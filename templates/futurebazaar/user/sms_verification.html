@@ -1,0 +1,58 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load cc_tags %}
+{% load web_tags %}
+<div class="clear"></div>
+
+  <div class="mart10">
+    {% if signup_username %}
+      <h3 class="f18 fn">Your Sign up is almost complete.</h3>
+    {% else %}
+      <h3 class="f18 fn">Verify your mobile number to complete your sign up.</h3>
+    {% endif %}
+    {% if is_email%}
+    <div>Please confirm your verification by clicking the link sent to your email address<div>
+    {% else %}
+    <p class="mart5 marb20">We sent you a verification code by SMS on you mobile. Please enter the verification code to complete your sign up.</p>
+    <form method="post" action="/auth/sms-verification/" id="sms_verify" name="sms_verify">
+    {% endif %}
+    {% if signup_username and not is_email%}
+      <input type="hidden" name="username" value="{{signup_username}}"/>
+      <div class="marb10">
+        <span id="v_code" class="f12 fdgray">Your Mobile number</span><br />
+        <p class="f14" style="border: 1px solid #BBBBBB; color: #000000; padding: 0px 4px; width: 196px; background-color: #fafafa;">{{signup_username}}</p>
+      </div>
+    {% else %}
+        {% if not is_email %}
+            <div class="marb10">
+                <span id="v_code" class="f12 fdgray">Enter Your Mobile number</span><br />
+                <input type="text" id="username" name="username" style="width: 200px;" />
+            </div>
+        {% endif %}
+    {% endif %}
+    {%if not is_email%}
+      <div class="marb10">
+        <span id="v_code" class="f12 fdgray">Enter Your verification code</span><br />
+        <input type="text" id="verification_code" name="verification_code" style="width: 200px;" />
+      </div>
+      <div>
+        <input type="submit" value="Continue" class="btn_c btn_c_s btn_orange" id="verify" title="Verify now" />
+      </div>
+    {% endif %}
+    </form>
+  </div>
+  <div class="clear"></div>
+
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    {% if signup_username %}
+      $('#verification_code').focus();
+    {% else %}
+      $('#username').focus();
+    {% endif %}
+});
+</script>
+{%endblock%} 

@@ -1,0 +1,78 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form select{width:202px;}
+#form input[type=submit]{width:50px;}
+ul, ol { padding-left: 0px !important; }
+</style>
+{% if form.non_field_errors %}
+<div class="error">{{form.non_field_errors}}</div>
+{%endif%}
+<form method='post' action='/actionflow/add' id='form'>
+<div class="fieldWrapper marb5 clear">
+	<span class="f11 fdgray">{{ form.name.label }}</span><br/>
+	{{ form.name }}
+</div>
+{% if form.name.errors %}
+<div class='error clear'>{{form.name.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.initial_state.label }}</span><br/>
+	{{ form.initial_state }}
+</div>
+{% if form.initial_state.errors %}
+<div class='error clear'>{{form.initial_state.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.initial_substate.label }}</span><br/>
+	{{ form.initial_substate }}
+</div>
+{% if form.initial_substate.errors %}
+<div class='error clear'>{{form.initial_substate.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.final_state.label }}</span><br/>
+	{{ form.final_state }}
+</div>
+{% if form.final_state.errors %}
+<div class='error clear'>{{form.final_state.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.final_substate.label }}</span><br/>
+	{{ form.final_substate }}
+</div>
+{% if form.final_substate.errors %}
+<div class='error clear'>{{form.final_substate.errors}}</div>
+{% endif %}
+<div class='clear'>
+    <input type="submit" name="submit" value="Add" class="uiButton" id='addactionflow'/>
+</div>
+</form>
+
+<script type="text/javascript">
+var substate_list = new Array({{substate_list|length}});
+{% for substates in substate_list %}
+substate_list[{{forloop.counter0}}] = new Array({{substates|length}});
+{% for val,name in substates %}
+substate_list[{{forloop.parentloop.counter0}}][{{forloop.counter0}}] = ["{{name}}",{{val}}];
+{% endfor %}
+{% endfor %}
+$('#id_initial_state').change(function() {
+    var index = this.selectedIndex;
+    var newlist = $('#id_initial_substate');
+    newlist.get(0).options.length = 0;
+    var substates = substate_list[index];
+    for(i=0; i<substates.length; i++) {
+        newlist.get(0).options[i] = new Option(substates[i][0],substates[i][1]);
+    }
+});
+$('#id_final_state').change(function() {
+    var index = this.selectedIndex;
+    var newlist = $('#id_final_substate');
+    newlist.get(0).options.length = 0;
+    var substates = substate_list[index];
+    for(i=0; i<substates.length; i++) {
+        newlist.get(0).options[i] = new Option(substates[i][0],substates[i][1]);
+    }
+});
+</script>
+

@@ -1,0 +1,181 @@
+{% extends 'popups/dialog.html' %}
+{% block content %}
+  <form method="post" action="/auth/signin/" id="form_signin" name="form_signin">
+    <div id="tr_error" class="hide_div error marb5" style=""><span id="errors" class="f11" style="color:#8A1F11;">{{error}}</span></div>
+    <div class="marb5">
+     <span class="f11 fdgray" style="margin-left:1px;">Email or Mobile</span>
+      <input type="text"  size="44"  id="username" name="username" value="{{username}}" />
+    </div>
+    <div class="marb5">
+    <span id="lpassword" class="f11 fdgray" style="margin-left:1px;">{%ifequal type "signin"%}Password {%else%}Set Password{%endifequal%}</span>
+      <input type="password" size="44" id="password" name="password"/>
+    </div>
+    <div id="lcpassword" class="marb5" {%ifequal type "signin"%} class="hide_div" {%endifequal%}>
+      <div class="f11 fdgray" style="margin-left:1px;">Confirm Password</div>
+      <input type="password" size="44" id="cpassword" name="cpassword"/>
+    </div>
+
+      
+    <div class="mart5">
+
+      <input type="submit" value="{%ifequal type "signin"%}Sign in{%else%}Sign up{%endifequal%}" id="login" />
+      &nbsp;
+      <button class="linkButton" id="cancel">Cancel</button>
+    </div>
+    <div class="mart10">
+    	<p style="border-top:1px dotted #999999; padding-top:5px; padding-bottom:5px;"><span>Or, use your Facebook account</span></p>
+        <div class="mart2">
+            <fb:login-button perms="email,user_likes,friends_likes,publish_stream">Connect</fb:login-button>
+        </div>
+    </div>
+<div class="margin_t10">
+    <button class="linkButton f11" id="forgot">Forgot Password?</button>
+    <input type="hidden" id="isphonepedeal" value="{{phonepedeal}}">
+</div>
+  </form>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#forgot').click(function(){
+            $('#dialog').dialog('close');
+            var url = $(location).attr('protocol');
+            url += "//" + $(location).attr('host');
+            url += "/forgotpassword/";
+            location.href = url;
+            return false;
+        });
+});
+
+
+
+
+    $.fn.isMobileValid = function(){
+        var data  = $(this).val();
+        var mobilePattern = /^[0-9]{10}$/;
+        if(data) {
+            return mobilePattern.test(data);
+        }
+    }
+
+    $.fn.isEmailValid = function(){
+        var data  = $(this).val();
+        if(data){
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return emailPattern.test(data);
+        }
+    }
+
+    $('#username').blur(function() {
+		var mobile = $('#username').val();
+		if($('#username').isMobileValid() || $('#username').isEmailValid() ){
+            $('#tr_error').removeClass('show_div');
+            $('#tr_error').addClass('hide_div');
+            var data = 'username=' + $('#username').val();
+            var action = '/user/checkuser';
+            var onSuccess = function(response) {
+                var data = $.parseJSON(response);
+                var is_new_user = data.is_new_user;
+                var full_name = data.full_name;
+                var has_password = data.has_password;
+                if(is_new_user){
+                    $('#dialog').dialog({title:'Sign up'});
+                    $('#lpassword').html('Set Password');
+                    $('#lcpassword').addClass('show_div');
+                    $('#lcpassword').removeClass('hide_div');
+                    $('#login').val('Sign up');
+                }
+                else if(!has_password){
+                    $('#dialog').dialog({title:'Sign up'});
+                    $('#lpassword').html('Set Password');
+                    $('#lcpassword').addClass('show_div');
+                    $('#lcpassword').removeClass('hide_div');
+                    $('#login').val('Sign up');
+                }
+                else{
+                    $('#dialog').dialog({title:'Sign in'});
+                    $('#lpassword').html('Password');
+                    $('#lcpassword').addClass('hide_div');
+                    $('#lcpassword').removeClass('show_div');
+                    $('#login').val('Sign in');
+                }
+            };
+            var onError = function() {
+            };
+            $.ajax({ url:action,
+                data : data,
+                success : onSuccess,
+                error : onError,
+                type : 'POST'
+                });
+        }
+        else{
+			if(mobile){
+            $('#tr_error').addClass('show_div');
+            $('#tr_error').removeClass('hide_div');
+            $('#errors').html('Please enter a valid 10 digit mobile or email');
+			}
+		} 
+    });
+	$('#login').click(function(){
+		var mobile = $('#username').val();
+		if(!mobile){
+			$('#tr_error').addClass('show_div');
+            $('#tr_error').removeClass('hide_div');
+            $('#errors').html('Please enter a valid 10 digit mobile or email');
+		}
+	});
+	 $('#cancel').click(function(){
+        $('#dialog').dialog('close');
+        return false;
+    });
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId: {{app_settings.facebook_app_id}},
+          status: true,
+          cookie: true,
+          xfbml: true
+        });
+    };
+
+    FB.Event.subscribe('auth.login', function(response) {
+        // check for auth condition
+        FB.getLoginStatus(function(res) {
+            if(res.session.uid) {
+            FB.api('/me', function(response1) {
+                attach_fb(response1);
+                }); 
+            }
+        });
+    });
+
+    function attach_fb(res_data) {
+        var data = {
+                "id":res_data.id,
+                "first_name":res_data.first_name, 
+                "last_name":res_data.last_name,
+                "email": res_data.email
+            };
+        $.ajax({
+            type: "POST",
+            url: "/fb/attach-fb/",
+            data: data,
+            success: function(msg){
+                if (msg=="OK"){
+                    window.location.href=window.location.href;
+                };
+            }
+        });
+    };
+
+	
+     $('#forgot').click(function(){
+        $('#dialog').dialog('close');
+        var url = $(location).attr('protocol');
+        url += "//" + $(location).attr('host');
+        url += "/forgotpassword/";
+        location.href = url;
+        return false;
+    });
+
+</script>
+{% endblock %} 
+

@@ -1,0 +1,78 @@
+<div id="error_msg" >
+ {% if form.errors %}
+          <p style="color: red;">
+                      Please correct the error{{ form.errors|pluralize }} below.
+                    <div class='error'>
+                        {{form.first_name.errors}}
+                        {{form.last_name.errors}}
+                        {{form.address.errors}}
+                        {{form.pincode.errors}}
+                        {{form.cityname.errors}}
+                        {{form.statename.errors}}
+                        {{form.countryname.errors}}
+                        {{form.phone.errors}}
+                        {{form.email.errors}}
+                    </div>
+          </p>
+  {% endif %}
+</div>
+    <div class="padb5">
+        <div class="left">
+            <div>{{form.first_name.label}} <span class="fred">*</span><div id="first_name_error"></div></div>
+            <div id="first_name_entry">
+            {{form.first_name}}
+            &nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="left">
+            <div>{{form.last_name.label}} <span class="fred">*</span><div id="last_name_error"></div></div>
+            {{form.last_name}}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="padb5">
+        <div>{{form.address.label}} <span class="fred">*</span><div id="address_error"></div></div>
+        {{form.address}}
+    </div>
+    <div class="padb5">
+        <div class="left">
+            <div id="cityname_image">{{form.cityname.label}} <span class="fred">*</span><div id="cityname_error"></div></div>
+            {{form.cityname}}
+            &nbsp;&nbsp;
+        </div>
+        <div class="left">
+            <div id="statename_image">{{form.statename.label}} <span class="fred">*</span><div id="statename_error"></div></div>
+            {{form.statename}}
+        </div>                         
+        <div class="clear"></div>
+    </div>
+   <div class="padb5">
+        <div class="left">
+            <div>{{form.pincode.label}} <span class="fred">*</span><div id="pincode_error"></div></div>
+            <div id="pincode_entry">
+            {{form.pincode}}
+            &nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="left">
+            <div id="countryname_image">{{form.countryname.label}} <span class="fred">*</span><div id="countryname_error"></div></div>
+            {{form.countryname}}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div>
+        <div class="left padb5">
+            <div>{{form.phone.label}} <span class="fred">*</span><div id="phone_error"></div></div>
+            {{form.phone}}
+            &nbsp;&nbsp;
+        </div>
+        <div class="left">
+            <div>{{form.email.label}} <div id="email_error"></div> </div>
+            {{form.email}}
+        </div>
+
+    <div>
+        <div class="left padb5">
+        {{form.defaddress}} Make this the default shipping address
+        </div>
+    </div>

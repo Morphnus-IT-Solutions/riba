@@ -1,0 +1,73 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{%load web_tags%}
+{% block user_content %}
+<style>
+    .tbl_profile select {width:250px}
+</style>
+
+<div class="inner-content">
+<h1 class="head1">Promotion Details</h1>
+<table class="tbl_profile">
+    <tbody>
+        <tr>
+            <td width="40" class="f11 fdgray">Promotion ID : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_id}}</td>
+        </tr>
+ 
+
+        <tr>
+            <td width="40" class="f11 fdgray">Promotion Name : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_name}}</td>
+        </tr>
+        <tr>
+            <td width="40" class="f11 fdgray">Discount Type : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_discount_type}}</td>
+        </tr>
+        <tr>
+            <td width="140" class="f11 fdgray">Discount Value : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_discount_value}}</td>
+        </tr>
+        <tr>
+            <td width="140" class="f11 fdgray">Applies On : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_applies_on}}</td>
+        </tr>
+ 
+
+        <tr>
+            <td width="140" class="f11 fdgray">Promotion Type : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_type}}</td>
+        </tr>
+        <tr>
+            <td width="140" class="f11 fdgray">Min Order Value : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_min_order_value}}</td>
+        </tr>
+        <tr>
+            <td width="140" class="f11 fdgray">Start Date : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_start_date}}</td>
+        </tr>
+        <tr>
+            <td width="140" class="f11 fdgray">End Date : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_end_date}}</td>
+        </tr>
+
+        <tr>
+            <td width="140" class="f11 fdgray">Active : </td>
+            <td width="140" class="f11 fdblack">{{promotion.promotion_active}}</td>
+        </tr>
+
+        <tr>
+            <td width="140" class="f11 fdgray">Coupons : </td>
+            {% if promotion.len <= 1 %}
+            <td width="140" class="f11 fdblack">{{promotion.first_coupon}}</td>
+            {% else %}
+            <td width="140" class="f11 fdblack"><a href="/show_coupons/{{client_name}}/{{seller_name}}/{{promotion.promotion_id}}/" >coupons list</a></td>
+            {% endif %}
+        </tr>
+
+
+
+    </tbody>
+</table>
+</div>
+{% endblock %}

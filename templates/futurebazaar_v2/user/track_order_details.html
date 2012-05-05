@@ -1,0 +1,177 @@
+{% extends 'user/home.html' %}
+{%load web_tags%}
+{%load cc_tags%}
+{%block account_head%}
+{%if request|is_user_authenticated%}
+<h1>My Account</h1>
+{%endif%}
+{%endblock%}
+{% block user_content %}
+{%if error%}
+    {%for err in error%}
+        <div class="error">{{err}}</div>
+    {%endfor%}
+{%endif%}
+{%if order_info%}
+    <div class="marb20">
+    <div class="fb padl20"> Your Order Details :</div>
+    <div class="padl20" style="position:relative">View the details of your order here. 
+    {%if request|is_user_authenticated%}
+        To view all your orders, click on the My Order Tab .
+        <div class="ra f11" style="position:absolute; right:200px; top:0px;"><a href="/user/orders/">&laquo; Back to My Orders</a></div>
+    {%endif%}
+    </div>
+    <div class="order_info_block pad10 mart10">
+    <table class="order_details_info" >
+        <tr>
+            <td width="160">Order No</td>
+            <td width="300">: <span class="fb">{{order_info.orderId}}</span></td>
+            <td width="300" class="fb">Shipped To:</td>
+        </tr>
+        <tr>
+            <td width="160">Payment Status</td>
+            <td width="300">: <span class="fb">{{order_info.paymentStatus}}</span></td>
+            <td width="300" rowspan="6" valign="top"><p> {{address.name}}
+                {%if address.address1%}
+                {{address.address1}},<br />
+                {%endif%}
+                
+                {{address.city}} - {{address.pincode}}.<br />
+                {{address.state}} <br />
+                <strong class="mart5">Phone:</strong> {{address.phone}} </p></td>
+        </tr>
+        <tr>
+            <td width="160">Order Placed On</td>
+            <td width="300">: <span class="fb">{{order_info.orderSubmissionDate|date:'M d, Y'}}</span></td>
+            <td width="300"></td>
+        </tr>
+        <tr>
+            <td>Total Order Quantity</td>
+            <td>: <span class="fb">{{order_info.total_order_qty}}</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Total Shipping Cost</td>
+            <td>: <span class="fb"><span class="WebRupee">Rs.</span> {{order_info.totalShippingCost}}</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Total Order Value</td>
+            <td>: <span class="fb"><span class="WebRupee">Rs.</span> {{order_info.orderAmount}}</span></td>
+            <td></td>
+        </tr>
+    </table>
+    <table>
+
+        <table>
+        {%if orders%}
+        {%for order in orders%}
+        <tr valign="top">
+            <td class="ca"><a href="{%cc_url request ''%}{%ifequal logged_user.buyer_or_seller "Seller"%}seller{%else%}user{%endifequal%}/orders/{{order.order_id}}/">{{order.order_id}}</a></td>
+            <td>{{order.order_date|date}}</td>
+            <td><span class="WebRupee">Rs.</span> {{order.list_price|money}}</td>
+            <td><span class="WebRupee">Rs.</span> {{order.item_discount|money}}</td>
+            <td><span class="WebRupee">Rs.</span> {{order.shipping_charges|money}}</td>
+            <td><span class="WebRupee">Rs.</span> {{order.amount|money}}</td>
+        </tr>
+        {%endfor%}
+        {%endif%}
+        </table>
+    </div>      
+    <div class="order mart20">
+    <div>
+        <ul class="tabs">
+            <li id="view_product" class="sel_tab">View by Product</li>
+            <li id="view_status">View by status</li> 
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div id="view_by_product" class="show ">
+
+      <table class="mart10">
+        <tr>
+          <th>Qty</th>
+          <th>Product Description</th>
+          <th>Product Status</th>
+          <th>AWB # </th>
+          <th>Courier Partner</th>
+          <th class="ra">Amount</th>
+        </tr>
+        {%for item in order_info.items%}
+            <tr>
+              <td>{{item.qty}}</td>
+              <td>{{item.product.title}}<br/>FBID: {{item.product.primary_rate_chart.sku}}</td>
+              <td>{{item.productStatus}}</td>
+              <td>{{item.awb}}</td>
+              <td>{{item.courierPartner}}</td>
+              <td class="ra"><span class="WebRupee">Rs.</span> {{item.amount}}</td>
+            </tr>
+        {%endfor%}
+        <tr>
+            <td class="ra bbnone" colspan='5'><strong>Shipping & Handling</strong></td>
+            <td class="ra bbnone"><span class="WebRupee">Rs.</span> {{order_info.totalShippingCost}}</td>
+        </tr>
+        <tr>
+            <td class="ra bbnone" colspan='5'><strong>Order Total</strong></td>
+            <td class="ra bbnone"><span class="WebRupee">Rs.</span> {{order_info.orderAmount}}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="view_by_status" class="hide">
+
+    {%for item in status_items%}
+      <table class="mart10">
+        <tr>
+        </tr>
+            <tr>
+                <td class='ra' colspan='4'><strong>Status:</strong> {{item.0}}</td>
+            </tr>
+        <tr>
+          <th>Qty</th>
+          <th>Product Description</th>
+          <th class="ra">Shipping & Handling</th>
+          <th class="ra">Amount</th>
+        </tr>
+        {%for item in item.1%}
+            <tr>
+              <td>{{item.qty}}</td>
+              <td>{{item.product.title}}<br/>FBID: {{item.product.primary_rate_chart.sku}}</td>
+              <td class='ra'><span class="WebRupee">Rs.</span> {{item.shipping_charges}}</td>
+              <td class="ra"><span class="WebRupee">Rs.</span> {{item.amount}}</td>
+            </tr>
+        {%endfor%}
+      </table>
+    {%endfor%}
+    </div>
+    </div>
+{%else%}
+      <tr>
+        <td colspan="6" class="fred">No order found.</td>
+      </tr>
+{%endif%}
+<div class="clear"></div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+$('#view_product').click(function(){
+        $(this).addClass('sel_tab');
+        $('#view_status').removeClass('sel_tab');
+        $('#view_by_product').addClass('show');
+        $('#view_by_product').removeClass('hide');        
+        $('#view_by_status').addClass('hide');
+        $('#view_by_status').removeClass('show');        
+    });
+$('#view_status').click(function(){
+        $(this).addClass('sel_tab');
+        $('#view_product').removeClass('sel_tab');
+        $('#view_by_status').removeClass('hide');
+        $('#view_by_status').addClass('show');        
+        $('#view_by_product').removeClass('show');
+        $('#view_by_product').addClass('hide');        
+    });
+});
+</script>
+{%endblock%} 

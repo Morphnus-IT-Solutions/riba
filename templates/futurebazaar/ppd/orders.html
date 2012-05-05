@@ -1,0 +1,126 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+{% load pagination_tags%}
+<div class="padding_top10">
+{%comment%}
+<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+{%endcomment%}
+<div class="content_head">
+  <div class="header rc5">
+    <h1>{{client.name|title}} - Orders</h1>
+  </div>
+  <div class="clear bordergray"></div>
+</div>
+
+<div class="left" style="width:940px"> {%ifequal order_state "confirmed"%}
+  {% daterange "Confirmed Orders"  search_trend from_date to_date request '' client.name%}
+  {%endifequal%}
+  {% ifequal order_state "booked"%}
+  {% daterange "Booked Orders"  search_trend from_date to_date request '' client.name%}
+  {%endifequal%}
+  {% ifequal order_state "cancelled"%}
+  {% daterange "Cancelled Orders"  search_trend from_date to_date request '' client.name%}
+  {%endifequal%} </div>
+
+<div class="search_sku right ra">
+  <div class="left">
+    <form method="get" action="">
+      <span class="f11 fdgray">Order ID</span>
+      <input type="text" id="order_id" name="order_id"/>
+      <input type="submit" id="order_id_submit" value="Search" class="uiButton mart6" />
+    </form>
+  </div>
+  <div class="left">{%include "ppd/show_excel_link.html" %}</div>
+</div>
+<div class="clear"></div>
+{%if orders%}
+{% autopaginate orders 25 %}
+<table cellspacing="0" cellpadding="0" border="0" class="tbl_response left mart10">
+  <tr> {% if sortby == 'id_dsc' %}
+    <th class="ca" width="150"><a href = "{{url}}&sortby=id_asc">Order ID&nbsp;&nbsp;<img src="/media/images/up.gif" border="0" alt="up" height="7" width="5"></a> {% else %}
+    <th class="ca" width="150"><a href = "{{url}}&sortby=id_dsc">Order ID&nbsp;&nbsp;{% if sortby == "id_asc" %}<img src="/media/images/down.gif" border="0" alt="up" height="7" width="5">{% endif %}</a> {% endif %}
+      
+      {% if sortby == 'date_asc' %}
+    <th class="ca" width="170"><a href = "{{url}}&sortby=date_dsc">&nbsp;&nbsp;{{order_state|title}} on&nbsp;&nbsp;<img src="/media/images/down.gif" border="0" alt="up" height="7" width="5"></a> {% else %}
+    <th class="ca" width="170"><a href = "{{url}}&sortby=date_asc">&nbsp;&nbsp;{{order_state|title}} on&nbsp;&nbsp;{%if sortby == "date_dsc" %}<img  src="/media/images/up.gif" border="0" alt="up" height="7" width="5">{% endif %}</a> {% endif %}
+      
+      {% if sortby == 'amt_dsc' %}
+    <th class="ca" width="150"><a href = "{{url}}&sortby=amt_asc">Payable Amount&nbsp;&nbsp;<img src="/media/images/up.gif" border="0" alt="up" height="7" width="5"></a> {% else %}
+    <th class="ca" width="150"><a  href = "{{url}}&sortby=amt_dsc">Payable Amount&nbsp;&nbsp;{% if sortby == "amt_asc"%}<img src="/media/images/down.gif" border="0" alt="up" height="7" width="5">{% endif %}</a> {% endif %}
+    <th class="ca" width="500">Address</th>
+  </tr>
+  {%for order in orders%}
+  <tr>
+        <td class="ca" width="150" valign="top" id="order_display_{{order.order.get_id}}" style="text-align:center;"><a href="/sales/orders/{{order.order.id}}/">{{order.order.get_id}}</a></td>
+        {%if order.support_state == "confirmed"%}
+            <td class="ca" width="170" valign="top">&nbsp;&nbsp;&nbsp;{{order.order.confirming_timestamp|date:'d M, Y P'}}</td>
+        {% else %}
+            <td valign="top" width"170" class="ca">{{order.order.timestamp|date:'d M, Y f A'}}</td>
+        {%endif%}
+        <td class="ca" width="150" valign="top">&nbsp;&nbsp;<span class="WebRupee"> Rs. </span>{{order.total_amount|money}}</td>
+        <td class="la" valign="top"><span>{{order.order.get_delivery_address}}</span></td>
+  </tr>
+  {%endfor%}
+</table>
+{% paginate %}
+{%else%}
+<table>
+  <tr> {%ifequal request.method "POST"%}
+    {%if valid_query_or_no_query%}
+    <td colspan="7" style="color:#FF0000; font-size:12px;">Order with order id '{{requested_order_id}}' not found. Click <a href="{{request.path}}">here</a> to see all the orders for {{selected_account.name}}</td>
+    {%else%}
+    <td colspan="7" style="color:#FF0000; font-size:12px;">'{{requested_order_id}}' is not a valid search query. Please enter a valid search id. Click <a href="{{request.path}}">here</a> to see all the orders for {{selected_account.name}}</td>
+    {%endif%}
+    {%else%}
+    </br>
+    <td colspan="7" style="color:#FF0000; font-size:12px;">No orders found.
+      <!-- Click <a href="{{request.path}}">here</a> to see all the orders for {{selected_account.name}}--></td>
+    {%endifequal%} </tr>
+</table>
+{%endif%}
+  {%comment%}
+  <div class="pagination"> <span class="step-links"> {% if page_range|length > 1 %}
+    
+    {% if page_range|length > 8 %} <a href="?page=1">1</a> <a href="?page=2">2</a> <a href="?page=3">3</a>. . . . . . <a href="?page={{mid}}">{{mid}}</a>. . . . . <a href="?page={{order_page_list.paginator.num_pages}}">{{order_page_list.paginator.num_pages}}</a> {% endif %}
+    {% if page_range|length <= 8 %}        
+    {% for i in page_range %} <a href="?page={{i}}">{{i}}</a> {% endfor %} 
+    {% endif %}
+    {% endif %}
+    
+    {% if order_page_list.has_previous %} <a href="?page={{ order_page_list.previous_page_number }}">previous</a> {% endif %} <span class="current"> Page {{ order_page_list.number }} of {{ order_page_list.paginator.num_pages }}. </span> {% if order_page_list.has_next %} <a href="?page={{ order_page_list.next_page_number }}">next</a> {% endif %} </span> </div>
+  {% endcomment %} </div>
+<div class="clear"></div>
+<script type="text/javascript">
+$('.order_display').click(function(){
+    var id = this.id;
+    var order_id = id.split("order_display_")[1];
+    var showndiv = "#items_display_" + order_id;
+    if ($(this).hasClass("hide_filter"))
+    {
+        $('.order_display').removeClass("show_filter");
+        $('.order_display').addClass("hide_filter");
+        $(this).removeClass("hide_filter");
+        $(this).addClass("show_filter");
+        $('.items_display').addClass("hidden");
+        $(showndiv).removeClass("hidden")
+    }
+    else
+    {
+        $(this).removeClass("show_filter");
+        $(this).addClass("hide_filter");
+        $(showndiv).addClass("hidden");
+    }
+});
+</script>
+<script type="text/javascript">
+    $('#order_id_submit').click(function(){
+        url_path = '{{url|safe}}';
+        var order_id = document.getElementById('order_id').value;
+        url_path += "&order_id=" + order_id + "&";
+        location.href = url_path;
+    });
+</script>
+{%endblock%} 

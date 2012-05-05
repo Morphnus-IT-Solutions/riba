@@ -1,0 +1,44 @@
+<!--debit card-->
+  {% if card_form.errors %}
+    <div>                   
+      <div class="error">
+          <ol>
+          {% for field in card_form %}
+          {% for error in field.errors %}
+              <li>{{error}}</li>
+          {% endfor %}
+          {% endfor %}
+          </ol>
+      </div>                   
+    </div>
+  {% endif %}
+<table class="pad10">
+  <tr>
+    <td class="ra fb" style="width: 60px;">Card Type</td>
+    <td>
+      <label>
+        <input type="radio" style="margin-top:5px;" class="vt" value="visa-card" checked="checked" name="cardtype" />
+        <img width="50" height="30" alt="Visa" src="https://www.futurebazaar.com/media/images/bank/visa_icon.jpg" />
+      </label>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label>
+        <input type="radio" style="margin-top:5px;" class="vt" value="master-card" name="cardtype" />
+        <img width="50" height="30" alt="Master Card" src="https://www.futurebazaar.com/media/images/bank/mastercard_icon.jpg" />
+      </label>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label>
+        <input type="radio" style="margin-top:5px;" class="vt" value="maestro-card" name="cardtype" />
+        <img width="50" height="30" alt="Maestro" src="https://www.futurebazaar.com/media/images/maestro_icon.jpg" />
+      </label>
+    </td>
+  </tr>
+  {% comment %}{% include "order/card_form.html"%}{% endcomment %}
+</table>
+  <div class="notice">
+      <strong>Note:</strong>
+      <p class="marb5">Currently, we support only Indian cards.</p>
+      <p>As per RBI guildelines, 3D secure password is required to complete online debit card and credit card transactions. You may register with your bank and get your password when you proceed to make payment</p>
+  </div>
+{% comment %}{% include "order/payment_options/billing_info.html"%}{% endcomment %}
+
+<!--end debit card-->

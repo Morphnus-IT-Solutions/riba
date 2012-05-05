@@ -1,0 +1,93 @@
+              <!--debit card-->
+                {% if card_form.errors %}
+                <div>                   
+                            <div class="error">
+                                <ol>
+                                {% for field in card_form %}
+                                {% for error in field.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                                {% endfor %}
+                                </ol>
+                            </div>                   
+                </div>
+                {% endif %}
+                 <table>  
+                    <tr><td class="ra fb"><span class="label">Issuing Bank</span></td>
+                        <td>
+                        <select title="Issuing bank" class="required" name="issuing_bank" id="id_issuingBank">
+                                        <option value="0">Select your issuing bank</option>
+                                        <optgroup label="Popular banks">
+                                            <option value="5">HDFC</option>
+                                            <option value="6">ICICI Bank</option>
+                                            <option value="9">Axis Bank</option>
+                                            <option value="8">Standard Chartered</option>
+                                            <option value="15">Canara Bank</option>
+                                            <option value="39">SBI ATM-cum-DEBIT Card</option>
+                                            <option value="1">ABN Amro</option>
+                                    </optgroup>
+                                    <optgroup label="All banks">
+                                            <option value="10">Andhra Bank</option>
+                                            <option value="3">Barclays</option>
+                                            <option value="4">CitiBank</option>
+                                            <option value="207">City Union Bank</option>
+                                            <option value="131">Corporation Bank</option>
+                                            <option value="212">Cosmos Coop Bank Visa cards</option>
+                                            <option value="32">Deutsche Bank</option>
+                                            <option value="132">GE Countrywide</option>
+                                            <option value="31">HSBC</option>
+                                            <option value="171">IDBI Bank</option>
+                                            <option value="172">Indian Overseas Bank</option>
+                                            <option value="195">IndusInd Bank</option>
+                                            <option value="151">Karur Vyasa Bank</option>
+                                            <option value="211">Kotak bank</option>
+                                            <option value="71">State Bank of India</option>
+                                            <option value="91">Syndicate Bank</option>
+                                            <option value="111">Union Bank of India</option>
+                                            <option value="198">United Bank of India</option>
+                                            <option value="271">Yes Bank</option>
+                                    </optgroup>
+                            </select>
+                        </td>
+                    </tr>
+                    {%include "order/card_form.html" %}
+             </table>
+            <div class="notice">
+                <b>Note:</b>
+                <ul>
+                <li>
+                 Please note that currently we are unable to process credit &amp; debit cards issued by international banks.  We request international customers to use alternate payment options.</li>
+                <li>
+                 With effect from 1st Aug 2009, as per the RBI guidelines, an additional password would be mandatory for online credit card 
+                    &amp; debit card transactions. Simply register with your card-issuing bank on their website and get your password. You may also register
+                    with your bank and get your password while you make this payment.
+                    </li>
+                 </ul>
+            </div>
+             <script type="text/javascript">
+	$(document).ready(function() {
+		
+		$(".fancybox").fancybox({
+			'width'				: '80%',
+			'height'			: '100%',
+			'autoScale'			: 'false',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe'
+		});		
+	
+	});
+	</script>
+             <script type="text/javascript">
+               // $('#cvv_info').click(function(){
+//                    $.get(this.href, function(data){
+//                        $('#shipping_dialog').html(data);
+//                        var dialog = $('#shipping_dialog').dialog({model:true,
+//                            title:'CVV Information',
+//                            width:500
+//                            });
+//                    });
+//                    return false;
+//                });
+             </script>
+              <!--end debit card-->

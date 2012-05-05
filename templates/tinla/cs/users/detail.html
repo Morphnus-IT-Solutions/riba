@@ -1,0 +1,78 @@
+{% extends 'cs/base.html' %}
+{% load cs_tags %}
+{% load cc_tags %}
+{% block content %}
+<hr class="space"/>
+<div class="message">
+</div>
+<div class="span-24 last">
+</div>
+<div class="span-24 last">
+    <div style="padding:5px">
+        <div style="text-align:right">
+            <a href="{% cc_url request 'users/' %}{{u.id}}/responses/add/">Add New Response</a>
+        </div>
+        {% user_list_header %}
+        {% user_list u request "False"%}
+        {% user_list_footer %}
+    </div>
+    <div style="padding:5px">
+        {% if responses %}
+        <div >
+            <h3>Open Responses</h3>
+        </div>
+        <br />
+        <div class="list_wrapper">
+        <table width="99%" cellspacing="0" class="list">
+            <tr class="list_header">
+                <td>ID</td>
+                <td>Message</td>
+                <td>Created On</td>
+                <td>Status</td>
+                <td>Closed</td>
+                <td></td>
+            </tr>
+            {% for response in responses %}
+            <tr class="list_row">
+                <td class="first_col">{{response.id}}
+                    <br/><a href="/responses/{{response.id}}/attempts" id="history_{{response.id}}" class="rah">+ History</a><br/>
+                </td>
+                <td>{{response.message}}</td>
+                <td>{% if response.created_on %}{{response.created_on|date:"D, d M h:i A"}}{% endif %}</td>
+                <td>{{response.status}}</td>
+                <td>{%if response.closed %}Closed{%else%}Open{%endif%}</td>
+                <td class="last_col"><a href="{% cc_url request 'users/' %}{{u.id}}/responses/{{response.id}}/attempts/add/">Add Attempt</a></td>
+            </tr>
+            <tr class="last_row rah_td " id="history_{{response.id}}_tr">
+                <td colspan="7" class="first_col last_col">
+                    <div id="history_{{response.id}}_details"></div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+
+
+$('.rah').click(function() {
+    var div_id = this.id + '_details';
+    var tr_id = this.id + '_tr';
+    var that = this;
+    if(this.innerHTML == '+ History') {
+        $.get(this.href + '?mode=details_only', function(data) {
+                $('#' + div_id).html(data);
+                $('#' + div_id)[0].style.display = 'block';
+                that.innerHTML = '- History';
+            });
+    } else {
+            $('#' + div_id)[0].style.display = 'none';
+            this.innerHTML = '+ History';
+    }
+    return false;
+});
+{% endblock %}

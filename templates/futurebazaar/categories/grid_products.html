@@ -1,0 +1,78 @@
+{%load web_tags%}
+{%load cc_tags%}
+{%for product in products%}
+<!-- Product Unit -->
+<li class="grid_5" {%if forloop.counter == 1 and pagination %}id="grid_page_{{pagination.cur_page}}" {%endif%}>
+		<!-- Product Image -->	
+	<div class="greed_inner {% if product.deal_type == 'home_clearance' %}greed_clearance{% endif %}">                    
+        {% if product.deal_type == 'home_clearance' and product.retailer %}
+            <a href="{% cc_url request "clearance/?q=&t="%}{{product.retailer.id}}" title="{{product.retailer.display_name}} Clearance">
+		<div class="ca" style="border-bottom:1px solid #eee; height:67px;">
+			<img src="/media/images/retailer-{{product.retailer.tag}}.jpg" width="174" height="67" />
+		</div>
+	    </a>
+	{% endif %}
+	<!-- Product Image -->	
+        <div class="item_img ca"> 
+            <a href="{% cc_url request product.product.url %}"> 
+                <img src="{{product.product_images.0.get_display_url}}" width="174" height="219" title="{{product.product.title}}" alt="{{product.product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_p.jpg" %}';}return false;" onerror_cnt="0" />
+	    </a>            
+            <a href="{% cc_url request  product.product.quick_look_url %}" class="lightbox lightbox_overlay product_quick_look" style="position:static !important;">
+            <span class="btn_qv">Quick View</span></a>
+            {%if request|getDiscountPercent:product.rate_chart > 10 %}
+            <!--div class="save ca fb fwhite {%if request|getDiscountPercent:product.rate_chart > 25%}green-tag{%endif%}">
+				<span>{% getDiscount request product.rate_chart%}% off</span>   <br/>
+				<span> SAVE</span>
+				<span><span class="WebRupee">Rs. </span>{% getSavings request product.rate_chart %}</span>
+			</div-->
+		
+			<div class="offer-tag {%if request|getDiscountPercent:product.rate_chart > 20%}green-offer-tag{%endif%}">
+				<span>off<br /><strong>{% getDiscount request product.rate_chart%}%</strong></span>
+			</div>	
+	    {% endif %}
+        {% if request.path != '/' %}
+    		{% show_product_tags request product %}
+        {% endif %}
+		</div><!-- /Product Image -->
+        <h3>
+		{%if show_compare%}
+			<span class="select_item">
+				<input type="checkbox" name="selected" value={{product.product.id}} class="selected" />          
+			</span>
+                {% endif %}
+			<a href="{% cc_url request product.product.url %}" title="{{product.product.title}}">{{product.product.title|truncate:65}}</a>
+		</h3>
+		
+		<!-- Price Unit -->
+		<div style="padding:3px 10px 7px;">
+            <div class="price left">               
+                <span class="offer_price f15 fb">
+                	<span class="WebRupee">Rs.</span> <span>{% get_price_info request product.rate_chart 'offer_price' %}</span>
+                </span><br />
+				{%if request|isAnySaving:product.rate_chart %}
+				<span class="mrp f11">
+					<span class="WebRupee">Rs.</span> <span class="fs">{% get_price_info request product.rate_chart 'list_price' %}</span>
+				</span>
+                {% endif %}
+            </div>
+            {%ifequal product.rate_chart.stock_status "instock"%} 
+			<form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form_{{product.product.id}}" method="post">
+				<input type="hidden" name="rate_chart_id" value="{{product.rate_chart.id}}"/>
+				<input type="hidden" name="qty" value="{{product.rate_chart.min_qty}}"/>
+				<input type="hidden" name="product_id" value="{{product.product.id}}"/>
+				<input type="hidden" name="action" value="add_to_cart"/>
+				<button type="submit" class="btn_c btn_c_s btn_orange right f11" value={{product.product.id}} title="Add To Cart">Add to Cart</button>
+			</form>
+            {% endifequal %}   
+            <div class="clear"></div>
+        </div><!-- /Price Unit -->
+    </div>        
+    {% if product.deal_type == 'todays_deal' %}
+      <div class="f11" style="margin-top:7px;">
+	<a href="{% cc_url request product.product.category.url %}" title="{{product.product.category.name}}" class="fdgray">
+        More {{product.product.category.name|truncate:20}} &rsaquo;</a>
+      </div>
+    {% endif %}
+</li><!-- /Product Unit -->
+{% endfor %}
+

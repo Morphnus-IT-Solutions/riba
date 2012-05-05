@@ -1,0 +1,15 @@
+<html>
+    <body OnLoad="OnLoadEvent();">
+        <form name="form1" action="{{json.redirect_url}}" method="post">
+            {% for k, v in json.iteritems %}
+                <input type="hidden" name="{{k}}" value="{{v}}"/>
+            {% endfor %}
+        </form>
+        <script language="JavaScript">
+            function OnLoadEvent() {
+                document.form1.submit();
+            }
+        </script>
+    </body>
+</html>
+

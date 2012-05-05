@@ -1,0 +1,160 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+
+{% block extrahead %}{{ block.super }}
+{% url admin:jsi18n as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block coltype %}{% if ordered_objects %}colMS{% else %}colM{% endif %}{% endblock %}
+
+{% block bodyclass %}{{ opts.app_label }}-{{ opts.object_name.lower }} change-form{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+     <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+     <a href="../../">{{ app_label|capfirst|escape }}</a> &rsaquo; 
+     {% if has_change_permission %}<a href="../">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %} &rsaquo; 
+     {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+</div>
+{% endif %}{% endblock %}
+
+{% block content %}<div id="content-main">
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools"><li><a href="history/" class="historylink">{% trans "History" %}</a></li>
+  {% if has_absolute_url %}<li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}
+<form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form">{% csrf_token %}{% block form_top %}{% endblock %}
+<div>
+{% if is_popup %}<input type="hidden" name="_popup" value="1" />{% endif %}
+{% if save_on_top %}{% submit_row %}{% endif %}
+{% if errors %}
+    <p class="errornote">
+    {% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+    </p>
+    {{ adminform.form.non_field_errors }}
+{% endif %}
+
+{% for fieldset in adminform %}
+  {% include "admin/includes/fieldset.html" %}
+{% endfor %}
+
+{% block after_field_sets %}{% endblock %}
+
+{% for inline_admin_formset in inline_admin_formsets %}
+    {% include inline_admin_formset.opts.template %}
+{% endfor %}
+
+{% block after_related_objects %}{% endblock %}
+
+{% submit_row %}
+
+{% if adminform and add %}
+   <script type="text/javascript">document.getElementById("{{ adminform.first_field.auto_id }}").focus();</script>
+{% endif %}
+
+{# JavaScript for prepopulated fields #}
+{% prepopulated_fields_js %}
+
+</div>
+</form></div>
+<script type="text/javascript">
+    django.jQuery('#productfeatures_set-group td.feature select').trigger('change');
+</script>
+{% comment %}
+<script type="text/javascript">
+$(document).ready(function(){
+    if($("#id_type")){
+        function custom_help_text(){
+            var type = $("#id_type");
+            var value = type.attr("value");
+            var help_texts = new Array();
+            if(value == 'hero_deal'){
+                set_product_help_text();
+                hide_deal_products();
+            }
+            else if(value == 'todays_deals'){
+                help_texts[0] = 'Electronics Category';
+                help_texts[1] = 'Home Fashion Category';
+                help_texts[2] = 'Fashion Category';
+                help_texts[3] = 'Gifts Category';
+                set_product_help_text(help_texts);
+                display_deal_products();
+            }
+            else if(value == 'clearance_deals'){
+                help_texts[0] = 'Big Bazaar';
+                help_texts[1] = 'Ezone';
+                help_texts[2] = 'HomeTown';
+                help_texts[3] = 'Brand Factory';
+                set_product_help_text(help_texts);
+                display_deal_products();
+            }
+        };
+        function display_deal_products(){
+            if($("#dailydealproduct_set-1")){
+                $("#dailydealproduct_set-1").css("display",'block');
+            }
+            if($("#dailydealproduct_set-2")){
+                $("#dailydealproduct_set-2").css("display",'block');
+            }
+            if($("#dailydealproduct_set-3")){
+                $("#dailydealproduct_set-3").css("display",'block');
+            }
+            if($("#dailydealproduct_set-4")){
+                $("#dailydealproduct_set-4").css("display",'block');
+            }
+        };
+        function hide_deal_products(){
+            if($("#dailydealproduct_set-1")){
+                $("#dailydealproduct_set-1").css("display",'none');
+            }
+            if($("#dailydealproduct_set-2")){
+                $("#dailydealproduct_set-2").css("display",'none');
+            }
+            if($("#dailydealproduct_set-3")){
+                $("#dailydealproduct_set-3").css("display",'none');
+            }
+            if($("#dailydealproduct_set-4")){
+                $("#dailydealproduct_set-4").css("display",'none');
+            }
+        };
+        function set_product_help_text(help_texts){
+            $(".product_help").each(function(){
+                var id = $(this).attr("id");
+                if(!help_texts){
+                    $(this).html("");
+                }
+                else{
+                    if(id == 'product_help_text_1'){
+                        $(this).html("Make sure you Enter a "+help_texts[0]+" Product");
+                    }
+                    else if(id == 'product_help_text_2'){
+                        $(this).html("Make sure you Enter a "+help_texts[1]+" Product");
+                    }
+                    else if(id == 'product_help_text_3'){
+                        $(this).html("Make sure you Enter a "+help_texts[2]+" Product");
+                    }
+                    else if(id == 'product_help_text_4'){
+                        $(this).html("Make sure you Enter a "+help_texts[3]+" Product");
+                    }
+                    else {
+                        $(this).html("");
+                    }
+                };
+            });
+        };
+        custom_help_text();
+        $("#id_type").change(function(){
+            custom_help_text();
+        });
+    };
+});
+</script>
+{% endcomment %}
+{% endblock %}

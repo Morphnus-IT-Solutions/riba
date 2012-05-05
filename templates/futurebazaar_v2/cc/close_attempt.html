@@ -1,0 +1,209 @@
+{%load cc_tags%}
+<div class="dialog">
+    <div>
+        <table width="99%" cellspacing="0" align="center">
+            <tr>
+                <td colspan="2"><div id="close_attempt_status" class="error" style="display:none"></div></td>
+            </tr>
+            <tr>
+                <td width="25%">Call Status</td>
+                <td>
+                    <input type="hidden" id="response_list" value="by_dialer"/>
+                    <textarea style="display:none" id="response_statuses_list_by_dialer">
+                        {% for status in response_statuses %}{{status.id}}**{{status.name}}**{{status.type}}{% if not forloop.last %}$${% endif %}{% endfor %}
+                    </textarea>
+                    <input type="hidden" id="response_current_state_by_dialer" value="{{current_state}}"/>
+                    <input type="hidden" id="suggested_status_name" value=""/>
+                    <select name="call_status" id="call_status" >
+                        <option value="">----</option>
+                        <optgroup label="Unanswered">
+                            {% for attempt_status  in attempt_statuses %}
+                            <option value="{{attempt_status.name}}">{{attempt_status.name}}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="Answered">
+                            <option value="Answered">Answered</option>
+                        </optgroup>
+                    </select>
+                </td>
+            </tr>
+            <tr id="response_state_tr">
+                <td>Response State</td>
+                <td>
+                    <select name="response_state" id="response_state" >
+                        <option value="">---</option>
+                        {% for state in response_status_groups %}
+                        <option value="{{state.group}}" {%ifequal state.group current_state %}selected{% endifequal %}>{{state.group}}</option>
+                        {% endfor %}
+                    </select>
+
+                </td>
+            </tr>
+            <tr id="response_status_tr">
+                <td>Response Status</td>
+                <td>
+                    <select name="response_status" id="response_status">
+                        <option value="">----</option>
+                        {% for rsg in response_status_groups %}
+                        {% ifequal rsg.group current_state %}
+                            {% for rsg_value in rsg.values %}
+                            <option value="{{rsg_value.id}}">{{rsg_value.name}}</option>
+                            {% endfor %}
+                        {% endifequal %}
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">Notes</td>
+                <td><textarea name="notes" rows="4" cols="40" id="notes"></textarea></td>
+            </tr>
+            <tr>
+                <td valign="top">Next Call After</td>
+                <td>
+                    <input name="next_call" id="next_call" type="text"/>&nbsp;
+                    <img src="{{MEDIA_URL}}images/calbtn.gif" />
+                    <select name="next_call_hr" id="next_call_hr">
+                        <option value="">--</option>
+                        {% for hr in hours %}
+                        <option value="{{hr}}">{{hr}}</option>
+                        {% endfor %}
+                    </select>&nbsp;
+                    <select name="next_call_am_pm" id="next_call_am_pm">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                    <div id="next_call_cal_container" ></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" name="attempt_id" value="{{attempt_id}}" id="attempt_id">
+                </td>
+                <td><button type="button"  id="close_attempt_btn">Submit</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#close_attempt_btn').click(function(){
+        var btn = $('#close_attempt_btn');
+        btn.attr('disabled',true);
+        var errors = $('#close_attempt_status');
+        errors.css('display','none');
+        var aid = $('#attempt_id').val();
+        var call_status = $('#call_status').val();
+        var response_status = $('#response_status').val();
+        var comments = $('#notes').val();
+        var time = '';
+        if ($('#next_call_hr').val() != '')
+            time = $('#next_call_hr').val() + ':00' + $('#next_call_am_pm').val();
+        else
+            time = '10:00 AM';
+        var next = $('#next_call').val() + ' ' + time;
+        if(call_status == ''){
+            errors.html('Please select a call status');
+            errors.css('display','block');
+            btn.attr('disabled',false);
+            return;
+        }
+        if(response_status == '' && call_status == 'Answered'){
+            errors.html('Please select a reponse status');
+            errors.css('display','block');
+            btn.attr('disabled',false);
+            return;
+        }
+        var onSuccess = function(responseText){
+            var response = $.parseJSON(responseText);
+            if(response.status == 'success'){
+                $('stop_close_call').val('no');
+                document.location.href = "{%cc_url request 'user/signout'%}";
+            }
+            else{
+                btn.attr('disabled','false');
+                errors.html(response.statusText);
+                errors.css('display','block');
+            }
+        };
+
+        var onError = function(response){
+            var data = response;
+            errors.html(data);
+            errors.css('display','block');
+            btn.attr('disabled',false);
+            return;
+        };
+        var action = "{%cc_url request 'user/dialer'%}";
+        var data = 'aid=' + aid + '&call_status=' + call_status + '&comments=' + comments + '&next=' + next + '&resp_status=' + response_status;  
+        //data = data.serialize();
+        //var data = 'rId=' + rid;
+        $.ajax({ url:action,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+            });
+    });
+    $('#call_status').change(function(){
+        var is_answered = $('#call_status').val() == 'Answered';
+        if(is_answered){
+            $('#response_status').attr('disabled',false);
+            $('#response_state').attr('disabled',false);
+            $('#response_list').attr('disabled',false);
+        }
+        else{
+            $('#response_status').attr('disabled',true);
+            $('#response_state').attr('disabled',true);
+            $('#response_list').attr('disabled',true);
+        }
+    });
+    function setOptions(element_id, options) {
+        var e = $('#'+element_id);
+        var html = '';
+        if (!options) {
+            e.html(html);
+            return;
+        }
+        var len = options.length;
+        var last_group = options[0].type;
+        for(var i=0; i < len; i++) {
+            if(!options[i].selected) {
+                html += '<option value="' + options[i].id + '">' + options[i].name + '</option>';
+            } else {
+                html += '<option value="' + options[i].id + '" selected>' + options[i].name + '</option>';
+            }
+        }
+        e.html(html);
+    };
+    function onResponseStateChanged() {
+        var selected_response_id = $('#response_list').val() || '';
+        var selected_response_state = $('#response_state').val() || '';
+        if(selected_response_id) {
+            if(!selected_response_state) {
+                setOptions('response_status', null);
+                return;
+            }
+            var data = $.trim($('#response_statuses_list_' + selected_response_id).val()).split('$$');
+            var current_state = $.trim($('#response_current_state_' + selected_response_id).val());
+            var suggested_status_name = $.trim($('#suggested_status_name').val());
+            var statuses = [];
+            var uniq_statuses = [];
+            var len = data.length;
+            for(var i=0; i < len; i++) {
+                var status_data = data[i].split('**');
+                var id = status_data[0];
+                var name = status_data[1];
+                var type = status_data[2];
+                var selected = false;
+                if(selected_response_state == type ) {
+                    if(suggested_status_name)
+                        selected = ( name == suggested_status_name);
+                    statuses.push({id:id,name:name,selected:selected});
+                }
+            }
+            setOptions('response_status', statuses);
+        }
+    };
+    $('#response_state').change(onResponseStateChanged);
+    
+</script>

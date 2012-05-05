@@ -1,0 +1,199 @@
+{% load ppd_tags %}
+<ul id="menu_account">
+    {% if "Category-Deals" in request|tabs or "Category-Product Planner" in request|tabs or "Category-Products" in request|tabs or "Category-Product Reviews" in request|tabs or "Category-Inventory" in request|tabs or "Category-Pricing" in request|tabs or "Category-Velocity" in request|tabs %}
+        <li class="item order_tab {% if "/category/" in request.path%} sel_menu {%endif%}"><a href="/category/">Category</a>
+            <ul class="menu_account_sub">
+                {%if "Category-Deals" in request|tabs%}
+                    <li class="confirmed"><a href="/category/deals/">Deals</a> </li>
+                {%endif%}
+                {%if "Category-Product Planner" in request|tabs%}
+                    <li class="confirmed"><a href="/category/product_planner">Product Planner</a> </li>
+                {%endif%}
+                {%if "Category-Products" in request|tabs%}
+                    <li class="confirmed"><a href="/category/products/">Products</a> </li>
+                {%endif%}
+                    {% if "Category-Product Reviews" in request|tabs and request.session.seller|length == 1%}
+                    <li class="confirmed"><a href="/category/product_reviews/new/">Product Reviews</a></li>
+                {%endif%}
+                {%if "Category-Inventory" in request|tabs or "Category-Pricing" in request|tabs or "Category-Velocity" in request|tabs%}
+                <li class="confirmed" style="position:relative;"><a href="/category/category_management/"><span class="left">Catagory Management</span><span class="right arr_right">&nbsp;</span><div class="clear"></div></a>
+                    <ul class="menu_account_sub_2">
+                        {%if "Category-Inventory" in request|tabs%}
+                            <li class="confirmed"><a href="/category/category_management/inventory/">Inventory</a> </li>
+                        {%endif%}
+                        {%if "Category-Pricing" in request|tabs%}
+                            <li class="confirmed"><a href="/category/category_management/pricing/">Pricing</a> </li>
+                        {%endif%}
+                        {%comment%}
+                        {%if "Category-Velocity" in request|tabs%}
+                            <li class="confirmed"><a href="/category/category_management/velocity/">Velocity</a> </li>
+                        {%endif%}
+                        {%endcomment%}
+                    </ul>
+                </li>
+                {%endif%}
+            </ul>
+        </li>
+    {%endif%}
+
+    {%if "Sales-Orders" in request|tabs %}
+    <li class="item order_tab {% if "/sales/" in request.path%} sel_menu{% else %} {%endif%}"><a href="/sales/">Sales</a>
+        <ul class="menu_account_sub">
+                <li class="confirmed" style="position:relative;"><a href="/sales/orders/"><span class="left">Orders</span><span class="right arr_right">&nbsp;</span><div class="clear"></div></a>
+                    <ul class="menu_account_sub_2">
+                        <li class="pending"><a href="/sales/orders/confirmed/?search_trend=day">Confirmed Orders</a> </li>
+                        <li class="pending"><a href="/sales/orders/booked/?search_trend=day">Booked Orders</a> </li>
+                        <li class="pending"><a href="/sales/orders/cancelled/?search_trend=day">Cancelled Orders</a> </li>
+                    </ul>
+                </li>
+        </ul>
+    </li>
+    {%endif%}
+    
+    {%if "Marketing-Subscription" in request|tabs or "Marketing-Payback" in request|tabs or "Marketing-Manage Affiliates" in request|tabs or "Marketing-Manage Promotions" in request|tabs%}
+        <li class="item order_tab {% if "/marketing/" in request.path%} sel_menu  {%endif%}"><a href="/marketing/"> Marketing</a>
+            <ul class="menu_account_sub">
+                {%if "Marketing-Subscription" in request|tabs%}
+                    <li class="confirmed"><a href="/marketing/subscritions/">Subsciptions</a></li>
+                {%endif%}
+                {%if "Marketing-Payback" in request|tabs%}
+                    <li class="pending "><a href="/marketing/payback/">Payback</a></li>
+                {%endif%}
+                {%if "Marketing-Manage Affiliates" in request|tabs%}
+                    <li class="pending "><a href="/marketing/manage_affiliates/">Manage Affiliates</a></li>
+                {%endif%}
+                {%if "Marketing-Manage Promotions" in request|tabs%}
+                    <li class="pending "><a href="/marketing/manage_promotions/0/">Manage Promotions</a></li>
+                {%endif%}
+            </ul>
+        </li>
+    {%endif%}
+    
+    {%if "Payments-Option Settings" in request|tabs or "Payments-Channel Settings" in request|tabs or "Payments-Payouts" in request|tabs or "Payments-Recon Reports" in request|tabs or "Payments-Marketplace Rec" in request|tabs or "Payments-Risk" in request|tabs%}
+        <li class="item order_tab {% if "/payments/" in request.path %} sel_menu  {%endif%}"><a href="/payments/"> Payments</a>
+            <ul class="menu_account_sub">
+                {%if "Payments-Option Settings" in request|tabs%}
+                    <li class="pending"><a href="/payments/option_settings/">Option Settings</a></li>
+                {%endif%}
+                {%if "Payments-Channel Settings" in request|tabs%}
+                    <li class="pending"><a href="/payments/channel_settings/">Channel Settings</a></li>
+                {%endif%}
+                {%if "Payments-Payouts" in request|tabs%}
+                    <li class="pending"><a href="/payments/payouts/">Payouts</a></li>
+                {%endif%}
+                {%if "Payments-Recon Reports" in request|tabs%}
+                    <li class="pending"><a href="/payments/recon_reports/">Recon Reports</a></li>
+                {%endif%}
+                {%if "Payments-Marketplace Rec" in request|tabs%}
+                    <li class="pending"><a href="/payments/marketplace_receivables/">Marketplace Receivables</a></li>
+                {%endif%}
+                {%if "Payments-Risk" in request|tabs%}
+                    <li class="pending"><a href="/payments/risk/">Risk</a></li>
+                {%endif%}
+            </ul>
+        </li>
+    {%endif%}
+
+    {%if "Management-Client Setup" in request|tabs or "Management-T&C" in request|tabs or "Management-User Rights" in request|tabs or "Management-Profile" in request|tabs or "Management-Notifications" in request|tabs %}
+        <li class="item order_tab {% if "/management/" in request.path%} sel_menu  {%endif%}"><a href="/management/"> Management</a>
+            <ul class="menu_account_sub">
+                {%if "Management-Client Setup" in request|tabs%}
+                    <li class="pending"><a href="/management/client_setups/">Client Setups</a></li>
+                {%endif%}
+                {%if "Management-T&C" in request|tabs%}
+                    <li class="pending"><a href="/management/t&c/">T&C</a></li>
+                {%endif%}
+                {%if "Management-User Rights" in request|tabs%}
+                    <li class="pending"><a href="/management/user_rights/">User Rights</a></li>
+                {%endif%}
+                {%if "Management-Profile" in request|tabs and request.session.seller|length == 1%}
+                    <li class="pending"><a href="/management/profile/">Profile</a></li>
+                {%endif%}
+                {%if "Management-Notifications" in request|tabs and request.session.seller|length == 1%}
+                    <li class="pending"><a href="/management/notifications/">Notifications</a></li>
+                {%endif%}
+            </ul>
+        </li>
+    {%endif%}
+
+    {%if "User Experience-Reviews" in request|tabs or "User Experience-Feedback" in request|tabs or "User Experience-Content" in request|tabs or "User Experience-Site Propertie" in request|tabs %}
+        <li class="item order_tab {% if "/user_experience/" in request.path%} sel_menu  {%endif%}"><a href="/user_experience/"> User Experience</a>
+            <ul class="menu_account_sub">
+                {%if "User Experience-Site Propertie" in request|tabs%}
+                    <li class="pending"><a href="/user_experience/site_properties/">Site Properties</a></li>
+                {%endif%}
+                {%if "User Experience-Content" in request|tabs%}
+                    <li class="pending"><a href="/user_experience/content/">Content</a></li>
+                {%endif%}
+                {%if "User Experience-Feedback" in request|tabs%}
+                    <li class="pending"><a href="/user_experience/feedbacks/">Feedbacks</a></li>
+                {%endif%}
+                {%if "User Experience-Reviews" in request|tabs%}
+                    <li class="pending"><a href="/user_experience/reviews/">Reviews</a></li>
+                {%endif%}
+            </ul>
+        </li>
+    {%endif%}
+
+    {%if "Fulfilment" in request|tabs%}
+        <li class="item order_tab {% if "/fulfillment/" in request.path%} sel_menu  {%endif%}"><a href="/fulfillment/"> Fulfillment</a>
+			<ul class="menu_account_sub">
+				<li class="confirmed"><a href="/fulfillment/ifs_database/">IFS Database</a> </li>
+				<li class="pending"><a href="/fulfillment/check_fulfillment/">Check Fulfillment</a> </li>
+			</ul>
+	   </li>
+    {%endif%}
+
+    {%comment%}
+    {% if request|role == 'Sellers Admin' or 'Promotions' in request|tabs%}
+      <li class="item order_tab{%if "promotion" in url%} sel_dr {%else%} {% endif %}"> Promotions
+          <ul class="menu_account_sub">
+              <li class="seller_report"><a href="/promotions_list/{{client_name}}/{{seller_name}}/0/">Promotions List</a> </li>
+              <li class="seller_report"><a href="/create_new_promotion/{{client_name}}/{{seller_name}}/">Create New Promotion</a> </li>
+          </ul>
+      </li>
+    {% endif %}
+    {%endcomment%}
+
+</ul>
+
+
+<script type="text/javascript">
+$("#menu_account li.item").hover(function(){
+    if ($(this).hasClass("hovering")){
+        $(this).removeClass("hovering");
+    }
+    else{
+        $(this).addClass("hovering");
+    }
+//    $(".order_list").toggle();
+});
+
+$(".menu_account_sub li").hover(function(){
+	$(this).toggleClass("hovering_2");
+});
+
+</script>
+<script type="text/javascript" charset="utf-8">
+$(function() {                                                                                                                                    
+    $("#showFollow").toggle(function()
+    {                                             
+        $( ".follow_us_mn" ).show("fast");
+        document.getElementById('cid').size=12;
+		$("#showFollow").addClass("follow_a_act");
+        return false;                                     
+    },
+    function()
+    {                                                                             
+        $( ".follow_us_mn" ).hide("fast");
+		$("#showFollow").removeClass("follow_a_act");
+        return false;
+    });                          
+    $('body').click(function()
+    {
+        $( ".follow_us_mn" ).hide("fast");
+		$("#showFollow").removeClass("follow_a_act");        
+
+    });                          
+});
+</script>

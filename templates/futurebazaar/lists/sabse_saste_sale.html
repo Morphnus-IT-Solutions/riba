@@ -1,0 +1,144 @@
+{% extends "web/base.html" %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block content %}
+<div>
+  
+  <div id="content_area" class="padt10 promo_wrapper">
+     <div class="fdgray" id="breadcrumb">
+      <a href="{% cc_url request "" %}">Home</a><span></span>           
+        {%if tab_label %}
+            <a href="{% cc_url request "sabsesasta"%}" >
+                <div>Sabse Saste 5 Din</div>
+            </a><span></span>
+            <div>{{tab_label.name}}</div>
+        {% else %}
+            <div>Sabse Saste 5 Din</div>
+        {% endif %}
+    </div>
+    
+    <div id="slides">
+      <div class="slides_container" style="height:479px; margin:auto;">
+          <div class="padl10"><img src="/media/images/ss5d-banner-1.jpg" border="0" usemap="#Map" width="959" height="479" /></div>
+          <div class="padl10"><img src="/media/images/ss5d-banner-2.jpg" border="0" usemap="#Map2" width="959" height="479"/></div>
+      </div>
+    </div> 
+    
+    
+    <map name="Map" id="Map">
+  <area shape="rect" coords="0,1,117,116"     href="{%cc_url request "sabsesasta/home-living/coral-vine/"%}" title="Coral Vine Flat 40% off" />
+  <area shape="rect" coords="242,0,359,116"   href="{%cc_url request "sabsesasta/home-living/cabanagreeky/"%}" title="Cabana Towels Flat 30% off" />
+  <area shape="rect" coords="362,2,478,116"   href="{%cc_url request "sabsesasta/fashion/footwear/"%}" title="Footwear upto 50% off"/>
+  <area shape="rect" coords="483,3,597,115"   href="{%cc_url request "sabsesasta/fashion/sepia/"%}" title="Sepia Flat 50% off" />
+  <area shape="rect" coords="723,2,838,116"   href="{%cc_url request "sabsesasta/fashion/maxima-watches/"%}" title="Maxima Watches upto 60% off" />
+  <area shape="rect" coords="843,2,955,116"   href="{%cc_url request "sabsesasta/fashion/john-millar/"%}" title="John Miller Flat 40% off" />
+  <area shape="rect" coords="2,120,235,236"   href="{%cc_url request "sabsesasta/home-living/gas-stove-induction/"%}" title="Prestige Gas Stove" />  
+  <area shape="rect" coords="361,121,478,358" href="{%cc_url request "sabsesasta/home-living/trolley/"%}" title="Bags upto 50% off"/>
+  <area shape="rect" coords="602,121,718,238" href="{%cc_url request "sabsesasta/home-living/double-bed-sheet/"%}" title="Double Bedsheet 50% off" />
+  <area shape="rect" coords="843,121,957,237" href="{%cc_url request "sabsesasta/fashion/alphabets-pendant/"%}" title="Sparkles Alphabet Pendant Flat 50% off"/>
+  <area shape="rect" coords="4,242,116,358"   href="{%cc_url request "sabsesasta/fashion/scullers-flat/"%}" title="Scullers 40% off"/>
+  <area shape="rect" coords="242,242,357,358" href="{%cc_url request "sabsesasta/fashion/jealous-t-shirt/"%}" title="Jealous T-shirt 40% off" />
+  <area shape="rect" coords="482,243,598,357" href="{%cc_url request "sabsesasta/home-living/gng/"%}" title="Grab n Go upto 68% off" />
+  <area shape="rect" coords="723,243,840,359" href="{%cc_url request "sabsesasta/fashion/biba/"%}" title="Biba Flat 40% off" />
+  <area shape="rect" coords="1,363,117,477"   href="{%cc_url request "sabsesasta/fashion/indigo-nation/"%}" title="Indigo Nation Flat 40% off" />
+  <area shape="rect" coords="121,363,237,476" href="{%cc_url request "sabsesasta/home-living/toys-and-games/"%}" title="Toys and Games 50% off" /> 
+ 
+  <area shape="rect" coords="602,363,718,475" href="{%cc_url request "sabsesasta/home-living/caseroles/"%}" title="Casseroles upto 50% off" />
+  <area shape="rect" coords="842,363,956,475" href="{%cc_url request "sabsesasta/fashion/zodiac-signs/"%}" title="Sparkles Zodiac Signs Pendants Flat 45% off"/>
+  <area shape="rect" coords="363,363,478,477" href="{%cc_url request "sabsesasta/home-living/pressure-cooker/"%}" title="Pressure Cooker upto 30% off" />
+</map>
+    
+    <map name="Map2" id="Map2">
+  <area shape="rect" coords="2,1,114,116"     href="{%cc_url request "sabsesasta/home-living/containers/"%}" title="Containers upto 50% off"/>
+  <area shape="rect" coords="241,2,355,115"   href="{%cc_url request "sabsesasta/home-living/solar-light/"%}" title="Greenlight Planet Solar Light Upto 13% off"/>
+  <area shape="rect" coords="481,-3,595,115"  href="{%cc_url request "sabsesasta/fashion/thomas-scott/"%}" title="Thomas scott Flat Rs. 499"/>
+  <area shape="rect" coords="721,4,838,114"   href="{%cc_url request "sabsesasta/home-living/story-bed-sheet/"%}" title="vividha Story Bed Sheet Flat 37% off"/>
+  <area shape="rect" coords="120,121,234,235" href="{%cc_url request "sabsesasta/fashion/sweet-dreams/"%}" title="SDL Flat 40% off"/>
+  <area shape="rect" coords="242,121,356,235" href="{%cc_url request "sabsesasta/home-living/single-double/"%}" title="Fleece Blanket Flat 32% off"/>
+  <area shape="rect" coords="362,121,477,236" href="{%cc_url request "sabsesasta/home-living/shield-cutlery/"%}" title="Shield Cutlery Set upto 40% off"/>
+  <area shape="rect" coords="601,122,837,236" href="{%cc_url request "sabsesasta/home-living/t-w/"%}" title="Targus & Wilson Backpacks upto 47% off"/>
+  <area shape="rect" coords="843,122,957,235" href="{%cc_url request "sabsesasta/home-living/massager/"%}" title="Massager upto 55% off"/>
+  <area shape="rect" coords="2,242,116,356"   href="{%cc_url request "sabsesasta/home-living/ceylon-single/"%}" title="Ceylon Single Bedsheet Flat 40% off"/>
+  <area shape="rect" coords="242,243,356,355" href="{%cc_url request "sabsesasta/fashion/vip-bonus/"%}" title="Vip Bonus pack of 2vests upto 15% off"/>
+  <area shape="rect" coords="481,241,596,477" href="{%cc_url request "sabsesasta/fashion/lijento/"%}" title="Lijento Flat 50% off"/>
+  <area shape="rect" coords="721,243,837,356" href="{%cc_url request "sabsesasta/home-living/house-this/"%}" title="House This Combo Sets Flat 46% off"/>
+  <area shape="rect" coords="842,243,955,358" href="{%cc_url request "sabsesasta/home-living/helmets/"%}" title="Slick Helmets upto 25% off"/>
+  <area shape="rect" coords="5,362,114,475"   href="{%cc_url request "sabsesasta/fashion/earthern-thread-sarees/"%}" title="Earthern thread Sarees Flat 40% off"/>
+  <area shape="rect" coords="121,363,233,475" href="{%cc_url request "sabsesasta/home-living/magnum/"%}" title="Magnum Laptop Backpacks upto 16% off"/>
+  <area shape="rect" coords="361,363,476,476" href="{%cc_url request "sabsesasta/home-living/double-quilted/"%}" title="Living Essence Double Quilted Blanket Flat 32% off"/>
+  <area shape="rect" coords="602,362,720,476" href="{%cc_url request "sabsesasta/home-living/portico/"%}" title="Portico Flocked Cushions Flat 30% off"/>
+  <area shape="rect" coords="842,363,955,476" href="{%cc_url request "sabsesasta/fashion/all/"%}" title="All 40% off"/>
+</map>
+    
+   
+    {% if not tab_label %}
+        {% for data in datas %}    
+        <div class="mart30">
+            <div>
+              <h1>Sabse Saste <span class="fn">{{data.0.name}}</span></h1>
+              <div class="left f11 marr20" style="margin-top:9px"><a href="{% cc_url request "sabsesasta/" %}{{data.0.tag_name}}/">See all {{data.0.name}} offers &raquo;</a></div>
+              <div class="clear"></div>
+            </div>
+            <ul class="promo_greed mart10">
+                {% render_sabse_saste_deals request data.1 %}
+            </ul>  
+          <div class="clear"></div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <ul class="promo_greed mart10">
+            {% render_sabse_saste_deals request datas %}
+        </ul>  
+    {% endif %}
+  </div>  
+  <div class="clear"></div>
+</div>
+
+{%endblock%} 
+{% block script_footer %}
+  {{block.super}}
+ <script src="/media/js/slides.min.jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+     $(function(){
+        $('#slides').slides({
+            //preload: true,
+            preloadImage: '/media/images/loading-img.gif',
+            play: 5000,
+            pause: 5000,
+            hoverPause: true
+        });
+	});
+    
+    
+    
+        $(".promo_greed li:nth-child(4n)").css("margin-right", "0");
+        $(".slides_control").css("height", "479px !important");
+        
+        
+    });
+</script>
+
+<!-- Google Code for Saabse Saaste Paanch Din Remarketing List -->
+<iframe src="http://www.vizury.com/analyze/analyze.php?account_id=VIZVRM144&param=e100&section=1&level=1" scrolling="no" width="1" height="1" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+
+<iframe id='a725765b' name='a725765b' src='http://n.admagnet.net/d/fr/?n=a725765b&amp;zoneid=5974&amp;target=_blank&amp;cb=960642311&amp;z=MD8wPA%3D%3D;'framespacing='0' frameborder='no' scrolling='no' width='1' height='1'></iframe>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 989445909;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "fiH0CLPdtwMQlf7m1wM";
+var google_conversion_value = 0;
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/989445909/?label=fiH0CLPdtwMQlf7m1wM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+{% endblock %}

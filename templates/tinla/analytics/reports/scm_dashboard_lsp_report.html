@@ -1,0 +1,249 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+
+<div class="content_head">
+  <div class="header rc5">
+    {%show_excel_link request 'excel'%}
+    <div class="clear"></div>
+  </div>
+</div>
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+{% daterange title search_trend from_date to_date request%}
+
+<br/>
+<h3>{{heading}}</h3>
+<!--<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >-->
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report" style="width:{{width}}%">
+{%for item in data.list%}
+<tr>
+    {%if forloop.counter in data.highlighted_rows%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td {%if forloop.counter in data.left_ali_cols%}class="la"{%endif%}>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+<br/>
+<br/>
+                    
+<!-- {%comment%}
+
+<h3>Analysis Stage: Payment to Customer Delivery</h3>
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report" style="width:150%">
+{%for item in data_paid_to_delivered_lsp%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+<br/>
+
+<h3>Analysis Stage: Availability to Customer Delivery</h3>
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report" style="width:150%">
+{%for item in data_del_created_to_delivered_lsp%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+<br/>
+<br/>
+
+<h3>Analysis Stage: Invoiced to Customer Delivery</h3>
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report" style="width:150%">
+{%for item in data_invoiced_to_delivered_lsp%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+<br/>
+<br/>
+<h3>Stage: Order booked to Payment</h3>
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report">
+{%for item in data_booked_to_paid%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+</div>
+
+<br/>
+<br/>
+<h3>Stage: Payment to Delivery Creation</h3>
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report">
+{%for item in data_paid_to_del_created%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+</div>
+
+<br/>
+<br/>
+<h3>Stage: Delivery Creation to Invoiced</h3>
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report">
+{%for item in data_del_created_to_invoiced%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+</div>
+
+
+<br/>
+<br/>
+<h3>Stage: Payment to Invoiced</h3>
+<div style="overflow:scroll; width:100%" >
+<table class="tbl_report">
+{%for item in data_paid_to_invoiced%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+</div>
+<br/>
+
+
+<br/>
+<br/>
+<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >
+<h3>Cancellation Report</h3>
+<table class="tbl_report">
+{%for item in data_cancel_order%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+</div>
+<br/>
+
+
+<br/>
+<br/>
+<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >
+<h3>Return Order Report</h3>
+<table class="tbl_report">
+{%for item in data_return_order%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+</div>
+<br/>
+
+{%endcomment%} -->
+{% endblock %}

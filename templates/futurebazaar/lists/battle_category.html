@@ -1,0 +1,17 @@
+{%load web_tags%}
+{%load cc_tags%}
+{%for item in products%}
+    <li>
+    <div class="category_title">Category 1</div>
+    <div class="category_image">
+     <a href="{%cc_url request item.sku.product.url%}">
+      <img width="208" height="208" src="{{item.sku.product.battle_image_url}}" title="{{item.get_item_title}}" alt="{{item.get_item_title}}">
+       </a>   
+     <div class="ca padtt5 padb10">
+    <a href="#">
+    <button class="btn_viewall"></button>
+    </a>
+    </div>
+    </div>
+    </li>
+{%endfor%}

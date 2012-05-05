@@ -1,0 +1,145 @@
+{% extends "web/base.html" %}
+{% block page_title %}Futurebazaar-Points{% endblock %}
+{%block content%}
+<style type="text/css">
+ a {color:#006699;text-decoration:underline}
+.points-wrapper{margin:0 auto;width:988px;height:auto;font-family:Arial, Helvetica, sans-serif}
+.points-payback{width:988px;float:left;height:46px;-moz-border-radius:7px;margin-top:10px}
+.points-payback-left{width:126px;float:left;background-color:#004c9d;height:40px;-moz-border-radius:5px;-webkit-border-radius:7px;padding-left:4px;padding-top:6px}
+.points-payback-right{width:850px;float:right;background:#004c9d;height:46px;-moz-border-radius:5px;-webkit-border-radius:7px}
+.payback-left-left{float:left;color:#FFF;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:11px;margin-top:20px;margin-left:13px}
+.payback-left-right{float:right;color:#FFF;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:13px;margin-top:18px;margin-right:12px}
+
+.points-content-header{width:932px;margin-top:12px;padding-left:28px;padding-right:28px;background:url(/media/images/payback-bg.gif) no-repeat;float:left;height:auto;background-color:#cfe4f7;border-bottom:15px solid #cfe4f7}
+.points-subheader{float:left;width:658px;display:block;margin-top:20px}
+.points-subheader span{color:#003399;font-size:18px;margin-left:8px;font-weight:bold;}
+.point-contentA{font-size:14px;color:#333333;margin-left:8px;text-align:justify;line-height:18px;margin-top:7px}
+.point-contentB{float:left;width:872px;overflow:hidden;margin-top:15px;height:auto;padding-right:34px;padding-left:24px;padding-top:16px;padding-bottom:20px;background-color:#FFF;margin-left:5px;-moz-border-radius:5px;-webkit-border-radius:7px}
+.point-qacontaniner{float:left;width:872px;margin-bottom:40px}
+.point-quest{float:left;width:54px;}
+.point-answr{float:left;width:818px;}
+.point-answer-q{float:left;font-size:15px;color:#003399;font-weight:bold;width:600px;}
+.point-answer-a{float:left;font-size:12px;color:#333333;width:600px;margin-top:5px}
+.point-answer-a ul{margin:0 auto;padding:0;text-decoration:none;float:left;list-style:none;margin-bottom:10px}
+.point-answer-a ul li{list-style:none;line-height:20px;width:800px}
+.paa{float:left;width:630px;font-size:12px;color:#333333;margin-top:10px}
+.point-brandA{float:left;}
+
+.point-footer{float:left;width:872px;margin-bottom:7px}
+.point-brand-footer{margin-bottom:10px;font-size:11px;color:#666666;text-align:justify;}
+
+</style>
+
+
+
+<div class="points-wrapper">
+        <div class="points-payback">
+        	 <div class="points-payback-left">
+             <img src="/media/images/payback-logo.gif" />
+             </div>
+            <div class="points-payback-right">
+            	<div class="payback-left-left">www.payback.in</div>
+            	<div class="payback-left-right">SHOPPING IS REWARDING.</div>
+            </div>
+    	</div>
+        
+        <div class="points-content-header">
+        	<div class="points-subheader">
+            <span>POINTS AT EVERY STEP</span>
+            <div class="point-contentA">
+            PAYBACK, India's largest and one of Europe's most successful Multipartner Loyalty Program now offers incredible rewards on your daily shopping. Now, as an exclusive tie-up, we at <a href="/" title="futurebazaar">www.futurebazaar.com</a> bring you an incredible opportunity to earn as well as redeem PAYBACK points every time you shop with us. You can also earn points through PAYBACK partners like BigBazaar, Pantaloons, Central, HPCL, MakeMyTrip.com, ICICI Bank & more. But be sure to redeem all those points right here at <a href="/" title="futurebazaar">www.futurebazaar.com</a>
+            </div>
+            </div>
+            
+        <div class="point-contentB">
+            <div class="point-qacontaniner">
+                    <div class="point-quest">
+                    <img src="/media/images/point-quest.gif" border="0" />
+                    </div>
+                    <div class="point-answr">
+                      <div class="point-answer-q">HOW TO BECOME A PAYBACK MEMBER ?</div>
+                        <div class="point-answer-a">
+                        <ul>
+                        <li>&bull; Just fill up the enrollment form on www.payback.in and your PAYBACK card will be delivered to your registered address</li>
+                        </ul>
+             
+                       <a href="http://www.payback.in/pb/onlineMemberEnrollment?lmid=90000803{% if request.user.is_authenticated %}&ecid={{ request.session.atg_username|iriencode }}{% endif %}" title="Click Here" target="_blank"> <img src="/media/images/click.gif" border="0" alt="Click Here" title="Click Here" /></a>
+                     
+                        </div>
+                    </div>
+            </div>
+            
+            
+            <div class="point-qacontaniner">
+                    <div class="point-quest">
+                    <img src="/media/images/point-hand.gif" border="0" />
+                    </div>
+                    <div class="point-answr">
+                      <div class="point-answer-q">3 simple steps to earn PAYBACK points right away</div>
+                        <div class="point-answer-a">
+                        <ul>
+                        <li>&bull;&nbsp; Shop on www.futurebazaar.com as usual</li>
+                        <li>&bull;&nbsp; During Payment, enter your 16 digit PAYBACK (former i-mint) card number in the provided field </li>
+                        <li>&bull;&nbsp; Earn 3 PAYBACK points for every Rs.100 spent at <a href="/" title="futurebazaar">www.futurebazaar.com</a></li>
+                        </ul>
+                        </div>
+                        <div class="paa">You can also earn bonus PAYBACK points from special offers. Stay informed with PAYBACK email newsletters and 
+SMS updates or visit  www.payback.in
+</div>
+                        <div class="paa"><a href="/" title="Shop Now"> <img src="/media/images/shop.gif" border="0" alt="Shop Now" title="Shop Now" /></a></div>
+			
+                    </div>
+            </div>
+            
+            
+            <div class="point-qacontaniner">
+                    <div class="point-quest">
+                    <img src="/media/images/point-hand-d.gif" border="0" />
+                    </div>
+                    <div class="point-answr">
+                      <div class="point-answer-q">REDEEM YOUR PAYBACK POINTS EVERY TIME YOU SHOP! </div>
+                        <div class="point-answer-a">
+                        <ul>
+                        <li>&bull;&nbsp; Redeem your PAYBACK points at <a href="/" title="futurebazaar">www.futurebazaar.com</a> </li>
+                        <li>&bull;&nbsp; To check your current PAYBACK point balance,  visit <a href="http://www.payback.in">www.payback.in</a> </li>
+                        </ul>
+                         <a href="/" title="Learn More"><img src="/media/images/learn.gif" border="0" alt="Learn More" title="Learn More" /></a>
+                        </div>
+                    </div>
+            </div>
+            
+            
+            <div class="point-qacontaniner">
+                    <div class="point-quest">
+                    <img src="/media/images/point-pay.gif" border="0" />
+                    </div>
+                    <div class="point-answr">
+                      <div class="point-answer-q">i-mint IS NOW PAYBACK</div>
+                        <div class="point-answer-a">
+                        <ul>
+                        <li>&bull;&nbsp; Your i-mint points are now called PAYBACK points. To check your current point balance, visit <a href="http://www.payback.in" title="payback">www.payback.in</a> </li>
+                         <li>&bull;&nbsp; You can continue using your i-mint card to earn and redeem points or simply get a new PAYBACK card.  </li>
+                        </ul>
+                      
+                        </div>
+                    </div>
+            </div>
+            
+            
+            
+            <div class="point-qacontaniner">
+                    <div class="point-brandA"><img src="/media/images/payback-lp-footer.jpg" border="0" width="801" height="90" alt="brands" title="brands" /></div>
+            </div>
+            
+        <div class="point-footer">
+            <div class="point-brand-footer">
+            PAYBACK acts as a facilitator only and cannot be held responsible for any claim raised by PAYBACK customers on account of non availability, damaged, shortfall in quantity/quality of products and services deficiency on the delivery by partner. The product and the warranty and/or guaranty whatsoever for any products purchased will be sole responsibility of <a href="http://www.futurebazaar.com/" title="futurebazaar">futurebazaar.com</a>.
+            </div>
+        </div>
+            
+            
+            </div>
+        </div>
+        
+</div>
+{%endblock%}

@@ -1,0 +1,4 @@
+{% load cc_tags web_tags %}
+{%if daily_deal%}
+	 <li><a href={% if is_friday_deals %}{% cc_url request "freaking-friday-deals/" %}{%else%}"{% cc_url request daily_deal.deal.get_url %}"{%endif%}><img src="/media/mobile/images/icons/dealoftheday.png" width="24" height="24" alt="" style="margin-bottom:-5px;" /> Today's Deal</a><span class="icon icon-bg arrow-right"></span></li>
+ {%endif%}

@@ -1,0 +1,701 @@
+{%extends "web/base.html"%}
+{%load cc_tags%}
+{%load web_tags%}
+{% block page_title %}{% render_product_page_title product request%}{% endblock %}
+{% block page_desc %}{% render_product_page_desc product request%}{% endblock %}
+{% block page_tags %}{% render_product_page_tags product request%}{% endblock %}
+{% block extra_header %}
+    <meta property="og:url" content="http://{{request.client.domain}}/{{product.url}}?utm_source=facebook-pp&utm_medium=facebook&utm_campaign=Social%2BShare" />
+    <meta property="og:image" content="{{product_images.0.get_display_url}}" />
+    {% if product.meta_description %}
+        <meta content="{{product.meta_description}}" name="Description"/>
+    {% endif %}
+    <link rel="canonical" href="http://{{request.client.domain}}{{request.path}}"/>
+{% endblock %}
+{% block content %}
+<div id="breadcrumb" class="fdgray"><a href="{%cc_url request ""%}">Home</a><span></span>
+    {% for category, cat_name in product.category|category_heirarchy %}
+        <a href="{%cc_url request category.url %}">{{cat_name}}</a><span></span>
+    {% endfor %}
+    <a href="{%cc_url request product.category.url %}">{{product.category.name}}</a><span></span>
+  <div>{{product.title}}</div>
+</div>
+<div id="product">
+   <div class="pdp_top_section">
+	  
+	  <!-- Product title bar  -->
+      {% with offer_price=request|get_offer_price:product.primary_rate_chart %}
+	  <div class="prdt_bar_pdp">
+		 <h3 style="width: 482px; float: left;">{{product.title}}</h3>
+		 <div style="float: left;">
+			<p class="forange f14">
+			   <span class="WebRupee">Rs.</span> {% get_price_info request product.primary_rate_chart 'offer_price' %} 
+			   {%if offer_price >= 1500 %}
+				 <span class="price_lable f12 fdgray fn">(EMI <span class="WebRupee">Rs.</span> {{emi.3months|money}} p.m. x 3)</span>
+			   {% endif %}
+			</p>
+			<p class="f11"><span class="WebRupee">Rs.</span>  <span class="fs">{% get_price_info request product.primary_rate_chart 'list_price' %}</span></p>
+		 </div>
+		 {% with stock=product.primary_rate_chart|check_stock_availability %}
+		 {% if stock >= product.primary_rate_chart.min_qty %}
+		 <div class="right">
+			<span>Quantity </span>
+			<select style="width: 45px; padding: 0px;" id="pdp_bar_prod_qty">
+			</select>
+			<button type="button" class="btn_c btn_c_m btn_orange marl20" id="pdp_bar_buynow" >Buy Now</button>
+		 </div>
+		 {% else %}
+			<div class="right fb fred pad5">OUT OF STOCK</div>
+		 {% endif %}
+		 {% endwith %}
+		 <div class="clear"></div>
+		 
+	  </div><!-- /Product title bar  -->
+	  
+    <div class="product_details">
+      <div class="img_wrapper">
+        <div class="prod_img">
+		<div class="prod_img_link">
+		<a id="product_zoom_image" class="fb-zoom" rel="adjustX: 60, adjustY:-4" style="cursor:default;">  
+		<img src="{{product_images.0.get_display_url}}"  id="display_img" width="270" height="340" alt="{{product.title}}" title="{{product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);
+            this.src='{% media_url request "images/noimage_p.jpg" %}';
+            $('#product_zoom_image').removeClass('fb-zoom');
+            $('#product_zoom_image').addClass('zoom-disable');
+            $('#product_zoom_image').removeAttr('href');
+            $('#product_zoom_image').removeAttr('id');
+            $('.fb-zoom-loading').remove();
+            $('.mousetrap').remove();
+            }return false;" onerror_cnt="0" />
+		 </a>
+	    </div>
+          {% if product_images|length > 1 %}
+            <div class="product_img_thumb filmstrip ca">
+            {%for image in product_images%}      
+                 {% if product_images|length > 1 %} 
+                  <img src="{{image.get_filmstrip_url}}" class="steal_thumb_img" width="36" height="46" alt="" title="{{product.title}}" display="{{image.get_display_url}}" large_display="{{image.get_zooming_image_url}}" />
+                 {% endif %}      
+            {%endfor%}
+            </div>
+          {% endif %}
+          
+        </div>
+        {% if product_images.0.type == 'scene7' %}
+        <div class="zoom_in_wrapper">
+          <div class="zoom_in flink f11" title="Zoom in">View larger image</div>        
+        </div>          
+        {% endif %}  
+      </div>
+      <div class="product_desc posr" id="product_desc">
+      <h1>{{product.title}}</h1>
+        <div class="marb10 brand_row f11">           
+                <span class="fblack">Brand: </span>
+                <span><a href="{%cc_url request product.brand.url%}" title="{{product.brand}}">{{product.brand}}</a></span>
+       </div>
+      <table class="pdp_price mart10 marb10">
+        
+        <tr>
+          <td class="price_lable f16 fb forange">Offer Price</td>
+          <td class="price_value forange fb f16"><span class="WebRupee">Rs.</span>  {% get_price_info request product.primary_rate_chart 'offer_price' %}
+          {%if offer_price > 1499 %}
+            <span class="price_lable f12 fdgray fn">(EMI <span class="WebRupee">Rs.</span> {{emi.3months|money}} p.m. x 3)</span>
+          {% endif %}
+          </td>
+        </tr>
+        {%if request|isAnySaving:product.primary_rate_chart %}
+            <tr>
+              <td class="price_lable">MRP</td>
+              <td class="price_value"><span class="WebRupee">Rs.</span>  <span class="fs">{% get_price_info request product.primary_rate_chart 'list_price' %}</span></td>
+            </tr>
+        {% endif %} 
+        {%if request|isAnySaving:product.primary_rate_chart %}
+           
+            <tr>
+              <td class="price_lable">You Save</td>
+              <td class="price_value"><span class="WebRupee">Rs.</span> {%getSavings request product.primary_rate_chart%} ({% getDiscount request product.primary_rate_chart %}% off)</td>
+            </tr>
+        {% endif %}
+        {% product_variants product request %}
+      </table>
+       {%add_to_cart request product product.primary_rate_chart%}
+	   <div id="product-title-bar" class="clear"></div>
+    </div>
+      <div class="pdp_rightbar">
+        <div class="pdp_rightbar_inner f11">
+            <ul>
+        {% if product.primary_rate_chart.is_cod_available %}
+            <li class="pad5 pdp_cod">
+                This product is eligible
+                for <span class="fmaroon fb">CASH ON DELIVERY</span>
+                <div class="mart5">
+                    <div class="left buy_now_product"><a>Buy Now &rsaquo;</a></div>
+                    <a target="_blanck" class="f11 popup" href="/trust/cod.html">
+                        <div class="right learn_more_sign">?</div>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+            </li>
+        {% endif %}
+         <li class="pad5 pdp_payback">
+           Buy using <span class="fmaroon fb">{% get_price_info request product.primary_rate_chart 'payback_points' %} </span>
+            PAYBACK Points
+            <div class="pdp_payback_icon mart5"></div>
+            <div class="mart5">
+                <div class="left buy_now_product"><a>Redeem Now &rsaquo;</a></div>                
+                <a target="_blanck" class="f11 popup" href="/info/payback_whats_this.html"><div class="right learn_more_sign">?</div></a>
+                <div class="clear"></div>
+            </div>
+         </li>
+         
+         {%if offer_price > 1499 %}
+             <li class="pad5 pdp_payback">
+              Buy this in 3 EMI's at no extra cost for
+             <div><span class="fmaroon fb"><span class="WebRupee">Rs.</span> {{emi.3months|money}}</span> per month</div>
+               <div class="mart5">
+                   <div class="left buy_now_product"><a>Avail Now &rsaquo;</a></div>
+                   <a target="_blanck" class="f11 popup" href="/info/emi.html">
+                       <div class="right learn_more_sign">?</div>
+                   </a>
+                   <div class="clear"></div>
+               </div>
+             </li>
+         {% endif %} 
+
+          <li class="pad5 pdp_chat">
+           <div> Have a Question?
+            Try our live assistance</div>
+           <div class="mart10 marb5">
+            <a class="chat_now_btn" onclick="window.open('http://chatserver.comm100.com/ChatWindow.aspx?siteId=130474&amp;planId=2430&amp;partnerId=-1&amp;visitType=1&amp;byHref=1', 'popupwindow', 'width=540,height=400,left=200,top=5,scrollbars,resizable');">Chat Now</a>
+           </div>
+        </li>
+       
+            </ul>
+        </div>
+      
+      <div class="pdp_rightbar_inner mart10">
+        <div class="fb f12 ca">Share it</div>
+        <table class="like_buttons mart10">         
+          
+          <tr>
+            <td class="like_fb">
+                <div class="fb-like" data-href="http://{{request.client.domain}}/{{product.url}}?utm_source=facebook-pp&utm_medium=facebook&utm_campaign=Social%2BShare" data-layout="button_count" data-send="false" data-width="226" data-show-faces="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="like_tw"><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://{{request.client.domain}}{% cc_url request product.url %}" data-text="Would love to buy this!" data-count="horizontal" data-via="futurebazaar">Tweet</a> </td>
+            </tr>
+          <tr>
+            <td class="like_g"><g:plusone width="75" size="medium" href="http://{{request.client.domain}}/{{product.url}}"></g:plusone>
+            </td>
+          </tr>
+        </table>
+      </div>
+      </div>
+    <div class="clear"></div>
+  </div>
+  {% endwith %} 
+  
+   </div>
+</div>
+<div class="clear"></div>
+<div>
+<div class="mart20">	  
+    <div class="clear"></div>
+    <div class="pdp_tab_details posr">
+	<span class="pro_fbid"><span class="fb">FBID: </span>{{product.primary_rate_chart.sku}}</span>
+    {%if product.description != '--'%}
+    <h2 class="header_title">Product Description</h2>
+    <div class="pdp_tab1_desc marb10">{{product.description|safe}}</div>
+    {%endif%}
+    {% if product.primary_rate_chart.key_feature %}
+    <h2 class="header_title">Key Features</h2>
+    <div class="pdp_tab2_desc">     
+      <div> {{product.primary_rate_chart.key_feature|safe }} </div>
+    </div>
+    {% endif %}
+    {%feature_tag product%}
+    {% if product.video_embed %}
+        <h2 class="header_title">Video</h2>
+    <div class="pdp_tab4_desc">      
+      <div class="bgcolor_one">
+        <object width="500" height="250">
+          <param name="movie" value="{{product.video_embed}}">
+          <param name="allowFullScreen" value="true">
+          <param name="allowscriptaccess" value="always">
+          <embed src="{{product.video_embed}}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="500" height="250"> </embed>
+        </object>
+      </div>
+    </div>
+    {% endif %}  
+    </div>
+    {% if similarProducts %}
+    <div class="similar_prod">
+      <h4 class="header_title">Similar Products</h4>
+          {%for sp in similarProducts%}
+              <div class="similar_prod_item ">
+               <a href="{%cc_url request sp.product.url%}">
+                 <img src="{{sp.product_images.0.get_thumbnail_url}}" alt="{{sp.product.title}}" title="{{sp.product.title}}" width="150" height="150"  onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_p.jpg" %}';}return false;" onerror_cnt="0"/>
+               </a>
+                <div class="similar_prod_desc">
+                  <div><a href="{%cc_url request sp.product.url%}" title="{{sp.product.title}}">{{sp.product.title|truncate:52}}</a></div>
+                  <div>
+                  <span class="f15 forange fb"> <span class="WebRupee">Rs.</span> {{sp.price_info.offer_price|money}}</span>&nbsp;&nbsp;
+                  <span class="f11"><span class="WebRupee">Rs.</span><span class="fs"> {{sp.price_info.list_price|money}} </span></span>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </div>
+          {%endfor%}
+      <div class="clear"></div>
+    </div>
+    {% endif %}
+  </div>
+  </div>
+<div class="clear"></div>
+
+{%if total_reviews < 1%}
+<h3 class="header_title">
+	<span>Write a review for </span> {{product.title}}
+</h3>
+<div>
+    {%if not request.user.is_authenticated%}
+	    <div class="f12 left marb10"><p>Please login to write a review. To login <a href="/auth/signin/?next=/review/write/{{product.id}}">click here.</a></p></div>
+    {%else%}
+            <form method="GET" action="/review/write/{{product.id}}" id="write_review_form_{{product.id}}">
+       	    <div class="marb10">Be the first to write a review</div>
+            <div class="marb10"><img src="/media/images/write-review-stars.gif" class="cp" onclick="$('#write_review_form_{{product.id}}').submit();"/></div>
+            <input type="submit" class="btn_write_review" value="Write a review"></input>
+            </form> 
+    {% endif %}
+</div>
+{%else%}
+
+<h3 class="header_title">
+	<span>Reviews of </span> {{product.title}}
+</h3> 
+<div id="row1" class="mart20">
+	<div class="left avg_user_rating_col">
+      	<div class="f13 fb">Average User Rating ({{avg_rating}})</div>  
+    	<div class="mart5">
+            <input type="radio" class="star {split:4}" {% ifequal avg_rating 0.25 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 0.50 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 0.75 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.00 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.25 %} checked="checked" {% endifequal %} disabled title="Average"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.50 %} checked="checked" {% endifequal %} disabled title="Average"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.75 %} checked="checked" {% endifequal %} disabled title="Average"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.00 %} checked="checked" {% endifequal %} disabled title="Average"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.25 %} checked="checked" {% endifequal %} disabled title="Good"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.50 %} checked="checked" {% endifequal %} disabled title="Good"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.75 %} checked="checked" {% endifequal %} disabled title="Good"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.00 %} checked="checked" {% endifequal %} disabled title="Good"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.25 %} checked="checked" {% endifequal %} disabled title="Great"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.50 %} checked="checked" {% endifequal %} disabled title="Great"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.75 %} checked="checked" {% endifequal %} disabled title="Great"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.00 %} checked="checked" {% endifequal %} disabled title="Great"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.25 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.50 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.75 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+     	    <input type="radio" class="star {split:4}" {% ifequal avg_rating 5.00 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+	 </div> 
+	 <div class="clear"></div>
+        <div class="f11" style="margin-top:16px; ">
+        	<a href="all-reviews/">Based on {{total_reviews}} Review{{total_reviews|pluralize}}</a>
+        </div>  
+    </div>
+	<div class="left rating_star_col">
+		<div class="left rating_star_col_inner">
+        	{% for a, b in rating_dict.items %}       
+      		<div id="for_row" class="left marb5">
+      		    <div id="stardisp"class="left stardisp">   
+      			 <div class="right">
+   			 {% if forloop.revcounter >= 1%}
+      			 <input type="radio" class="star" value="Poor" name="{{forloop.counter}}-star" {%ifequal forloop.revcounter 1 %} checked {% endifequal%} disabled="disabled"/>
+			  {%endif%}
+    			  {% if forloop.revcounter >= 2%}
+<input type="radio" class="star" value="Average" name="{{forloop.counter}}-star" {%ifequal forloop.revcounter 2 %} checked {% endifequal%} disabled="disabled"/>
+			{%endif%}
+      			 {% if forloop.revcounter >= 3%}
+<input type="radio" class="star" value="Good" name="{{forloop.counter}}-star"  {%ifequal forloop.revcounter 3 %} checked {% endifequal%}   disabled="disabled"/>{%endif%}
+ 			 {% if forloop.revcounter >= 4%}
+<input type="radio" class="star" value="Great" name="{{forloop.counter}}-star"  {%ifequal forloop.revcounter 4 %} checked {% endifequal%} disabled="disabled"/>{%endif%}
+    			  {% if forloop.revcounter >= 5%}		
+ <input type="radio" class="star" value="Excellent" name="{{forloop.counter}}-star"  {%ifequal forloop.revcounter 5 %} checked {% endifequal%} disabled="disabled"/>{%endif%}
+			  </div>
+			 </div>
+			 <div class="left f11" style="margin-top:3px;">&nbsp; &nbsp;{{forloop.revcounter}} Star &nbsp;&nbsp;</div>
+			 <div class="left rating_graph">
+				 <div class="rating_graph_outer">
+					 <div class="rating_graph_inner" style="width:{{b.1}}px;"> </div>
+				  </div>       
+			 </div>
+			 <div class="left f12 fb" style="margin-top:3px;">&nbsp;&nbsp;&nbsp;&nbsp;{{b.0}}</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+    {%if not request.user.is_authenticated%}
+	    <div class="f12 marl10 mart20 left marb10"><p>Please login to write a review.</br> To login <a href="/auth/signin/?next=/review/write/{{product.id}}">click here.</a></p></div>
+    {%else%}
+            <form method="GET" action="/review/write/{{product.id}}">
+            <input type="submit" class=" marl10 mart20 btn_write_review" value="Write a review"></input>
+            </form> 
+    {% endif %}
+</div>
+{% endif %}
+<div class="clear"></div>
+{%if total_reviews%}
+	<div class="left f12">
+		{% if total_reviews <= 5%}
+			Showing {{pdp_review_length}} of {{total_reviews}} Review{{pdp_review_length|pluralize}}</div>
+		{% else %}
+			Showing 1 - {{pdp_review_length}} of {{total_reviews}} Reviews</div>
+{% comment %}	
+			<div class="f12 left padl5"><a href="all-reviews/">Read all {{total_reviews}} Reviews</a></div>
+{% endcomment %}
+		{% endif %}
+		<div class="clear"></div>
+		<div class="mart40">
+			{%for review in product_reviews%}
+				<div class="marb40">
+				   <div class="left review_row_left">
+			  		    <div style="margin-top:2px;">
+            				<input type="radio" class="star" value="1" name="rating-{{review.id}}" {%ifequal review.rating 1%}checked{%endifequal%} disabled/>
+            				<input type="radio" class="star" value="2" name="rating-{{review.id}}" {%ifequal review.rating 2%}checked{%endifequal%} disabled/>
+       					    <input type="radio" class="star" value="3" name="rating-{{review.id}}" {%ifequal review.rating 3%}checked{%endifequal%} disabled/>
+            				<input type="radio" class="star" value="4" name="rating-{{review.id}}" {%ifequal review.rating 4%}checked{%endifequal%} disabled/>
+       				        <input type="radio" class="star" value="5" name="rating-{{review.id}}" {%ifequal review.rating 5%}checked{%endifequal%} disabled/>
+   						</div>
+						<div class="clear"></div>
+	  	   				<div class="f12 fb " style="color:#343434;margin-top:8px;">{{review.display_name}}</div>
+						<div class="clear"></div>  
+					    <div class="f11 mart5"><a href="/{{slug}}/review/{{review.id}}">{{review.reviewed_on|date:" d M Y"}}</a></div>
+					</div>
+					<div class="left review_row_right ja">
+						<div class="f15 fb"> {{review.title}}</div>
+						<div clss="f12">
+							<p class="mart10">{{review.review|linebreaks}}</p>
+						</div>
+						<div class="left mart10">
+						{% if not request.user.is_authenticated %}
+							<div class="f11 marr10 left lh25" id="helpful_data{{review.id}}">Was this review Helpful?</div>
+							<div class="left lh25">
+						 	    <a class="review_like" href="/auth/signin/?next={{request.path}}" id="like" ><span id="rate_yes_{{review.id}}" >{{review.no_helpful}}</span></a> &nbsp;&middot; &nbsp;
+							    <a class="review_dislike"  href="/auth/signin/?next={{request.path}}" id="dislike"><span id="rate_no_{{review.id}}">{{review.no_not_helpful}}</span></a>
+							</div>
+							 
+						{%else%}
+							{% for k,v in rated_check.items %}
+								{% ifequal k review.id %}
+									{%ifequal v 'NULL'%}
+										<div class="f11 marr10 left lh25" id="helpful_data{{review.id}}">Was this review Helpful?</div>
+										<div class="left marr10 lh25"><a class ="id_help_cancel cp hide" id="{{review.id}}">Trash it!</a></div>
+									{%else%}
+										<div class="f11 marr10 left lh25" id="helpful_data{{review.id}}"> You have rated this review as {{v}}</div>
+										<div class="left marr10 lh25"><a class ="id_help_cancel cp lh25" id="{{review.id}}" >Trash it!</a></div>
+									{% endifequal %}
+									<div class="left lh25">
+										<a class="id_help_yes cp" id="{{review.id}}" >
+										<span id="rate_like_{{review.id}}" >{{review.no_helpful}}</span>
+									    </a> &nbsp;&middot; &nbsp;
+ 										<a class="id_help_no cp" id="{{review.id}}">
+										<span id="rate_dislike_{{review.id}}">{{review.no_not_helpful}}</span>
+										</a>
+									</div>
+									 
+										
+								{% endifequal %}
+							{% endfor %}
+						{% endif%}
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		{%endfor%}     
+	</div>
+	{% if total_reviews >= 5%}
+		<div class="f12 left padl5">
+			<a href="all-reviews/">Read all {{total_reviews}} Reviews</a>
+		</div>
+	{% endif %}
+	<div class="clear"></div>
+{%else%}
+	</div>
+{%endif%}
+</div>
+</div>
+<!-- Remarketing Code -->
+{% get_remarketing_code product.category %}
+{%get_admagnet_url product.category%}
+<iframe src="http://www.vizury.com/analyze/analyze.php?account_id=VIZVRM144&param=e300&pid={{product.id}}{% for category, cat_name in product.category|category_heirarchy %}{% if forloop.counter0 == 0 %}&catid={{category.id}}{% else %}&subcat{{forloop.counter0}}id={{category.id}}{% endif %}{% if forloop.last %}&subcat{{forloop.counter}}id={{product.category.id}}{% endif %}{% endfor %}&section=1&level=1" scrolling="no" width="1" height="1" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    $("a#product_zoom_image").click(function(){
+        return false;
+    })
+    $("a#product_zoom_image").attr("href", "{{product.productimage_set.all.0.get_zooming_image_url}}");
+    active_image_zoom();
+    try{
+        validate_specifications();
+    }
+    catch(err){}
+</script>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+//{"parsetags": "explicit"}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+gapi.plusone.render("plusone-div",{"size": "medium", "count": "true"});
+});
+</script>
+<script type="text/javascript">
+$('.pdp_tab1').click(function(){		
+		$('.pdp_tabs li').removeClass('sel_tab');
+		$(this).addClass('sel_tab');						
+		$('.pdp_tab1_desc').removeClass('hide');
+		$('.pdp_tab1_desc').addClass('show');
+		$('.pdp_tab2_desc, .pdp_tab3_desc, .pdp_tab4_desc').addClass('hide');
+		$('.pdp_tab2_desc, .pdp_tab3_desc, .pdp_tab4_desc').removeClass('show');
+ });
+
+$('.pdp_tab2').click(function(){		
+		$('.pdp_tabs li').removeClass('sel_tab');
+		$(this).addClass('sel_tab');						
+		$('.pdp_tab2_desc').removeClass('hide');
+		$('.pdp_tab2_desc').addClass('show');
+		$('.pdp_tab1_desc, .pdp_tab3_desc, .pdp_tab4_desc').addClass('hide');
+		$('.pdp_tab1_desc, .pdp_tab3_desc, .pdp_tab4_desc').removeClass('show');
+ });
+
+$('.pdp_tab3').click(function(){		
+		$('.pdp_tabs li').removeClass('sel_tab');
+		$(this).addClass('sel_tab');						
+		$('.pdp_tab3_desc').removeClass('hide');
+		$('.pdp_tab3_desc').addClass('show');
+		$('.pdp_tab1_desc, .pdp_tab2_desc, .pdp_tab4_desc').addClass('hide');
+		$('.pdp_tab1_desc, .pdp_tab2_desc, .pdp_tab4_desc').removeClass('show');
+ });
+
+$('.pdp_tab4').click(function(){		
+		$('.pdp_tabs li').removeClass('sel_tab');
+		$(this).addClass('sel_tab');						
+		$('.pdp_tab4_desc').removeClass('hide');
+		$('.pdp_tab4_desc').addClass('show');
+		$('.pdp_tab1_desc, .pdp_tab2_desc, .pdp_tab3_desc').addClass('hide');
+		$('.pdp_tab1_desc, .pdp_tab2_desc, .pdp_tab3_desc').removeClass('show');
+ });
+</script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+    $('.tab_read_review').click(function(){			
+    $(this).addClass('sel_tab');
+    $('.tab_write_review').removeClass('sel_tab');			
+        $('.tab1').removeClass('hide');
+        $('.tab1').addClass('show');
+        $('.tab2').addClass('hide');						
+        $('.tab2').removeClass('show');			
+	});
+	
+	$('.tab_write_review').click(function(){		
+		$(this).addClass('sel_tab');	
+		$('.tab_read_review').removeClass('sel_tab');		
+			$('.tab2').removeClass('hide');
+			$('.tab2').addClass('show');
+			$('.tab1').addClass('hide');
+			$('.tab1').removeClass('show');			
+		
+	});	
+    
+    $('div.filmstrip img').bind('mouseover', function() {
+        var display_url = $(this).attr('display');
+        var current_url = $('#display_img')[0].src;
+        if(display_url) {
+            if (display_url != current_url) {
+                $('#display_img')[0].src = display_url;
+                var zoom_url = $(this).attr('large_display');
+                $("a#product_zoom_image").attr("href", zoom_url);
+                active_image_zoom();
+            }
+        }
+    });
+    $('div.zoom_in').bind('click', function() {
+        var url = $('#display_img')[0].src;
+        var re = new RegExp(".*scene7.*Futurebazaar/([^?]+)")
+        var m = url.match(re);
+        if(m) {
+             var zoom_url = "http://futurebazaar.scene7.com/s7ondemand/zoom/flasht_zoom.jsp?company=Futurebazaar&sku=noimage&config=ImageSetConfigDefaults&zoomwidth=650&zoomheight=500&vc=image%3dFuturebazaar/" + m[1];
+             window.open(zoom_url, 'zoom_window', 'location=no, height=550, width=650, toolbar=no, menubar=no, top=100, left=200' );
+        }
+    });
+	
+});	
+
+ $("ul.prod_tabs li:first-child").addClass("sel_tab"); 	
+ $(".pdp_tab_details div:first-child").addClass("show"); 
+ $(".pdp_tab_details div:first-child").removeClass("hide");
+ 
+ $('table.feature tr:odd').addClass('bgcolor_one');
+
+ 
+</script>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("select[name=size]").change(function() {
+        var url = this.options[this.selectedIndex].value;
+        location.href = url;
+    });
+});
+</script>
+<script language="javascript" type="text/javascript">
+$(".id_help_yes").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+    var rev = $.parseJSON(ajax_response);
+        $('#rate_like_'+review_id).html(rev.no_helpful);
+        $('#rate_dislike_'+review_id).html(rev.no_not_helpful);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.You have rated this review helpful")
+        $('.id_help_cancel#'+review_id).removeClass('hide');
+        $('.id_help_cancel#'+review_id).addClass('show');
+      }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-yes/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+$(".id_help_no").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+        var rev = $.parseJSON(ajax_response); 
+        $('#rate_like_'+review_id).html(rev.no_helpful);
+        $('#rate_dislike_'+review_id).html(rev.no_not_helpful);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.You have rated this review unhelpful")
+        $('.id_help_cancel#'+review_id).removeClass('hide');
+        $('.id_help_cancel#'+review_id).addClass('show');
+   
+}
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-no/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+$(".id_help_cancel").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+			var rev = $.parseJSON(ajax_response);
+	     	$("#rate_like_"+review_id).html(rev.no_helpful);
+			$("#rate_dislike_"+review_id).html(rev.no_not_helpful);
+            $('#helpful_data'+review_id).html("You have trashed your feedback.You can rate it again");
+            $('.id_help_cancel#'+review_id).removeClass('show');
+            $('.id_help_cancel#'+review_id).addClass('hide');
+    
+    
+    }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-cancel/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+</script>
+<style type="text/css">
+
+
+</style>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#btn_notify_me").click(function(){
+        var email = $("#email_notify_me").val();
+        var data = "rate_chart={{product.primary_rate_chart.id}}&email=" + email;
+        var url = "/product/instock_notification/";
+        $("#loader_notify_me").removeClass("hide");
+        var onSuccess = function(responseText) {
+            $("#loader_notify_me").addClass("hide");
+            var response = $.parseJSON(responseText);
+            var msg = response.msg;
+            $("#msg_notify_me").html(msg);
+            if(response.status == "ok"){
+                  $("#notify_type").removeClass("msg_no");
+                  $("#notify_type").addClass("msg_yes");
+            }
+            else{
+                  $("#notify_type").removeClass("msg_yes");
+                  $("#notify_type").addClass("msg_no");
+            }
+            $("#notify_type").fadeIn(100, function () {
+                $(document).click( function(){
+                    $("#notify_type").fadeOut(100);
+                })
+            });
+        };
+        var onError = function() {
+        };
+
+        $.ajax({ 
+               url:url,
+               data : data,
+               success : onSuccess,
+               error : onError,
+               type : "POST"
+               });
+        return false;
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".buy_now_product").click(function(){
+        var product_form_id = '#add_product_to_cart_form_' + {{product.id}};
+        $(product_form_id).submit();
+    });
+});
+</script>
+
+<!-- For Waypoint -->
+<script type="text/javascript" src="/media/js/waypoints.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#product-title-bar').waypoint(function(event, direction) {
+	  $('.prdt_bar_pdp').toggleClass('show-pdp-bar', direction === "down");
+   })
+   
+   //Add qty same on both select
+   var prdqtylist = $("#pdp_prod_qty").html();
+   $(prdqtylist).appendTo("#pdp_bar_prod_qty");
+   $("#pdp_bar_prod_qty").val($("#pdp_prod_qty").val());
+   
+   //for change value both select
+   $("#pdp_prod_qty").change( function() { $("#pdp_bar_prod_qty").val($(this).val()); });
+   $("#pdp_bar_prod_qty").change( function() { $("#pdp_prod_qty").val($(this).val()); });
+   
+   $("#pdp_bar_buynow").click(function(){
+        var product_form_id = '#add_product_to_cart_form_' + {{product.id}};
+        $(product_form_id).submit();
+    });
+   
+});
+</script>
+{%endblock%}
+

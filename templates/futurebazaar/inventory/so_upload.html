@@ -1,0 +1,198 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% block user_content %}
+<style type="text/css">
+.tbl_price{border-collapse:collapse;}
+.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+.tbl_price th{background-color:#f3f3f3; text-align:center;}
+.tbl_price td{text-align:center;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+        <h1>{{client_display_name|title}} - Pincodes Upload</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div> {% if errors %}
+    <div class="orders_msg">
+      <div class="error"> {% for error in errors %}
+        {{error}}<br/>
+        {% endfor %} </div>
+    </div>
+    {% endif %}
+    
+    <div class="mart20"> Please upload file in Excel (.xls) format with the following columns and headers. </div>
+    <div class="clear mart20">
+      <div class=" box-shadow pad20">
+        <center>
+          <table class="tbl_excel">
+            <tr>
+              <th style="padding:0px !important;width:28px !important;"><img src="/media/rms/images/excel.gif" width="25" height="19"/></th>
+              <th>PINCODE</th>
+              <th style="background-color:#f4ca78 !important; background-image:none !important; border:1px solid #f29536 !important">TYPE</th>
+              <th>ACTION</th>
+            </tr>
+            <tr>
+              <td style="background-color:#e4ecf7; text-align:center">1</td>
+              <td class="ca">110001</td>
+              <td class="ca">OTC</td>
+              <td class="ca">add</td>
+            </tr>
+            <tr>
+              <td style="background-color:#f4ca78; border:1px solid #f29536; text-align:center">2</td>
+              <td class="ca">110002</td>
+              <td class="ca">OTC</td>
+              <td class="ca">add</td>
+            </tr>
+            <tr>
+              <td style="background-color:#e4ecf7; text-align:center">3</td>
+              <td class="ca">110007</td>
+              <td class="ca">OTC</td>
+              <td class="ca">add</td>
+            </tr>
+          </table>
+        </center>
+      </div>
+    </div>
+	<div>
+      <div class="mart20">Select an excel (.xls) file for upload</div>
+      <form method="post" enctype="multipart/form-data">
+        {% if flag == 'show_details' %}
+        {% if consolidated_so_updates %}
+        <table class="tbl_price">
+          <tr>
+            <th> Pincode </th>
+            <th> Currently Covered under SO </th>
+            <th> Action </th>
+          </tr>
+          {% for item in consolidated_so_updates %}
+          <tr {% if item.action == 'DELETE' %} style="background-color:grey;"{%endif%}>
+            <td> {{item.pincode}} </td>
+            <td> {{item.current_status}} </td>
+            <td> {{item.action}} </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %} <br/>
+        <br/>
+        {% if consolidated_otc_updates %}
+        <table class="tbl_price">
+          <tr>
+            <th> Pincode </th>
+            <th> Currently Covered under OTC </th>
+            <th> Action </th>
+          </tr>
+          {% for item in consolidated_otc_updates %}
+          <tr {% if item.action == 'DELETE' %} style="background-color:grey;"{%endif%}>
+            <td> {{item.pincode}} </td>
+            <td> {{item.current_status}} </td>
+            <td> {{item.action}} </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %} <br/>
+        <input type="hidden" name="path_to_save" value="{{path_to_save}}" id="path_to_save" />
+        <input type="hidden" name="to_update_json" value="{{to_update_json}}" />
+        {% if not errors %}
+        <input type="submit" value="Update" name="update" id="update" class="button orange"/>
+        <!-- <INPUT TYPE="button" VALUE="Back" id="back_button" class="button orange" /> -->
+        <INPUT class="button orange" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+        {% else%} 
+        {{forms.errors}}
+        {{forms.status_file}}
+        <div class="mart5">
+          <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton" style="padding: 2px 6px;"/>
+        </div>
+        {% endif %}
+        {% else %} 
+        {% if flag == 'updated' %}
+        <h2 class="f18">List of pincodes is updated successfully!</h2>
+        {{forms.errors}}
+        {{forms.status_file}}
+        <div class="mart5">
+          <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton" style="padding: 2px 6px;"/>
+        </div>
+        {% else %}
+        {% if flag == 'new' %}
+        {{forms.errors}}
+        {{forms.status_file}}
+        <div class="mart5">
+          <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton" style="padding: 2px 6px;"/>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+      </form>
+    </div>
+    <!--<div class="clear mart30">
+      <form method="post" enctype="multipart/form-data">
+        {% if flag == 'show_details' %}
+        {% if consolidated_so_updates %}
+        <table class="tbl_response mart5 marb10">
+          <tr>
+            <th> Pincode </th>
+            <th> Currently Covered under SO </th>
+            <th> Action </th>
+          </tr>
+          {% for item in consolidated_so_updates %}
+          <tr {% if item.action == 'DELETE' %} style="background-color:grey;"{%endif%}>
+            <td> {{item.pincode}} </td>
+            <td> {{item.current_status}} </td>
+            <td> {{item.action}} </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %} <br/>
+        <br/>
+        {% if consolidated_otc_updates %}
+        <table class="tbl_response mart5 marb10">
+          <tr>
+            <th> Pincode </th>
+            <th> Currently Covered under OTC </th>
+            <th> Action </th>
+          </tr>
+          {% for item in consolidated_otc_updates %}
+          <tr {% if item.action == 'DELETE' %} style="background-color:grey;"{%endif%}>
+            <td> {{item.pincode}} </td>
+            <td> {{item.current_status}} </td>
+            <td> {{item.action}} </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %} <br/>
+        <input type="hidden" name="path_to_save" value="{{path_to_save}}" id="path_to_save" />
+        <input type="hidden" name="to_update_json" value="{{to_update_json}}" />
+        {% if not errors %}
+        <input type="submit" value="Update" name="update" id="update" class="uiButton"/>
+        <INPUT class="uiButton" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+        {% else%} 
+        {{forms}}
+        <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton"/>
+        {% endif %}
+        {% else %} 
+        {% if flag == 'updated' %}
+        <h2 class="f18">List of pincodes is updated successfully!!!</h2>
+        {{forms}}
+        <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton"/>
+        {% else %}
+        {% if flag == 'new' %}
+        {{forms}}
+        <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton"/>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+      </form>
+    </div>-->
+  </div>
+</div>
+{% endblock %}
+{% block script_footer %}
+<script type="text/javascript">
+	$("#back_button").click(function(){
+		history.go(-1);
+		return true;
+	})
+</script>
+{% endblock %} 

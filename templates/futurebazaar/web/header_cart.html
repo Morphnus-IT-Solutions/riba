@@ -1,0 +1,58 @@
+{% load web_tags %}
+{% load cc_tags %}
+{%load cache %}
+<div class="cart" id="header_view_cart">
+    {% if cart %}
+    {% with order_items=cart.get_items_for_billing %}
+        <a id="cart_tab" href={% cc_url request "orders/mycart" %} >
+          <div class="cart_icon"></div>
+            {% if order_items %}
+                <div class="cart_items">{{order_items.count}} item{{order_items.count|pluralize}}</div>
+            {% else %}
+                <div class="cart_items">0 items</div>
+            {% endif %}
+        </a>
+      <div class="clear"></div>
+      <div class="white_patch"></div>
+        <div class="cart_menu" id="header_show_cart">
+        {% if order_items %}
+                {% for item in order_items%}   
+                <div class="cart_item">
+                    <img class="left" title="{{item.item_title}}" src="{{item.seller_rate_chart.product.get_default_img}}" width="40" height="40" />
+                    <div class="left cart_item_name">
+                        <div class="marb5"><a href="{% cc_url request item.seller_rate_chart.product.url%}" title="{{item.item_title}}">{{item.item_title|truncate:40}}</a></div>
+                        <div><span class="fb"><span class="WebRupee">Rs.</span> {% get_price_info request item.seller_rate_chart 'offer_price' %} </span><span> | </span><span>Qty:{{item.qty}}</span></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            {% endfor %}
+            <div class="cart_total">
+                {% if cart.coupon_discount %}
+                    <div class="forange"><span class="fb">Discounts:</span> <span class="WebRupee">Rs.</span> {{cart.coupon_discount}}</div>
+                {% endif %}
+              <div><span class="fb">Total Payable:</span> <span class="WebRupee">Rs.</span> {{cart.payable_amount}}</div>
+            </div>
+             <a href={% cc_url request "orders/mycart" %} id="view_cart_items"><div class="view_cart_items"
+             id="view_mycart">VIEW CART ({{order_items.count}} item{{order_items.count|pluralize}})</div></a>
+          </div>
+        {% else %}
+         <div class="f12 pad10" id="header_show_cart">
+                 <span class="fb"> Your Shopping Cart is Empty</span>
+         </div>
+        {% endif %}
+        </div>
+    {% endwith %} 
+    {% else %}
+        <a id="cart_tab" href={% cc_url request "orders/mycart" %} >
+          <div class="cart_icon"></div>
+            <div class="cart_items">0 items</div>
+        </a>
+      <div class="clear"></div>
+      <div class="white_patch"></div>
+        <div class="cart_menu" id="header_show_cart">
+         <div class="f12 pad10" id="header_show_cart">
+             <span class="fb"> Your Shopping Cart is Empty</span>
+         </div>
+        </div>
+    {% endif %}
+</div>

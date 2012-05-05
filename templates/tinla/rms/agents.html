@@ -1,0 +1,47 @@
+<div id='{{type}}' style='margin-top:10px;'>
+{% for lead,list in groups %}
+    <div class='left agentlist' id='{{type}}_div_{{forloop.counter0}}'>
+    <ul class=' f12 fdgray'>
+    <li style='margin-bottom:2px;'><input type='checkbox' id='{{type}}_{{forloop.counter0}}' class='{{type}}_lead' /><span style='color:#000; font-weight:bold;'> {{lead}}</span></li>
+    {% for checkbox in list %}
+        <li>{{checkbox}}</li>
+    {% endfor %}
+    </ul>
+    </div>
+{% endfor %}
+<div class='clear'></div>
+<input type='checkbox' id='{{type}}_selectall' style='vertical-align:-3px;'/><span style='font-weight:bold;'> Select All</span>
+</div>
+
+<script type='text/javascript'>
+$('.{{type}}_lead').click(function(){
+    var id = $(this).attr('id').split('_')[1];
+    var selected = $(this).attr('checked');
+    $('#{{type}}_div_'+id+' [name="{{type}}_agents"]').each(function(){
+        $(this).attr('checked',selected);
+    });
+    select_all(selected,'{{type}}');
+});
+
+$('[name="{{type}}_agents"]').click(function(){
+    var num = $(this).attr('id').split('_')[3];
+    var selected = $(this).attr('checked');
+    for (var i=0; i<count.length; i++)
+        if (num<=count[i]) break;
+    select_lead(selected,'{{type}}',i);
+    select_all(selected,'{{type}}');
+});
+
+$('#{{type}}_selectall').click(function(){
+    var selected = $(this).attr('checked');
+    $('#{{type}} :checkbox').each(function(){
+        $(this).attr('checked',selected);
+    });
+});
+
+$(function(){
+    for (var i=0; i<count.length; i++)
+        select_lead(true,'{{type}}',i);
+    select_all(true, '{{type}}');
+});
+</script>

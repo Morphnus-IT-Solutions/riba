@@ -1,0 +1,832 @@
+- fields: {name: India, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 1
+- fields: {name: Common Name, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 2
+- fields: {name: Afghanistan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 3
+- fields: {name: Albania, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 4
+- fields: {name: Algeria, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 5
+- fields: {name: Andorra, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 6
+- fields: {name: Angola, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 7
+- fields: {name: Antigua and Barbuda, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 8
+- fields: {name: Argentina, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 9
+- fields: {name: Armenia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 10
+- fields: {name: Australia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 11
+- fields: {name: Austria, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 12
+- fields: {name: Azerbaijan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 13
+- fields: {name: 'Bahamas, The', normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 14
+- fields: {name: Bahrain, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 15
+- fields: {name: Bangladesh, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 16
+- fields: {name: Barbados, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 17
+- fields: {name: Belarus, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 18
+- fields: {name: Belgium, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 19
+- fields: {name: Belize, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 20
+- fields: {name: Benin, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 21
+- fields: {name: Bhutan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 22
+- fields: {name: Bolivia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 23
+- fields: {name: Bosnia and Herzegovina, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 24
+- fields: {name: Botswana, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 25
+- fields: {name: Brazil, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 26
+- fields: {name: Brunei, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 27
+- fields: {name: Bulgaria, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 28
+- fields: {name: Burkina Faso, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 29
+- fields: {name: Burundi, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 30
+- fields: {name: Cambodia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 31
+- fields: {name: Cameroon, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 32
+- fields: {name: Canada, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 33
+- fields: {name: Cape Verde, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 34
+- fields: {name: Central African Republic, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 35
+- fields: {name: Chad, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 36
+- fields: {name: Chile, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 37
+- fields: {name: 'China, People''s Republic of', normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 38
+- fields: {name: Colombia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 39
+- fields: {name: Comoros, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 40
+- fields: {name: "Congo, Democratic Republic of the (Congo \u2013 Kinshasa)", normalized: null,
+    type: primary, user_created: false}
+  model: locations.country
+  pk: 41
+- fields: {name: "Congo, Republic of the (Congo \u2013 Brazzaville)", normalized: null,
+    type: primary, user_created: false}
+  model: locations.country
+  pk: 42
+- fields: {name: Costa Rica, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 43
+- fields: {name: Cote d'Ivoire (Ivory Coast), normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 44
+- fields: {name: Croatia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 45
+- fields: {name: Cuba, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 46
+- fields: {name: Cyprus, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 47
+- fields: {name: Czech Republic, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 48
+- fields: {name: Denmark, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 49
+- fields: {name: Djibouti, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 50
+- fields: {name: Dominica, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 51
+- fields: {name: Dominican Republic, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 52
+- fields: {name: Ecuador, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 53
+- fields: {name: Egypt, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 54
+- fields: {name: El Salvador, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 55
+- fields: {name: Equatorial Guinea, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 56
+- fields: {name: Eritrea, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 57
+- fields: {name: Estonia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 58
+- fields: {name: Ethiopia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 59
+- fields: {name: Fiji, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 60
+- fields: {name: Finland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 61
+- fields: {name: France, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 62
+- fields: {name: Gabon, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 63
+- fields: {name: 'Gambia, The', normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 64
+- fields: {name: Georgia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 65
+- fields: {name: Germany, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 66
+- fields: {name: Ghana, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 67
+- fields: {name: Greece, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 68
+- fields: {name: Grenada, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 69
+- fields: {name: Guatemala, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 70
+- fields: {name: Guinea, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 71
+- fields: {name: Guinea-Bissau, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 72
+- fields: {name: Guyana, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 73
+- fields: {name: Haiti, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 74
+- fields: {name: Honduras, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 75
+- fields: {name: Hungary, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 76
+- fields: {name: Iceland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 77
+- fields: {name: Indonesia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 79
+- fields: {name: Iran, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 80
+- fields: {name: Iraq, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 81
+- fields: {name: Ireland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 82
+- fields: {name: Israel, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 83
+- fields: {name: Italy, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 84
+- fields: {name: Jamaica, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 85
+- fields: {name: Japan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 86
+- fields: {name: Jordan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 87
+- fields: {name: Kazakhstan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 88
+- fields: {name: Kenya, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 89
+- fields: {name: Kiribati, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 90
+- fields: {name: 'Korea, Democratic People''s Republic of (North Korea)', normalized: null,
+    type: primary, user_created: false}
+  model: locations.country
+  pk: 91
+- fields: {name: 'Korea, Republic of  (South Korea)', normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 92
+- fields: {name: Kuwait, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 93
+- fields: {name: Kyrgyzstan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 94
+- fields: {name: Laos, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 95
+- fields: {name: Latvia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 96
+- fields: {name: Lebanon, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 97
+- fields: {name: Lesotho, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 98
+- fields: {name: Liberia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 99
+- fields: {name: Libya, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 100
+- fields: {name: Liechtenstein, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 101
+- fields: {name: Lithuania, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 102
+- fields: {name: Luxembourg, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 103
+- fields: {name: Macedonia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 104
+- fields: {name: Madagascar, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 105
+- fields: {name: Malawi, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 106
+- fields: {name: Malaysia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 107
+- fields: {name: Maldives, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 108
+- fields: {name: Mali, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 109
+- fields: {name: Malta, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 110
+- fields: {name: Marshall Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 111
+- fields: {name: Mauritania, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 112
+- fields: {name: Mauritius, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 113
+- fields: {name: Mexico, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 114
+- fields: {name: Micronesia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 115
+- fields: {name: Moldova, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 116
+- fields: {name: Monaco, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 117
+- fields: {name: Mongolia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 118
+- fields: {name: Montenegro, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 119
+- fields: {name: Morocco, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 120
+- fields: {name: Mozambique, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 121
+- fields: {name: Myanmar (Burma), normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 122
+- fields: {name: Namibia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 123
+- fields: {name: Nauru, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 124
+- fields: {name: Nepal, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 125
+- fields: {name: Netherlands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 126
+- fields: {name: New Zealand, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 127
+- fields: {name: Nicaragua, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 128
+- fields: {name: Niger, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 129
+- fields: {name: Nigeria, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 130
+- fields: {name: Norway, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 131
+- fields: {name: Oman, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 132
+- fields: {name: Pakistan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 133
+- fields: {name: Palau, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 134
+- fields: {name: Panama, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 135
+- fields: {name: Papua New Guinea, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 136
+- fields: {name: Paraguay, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 137
+- fields: {name: Peru, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 138
+- fields: {name: Philippines, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 139
+- fields: {name: Poland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 140
+- fields: {name: Portugal, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 141
+- fields: {name: Qatar, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 142
+- fields: {name: Romania, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 143
+- fields: {name: Russia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 144
+- fields: {name: Rwanda, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 145
+- fields: {name: Saint Kitts and Nevis, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 146
+- fields: {name: Saint Lucia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 147
+- fields: {name: Saint Vincent and the Grenadines, normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 148
+- fields: {name: Samoa, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 149
+- fields: {name: San Marino, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 150
+- fields: {name: Sao Tome and Principe, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 151
+- fields: {name: Saudi Arabia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 152
+- fields: {name: Senegal, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 153
+- fields: {name: Serbia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 154
+- fields: {name: Seychelles, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 155
+- fields: {name: Sierra Leone, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 156
+- fields: {name: Singapore, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 157
+- fields: {name: Slovakia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 158
+- fields: {name: Slovenia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 159
+- fields: {name: Solomon Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 160
+- fields: {name: Somalia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 161
+- fields: {name: South Africa, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 162
+- fields: {name: Spain, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 163
+- fields: {name: Sri Lanka, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 164
+- fields: {name: Sudan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 165
+- fields: {name: Suriname, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 166
+- fields: {name: Swaziland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 167
+- fields: {name: Sweden, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 168
+- fields: {name: Switzerland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 169
+- fields: {name: Syria, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 170
+- fields: {name: Tajikistan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 171
+- fields: {name: Tanzania, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 172
+- fields: {name: Thailand, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 173
+- fields: {name: Timor-Leste (East Timor), normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 174
+- fields: {name: Togo, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 175
+- fields: {name: Tonga, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 176
+- fields: {name: Trinidad and Tobago, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 177
+- fields: {name: Tunisia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 178
+- fields: {name: Turkey, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 179
+- fields: {name: Turkmenistan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 180
+- fields: {name: Tuvalu, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 181
+- fields: {name: Uganda, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 182
+- fields: {name: Ukraine, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 183
+- fields: {name: United Arab Emirates, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 184
+- fields: {name: United Kingdom, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 185
+- fields: {name: United States, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 186
+- fields: {name: Uruguay, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 187
+- fields: {name: Uzbekistan, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 188
+- fields: {name: Vanuatu, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 189
+- fields: {name: Vatican City, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 190
+- fields: {name: Venezuela, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 191
+- fields: {name: Vietnam, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 192
+- fields: {name: Yemen, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 193
+- fields: {name: Zambia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 194
+- fields: {name: Zimbabwe, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 195
+- fields: {name: Abkhazia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 196
+- fields: {name: 'China, Republic of (Taiwan)', normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 197
+- fields: {name: Nagorno-Karabakh, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 198
+- fields: {name: Northern Cyprus, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 199
+- fields: {name: Pridnestrovie (Transnistria), normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 200
+- fields: {name: Somaliland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 201
+- fields: {name: South Ossetia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 202
+- fields: {name: Ashmore and Cartier Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 203
+- fields: {name: Christmas Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 204
+- fields: {name: Cocos (Keeling) Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 205
+- fields: {name: Coral Sea Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 206
+- fields: {name: Heard Island and McDonald Islands, normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 207
+- fields: {name: Norfolk Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 208
+- fields: {name: New Caledonia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 209
+- fields: {name: French Polynesia, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 210
+- fields: {name: Mayotte, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 211
+- fields: {name: Saint Barthelemy, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 212
+- fields: {name: Saint Martin, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 213
+- fields: {name: Saint Pierre and Miquelon, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 214
+- fields: {name: Wallis and Futuna, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 215
+- fields: {name: French Southern and Antarctic Lands, normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 216
+- fields: {name: Clipperton Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 217
+- fields: {name: Bouvet Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 218
+- fields: {name: Cook Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 219
+- fields: {name: Niue, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 220
+- fields: {name: Tokelau, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 221
+- fields: {name: Guernsey, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 222
+- fields: {name: Isle of Man, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 223
+- fields: {name: Jersey, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 224
+- fields: {name: Anguilla, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 225
+- fields: {name: Bermuda, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 226
+- fields: {name: British Indian Ocean Territory, normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 227
+- fields: {name: British Sovereign Base Areas, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 228
+- fields: {name: British Virgin Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 229
+- fields: {name: Cayman Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 230
+- fields: {name: Falkland Islands (Islas Malvinas), normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 231
+- fields: {name: Gibraltar, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 232
+- fields: {name: Montserrat, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 233
+- fields: {name: Pitcairn Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 234
+- fields: {name: Saint Helena, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 235
+- fields: {name: South Georgia and the South Sandwich Islands, normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 236
+- fields: {name: Turks and Caicos Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 237
+- fields: {name: Northern Mariana Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 238
+- fields: {name: Puerto Rico, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 239
+- fields: {name: American Samoa, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 240
+- fields: {name: Baker Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 241
+- fields: {name: Guam, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 242
+- fields: {name: Howland Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 243
+- fields: {name: Jarvis Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 244
+- fields: {name: Johnston Atoll, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 245
+- fields: {name: Kingman Reef, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 246
+- fields: {name: Midway Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 247
+- fields: {name: Navassa Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 248
+- fields: {name: Palmyra Atoll, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 249
+- fields: {name: U.S. Virgin Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 250
+- fields: {name: Wake Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 251
+- fields: {name: Hong Kong, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 252
+- fields: {name: Macau, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 253
+- fields: {name: Faroe Islands, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 254
+- fields: {name: Greenland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 255
+- fields: {name: French Guiana, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 256
+- fields: {name: Guadeloupe, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 257
+- fields: {name: Martinique, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 258
+- fields: {name: Reunion, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 259
+- fields: {name: Aland, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 260
+- fields: {name: Aruba, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 261
+- fields: {name: Netherlands Antilles, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 262
+- fields: {name: Svalbard, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 263
+- fields: {name: Ascension, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 264
+- fields: {name: Tristan da Cunha, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 265
+- fields: {name: Antarctica, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 266
+- fields: {name: Kosovo, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 267
+- fields: {name: Palestinian Territories, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 268
+- fields: {name: Western Sahara, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 269
+- fields: {name: Australian Antarctic Territory, normalized: null, type: primary,
+    user_created: false}
+  model: locations.country
+  pk: 270
+- fields: {name: Ross Dependency, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 271
+- fields: {name: Peter I Island, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 272
+- fields: {name: Queen Maud Land, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 273
+- fields: {name: British Antarctic Territory, normalized: null, type: primary, user_created: false}
+  model: locations.country
+  pk: 274
+

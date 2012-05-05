@@ -1,0 +1,94 @@
+{% extends 'web/base.html' %}
+{% block content %}
+<div class="breadcrumb">&nbsp;        
+</div>
+{% load cc_tags %}
+{% load web_tags %}
+<div>
+    <div class="cart_left">     
+        {% checkout_tabs request "payment" %}
+        <form id="book_form" method="post" action="{% cc_url request "orders/book" %}">
+           <div class="checkout_div">
+          <div class="payment_actions gbor" style="margin-top:10px; margin-right:10px; margin-bottom:10px; margin-left:none; width:480px; ">   
+          <div class="book_inner1" id="tbl_book" style="margin:20px;  position:relative;">      
+                {%if fb_error%} 
+                <div>                   
+                            <div class="error">
+                                <ol>
+                                    <li>{{fb_error}}</li>
+                                </ol>
+                            </div>                   
+                </div>
+                {%endif%}
+                {% if payment_options_form.errors %}
+                {{payment_options_form.errors}}
+                <div>                   
+                            <div class="error">
+                                <ol>
+                                {% for field in payment_options_form %}
+                                {% for error in field.errors %}
+                                    <li>{{error}}</li>
+                                {% endfor %}
+                                {% endfor %}
+                                </ol>
+                            </div>                   
+                </div>
+                {% endif %}
+                <div id="payment_option_page"></div>
+                <div class="hidden padding_bot5">
+                    <div class="label">{{payment_options_form.payment_status.label}}</div>
+                    <div>
+                        {{payment_options_form.payment_status}}
+                    </div>
+                </div>
+              
+               <div class="clear"></div>
+              
+            </div>
+          
+          <div class="clear"></div>
+            </div>
+           <div  class="payment_options" style="margin-top:10px">
+           <input type="hidden" id="order_id" value="{{order.id}}"/>
+           <input type="hidden" id="selected_payment_mode" value="none"/>
+            <input type="hidden" id="id_payment_mode" name="payment_mode" value="{{payment_options_form.fields.payment_mode.choices.0.0}}"/>
+          
+	  <input type="hidden" id="payment_options_length" value="{%widthratio payment_options_form.fields.payment_mode.choices|length 1 30 %}px"/>
+           <ul>
+               {%for k,v in payment_options_form.fields.payment_mode.choices%}
+                    <li class="payment_mode {%if forloop.counter == 1%}selected{%endif%}" val={{k}}>{{v}}</li>
+                {%endfor%}
+           </ul>           
+           </div>
+           <div class="pay_action_bot">
+                 
+                        <div class="f14 bt ra" style="padding:0px 10px; margin:4px 0px;">
+                        	 <span>Order Total: &nbsp;</span>
+                         	 <span id="oPayableAmount" class="fb fmaroon f14">{{order.formatted_currency}} {{order.payable_amount|money}} </span>
+                          </div>      
+                            <div style="padding-right:10px;">
+                                <div class="hidden" id="book_button_hidden"></div>
+                                <div class="ra" id="book_button">             
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+   
+                        
+                         <div class="clear"></div>
+              
+              </div>
+           <div class="clear"></div>
+            </div>
+        </form>
+    </div>
+    <div class="cart_right">
+        {% include "order/right.html" %}
+    </div>
+<div class="clear">
+</div>
+   
+</div>
+{% endblock %}
+{% block script_footer %}
+    <script type="text/javascript" src="{% book_js request%}"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "web/base.html" %}
+{% load web_tags%}
+{% block content %}
+<div class="sitemap">
+<h1>All Categories</h1>
+  <div class="sitemap_column">
+    {%for item in items_first_column%}
+    <h3><a href="/{{item.item.category.url}}">{{item.item.category.name|truncate_category:37}}</a></h3>
+    <ul>
+        {%for sub_cat in item.sub_categories%}
+            <li><a href="/{{sub_cat.category.url}}">{{sub_cat.category.name}}</a></li>
+        {%endfor%}
+    </ul>
+    {%endfor%}
+  </div>
+  
+  <div class="sitemap_column">
+    {%for item in items_second_column%}
+    <h3><a href="/{{item.item.category.url}}">{{item.item.category.name|truncate_category:30}}</a></h3>
+    <ul>
+        {%for sub_cat in item.sub_categories%}
+            <li><a href="/{{sub_cat.category.url}}">{{sub_cat.category.name}}</a></li>
+        {%endfor%}
+    </ul>
+    {%endfor%}
+  </div>
+
+  <div class="sitemap_column">
+    {%for item in items_third_column%}
+    <h3><a href="/{{item.item.category.url}}">{{item.item.category.name|truncate_category:30}}</a></h3>
+    <ul>
+        {%for sub_cat in item.sub_categories%}
+            <li><a href="/{{sub_cat.category.url}}">{{sub_cat.category.name}}</a></li>
+        {%endfor%}
+    </ul>
+    {%endfor%}
+  </div>
+<div class="clear"></div>
+</div>
+{%endblock%} 

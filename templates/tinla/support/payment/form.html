@@ -1,0 +1,64 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form input[type=submit]{width:50px;}
+#id_notes {height:50px;}
+ul, ol { padding-left: 0px !important; }
+</style>
+{% if form.non_field_errors %}
+<div class="error">{{form.non_field_errors}}</div>
+{%endif%}
+<form method='post' action='' id='form'>
+{% for field in form %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{field.label}}{%if field.field.required%}<span class='red'> *</span>{%endif%}</span><br/>
+	{{field}}
+</div>
+{% if field.errors %}
+<div class='error clear'>{{field.errors}}</div>
+{% endif %}
+{% endfor %}
+<div class='clear'>
+    <input type="submit" name="submit" value="Submit" class="uiButton" id='submit'/>
+</div>
+</form>
+
+<script type='text/javascript'>
+$('#id_instrument_recv_date').datepicker({dateFormat: 'dd M yy', minDate:-90, maxDate:0,
+    onSelect: function() {
+        var v = $('#id_payment_realized_on');
+        if(v.val() != undefined) {
+            dt1 = $(this).datepicker("getDate");
+            v.datepicker("option", "minDate", dt1);
+        }
+    }
+});
+
+$('#id_payment_realized_on').datepicker({dateFormat: 'dd M yy', maxDate:0});
+
+var temp = $('#id_instrument_recv_date');
+if(temp.val() != undefined && temp.val() != '') {
+    dt1 = temp.datepicker("getDate");
+    $('#id_payment_realized_on').datepicker("option", "minDate", dt1);
+}
+
+$('#submit').click(function() {
+    var entity = '{{entity}}';
+    var pk = {{pk}};
+    var onSuccess = function(data, textStatus, xhr) {
+        $('#apply_action').html(data);
+        if (xhr.status == 200)
+            setInterval('location.reload();', 2000);
+    };
+    var onError = function(xhr, textStatus, error) {
+        $('#apply_action').html(xhr.responseText);
+    };
+    var data = $('#form').serialize();
+    $.ajax({ url:'/'+entity+'/'+pk+'/form/?action_id={{action_id}}',
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'POST'
+	});
+    return false;
+});
+</script>

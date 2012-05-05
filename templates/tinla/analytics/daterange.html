@@ -1,0 +1,398 @@
+<style type="text/css">
+	.content_head {margin:0;}
+	.excel_main {
+		margin: 13px 10px 0;
+	}
+</style>
+<div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>{{title}}</h1>
+    </div>
+    <div class="right content_head">
+		<div id="dr_container">
+			<form>
+				<ul class="date_range">
+					<li class= {% if search_trend == "day" %} "sel_dr" {%else%} "white" {%endif%} id="id_day" title="Today">Day</span>
+					<li class= {% if search_trend == "week" %} "sel_dr" {%else%} "white" {%endif%} id="id_week" title="Last 7 days">Week</span>
+					<li class= {% if search_trend == "month" %} "sel_dr" {%else%} "white" {%endif%} id="id_month" title="Last 30 days">Month</span>
+					<li class= {% if search_trend == "mtd" %} "sel_dr" {%else%} "white" {%endif%} id="id_mtd" title="This month">MTD</span>
+					<li id="li_dr">
+					<input readonly=True type="text" id="dr" value="{{from_date|date:'d M, Y'}} - {{to_date|date:'d M, Y'}}" /> </li>
+				</ul>
+				<div class="clear"></div>
+			</form>
+			<form method="get">
+			<div id="sr" style="display:none;float:left">
+				<table class="tbl_sr">
+				  <tr>       
+					<td>From </td>
+					<td><input type="text" Name="from" id="id_from" Autocomplete=OFF /></td>
+					<td class="ra" width="80">To</td>
+					<td><input type="text" Name="to" id="id_to" Autocomplete=OFF /></td>
+					<td>
+				  <button type="button" id="id_apply" disabled=True class="uiButton" >Apply</button>
+					  </td>
+				  </tr>
+				</table>
+			  </div>
+			</form>
+		</div>
+		
+	</div>
+	<div class="clear"></div>
+  </div>
+  <div class="main padding_bot5">
+		<form method='get' action=''>
+			<div class="f11"> {{from_date|date:"d M, Y"}} - {{to_date|date:"d M, Y"}} </div>
+		</form>
+  </div>
+</div> 	
+
+<div class="hide" id="wait" ><div style="margin:-50px auto 0;width:75px; "><img src="/media/images/ajax-loader.gif" /></div></div>
+<script type="text/javascript" language="javascript"> 
+$(document).ready(function() {   
+        $(function() {          
+    
+                $('#dr').toggle(function()
+                {           
+                    $( '#sr' ).show("fast", 0);                     
+                    return false;           
+                },
+                
+                function()
+                {                   
+                        $( '#sr' ).hide("fast", 0);                                         
+                        return false;
+                });     
+        }); 
+}); 
+</script>
+<script type="text/javascript" language="javascript"> 
+$(document).ready(function() {   
+    $('#id_from').datepicker({dateFormat: 'dd M, yy', maxDate:'0',
+        onSelect: function(){
+            $('#id_to').datepicker('enable');
+        }
+    });
+    $('#id_to').datepicker({dateFormat: 'dd M, yy', minDate:$('#id_from').val(),maxDate:'0',
+        beforeShow: function(){
+            var newDate = $('#id_from').datepicker('getDate');
+            if(newDate){
+                $('#id_to').datepicker('option','minDate', newDate);                   
+            }
+            else{
+                $('#id_to').datepicker('disable'),true;
+            }
+        },
+        onSelect: function(){
+            document.getElementById('id_apply').disabled = false;
+        }
+    });
+}); 
+</script>
+<script type="text/javascript" language="javascript">  
+$(document).ready(function() {  
+    $('#id_apply').click(function(){
+        $('#wait').removeClass("hide");
+        url_path = '{{url|safe}}';
+        if('{{do_mode}}' == "True"){
+            if(document.getElementById('booked').checked){
+                url_path += "mode=1&";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "mode=2&";
+            }
+        }
+        if('{{do_mode}}' == "lob"){
+            if(document.getElementById('booked').checked){
+                url_path += "mode=1&";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "mode=2&";
+            }
+            var lob_level = document.getElementById('lob_level').options[document.getElementById('lob_level').selectedIndex].value;
+            url_path += "lob_level=" + lob_level + "&";
+            if ('{{lob_obj}}' != 'False'){
+                url_path += "lob_obj={{lob_obj}}&";
+            }
+            if ('{{lob_level_page}}' != 'False'){
+                url_path += "lob_level_page=" + "{{lob_level_page}}" + "&";
+            }
+        }
+        if('{{do_mode}}' == "call"){
+            if(document.getElementById('id_phone_vs_web').checked){
+                url_path += "phone_vs_web=True&";
+            }
+            if(document.getElementById('id_contribution').checked){
+                url_path += "contribution=True&";
+            }
+            if(document.getElementById('id_invoiced').checked){
+                url_path += "invoiced=True&";
+            }
+            if(document.getElementById('id_asp').checked){
+                url_path += "ASP=True&";
+            }
+            if(document.getElementById('id_ats').checked){
+                url_path += "ATS=True&";
+            }
+            if(document.getElementById('id_basket_size').checked){
+                url_path += "basket_size=True&";
+            }
+        }
+        if('{{do_mode}}' == 'city'){
+            if(document.getElementById('booked').checked){
+                url_path += "mode=1&";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "mode=2&";
+            }
+            var sort_by = document.getElementById('sort_by').options[document.getElementById('sort_by').selectedIndex].value;
+            url_path += "sort_by=" + sort_by + "&";
+        }
+        
+        if('{{do_mode}}' == 'deals'){
+            var selected_deal = document.getElementById('deal').options[document.getElementById('deal').selectedIndex].value;
+            url_path += "deal=" + selected_deal + "&";
+        }
+
+        if('{{do_mode}}' == 'payback'){
+            if(document.getElementById('fb').checked){
+                url_path += "format=1&";
+            }
+            if(document.getElementById('ezoneonline').checked){
+                url_path += "format=2&";
+            }
+        }
+
+        if('{{do_mode}}' == 'summary'){
+            var format_option = document.getElementById('format_option').options[document.getElementById('format_option').selectedIndex].value;
+            url_path += "format_option=" + format_option + "&";
+            var filter = document.getElementById('payment_method').options[document.getElementById('payment_method').selectedIndex].value;
+            if (filter != 'all'){
+                url_path += "&filter=" + filter;
+            }
+        }
+        
+        url_path +=  "from=" + $('#id_from').val() + "&to=" + $('#id_to').val();
+        location.href = url_path;
+    });
+}); 
+</script>
+<script type="text/javascript" language="javascript"> 
+$(document).ready(function() {   
+    $('#id_day').click(function(){
+        $('#wait').removeClass('hide');
+        url_path = '{{url|safe}}' + "search_trend=day";
+        if('{{do_mode}}' == "True"){
+            if(document.getElementById('booked').checked){
+                url_path += "&mode=1";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "&mode=2";
+            }
+        }
+        if('{{do_mode}}' == "call"){
+            if(document.getElementById('id_phone_vs_web').checked){
+                url_path += "&phone_vs_web=True";
+            }
+            if(document.getElementById('id_contribution').checked){
+                url_path += "&contribution=True";
+            }
+            if(document.getElementById('id_invoiced').checked){
+                url_path += "&invoiced=True";
+            }
+            if(document.getElementById('id_asp').checked){
+                url_path += "&ASP=True";
+            }
+            if(document.getElementById('id_ats').checked){
+                url_path += "&ATS=True";
+            }
+            if(document.getElementById('id_basket_size').checked){
+                url_path += "&basket_size=True";
+            }            
+        }
+        if('{{do_mode}}' == 'deals'){
+            var selected_deal = document.getElementById('deal').options[document.getElementById('deal').selectedIndex].value;
+            url_path += "&deal=" + selected_deal;
+        }
+        if('{{do_mode}}' == 'payback'){
+            if(document.getElementById('fb').checked){
+                url_path += "&format=1";
+            }
+            if(document.getElementById('ezoneonline').checked){
+                url_path += "&format=2";
+            }
+        }
+        if('{{do_mode}}' == 'summary'){
+            var format_option = document.getElementById('format_option').options[document.getElementById('format_option').selectedIndex].value;
+            url_path += "&format_option=" + format_option;
+            var filter = document.getElementById('payment_method').options[document.getElementById('payment_method').selectedIndex].value;
+            if (filter != 'all'){
+                url_path += "&filter=" + filter;
+            }
+        }
+        
+        location.href = url_path
+    });
+    $('#id_week').click(function(){
+        $('#wait').removeClass("hide");
+        url_path = '{{url|safe}}' + "search_trend=week";
+        if('{{do_mode}}' == "True"){
+            if(document.getElementById('booked').checked){
+                url_path += "&mode=1";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "&mode=2";
+            }
+        }
+        if('{{do_mode}}' == "call"){
+            if(document.getElementById('id_phone_vs_web').checked){
+                url_path += "&phone_vs_web=True";
+            }
+            if(document.getElementById('id_contribution').checked){
+                url_path += "&contribution=True";
+            }
+            if(document.getElementById('id_invoiced').checked){
+                url_path += "&invoiced=True";
+            }
+            if(document.getElementById('id_asp').checked){
+                url_path += "&ASP=True";
+            }
+            if(document.getElementById('id_ats').checked){
+                url_path += "&ATS=True";
+            }
+            if(document.getElementById('id_basket_size').checked){
+                url_path += "&basket_size=True";
+            }            
+        }
+        if('{{do_mode}}' == 'deals'){
+            var selected_deal = document.getElementById('deal').options[document.getElementById('deal').selectedIndex].value;
+            url_path += "&deal=" + selected_deal;
+        }
+        if('{{do_mode}}' == 'payback'){
+            if(document.getElementById('fb').checked){
+                url_path += "&format=1";
+            }
+            if(document.getElementById('ezoneonline').checked){
+                url_path += "&format=2";
+            }
+        }
+        if('{{do_mode}}' == 'summary'){
+            var format_option = document.getElementById('format_option').options[document.getElementById('format_option').selectedIndex].value;
+            url_path += "&format_option=" + format_option;
+            var filter = document.getElementById('payment_method').options[document.getElementById('payment_method').selectedIndex].value;
+            if (filter != 'all'){
+                url_path += "&filter=" + filter;
+            }
+        }
+        location.href = url_path;
+    });
+    $('#id_month').click(function(){
+        $('#wait').removeClass("hide");
+        url_path = '{{url|safe}}' + "search_trend=month";
+        if('{{do_mode}}' == "True"){
+            if(document.getElementById('booked').checked){
+                url_path += "&mode=1";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "&mode=2";
+            }
+        }
+        if('{{do_mode}}' == "call"){
+            if(document.getElementById('id_phone_vs_web').checked){
+                url_path += "&phone_vs_web=True";
+            }
+            if(document.getElementById('id_contribution').checked){
+                url_path += "&contribution=True";
+            }
+            if(document.getElementById('id_invoiced').checked){
+                url_path += "&invoiced=True";
+            }
+            if(document.getElementById('id_asp').checked){
+                url_path += "&ASP=True";
+            }
+            if(document.getElementById('id_ats').checked){
+                url_path += "&ATS=True";
+            }
+            if(document.getElementById('id_basket_size').checked){
+                url_path += "&basket_size=True";
+            }            
+        }
+        if('{{do_mode}}' == 'deals'){
+            var selected_deal = document.getElementById('deal').options[document.getElementById('deal').selectedIndex].value;
+            url_path += "&deal=" + selected_deal;
+        }
+        if('{{do_mode}}' == 'payback'){
+            if(document.getElementById('fb').checked){
+                url_path += "&format=1";
+            }
+            if(document.getElementById('ezoneonline').checked){
+                url_path += "&format=2";
+            }
+        }
+        if('{{do_mode}}' == 'summary'){
+            var format_option = document.getElementById('format_option').options[document.getElementById('format_option').selectedIndex].value;
+            url_path += "&format_option=" + format_option;
+            var filter = document.getElementById('payment_method').options[document.getElementById('payment_method').selectedIndex].value;
+            if (filter != 'all'){
+                url_path += "&filter=" + filter;
+            }
+        }
+        location.href = url_path;
+    });
+    $('#id_mtd').click(function(){
+        $('#wait').removeClass("hide");
+        url_path = '{{url|safe}}' + "search_trend=mtd";
+        if('{{do_mode}}' == "True"){
+            if(document.getElementById('booked').checked){
+                url_path += "&mode=1";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "&mode=2";
+            }
+        }
+        if('{{do_mode}}' == "call"){
+            if(document.getElementById('id_phone_vs_web').checked){
+                url_path += "&phone_vs_web=True";
+            }
+            if(document.getElementById('id_contribution').checked){
+                url_path += "&contribution=True";
+            }
+            if(document.getElementById('id_invoiced').checked){
+                url_path += "&invoiced=True";
+            }
+            if(document.getElementById('id_asp').checked){
+                url_path += "&ASP=True";
+            }
+            if(document.getElementById('id_ats').checked){
+                url_path += "&ATS=True";
+            }
+            if(document.getElementById('id_basket_size').checked){
+                url_path += "&basket_size=True";
+            }            
+        }
+        if('{{do_mode}}' == 'deals'){
+            var selected_deal = document.getElementById('deal').options[document.getElementById('deal').selectedIndex].value;
+            url_path += "&deal=" + selected_deal;
+        }
+        if('{{do_mode}}' == 'payback'){
+            if(document.getElementById('fb').checked){
+                url_path += "&format=1";
+            }
+            if(document.getElementById('ezoneonline').checked){
+                url_path += "&format=2";
+            }
+        }
+        if('{{do_mode}}' == 'summary'){
+            var format_option = document.getElementById('format_option').options[document.getElementById('format_option').selectedIndex].value;
+            url_path += "&format_option=" + format_option;
+            var filter = document.getElementById('payment_method').options[document.getElementById('payment_method').selectedIndex].value;
+            if (filter != 'all'){
+                url_path += "&filter=" + filter;
+            }
+        }
+        location.href = url_path;
+    });
+});
+</script>

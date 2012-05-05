@@ -1,0 +1,206 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+
+<form method="POST" id="report_form" name="report_form" action="">
+{% form_daterange request form title%}
+
+<div class="report_option_main">
+  <div class="report_option_aa marb10"><span>Order State:</span> {{form.order_state}}</div>
+    <input type="submit" value="Go!" class="uiButton" style="width:50px\9; padding:5px;">
+</div>
+<br />
+
+<table>
+  <tr>
+    <td>
+      <div id="channel_value" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div id="channel_volume" style="border:1px solid #ccc;width: 300px; height: 300px;float:left; margin-left:15px; margin-right:15px;"></div>
+      <div id="channel_orders" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div class="clear"></div>
+    </td>
+  </tr>
+<tr><td><br/></td></tr>
+  <tr>
+    <td>
+      <div id="category_value" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div id="category_volume" style="border:1px solid #ccc;width: 300px; height: 300px;float:left; margin-left:15px; margin-right:15px;"></div>
+      <div id="category_orders" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div class="clear"></div>
+    </td>
+  </tr>
+<tr><td><br/></td></tr>
+  <tr>
+    <td>
+      <div id="pay_value" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div id="pay_volume" style="border:1px solid #ccc;width: 300px; height: 300px;float:left; margin-left:15px; margin-right:15px;"></div>
+      <div id="pay_orders" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div class="clear"></div>
+    </td>
+  </tr>
+<tr><td><br/></td></tr>
+  <tr>
+    <td>
+      <div id="sku_value" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div id="sku_volume" style="border:1px solid #ccc;width: 300px; height: 300px;float:left; margin-left:15px; margin-right:15px;"></div>
+      <div id="sku_orders" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div class="clear"></div>
+    </td>
+  </tr>
+<tr><td><br/></td></tr>
+  <tr>
+    <td>
+      <div id="city_value" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div id="city_volume" style="border:1px solid #ccc;width: 300px; height: 300px;float:left; margin-left:15px; margin-right:15px;"></div>
+      <div id="city_orders" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div class="clear"></div>
+    </td>
+  </tr>
+<tr><td><br/></td></tr>
+
+</table>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_channel_value|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('channel_value'));
+         chart.draw(jscode_data_channel_value, {width: 300, height: 300, title: 'Sales by Channel (Rs. Lakh)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_channel_volume|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('channel_volume'));
+         chart.draw(jscode_data_channel_volume, {width: 300, height: 300, title: 'Sales by Channel (# Quantity)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_channel_orders|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('channel_orders'));
+         chart.draw(jscode_data_channel_orders, {width: 300, height: 300, title: 'Sales by Channel (# Orders)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_category_value|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('category_value'));
+         chart.draw(jscode_data_category_value, {width: 300, height: 300, title: 'Sales by Category (Rs. Lakh)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_category_volume|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('category_volume'));
+         chart.draw(jscode_data_category_volume, {width: 300, height: 300, title: 'Sales by Category (# Quantity)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_category_orders|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('category_orders'));
+         chart.draw(jscode_data_category_orders, {width: 300, height: 300, title: 'Sales by Category (# Orders)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_pay_value|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('pay_value'));
+         chart.draw(jscode_data_pay_value, {width: 300, height: 300, title: 'Sales by Payment Mode (Rs. Lakh)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_pay_volume|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('pay_volume'));
+         chart.draw(jscode_data_pay_volume, {width: 300, height: 300, title: 'Sales by Payment Mode (# Quantity)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_pay_orders|safe}}
+         var chart = new google.visualization.PieChart(document.getElementById('pay_orders'));
+         chart.draw(jscode_data_pay_orders, {width: 300, height: 300, title: 'Sales by Payment Mode (# Orders)',lineWidth: 3,pointSize: 5, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_sku_value|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('sku_value'));
+         chart.draw(jscode_data_sku_value, {width: 300, height: 300, title: 'Top 10 SKUs by Value (Rs. Lakh)',lineWidth: 3,pointSize: 5,hAxis:{title:'Rs.'}, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_sku_volume|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('sku_volume'));
+         chart.draw(jscode_data_sku_volume, {width: 300, height: 300, title: 'Top 10 SKUs by Volume (# quantity)',lineWidth: 3,pointSize: 5,hAxis:{title:'#'}, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_sku_orders|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('sku_orders'));
+         chart.draw(jscode_data_sku_orders, {width: 300, height: 300, title: 'Top 10 SKUs by Volume (# orders)',lineWidth: 3,pointSize: 5,hAxis:{title:'#'}, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_city_value|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('city_value'));
+         chart.draw(jscode_data_city_value, {width: 300, height: 300, title: 'Top 10 Cities by Value (Rs. Lakh)',lineWidth: 3,pointSize: 5,hAxis:{title:'Rs.'}, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_city_volume|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('city_volume'));
+         chart.draw(jscode_data_city_volume, {width: 300, height: 300, title: 'Top 10 Cities by Volume (# quantity)',lineWidth: 3,pointSize: 5,hAxis:{title:'#'}, legend:{'position':'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_city_orders|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('city_orders'));
+         chart.draw(jscode_data_city_orders, {width: 300, height: 300, title: 'Top 10 Cities by Volume (# orders)',lineWidth: 3,pointSize: 5,hAxis:{title:'#'}, legend:{'position':'bottom'}});
+    }
+</script>
+{% endblock %}
+

@@ -1,0 +1,87 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.excel_main {margin:8px 0 0 5px !important;}
+	.select_range{padding:0}
+</style>
+
+<form method="POST" id="report_form" name="report_form" action="">
+{% show_export_link request form 'excel' %}
+{% form_daterange request form title%}
+
+<div class="report_option_main">
+    <div class="report_option_aa">	
+        <span>Order State:</span>{{form.order_state}}&nbsp; &nbsp;
+    </div>
+    <input type="submit" id="merch_submit" value="Go!" class="uiButton" style="width:50px\9;">
+</div>
+
+</form>
+
+<div class="clear">&nbsp;</div>
+<h3>Subscriptions distibution - by channels</h3>
+<table class="tbl_report">
+{%for item in data%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item.list%}
+            <th><b>{{i}}</b></th>
+        {%endfor%}
+    {%else%}
+        <td class="fb {%if item.hl%}bcolor_one{%endif%}">{{item.list.0}}</td>
+        <td class="{%if item.hl%}bcolor_one{%endif%}">{{item.list.1}}</td>
+        <td class="{%if item.hl%}bcolor_one{%endif%}">{{item.list.2}}</td>
+        <td class="{%if item.hl%}bcolor_one{%endif%}">{{item.list.3}}</td>
+        {%if item.list.1%}
+            <td class="{%if item.hl%}bcolor_one{%endif%}"><a href="{%subscription_detail request item.list.1 item.promo%}">{{item.list.4}}</a></td>
+        {%else%}
+            <td class="{%if item.hl%}bcolor_one{%endif%}">{{item.list.4}}</td>
+        {%endif%}
+        <td class="{%if item.hl%}bcolor_one{%endif%}">{{item.list.5}}</td>
+        <td class="{%if item.hl%}bcolor_one{%endif%}">{{item.list.6}}</td>
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+
+<div class="clear">&nbsp;</div>
+<div>
+<h3>Subscriptions summary <span class="f12 fn fi">(All subscribers ordered in the selected time-range)</span></h3>
+<table class="tbl_report">
+{%for item in total_lt%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+<div class="clear">&nbsp;</div>
+<div>
+<h3>Top 10 Products Sold  via subscriptions</h3>
+<table class="tbl_report">
+{%for item in top_prods%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        <td class="la">{{item.0}}</td>
+        <td>{{item.1}}</td>
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+{% endblock %}

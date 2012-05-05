@@ -1,0 +1,83 @@
+<div id="popup" class="popup">
+<div id="popup_close"></div>
+  <div class="inner">
+    <div class="popup_header">     
+      <h1>Get drop-dead deals from India's foremost retailers</h1>        
+    </div>
+    <div class="pad5 padl25">        
+         <div class="f12 pupup_text">Our merchandizers scrape all corners of Indian markets to bring you best deals<br/> at your doorstep. Come join the gang!
+         </div>
+    
+    </div>
+    <div class="pupup_middle">
+        <form method="post" id="subscribe_dialog_form" action="">
+      <table class="fields">
+      <tr>
+      <td> 
+        <div id="error_msg" class="hidden f11" style="margin-bottom:5px"></div>
+      <label for="email">Email<span class="red">*</span></label><br />
+       <input type="text" id="email" maxlength=200 name="email" onblur="if (value== '') {value='Send me deals in my Inbox'}" onfocus="if (value == 'Send me deals in my Inbox') {value=''}" value="Send me deals in my Inbox"/>
+      </td>
+      </tr>
+      <tr>
+      <td>
+       <label for="mobile">Mobile<span class="red">*</span></label><br />
+         <input type="text" id="mobile" name="mobile" maxlength=10  onblur="if (value== '') {value='Send me deals by SMS'}" onfocus="if (value == 'Send me deals by SMS') {value=''}" value="Send me deals by SMS" />
+      </td>
+      </tr>
+      <tr>
+      <td>
+      <label for="name">Name</label><br />
+        <input type="text" maxlength=200 id="name" name="name"/>
+      </td>
+      </tr>
+      <tr><td class="padt10">
+       <button type="submit" class="btn_subscribe"></button> <a class="marl20 cp fb" id="no_will_miss" style="padding-top:20px;">No, I will miss this</a>
+      </td></tr>      
+       <tr><td>
+       <div  class="btd marb5 mart10"></div>
+       Or, use Facebook to subscribe
+       </td></tr>
+       <tr> <td>
+          <fb:login-button perms="email,user_likes,friends_likes,publish_stream">Subscribe</fb:login-button>
+          </td>
+          </tr>
+           <tr><td class="ra f11 padt10">
+       </td></tr>
+      </table>  
+      </form>
+      <div class="clear"></div>    
+    </div>  
+  </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        if(getCookie('subpopdd') != "yes"){
+            document.onkeyup = KeyCheck;       
+        }
+        function KeyCheck(e)
+        {
+           var KeyID = e.keyCode;
+           if(KeyID == 27){
+                setCookie('subpopdd','yes', 365);
+            }
+        }
+    })
+</script>
+<script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-6628622-16']);
+        _gaq.push(['_setDomainName', '.futurebazaar.com']);
+        _gaq.push(['_setAllowHash', false]);
+
+        _gaq.push(['_trackPageview']);
+        _gaq.push(['_trackPageLoadTime']);
+        {% block ga_extensions %}
+        {% endblock %}
+
+        (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
+</script>

@@ -1,0 +1,40 @@
+<p>Select a partner that has a location near you.</p>
+<input type="hidden" id="id_payment_group_member" name="payment_group_member" value="easybill"/>
+<div class="cash_pay_option mart10">
+  <input type="radio" checked="true" title="EasyBill" value="easybill" id="cashType" name="cashType" class="radio">
+  &nbsp; <img height="30" src="/media/images/easybill-logo.gif" class="marr10">
+  <input type="radio"  title="Suvidha" value="suvidha" id="cashType" name="cashType" class="radio">
+  &nbsp; <img height="30" src="/media/images/suvidha-logo.gif" class="marr10">
+  <input type="radio" title="ICICI Cash" value="ICICICash" id="cashType" name="cashType" class="radio">
+  &nbsp; <img height="30" src="/media/images/icici-icon.gif"/>
+  <input type="radio" title="Itz Cash" value="Itz" id="cashType" name="cashType" class="radio">
+  &nbsp; <img height="30" src="/media/images/Itz-logo.gif" class="marr10">
+</div>
+<p class="mart20"><a href="/info/pay-by-cash.html" class="fancybox">Click here</a> to learn How to Pay by Cash &amp; to find a nearest Cash payment location</p>
+<div class="notice"> <b>Note:</b>
+  <ul>
+    <li> Payment through cash must be made within the next 2 days to avoid cancellation of the order.</li>
+    <li> We will begin processing your order only after receipt of the cash payment.</li>
+    <li>Alternately, you may opt for Credit Card or Netbanking as payment modes which are instant payments.</li>
+  </ul>
+</div>
+<script type="text/javascript">
+        $('.radio').click(function(){
+                var mode = $(this).val();
+                $('#id_payment_group_member').val(mode);
+        });
+</script>
+ <script type="text/javascript">
+	$(document).ready(function() {
+		
+		$(".fancybox").fancybox({
+			'width'				: '80%',
+			'height'			: '100%',
+			'autoScale'			: 'false',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe'
+		});		
+	
+	});
+	</script>

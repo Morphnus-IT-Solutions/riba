@@ -1,0 +1,32 @@
+{%load web_tags%}
+{%load cc_tags%}
+{%for product in products%}
+    <li {%if forloop.counter == 1%}id="grid_page_{{pagination.cur_page}}" {%endif%}>    
+		<a href="{% cc_url request product.product.url %}">
+			<div class="dib">
+				<img width="150" height="150" class="bbs" title="{{product.product.title}}" src="{{product.product_images.0.get_large_thumb_url}}" alt="{{product.product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" />
+			</div>
+			<div class="dib wauto">
+				<h6 class="list-img-heading">{{product.product.title|truncate:40}}</h6>
+				<p><span class="co mw-80"><span class="WebRupee">Rs.</span>{% get_price_info request product.rateChart 'offer_price' %}</span><span class="td-lt"><span class="WebRupee">Rs.</span>{% get_price_info request product.rateChart 'list_price' %}</span></p>
+                {%if request|isAnySaving:product.rateChart %}  
+				<p>Save <span class="WebRupee">Rs.</span>{% getSavings request product.rateChart %} ({% getDiscount request product.rateChart%}%)
+
+				<p><span class="btn btn-s">Buy Now</span></p>
+                {% endif %}
+			</div>
+		</a>
+		<span class="icon icon-bg arrow-right"></span>
+    </li>
+{%endfor%}
+
+<script type="text/javascript">
+{% if not daily_deal%}
+$(document).ready(function(){
+        if("{{total_results}}"){
+        var status = "1 - {{pagination.result_to}} of {{total_results}} Items";
+        $(".see_more_deals").html("Click Here to See More Deals (" + status + ")");
+    }
+});
+{%endif%}
+</script>

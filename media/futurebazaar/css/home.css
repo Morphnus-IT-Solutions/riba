@@ -1,0 +1,275 @@
+
+#home{padding-top:12px;}
+
+
+.daily_deals{width:988px; height:300px;position:relative; overflow:hidden;}
+
+.steal_timer_banner{
+	/*width:250px; height:25px; background-position: 0px -398px;  padding:7px 4px 0px 30px;position:absolute; right:15px; top:235px; background-color:#fff;*/  
+    background-color: #FFFFFF;
+    background-image: url("/media/images/dod-banner-clock.png");   
+    background-position: 4px 8px;
+    background-repeat: no-repeat;   
+    height: 20px;
+    padding-bottom: 0;
+    padding-left: 20px;
+    padding-right: 4px;
+    padding-top: 7px;
+    position: absolute;
+    right: 10px;
+    /*top: 235px;*/
+    top:15px;
+    width: 250px;
+    color:#575757;
+    }
+    
+    
+.home_header{ position:relative;}
+.home_header h1{font-size:22px; line-height:32px; height:32px; /*color:#457ab0;*/ color:#333; font-weight:bold; /*padding-bottom:3px;*/ text-transform:uppercase;}
+
+.sptwo.dots { background-position: 0px -901px; width: 47px; height: 11px;  } 
+
+.slider_dots{ width:80px; height:18px; margin-left:332px; float1:left; clear:both; text-align:center; margin-top:10px;cursor:pointer;}
+.slider_dots a{background:url('/media/images/sptwo.png') no-repeat -114px -120px; width:12px; height:12px; margin-right:5px; float:left; cursor:pointer;}
+.slider_dots a:hover{background-position:-97px -120px ;}
+
+.slider_dots_sel , .slider_dots_sel a:hover{background-position:-79px -120px !important; cursor:auto !important;}
+.slider_dots_sel_cat , .slider_dots_sel_cat a:hover{background-position:-79px -120px !important; cursor:auto !important;}
+.slider_dots_sel_others_buy , .slider_dots_sel_others_buy a:hover{background-position:-79px -120px !important; cursor:auto !important;}
+.slider_dots_offer , .slider_dots_offer a:hover{background-position:-79px -120px !important; cursor:auto !important;}
+
+.readmore_pagination{height:16px; font-size:11px;}
+
+.readmore_pagination div a{width:10px; height:10px; border:1px solid #4e9fd3; float:left; margin-right:4px; text-decoration:none; text-align:center; padding:2px; line-height:10px;}
+.readmore_pagination div a.active, .readmore_pagination div a:hover{background-color:#4e9fd3; color:#fff !important; }
+
+.pad{padding:3px;}
+.w210{width:210px;}
+
+
+.battle_banner { position: relative; width: 988px; height: 300px; overflow:hidden;}
+.battle_banner .battle_timer{position:absolute; top:17px; right:17px; }
+.tdnone:hover { text-decoration: none !important; }
+.top10_banner {  width: 988px; height: 300px; overflow:hidden;}
+.battle_banner .battle_timer .day{float:left; width:40px; height:25px;  margin:0 10px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_banner .battle_timer .hr{float:left; width:40px; height:25px;  margin:0 10px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_banner .battle_timer .min{float:left; width:40px; height:25px; margin:0 15px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_timer .sec{float:left;width:40px; height:25px; margin:0 10px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+.mart83{margin-top:83px;}
+.mart96{margin-top:96px;}
+.mart92{margin-top:92px;}
+.tdnone { text-decoration: none !important; }
+.c333{color:#333;}
+
+#slides {position:relative;}
+.slides_container {	
+	width:980px;
+	height:300px;
+	overflow:hidden;
+	position:relative;	
+}
+
+.slides_container a {
+	width:988px;
+	height:300px;
+	display:block;
+}
+
+.slides_container a img {
+	display:block;
+}
+
+
+.slider_pagination {
+	margin:10px auto ;
+	width:100px;
+	position:absolute;	
+	left:474px;	
+}
+
+.slider_pagination li {
+	float:left;
+	margin:0 1px;
+	list-style:none;
+}
+
+.slider_pagination li a {
+	display:block;
+	width:12px;
+	height:0;
+	padding-top:12px;	
+	background-image:url(/media/images/sp-one.png);
+	background-position:-35px -524px;
+	float:left;
+	overflow:hidden;
+}
+
+.slider_pagination li.current a {
+	background-position:0px -524px;
+}
+.slider_pagination li a:hover{background-position:-18px -524px;}
+
+.battle_timer{position:absolute; top:17px; right:17px; }
+.battle_timer .day{float:left; width:40px; height:25px;  margin:0 10px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_timer .hr{float:left; width:40px; height:25px;  margin:0 10px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_timer .min{float:left; width:40px; height:25px; margin:0 15px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_timer .sec{float:left;width:40px; height:25px; margin:0 10px;
+background-image:url("../images/timer-digit-5w.jpg"); background-repeat:no-repeat; background-position:center;}
+
+
+.home_midle{margin-top:40px;}
+/*partner*/
+/* rotator in-page placement */
+    div.partners_slides {
+	position:relative;
+	height:236px;	
+	display: none;
+}
+/* rotator css */
+	div.partners_slides ul li {
+	float:left;
+	position:absolute;
+	list-style: none;
+}
+/* rotator image style */	
+	div.partners_slides ul li img {	
+	padding: 0px;
+	background: #FFF;
+}
+    div.partners_slides ul li.show {
+	z-index:500
+}
+
+.home_greed li{float:left; margin-right:15px;  margin-bottom:40px; }
+/*.home_greed li h3{padding:10px 10px 10px 10px; text-align:left; height:30px; overflow:hidden; font-size:13px; }*/
+.greed_clearance{height:368px !important; }
+/*.home_greed .greed_inner{border:1px solid #d9d9d9; width:230px; height:293px; }*/
+.home_greed .greed_inner.bor{border:2px solid #F47318}
+/*.home_greed .item_img{position:relative; height:230px; z-index:1 !important; text-align:center; }*/
+.home_greed .item_img img{position:static; z-index:1 !important;}
+/*.home_greed .save{width:56px; height:48px;background:url('/media/images/sp-one.png')  0px -555px no-repeat; position:absolute; z-index:5; right:5px; top:5px; font-size:11px; padding-top:7px; color:#000;}
+*/
+.home_greed .brand{text-align:center;  border-top:1px solid #d9d9d9; border-bottom:1px solid #d9d9d9;}
+.new_tag{width:51px; height:50px; background:url(/media/images/sp-one.png) 0px -264px no-repeat; position:absolute; top:0px; left:0px;}
+.home_greed .price{}
+.home_greed .mrp{color:#a7a7a7; height:22px;}
+.home_greed .offer_price{color:#db5200;}
+
+
+.prod_rec_wrapper{background:#F1F1F1; padding:10px; margin-bottom:30px; box-shadow:0px 20px 8px -20px rgba(0,0,0, 0.5); -moz-box-shadow:0px 20px 8px -20px rgba(0,0,0, 0.5); -webkit-box-shadow:0px 20px 8px -20px rgba(0,0,0, 0.5);}
+.prod_rec_header{color:#242424;}
+.prod_rec_header .color1{color:#918b87;}
+.prod_rec li{margin-right:10px; margin-bottom:0px !important; background-color:#fff;}
+
+.guest_login{color:#242424; background-color:#f1f1f1; border:1px solid #ede6e6; padding:10px; margin-top:40px;height:40px;overflow:hidden;}
+
+
+
+.item_img .btn_qv{display:none; position:absolute; top:5px; right:5px;  width:70px; height:22px; line-height:22px; text-align:center; font-size:11px;  color:#000; text-decoration:none !important; border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;
+ box-shadow:2px 2px 2px #666; -moz-box-shadow:2px 2px 2px #666; -webkit-box-shadow:2px 2px 2px #666;
+
+ background: #dedddb; /* Old browsers */
+background: -moz-linear-gradient(top, #dedddb 0%, #cdccc8 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedddb), color-stop(100%,#cdccc8)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #dedddb 0%,#cdccc8 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #dedddb 0%,#cdccc8 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #dedddb 0%,#cdccc8 100%); /* IE10+ */
+background: linear-gradient(top, #dedddb 0%,#cdccc8 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedddb', endColorstr='#cdccc8',GradientType=0 ); /* IE6-9 */
+
+}
+.item_img .btn_qv.active{background:#000 !important;  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000' );
+ color:#fff !important;}
+ .item_img  a:hover{text-decoration:none !important;}
+
+
+
+.greed_inner .timer_outer{height:25px;  padding:2px; position:absolute; top:197px; left:0px; width:178px;}
+
+.greed_inner .timer{height:20px; width:80px; margin-left:10px;}
+.greed_inner .retailer{height:20px; width:20px;margin-right:10px;  }
+.greed_inner .timer .time{width:18px; height:18px; background:url('/media/images/timer.png') -1px 0 no-repeat; display:inline-block;  margin-right:5px;}
+.greed_inner .timer .time:hover{background:url('/media/images/timer-ho.png') -1px 0 no-repeat;}
+
+.greed_inner .timer .qty{width:22px; height:18px; background:url('/media/images/timer.png') -26px 0 no-repeat; display:inline-block;  margin-right:5px;}
+.greed_inner .timer .qty:hover{background:url('/media/images/timer-ho.png') -25px 0 no-repeat;}
+.greed_inner .timer .seller{width:14px; height:18px; background:url('/media/images/timer.png') -56px 0 no-repeat; display:inline-block; }
+.greed_inner .timer .seller:hover{background:url('/media/images/timer-ho.png') -56px 0 no-repeat;}
+.greed_inner .retailer .retailer_icon{width:18px; height:18px;  background-position: 0px 0 ; background-repeat: no-repeat; display:inline-block; }
+
+.greed_inner .retailer .retailer_icon.icon_futurebazaar{background-image:url('/media/images/fb-icon.png');}
+.greed_inner .retailer .retailer_icon.icon_ezone{background-image:url('/media/images/icon-ez.png');}
+.greed_inner .retailer .retailer_icon.icon_big-bazaar{background-image:url('/media/images/icon-bb.png');}
+.greed_inner .retailer .retailer_icon.icon_hometown{background-image:url('/media/images/icon-ht.png');}
+.greed_inner .retailer .retailer_icon.icon_pantaloons{background-image:url('/media/images/icon-p.png');}
+.greed_inner .retailer .retailer_icon.icon_planet-sports{background-image:url('/media/images/icon-ps.png');}
+.greed_inner .retailer .retailer_icon.icon_brand-factory{background-image:url('/media/images/icon-bf.png');}
+
+.greed_inner .retailer .retailer_icon.icon_futurebazaar-clearance{background-image:url('/media/images/fb-icon.png');}
+.greed_inner .retailer .retailer_icon.icon_ezone-clearance{background-image:url('/media/images/icon-ez.png');}
+.greed_inner .retailer .retailer_icon.icon_big-bazaar-clearance{background-image:url('/media/images/icon-bb.png');}
+.greed_inner .retailer .retailer_icon.icon_hometown-clearance{background-image:url('/media/images/icon-ht.png');}
+.greed_inner .retailer .retailer_icon.icon_pantaloons-clearance{background-image:url('/media/images/icon-p.png');}
+.greed_inner .retailer .retailer_icon.icon_planet-sports-clearance{background-image:url('/media/images/icon-ps.png');}
+.greed_inner .retailer .retailer_icon.icon_brand-factory-clearance{background-image:url('/media/images/icon-bf.png');}
+
+.greed_inner .retailer .retailer_icon:hover{}
+
+
+.greed_inner .timer a.time:hover, .greed_inner .timer a.qty:hover, .greed_inner .timer a.seller:hover , .greed_inner .retailer .retailer_icon:hover{
+    position: relative; text-decoration:none; z-index:10;
+}
+.greed_inner .timer a.time span.timer_comment, .greed_inner .timer a.qty span.timer_comment, .greed_inner .timer a.seller span.timer_comment, .greed_inner .retailer a.retailer_icon span.timer_comment{display: none
+}
+.greed_inner .timer a.time:hover span.timer_comment, .greed_inner .timer a.qty:hover span.timer_comment, .greed_inner .timer a.seller:hover span.timer_comment {
+      display: block;  background: #000;  width: 170px; padding:3px 5px; border:1px solid #000;  text-decoration: none; color:#fff;
+	   border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px; left:-50px; position:absolute;}
+	   
+.greed_inner .retailer a.retailer_icon:hover span.timer_comment{
+      display: block;   width: 220px; height:88px;
+	   left:-198px; position:absolute; background:#fff url('/media/images/retailer-fb.png') 0 0 no-repeat; }
+	   
+.greed_inner .timer a.time div.comment_outer, .greed_inner .timer a.qty div.comment_outer, .greed_inner .timer a.seller div.comment_outer, .greed_inner .retailer a.retailer_icon div.comment_outer{display:none;}
+.greed_inner .timer a.time:hover div.comment_outer, .greed_inner .timer a.qty:hover div.comment_outer, .greed_inner .timer a.seller:hover div.comment_outer{background:url('/media/images/bubble.png') 0px 0 no-repeat; display:block; height:10px; width:20px; padding-top:8px;   z-index: 10000; position: absolute; top: 18px;}
+
+.greed_inner .retailer a.retailer_icon:hover div.comment_outer{background:url('/media/images/bubble-white.png') 0px 0 no-repeat; display:block; height:10px; width:20px; padding-top:8px;   z-index: 10000; position: absolute; top: 18px;}
+.fcolor1{color:#fbcc4a;}
+
+.greed_inner .retailer .retailer_icon{position:relative;}
+.greed_inner .retailer .retailer_icon img{display:none; position:absolute; top:22px; right:-21px;}
+.greed_inner .retailer .retailer_icon:hover img{display:block;}
+
+.menu_icons{padding:3px 10px; height:18px;  z-index:10; position:absolute; bottom:5px; left:0; width:162px;  background:rgb(210,210,219); background:rgba(210,210,219,0.3);  }
+.menu_icons li{float:left;height:16px; background:url('/media/images/menu-icons.png') 0 0 no-repeat; margin:0px !important; margin-right:6px !important; position:relative;}
+
+.menu_icons li.new{width:36px; background-position:0px 0px;}
+.menu_icons li.clock{width:16px;background-position:-42px 0px;}
+.menu_icons li.popular{width:25px;background-position:-63px 0px;}
+.menu_icons li.recom{width:16px;background-position:-96px 0px;}
+.menu_icons li.eur{width:11px;background-position:-118px 0px;}
+.menu_icons li.clearance{width:16px;background-position:-136px 0px;}
+/*.menu_icons li:hover .icons_comment_outer{display:block;}
+*/
+
+.icons_comment_outer{background:url('/media/images/bubble.png') 0px 0 no-repeat; display:none; height:10px; width:20px; padding-top:8px;   z-index: 10000; position: absolute; top: 18px;}
+.icons_comment{ display: block;  background: #000;  width: 170px; padding:3px 5px; border:1px solid #000;  text-decoration: none; color:#fff;
+	   border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px; left:-50px; position:absolute;}
+.menu_icons li.new .icons_comment{width: 80px;left:-40px;}
+.menu_icons li.popular .icons_comment{width: 50px; left:-25px;}
+.menu_icons li.recom .icons_comment{width: 110px; left:-54px;}
+.menu_icons li.eur .icons_comment{width: 60px;left:-30px;}
+.menu_icons li.clearance .icons_comment{width: 60px;left:-30px;}
+
+.our_partners_header{font-size:18px; font-weight:bold; text-transform:uppercase; color:#363636; margin-bottom:2px;}
+.our_partner{border:1px solid #d9d9d9; width:318px; color:#363636;}
+.our_partner_inner{border:1px solid #fff; background-color:#e5e5e5; background-image: url('/media/images/sp-one.png'); background-repeat:no-repeat; height:68px; padding:15px;}
+.our_partner_inner.partner_payback{background:#e5e5e5 url('/media/images/payback-5xpoints.png') 218px 4px no-repeat; /*background:#e5e5e5 url('/media/images/payback-icon-1.png') 210px 25px no-repeat; */}
+.our_partner_inner.partner_visa{background-position: 214px -1566px}
+.our_partner_inner.partner_credit_card{background:#e5e5e5 url('/media/images/partner-credit-card.jpg') no-repeat 206px 14px}

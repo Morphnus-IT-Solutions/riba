@@ -1,0 +1,79 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% block user_content %}
+<style type="text/css">
+table {
+    margin-bottom: 1.4em;
+}
+table, td, th {
+    vertical-align: middle;
+}
+th, td, caption {
+    padding: 4px 10px 4px 5px;
+}
+</style>
+<div class="padding_top10">
+    {%comment%}<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Notification</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+	<div class="inner-content">
+	  <form method="POST" action="" id="seller_profile_form" name="seller_profile_form">
+		{{formset.management_form}}
+	  {% if not formset.errors %}
+		{%ifequal method "POST"%}
+		Your notification settings have been submitted.
+		<br />
+		{%endifequal%}
+	  {% endif %}
+	  <table class="tbl_profile"  style="width:380px;">
+		<tr align="center">
+		  <td class="bbdr bbdb"></td>
+		  <td class="f11 flgray ca">Email</td>
+		  <td class="f11 flgray ca">Alt Email</td>
+		  <td class="f11 flgray ca">Mobile</td>
+		</tr>
+		{%for form in formset.forms%}
+	  {% if form.errors %}
+	  <p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+	
+	  {{form.errors}}
+	  {% endif %}
+		  {% for hid in form.hidden_fields %}
+		  {{ hid }}
+		  {% endfor %}
+		<tr>
+		  <td class="hidden">{{form.event}}</td>
+		  {%if new_fields%}
+			  <td class="f11 flgray">{%display_value_new form.event forloop.counter%}</td>
+		  {%else%}
+			  <td class="f11 flgray">{{form.event|display}}</td>
+		  {%endif%}
+		  <td class="f11 flgray ca">{{form.on_primary_email}}</td>
+		  <td class="f11 flgray ca">{{form.on_secondary_email}}</td>
+		  <td class="ca">{{form.on_primary_phone}}</td>
+		</tr>
+		{%endfor%}
+		<!--{%comment%}
+		<tr>
+		  <td width="120" class="bbdr bbdb">{{form1.event.field.choices.1.1}}</td>
+		  <td width="80" align="center" class="bbdr bbdb"  style="background-color:#eee;">{{form1.on_primary_email}}</td>
+		  <td width="80" align="center" class="bbdr bbdb" style="background-color:#eee;">{{form1.on_secondary_email}}</td>
+		  <td width="80" align="center" class="bbdb" style="background-color:#eee;">{{form1.on_primary_phone}}</td>
+		</tr>
+		{%endcomment%}-->
+		  <tr>
+		  	<td class="padding_top10">&nbsp;</td>
+		  	<td class="ra padding_top10"><input class="uiButton" type="submit" id="submit_button" VALUE="Save" /></td>
+			<td colspan="2" class="padding_top10">&nbsp;</td>
+		  </tr>
+	  </table>
+	  </form>
+	</div>
+</div>
+<div class="clear"></div>
+
+{% endblock %} 

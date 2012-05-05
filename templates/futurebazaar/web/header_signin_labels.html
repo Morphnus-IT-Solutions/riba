@@ -1,0 +1,84 @@
+{% load cc_tags %}
+{% load web_tags %}
+{% if request|is_user_authenticated %}
+    <li class="mart2"> <span>Hi, {%get_username request%}!</span>&nbsp;&nbsp;
+        {%if not request|is_cc%}
+            {% if 'logged_through_facebook' in request.session %}
+                <a href={% cc_url request "deals/recommendations/"%} >
+                    Recommendations for you</a>&nbsp;&nbsp;|
+            {% endif %}
+            {% if 'orders/payment' not in request.path %}
+                <span class="never_miss_deal_span {% if not 'user_subscribed' in request.session and not 'nevermissadeal' in request.COOKIES %}hide{% endif %}"><a class="never_miss_deal">Never Miss a Deal</a>&nbsp;&nbsp;|&nbsp;</span>
+            {% endif %}
+        <a href="{% cc_url request "order/track_order/" %}" title="Track Order">Track Order</a>&nbsp;&nbsp;|
+        {%endif%}
+        <span>
+            <a class="signin cp">My Account</a>
+        </span>
+        <div class="signin_form myaccount_links hide">    
+            <div>
+                <ul>
+                    <li>
+                        <a href={% cc_url request "user/orders/" %} class="my_account_href">My Orders</a>
+                    </li>
+                    <li>
+                        <a href={% cc_url request "user/wishlist/" %} class="my_account_href" >My Wishlist</a>
+                    </li>
+                    <li>
+                        <a href={% cc_url request "user/notification/" %} class="my_account_href" >My Subscriptions</a>
+                    </li>
+                    <li>
+                        <a href={% cc_url request "user/profile/" %} class="my_account_href">My Profile</a>
+                    </li>
+                    <li>
+                        <a href={% cc_url request "user/address/" %} class="my_account_href">Address Book</a>
+                    </li>
+                    {%if not request|is_cc%}
+                    <li>
+                        <a href={% cc_url request "user/change_password/" %} class="my_account_href">Manage Password</a>
+                    </li>
+                    {%endif%}
+                    {% if 'logged_through_facebook' in request.session  %}
+                        <li class="padt10" ><a href="/auth/signout/" id="f_logout" title="Sign out"><img src={% media_url request "images/flogout_btn.png" %} /></a></li>
+                    {% else %}
+                        <li>
+                            <a href="{%if request|is_cc%}/user/signout/{% else %}/auth/signout/{% endif %}" id="sout" title="Sign out" class="my_account_href">Sign Out</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>                         
+        </div>
+    </li>
+{% else %}
+    <li class="mart2">
+      {%if not request|is_cc%}
+        {% if 'orders/payment' not in request.path %}
+            <span class="never_miss_deal_span {% if not 'user_subscribed' in request.session and not 'nevermissadeal' in request.COOKIES %}hide{% endif %}">
+            <a class="never_miss_deal">Never Miss a Deal</a>&nbsp;&nbsp;|&nbsp;</span>
+        {% endif %}
+        <a href="{% cc_url request "order/track_order/" %}" title="Track Order">Track Order</a>&nbsp;&nbsp;|
+          {%endif%}
+        {% if not request|is_cc %}
+            <a class="signin cp">My Account</a>
+            <div class="signin_form hide">    
+              <div class="mart5 ca marb10">
+                  {% if  request|user_connected_to_facebook %}
+                      <a class="flogin_retry cp fb-login-button"><img src={% media_url request "images/login_with_facebook_btn.png" %}></a>
+                      <div class="mart10" style="height:66px; overflow:hidden;">
+                          <iframe src="http://www.facebook.com/plugins/facepile.php?
+                          app_id=126505110759991" scrolling="no" frameborder="0" style="border:none;
+                          overflow:hidden; width:230px;" allowTransparency="true"></iframe> 
+                      </div>
+                  {% else %}                      
+                      <div class="marr10">
+                        {% include "user/facebook_login.html" %}
+                      </div>
+                  {% endif %}
+              </div>
+              <div class="or_hr mart20"></div>
+              <div class="mart10 marb5">Sign in using FutureBazaar account</div>
+              <span id="header_signin" >{% include "web/header_signin.html" %}</span> 
+              </div>
+        {% endif %}
+    </li>
+{% endif %} 

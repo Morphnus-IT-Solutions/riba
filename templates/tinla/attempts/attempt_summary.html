@@ -1,0 +1,32 @@
+<div class="attempt_summary" id="attempt_{{attempt.id}}">
+    {% if attempt.is_answered %}
+    Spoken with {{agent.name}} on {{attempt.time|date:"D, d N Y at h:i A"}}. {{attempt.state}}<br/>
+    {% ifequal attempt.type "agent_first" %}
+    <a href="http://192.168.0.143/recordings/{{attempt.call_id}}.out.wav">Download Recording</a><br/>
+    {% endifequal %}
+    {% ifequal attempt.type "inbound" %}
+    <a href="http://192.168.0.143/recordings/{{attempt.call_id}}.out.wav">Download Recording</a><br/>
+    {% endifequal %}
+    {% else %}
+    Attempted by {{agent.name}} on {{attempt.time|date:"D, d N Y at h:i A"}}. {{attempt.state}}<br/>
+    {% endif %}
+    {% if attempt.response_status_changed %}
+    Response status changed from {{attempt.pre_response_status.name}} to {{attempt.post_response_status}}<br/>
+    {% else %}
+    Response status unchanged from {{attempt.pre_response_status.name}}<br/>
+    {% endif %}
+    {% if attempt.pipeline_status_changed %}
+    Pipeline status changed from {{attempt.pre_pipeline_status}} to {{attempt.post_pipeline_status}}<br/>
+    {% else %}
+    Pipeline status unchanged from {{attempt.pre_pipeline_status}}<br/>
+    {% endif %}
+    {% if response.next_call_scheduled %}
+    Next call scheduled at {{response.next_call|date:"D, d N Y h:i A"}}<br/>
+    {% endif %}
+    {% if attempt.comments %}
+    Notes: {{attempt.comments}}
+    {% endif %}
+    {% if attempt.is_open %}
+        <button class="button update_attempt" id="attempt_{{attempt.id}}">Close</button>
+    {% endif %}
+</div>

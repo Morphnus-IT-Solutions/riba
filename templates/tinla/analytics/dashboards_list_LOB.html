@@ -1,0 +1,23 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="content_head">
+  <div class="header rc5">   
+    <h3 class="left">Sales by LOB Dashboard</h3>    
+    <div class="clear"></div>
+  </div>
+  </div>
+
+<div class="rc5" style="border:1px solid #ccc; width:300px; margin-top:20px;">
+<div class="toprc5 fb" style="background-color:#EDEDED; padding:5px 10px; font-size:16px;">Sales Reports</div>
+        <ul style="padding:10px 20px 20px; list-style:disc;">           
+            <li><a href="/reports/LOB_report/">Daily Sales Report</a><span class="fb fi fblack"> (Modified)</span></li>
+            <li><a href="/reports/LOB_interval_report/weekly">Weekly Sales Report</a></li>
+            <li><a href="/reports/LOB_interval_report/monthly">Monthly Sales Report</a></li>
+
+        </ul>
+   <div class="clear"></div>   
+</div>   
+
+</div>   
+{% endblock %}

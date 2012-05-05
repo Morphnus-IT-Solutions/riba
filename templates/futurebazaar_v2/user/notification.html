@@ -1,0 +1,120 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{% block user_content %}
+{%if message%}
+    <div class='error' id='id_message' style="width:400px;"> {{message}} </div>
+{%endif%}
+<div class="subscription">
+<div class="marb20 padl20">Send me daily notifications for deals</div>
+<form method="post" action="" id="notification_form">
+  <table class="left marr20">    
+    <tr>
+    <th>Email / Mobile</th>
+    <th>Status</th>
+    </tr>
+    {%for email in emails%}
+    <tr>
+        <td class="fb">{{email.email}}</td>
+      <td>
+        <div class="onoff">
+            <div id="email_{{email.id}}_on" type="email" value="{{email.email}}" class="leftrc5 btn {%if email.email|is_email_subscribed:request %}bgreen{%else%}bgray{%endif%} on">ON</div>
+            {%if email.email|is_email_subscribed:request%}<input id="email_{{email.id}}_alert" type="hidden" name="email_alerts" value="{{email.email}}"/>{%endif%}
+            <div id="email_{{email.id}}_off" type="email" value="{{email.email}}" class="rightrc5 btn {%if not email.email|is_email_subscribed:request %}bred{%else%}bgray{%endif%} off">OFF</div>
+        </div>
+        </td>
+    </tr>
+    {%endfor%}
+    {%for phone in phones%}
+    <tr> 
+        <td class="fb">{{phone.phone}}</td>
+      <td>
+      <div class="onoff">
+            <div id="phone_{{phone.id}}_on" type="phone" value="{{phone.phone}}" class="leftrc5 btn {%if phone.phone|is_phone_subscribed:request %}bgreen{%else%}bgray{%endif%} on">ON</div>
+            {%if phone.phone|is_phone_subscribed:request%}<input type="hidden" id="phone_{{phone.id}}_alert" name="sms_alerts" value="{{phone.phone}}"/>{%endif%}
+            <div id="phone_{{phone.id}}_off" type="phone" value="{{phone.phone}}" class="rightrc5 btn {%if not phone.phone|is_phone_subscribed:request %}bred{%else%}bgray{%endif%} off">OFF</div>
+        </div>
+    </td>
+    </tr>
+    {%endfor%}
+  </table>
+  <input type="submit" id="change_status" style="display:none;" />
+</form>
+  <div class="left pad10 w300" style="background-color:#e1f3fe;">
+  <form method="post" action="/user/add_contact">
+  <div>
+  
+  <label class="fb">Enter E-mail or Phone</label><br />
+  <input type="text" class="w250 mart10" id="contact" name="contact" />  
+  </div>
+  <div id="contact_error" class="error" style="width:220px;display:none;margin-bottom:10px; margin-top:10px;">Please enter a valid Email/Mobile No.</div>
+
+  <div class="mart20"><button class="btn btn_add_contact" id="add_contact"></button> </div>
+  </form>
+  </div>
+<div class="clear"></div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#add_contact").click(function(){
+        var data = $("#contact").attr("value")
+        if(!isEmailPattern(data) && !isMobilePattern(data)){
+            $('#contact_error').css('display','block');
+            $('#id_message').css('display','none');
+            return false;
+        }
+        $('#contact_error').css('display','none');
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.on').click(function(){
+        if(!$(this).hasClass("bgreen")){
+            var id = this.id;
+            var type = $(this).attr('type');
+            var val = $(this).attr('value');
+            var field_name = "email_alerts";
+            var prefix = "email_";
+            if (type == "phone"){
+                field_name = "sms_alerts";
+                prefix = "phone_";
+            }
+            $(this).removeClass("bgray");
+            $(this).addClass("bgreen");
+            var off_id = prefix + this.id.split("_")[1] + "_off";
+            $('#' + off_id).removeClass("bred");
+            $('#' + off_id).addClass("bgray");
+            var hiddenid = prefix + this.id.split("_")[1] + "_alert";
+            var $hiddenInput = $('<input/>',{type:'hidden',name:field_name,value:val,id:hiddenid});
+            $hiddenInput.appendTo('#notification_form');
+            $("#change_status").click();
+        }
+    });
+    $('.off').click(function(){
+        if(!$(this).hasClass("bred")){
+            var id = this.id;
+            var type = $(this).attr('type');
+            var val = $(this).attr('value');
+            var field_name = "email_alerts";
+            var prefix = "email_";
+            if (type == "phone"){
+                field_name = "sms_alerts";
+                prefix = "phone_";
+            }
+            $(this).removeClass("bgray");
+            $(this).addClass("bred");
+            var on_id = prefix + this.id.split("_")[1] + "_on";
+            $('#' + on_id).removeClass("bgreen");
+            $('#' + on_id).addClass("bgray");
+            var hiddenid = prefix + this.id.split("_")[1] + "_alert";
+            $('#' + hiddenid).remove();
+            $("#change_status").click();
+        }
+    });
+});
+</script>
+{%endblock%}

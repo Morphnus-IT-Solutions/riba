@@ -1,0 +1,23 @@
+<html>
+    <body OnLoad="OnLoadEvent();">
+        <form name="form1" action="{{json.innovitiUrl}}" method="post">
+          <input type="hidden" name="orderId" value="{{json.orderId}}"><br>
+          <input type="hidden" name="merchantId" value="{{json.merchantId}}"><br>
+          <input type="hidden" name="subMerchantId" value="{{json.subMerchantId}}"><br>
+          <input type="hidden" name="amt" value="{{json.amount}}"><br>
+          <input type="hidden" name="chksum" value="{{json.checksum}}"><br>
+          <input type="hidden" name="cur" value="{{json.currency}}"><br>
+          <input type="hidden" name="processingCode" value="{{json.processingCode}}"><br>
+          <input type="hidden" name="proSku" value="{{json.proSku}}"><br>
+          <input type="hidden" name="redirUrl" value="{{json.redirectUrl}}"><br>
+        </form>
+      <script language="JavaScript">
+                
+            function OnLoadEvent() {
+                  document.form1.submit();
+                }
+
+      </script>
+    </body>
+</html>
+

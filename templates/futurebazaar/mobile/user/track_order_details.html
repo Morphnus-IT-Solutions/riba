@@ -1,0 +1,213 @@
+{% extends 'web/base.html' %}
+{% block content %}
+<!--<div class="breadcrumb">&nbsp; </div>-->
+{% load cc_tags %}
+{% load web_tags %}
+<header class="header">
+		<h1 class="header-title">Order Details</h1>
+</header> <!-- /header -->
+<section class="content">
+		{%if error%}
+				{%for err in error%}
+            <div class="error">{{err}}</div>
+				{%endfor%}
+		{%endif%}
+	 
+		{%if order_info%}
+				<div class="mt15">
+						
+						{%if request|is_user_authenticated%}
+							 <p class="btn-icon-left"><a href={% cc_url request "user/orders/" %}>Back to My Orders</a><span class="icon-left icon-bg arrow-left"></span></p>
+						{%endif%}
+						
+						<div class="mt15">
+								<div class="fb-form fb-form-ro fb-form-s mt15 fb-form-select">
+										<ul>
+											 <li>
+												  <div class="dlabel"><span>Order No</span></div>
+												  <div class="fbf-dcant"><span>{{order_info.orderId}}</span></div>
+											 </li>
+											 <li>
+												  <div class="dlabel"><span>Payment Status</span></div>
+												  <div class="fbf-dcant"><span>{{order_info.paymentStatus}}</span></div>
+											 </li>
+											 <li>
+												  <div class="dlabel"><span>Order Date</span></div>
+												  <div class="fbf-dcant"><span>{{order_info.orderSubmissionDate|date:'M d, Y'}}</span></div>
+											 </li>
+											 <li>
+												  <div class="dlabel"><span>Order Receipt</span></div>
+												  <div class="fbf-dcant"><span><a href="#">View Receipt</a></span></div>
+											 </li>
+											 <li>
+												  <div class="dlabel"><span>Qty</span></div>
+												  <div class="fbf-dcant"><span>{{order_info.total_order_qty}}</span></div>
+											 </li>
+											 <li>
+												  <div class="dlabel"><span>Shipping Cost</span></div>
+												  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{order_info.totalShippingCost}}</span></div>
+											 </li>
+											 <li>
+												  <div class="dlabel"><span>Order Value</span></div>
+												  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{order_info.orderAmount}}</span></div>
+											  </li>
+											 <li>
+												  <div class="dlabel"><span>Shipped To</span></div>
+												  <div class="fbf-dcant"><span>{{address.name}}
+														{%if address.address1%}
+														{{address.address1}},<br />
+														{%endif%}
+														{{address.city}} - {{address.pincode}}.<br />
+														{{address.state}}</span>
+												  </div>
+											 </li>
+											 <li>
+												  <div class="dlabel"><span>Phone</span></div>
+												  <div class="fbf-dcant"><span>{{address.phone}}</span></div>
+											 </li>
+										</ul>
+								</div>
+								{%if orders%}
+								<div class="mt15">
+										{%for order in orders%}
+										<ul>
+												<li><a href="{%cc_url request ''%}{%ifequal logged_user.buyer_or_seller "Seller"%}seller{%else%}user{%endifequal%}/orders/{{order.order_id}}/">{{order.order_id}}</a></li>
+												<li>{{order.order_date|date}}</li>
+												<li><span class="WebRupee">Rs.</span> {{order.list_price|money}}</li>
+												<li><span class="WebRupee">Rs.</span> {{order.item_discount|money}}</li>
+												<li><span class="WebRupee">Rs.</span> {{order.shipping_charges|money}}</li>
+												<li><span class="WebRupee">Rs.</span> {{order.amount|money}}</li>
+										</ul>
+										{%endfor%}									 
+								</div>
+								{%endif%}
+						</div>
+						
+						
+						
+						<div class="tac mt15">
+								<div class="tab">
+									 <a id="view-product" class="act">View by Product</a>
+									 <a id="view-status">View by Status</a>
+								</div>
+						</div>
+						
+						<div id="view-product-can">
+								{%for item in order_info.items%}
+								<div class="fb-form fb-form-ro fb-form-s mt15">
+										<ul>
+												<li>
+													<div class="dlabel"><span>Qty</span></div>
+													<div class="fbf-dcant"><span>{{item.qty}}</span></div>
+												</li>
+												<li>
+													<div class="dlabel"><span>Product Description</span></div>
+													<div class="fbf-dcant"><span>{{item.product.title}}, FBID: {{item.product.primary_rate_chart.sku}}</span></div>
+												</li>
+												<li>
+													<div class="dlabel"><span>Product Status</span></div>
+													<div class="fbf-dcant"><span>{{item.productStatus}}</span></div>
+												</li>
+												<li>
+													<div class="dlabel"><span>AWB #</span></div>
+													<div class="fbf-dcant"><span>{{item.awb}}</span></div>
+												</li>
+												
+												<li>
+													<div class="dlabel"><span>Courier Partner</span></div>
+													<div class="fbf-dcant">
+														  {% if item.courierPartner = "Quantium" %}
+																<span><a href="http://www.quantiumsolutions.com/in/" target="blank">Quantium</a></span>
+														  {% endif %}
+														  
+														  {% if item.courierPartner = "Aramex"%}
+																{% if item.awb != "None" and item.awb  %}
+																	 <span><a href="http://www.aramex.com/express/track_results_multiple.aspx?ShipmentNumber={{item.awb}}" target="blank">Aramex</a></span>
+																{% else %}
+																	 <span><a href="http://www.aramex.com/express/track.aspx" target="blank">Aramex</a></span>
+																{% endif %} 
+														  {% endif %}
+														  
+														  {% if item.courierPartner = "TNT India" %}
+																<span><a href="http://www.tnt.com/express/en_in/site/home.html" target="blank">TNT India</a></span>
+														  {% endif %}
+								  
+														  {% if item.courierPartner = "Blue Dart" %}
+																<span><a href="http://www.bluedart.com/maintracking.html" target="blank">Blue Dart</a></span>
+														  {% endif %}
+														  
+														  {% if item.courierPartner != "Quantium" and item.courierPartner != "Aramex" and item.courierPartner != "TNT India" and item.courierPartner != "Blue Dart" %} 
+																<span>{{item.courierPartner}}</span>
+														  {% endif %}
+													</div>
+												</li>
+												<li>
+													<div class="dlabel"><span>Amount</span></div>
+													<div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{item.amount}}</span></div>
+												</li>							  
+										</ul>
+								 </div>
+								{%endfor%}
+								<div class="view-pro-tot fb mt15">
+									 <ul>
+										  <li><div class="label"><span>Shipping &amp; Handling</span></div><div class="dcant"><span><span class="WebRupee">Rs.</span>{{order_info.totalShippingCost}}</span></div></li>
+										  <li><div class="label"><span>Order Total</span></div><div class="dcant"><span><span class="WebRupee">Rs.</span> {{order_info.orderAmount}}</span></div></li>
+									 </ul> 
+								</div>
+						</div>
+						
+						<div id="view-status-can" style="display:none;">
+								{%for item in status_items%}
+										{%for item in item.1%}
+										<div class="fb-form fb-form-ro fb-form-s mt15">
+												<ul>
+														<li>
+															<div class="dlabel"><span>Qty</span></div>
+															<div class="fbf-dcant"><span>{{item.0}}</span></div>
+														</li>
+														<li>
+															<div class="dlabel"><span>Product Description</span></div>
+															<div class="fbf-dcant"><span>{{item.product.title}}, FBID: {{item.product.primary_rate_chart.sku}}</span></div>
+														</li>
+														<li>
+															<div class="dlabel"><span>Shipping &amp; Handling</span></div>
+															<div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{item.shipping_charges}}</span></span></div>
+														</li>
+														<li>
+															<div class="dlabel"><span>Amount</span></div>
+															<div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{item.amount}}</span></div>
+														</li>							  
+												</ul>
+										 </div>
+										{%endfor%}
+								{%endfor%}
+								
+				</div>
+							
+		{%else%}
+						
+		<div class="note">No order found.</td>	
+		{%endif%}
+</section>
+{% endblock %}
+
+{% block script_footer %}
+
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+$('#view-product').click(function(){
+		$(this).addClass('act');
+		$('#view-status').removeClass('act');
+		$('#view-product-can').show();
+		$('#view-status-can').hide();
+    });
+$('#view-status').click(function(){
+		$(this).addClass('act');
+		$('#view-product').removeClass('act');
+		$('#view-product-can').hide();
+		$('#view-status-can').show();
+    });
+});
+</script>
+{%endblock%} 

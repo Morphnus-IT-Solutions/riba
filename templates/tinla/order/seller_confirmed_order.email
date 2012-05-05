@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Order-Confirmation</title>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif; size:12px;">
+<table cellpadding="0" cellspacing="14px" border="0" >
+<tr>
+    <td>Dear {{shop_name}},</td>
+    </tr>
+    <tr>
+    <td>
+        {%ifequal payment_option.payment_mode.code 'cod'%}
+        Received order from {{customer_name}}{%if customer_email%}, {{customer_email}}
+        {%endif%}{%if customer_phone%}, {{customer_phone}}{%endif%}
+         on {{order_payment_date}}. Please ship the following items and collect cash on delivery.{%else%}Received {{seller_total}} from {{customer_name}}{%if customer_email%}, {{customer_email}}{%endif%}{%if customer_phone%}, {{customer_phone}}{%endif%}. Payment received by {{payment_mode_string}} on {{order_payment_date}}. Please ship the following items:{%endifequal%}
+    </td>
+    </tr>
+    {%for item in seller_items%}
+    <tr>
+        <td>
+            {% if seller_multiple_items%}{{forloop.counter}}. {%endif%}{{item.title}} [{{item.sku}}]{%if item.gift%} + {{item.gift}}{%endif%}, MRP {{item.price}}, Quantity: {{item.qty}}
+        </td>
+    </tr>
+    {%endfor%}
+    <tr>
+    <td>
+        Total MRP: {{seller_mrp_total}}<br/>
+        {%if is_seller_discount%}
+            Discount: {{seller_discount}}<br/>{%endif%}
+        {%if is_seller_cashback%}<br/>
+            Cashback: {{seller_cashback}}<br/>{%endif%}
+        {%if seller_shipping_charges%}
+            Shipping Charges: {{seller_shipping_charges}}<br/>{%endif%}
+        {%if seller_coupon_discount%}
+            Special Discount: {{seller_coupon_discount}} {%if coupon%}(Coupon # {{coupon_code}}){%endif%}<br/>{%endif%}
+        Customer Paid: {{seller_total}}
+    </td>
+    </tr>
+    <tr>
+    <td>
+        DELIVERY ADDRESS:<br/>
+        {{delivery_name}}<br/>
+        {{delivery_address}}<br/>
+        {{delivery_city}} - {{delivery_pincode}}<br/>
+        {%if delivery_state%}
+            {{delivery_state}}
+        {%endif%}
+        {%if delivery_country%}
+            {%if delivery_state%}, {%else%}
+        {%endif%}{{delivery_country}}{%endif%}<br/>
+        Phone: {{delivery_phone}}
+    </td>    
+    </tr>
+            {%if delivery_notes %}
+            <tr>
+            <td>
+                DELIVERY NOTES:<br/>
+                {{delivery_notes}}
+            </td>
+            </tr>
+            {%endif%}               
+            {%if delivery_giftmessage%}
+            <tr>
+            <td>
+                GIFT NOTES:<br/>
+                {{delivery_giftmessage}}
+            </td>
+            </tr>
+            {%endif%}    
+    <tr>
+    <td><br/>{{signature|linebreaks}}</td>
+    </tr>
+
+</table>
+</body>
+</html>

@@ -1,0 +1,182 @@
+{%load web_tags%}
+<div class="left" style="height:30px; line-height:30px; width:650px;background-color:#f6f6f6">
+	{% if total_reviews <= 5%}
+		Showing {{total_reviews}} of {{total_reviews}} Review{{total_reviews|pluralize}}
+	{% else %}
+		Showing {{from}} - {{to}} of {{total_reviews}} Reviews
+	{% endif %}
+</div>
+<div class="clear"></div>
+<br/>
+{%for review in product_reviews%}
+	<div class="marb40">
+		<div class="left "style='width:150px;'>
+     		<div style="padding-top:2px;">
+         	   <input type="radio" class="prating-{{review.id}}" value="1" name="rating-{{review.id}}" {%ifequal review.rating 1%}checked{%endifequal%}>
+         	   <input type="radio" class="prating-{{review.id}}" value="2" name="rating-{{review.id}}" {%ifequal review.rating 2%}checked{%endifequal%}>
+         	   <input type="radio" class="prating-{{review.id}}" value="3" name="rating-{{review.id}}" {%ifequal review.rating 3%}checked{%endifequal%}>
+         	   <input type="radio" class="prating-{{review.id}}" value="4" name="rating-{{review.id}}" {%ifequal review.rating 4%}checked{%endifequal%}>
+         	   <input type="radio" class="prating-{{review.id}}" value="5" name="rating-{{review.id}}" {%ifequal review.rating 5%}checked{%endifequal%}>
+            <script type="text/javascript">
+         	   $('.prating-{{review.id}}').rating({readOnly:true});
+            </script>
+   		</div>
+		<div class="clear"></div>
+	  	<div class="f12 fb la" style="color:#343434;margin-top:8px;">{{review.display_name}}</div>
+	<div class="clear"></div>  
+    	<div class="f11 mart5" ><a href="/{{slug}}/review/{{review.id}}">{{review.reviewed_on|date:" d M Y"}}</a></div>
+	</div>
+	<div class="left" style="width:830px;">
+		<div class="f15" style="color:#343434;font-weight:bold;"> {{review.title}}</div>
+		<div class="f12" style='color:#343434;width:830px;'>
+			<p class="mart10">{{review.review|linebreaks}}</p>
+		</div>
+		<div class="left mart10" style="width:700px;height:20px;">
+			{% if not request.user.is_authenticated %}
+				<div class="f11 marr10 left lh25" id="helpful_data{{review.id}}">Was this review Helpful?</div>
+				<div class="left lh25"   style=" height:25px;">
+					<a class="review_like" href="/auth/signin/?next=/{{slug}}/pd/{{product_id}}/all-reviews/" id="like" ><span id="rate_yes_{{review.id}}" >{{review.no_helpful}}</span></a> &nbsp; &middot;&nbsp;
+				    <a class="review_dislike"  href="/auth/signin/?next=/{{slug}}/pd/{{product_id}}/all-reviews/" id="dislike"><span id="rate_no_{{review.id}}">{{review.no_not_helpful}}</span></a>
+				</div>
+				
+			{%else%}
+				{% for k,v in rated_check.items %}
+					{% ifequal k review.id %}
+						{%ifequal v 'NULL'%}
+							<div class="f11 marr10 left lh25" id="helpful_data{{review.id}}">Was this review Helpful?</div>
+							<div class="left marr10 lh25"><a class ="id_help_cancel cp hide" id="{{review.id}}">Trash it!</a></div>
+						{%else%}
+							<div class="f11 marr10 left lh25" id="helpful_data{{review.id}}"> You have rated this review as {{v}}</div>
+							<div class="left marr10 lh25"><a class ="id_help_cancel cp lh25" id="{{review.id}}" >Trash it!</a></div>
+						{% endifequal %}
+						<div class="left lh25">
+							<a class="id_help_yes cp" id="{{review.id}}" >
+							<span id="rate_like_{{review.id}}" >{{review.no_helpful}}</span>
+						    </a> &nbsp;&middot; &nbsp;
+ 							<a class="id_help_no cp" id="{{review.id}}">
+							<span id="rate_dislike_{{review.id}}">{{review.no_not_helpful}}</span>
+							</a>
+						</div>
+									 
+					{% endifequal %}
+
+
+				{% endfor %}
+			{% endif%}
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+{%endfor%}     
+<br/>
+ {% comment %}
+<div class="left marb20">
+	{% if total_reviews <= 5%}
+		Showing {{total_reviews}} of {{total_reviews}} Review{{total_reviews|pluralize}}
+	{% else %}
+		Showing {{from}} - {{to}} of {{total_reviews}} Reviews
+ 	{% endif %}
+</div>
+{% endcomment %}
+{%if pagination.enable_prev or pagination.enable_next%}
+    <div class="marb10 pagination right"> {% if pagination.enable_prev %} <a class="read_pagination cp" id="{{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+	    {% for page in pagination.first_set %} <a class="read_pagination cp" id="{{page}}">{{page}}</a> {% endfor %}
+        {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+        {% for page in pagination.prev_set %} <a class="read_pagination cp" id="{{page}}">{{page}}</a> {% endfor %}
+   		<div>{{pagination.cur_page}}</div>
+      	{% for page in pagination.next_set %} <a class="read_pagination cp" id="{{page}}">{{page}}</a> {% endfor %}
+      	{% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+      	{% for page in pagination.last_set %} <a class="read_pagination cp" id="{{page}}">{{page}}</a> {% endfor %}
+      	{% if pagination.enable_next %} <a class="read_pagination cp" id="{{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {%endif%} 
+	</div> 
+{%endif%} 
+     
+<script language="javascript" type="text/javascript">
+$(".id_help_yes").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+    var rev = $.parseJSON(ajax_response);
+        $('#rate_like_'+review_id).html(rev.no_helpful);
+        $('#rate_dislike_'+review_id).html(rev.no_not_helpful);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.You have rated this review helpful")
+        $('.id_help_cancel#'+review_id).removeClass('hide');
+        $('.id_help_cancel#'+review_id).addClass('show');
+      }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-yes/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+$(".id_help_no").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+        var rev = $.parseJSON(ajax_response); 
+        $('#rate_like_'+review_id).html(rev.no_helpful);
+        $('#rate_dislike_'+review_id).html(rev.no_not_helpful);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.You have rated this review unhelpful")
+        $('.id_help_cancel#'+review_id).removeClass('hide');
+        $('.id_help_cancel#'+review_id).addClass('show');
+   
+}
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-no/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+$(".id_help_cancel").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+			var rev = $.parseJSON(ajax_response);
+	     	$("#rate_like_"+review_id).html(rev.no_helpful);
+			$("#rate_dislike_"+review_id).html(rev.no_not_helpful);
+            $('#helpful_data'+review_id).html("You have trashed your feedback.You can rate it again");
+            $('.id_help_cancel#'+review_id).removeClass('show');
+            $('.id_help_cancel#'+review_id).addClass('hide');
+    
+    
+    }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-cancel/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+
+</script>
+<script language="javascript" type="text/javascript">
+$('.read_pagination').click(function(){
+    var page_no = $(this).attr('id')
+    var onsuccess = function(response){
+        $('#product_reviews').html(response);
+        location.href = '#read_reviews'
+    }
+    var onerror = function(){
+    }
+    var data = "page="+page_no + "&product_id="+"{{product_id}}&sort={{sort}}";
+    $.ajax({
+        type: "GET",
+        url: "/product/read-reviews/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+</script>
+

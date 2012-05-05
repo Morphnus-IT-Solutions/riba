@@ -1,0 +1,24 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+	{%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+	<div class="content_head">
+		<div class="header rc5">
+		  <h1>{{request.client.client.name|title}} - Category Management Dashboard</h1>
+		</div>
+		<div class="clear bordergray"></div>
+	</div>
+	<div class="inner-content">
+		<ul>
+			<li class="f12"><a href="/category/category_management/inventory/"><span class="left">Inventory</span><div class="clear"></div></a></li>
+			<li class="f12"><a href="/category/category_management/pricing/"><span class="left">Pricing</span><div class="clear"></div></a></li>
+			{%comment%}
+			<li class="f12"><a href="/category/category_management/velocity/"><span class="left">velocity</span><div class="clear"></div></a></li>
+			{%endcomment%}
+		</ul>
+	</div>
+</div>
+{%endblock%} 

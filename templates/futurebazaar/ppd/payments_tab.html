@@ -1,0 +1,38 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+	{%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+	<div class="content_head">
+		<div class="header rc5">
+		  <h1>{{request.client.client.name|title}} - Payments Dashboard</h1>
+		</div>
+		<div class="clear bordergray"></div>
+	</div>
+	<div class="inner-content">
+		<ul>
+			{%if "Payments-Option Settings" in request|tabs%}
+				<li class="f12"><a href="/payments/option_settings/"><span class="left cursorp">Option Settings</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "Payments-Channel Settings" in request|tabs%}
+				<li class="f12"><a href="/payments/channel_settings/">Channel Settings</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "Payments-Payouts" in request|tabs%}
+				<li class="f12"><a href="/payments/payouts/"><span class="left cursorp">Payouts</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "Payments-Recon Reports" in request|tabs%}
+				<li class="f12"><a href="/payments/recon_reports/"><span class="left cursorp">Recon Reports</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "Payments-Marketplace Rec" in request|tabs%}
+				<li class="f12"><a href="/payments/marketplace_receivables/"><span class="left cursorp">Marketplace Receivables</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "Payments-Risk" in request|tabs%}
+				<li class="f12"><a href="/payments/risk/"><span class="left cursorp">Risks</span><div class="clear"></div></a></li>
+			{%endif%}
+		</ul>
+	</div>
+</div>
+
+{%endblock%} 

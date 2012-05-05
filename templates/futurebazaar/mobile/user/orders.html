@@ -1,0 +1,61 @@
+{% extends 'web/base.html' %}
+{% block content %}
+<!--<div class="breadcrumb">&nbsp; </div>-->
+{% load cc_tags %}
+<header class="header">
+	<h1 class="header-title">My Order</h1>
+</header>
+<section class="content">
+	<p>Track your packages and see the history of your orders placed with us. Click on the order numbers to view details of your order. </p>
+	
+    {%if orders%}
+    {%for order in orders%}
+	<div class="mt15">
+		 <div class="fb-form fb-form-ro fb-form-s mt15">
+			  <ul><a href="{%cc_url request ''%}{%ifequal logged_user.buyer_or_seller "Seller"%}seller{%else%}user{%endifequal%}/orders/{{order.order_id}}/">
+				  <li>
+					  <div class="dlabel"><span>Order No</span></div>
+					  <div class="fbf-dcant"><span class="cb">{{order.order_id}}</span></div>
+				  </li>
+				  <li>
+					  <div class="dlabel"><span>Order Date</span></div>
+					  <div class="fbf-dcant"><span>{{order.order_date|date:"M d, Y"}}</span></div>
+				  </li>
+				  <li>
+					  <div class="dlabel"><span>Payable Amount</span></div>
+					  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span>{{order.amount|money}}</span></div>
+				  </li>
+				  <li>
+					  <div class="dlabel"><span>Address</span></div>
+					  <div class="fbf-dcant"><span>{{order.shippingaddress}}</span></div>
+				  </li>
+				  <li>
+					  <div class="dlabel"><span>Status</span></div>
+					  <div class="fbf-dcant"><span>{{order.paymentstatus}}</span></div>
+				  </li>
+				  </a>
+			  </ul>
+		  </div>
+	</div>
+	{%endfor%}
+    {%if pagination.enable_prev or pagination.enable_next%}
+        <div class="pagination mt15 tac"> {% if pagination.enable_prev %} <a href="{{pagination.base_url}}?page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+            {% for page in pagination.first_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+            {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+            <div>{{pagination.cur_page}}</div>
+            {% for page in pagination.next_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+            {% for page in pagination.last_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.enable_next %} <a href="{{pagination.base_url}}?page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+        </div>
+    {%endif%}
+{%else%}
+    <p>No order found.</p>
+{%endif%}
+</section>
+ <script type="text/javascript" language="javascript">
+	  $('.fb-form-ro').click(function () { $(this).toggleClass('fb-form-select'); });
+	  $(document).ready(function(){ $('.actab').addClass('act'); });
+ </script>
+ {%endblock%}	 

@@ -1,0 +1,105 @@
+{% extends 'web/ppd_base.html' %}
+{% load ppd_tags %}
+
+{% block content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+	}
+	table, td, th {
+		vertical-align: middle;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+	.tbl_profile input[type="text"], .tbl_profile input[type="password"], .tbl_profile input.text, .tbl_profile input.title, .tbl_profile textarea, .tbl_profile select {
+		margin: 0;
+		width: 250px;
+	}
+</style>
+<div class="padding_top10">
+{%comment%}
+<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+{%endcomment%}
+<div class="content_head">
+  <div class="header rc5">
+    <h1>{{request.client.client.name|title}} - Fulfillment</h1>
+  </div>
+  <div class="clear bordergray"></div>
+</div>
+  <div class="clear padding_top10">Welcome to the IFS update interface.<br />Please choose the table and the action to be performed on it.</div>
+    <div class="margin-t20">
+        <form name="ifs_table_display" id="table_form" action="" method="POST">
+            <table class="tbl_profile">
+			   <tbody>
+			   	<tr>
+				  <td width="160" class="f11 flgray ">Tables</td>
+				  <td>
+				  	<select name="table" id="tables_id" class="f10 fgray">
+					  {%for table,action in table_dict.iteritems%}
+						 <option class="f11 fdgray option" {%ifequal table selected_table %} selected="selected"{%endifequal%} value="{{table}}">{{table}}</option>
+					   {%endfor%}
+					</select>
+				  </td>
+				</tr>
+			   	<tr>
+				  <td width="160" class="f11 flgray ">Actions</td>
+				  <td>
+				  	<select name="action" id="actions_id" class="f10 fgray">
+					</select>
+				  </td>
+				</tr>
+				</tr>
+			   	<tr>
+				  <td width="160"></td>
+				  <td><input type="submit" name="submit" value="Submit" class="uiButton" /></td>
+				</tr>
+			  </tbody>
+	  		</table>
+			
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+var table_list = new Array({{table_dict.keys|length}});
+
+{%for table in table_dict.keys%}
+    table_list[{{forloop.counter0}}] = ['{{table}}','{{table}}'];
+{%endfor%}
+
+var actions = new Array({{table_dict.keys|length}});
+
+{%for table, actions in table_dict.iteritems%}
+    actions[{{forloop.counter0}}] = new Array({{actions|length}});
+    {%for action in actions%}
+        actions[{{forloop.parentloop.counter0}}][{{forloop.counter0}}] = ['{{action}}','{{action}}'];
+    {%endfor%}
+{%endfor%}
+
+var action_input = $('#actions_id');
+for(i=0; i<actions[0].length; i++) {
+    action_input.get(0).options[i] = new Option(actions[0][i][0],actions[0][i][1]);
+}
+
+$('#tables_id').change(function() {
+    var index = this.selectedIndex;
+    action_input.get(0).options.length = 0;
+    var new_actions = actions[index];
+    for(i=0; i<new_actions.length; i++) {
+        action_input.get(0).options[i] = new Option(new_actions[i][0],new_actions[i][1]);
+    }
+});
+
+</script>
+
+
+{% endblock %}
+{% block script_footer %}
+    <script type="text/javascript">
+        $("#back_button").click(function(){
+            history.go(-1);
+            return true;
+        })
+    </script>
+{% endblock %}
+

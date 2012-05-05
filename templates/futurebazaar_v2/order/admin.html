@@ -1,0 +1,64 @@
+{% extends 'web/base.html' %}
+{% load cc_tags %}
+{% block content %}
+<div>
+<div class="breadcrumb">
+  	&nbsp;  
+  	</div>
+   <div class="cart_left">      
+   <div id="checkout_tabs">
+    <ul>        
+        <li class="selected"><div class="step_no">1</div><div class="step1">{% ifequal action '/orders/cancel/' %}Specify order id to cancel {%else%}Confirm the Order ID{%endifequal%}</div> </li>   
+    </ul>
+  
+</div>
+    <div class="clear"></div>
+    <form method="POST" action="{{action}}" name="myform">
+    <table cellpadding="0" cellspacing="0" class="checkout_table">
+           <tr>
+           <td colspan="2">
+                <div class="error hidden" id="error"></div>
+        		 {% if error %}
+                  <div class="error">{{error}}</div>
+                  {% else %}
+                   <hr class="space"/>
+                  {% endif %}
+           </td>
+           </tr>
+            <tr>
+                <td class="label" width="200">Enter Order ID</td>
+                <td>
+                    <input type="text" id="order_id" name="order_id" />
+                </td>
+            </tr>            
+            <tr>
+                <td></td>
+                <td colspan="2">
+                        <input value="Proceed" id="proceed" type="image" alt="Proceed" src="{{MEDIA_URL}}images/pixel.gif" class="btn_proceed"/>
+                </td>
+            </tr>
+    </table>
+    </form>
+    </div>
+     <div class="cart_right">
+        {% include "order/right.html" %}
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+document.myform.order_id.focus();
+    $('#proceed').click(function(){
+            var order_id = $('#order_id').val();
+            if(! order_id || order_id == null || order_id == ''){
+            $('#error').removeClass('hidden');
+            $('#error').html('Please enter order ID.');
+            return false;
+            }
+            else{
+                $('#error').addClass('hidden');
+            }
+            });
+
+</script>
+{% endblock %}
+

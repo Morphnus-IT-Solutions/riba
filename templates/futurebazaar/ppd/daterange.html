@@ -1,0 +1,169 @@
+<style type="text/css">
+	button{top:0em\9;}
+</style>
+<div class="left">
+    {% if client_name %}
+    <span class="fb fdgray  f18">{{client_name}} - {{title}}</span>
+    {% else %}
+        <span class="fb fdgray f18">{{title}}</span>
+    {% endif %}
+    {% if from_date == to_date %}
+     <div class="f11 la"> {{from_date|date:"d M, Y"}}</div>
+    {% else %}
+    <div class="f11 la"> {{from_date|date:"d M, Y"}} - {{to_date|date:"d M, Y"}} </div>
+    {% endif %}
+</div>
+<div id="dr_container">
+<form method="get" name='test'>
+    <ul class="date_range">
+      <li class= {% if search_trend == "day" %} "sel_dr" {%else%} "white" {%endif%} id="id_day">Day</li>
+      <li class= {% if search_trend == "week" %} "sel_dr" {%else%} "white" {%endif%} id="id_week">Week</li>
+      <li class= {% if search_trend == "mtd" %} "sel_dr" {%else%} "white" {%endif%} id="id_mtd">MTD</li>
+      <li id="li_dr">
+        <input readonly=True type="text" id="dr" class="cursorp" value="{{from_date|date:'d M Y'}} - {{to_date|date:'d M Y'}}" />
+      </li>
+    </ul>
+    <div id="sr" style="display:none;">
+      <table class="tbl_sr" style="margin-bottom:0 !important">
+        <tr>
+          <td>From&nbsp;</td>
+          <td><input readonly=True type="text" Name="from" id="id_from" Autocomplete=OFF value="{{from_date|date:'d M Y'}}"/></td>
+          <td class="ra">To&nbsp;</td>
+          <td><input readonly=True type="text" Name="to" id="id_to" Autocomplete=OFF value="{{to_date|date:'d M Y'}}"/></td>
+          <td><button class="uiButton f11" id="id_apply" disabled="disabled">Apply</button></td>
+        </tr>
+      </table>
+    </div>
+  </form>
+ </div>
+<div class="clear"></div>
+
+<script type="text/javascript" language="javascript">   
+ $(document).ready(function(){
+	$("#dr").toggle(function() {
+			$( "#sr" ).show("fast", 0);
+			return false; 
+		}, function() {
+			$( "#sr" ).hide("fast", 0);
+			return false;
+	});
+	
+   $('#id_from').datepicker({dateFormat: 'dd M yy', maxDate:'0',
+        onSelect: function(){
+            $('#id_to').datepicker('enable');
+            if ($('#id_from').val() > $('#id_to').val()) {
+				$('#id_to').val('');
+            }
+            document.getElementById('id_apply').disabled = false;
+        },
+    });
+    
+	$('#id_to').datepicker({dateFormat: 'dd M yy', minDate:$('#id_from').val(), maxDate:'0',
+        beforeShow: function(){
+            var newDate = $('#id_from').datepicker('getDate');
+            if(newDate){
+                $('#id_to').datepicker('option','minDate', newDate);                   
+            }
+            else{
+                $('#id_to').datepicker('disable'),True;
+            }
+        },
+    });
+	
+    $('#id_apply').click(function(){
+        var url_path = '{{url|safe}}' ;    
+        if('{{args}}' == "orders" ){
+            url_path += "seller=" + $('#id_seller').val() + "&";
+        }
+        else if('{{args}}' == "cc_report"){
+            url_path += "did_no=" + $('#id_did').val() + "&agent=" + $("#id_agent").val() + "&";
+        }
+        else if('{{args}}' == "call_data"){
+            url_path += "call_type=" + $('#id_call_type').val() + "&agent=" + $("#id_agent").val() + "&";
+        }
+        url_path += "from=" + $('#id_from').val() + "&to=" + $('#id_to').val() + "&source=" + $('#id_source').val();
+        var type = '{{typ}}';
+        if (type == "best_performing_sellers" || type == "seller_report" || type == "client_report" || type == "store_report" || type == "report_by_geography"){
+            url_path +="&typ={{typ}}";
+        }
+        location.href = url_path;
+    });
+
+    $('#id_day').click(function(){
+            url_path = '{{url|safe}}';
+            url_path = url_path.replace('&search_trend=day&','');
+            url_path = url_path.replace('&search_trend=week&','');
+            url_path = url_path.replace('&search_trend=mtd&','');
+            url_path = url_path + "&search_trend=day"
+
+       if('{{args}}' == "orders"){
+            url_path += "&seller=" + $('#id_seller').val();
+        }
+        else if('{{args}}' == "cc_report"){
+            url_path += "&did_no=" + $('#id_did').val() + "&agent=" + $("#id_agent").val();
+        }
+        else if('{{args}}' == "call_data"){
+            url_path += "&call_type=" + $('#id_call_type').val() + "&agent=" + $("#id_agent").val();
+        }
+        if($('#id_source')){
+            //url_path += "&source=" + $('#id_source').val();
+            }
+        var type = '{{typ}}';
+        if (type == "best_performing_sellers" || type == "seller_report" || type == "client_report" || type == "store_report" || type == "report_by_geography"){
+            url_path +="&typ={{typ}}";
+        }
+
+        location.href = url_path
+    });
+    $('#id_week').click(function(){
+            url_path = '{{url|safe}}';
+            url_path = url_path.replace('&search_trend=day&','');
+            url_path = url_path.replace('&search_trend=week&','');
+            url_path = url_path.replace('&search_trend=mtd&','');
+            url_path = url_path + "&search_trend=week"
+       if('{{args}}' == "orders"){
+            url_path += "&seller=" + $('#id_seller').val();
+        }
+        else if('{{args}}' == "cc_report"){
+            url_path += "&did_no=" + $('#id_did').val() + "&agent=" + $("#id_agent").val();
+        }
+        else if('{{args}}' == "call_data"){
+            url_path += "&call_type=" + $('#id_call_type').val() + "&agent=" + $("#id_agent").val();
+        }
+        if($('#id_source')){
+            //url_path += "&source=" + $('#id_source').val();
+            }
+         var type = '{{typ}}';
+        if (type == "best_performing_sellers" || type == "seller_report" || type == "client_report" || type == "store_report" || type == "report_by_geography"){
+            url_path +="&typ={{typ}}";
+        }
+           
+        location.href = url_path;
+    });
+    $('#id_mtd').click(function(){
+            url_path = '{{url|safe}}';
+            url_path = url_path.replace('&search_trend=day&','');
+            url_path = url_path.replace('&search_trend=week&','');
+            url_path = url_path.replace('&search_trend=mtd&','');
+            url_path = url_path + "&search_trend=mtd"
+        if('{{args}}' == "orders"){
+            url_path += "&seller=" + $('#id_seller').val();
+        }
+        else if('{{args}}' == "cc_report"){
+            url_path += "&did_no=" + $('#id_did').val() + "&agent=" + $("#id_agent").val();
+        }
+        else if('{{args}}' == "call_data"){
+            url_path += "&call_type=" + $('#id_call_type').val() + "&agent=" + $("#id_agent").val();
+        }
+        if($('#id_source')){
+            //url_path += "&source=" + $('#id_source').val();
+            }
+        var type = '{{typ}}';
+        if (type == "best_performing_sellers" || type == "seller_report" || type == "client_report" || type == "store_report" || type == "report_by_geography"){
+            url_path +="&typ={{typ}}";
+        }
+
+        location.href = url_path;
+    });
+});
+</script>

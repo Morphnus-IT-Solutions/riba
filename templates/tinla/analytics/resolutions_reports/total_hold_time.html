@@ -1,0 +1,17 @@
+{%extends 'web/base.html' %}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+            {%include "callcenter_reports/phone_pe_deal_header.html"%}
+{%endblock%}
+{%block content %}
+
+{% daterange "Total hold time" search_trend from_date to_date request "call_data"%}
+
+<br>
+{%table_display_with_bar request total_hold_time_dict.list "" "excel" %}
+
+<br>
+<br>
+
+{%endblock%}

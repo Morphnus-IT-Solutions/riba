@@ -1,0 +1,111 @@
+{%load order_tags%}
+  {% if user.is_authenticated %}
+<div class="user_account_tabs">
+  <div class="menu">
+    <ul id="menu_account">
+      {%if request|group_check:"management"%}
+      <li class="order_tab item2"><a href="/dashboards_tab/sales" >Sales</a>
+        <ul class="menu_account_sub">
+          {%include 'analytics/dashboards/sales.html'%}
+        </ul>
+      </li>
+      {%endif%}
+      
+      {%if request|group_check:"marketing"%}
+      <li class="order_tab item5"><a href="/dashboards_tab/marketing">Marketing</a>
+        <ul class="menu_account_sub">
+          {%include 'analytics/dashboards/marketing.html'%}
+        </ul>
+      </li>
+      {%endif%}
+      
+      {%if request|group_check:"category"%}
+      <li class="order_tab item3"><a href="/dashboards_tab/category">Category</a>
+        <ul class="menu_account_sub">
+          {%include 'analytics/dashboards/category.html'%}
+        </ul>
+      </li>
+      {%endif%}
+      
+      {%if request|group_check:"cs"%}
+      <li class="order_tab item4"><a href="/dashboards_tab/cs">Customer First</a>
+        <ul class="menu_account_sub">
+          {%include 'analytics/dashboards/cs.html'%}
+        </ul>
+      </li>
+      {%endif%}
+      
+      {%if request|group_check:"scm"%}
+      <li class="order_tab item6"><a href="/dashboards_tab/scm">Fulfillment</a>
+        <ul class="menu_account_sub">
+          {%include 'analytics/dashboards/scm.html'%}
+        </ul>
+      </li>
+      {%endif%}
+      
+      {%if request|group_check:"data"%}
+      <li class="order_tab item7"><a href="/dashboards_tab/data">Data</a>
+        <ul class="menu_account_sub">
+          {%include 'analytics/dashboards/data.html'%}
+        </ul>
+      </li>
+      {%endif%}
+      
+      {%if request.user.is_superuser%}
+      <li class="order_tab item8"><a href="/dashboards_tab/admin">Admin</a>
+        <ul class="menu_account_sub" >
+          {%include 'analytics/dashboards/admin.html'%}
+        </ul>
+      </li>
+      <li class="order_tab item9"><a href="/dashboards_tab/user">User</a>
+        <ul class="menu_account_sub" >
+          {%include 'analytics/dashboards/user.html'%}
+        </ul>
+      </li>
+      {%endif%}
+    </ul>
+    <script type="text/javascript">
+	$(document).ready(function() { 
+		$("#menu_account li.item").hover(function(){
+		if ($(this).hasClass("sel_menu")){
+		$(this).removeClass("sel_menu");
+		}
+		else{
+		$(this).addClass("sel_menu");
+		}
+		//    $(".order_list").toggle();
+		});
+		
+		{%if dashboard%}
+			{%ifequal dashboard "sales"%}
+				$("ul#menu_account li.item2").addClass('sel_menu');
+			{%endifequal%}
+			{%ifequal dashboard "category"%}
+				$("ul#menu_account li.item3").addClass('sel_menu');
+			{%endifequal%}
+			{%ifequal dashboard "cs"%}
+				$("ul#menu_account li.item4").addClass('sel_menu');
+			{%endifequal%}
+			{%ifequal dashboard "marketing"%}
+				$("ul#menu_account li.item5").addClass('sel_menu');
+			{%endifequal%}
+			{%ifequal dashboard "scm"%}
+				$("ul#menu_account li.item6").addClass('sel_menu');
+			{%endifequal%}
+			{%ifequal dashboard "data"%}
+				$("ul#menu_account li.item7").addClass('sel_menu');
+			{%endifequal%}
+			{%ifequal dashboard "admin"%}
+				$("ul#menu_account li.item8").addClass('sel_menu');
+			{%endifequal%}
+			{%ifequal dashboard "user"%}
+				$("ul#menu_account li.item9").addClass('sel_menu');
+			{%endifequal%}
+		{%endif%}
+	});
+</script>
+  </div>
+</div>
+{% else %}
+<div class="bbo"></div>
+{% endif %} 

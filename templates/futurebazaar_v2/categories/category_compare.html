@@ -1,0 +1,67 @@
+{%extends "web/base.html"%}
+{%load web_tags%}
+{%load cc_tags%}
+{%block content%}
+<div id="breadcrumb"> <a href="/">Home</a> &raquo;&nbsp;<a href="/{{category.slug}}/ch/{{category.id}}/">{{category.name}}</a> </div>
+<div id="compare_page">
+  <div class="search_header marb10">
+    <h1>Compare {{category.name}}</h1>
+  </div>
+  <div class="greed_view">
+    <ul class="greed">
+     <li style="width:240px;">&nbsp;</li>
+      {%for product in product_info%}
+
+      <li style="width:240;">
+        <div class="greed_prod">
+        <h3><a href="/{{product.product.url}}" title="{{product.product.title}}">{{product.product.title|truncate:40}}</a></h3>
+        
+         <div class="ca"><a href="/{{product.product.url}}"> <img src="{{ product.product.search_image }}" title="{{product.product.title}}" alt="{{product.product.title}}"/> </a>
+        {%if request|isAnySaving:product.rateChart %}  
+            <div class="sptwo save fblack">Save<br>
+                <span class="WebRupee">Rs.</span> {% getSavings request product.rateChart %}
+            </div> 
+        {%endif%}
+         </div>
+        <div class="price ca">
+          <div class="marb5">{% get_price_info request product.rateChart 'list_price_label' %}<span class="fs"> <span class="WebRupee">Rs.</span> {% get_price_info request product.rateChart 'list_price' %}</span></div>
+          <div class="fb f18 forange2 marb5">{% get_price_info request product.rateChart 'offer_price_label' %} <span class="WebRupee">Rs.</span> {% get_price_info request product.rateChart 'offer_price' %}</div>
+          <div class="ca"> <a href="/{{product.product.url}}">
+            <button class="btn btn_buynow"></button>
+            </a> </div>
+        </div>
+      </li>
+      {%endfor%}
+
+
+    </ul>
+  </div>
+  <div class="clear"></div>
+  <div class="search_header mart10">
+    <h1>Specification</h1>
+  </div>
+{% if datas %}
+<div class="product_desc_details">
+<div class="product_features">
+{% for data in datas %}
+    <div class="featuregroup">
+       <h3>{{data.name}}</h3>
+        {% for feature in data.features %}
+        <table class="feature {%if not forloop.last%}collapse{%endif%}">
+	    <tr>
+        	    <td width="220" class="featurelabel fdgray">{{feature.name}}</td>
+		{%for value in feature.values%}
+        	    <td width="230" class="featurevalue">{{value|safe}}</td>
+		{%endfor%}	            
+	    </tr>
+        </table>
+        {% endfor %}
+    </div>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+{%endblock%} 

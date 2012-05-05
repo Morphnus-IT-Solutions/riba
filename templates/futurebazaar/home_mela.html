@@ -1,0 +1,61 @@
+{% extends "web/base.html" %}
+{% load cc_tags %}
+{% block content %}
+<style>
+  .home_mela_wrapper{background:#e7e7e7;padding-bottom:30px;}
+  .home_mela_prod{width:185px; height:196px; float:left;  background-position:0 0; background-repeat:no-repeat; margin-right:6px;margin-bottom:6px; font-size:18px; color:#333; text-decoration:none !important; border:1px solid #e7e7e7;}
+  a:hover .home_mela_prod{text-decoration:none !important; border:1px solid #df007e; box-shadow:0px 0px 2px #ccc; -moz-box-shadow:0px 0px 2px #ccc; -webkit-box-shadow:0px 0px 2px #ccc;}
+  .home_mela_wrapper a:hover{text-decoration:none;}
+  .home_off{color:#df007e; padding:5px 10px 0px; font-size:15px;}
+  .home_cat{padding:10px 10px 0px;}
+  .home_mela_prod.auto-care{background-image:url('/media/images/auto-care.gif');}
+  .home_mela_prod.bed-bath{background-image:url('/media/images/bed&-bath.gif');}
+  .home_mela_prod.kitchen-dining{background-image:url('/media/images/Kitchen-&-Dining.gif');}
+  .home_mela_prod.luggage{background-image:url('/media/images/Luggage.gif');}
+  .home_mela_prod.home-improvement{background-image:url('/media/images/Home-Impowerment.gif');}
+  
+  .home_mela_prod.toys-games{background-image:url('/media/images/Toys-&-Games.gif');}
+  .home_mela_prod.home-decor{background-image:url('/media/images/Home-decor.gif');}
+  .home_mela_prod.home-furnishing{background-image:url('/media/images/Home-furnishing.gif');}
+  .home_mela_prod.sports-outdoor{background-image:url('/media/images/Sports-&-Outdoor.gif');}
+  .home_mela_prod.kitchen-appliances{background-image:url('/media/images/Kitchen-appliances.gif');}
+</style>
+ <div class="home_mela_wrapper mart10">
+  <img src="/media/images/home-mela-banner.gif">
+  <div class="mart10" style="padding-left:11px;">
+
+    {% for data in mela_data %}
+        <a href="{% cc_url request data.link %}" title="{{data.category_name}}">
+        <div class="home_mela_prod {{data.slug}}">
+         <div class="home_cat">{{data.category_name}} <img src="/media/images/home-mela-landing-arrow.gif"/></div>
+          <div class="home_off">UPTO {{data.discount}}% OFF</div>
+        </div>
+        </a>
+    {% endfor %}
+    <div class="clear"></div>
+  </div>
+ </div>
+ {%endblock%}
+
+{%block script_footer%}
+{{block.super}}
+ <!-- Google Code for Home Mela Remarketing List -->
+ <script type="text/javascript">
+     /* <![CDATA[ */
+     var google_conversion_id = 989445909;
+     var google_conversion_language = "en";
+     var google_conversion_format = "3";
+     var google_conversion_color = "ffffff";
+     var google_conversion_label = "e6SlCPuqzwMQlf7m1wM";
+     var google_conversion_value = 0;
+     /* ]]> */
+ </script>
+ <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+ </script>
+ <noscript>
+     <div style="display:inline;">
+         <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/989445909/?label=e6SlCPuqzwMQlf7m1wM&amp;guid=ON&amp;script=0"/>
+     </div>
+ </noscript>
+ <!--home mela-->
+{%endblock%}

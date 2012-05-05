@@ -1,0 +1,158 @@
+                                {%load cc_tags%} 
+                                {%if not request|is_future_ecom%}
+                                {%if po.is_instant%}
+                                <input type="image" class="btn_confirmnow right" id="confirmnow" src="{{MEDIA_URL}}images/pixel.gif" name="confirmnow" alt="Confirm Now"  title="Confirm Now" />  {%if po.is_noninstant%}
+                                <div class="right" id="or">&nbsp;&nbsp;or&nbsp;&nbsp;</div>
+                                {%endif%}
+                                {%endif%}
+                                {%endif%}
+                                {%if po.is_noninstant%}
+                                <div style="margin-top:3px;" class="right">
+                                    {%if request|is_future_ecom%}
+                                    <input type="image" class="btn_bookorder left" id="bookorder" name="bookorder" src="{{MEDIA_URL}}images/pixel.gif" title="Book this order now"/>
+                                    {%else%}
+                                    <button class="linkButton left" id="link_confirmlater" name="link_confirmlater" title="Confirm this order later">Confirm this order later</button>
+                                    {%endif%}
+                                </div>
+                                {%endif%}
+
+            <input type="hidden" id="state_map" value="{{state_map}}"/>
+            <script type="text/javascript">
+            $('#bookorder').click(function(){
+                var payment_mode = $('#selected_payment_mode').val();
+                if (payment_mode == 'credit-card' || payment_mode == 'credit-card-emi-web' || payment_mode == 'credit-card-emi-ivr')
+                {
+                    var return_flag = false;
+                    var onSuccess = function(responseText){
+                        if(responseText){
+                            var response = $.parseJSON(responseText);
+                            if(response.status == 'ok')
+                            {
+                                return_flag = true;
+                            }
+                            if(response.status == 'error')
+                            {
+                                $('#billing_form_errors_div').removeClass('hidden');
+                                var error_msg = '<ul>';
+                                for(var key in response.error)
+                                {
+                                    if(response.error[key])
+                                    {
+                                        for (var i in response.error[key])
+                                        {
+                                            error_msg = error_msg + '<li>' + response.error[key][i] + '</li>';
+                                        }
+                                    }
+                                }
+                                error_msg = error_msg +  '</ul>';
+                                $('#billing_form_errors_div').html(error_msg);
+
+                            }//end of if response.status == error
+                        }
+                    };
+                    var onError = function(){
+                        alert("Entered onError in book_buttons.html");
+                    };
+                    var form_data = $('#billing_info_form').serialize();
+                    $.ajax({
+                        url: '/orders/validate_billing_info_form/',
+                        data: form_data,
+                        success: onSuccess,
+                        error: onError,
+                        async: false,
+                        type: "POST"
+                    });
+                    return return_flag;
+                }
+            });
+
+
+            $('#link_confirmlater').click(function(){
+                var payment_mode = $('#selected_payment_mode').val();
+                if (payment_mode == 'credit-card')
+                {
+                    var return_flag = false;
+                    var onSuccess = function(responseText){
+                        if(responseText){
+                            var response = $.parseJSON(responseText);
+                            if(response.status == 'ok')
+                            {
+                                return_flag = true;
+                            }
+                            if(response.status == 'error')
+                            {
+                                $('#billing_form_errors_div').removeClass('hidden');
+                                var error_msg = '<ul>';
+                                for(var key in response.error)
+                                {
+                                    if(response.error[key])
+                                    {
+                                        for (var i in response.error[key])
+                                        {
+                                            error_msg = error_msg + '<li>' + response.error[key][i] + '</li>';
+                                        }
+                                    }
+                                }
+                                error_msg = error_msg +  '</ul>';
+                                $('#billing_form_errors_div').html(error_msg);
+
+                            }//end of if response.status == error
+                        }
+                    };
+                    var onError = function(){
+                        alert("Entered onError in book_buttons.html");
+                    };
+                    var form_data = $('#billing_info_form').serialize();
+                    $.ajax({
+                        url: '/orders/validate_billing_info_form/',
+                        data: form_data,
+                        success: onSuccess,
+                        error: onError,
+                        async: false,
+                        type: "POST"
+                    });
+                    return return_flag;
+                }
+            });
+
+
+            $("#id_billing_pincode").blur(function(){
+                $('<img src="{{MEDIA_URL}}images/wait20.gif" />').prependTo("#cityname_image").attr('prepended','yes').fadeOut(2500);
+                $('<img src="{{MEDIA_URL}}images/wait20.gif" />').prependTo("#statename_image").attr('prepended','yes').fadeOut(3000);
+                $('<img src="{{MEDIA_URL}}images/wait20.gif" />').prependTo("#countryname_image").attr('prepended','yes').fadeOut(3500);
+                var jData=$("#id_billing_pincode").val();
+                function getLocation(jData){
+                    $('#id_billing_city').attr('disabled','disabled');
+                    $('#id_billing_state').attr('disabled','disabled');
+                    $('#id_billing_country').attr('disabled','disabled');
+                    var country = 'IN';
+                    var postalcode = jData;
+                    var requesturl = 'http://api.geonames.org/postalCodeLookupJSON?postalcode=' + postalcode  + '&country=' + country  + '&username=shagun';
+                    $.get(requesturl, function(data){
+                        $("[prepended=yes]", "#cityname_image").remove();
+                        $("[prepended=yes]", "#statename_image").remove();
+                        $("[prepended=yes]", "#countryname_image").remove();
+                        $('#id_billing_city').removeAttr('disabled');
+                        $('#id_billing_state').removeAttr('disabled');
+                        $('#id_billing_country').removeAttr('disabled');
+                        if (data.postalcodes && data.postalcodes.length)
+                        {
+                            city = data.postalcodes[0].adminName2;
+                            state = data.postalcodes[0].adminName1;
+                            var state_map = $.parseJSON($('#state_map').val());
+                            var state_id=0;
+                            $.each(state_map, function(s,id){
+                                if(s==state)
+                                    state_id=id;
+                            });
+                            country = 'India';
+                            $("#id_billing_city").val(city);
+                            $("#id_billing_state").val(state_id);
+                            $("#id_billing_country").val(country);
+                        }
+                    });
+                }
+                getLocation(jData);
+            });
+
+            </script>

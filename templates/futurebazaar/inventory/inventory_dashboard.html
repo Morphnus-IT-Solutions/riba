@@ -1,0 +1,104 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"></div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - View Current Inventory</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="clear"></div>
+        {% if errors %}
+            <div>
+              <div class="error"> 
+                {% for error in errors %}
+                    {{error}}<br/>
+                {% endfor %} 
+              </div>
+            </div>
+        {% endif %}
+
+        <form name="search_by_sku_form" id="search_by_sku_form" action="" method="POST">
+            <div class="left">
+                <strong>Article Id/SKU :</strong> 
+                <input type="text" name="article_id" value=""></input> &nbsp; &nbsp;
+                <input type="submit" name="search" class="uiButton" value="Search" id="submit_button">
+            </div>
+        </form>
+        <div class="clear">&nbsp;</div>
+        {% if datas %}
+            <div>
+                <table class="tbl_response mart5 marb10">
+                  <tbody>
+                    <tr>
+                      <th>FB ID</th>
+                      <th>Article ID</th>
+                      <th>Article</th>
+                      <th>Category</th>
+                      <th>Virtual<br/>Inventory</th>
+                      <th>Physical<br/>Inventory</th>
+                      <th>FC</th>
+                      <th>Value</th>
+                    </tr>
+                    {% for data in datas %}
+                        <form method="POST" action="" id="inventory_form_{{data.rate_chart.article_id}}">
+                        <tr>
+                            <input type="hidden" name="article_id" value="{{data.rate_chart.article_id}}" />
+                            <td>{{data.rate_chart.sku}}</td>
+                            <td>{{data.rate_chart.article_id}}</td>
+                            <td>
+                                <a href="#" class="show_detail_inventory" value="{{data.rate_chart.article_id}}" title="{{data.product.title}}">{{data.product.title|truncate:50}}</a>
+                            </td>
+                            <td>{{data.product.category|truncate:15}}</td>
+                            <td class="ca">{{data.virtual_inventory|floatformat}}</td>
+                            <td class="ca">{{data.physical_inventory|floatformat}}</td>
+                            <td class="ca">{{data.fc.code}}</td>
+                            <td class="ra">{{data.value|money}}</td>
+                        </tr>
+                        </form>
+                    {% endfor %}
+                   </tbody>
+                </table>
+            </div>
+            <div class="clear"></div>
+        {% endif %}
+  <div class="pagination">    
+     {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+      {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+      {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+      <div>{{pagination.cur_page}}</div>
+      {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+      {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="clear"></div>
+{% endblock %} 
+{% block script_footer %}
+{{block.super}}
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function(){
+            $(".show_detail_inventory").click(function(){
+                var article_id = $(this).attr("value");
+                var form_id = 'inventory_form_' + article_id;
+                $("#"+form_id).submit();
+            });
+        })
+    </script>
+{% endblock %} 

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="breadcrumb"><a href="/" title="Home">Home</a>&nbsp;&raquo;&nbsp;Assigned Orders Dashboard</div>
+
+{% if statuses.object_list %}
+<div class="span-24 last">
+<div class="p5">
+    <h3 style="margin:0; padding: 0;">
+        Assigned Orders Dashboard
+    </h3>
+</div>
+<div class="span-24 last">
+    <div class="p5 ra">
+        <div class="pagination p5">
+            <span class="step-links">
+                {% if statuses.has_previous %}
+                <a href="?page={{ statuses.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ statuses.number }} of {{ paginator.num_pages }}.
+                </span>
+
+                {% if statuses.has_next %}
+                <a href="?page={{ statuses.next_page_number }}">Next >></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+<div class="span-24 last">
+    <div class="p5">
+    <table cellpadding="2" cellspacing="2" style="border-collapse: collapse">
+        <tr class="header">
+            <td width="10px"></td>
+            <td>Submitted Date</td>
+            <td>Order ID</td>
+            <td>Article ID</td>
+            <td>Product</td>
+            <td>Qty</td>
+            <td>Status</td>
+        </tr>
+        {% for status in statuses.object_list %}
+        <tr class="{% cycle "row1" "row2"%}">
+            <td><input type="checkbox"/></td>
+            <td>{{status.order_item.order.atg_submitted_date}}</td>
+            <td>{{status.order_item.order.order_id}}</td>
+            <td>{{status.order_item.article_id}}</td>
+            <td><a href="/orderitems/{{status.order_item.commerce_item_id}}/">{{status.order_item.product_name}}</a></td>
+            <td>{{status.order_item.quantity}}</td>
+            <td>{{status.order_item.item_state}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+</div>
+<div class="span-24 last">
+    <div class="p5 ra">
+        <div class="pagination p5">
+            <span class="step-links">
+                {% if statuses.has_previous %}
+                <a href="?page={{ statuses.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ statuses.number }} of {{ paginator.num_pages }}.
+                </span>
+
+                {% if statuses.has_next %}
+                <a href="?page={{ statuses.next_page_number }}">Next >></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+</div>
+{% else %}
+<div class="orders_msg rc5">
+<div class="rc5">
+    <h3>Nice!</h3>
+    <p>There are no orders assigned to you.</p>
+</div>
+</div>
+{% endif %}
+{% endblock %}

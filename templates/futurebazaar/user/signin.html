@@ -1,0 +1,219 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load cc_tags %}
+{% load web_tags %}
+
+<div>
+  <div class="clear"></div>
+  <div class="sintab">
+	<ul>
+	  <li {%if type == "signin"%} class="act" {%endif%} id="signintab"><a href="/auth/signin/">Sign In</a></li>
+	  <li {%if type == "signup"%} class="act" {%endif%} id="signuptab"><a href="/auth/signup/">Sign Up</a></li>
+	</ul>
+	<div class="clear"></div>
+  </div>
+  <div class="signin_cnt">
+	<!-- Futurebazaar SignIn -->
+	<div class="left signinleft">
+	  <div id="fb-root"></div>
+	  <div class="rc5"> 
+		<form method="post" action="" id="form_signin" name="form_signin">
+		  <input id="next" type="hidden" name="next" value="{{next}}"/>
+          <input id="action" type="hidden" name="action" value="signin" />		  
+		  <!-- User Mass. -->
+		  <p id="usergmsg" class="marb10" style="display: none;"></p>
+		  <!-- /User Mass. -->
+
+		  <div id="tr_error" class="error marb10" style="width:237px; display: none;"><span id="errors" class="f11" style="color:#8A1F11;">{{error}}</span></div>
+			{%if is_success%}
+		        <div id="tr_success" class="notice marb10"><span id="errors">Please confirm your verification by clicking the link sent to your email address</span></div>	
+			{% endif %}
+		  <div class="marb10">
+			<span class="fdgray" style="margin-left:1px;">Email or Mobile</span><br />
+			<input type="text" id="username" name="username" value="{{username}}" style="width:200px" class="textbox_m" />
+			<span id="emailloadimg" style="display: none; margin-left: -22px;"><img src="/media/images/signin-ajax-loader.gif" width="16" height="16" alt="Wait..." style="margin-bottom:-2px;" /></span>
+			<span id="emailvalidicon" style="display: none; margin-left: -22px;"><img src="/media/images/right-icon-green.png" width="16" height="16" alt="" style="margin-bottom:-2px;" /></span>
+		  </div>
+		 
+		  <div class="marb10">
+			<span id="lpassword" class="fdgray" style="margin-left:1px;">{%ifequal type "signin"%}Password {%else%}Set Password{%endifequal%}</span><br />
+			<input type="password" id="password" name="password" style="width:200px" class="textbox_m" />&nbsp;
+			<a href="/forgotpassword/" id="forget_password" {%if type == "signup"%}style="display:none"{%endif%}>Forgot password?</a>
+		  </div>
+		  
+		  <div id="lcpassword" class="marb10" style="{%if type == "signin"%}display: none;{%endif%}">
+			<span  class="fdgray" style="margin-left:1px">Confirm Password</span><br />
+			<input type="password" style="width:200px" id="cpassword" name="cpassword" class="textbox_m" />
+		  </div>
+		  
+		  <div>
+			<input type="submit" id="login" class="btn_c btn_c_m btn_orange" value="{%if type == "signin"%}Sign In{%else%}Sign Up{%endif%}" />
+		  </div>
+		</form>
+	  </div>
+	</div><!-- /Futurebazaar SignIn -->
+	
+	<!-- Facebook SingIn -->
+	<div class="left signinright">
+	  <span style="position:absolute; top:80px; left: -10px; background-color: #f5f5f5; padding: 4px 0px;">OR</span>
+	  <div style="padding: 46px 0px 0px 40px;">
+		{% if  request|user_connected_to_facebook %}
+		  <a class="flogin_retry cp fb-login-button"><img src={% media_url request "images/login_with_facebook_btn.png" %}></a>
+		  <div class="mart10" style="height:66px; overflow:hidden;">
+			<iframe src="http://www.facebook.com/plugins/facepile.php?
+			app_id=126505110759991" scrolling="no" frameborder="0" style="border:none;
+			overflow:hidden; width:230px;" allowTransparency="true"></iframe> 
+		  </div>
+		{% else %}                      
+		  <div class="marr10">
+			{% include "user/facebook_login.html" %}
+		  </div>
+		{% endif %}
+	  </div>
+	</div><!-- Facebook SingIn -->
+	<div class="clear"></div>
+  </div>
+  
+</div>
+{%endblock%}
+
+{% block script_footer %}
+  {{block.super}}
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $('#username').focus();
+  var error = "{{signin_error}}";
+  var errorsignup = "{{signup_error}}";
+  var type = "{{type}}";
+  if(error){
+    $('#errors').html(error);
+	$('#tr_error').show();
+  }
+  if(errorsignup){
+    $('#errors').html(errorsignup);
+	$('#tr_error').show();
+  }
+  
+  $('#forgotpassword').click(function(){
+    $('#dialog').dialog('close');
+    var url = $(location).attr('protocol');
+    url += "//" + $(location).attr('host');
+    url += "/forgotpassword/";
+    location.href = url;
+    return false;
+  });
+});
+
+
+  $('#username').blur(function() {
+	//$('#emailloadimg').show(); // show email loading image
+	var mobile = $('#username').val();
+	
+	if($('#username').isMobileValid() || $('#username').isEmailValid() ){
+	  $('#emailloadimg').hide(); // hide email loading image
+	  //$('#emailvalidicon').show(); // show email Valid icon
+	  $('#tr_error').slideUp();
+	  var data = 'username=' + $('#username').val();
+	  var action = '/user/checkuser';
+	  var onSuccess = function(response) {
+		var data = $.parseJSON(response);
+		var is_new_user = data.is_new_user;
+		var full_name = data.full_name;
+		var has_password = data.has_password;
+		if(is_new_user){
+			$('#signintab').removeClass('act');
+			$('#signuptab').addClass('act');
+			
+			$('#usergmsg').slideUp();
+			{%if type == "signin"%}
+			$('#usergmsg').html( mobile + ' is not registered with Future Bazaar. Please choose a password to sign up.');
+			$('#usergmsg').slideDown();
+			{% endif%}
+			
+			$('#lpassword').html('Set Password');
+			$('#lcpassword').show();
+			$('#forget_password').hide();
+			$("#login").attr('value', 'Sign Up');
+			type = "signup";
+		}
+		else if(!has_password){
+			$('#lpassword').html('Set Password');
+			$('#lcpassword').show();
+			$('#forget_password').hide();
+			type = "signup";
+		}
+		else{
+			$('#signuptab').removeClass('act');
+			$('#signintab').addClass('act');
+			
+			$('#usergmsg').slideUp();
+			{%if type == "signup"%}
+			$('#usergmsg').html( mobile + ' is already registered with Future Bazaar. <br />Please use your password to sign in. <a id="forget_password" href="/forgotpassword/">Did you forget your password?');
+			$('#usergmsg').slideDown();
+		    //location.href = '/auth/signin';
+		    $("#action").attr('value',"signin");
+			{% endif%}
+			$('#lpassword').html('Password');
+			$('#lcpassword').hide();
+			$('#sigin_text').html('Sign in to Futurebazaar');
+			$('#forget_password').css('display','')
+			$("#login").attr('value', 'Sign In');
+			type = "signin";
+		}
+	  };
+	  
+	  var onError = function() {};
+	  
+	  $.ajax({ url:action,
+	  data : data,
+	  success : onSuccess,
+	  error : onError,
+	  type : 'POST'
+	  });
+	}
+	//else if(!this.value){
+	//  $('#emailloadimg').hide(); // hide email loading image
+	//  $('#emailvalidicon').hide(); // hide email Valid icon
+	//  $('#errors').html('Please enter a valid 10 digit mobile or email');
+	//  $('#tr_error').show();
+	//  $('#username').focus();
+	//}
+	else{
+	  if(mobile){
+		$('#emailloadimg').hide(); // hide email loading image
+		$('#emailvalidicon').hide(); // hide email Valid icon
+		$('#errors').html('Please enter a valid 10 digit mobile or email');
+		$('#tr_error').slideDown();
+	  }
+	} 
+  });
+	$('#login').click(function(){
+		var mobile = $('#username').val();
+		if(!($('#username').isMobileValid() || $('#username').isEmailValid())){
+		  $('#errors').html('Please enter a valid 10 digit mobile or email');
+		  $('#tr_error').show();
+		  return false;
+		}
+        $("#form_signin").attr("action", "/auth/" + type + "/");
+        $("#action").attr("value", type);
+        $("#form_signin").submit();
+	});
+	
+	$('#cancel').click(function(){
+	  $('#dialog').dialog('close');
+	  return false;
+    });
+
+    $('#forgotpassword').click(function(){
+	$('#dialog').dialog('close');
+	var url = $(location).attr('protocol');
+	url += "//" + $(location).attr('host');
+	url += "/forgotpassword/";
+	location.href = url;
+	return false;
+    });
+
+</script>
+
+{%endblock%} 

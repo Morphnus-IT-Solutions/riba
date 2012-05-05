@@ -1,0 +1,9 @@
+#feedback_outer{top:170px; right:0px; position:fixed; z-index:1300; font-size:11px; }
+#feedback_outer .feedback_close{height:108px;width:26px;position:absolute; top:5px; left:-26px; background-position: 0px -351px; cursor:pointer;}
+#feedback_outer .feedback_show{ background-position: 0px -351px; float:left;cursor:pointer;height:108px;width:26px; margin-top:5px;}
+#feedback_outer .feedback_box{border:1px solid #ccc; border-right:none; display:block; background-color:#fff; margin-left:1px; 
+border-top-right-radius:5px;border-bottom-right-radius:5px;display:none; padding:10px; position:relative; 
+ }
+#feedback_outer textarea{height:70px; width:320px; }
+#feedback_outer input[type="text"]{width:320px !important; padding:3px;}
+

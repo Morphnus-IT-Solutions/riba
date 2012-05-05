@@ -1,0 +1,87 @@
+{% extends "web/base.html" %}
+{% block page_title %}Futurebazaar-Points{% endblock %}
+{% block content %}
+<div class="n_points-wrapper">
+  <div class="n_points-payback">
+    <div class="n_points-payback-left"> <img src="/media/images/payback-logo.gif" /> </div>
+    <div class="n_points-payback-right">
+      <div class="n_payback-left-left">www.payback.in</div>
+      <div class="n_payback-left-right">SHOPPING IS REWARDING.</div>
+    </div>
+  </div>
+  <div class="n_points-content-header">
+    <div class="n_points-subheader"> <span>POINTS AT EVERY STEP</span>
+      <div class="n_point-contentA"> PAYBACK, India's largest and one of Europe's most successful Multipartner Loyalty Program now offers incredible rewards on your daily shopping. Now, as an exclusive tie-up, we at <a href="http://www.futurebazaar.com/" title="futurebazaar">www.futurebazaar.com</a> bring you an incredible opportunity to earn as well as redeem PAYBACK points every time you shop with us. You can also earn points through PAYBACK partners like BigBazaar, Pantaloons, Central, HPCL, MakeMyTrip.com, ICICI Bank & more. But be sure to redeem all those points right here at <a href="http://www.futurebazaar.com/" title="futurebazaar">www.futurebazaar.com</a> </div>
+    </div>
+    <div class="n_point-contentB points_top points_bg_w">
+      <div class="n_point-qacontaniner">
+        <div class="n_point-answr">
+          <div class="n_point-answer-q">i-mint IS NOW PAYBACK</div>
+          <div class="n_point-answer-a">
+            <ul>
+              <li>&bull; Your i-mint points are now called PAYBACK points. To check your current point balance, visit <a href="https://www.payback.in/" target="_new"> www.payback.in</a> </li>
+              <li>&bull; You can continue using your i-mint card to earn and redeem points or simply get a new PAYBACK card.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="n_point-contentB points_bg_b">
+      <div class="n_point-qacontaniner">
+        <div class="n_point-answr">
+          <div class="n_point-answer-q">HOW TO BECOME A PAYBACK MEMBER?</div>
+          <div class="n_point-answer-a">
+            <ul>
+              <li>&bull; Just fill up the enrollment form on <a href="https://www.payback.in/" target="_new">www.payback.in</a> and your PAYBACK card will be delivered to your registered address <a href="http://www.payback.in/pb/onlineMemberEnrollment?lmid=90012970{% if request.user.is_authenticated %}&ecid={{ atg_user_id }}{% endif %}" title="Click Here" target="_blank"><img src="/media/images/bam.gif" border="0"  /></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="n_point-contentB points_bg_w">
+      <div class="n_point-qacontaniner">
+        <div class="n_point-answr">
+          <div class="n_point-answer-q">PAY USING YOUR PAYBACK/ iMINT POINTS & GET ADDITIONAL 5% OFF </div>
+          <div class="n_point-answer-a">
+            <ul>
+              <li>&bull; Check your PAYBACK point balance by SMSing PBBAL "last 4 digits of your Card no." (eg PBBAL 3214) from your PAYBACK registered mobile No &nbsp;&nbsp;&nbsp;to 9212146468 or you can also call 18602585000</li>
+              <li>&bull; If you already know your PAYBACK point count, you can choose to 'Shop by payback points'</li>
+              <li>&bull; Alternatively you can browse by category and each product will display its respective worth in terms of PAYBACK points</li>
+              <li>&bull; For every 1000 PAYBACK points, you can shop worth INR 250 </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pb_demo_img_container points_bg_w">
+      <div style="text-align:center"> <img src="/media/images/step1.gif" width="949" height="316" border="0" alt="futurebazaar" title="futurebazaar" /> </div>
+      <div class="pb_demo-content"> <span><b>To pay using PAYBACK points</b> at <a href="http://www.futurebazaar.com/">www.futurebazaar.com</a>, you need to: Select <b>'Pay by Payback'</b> as your mode of payment </span> </div>
+      <div style="text-align:center"> <img src="/media/images/step2.gif" width="970" height="442" border="0" alt="futurebazaar" title="futurebazaar" /> </div>
+      <div class="pb_demo-content"> <span><b>Apply Coupon Code: PAYBACK</b> to avail additional 5% off* on all products. (* Not applicable on Mobile Handsets & Gift Vouchers) </span> </div>
+      <div style="text-align:center"> <img src="/media/images/step3.gif" width="970" height="472" border="0" alt="futurebazaar" title="futurebazaar" /> </div>
+      <div class="pb_demo-content">
+        <div class="n_point-answr">
+          <div class="n_point-answer-q">EARN PAYBACK POINTS RIGHT AWAY </div>
+          <div class="n_point-answer-a">
+            <ul>
+              <li>&bull; Shop on<a href="http://www.futurebazaar.com/" title="futurebazaar"> www.futurebazaar.com</a> as usual </li>
+              <li>&bull;  Before making payment, enter and apply your 16 digit PAYBACK (former i-mint) card number in the box shown below; it can be spotted on the right <br />
+                &nbsp; &nbsp;hand side after the product is added to your cart</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center"> <img src="/media/images/step4.gif" width="970" height="448" border="0" /> </div>
+      <div class="pb_demo-content">
+        <div class="n_point-answer-a">
+          <ul>
+            <li>&bull; Earn 3 PAYBACK points for every Rs.100 spent at <a href="http://www.futurebazaar.com/">www.futurebazaar.com</a> </li>
+            <li>&bull; You can also earn bonus PAYBACK points from special offers. Stay informed with PAYBACK email newsletters and SMS updates or visit<br />
+              &nbsp;&nbsp; <a href="https://www.payback.in/" target="_new">www.payback.in</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

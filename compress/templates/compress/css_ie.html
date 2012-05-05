@@ -1,0 +1,2 @@
+{% load web_tags %}
+<!--[if {{ condition|default:"IE" }}]><link href="{{ url|serve_local:request }}" rel="stylesheet" type="text/css" media="{{ media|default:"all" }}" title="{{ title|default:"all" }}" charset="utf-8" /><![endif]-->

@@ -1,0 +1,109 @@
+- fields: {allow_multiple_select: false, category: 30, group: null, is_visible: true,
+    max: null, min: null, name: Age, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 1
+- fields: {allow_multiple_select: true, category: 31, group: null, is_visible: true,
+    max: null, min: null, name: Genre, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 2
+- fields: {allow_multiple_select: false, category: 31, group: null, is_visible: true,
+    max: null, min: null, name: Language, sort_order: 3, type: text, unit: null}
+  model: categories.feature
+  pk: 3
+- fields: {allow_multiple_select: false, category: 31, group: null, is_visible: true,
+    max: null, min: null, name: Minimum Age, sort_order: 2, type: number, unit: 17}
+  model: categories.feature
+  pk: 4
+- fields: {allow_multiple_select: false, category: 33, group: null, is_visible: true,
+    max: null, min: null, name: Format, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 5
+- fields: {allow_multiple_select: false, category: 1, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 6
+- fields: {allow_multiple_select: false, category: 1, group: null, is_visible: true,
+    max: null, min: null, name: Capacity, sort_order: 3, type: number, unit: 8}
+  model: categories.feature
+  pk: 7
+- fields: {allow_multiple_select: false, category: 1, group: null, is_visible: true,
+    max: null, min: null, name: Star Rating, sort_order: 2, type: text, unit: null}
+  model: categories.feature
+  pk: 8
+- fields: {allow_multiple_select: true, category: 5, group: null, is_visible: true,
+    max: null, min: null, name: Features, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 9
+- fields: {allow_multiple_select: false, category: 8, group: null, is_visible: true,
+    max: null, min: null, name: Channel, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 10
+- fields: {allow_multiple_select: false, category: 9, group: null, is_visible: true,
+    max: null, min: null, name: Capacity, sort_order: 2, type: number, unit: 15}
+  model: categories.feature
+  pk: 11
+- fields: {allow_multiple_select: false, category: 9, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 12
+- fields: {allow_multiple_select: false, category: 11, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 2, type: text, unit: null}
+  model: categories.feature
+  pk: 13
+- fields: {allow_multiple_select: false, category: 11, group: null, is_visible: true,
+    max: null, min: null, name: Capacity, sort_order: 1, type: number, unit: 7}
+  model: categories.feature
+  pk: 14
+- fields: {allow_multiple_select: false, category: 12, group: null, is_visible: true,
+    max: null, min: null, name: Doors, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 15
+- fields: {allow_multiple_select: false, category: 12, group: null, is_visible: true,
+    max: null, min: null, name: Capacity, sort_order: 2, type: number, unit: 7}
+  model: categories.feature
+  pk: 16
+- fields: {allow_multiple_select: false, category: 12, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 3, type: text, unit: null}
+  model: categories.feature
+  pk: 17
+- fields: {allow_multiple_select: false, category: 13, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 18
+- fields: {allow_multiple_select: false, category: 14, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 19
+- fields: {allow_multiple_select: false, category: 14, group: null, is_visible: true,
+    max: '200.00', min: '0.00', name: Screen Size, sort_order: 1, type: number, unit: 3}
+  model: categories.feature
+  pk: 20
+- fields: {allow_multiple_select: false, category: 17, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 21
+- fields: {allow_multiple_select: false, category: 17, group: null, is_visible: true,
+    max: null, min: null, name: Capacity, sort_order: 2, type: number, unit: 6}
+  model: categories.feature
+  pk: 22
+- fields: {allow_multiple_select: false, category: 18, group: null, is_visible: true,
+    max: null, min: null, name: Type, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 23
+- fields: {allow_multiple_select: true, category: 24, group: null, is_visible: true,
+    max: null, min: null, name: Genre, sort_order: 1, type: text, unit: null}
+  model: categories.feature
+  pk: 24
+- fields: {allow_multiple_select: false, category: 24, group: null, is_visible: true,
+    max: null, min: null, name: Edition, sort_order: 2, type: text, unit: null}
+  model: categories.feature
+  pk: 25
+- fields: {allow_multiple_select: false, category: 24, group: null, is_visible: true,
+    max: null, min: null, name: Language, sort_order: 3, type: text, unit: null}
+  model: categories.feature
+  pk: 26
+- fields: {allow_multiple_select: false, category: 24, group: null, is_visible: true,
+    max: null, min: null, name: Publisher, sort_order: 4, type: text, unit: null}
+  model: categories.feature
+  pk: 27
+

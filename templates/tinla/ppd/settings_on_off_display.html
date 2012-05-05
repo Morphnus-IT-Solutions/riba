@@ -1,0 +1,201 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% block user_content %}
+
+<h1 class="head1">{{client_display_name}} - Payments Options</h1><br />
+  <div style="/*width:990px;float:left;*/margin-bottom:30px">
+<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />
+<div style="width:100%; overflow-x:scroll; margin-bottom:20px">
+    <table class="tbl_pay_option">
+    <tr>
+   	<td style="width:180px;">&nbsp;</td>
+        {%for cd in client_domains%}
+        <th>{{cd.domain}}
+        
+        </th>
+        {%endfor%}
+    </tr>
+    <tr>
+    	<td>Second factor auth</td>
+      {%for cd in client_domains%}
+        <td><a id={{cd.id}}_on cd_id="{{cd.id}}" class="{%if cd.is_second_factor_auth_reqd%}auth_active{%else%}auth_inactive link{%endif%} auth_on">ON</a> <a id={{cd.id}}_off class="{%if cd.is_second_factor_auth_reqd%}auth_inactive link{%else%}auth_active{%endif%} auth_off" cd_id="{{cd.id}}">OFF</a></td>
+        {%endfor%}
+    </tr>
+    {%for option in payment_options %}
+        <tr>
+        <td>{{option.payment_mode.name}}</td>
+        {%for po in domain_payment_options_list %}
+          {% ifequal po.payment_option.id option.id %}
+        <td>
+        <div class="onoff" style="margin:0 auto; width:120px;">
+            <div style="float:left; margin-left:35px" id="{{po.id}}on" name="{{po.id}}"class="leftrc5 btn {%if po|enable_or_disable_domain_payment_option %}bgreen {%else%} bgray{%endif%} on">ON</div>
+            <div style="float:left;" id="{{po.id}}onnot" name="{{po.id}}" class="rightrc5 btn {%if po|enable_or_disable_domain_payment_option%}bgray {%else%} bred{%endif%} off">OFF</div>
+            <div class="clear"></div>
+        </div>
+        <div class="radio-confirm" id="{{po.id}}order_taking_div" style="{%if po|enable_or_disable_domain_payment_option%}display:block{%else%}display:none{%endif%}" ><input id="{{po.id}}book" type="radio" name="{{po.id}}" class="book_order" checked={%ifequal po.order_taking_option "book"%}CHECKED{%endifequal%} />&nbsp; Book
+            &nbsp; <input id="{{po.id}}book_confirm" name="{{po.id}}" class="book_confirm_order" type="radio" {%ifequal po.order_taking_option "book_and_confirm"%}CHECKED{%endifequal%}/>&nbsp; Book & Confirm
+        </div>
+      </td>
+      {% endifequal%}
+        {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+   </div>
+  </div>
+<script type="text/javascript">
+    function set_order_taking_option(data){
+        var onSuccess=function(){
+        };
+        var onError=function(){
+        };
+         $.ajax({
+            url : '/seller/order_taking_option',
+            success : onSuccess,
+            error : onError,
+            data : data,
+            type : "POST"
+        });       
+    }
+
+    $(".book_order").change(function(){
+        var id = this.id;
+        var opid = this.getAttribute("name");
+        var data = 'opid='+opid+'&order_taking_option=book';
+        set_order_taking_option(data);
+    });
+
+    $(".book_confirm_order").change(function(){
+        var id = this.id;
+        var opid = this.getAttribute("name");
+        var data = 'opid='+opid+'&order_taking_option=book_and_confirm';
+        set_order_taking_option(data)
+    });
+
+
+    $(".auth_on").click(function(){
+        var cd_id = this.getAttribute("cd_id");
+        var data = 'cd_id='+cd_id+'&second_factor_auth=On';
+        $('#'+cd_id+'_on').removeClass("auth_inactive");
+        $('#'+cd_id+'_on').removeClass("link");
+        $('#'+cd_id+'_on').addClass("auth_active");
+        $('#'+cd_id+'_off').removeClass("auth_active");
+        $('#'+cd_id+'_off').addClass("auth_inactive");
+        $('#'+cd_id+'_off').addClass("link");
+        var onSuccess=function(){
+        };
+        var onError=function(){
+        };
+
+        $.ajax({
+            url : '/seller/second_factor_auth',
+            success : onSuccess,
+            error : onError,
+            data : data,
+            type : "POST"
+        });
+    });
+
+    $(".auth_off").click(function(){
+        var cd_id = this.getAttribute("cd_id");
+        var data = 'cd_id='+cd_id+'&second_factor_auth=Off';
+        $('#'+cd_id+'_off').removeClass("auth_inactive");
+        $('#'+cd_id+'_off').removeClass("link");
+        $('#'+cd_id+'_off').addClass("auth_active");
+        $('#'+cd_id+'_on').removeClass("auth_active");
+        $('#'+cd_id+'_on').addClass("auth_inactive");
+        $('#'+cd_id+'_on').addClass("link");
+        var onSuccess=function(){
+        };
+        var onError=function(){
+        };
+
+        $.ajax({
+            url : '/seller/second_factor_auth',
+            success : onSuccess,
+            error : onError,
+            data : data,
+            type : "POST"
+        });       
+    });
+
+    $( ".on" ).click(function() {
+        var on_id = this.id;
+        var divname = document.getElementById(on_id);
+        var name = divname.getAttribute("name");
+        var off_id = name + 'onnot';
+        var current_seller_id = $("#current_seller_id").val();
+        $('#' + on_id).addClass( "bgreen");
+        $('#' + on_id).removeClass( "bgray");
+        $('#' + off_id).removeClass( "bred");
+        $('#' + off_id).addClass( "bgray");
+        $('#'+name+'order_taking_div').css("display","block");
+        
+        if ($('#' + on_id).hasClass("option_is_grouped")){
+            var option_grouped = "1";                                                                                                                                           }
+        else{
+            var option_grouped = "0";
+        }
+        var onSuccess=function(){
+
+        };
+        var onError=function(){
+
+        };
+        var data = 'option=' + name + '&on_or_off=on&current_seller_id=' + current_seller_id + '&option_grouped=' + option_grouped;
+        $.ajax({
+            url : '/seller/payment_option_on_or_off/',
+            success : onSuccess,
+            error : onError,
+            data : data,
+            type : "POST"
+        });
+    });
+
+    $( ".off").click(function() {
+        var off_id = this.id;
+        var divname = document.getElementById(off_id);
+        var name = divname.getAttribute("name");
+        var on_id = name + "on";
+        var current_seller_id = $("#current_seller_id").val();
+        $("#" + on_id).addClass( "bgray");
+        $("#" + on_id).removeClass( "bgreen");
+        $("#" + off_id).addClass( "bred");
+        $("#" + off_id).removeClass( "bgray");
+    
+        $('#'+name+'order_taking_div').css("display","none");
+        if ($('#' + on_id).hasClass("option_is_grouped"))
+        {
+            var option_grouped = "1";
+        }
+        else
+        {
+            var option_grouped = "0";
+        }
+    
+        var onSuccess=function(){
+        };
+        var onError=function(){
+        };
+        var data='option=' + name + '&on_or_off=off&current_seller_id=' + current_seller_id+ '&option_grouped=' + option_grouped;
+        $.ajax({
+            url : '/seller/payment_option_on_or_off/',
+            success : onSuccess,
+            error : onError,
+            data : data,
+            type : "POST"
+        });
+    });
+
+    $( "#off").click(function() {
+        $( "#off" ).addClass( "bred") ;
+        $( "#off" ).removeClass( "bgray");
+        $( "#on" ).removeClass( "bgreen");
+        $( "#on" ).addClass( "bgray");
+        return false;
+    });
+
+</script>
+
+{% endblock %}
+

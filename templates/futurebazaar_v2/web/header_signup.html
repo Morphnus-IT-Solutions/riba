@@ -1,0 +1,30 @@
+<a class="signup">Sign up</a>
+<div class="signup_form hide">
+    <form method="post" action="/auth/signin/" id="form_signup" name="form_signup">
+    <label>NEW MEMBER? SIGN UP</label>
+     {% if signup_error %}
+        <div id="tr_error" class="error marb10"> <span id="errors">{{signup_error}}</span> </div>
+    {% endif %}
+    
+    <input type="text"  class="txt" name="username" value="{% if signup_username %}{{signup_username}}{% else %}Email or Mobile{% endif %}"id="signup_username" onfocus="if(this.value=='Email or Mobile') { this.value='';}"  onblur="if(this.value=='') {this.value='Email or Mobile'; }" />
+    <input type="password" name="password"  class="txt" value="Password" onfocus="if(this.value=='Password') { this.value='';}"  onblur="if(this.value=='') {this.value='Password'; }"/>
+    <input type="password" id="cpassword" name="cpassword"  class="txt" value="Password" onfocus="if(this.value=='Password') { this.value='';}"  onblur="if(this.value=='') {this.value='Password'; }"/>
+    <input type="hidden" name="next" value="{{request.get_full_path|urlencode}}"/>
+    <input type="hidden" name="action" value="signup"/>  
+
+    <div class="ra signup_submit">
+        <a value="SIGN UP NOW" id="signup_submit" name="signup" title="Sign up now">SIGN UP NOW</a>
+    </div>
+    </form>
+</div>
+<script type="text/javascript">
+function refresh_signup_submit(){
+    $("#signup_submit").click(function(){
+        var user_action = $(this).attr("name");
+        if($("#signup_username").attr("value") == 'Email or Mobile'){
+            $("#signup_username").val('');
+        }
+        header_user_actions(user_action)
+    });
+}
+</script>

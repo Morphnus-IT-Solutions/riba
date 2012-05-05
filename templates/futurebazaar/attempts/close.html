@@ -1,0 +1,25 @@
+{% if error %}
+<div class="error">{{error}}</div>
+{% endif %}
+{% if form %}
+<form action="/ui/attempts/{{attempt.id}}/close" method="post" id="form_close_attempt">
+        <div class="fieldWrapper">
+            {{ form.call_status.label_tag }}<br/>
+            {{ form.call_status }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.response_status.label_tag }}<br/>
+            {{ form.response_status }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.comments.label_tag }}<br/>
+            {{ form.comments }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.next_call.label_tag }}<br/>
+            {{ form.next_call }} {{form.next_call_hour}} {{form.next_call_min}} {{form.next_call_am_pm}}
+        </div>
+
+    <p><input type="submit" value="Close Attempt" /></p>
+</form>
+{% endif %}

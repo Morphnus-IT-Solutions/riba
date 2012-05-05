@@ -1,0 +1,280 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load cc_tags web_tags %}
+
+	<section class="content">
+		<div class="breadcrumb"></div>
+		<div>
+			<div class="conf-mass mb15 fs13">
+				<div class="conf-mass-can">
+					<p class="conf-title">Congrats</p>
+					<p class="fs16 cb mb5 tac"><span style="color:#00529C;">Your Order ID is {{order.get_id}}.</span></p>
+					<p class="line"></p>
+					<div class="mt5 mb5">
+						<p>Use this Order ID in all communication with {{order.client.name}}. We have sent your order details by
+					{% if order.user.get_primary_emails%} email to <strong>{{order.user.get_primary_emails.0}}</strong>{%else%} SMS
+					to <strong>{{order.user.get_primary_phones.0}}</strong>{%endif%}
+					{% if payback_points_earned %}</p>
+						<p>Subject to payment realization you will be awarded {{ payback_points_earned }} payback points.</p>
+					{% endif %}
+					</div>
+					<p class="line"></p>
+					<div class="mt5">
+						<p><span class="fb">Spread the Joy :</span> Tell your friends on Facebook and Twitter about your purchase on www.futurebazaar.com</p>
+						<p>
+							<a href="http://www.facebook.com/sharer.php?u={{fb_share_link}}" target="_blank" class="spone follow_f" onclick="return fbs_click('{{fb_share_link}}', '')" rel="nofollow"/></a> 
+							<a href="http://twitter.com/share" target="_blank" class="spone follow_t" onclick="return twit_click('{{fb_share_link}}','Just bought this product!','')" rel="nofollow"/></a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div>
+		{% include "order/right.html" %}
+			<div id="shipping_address" class="mtb15">
+				<h3 class="fb-form-hd">Shipping Address </h3>
+				<div class="wbox">
+					<p><span>{{address_info.first_name}} {{address_info.last_name}}</span><br/>
+						<span>{{address_info.address}}</span><br/>
+						<span>{{address_info.city}} - {{address_info.pincode}},</span><br/>
+						{%if address_info.state%} <span>{{address_info.state}},</span>
+						{%endif%}
+						{%if address_info.country%}{%if address_info.state%}, {%else%}{%endif%} <span>{{address_info.country}}</span><br/>
+						{%endif%}                            
+						{%if address_info.phone%} <span>Phone: {{address_info.phone}}</span>{%endif%}
+					</p>
+				</div>
+			</div>
+		</div>
+		</section>
+{% endblock %}
+
+{% block ga_extensions %}
+    {% if order.support_state in ga_states %}
+
+        {% if not order.ga_tracked %}
+          _gaq.push(['_addTrans',
+            '{{order.reference_order_id}}',
+            '{{order.client_domain}}',
+            '{{order.payable_amount}}',
+            '{{order.taxes}}',
+            '{{order.shipping_charges}}',
+            '{{order.get_delivery_city}}',
+            '{{order.get_delivery_state}}',
+            '{{order.get_delivery_country}}'
+          ]);
+
+            {% for oi in order_items %}
+          _gaq.push(['_addItem',
+            '{{order.reference_order_id}}',           // order ID - required
+            '{{oi.seller_rate_chart.sku}}',           // SKU/code - required
+            '{{oi.item_title}}',        // product name
+            '{{order.client_domain}}__{{oi.seller_rate_chart.product.category.name}}',   // category or variation
+            '{{oi.get_unit_price}}',          // unit price - required
+            '{{oi.qty}}'               // quantity - required
+          ]);
+            {% endfor %}
+        _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+        {{ order.set_tracked }}
+        {% endif %}
+    {% endif %}
+
+{% endblock %} 
+
+{% block script_footer %}
+{{block.super}}
+<!-- Desidime Offer Conversion: All Categories:  -->
+<img src="https://paritycube.go2cloud.org/SL9?adv_sub={{order.get_id}}&amount={{order.payable_amount}}" width="1" height="1" />
+<!-- // End Offer Conversion -->
+<!-- Offer Conversion: FutureBazaar.com -->
+<img src="http://futurebazaar.go2cloud.org/SL1?adv_sub={{order.get_id}}&amount={{order.payable_amount}}" width="1" height="1" />
+<!-- // End Offer Conversion -->
+<!-- OMG Tracking Code -->
+<script src="https://track.in.omgpm.com/210321/transaction.asp?APPID={{order.get_id}}&MID=210321&PID=8248&status="></script>
+<noscript><img src="https://track.in.omgpm.com/apptag.asp?APPID={{order.get_id}}&MID=210321&PID=8248&status=" border="0" height="1" width="1"></noscript>
+<!-- END of OMG Tracking Code -->
+<!-- Google Code for Future Bazaar Tracking code1 Conversion Page -->
+<script type="text/javascript">
+$(document).ready(function(){
+    /* <![CDATA[ */
+    var google_conversion_id = 986917502;
+    var google_conversion_language = "ar";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "2RwCCOrm3QIQ_tTM1gM";
+    var google_conversion_value = 0;
+    /* ]]> */
+});
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/986917502/?label=2RwCCOrm3QIQ_tTM1gM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Google Code for Future bazaar tracking code Conversion Page -->
+<script type="text/javascript">
+$(document).ready(function(){
+    /* <![CDATA[ */
+    var google_conversion_id = 986363575;
+    var google_conversion_language = "ar";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "RlzHCJmj8gIQt-2q1gM";
+    var google_conversion_value = 0;
+    /* ]]> */
+});
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/986363575/?label=RlzHCJmj8gIQt-2q1gM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<!-- Google Code for Leads Conversion Page -->
+<script type="text/javascript">
+$(document).ready(function(){
+    /* <![CDATA[ */
+    var google_conversion_id = 959831824;
+    var google_conversion_language = "ar";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "RM_wCKj5gwMQkL7XyQM";
+    var google_conversion_value = 0;
+    /* ]]> */
+});
+</script>
+<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/959831824/?label=RM_wCKj5gwMQkL7XyQM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<script language="javascript" src="https://www.everestjs.net/static/st.js"></script>
+<script language="javascript">
+$(document).ready(function(){
+    var ef_event_type="transaction";
+    var ef_transaction_properties = "ev_Leads=<Leads>&ev_transid=<transid>";
+    /*
+    * Do not modify below this line
+    */
+    var ef_segment = "";
+    var ef_search_segment = "";
+    var ef_userid="2820";
+    var ef_pixel_host="pixel.everesttech.net";
+    effp();
+});
+</script>
+<noscript><img src='https://pixel.everesttech.net/2820/t?ev_Leads=<Leads>&ev_transid=<transid>' width='1' height='1'/></noscript>
+
+<!-- DGM Affiliate tracking code -->
+<!-- Sales Order Tag -->
+<img height="0" width="0" src="http://www.s2d6.com/x/?x=a&amp;h=51538&amp;o={{order.get_id}}" alt=""/>
+<!-- Product Detail Tags -->
+{% for item in order.orderitem_set.all %}
+    <img height="0" width="0" src="http://www.s2d6.com/x/?x=r&amp;h=51538&amp;o={{order.get_id}}&amp;g={{item.seller_rate_chart.sku}}&amp;s={{item.seller_rate_chart.offer_price}}&amp;q={{item.qty}}"/>
+{% endfor %}
+<!-- End DGM Affiliate -->
+<!-- Google Code for CPA - Sale Conversion Conversion Page -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 989445909;
+    var google_conversion_language = "en";
+    var google_conversion_format = "2";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "73dbCOPykAMQlf7m1wM";
+    var google_conversion_value = {{order.payable_amount}};
+    /* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/989445909/?value={{order.payable_amount}}&amp;label=73dbCOPykAMQlf7m1wM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Yahoo! Conversion code -->
+<script language="javascript" type="text/javascript">
+    window.ysm_customData = new Object();
+    window.ysm_customData.conversion = "transId=,currency=,amount={{order.payable_amount}}";
+    var ysm_accountid  = "1HNAT80JS1URS4SJLODARRR4PM4";
+    document.write("<SCR" + "IPT language='JavaScript' type='text/javascript' "
+    + "SRC=//" + "srv1.wa.marketingsolutions.yahoo.com" + "/script/ScriptServlet" + "?aid=" + ysm_accountid
+    + "></SCR" + "IPT>");
+</script>
+
+<!--  Yahoo! Revenue code   -->
+<script language="javascript" type="text/javascript">
+    window.ysm_customData = new Object();
+    window.ysm_customData.conversion = "transId=,currency=,amount={{order.payable_amount}}";
+    var ysm_accountid  = "1VSPTL2L90N8JT8USC4D1BQLC3C";
+    document.write("<SCR" + "IPT language='JavaScript' type='text/javascript' " 
+    + "SRC=//" + "srv1.wa.marketingsolutions.yahoo.com" + "/script/ScriptServlet" + "?aid=" + ysm_accountid 
+    + "></SCR" + "IPT>");
+</script>  
+<!-- Offer Conversion: Futurebazaar.com (CPA) -->
+<iframe src="http://futurebazaar.go2cloud.org/SL1T" scrolling="no" frameborder="0" width="1" height="1"></iframe>
+<!-- // End Offer Conversion -->
+<!-- SEM campaign START -->
+<script type="text/javascript">
+    <!--
+        _sokClient = '165';
+    //-->
+</script>
+<script type="text/javascript">
+    var protocol = ("https:" == document.location.protocol) ? "https:" : "http:";
+    var sokratiJS = protocol + '//tracking.sokrati.com/javascripts/tracker.js';
+    document.write(unescape("%3Cscript src='" + sokratiJS + "' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    var paramList = {};
+    paramList['qty'] = "{{total_order_qty}}";
+    paramList['sales'] = "{{order.payable_amount}}";
+    paramList['payOption'] = "{{order.payment_mode}}";
+</script>
+<script type="text/javascript">
+    try {sokrati.trackParams("default", "{{order.get_id}}",paramList);}
+    catch(err) {}
+</script>
+<!-- SEM campaign END -->
+<!-- begin Marin Software Tracking Script -->
+<form style='display:none;' name='utmform'>
+<textarea id='utmtrans'>
+UTM:T|{{order.get_id}}||{{order.payable_amount}}|||||
+UTM:I|{{order.get_id}}|future_bazaar_sale|||{{order.payable_amount}}|
+
+</textarea>
+</form>
+
+<script type='text/javascript'>
+var _marinClientId = "1690zlm11992";
+var _marinTransaction = {
+currency : 'INR'
+};
+
+var _marinProto = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + _marinProto + "tracker.marinsm.com/tracker/" +
+_marinClientId + ".js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type='text/javascript'>
+try {
+_marinTrack.processOrders();
+} catch(err) {}
+</script>
+<noscript>
+<img width="1" height="1" src="https://tracker.marinsm.com/tp?act=2&cid=1690zlm11992&currency=INR&trans=UTM:T|{{order.get_id}}||{{order.payable_amount}}|||||%0AUTM:I|{{order.get_id}}|future_bazaar_sale|||{{order.payable_amount}}|" />
+</noscript>
+<!-- END Marin Software Tracking Script -->
+<!-- Advertiser 'FUTURE E-COMMERCE INFRASTRUCTURE LTD',  Conversion tracking 'FB_conversion pixel' - DO NOT MODIFY THIS PIXEL IN ANY WAY -->
+<img src="http://ad.yieldmanager.com/pixel?id=1547133&t=2" width="1" height="1" />
+<!-- End of conversion tag -->
+{% endblock %} 

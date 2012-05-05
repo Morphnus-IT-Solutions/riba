@@ -1,0 +1,456 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block user_content %}
+{% if flag == '' or flag == 'confirmed' %}
+{% load pagination_tags %}
+{%if all_valid_prices%}
+{% autopaginate all_valid_prices 20 %}
+{%endif%}
+{% endif %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - View Current Prices</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="inner-content">
+    	<form method="POST" action="" id="search_by_sku_form" name="search_by_sku_form">
+		{% if flag == 'searched' %}
+		
+		
+			{% if searched_by == 'skuid'%}
+				<h2 class="f18">Search Results for SKU:&nbsp;{{sku}} </h2>
+			{% else %}
+				{% if searched_by == 'article_id' %}
+					<h2 class="f18">Search Results for Article Id/SKU:&nbsp;{{article_id}} </h2>
+				{% endif %}
+			{% endif %}
+			
+			<input type="hidden" name="articleid" value="{{article_id}}" />
+			<input type="hidden" name="sku" value="{{sku}}" />
+	
+			<div class="left mart5">
+				<img class="left" src="{{product_image.get_large_thumb_url}}" width="150" height="150" title="{{product.title}}" alt="{{product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" />
+				<div class="left" style="padding:0px 15px;">
+					<table class="f12">
+						<tr>
+							<td><strong>Product Name:</strong></td>
+							<td>{{product.title}}</td>
+						</tr>
+						<tr>
+							<td><strong>Article Id/SKU:</strong></td>
+							<td>{{article_id}}</td>
+						</tr>
+						{%if list_price%}
+						<tr>
+							<td><strong>MRP:</strong></td>
+							<td><input type="text" size="8" id="list_price" name="list_price" value="{{list_price}}" /></td>
+						</tr>
+						{%endif%}
+					</table>
+				</div>
+				<div class="clear"></div>
+			</div>
+			{% if errors %}
+				{% for error in errors %}
+					<h2 class="f18">{{error}}</h2>
+					<br/>
+				{% endfor %}
+			{% else %}
+				{% if all_prices %}
+
+					<table class="tbl_price mart10">
+						<tr>
+							<th> Catalog </th>
+							<th> Sale Price </th>
+							<th> Cashback Amount </th>
+							<th> Starts on </th>
+							<th> Ends on </th>
+							<th> Delete </th>
+						</tr>
+						{% if all_prices %}
+						{% for price in all_prices %}
+							{% if not price.price_list.name|is_timed_pricelist %}
+								<tr> 
+									<td> {{price.price_list.name}} </td>
+									<td> <input type="text" size="8" id="{{price.id}}#offer_price" name="{{price.id}}#offer_price" value="{{price.offer_price}}" /> </td>
+									<td> <input type="text" size="8" id="{{price.id}}#cashback_amount" name="{{price.id}}#cashback_amount" value="{%if price.cashback_amount%}{{price.cashback_amount}}{%else%}0{%endif%}" /> </td>
+									<td> -- </td>
+									<td> -- </td>
+									{% if price.price_list.name|is_delete_option %}
+									<td> -- </td>
+									{% else %}
+									<td> <input type="checkbox" name="{{price.id}}#checkbox" value="deleted"> </td>
+									{% endif %}
+								</tr> 
+							{% endif %}
+						{% endfor %}
+						{% for price in all_prices %}
+							{% if price.price_list.name|is_timed_pricelist %}
+								<tr> 
+									<td> {{price.price_list.name}} </td>
+									<td> <input type="text" size="8" id="{{price.id}}#offer_price" name="{{price.id}}#offer_price" value="{{price.offer_price}}" /><br/> &nbsp; </td>
+									<td> <input type="text" size="8" id="{{price.id}}#cashback_amount" name="{{price.id}}#cashback_amount" value="{%if price.cashback_amount%}{{price.cashback_amount}}{%else%}0{%endif%}" /><br/> &nbsp; </td>
+									{% if price.start_time %}
+									<td> 
+										<input class="date ca" maxlength="10" size="7" style="" readonly="True" type="text" id="{{price.id}}#starts_on" name="{{price.id}}#starts_on" value="{{price.start_time|date:'d-m-Y'}}" />
+										<input class="ca" maxlength="2" size="1" type="text" id="{{price.id}}#starts_on#hr" value="{{price.start_time|date:'H'}}" name="{{price.id}}#starts_on#hr" /> 
+										<input class="ca" maxlength="2" size="1" type="text" id="{{price.id}}#starts_on#min" value="{{price.start_time|date:'i'}}" name="{{price.id}}#starts_on#min" /> 
+										
+										<br/>DD-MM-YYYY &nbsp; HH &nbsp; MM
+									</td>
+	
+									{% else %}
+									<td> --  </td>
+									{% endif %}
+									{% if price.end_time %}
+									<td> 
+										<input class="date ca" maxlength="10" size="7" readonly="True" type="text" id="{{price.id}}#ends_on" name="{{price.id}}#ends_on" value="{{price.end_time|date:'d-m-Y'}}" />
+										<input class="ca" maxlength="2" size="1" type="text" id="{{price.id}}#ends_on#hr" value="{{price.end_time|date:'H'}}" name="{{price.id}}#ends_on#hr" /> 
+										<input class="ca" maxlength="2" size="1" type="text" id="{{price.id}}#ends_on#min" value="{{price.end_time|date:'i'}}" name="{{price.id}}#ends_on#min" /> 
+										
+										<br/>DD-MM-YYYY &nbsp; HH &nbsp; MM
+									</td>
+									{% else %}
+									<td> -- </td>
+									{% endif %}
+									<td> <input type="checkbox" name="{{price.id}}#checkbox" value="deleted"> </input> </td>
+								</tr> 
+							{% endif %}
+						{% endfor %}
+						{% endif %}
+						
+					</table>
+
+			   <div class="ca">
+						<INPUT TYPE="submit" id="submit_button" VALUE="Update" class="uiButton" name="update">&nbsp;&nbsp;
+						<INPUT class="uiButton" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+				</div>
+	
+				{% else %}
+					No results found.
+				{% endif %}
+			{% endif %}
+			
+			
+			
+		{% else %}
+			{% if flag == 'updated' %}
+			<div class="left">
+				<img class="left" src="{{product_image.get_large_thumb_url}}" width="150" height="150" title="{{product.title}}" alt="{{product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" />
+				<div class="left" style="padding:0px 15px;">
+					<div><strong>Product Name:</strong> {{product.title}}</div>
+					<div><strong>Article Id/SKU:</strong> {{article_id}}</div>
+					{% comment %} {% if anonymous_update_price %} {% endcomment %}
+						{% if not updated_list_price|compare_prices:list_price %}
+					<div style="background-color:orange; width:200px;">
+							<strong>M.R.P.:</strong> {{list_price}} -> {{updated_list_price}}
+						</div> 
+						{% else %}
+							<div><strong>M.R.P.:</strong> {{list_price}} </div> 
+						{% endif %}
+					<input type="hidden" name="updated_list_price" value="{{updated_list_price}}" />
+					<input type="hidden" name="list_price" value="{{list_price}}" />
+				</div>
+			</div>
+			<input type="hidden" name="articleid" value="{{article_id}}" />
+			<input type="hidden" name="sku" value="{{sku}}" />
+			{% if errors %}
+				<div class="clear"></div> <br/>
+				{% for error in errors %}
+					<h2 class="f18">{{error}}</h2>
+					<br/>
+				{% endfor %}
+			{% else %}
+			<div class="clear"></div>
+				{%if anonymous_update_price or update_prices or delete_prices%}
+					{% comment %} <h2 class="f18">Updates in Catalog Specific Prices</h2> {% endcomment %}
+					<table class="tbl_price mart10">
+						<tr>
+							<th rowspan="2"> Catalog </th>
+							<th colspan="2"> Sale Price </th>
+							<th colspan="2"> Cashback Amount </th>
+							<th colspan="2"> Start Time </th>
+							<th colspan="2"> End Time </th>
+							<th rowspan="2"> Action </th>
+						</tr>
+						<tr>
+							<th> Was </th>
+							<th> New </th>
+							<th> Was </th>
+							<th> New </th>
+							<th> Was </th>
+							<th> New </th>
+							<th> Was </th>
+							<th> New </th>
+					   </tr>
+						{% for price in update_prices %}
+						{% if not price.price.price_list.name|is_timed_pricelist %}
+						<tr {% if price.action == 'Delete' %} style="background-color:grey" {% endif %}>
+							<td> {{price.price.price_list.name}} </td>
+							<td class="ra" {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}> {{price.price.offer_price|floatformat}} </td>
+							<td {% if price.offer_price %} class="ra" {% endif%} {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}> {% if price.offer_price %} {{price.offer_price|floatformat}} {%else%} -- {%endif%} </td>
+							<td class="ra" {%if not price.price.cashback_amount|compare_prices:price.cashback_amount %} style="background-color:orange" {%endif%}>{%if price.price.cashback_amount%} {{price.price.cashback_amount|floatformat}} {%else%} 0 {%endif%} </td>
+							<td {% if price.cashback_amount %} class="ra" {% endif%} {%if not price.price.cashback_amount|compare_prices:price.cashback_amount %} style="background-color:orange" {%endif%}> {% if price.cashback_amount %} {{price.cashback_amount|floatformat}} {%else%} -- {%endif%} </td>                       
+							<td> -- </td>
+							<td> -- </td>
+							<td> -- </td>
+							<td> -- </td>
+							<td> {{price.action}} </td>
+							{% if price.action == 'Update' %}
+								<input type="hidden" name="{{price.price.id}}#list_price" value="{{price.list_price}}" />
+								<input type="hidden" name="{{price.price.id}}#offer_price" value="{{price.offer_price}}" />
+								<input type="hidden" name="{{price.price.id}}#cashback_amount" value="{{price.cashback_amount}}" />
+								<input type="hidden" name="sku" value="{{price.price.rate_chart.sku}}" />
+							{% endif %}
+							{% if price.action == 'Delete' %}
+								<input type="hidden" name="{{price.price.id}}#delete_price" value="{{price.price.id}}" />
+								<input type="hidden" name="sku" value="{{price.rate_chart.sku}}" />
+							{% endif %}
+						</tr>
+						{% endif %}
+						{% endfor %}
+						{% for price in update_prices %}
+						{% if price.price.price_list.name|is_timed_pricelist %}
+						<tr {% if price.action == 'Delete' %} style="background-color:grey" {% endif %}>
+							<td> {{price.price.price_list.name}} </td>
+							<td class="ra" {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}> {{price.price.offer_price|floatformat}} </td>
+							<td {%if price.offer_price%}class="ra"{%endif%} {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}> {%if price.offer_price%} {{price.offer_price|floatformat}} {%else%} -- {%endif%} </td>
+							<td class="ra" {%if not price.price.cashback_amount|compare_prices:price.cashback_amount %} style="background-color:orange" {%endif%}> {{price.price.cashback_amount|floatformat}} </td>
+							<td {%if price.cashback_amount%}class="ra"{%endif%} {%if not price.price.cashback_amount|compare_prices:price.cashback_amount %} style="background-color:orange" {%endif%}> {%if price.cashback_amount%} {{price.cashback_amount|floatformat}} {%else%} -- {%endif%} </td>
+							<td {%if price.price.start_time and price.starts_on and price.price.start_time != price.starts_on %} style="background-color:orange" {%endif%}> {{price.price.start_time|date:'d-m-Y H:i'}} </td>
+							<td {%if price.price.start_time and price.starts_on and price.price.start_time != price.starts_on %} style="background-color:orange" {%endif%}> {%if price.starts_on%} {{price.starts_on|date:'d-m-Y H:i'}} {%else%} -- {%endif%} </td>
+							<td {%if price.price.end_time and price.ends_on and price.price.end_time != price.ends_on %} style="background-color:orange" {%endif%}> {{price.price.end_time|date:'d-m-Y H:i'}} </td>
+							<td {%if price.price.end_time and price.ends_on and price.price.end_time != price.ends_on %} style="background-color:orange" {%endif%}> {%if price.ends_on%} {{price.ends_on|date:'d-m-Y H:i'}} {%else%}--{%endif%} </td>
+							<td> {{price.action}} </td>
+							{% if price.action == 'Update' %}
+							<input type="hidden" name="{{price.price.id}}#list_price" value="{{price.list_price}}" />
+							<input type="hidden" name="{{price.price.id}}#offer_price" value="{{price.offer_price}}" />
+							<input type="hidden" name="{{price.price.id}}#cashback_amount" value="{{price.cashback_amount}}" />
+							<input type="hidden" name="{{price.price.id}}#starts_on" value="{{price.starts_on}}" />
+							<input type="hidden" name="{{price.price.id}}#ends_on" value="{{price.ends_on}}" />
+							<input type="hidden" name="sku" value="{{price.price.rate_chart.sku}}" />
+							{% endif %}
+							{% if price.action == 'Delete' %}
+								<input type="hidden" name="{{price.price.id}}#delete_price" value="{{price.price.id}}" />
+								<input type="hidden" name="sku" value="{{price.price.rate_chart.sku}}" />
+							{% endif %}
+						</tr>
+						{% endif %}
+						{% endfor %}
+					</table>
+				{% endif %}
+				{% endif %}
+				<div class="ca">
+					{% if if_any_changes %}
+						<INPUT TYPE="submit" id="confirm_button" VALUE="Confirm" class="uiButton" name="confirm">&nbsp;&nbsp;
+					{% endif %}
+					<INPUT class="uiButton" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+					<!-- <INPUT TYPE="button" VALUE="Back" id="back_button" class="button orange" /> -->
+				</div>
+	
+			{% else %}
+				{% if errors %}
+					{% for error in errors %}
+						<h2 class="f18">{{error}}</h2><br/>
+					{% endfor %}
+				{% endif %}
+				{%comment%}
+				{% if flag == 'confirmed' %}
+					<h2 class="f20"> Price update requst created successfully for {%if sku%}SKU: {{sku}}{%else%} {%if article_id%} Article Id:{{article_id}}{%endif%} {%endif%}!!!</h2> 
+					<br/>
+				{% endif %}
+				{%endcomment%}
+				{% if is_pricing_tool_supported %}
+					{% if prices_approved %}
+						<div class="orders_msg rc5">
+							<div class="rc5 success">       
+								Prices updated successfully for Articleids -&nbsp;
+								{% for i in prices_approved %}
+									{{i}},&nbsp;<br/>
+								{% endfor %}   
+							</div>
+						</div>   
+					{% endif %}
+	
+					{% if prices_rejected %}
+						<div class="orders_msg rc5">
+							<div class="rc5 error">       
+								Could not update prices for Articleids -&nbsp;
+								{% for i in prices_rejected %}
+									{{i}},&nbsp;<br/>
+								{% endfor %}   
+							</div>
+						</div>   
+					{% endif %}
+	
+					{% if failed_to_update_in_atg %}
+						<div class="orders_msg rc5">
+							<div class="rc5 error">       
+								Failed to update price in ATG for Articleids -&nbsp;
+								{% for i in failed_to_update_in_atg %}
+									{{i}},&nbsp;<br/>
+								{% endfor %}   
+							</div>
+						</div>   
+					{% endif %}
+	
+				<div class="clear">
+					<div class="left">
+						<strong>Article Id/SKU :</strong> 
+						<input type="text" name="articleid" value=""></input> &nbsp; &nbsp;
+						<input type="submit" id="submit_button" value="Search" name="search" class="uiButton" />
+					</div>
+                    {% comment %}
+					<div class="right mart5 marb5">{%include "prices/show_excel_link.html" %}</div>
+                    {% endcomment %}
+				</div>
+                {% if all_valid_prices %}				
+				<table class="tbl_response mart5 marb10" id="response_list">
+					<tr>
+						<th>Article Id</th>
+						<th>SKU</th>
+						<th>Product Name</th>
+						<th>Catalog</th>
+						<th>M.R.P.</th>
+						<th>Offer Price</th>
+						<th>Cashback Amount</th>
+						<th></th>
+					</tr>
+					{% for item in all_valid_prices %}
+					<tr id="{{item.rate_chart.article_id}}">
+						<td class="ca">{{ item.rate_chart.article_id }}</td>
+						<td class="ca">{{ item.rate_chart.sku }}</td>
+						<td>{{ item.rate_chart.product.title }}</td>
+						<td>{{ item.price_list.name }}</td>
+						<td>{{ item.list_price|floatformat }}</td>
+						<td>{{ item.offer_price|floatformat }}</td>
+						<td class="ca">{%if item.cashback_amount%}{{ item.cashback_amount|floatformat }} {%else%} -- {%endif%}</td>
+						<td><a href="{{request.client.name}}/prices/{{client_name}}/{{seller_name}}/all_prices?articleid={{item.rate_chart.article_id}}" class="f11"> Edit </a></td>
+					</tr>
+					<!--<tr class="list_row rah_td" id="{{item.rate_chart.article_id}}_tr">
+						<td colspan="10" style="padding:0px 10px; border-width:0px 0px 1px;">
+							<div id="{{item.article_id}}_details" style="margin:0px;"></div>
+						   {%comment%} {%show_price_info item.rate_chart.id item.price_list.name %} {%endcomment%}
+						</td>
+					</tr>-->
+					{% endfor %}
+				</table>
+                {% endif %}
+					<div class="clear"></div>
+
+					<!--{%if pagination.enable_prev or pagination.enable_next%}
+						<div class="pagination mart20"> {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+						{% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+						{% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+						{% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+						<div>{{pagination.cur_page}}</div>
+						{% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+						{% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+						{% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+						{% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+					</div>
+					{%endif%}-->
+					
+					{% paginate %}
+
+					
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	  </form>
+  </div>
+</div>
+{% endblock %} 
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    //refresh_js();
+    var row_count = 1;
+    var total_row = 5;
+    $("#back_button").click(function(){
+        history.go(-1);
+        return true;
+    })
+
+    $('.date').datepicker({dateFormat: 'dd-m-yy'});
+
+    $('.addbutton').click(function(){
+        alert('from addbutton')
+        alert(total_row);
+        if(total_row > 0 && row_count <= 15){
+            var add_id = Math.random();
+
+            var tr_row = "<tr id=nc_"+row_count+" value="+row_count+"><td> <select name=\""+row_count+"#pricelist\">"+ '{{pricelist_options|escapejs}}' + "<\/select> <br\/>&nbsp;<\/td> <td>  <input type=\"text\" size=\"8\" id=\"" + row_count +"#list_price\" name=\"" + row_count + "#list_price\" value=\"\" /><br/> &nbsp;   <\/td> <td> <input type=\"text\" size=\"8\" id=\"" + row_count  +"#offer_price\" name=\"" + row_count  + "#offer_price\" value=\"\" \/><br\/> &nbsp; <\/td> <td> <input class=\"date ca\" maxlength=\"10\" size=\"7\" style=\"\" readonly=\"True\" type=\"text\" id=\""+row_count+"#starts_on\" name=\""+row_count+"#starts_on\" value=\"\" \/> <input class=\"ca\" maxlength=\"2\" size=\"1\" type=\"text\" id=\""+row_count+"#starts_on#hr\" value=\"\" name=\""+row_count+"#starts_on#hr\" \/> <input class=\"ca\" maxlength=\"2\" size=\"1\" type=\"text\" id=\""+row_count+"#starts_on#min\" value=\"\" name=\""+row_count+"#starts_on#min\" \/> <br\/>DD-MM-YYYY &nbsp; HH &nbsp; MM <\/td> <td> <input class=\"date ca\" maxlength=\"10\" size=\"7\" style=\"\" readonly=\"True\" type=\"text\" id=\""+row_count+"#ends_on\" name=\""+row_count+"#ends_on\" value=\"\" \/> <input class=\"ca\" maxlength=\"2\" size=\"1\" type=\"text\" id=\""+row_count+"#ends_on#hr\" value=\"\" name=\""+row_count+"#ends_on#hr\" \/> <input class=\"ca\" maxlength=\"2\" size=\"1\" type=\"text\" id=\""+row_count+"#ends_on#min\" value=\"\" name=\""+row_count+"#ends_on#min\" \/> <br\/>DD-MM-YYYY &nbsp; HH &nbsp; MM             <\/td><td><input type=\"button\" class=\"delete button orange\" value=\"Remove\" /><\/td> <input type=\"hidden\" name=\"nr_" + row_count +"\" value=\"selected\" \/><\/tr>"
+            $(".tbl_price").append(tr_row);
+            refresh_js();
+            row_count += 1;
+            total_row -= 1;
+            if(total_row == 0 || row_count > 15){
+                $("#add_button").disabled = true;
+                $("#add_button").removeClass("orange");
+            }else{
+                $("#add_button").disabled = false;
+                $("#add_button").addClass("orange");
+            }
+        }else{
+            $("#add_button").disabled = true;
+            $("#add_button").removeClass("orange");
+        }
+    });
+});
+    function refresh_js(){
+        $(".delete").click(function(){
+            alert('from delete button');
+            total_row += 1;
+            alert("THIS"+$(this))
+            alert(total_row);
+            var grand_parent =$(this).parent().parent();
+            //var removed_id = grand_parent.attr("value");
+            grand_parent.remove();
+            //reset_ids(removed_id);
+            if(total_row > 0 && row_count <= 15){
+                $("#add_button").disabled = false;
+                $("#add_button").addClass("orange");
+            }
+        });
+
+        $('.date').datepicker({dateFormat: 'dd-m-yy'});
+    }
+$('display').toggleClass('tr_show', $('body').hasClass('tr_hide') );
+$('.rah').click(function() {
+    var div_id = this.parentNode.id + '_details';
+    var tr_id = this.parentNode.id + '_tr';
+    var rc_id = this.parentNode.id;
+    var that = this.parentNode;
+    var data = 'rc_id=' + rc_id;
+ 
+    if($(this.parentNode).hasClass('show')) {
+        $('#' + tr_id).removeClass('tr_hide');
+        $(that).removeClass('show');
+        $('#head_1100 td').each(function(){ $(this.parentNode).css('border-bottom','1px dotted #DDDDDD')});
+    } else {
+        $(that).addClass('show');
+        $('#' + tr_id).addClass('tr_hide');
+        $('#head_1100 td').each(function(){ $(this.parentNode).css('border-bottom','1px solid #DDDDDD')});
+    }
+    return false;
+});
+
+
+</script>
+{% endblock %} 

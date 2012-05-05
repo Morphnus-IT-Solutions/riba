@@ -1,0 +1,127 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+
+<div class="inner-content">
+	<div class="content_head" style="width: 948px; height: 36px; padding-top: 26px;">
+		<div class="left header rc5" style="width: 960px;">
+			<h1>{{request.client.client.name|title}} - Items</h1>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+  	<div class="clear"></div>
+	
+	<div class="sku_search">
+		<form method="get" action="">
+			<table class="search_box">
+			<tr>
+				<td style="padding-right: 10px; width: 49px;"><span class="f15 fblack">Product/SKU</span></td>
+				<td style="width: 167px;"><input type="text" id="sku_id" name="sku_id" style="width: 161px; height: 22px;"/></td> 
+				<td><input type="submit" id="sku_id_submit" value="Search" class="uiButton fblack" /></td>
+				<td></td>
+				<td></td>
+			</tr>
+			</table>
+		</form>
+	</div>
+	</div class="clear bordergray"></div>
+{% comment %}
+<div class="clear"></div>
+{%if searchitems%}
+{% for i in searchitems.object_list %}
+<tr valign ="top">
+<td>{{i.id}},</td>
+<td>{{i.product}},</td>
+<td>{{i.sku}}</td>
+</tr>
+<br />
+<br />
+{% endfor %}
+{% endif %}
+<div class="clear"></div>
+
+{%if search_pagination.enable_prev or search_pagination.enable_next%}
+    <div class="pagination mart20"> 
+	{% if search_pagination.enable_prev %} <a href="{{search_pagination.base_url}}page={{search_pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+      {% for page in search_pagination.first_set %} <a href="{{search_pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+      {% if search_pagination.show_sep1 %} <span> ...</span> {% endif %}             
+      {% for page in search_pagination.prev_set %} <a href="{{search_pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}                                         
+      <div>{{search_pagination.cur_page}}</div>
+      {% for page in search_pagination.next_set %} <a href="{{search_pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}           
+      {% if search_pagination.show_sep2 %} <span> ...</span> {% endif %}
+      {% for page in search_pagination.last_set %} <a href="{{search_pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+	  {% if search_pagination.enable_next %} <a href="{{search_pagination.base_url}}page={{search_pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+      </div>  
+	{% else %}
+<tr>
+	<td colspan="5" class="padl20 fred">No item found.whereeeeeeeeeee</td> 
+</tr>
+	{% endif %}
+<div class = "clear"></div>
+{% endcomment %}
+
+	<form id ="sku_page">
+		{% if srcitems.object_list %}
+			<table class="item_display">
+			<tr>
+				<th class="ca"><strong>Seller Rate Chart ID</strong></th>
+				<th class=""><strong>Product</strong></th>
+				<th class="ca"><strong>SKU</strong></th>
+			</tr>
+			{% for src in srcitems.object_list %}
+				<tr valign="top">
+					<td class="ca" style="width: 154px;">{{src.id}}</td>
+					<td class="" style="width: 355px;">{{src.product}}</td>
+					<td class="ca" style="width: 154px;">{{src.sku}}</td>
+				</tr>
+			{% endfor %}
+			</table>
+		{% else %}
+			<p class="f13 fred">Search for an item</p>
+		{% endif %}
+		<div class="clear"></div>
+			{%if pagination.enable_prev or pagination.enable_next%}
+    			<div class="pagination mart20"> 
+					{% if pagination.enable_prev %}
+						<a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a>
+					{% else %} 
+						<a class="gray_link">Prev</a>
+					{% endif %}
+      				{% for page in pagination.first_set %}
+						<a href="{{pagination.base_url}}page={{page}}">{{page}}</a>
+		 			{% endfor %}
+      				{% if pagination.show_sep1 %}
+						<span> ...</span> 
+					{% endif %}             
+      				{% for page in pagination.prev_set %}
+						<a href="{{pagination.base_url}}page={{page}}">{{page}}</a>
+					{% endfor %}                                         
+     				{{pagination.cur_page}}
+      				{% for page in pagination.next_set %}
+						<a href="{{pagination.base_url}}page={{page}}">{{page}}</a>
+					{% endfor %}           
+     			 	{% if pagination.show_sep2 %}
+						<span> ...</span>
+					{% endif %}
+      				{% for page in pagination.last_set %}
+						<a href="{{pagination.base_url}}page={{page}}">{{page}}</a>
+					{% endfor %}
+	 				{% if pagination.enable_next %}
+						<a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a>
+					{% else %}
+						<a class="gray_link">Next</a>
+					{% endif %} 
+      			</div>  
+			{% endif %}
+			<div class = "clear"></div>
+		</div>
+	</form>
+{% endblock %}

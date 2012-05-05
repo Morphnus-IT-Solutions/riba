@@ -1,0 +1,24 @@
+<html>
+    <body OnLoad="OnLoadEvent();">
+      <form name="form1" action="{{json.bankUrl}}" method="GET">
+          <input type="hidden" name="vpc_AccessCode" value="{{json.accessCode}}"><br>
+          <input type="hidden" name="vpc_Amount" value="{{json.amount}}"><br>
+          <input type="hidden" name="vpc_Command" value="{{json.command}}"><br>
+          <input type="hidden" name="vpc_Locale" value="{{json.locale}}"><br>
+          <input type="hidden" name="vpc_Merchant" value="{{json.merchantId}}"><br>
+          <input type="hidden" name="vpc_MerchTxnRef" value="{{json.transactionId}}"><br>
+          <input type="hidden" name="vpc_OrderInfo" value="{{json.orderId}}"><br>
+          <input type="hidden" name="vpc_ReturnURL" value="{{json.returnUrl}}"><br>
+          <input type="hidden" name="vpc_Version" value="{{json.version}}"><br>
+          <input type="hidden" name="vpc_SecureHash" value="{{json.secureHash}}"><br>
+        </form>
+      <script language="JavaScript">
+                
+            function OnLoadEvent() {
+                  document.form1.submit();
+                }
+
+      </script>
+    </body>
+</html>
+

@@ -1,0 +1,43 @@
+{% load cc_tags %}
+{% load web_tags %}
+<div class="cc_footer_box">
+  <div class="cc_footer_inner">
+  <table cellspacing="0" cellpadding="0" border="0">
+    <tbody>
+      <tr>
+         <td colspan="3" align="left"></td>
+      </tr>
+      <tr>
+        <td height="35" align="left" valign="middle" class="cc_footer_navigation">
+        	<div id="cc_footer_main_links" class="cc_footer_info">
+              <ul>
+                  <li><span class="fb f14">INTERFACES</span></li>
+                  <li><a href="/">Order Booking</a></li>
+                  {% if request|has_access_perm:"orders.can_confirm_order" %}
+                  <li><a href="/orders/auth" target="_blank">Order Confirmation</a></li>
+                  {% endif %}
+                  {% if request|has_access_perm:"orders.can_cancel_order" %}
+                  <li><a href="/orders/cancel" target="_blank">Order Cancellation</a></li>
+                  {% endif %}
+              </ul>
+            </div>
+        </td>
+        <td height="35" align="left" valign="middle" class="cc_footer_navigation">
+        	<div id="cc_footer_main_links" class="cc_footer_info">
+              <ul>
+                  <li><span class="fb f14">SYSTEMS</span></li>
+          <li><a href="http://analytics.futurebazaar.com">Analytics</a></li>
+          <li><a href="http://response.futurebazaar.com">Response</a></li>
+          <li><a href="http://sellers.futurebazaar.com">Sellers</a></li>
+          <li><a href="http://support.futurebazaar.com">Support</a></li>
+              </ul>
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>

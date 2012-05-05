@@ -1,0 +1,19 @@
+{%load web_tags%}
+{%load cc_tags%}
+<div class="home_header">
+  <h1>Shop by Brands</h1>
+</div>
+<div class="brands_wrapper">
+  <div class="prev_dis" id="brand_prev"> </div>
+  <div class="brands_list"> 
+  <ul class="brands_thumbs" style="float:left; margin-bottom:10px;">
+    {%for brand in brands%}
+      <li>
+          <a href="{{brand.slug}}"><img src="media/images/brands/brand-{{brand.brand.slug}}.jpg" alt="{{brand.brand.name}}" title="{{brand.brand.name}}"/></a>
+      </li>
+    {%endfor%}
+  </ul>
+  </div>
+  <div id="brand_next" class="next" > </div>
+  <div class="clear"></div>
+</div>

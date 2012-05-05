@@ -1,0 +1,55 @@
+ {%load menu_tags%}
+  {%load cc_tags%}
+  {%load web_tags%}
+  {%load cache %}
+<header class="header">
+  <div class="header_main">
+   <a href="{%cc_url request "" %}">
+   <img id="logo" src="{%media_url request "images/logo.jpg"%}" width="232" height="64" title="FutureBazaar" alt="FutureBazaar"/>
+   </a>
+   <div class="header_right">
+    <div class="top_nav">
+        <ul class="signin_nav right">
+
+            {% if request|is_user_authenticated %}
+                <li class="mart2"> <span>Howdy, {%get_username request%}!</span>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li class="switch_version"><a href="/switch/old-version/" class="fb" style="color:#CC3300;">Switch to Old version</a>&nbsp;|&nbsp;</li>
+                <li class="mart2"><a href="{% cc_url request "user/orders/" %}" title="My Account">My Account</a>&nbsp;|&nbsp;</li>
+                <li class="mart2"><a href="{% cc_url request "order/track_order/" %}" title="Track Order">Track Order</a>&nbsp;|&nbsp;</li>
+                <li class="mart2"><a href="/auth/signout/" id="sout" title="Sign out">Sign out </a></li>
+            {% else %}
+                <li class="switch_version"><a href="/switch/old-version/" class="fb" style="color:#CC3300;">Switch to Old version</a>&nbsp;|&nbsp;</li>
+                <li class="mart2"><a href="{% cc_url request "order/track_order/" %}" title="Track Order">Track Order</a>&nbsp;|</li>
+                <li><div id="header_subscribe" class="hide">{% include "web/header_subscribe.html" %}|</div>
+                </li>
+                <li>
+                    <div id="header_signin">{% include "web/header_signin.html" %}|</div>
+                </li>
+                <li>
+                    <div id="header_signup">{% include "web/header_signup.html" %}</div>
+                </li>
+            {% endif %}
+            <div class="clear"></div>        
+        </ul>
+    <div class="clear"></div>
+    </div>
+    <div>
+        <div class="search">
+          <form action="{%cc_url request "search"%}" method="get" id="search_form">
+            {% render_search_form_fb request %}
+            <div class="clear"></div>
+          </form>
+          {% render_header_dod request %}
+        </div>
+        <div id="header_cart" class="right">
+        {% render_header_cart request %}
+    </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+   </div>  
+</header>
+{%block header%}
+        {% render_menu request %}
+{%endblock%} 

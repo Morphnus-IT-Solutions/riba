@@ -1,0 +1,56 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="padding_top10">
+  {%comment%}<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+    <div class="content_head">
+        <div class="header rc5">
+            <h1>{{client_display_name|title}} - STO Report</h1>
+        </div>
+        <div class="clear bordergray"></div>
+    </div>
+    <div class="clear"></div>
+<div class="left" style="width:940px"> 
+    {% daterange ""  search_trend from_date to_date request '' client_display_name%}
+</div>
+    {% if sto %}
+        <div class="clear padding_top10">
+            <table class="tbl_response mart5 marb10">
+                <tbody>
+                    <tr>
+                        <th>From DC</th>
+                        <th>To DC</th>
+                        <th>Article Id </th>
+                        <th>Quantity</th>
+                    </tr>
+                    {% for item in sto %}
+                    <tr>
+                        <td class="ca"> {{item.0}} </td>
+                        <td class="ca"> {{item.1}} </td>
+                        <td class="ca"> {{item.2}} </td>
+                        <td class="ca"> {{item.3}} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        No STO Pending!<br/>
+    {% endif %}
+</div>
+{% endblock %} 
+
+{% block script_footer %}
+{{block.super}}
+{% endblock %} 

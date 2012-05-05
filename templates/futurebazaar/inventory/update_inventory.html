@@ -1,0 +1,145 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name}}adskjabdb</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="clear"></div>
+  <form id="search_by_sku_form" name="search_by_sku_form" action="" method="POST">
+	<div class="left">
+		<h2 class="f18">Search Results for Article Id/SKU:&nbsp;8903493000187 </h2>
+        <input type="hidden" name="articleid" value="{{article_id}}" />
+        <input type="hidden" name="sku" value="{{sku}}" />
+		<div class="left mart5">
+			<img width="150" height="150" onerror_cnt="1" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='/media/images/noimage_s.jpg';}return false;" alt="Baisakhi - Grab Handle Bag" title="Baisakhi - Grab Handle Bag" src="/media/images/noimage_s.jpg" class="left">
+			<div style="padding:0px 15px;" class="left">
+				<table class="f12">
+					<tbody><tr>
+						<td><strong>Product Name:</strong></td>
+						<td>Baisakhi - Grab Handle Bag</td>
+					</tr>
+					<tr>
+						<td><strong>Article Id/SKU:</strong></td>
+						<td>8903493000187</td>
+					</tr>
+					
+					<tr>
+						<td><strong>MRP:</strong></td>
+						<td><input type="text" value="200.00" name="list_price" id="list_price" size="8"></td>
+					</tr>
+					
+				</tbody></table>
+			</div>
+			<div class="clear"></div>
+		</div>
+		
+	</div>
+	<div class="clear">
+	<table class="tbl_response mart5 marb10">
+	  <tbody>
+		<tr>
+		  <th>Product Name</th>
+		  <th>Article Id</th>
+		  <th>DC</th>
+		  <th>SKU</th>
+		  <th>Type </th>
+		  <th>ATS</th>
+		  <th>Start On</th>
+		  <th>Ends On</th>
+		  <th>Expected On</th>
+		  <th>Is Active</th>
+		  <th></th>
+		</tr>
+		<tr>
+		  <td class="la">Mewar - Clutch</td>
+		  <td>8903493001696</td>
+		  <td>2786</td>
+		  <td>1234567</td>
+		  <td>Physical</td>
+		  <td>100</td>
+		  <td>12-10-2010 23:29</td>
+		  <td>12-10-2010 23:49</td>
+		  <td>12-10-2010 23:39</td>
+		  <td>Yes</td>
+		  <td><a class="f11" href="/updateinventory.html"> Edit </a></td>
+		</tr>
+		<tr>
+		  <td class="la">Mewar - Clutch</td>
+		  <td>8903493001702</td>
+		  <td>2792</td>
+		  <td>1444567</td>
+		  <td>Virtual</td>
+		  <td>250</td>
+		  <td>13-10-2010 20:10</td>
+		  <td>13-10-2010 20:40</td>
+		  <td>13-10-2010 20:30</td>
+		  <td>No</td>
+		  <td><a class="f11" href="/updateinventory.html"> Edit </a></td>
+		</tr>
+	   </tbody>
+	</table>
+		<div class="ca">
+			<input type="submit" name="add" class="uiButton" value="Add" id="add_submit_button">&nbsp;&nbsp;
+			<input type="submit" name="update" class="uiButton" value="Update" id="submit_button">&nbsp;&nbsp;
+			<input type="button" onclick="history.go(-1);return true;" value="Back" class="uiButton">
+		</div>
+	</div>
+  </form>
+</div>
+<div class="clear"></div>
+{% endblock %} 
+
+{% block script_footer %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.date').datepicker({dateFormat: 'dd-m-yy'});
+});
+/*
+$(document).ready(function(){
+
+$('#update').click(function checknumber(){
+    var x=document.search_by_sku_form.stock.value
+    var y=document.search_by_sku_form.delivery_time.value
+    var anum=/(^\d+$)|(^\d+\.\d+$)/
+    if (anum.test(x)){
+        testresult1=true
+    }else{
+            testresult1=false
+    }
+
+    if (anum.test(y))
+        testresult2=true
+    else{
+            testresult2=false
+    }
+
+    if(!testresult1 && !testresult2){
+        alert("Please enter a valid stock and delivery time!!!");
+    }else if(!testresult1 && testresult2){
+        alert("Please enter a valid stock!!!");
+    }else if(testresult1 && !testresult2){
+        alert("Please enter a valid delivery time!!!");
+    }
+    return (testresult1 && testresult2)
+})
+
+});
+*/
+</script>
+{% endblock %} 

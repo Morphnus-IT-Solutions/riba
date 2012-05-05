@@ -1,0 +1,90 @@
+.content_head{margin:10px 0px 20px;}
+.content_head div.header{background-color:#EDEDED; padding:8px 5px;  border-bottom:1px solid #fff;}
+.content_head div.header h3{ padding-left:5px; }
+
+.download_excel{float:right; margin-right:5px; padding-right:20px; background-image:url("/media/images/excel-16.gif"); background-position:right center; background-repeat:no-repeat;}
+.pagination{text-align:right; margin-right:5px; padding:2px 5px; color:#00529C;
+}
+.bgcolor1{background-color:#F2F2F2; }
+.bgcolor2{background-color:#EDEDED;}
+
+
+.tbl_order{border:1px solid #ccc; border-collapse:collapse; width:100%;  font-size:11px;}
+.tbl_order th{background-color:#B8E4FD; border:1px solid #EFF7FE; color:#00529C;  padding:3px 3px; vertical-align:top; text-align:center;}
+
+.tbl_order td{border:1px solid #B8E4FD
+; padding:3px 3px; vertical-align:top; text-align:center; color:#333;}
+/*.col1{text-align:center; width:20px;}
+.col2{text-align:center; width:50px; }
+.col3{text-align:center; width:50px;}
+.col4{text-align:center; width:50px;}
+.col5{text-align:center; width:50px;}
+.col6{text-align:center; width:50px;}
+.col7{text-align:center; width:50px;}
+.col8{text-align:center; width:50px;}
+.col9{text-align:center; width:50px;}
+.col10{text-align:center; width:50px;}
+.col11{text-align:center; width:50px;}
+.col12{text-align:center; width:50px;}
+.col13{text-align:center; width:50px;}
+.col14{text-align:center; width:50px;}*/
+
+.tbl_order td.chk{width:20px;}
+.tbl_order td.date{color:#666666; width:60px;}
+.tbl_order td.id{ width:65px;}
+.tbl_order td.prod{width:95px; font-size:12px;}
+.tbl_order td.total{width:55px; font-size:11px;}
+.tbl_order td.city{width:55px;}
+.tbl_order td.qty{width:20px;}
+.tbl_order td.lob{width:60px;}
+.tbl_order td.status{}
+.tbl_order td.name{}
+.tbl_order td.desc{}
+.tbl_order td.phone{}
+.tbl_order td.no{width:65px;}
+
+.row1{}
+.row2{ background-color:#EFF7FE;}
+
+/* item details*/
+.tbl_item_details{border:1px solid #ccc; border-collapse:collapse; width:100%;  font-size:12px; }
+
+/*.tbl_item_details th{background-color:#B8E4FD; border:1px solid #EFF7FE; color:#00529C;  padding:3px 3px; vertical-align:top; text-align:center;}
+*/
+.tbl_item_details td{border:1px solid #B8E4FD; padding:5px 10px; vertical-align:top; text-align:left; color:#333;}
+.tbl_item_details td.title{width:100px; background-color:#EFF7FE; font-weight:bold; color:#00529C; padding:3px 10px;}
+.tbl_item_details td.value{width:150px;}
+
+/*update history*/
+.tbl_update_history{border:1px solid #ccc; border-collapse:collapse; width:100%;  font-size:12px;}
+.tbl_update_history th{background-color:#B8E4FD; border:1px solid #EFF7FE; color:#00529C;  padding:5px 10px; vertical-align:top; text-align:left;}
+.tbl_update_history td{border:1px solid #B8E4FD; padding:5px 10px; vertical-align:top; text-align:left; color:#333;}
+
+/*update status*/
+.tbl_update_status{ border-collapse:separate; width:100%;  font-size:12px; border:1px solid #ccc;}
+.tbl_update_status td{ padding:5px 10px; vertical-align:top; text-align:left; color:#333;}
+.tbl_update_status td textarea {width:600px; height:120px; padding:5px;}
+.tbl_update_status td input[type="text"], input.text, select { width:300px;}
+
+/*Reports*/
+.tbl_report{border-collapse:collapse; width:100%;  font-size:11px;}
+.tbl_report caption{text-align:left; font-weight:bold; padding:5px 5px; font-size:12px; color:#333;}
+.tbl_report th{background-color:#B8E4FD; border:1px solid #EFF7FE; color:#00529C; font-size:12px; padding:3px 3px; vertical-align:top; text-align:center;}
+.tbl_report td{border:1px solid #B8E4FD; padding:3px 3px; vertical-align:top; text-align:center; color:#333;}
+
+.orders_msg{border:1px solid #B8E4FD; padding:10px; margin:20px 10px; color:#333; background-color:#EFF7FE;}
+.orders_msg div{background-color:#FFFFFF; padding:10px;}
+.orders_msg h3{color:#666;}
+
+/*.tbl_dashboard{border-collapse:collapse;font-size:12px; margin-top:20px;}
+.tbl_dashboard td{border:0px solid #B8E4FD; padding:3px 3px; vertical-align:top; text-align:left; color:#333;}
+.tbl_dashboard td div{padding:20px; border:1px solid #ccc;}
+
+*/
+/*dashboard home*/
+.dashboard{text-align:left; color:#333; margin:20px 0px;}
+.dashboard_row1{height:260px;}
+.dashboard_row2{height:150px;}
+.dashboard_block{border:1px solid #B8E4FD; margin-bottom:10px; float:left; width:465px; margin-right:10px}
+.dashboard_block h3{border-bottom:1px solid #B8E4FD; background-color:#EFF7FE; padding:3px 10px;}
+.dashboard_block ul{padding:3px 10px; list-style:inside; color:#666;}

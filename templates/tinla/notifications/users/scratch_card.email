@@ -1,0 +1,14 @@
+
+Welcome to Futurebazaar.com!
+
+You are the newest member of Future Bazaar, India's leading online retailer. We are excited to have you on board. 
+
+{% if scratch_card %}
+To verify your email and complete the sign up, please click on the link below and recieve a coupon code:
+ 
+http://{{request.client.domain}}/win-register/congratulations/?verification_msg={{user.id}}&card_id={{scratch_card.id}}
+{% endif %}
+
+Happy shopping!
+
+Future Bazaar team

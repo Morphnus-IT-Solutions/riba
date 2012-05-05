@@ -1,0 +1,173 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form input[type=submit]{width:50px;}
+#id_notes {height:50px;}
+ul, ol { padding-left: 0px !important; }
+.ui-widget select {width: auto;}
+.ui-widget input {width:80px;}
+.ui-dialog .ui-dialog-content {padding: 2px;}
+</style>
+<form method='POST' action=''>
+<div class='clear'>
+<div>
+    {% if errors %}
+        <div class="orders_msg">
+          <div class="error"> 
+            {% for error in errors %}
+                {{error}}<br/>
+            {% endfor %} 
+          </div>
+        </div>
+        <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok' style="width:80px\9; padding:5px;"/></div> 
+    {% else %}
+        {% if entry_edited_successfully %}
+            <div class="success"> Virtual Stock Entry edited successfully.</div>
+
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                  <th>DC</th>
+                  <th>A.T.S.</th>
+                  <th>Starts On</th>
+                  <th>Ends On</th>
+                  <th>Expected On</th>
+                  <th>Expected In</th>
+                  <th>Is Active</th>
+                </tr>
+                <tr>
+                    <td class="ca">{{inventory.dc.code}}</td>
+                    <td class="ca">{{inventory.get_ats_for_future_timeslots|floatformat}}</td>
+                    <td class="ca">{{inventory.starts_on|date:'d-m-Y H:i:s'}}</td>
+                    <td class="ca">{{inventory.ends_on|date:'d-m-Y H:i:s'}}</td>
+                    <td class="ca">{%if inventory.expected_on%}{{inventory.expected_on|date:'d-m-Y H:i:s'}}{%else%}--{%endif%}</td>
+                    <td class="ca">{%if inventory.expected_in%}{{inventory.expected_in|floatformat}}{%else%}--{%endif%}</td>
+                    <td class="ca">{%if inventory.is_active%}Yes{%else%}No{%endif%}</td>
+                </tr>
+               </tbody>
+            </table>
+            <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok' style="width:80px\9; padding:5px;"/></div>
+        {% else %}
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                  <th>DC</th>
+                  <th>A.T.S.</th>
+                  <th>Starts On</th>
+                  <th>Ends On</th>
+                  <th>Expected On</th>
+                  <th>Expected In</th>
+                  <th>Is Active</th>
+                </tr>
+                <tr>
+                    <td class="ca">{{inventory.dc.code}}</td>
+                    <td> <input class="ca" maxlength="4" size="1" type="text" value="{{inventory.get_ats_for_future_timeslots|floatformat}}" id="stock" name="stock" /> </td>
+                    {% if inventory.starts_on <= current_time %}
+                        <td class="ca">{{inventory.starts_on|date:'d-m-Y H:i:s'}}</td>
+                        <input type="hidden" name="starts_on" id="starts_on" value="{{inventory.starts_on|date:'d-m-Y'}}" style="width:45px;"/>
+                        <input type="hidden" name="starts_on_hr" id="starts_on_hr" value="{{inventory.starts_on|date:'H'}}" style="width:45px;"/> 
+                        <input type="hidden" name="starts_on_min" id="starts_on_min" value="{{inventory.starts_on|date:'i'}}" style="width:45px;"/> 
+                        <input type="hidden" name="starts_on_sec" id="starts_on_sec" value="{{inventory.starts_on|date:'s'}}" style="width:45px;"/> 
+                    {% else %}
+                        <td class="ca">
+                            <input class="date" maxlength="10" size="7" style="" readonly="True" type="text" name="starts_on" id="starts_on" Autocomplete=OFF value="{{inventory.starts_on|date:'d-m-Y'}}"/>
+                            <input class="ca" maxlength="2" size="1" type="text" name="starts_on_hr" id="starts_on_hr" value="{{inventory.starts_on|date:'H'}}" style="width:45px;"/> 
+                            <input class="ca" maxlength="2" size="1" type="text" name="starts_on_min" id="starts_on_min" value="{{inventory.starts_on|date:'i'}}" style="width:45px;"/> 
+                            <input class="ca" maxlength="2" size="1" type="text" name="starts_on_sec" id="starts_on_sec" value="{{inventory.starts_on|date:'s'}}" style="width:45px;"/> 
+                        </td>
+                    {% endif %}
+                    <td class="ca">
+                        <input class="date" maxlength="10" size="7" style="" readonly="True" type="text" name="ends_on" id="ends_on" Autocomplete=OFF value="{{inventory.ends_on|date:'d-m-Y'}}"/>
+                        <input class="ca" maxlength="2" size="1" type="text" name="ends_on_hr" id="ends_on_hr" value="{{inventory.ends_on|date:'H'}}" style="width:45px;"/> 
+                        <input class="ca" maxlength="2" size="1" type="text" name="ends_on_min" id="ends_on_min" value="{{inventory.ends_on|date:'i'}}" style="width:45px;"/> 
+                        <input class="ca" maxlength="2" size="1" type="text" name="ends_on_sec" id="ends_on_sec" value="{{inventory.ends_on|date:'s'}}" style="width:45px;"/> 
+                    </td>
+                    {% if inventory.starts_on <= current_time %}
+                        <td class="ca">{%if inventory.expected_on%}{{inventory.expected_on|date:'d-m-Y H:i:s'}}{%else%} -- {%endif%}</td>
+                        <input type="hidden" name="expected_on" id="expected_on" value="{{inventory.expected_on|date:'d-m-Y'}}" />
+                        <input type="hidden" name="expected_on_hr" id="expected_on_hr" value="{{inventory.expected_on|date:'H'}}" /> 
+                        <input type="hidden" name="expected_on_min" id="expected_on_min" value="{{inventory.expected_on|date:'i'}}" /> 
+                        <input type="hidden" name="expected_on_sec" id="expected_on_sec" value="{{inventory.expected_on|date:'s'}}" /> 
+                    {% else %}
+                        <td class="ca">
+                            <input class="date" maxlength="10" size="7" style="" type="text" name="expected_on" id="expected_on" Autocomplete=OFF value="{{inventory.expected_on|date:'d-m-Y'}}"/>
+                            <input class="ca" maxlength="2" size="1" type="text" name="expected_on_hr" id="expected_on_hr" value="{{inventory.expected_on|date:'H'}}" style="width:45px;"/> 
+                            <input class="ca" maxlength="2" size="1" type="text" name="expected_on_min" id="expected_on_min" value="{{inventory.expected_on|date:'i'}}" style="width:45px;"/> 
+                            <input class="ca" maxlength="2" size="1" type="text" name="expected_on_sec" id="expected_on_sec" value="{{inventory.expected_on|date:'s'}}" style="width:45px;"/> 
+                        </td>
+                    {% endif %}
+                    {% if inventory.starts_on <= current_time %}
+                        <td class="ca">{%if inventory.expected_in%}{{inventory.expected_in|floatformat}}{%else%}--{%endif%}</td>
+                        <input type="hidden" name="expected_in" id="expected_in" value="{{inventory.expected_in}}" />
+                    {% else %}
+                        <td> <input class="ca" maxlength="4" size="1" type="text" value="{{inventory.expected_in|floatformat}}" id="expected_in" name="expected_in" /> </td>
+                    {% endif %}
+                    <td class="ca">
+                        <select name='is_active' id='is_active'>
+                            <option value="yes" {%if inventory.is_active%}selected{%endif%}>Yes</option>
+                            <option value="no" {%if not inventory.is_active%}selected{%endif%}>No</option>
+                        </select>
+                    </td>
+                </tr>
+               </tbody>
+            </table>
+            <div><input type="submit" name="submit" value="Save Changes" class="uiButton" id='submit' style="width:115px; padding:5px;"/></div>
+        {% endif %}
+    {% endif %}
+</div>
+</form>
+
+<script type='text/javascript'>
+    $('.date').datepicker({dateFormat: 'dd-mm-yy'});
+
+    $('#submit').click(function() {
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#apply_action').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#apply_action').html(xhr.responseText);
+        };
+        var url = '/category/category_management/inventory/edit_virtual_inventory/';
+        var id = {{inventory.id}}
+        var starts_on = $('#starts_on').val() + ' ' + $('#starts_on_hr').val() + ':' + $('#starts_on_min').val() + ':' + $('#starts_on_sec').val();
+        var ends_on = $('#ends_on').val() + ' ' + $('#ends_on_hr').val() + ':' + $('#ends_on_min').val() + ':' + $('#ends_on_sec').val();
+        var expected_on = $('#expected_on').val() + ' ' + $('#expected_on_hr').val() + ':' + $('#expected_on_min').val() + ':' + $('#expected_on_sec').val();
+        var is_active = $('#is_active option:selected').val();
+        var stock = $('#stock').val();
+        var expected_in = $('#expected_in').val();
+        var data = 'id=' + id;
+        data += '&stock=' + stock;
+        data += '&starts_on=' + starts_on;
+        data += '&ends_on=' + ends_on;
+        data += '&expected_on=' + expected_on;
+        data += '&expected_in=' + expected_in;
+        data += '&is_active=' + is_active;
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+    
+    $('#ok').click(function() {
+        $(".ui-dialog-titlebar-close").trigger('click');
+        window.location.reload();
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#apply_action').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#apply_action').html(xhr.responseText);
+        };
+        var data = 'article_id=' + {{inventory.rate_chart.article_id}};
+        var url = '/category/category_management/inventory/all_inventory/'
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+    
+</script>

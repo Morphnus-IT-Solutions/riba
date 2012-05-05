@@ -1,0 +1,137 @@
+{%load cc_tags%}
+<style type="text/css">
+	#form_shipping_info input[type="text"] {
+		margin-bottom: 10px;
+		width: 315px;
+	}
+	#order_state{width:315px;width:320px\9;margin-bottom: 10px;}
+</style>
+<div class="dialog">
+<form method="post" action="{%cc_url request 'seller/update_shipping_info/'%}{{order_id}}/" id="form_shipping_info"  name="shipping_form">
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">Order State<span class="fred">*</span></span><br/>
+		<select id="order_state" name="order_state" value="{{shipping_details.state}}" onchange=f()>
+        {%if order_item.delivered_on%}                       
+			<option value="delivered">Delivered</option>
+			<option value="shipped">Shipped</option>
+        {%else%}                         
+			<option value="shipped">Shipped</option>
+			<option value="delivered">Delivered</option>
+		{%endif%}                   
+        </select>
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">Courier<span class="fred">*</span></span><br/>
+		<input type="text" id="courier" size="40" name="courier" class="input_text_box_m" value="{{shipping_details.courier}}" />
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">AWB Number<span class="fred">*</span></span><br/>
+		<input type="text" id="tracking_no" size="40" name="tracking_no" class="input_text_box_m" value="{{shipping_details.tracking_no}}" />
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">URL<span class="fred">*</span></span><br/>
+		<input type="text" id="tracking_url" size="40" name="tracking_url" class="input_text_box_m" value="{{shipping_details.tracking_url}}" />
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">Disptached On<span class="fred">*</span></span><br/>
+		<input type="text" id="dispatched_on" size="40" name="dispatched_on" class="input_text_box_m" value="{{order_item.dispatched_on|date:"d/m/Y"}}" />
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">Delivered On<span class="fred">*</span></span><br/>
+		<input type="text" id="delivered_on" size="40" name="delivered_on" class="input_text_box_m" value="{{order_item.delivered_on|date:"d/m/Y"}}" />
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">Received By<span class="fred">*</span></span><br/>
+		<input type="text" id="received_by" size="40" name="received_by" class="input_text_box_m" {%if order_item.received_by%}value="{{order_item.received_by}}"{%else%}value=''{%endif%} />
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">Receiver's Contact<span class="fred">*</span></span><br/>
+		<input type="text" id="receiver's_contact" size="40" name="receivers_contact" class="input_text_box_m" {%if order_item.receivers_contact%}value="{{order_item.receivers_contact}}"{%else%}value-''{%endif%} />
+	</div>
+	<div class="fieldWrapper marb10 clear la">
+		<span class="f11 fdgray">Notes<span class="fred">*</span></span><br/>
+		<textarea id="notes" name="notes" style="width:315px;" cols="40" rows="5">{{shipping_details.notes}}</textarea>
+	</div>
+	<div class="clear">&nbsp;</div>
+	<div class='fieldWrapper marb10 clear la'>
+		<input type="submit" name="submit" value="Update" class="uiButton" onclick="return validateForm();" />
+	</div>
+</form>
+</div>
+<script type="text/javascript">
+    $('#cancel').click(function(){
+        $('#shipping_dialog').dialog('close');
+        return false;
+    });
+	$('#dispatched_on').datepicker();
+	$('#delivered_on').datepicker();
+
+	$(document).ready(function(){
+        f()
+    });
+	function f(){
+		if ($('#order_state').val() == 'shipped')
+		{
+			$('#deliv')[0].style.display = 'none';
+			$('#ship')[0].style.display = '';
+		}
+		if ($('#order_state').val() == 'delivered')
+		{
+			$('#ship')[0].style.display = 'none';
+			$('#deliv')[0].style.display = '';
+		}
+	}
+
+	function validateForm()
+	{
+		var order_state = document.forms["shipping_form"]["order_state"].value;
+		var courier = document.forms["shipping_form"]["courier"].value;
+		var tracking_no = document.forms["shipping_form"]["tracking_no"].value;
+		var tracking_url = document.forms["shipping_form"]["tracking_url"].value;
+		var dispatched_on = document.forms["shipping_form"]["dispatched_on"].value;
+		var delivered_on = document.forms["shipping_form"]["delivered_on"].value;
+		var received_by = document.forms["shipping_form"]["received_by"].value;
+		var receivers_contact = document.forms["shipping_form"]["receivers_contact"].value;
+		if (courier==null || courier=="")
+		{
+			alert("Required Field - Courier");
+			return false;
+		}
+		if (tracking_no==null || tracking_no=="")
+		{
+			alert("Required Field - AWB No.");
+			return false;
+		}
+		if(order_state=='shipped')
+		{
+		if (tracking_url==null || tracking_url=="")
+		{
+			alert("Required Field - URL");
+			return false;
+		}
+		if (dispatched_on==null || dispatched_on=="")
+		{
+			alert("Required Field - Dispatched on");
+			return false;
+		}
+		}
+		if(order_state=='delivered')
+		{
+		if (delivered_on==null || delivered_on=="")
+		{
+			alert("Required Field - Delivered on");
+			return false;
+		}
+		if (received_by==null || received_by=="")
+		{
+			alert("Required Field - Received by");
+			return false;
+		}
+		if (receivers_contact==null || receivers_contact=="")
+		{
+			alert("Required Field - Receiver's Contact");
+			return false;
+		}
+		}
+	}
+</script>

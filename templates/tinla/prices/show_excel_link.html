@@ -1,0 +1,5 @@
+{%ifequal request.path url%}
+<a href="{{url}}?excel=True">Download all active prices for {{client_display_name}}</a>&nbsp;&nbsp;
+{%else%}
+    <a href="{{url}}&excel=True">Download all active prices for {{client_display_name}}</a>&nbsp;&nbsp;
+{%endifequal%}

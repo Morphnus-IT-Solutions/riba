@@ -1,0 +1,78 @@
+{% load ppd_tags %}
+<table cellpadding="0" cellspacing="0" width="100%" border="0">
+{% if not price_versions %}
+<tr id="history_1100_tr" class="list_row rah_td">
+	<td style="padding:0px 10px; border-width:0px 0px 0px;">
+		<div class="attempt_summary roundcorner5">
+			No price versions!!!
+		</div>
+	</td>
+</tr>
+{% else %}
+{% for pv in price_versions %}
+<tr id="history_1100_tr">
+	<td style="padding:0px 0px; border-width:0px 0px 0px;">
+	  <div style="margin:0px;" id="history_1100_details">
+		 <div id="response_{{pv_id}}" class="response_summary {%if not forloop.last %}bblightgray{%endif%}">
+			<div class="left" style="position:relative;">
+				<div class="left" style="width:750px;">
+					<div class="left" style="width:200px;">
+						<span class="f11 flgray">Catalog:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.price_list.name|title}} </span>
+					</div>
+					<div class="left" style="width:200px;">
+						<span class="f11 flgray">M.R.P.:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.current_list_price}} -> {{pv.new_list_price}}</span>
+					</div>
+                    <div class="left" style="width:200px;">
+						<span class="f11 flgray">Offer Price:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.current_offer_price}} -> {{pv.new_offer_price}}</span>
+					</div>
+                    <div class="left" style="width:200px;">
+						<span class="f11 flgray">Cashback Amount:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.current_cashback_amount}} -> {{pv.new_cashback_amount}}</span>
+					</div>
+                    {% if pv.price_list.name|is_timed_pricelist %}
+					<div class="left" style="width:200px;">
+						<span class="f11 flgray">Start Time:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.current_start_time|date:"h:i A o\n D, d M y"}} {%if pv.current_start_time != pv.new_start_time%}-> {{pv.new_start_time|date:"h:i A o\n D, d M y"}} {%endif%}</span>
+					</div>
+					<div class="left" style="width:200px;">
+						<span class="f11 flgray">End Time:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.current_end_time|date:"h:i A o\n D, d M y"}} {%if pv.current_end_time != pv.new_end_time%}-> {{pv.new_end_time|date:"h:i A o\n D, d M y"}} {%endif%}</span>
+					</div>
+                    {% endif %}
+					<div class="left" style="width:200px;">
+						<span class="f11 flgray">Action:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.action|title}}</span>
+					</div>
+					<div class="left" style="width:200px;">
+						<span class="f11 flgray">Created By:</span>
+					</div>
+					<div class="left" style="width:550px;">
+						<span class="f11">{{pv.created_by}} on {{pv.created_on|date:"h:i A D, d M y"}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	  </div>
+	</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}

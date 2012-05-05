@@ -1,0 +1,139 @@
+body{ background-color:#efefef; font-family:Sans-Serif;}
+.container { background-color: #fff; }
+#content { min-height:518px; }
+#header { background-color: #fff; color: #000; border-bottom: 1px solid #fcce00; padding: 0.5em 0 0 0;}
+#footer { border-top: 1px solid #fcce00; color: #ccc; padding: 1em;}
+#footer_nav { display:inline; text-align: right;}
+#footer_nav ul { padding: 0; margin: 0; }
+#footer_nav li { padding: 0 1em; margin: 0; font-size:1.2em; font-weight: bold;}
+#footer_nav ul li { display: inline }
+#footer_nav ul li a { text-decoration: none }
+#logo { padding-left: 1em; }
+#header h3 { display:inline; padding: 0em 0em 0em 1em; margin-bottom:2em;}
+#login_logout { text-align: right; vertical-align: bottom; padding: 0.7em 0.2em 0 0; }
+#nav {padding: 2em 0 0 0;}
+#nav ul { padding: 0; margin: 0; }
+#nav li {list-style: none; display: inline; font-family:Sans-Serif; font-size: 1.2em; font-weight: bold; padding: 0 1em 0em 0em; margin: 0;}
+#nav a { text-decoration: none; }
+#nav a:hover { color: #222 }
+#nav li a.selected_menu { color: #222 }
+/* login table styles */
+#login_tbl { width: 50%; align:center; margin-left: 25%; margin-right:25%; border: 1px solid #ccc; border-collapse: collapse;}
+#login_header { background-color: #fcce00; color: #333; padding: 0.2em; font-size: 1.5em; text-align: center; }
+
+/* reset camapaign summary table */
+.campaign_summary { border-collapse: collapse;}
+.campaign_summary th { padding: 3px 3px; margin: 0;}
+.campaign_summary td { vertical-align: top; padding: 0px; margin: 0;}
+.campaign_summary caption { padding: 3px 3px; margin: 0; }
+.campaign_summary table { border: none; border-collapse: collapse; }
+.campaign_summary table td { border:none;}
+.button { border:1px solid #fcc300; color: #000; background-color: #fcfcce; cursor:pointer; }
+
+table.campaign_summary { width: 930px; margin: 0px 10px; }
+
+.list_wrapper {padding:0 1em}
+.rb { border-right: 1px solid #ccc; }
+
+.list_header { background-color: #fcfccb; color: #000; font-weight: bold; }
+.list_header td { font-weight: bold; border:1px solid #fcce00;}
+.list { border-collapse: collapse; border: 1px solid #fcce00;}
+.list_row {}
+.list_row td {border:1px solid #eee;}
+.list_row .first_col{border-left:1px solid #fcce00;}
+.list_row .last_col{border-right:1px solid #fcce00;}
+.last_row{}
+.last_row td {border:1px solid #eee;border-bottom:1px solid #fcce00;}
+.last_row .first_col{border-left:1px solid #fcce00;}
+.last_row .last_col{border-right:1px solid #fcce00;}
+.buttons { padding: 0 1em 0.5em 0; text-align: right;}
+.buttons a {
+    background-color: #666; color: #fff; padding: 0.3em; font-weight: bold; text-decoration:none;
+    -moz-border-radius:5px;
+}
+.buttons a:hover { background-color: #999; }
+.pad { padding: 1em }
+.padh { padding: 0 1em; }
+div.actions {visibility: hidden; font-size:0.8em; }
+div.actions a { color: #444; text-decoration:none; }
+div.actions a:hover { color: #000; }
+div:hover.action_container div.actions { visibility: visible; }
+
+#id_comments {
+    width: 300px;
+    height: 100px;
+}
+
+td.spacer {
+    width: 15px;
+    border-top: none;
+}
+
+td.pipeline_summary {
+    background-color: #fcfccb;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+td.heading {
+    background-color: #fcce00;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.br {
+    border-right: 1px solid #ccc;
+}
+.brt {
+    border-top: 1px solid #fcce00;
+}
+.bl {
+    border-left: 1px solid #ccc;
+}
+.bb {
+    border-bottom: 1px solid #ccc;
+}
+
+td.heading h4 { margin-bottom: 0; }
+
+table.campaign_summary td h2 { margin-bottom: 10px; margin-top: 10px; }
+
+table.campaign_summary tr td table tr td { padding: 3px; } 
+
+textarea {
+        font-family: lucida grande, arial, verdana, sans-serif;
+        padding: 3px;
+        margin: 0;
+        width: 280px;
+        height: 60px;
+
+}
+
+.c_attempted { 
+    background-color: #fff;
+    color: #333;
+}
+
+.c_connected {
+    background-color: #BBEEFF;
+    color: #333;
+}
+
+.c_pending_order {
+    background-color: #99CCFF;
+    color: #333;
+}
+
+.c_order {
+    background-color: #6699CC;
+    color: #333;
+}
+
+.c_attempted a { color: #333; text-decoration: none; }
+.c_connected a { color: #333; text-decoration: none; }
+.c_pending_order a { color: #333; text-decoration: none; }
+.c_order a { color: #333; text-decoration: none; }
+
+a.filter { padding-left: 5px; }
+a.selected_filter { color: #000; border-left: 3px #ccc solid; padding-left: 2px; text-decoration: none}
+.required { color:#f00; }

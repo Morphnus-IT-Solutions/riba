@@ -1,0 +1,108 @@
+- fields: {country: 1, name: Andhra Pradesh, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 1
+- fields: {country: 1, name: Assam, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 2
+- fields: {country: 1, name: Arunachal Pradesh, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 3
+- fields: {country: 1, name: Bihar, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 4
+- fields: {country: 1, name: Chattisgarh, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 5
+- fields: {country: 1, name: Delhi, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 6
+- fields: {country: 1, name: West Bengal, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 7
+- fields: {country: 1, name: Gujarat, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 8
+- fields: {country: 1, name: Goa, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 9
+- fields: {country: 1, name: Himachal Pradesh, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 10
+- fields: {country: 1, name: Haryana, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 11
+- fields: {country: 1, name: Jharkhand, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 12
+- fields: {country: 1, name: Karnataka, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 13
+- fields: {country: 1, name: Maharastra, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 14
+- fields: {country: 1, name: Madhya Pradesh, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 15
+- fields: {country: 1, name: Mizoram, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 16
+- fields: {country: 1, name: Meghalaya, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 17
+- fields: {country: 1, name: Orissa, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 18
+- fields: {country: 1, name: Punjab, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 19
+- fields: {country: 1, name: Jammu and Kashmir, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 20
+- fields: {country: 1, name: Rajasthan, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 21
+- fields: {country: 1, name: Sikkim, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 22
+- fields: {country: 1, name: Nagaland, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 23
+- fields: {country: 1, name: Pondicherry, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 24
+- fields: {country: 1, name: Kerala, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 25
+- fields: {country: 1, name: Tamilnadu, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 26
+- fields: {country: 1, name: Tripura, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 27
+- fields: {country: 1, name: Daman and Diu, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 28
+- fields: {country: 1, name: Dadra and Nagar Haveli, normalized: null, type: primary,
+    user_created: false}
+  model: locations.state
+  pk: 29
+- fields: {country: 1, name: Lakshadweep, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 30
+- fields: {country: 1, name: Chandigarh, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 31
+- fields: {country: 1, name: Manipur, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 32
+- fields: {country: 1, name: Uttar Pradesh, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 33
+- fields: {country: 1, name: Uttarkhand, normalized: null, type: primary, user_created: false}
+  model: locations.state
+  pk: 34
+- fields: {country: 1, name: Andaman and Nicobar Islands, normalized: null, type: primary,
+    user_created: false}
+  model: locations.state
+  pk: 35
+

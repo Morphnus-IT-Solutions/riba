@@ -1,0 +1,5 @@
+<select id="id_deposit_banks">
+    {%for option in grouped_options%}
+        <option value="{{option.payment_mode.code}}">{{option.payment_mode.name}}</option>
+    {%endfor%}
+</select>

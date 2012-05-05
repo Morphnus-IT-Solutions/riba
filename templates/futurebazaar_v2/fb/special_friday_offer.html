@@ -1,0 +1,58 @@
+{% extends "web/base.html" %}
+{% block content %}
+<style>
+.subscription_outer{background:url('/media/images/friday-deal-signup-bg.gif') no-repeat 0 0; height:670px; padding-top:342px; margin-top:20px;}
+#id_name, #id_email, #id_mobile{width:340px !important; height:36px !important;line-height:36px !important; padding:2px; font-size:15px;}
+.data_fields .submit{width:103px !important; height:40px !important; padding:2px; cursor:pointer; border:none; background:url('/media/images/btn-deal-signup-submit.gif') no-repeat 0 0; }
+.data_fields label{color:#fff; font-size:15px;}
+.fyellow{color:#ebdb26;}
+.data_fields {width:340px; padding:0px;  margin-left:340px;}
+.data_fields td{ padding:0 0 20px ;}
+
+</style>
+<div class="subscription_outer">
+<form action="" method="POST">
+ <table class="data_fields">
+
+     {% for field in form %}
+        <tr>
+            <td colspan="2">
+                <div class="marb5"><label for="name">Enter your {{field.label}}{% if field.field.required %}<span class="fred"> *</span>{% endif %}:</label></div>
+               <div>{{field}}</div>
+            </td>
+        </tr>
+    {% endfor %}
+ <tr>
+{%if form.errors%}
+        <td style="padding:0px;vertical-align:top;">
+            <ul class="fred" >
+               {% for field in form %}
+                    {% for error in field.errors %}
+                            <li width="150">{{error}}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </td>
+{%endif%}
+{%if errors%}
+        <td style="padding:0px;vertical-align:top;">
+            <ul class="fred" >
+               {% for error in errors %}
+                    <li width="150">{{error}}</li>
+                {% endfor %}
+            </ul>
+        </td>
+{%endif%}
+ <td align="right">
+ <div><input type="submit" value="" title="SUBMIT" class="submit" /></div>
+ </td>
+ </tr>
+ </table>
+
+</form>
+</div>
+{% endblock %}
+{%block script_footer%}
+{{block.super}}
+
+{% endblock%}

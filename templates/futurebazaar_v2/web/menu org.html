@@ -1,0 +1,182 @@
+{%load cc_tags%}
+{%load web_tags%}
+<div id="menu">
+  <ul id="browse" class="browse toprc5">
+    <li>
+     <div>
+     <span class="padl10 lh32">Browse all Deals</span>
+      <div id="arrow" class="spone arrow"></div>
+      </div>
+      <ul class="menu">
+        {%for item in mega_items%}
+        {%if item.item.type == 'group_of_lists'%}
+        <li id="item" class="item"> <a  class="a_item item" href="{%cc_url request item.featured_list.url%}">{{item.item.display_name}}</a>
+          <div class="sub_menu" style="width:720px">
+            <div class="sub_menu_sec1">
+              <div class="sub_menu_sec1_left">
+               {%if item.featured_list.curator.user_photo%} 
+               <img src="{{item.featured_list.curator.user_photo.url}}" class="marb5" width="100" height="100" alt="{{item.featured_list.curator.full_name}}" title="{{item.featured_list.curator.full_name}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" />           
+               
+               {%endif%}
+                <div>{{item.featured_list.curator.full_name}},<br />
+                  {{item.featured_list.curator.profession}}</div>
+              </div>
+              <div class="sub_menu_sec1_right top10deals">
+                <div class="marb5">
+                  <h6><a href="{%cc_url request item.featured_list.url%}">Top 10 {{item.featured_list.title}}</a></h6>
+                  <p>{{item.featured_list.description|truncatewords:75|safe}}<!--<a href="{%cc_url request item.featured_list.url%}"> Read More &rsaquo;</a>--></p>
+                </div>
+                <ul class="left">
+                  {%for item in item.featured_list.get_active_items%}                
+                  <li>
+                  <a href="{%cc_url request item.sku.product.url%}">
+                  <img src="{{item.sku.product.productimage_set.all.0.get_filmstrip_url}}" width="48" height="48" title="{{item.sku.product.title}}" alt="{{item.sku.product.title}}"/>
+                  </a>
+                  </li>
+                  {%endfor%}
+                </ul>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="sub_menu_sec2 mart10">
+              <ul class="left">
+                {%for list in item.first_list%}
+                <li><a href="{%cc_url request list.url%}">Top 10 {{list.title}} by {{list.curator.full_name}}</a></li>
+                {%endfor%}
+              </ul>        
+            </div>
+          </div>
+        </li>
+        {%endif%}
+        {%if item.item.type == 'list'%}
+        <li id="item" class="item"> <a href="{%cc_url request item.item.list.get_url%}" class="a_item">{{item.item.list.title}}</a>
+          <div class="sub_menu"  style="width:720px"> {%for litem in item.list_items%}
+            <div class="sub_menu_sec1 left" style="width:350px;">
+              <h6><a href="{%cc_url request litem.sku.product.url%}">{{litem.sku.product.title}}</a></h6>
+              <div class="sub_menu_sec1 mobiles">
+               <a href="{%cc_url request litem.sku.product.url%}">
+               <img width="100" height="100" src="{{litem.sku.product.productimage_set.all.0.get_thumbnail_url}}" alt="{{litem.sku.product.title}}" title="{{litem.sku.product.title}}" class="left marr10"/>             
+                </a>
+                <ul class="li_price">
+                  <li>{% get_price_info request litem.sku 'list_price_label' %} <span class="fs"><span class="WebRupee">Rs.</span> {% get_price_info request litem.sku 'list_price' %}</span></li>
+                  <li>{% get_price_info request litem.sku 'offer_price_label' %} <span class="WebRupee">Rs.</span> {% get_price_info request litem.sku 'offer_price' %}</li>
+                  <li><a href="{%cc_url request litem.sku.product.url%}" class="spone btn_menu_buynow show"></a></li>
+
+                </ul>
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            {%endfor%}
+            <div class="right"><a href="{%cc_url request item.item.list.get_url %}">View all products</a></div>
+            <div class="clear"></div>
+          </div>
+        </li>
+        {%endif%}
+        {%if item.type == 'daily_deal'%}
+        <li id="item" class="item"> <a href="/stealoftheday/{{item.deal_product.slug}}/{{item.deal.id}}/" class="a_item">Today's Steal</a>
+          <div class="sub_menu" style="width:310px !important;">
+            <div class="sub_menu_sec1 left" style="width:350px;">
+              <h6><a href="{%cc_url request item.deal_product.url%}" title="{{item.deal_product.title}}">{{item.deal_product.title|truncate:50}}</a></h6>
+              <div class="sub_menu_sec1 mobiles">
+               <a href="{%cc_url request item.deal_product.url%}">
+               <img width="100" height="100" src="{{item.deal_product.productimage_set.all.0.get_thumbnail_url}}" alt="{{item.deal_product.title}}" title="{{item.deal_product.title}}" class="left marr10"/>             
+                </a>
+                <ul class="li_price">
+                  <li>{% get_price_info request item.sku 'list_price_label' %} <span class="fs"><span class="WebRupee">Rs.</span> {% get_price_info request item.sku 'list_price' %}</span></li>
+                  <li>{% get_price_info request item.sku 'offer_price_label' %} <span class="WebRupee">Rs.</span> {% get_price_info request item.sku 'offer_price' %}</li>
+                  <li><a href="{%cc_url request item.deal_product.url%}" class="spone btn_menu_buynow show"></a></li>
+
+                </ul>
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            {%if item.view_more%}
+                <div class="right"><a href="/stealoftheday/{{item.deal.slug}}/{{item.deal.id}}/">View all products</a></div>
+            {%endif%}
+            <div class="clear"></div>
+          </div>
+        </li>
+        {%endif%}
+        {%endfor%}
+
+
+        <li id="item" class="item"> <a href="#" class="a_item">Shop By Price</a>
+          <div class="sub_menu">  
+            <div class="sub_menu_sec2">        
+              <ul>
+                <li><a href="/shop-by-price/?min=0&max=1000">Less Then <span class="WebRupee">Rs.</span> 1,000</a>  
+                </li>                
+                <li><a href="/shop-by-price/?min=1000&max=5000"><span class="WebRupee">Rs.</span> 1,000 - <span class="WebRupee">Rs.</span> 5,000</a></li>
+                <li><a href="/shop-by-price/?min=5000&max=25000"><span class="WebRupee">Rs.</span> 5,000 - <span class="WebRupee">Rs.</span> 25,000</a></li>
+                <li><a href="/shop-by-price/?min=25000">Above <span class="WebRupee">Rs.</span> 25,000</a></li>
+              </ul>            
+          </div>
+          </div>
+        </li>
+        <li id="item" class="item"> <a href="#" class="a_item">Shop By Discount</a>
+          <div class="sub_menu">
+            <div class="sub_menu_sec2">
+              <ul>
+                <li><a href="/shop-by-discount/?min_discount=0&max_discount=10">Less Then 10%</a></li>
+                <li><a href="/shop-by-discount/?min_discount=10&max_discount=25">10% - 25%</a></li>
+                <li><a href="/shop-by-discount/?min_discount=25&max_discount=50">25% - 50%</a></li>
+                <li><a href="/shop-by-discount/?min_discount=50">Above 50%</a></li>
+              </ul>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </li>
+        <li id="item" class="item"> <a href="#" class="a_item">Shop By Category</a>    
+          <div class="sub_menu cat_menu" style="top:-80px;">
+            {%for items in category_items%}
+             <div  class="left cat_col">
+            	<ul>
+                {%for item in items%}
+                <li id="item{{forloop.counter}}" class="l2 {%if item.active_cats%}marb20{%else%}marb5{%endif%}" style="background-image:none; padding-left:0px;">
+                  <a href="{%cc_url request item.item.category.url%}" class="a_l2">{{item.item.category.name}}</a>
+                  <div class="menu_level3">                       
+                      <ul>
+                        {%for category in item.active_cats%}
+                           <li><a href="{% cc_url request category.category.url %}">{{category.category.name}}</a></li>
+                        {%endfor%}
+                      </ul>                        
+                  </div>
+                  <div class="clear"></div>
+                </li>
+                {%endfor%}             
+              </ul>
+            </div>
+            {%endfor%}             
+          <div class="clear"></div>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <div class="clear"></div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      
+      function addMega(){
+        $(this).addClass("hovering");
+        }
+
+      function removeMega(){
+        $(this).removeClass("hovering");
+        }
+    var megaConfig = {
+         interval:80,
+         sensitivity: 4,
+         over: addMega,
+         timeout: 100,
+         out: removeMega
+    };
+    $(".menu li.item").hoverIntent(megaConfig);
+    $("#browse").hover(function(){
+         $(".menu").toggle();
+    });
+});
+</script>

@@ -1,0 +1,190 @@
+{% extends 'support/base.html' %}
+    {% load support_tags %}
+    {% load cc_tags %}
+{% block content %}
+<style type='text/css'>
+.action_input select{width:120px;height:21px;font-size:11px;}
+.action_input input{height:21px;margin-left:5px;font-size:11px;padding:0 3px;}
+button.filter { padding: 6px 10px; -webkit-border-radius: 2px 2px; border: solid 1px rgb(153, 153, 153); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(rgb(221, 221, 221))); color: #333; text-decoration: none; cursor: pointer; display: inline-block; text-align: center; text-shadow: 0px 1px 1px rgba(255,255,255,1); line-height: 1; }
+</style>
+<div class="padding_top10">
+    {% if results %}
+    {% if facets %}
+        <form method="get" action="/search/" id="filterform">
+            <input type="hidden" name="q" value="{{q}}" />
+            <input type="hidden" name="t" value="{{doc_type}}" />
+        <div class="right ra w180 marb5">
+            <div>{% support_daterange request 0 1%}</div>
+        </div>
+        <div width="100%" style="height: 200px; border: 1px solid #ddd; margin-bottom: 10px; overflow-y:scroll; clear:both;" id="filter_div">
+            {% for facet in facets %}
+            {% if facet.values %}
+            <div class="left" style="width:175px; font-size: 11px; padding: 5px;">
+                <strong>{{facet.name}}</strong><br/>
+                {% for entry in facet.values %}
+                    <input type="checkbox" name="{{entry.key}}" value="{{entry.value}}" {% if entry.selected %}checked{% endif %}/>&nbsp;{{entry.data|title}} ({{entry.count}})<br/>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="ra marb10">
+			<a href="#" class="clear_filters" style="font-size:11px;">Clear filters</a>&nbsp;
+            <button type="submit" class="btn_c btn_c_s fb">Filter</button> 
+        </div>
+        </form>
+    {% endif %}
+    <div style="padding:5px; background-color:whiteSmoke; border: 1px solid #ddd;font-size:11px; margin-bottom:10px;">
+        <div class="left">
+        Found {{found}} results.{% if total_amount %} Amount Rs. {{total_amount}} {%endif %}
+        </div>
+        <div class="right">
+            {% if pagination.enable_prev %}&laquo; <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% endif %}
+            {{pagination.result_from}} - {{pagination.result_to}} of {{found}} 
+            {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> &raquo;{% endif %}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <table class="tbl_response tablesorter f11" id='order_list'>
+		<thead>
+        {% if doc_type == 'order' %}
+		<tr>
+            {% comment %}<th class="w20"><input type='checkbox' name='orders_select_all'/></th>{% endcomment %}
+			<th class="w110 ">Order ID</th>
+            <th class="w150 ">Name</td>
+            <th class="w120 ">Booked On</th>
+            <th class="w120 ">Confirmed On</th>
+            <th class="w75 ">Amount</th>
+            <th class="w100 ">State</th>
+		</tr>
+        {% endif %}
+        {% if doc_type == "orderitem" %}
+			<th class="w90">Order ID</th>
+            <th class="w150">Name</td>
+            <th class="w150">Product</td>
+            <th class="w30">Qty</td>
+            <th class="w120">Booked On</th>
+            <th class="w120">Confirmed On</th>
+            <th class="w30">DC</td>
+            <th class="w75">Amount</th>
+            <th class="w100">State</th>
+        {% endif %}
+        {% if doc_type == "payment" %}
+		<tr>
+			<th class="w110 ">Order ID</th>
+            <th class="w110 ">Transaction ID</th>
+            <th class="w120 ">Timestamp</th>
+            <th class="w75 ">Gateway</td>
+            <th class="w75 ">Amount</th>
+            <th class="w125 ">State</th>
+            <th class="w100 ">Order State</th>
+        {% endif %}
+        {% if doc_type == "shipment" %}
+		<tr>
+			<th class="w110 ">Order ID</th>
+			<th class="w110 ">Delivery Number</th>
+            <th class="w110 ">AWB Number</th>
+            <th class="w110">Invoice Number</th>
+            <th class="w75 ">LSP</td>
+            <th class="w125 ">State</th>
+		</tr>
+        {% endif %}
+        {% if doc_type == "refund" %}
+		<tr>
+			<th class="w110 ">Order ID</th>
+			<th class="w100 ">Payment Mode</th>
+            <th class="w75 ">Amount</th>
+            <th class="w110 ">Opened On</th>
+            <th class="w120 ">Closed On</th>
+            <th class="w125 ">State</th>
+            <th class="w100 ">Order State</th>
+		</tr>
+        {% endif %}
+		</thead>
+		<tbody>
+        {% for doc in results %}
+        {% if doc_type == 'order' %}
+        <tr>
+            <td class="txtalgnc"><a href="{% cc_url request "order/" %}{{doc.order_id}}">{{doc.reference_order_id|default:doc.order_id}}</a></td>
+            <td>{{doc.user_name|title}}</td>
+            <td class="txtalgnc">{{doc.booking_timestamp|date:'d-m-Y H:i'}}</td>
+            <td class="txtalgnc">{{doc.confirming_timestamp|date:'d-m-Y H:i'}}</td>
+            <td class="txtalgnc">INR {{doc.payable_amount|floatformat:-2}}</td>
+            <td class="txtalgnc">{{doc.support_state|upper}}</td>
+        </tr>
+        {% endif %}
+        {% if doc_type == 'orderitem' %}
+        <tr>
+            <td class="txtalgnc"><a href="{% cc_url request "order/" %}{{doc.order_id}}">{{doc.reference_order_id|default:doc.order_id}}</a></td>
+            <td>{{doc.user_name|title}}</td>
+            <td>{{doc.item_title|title}}</td>
+            <td>{{doc.item_qty}}</td>
+            <td class="txtalgnc">{{doc.booking_timestamp|date:'d-m-y H:i'}}</td>
+            <td class="txtalgnc">{{doc.confirming_timestamp|date:'d-m-y H:i'}}</td>
+            <td class="txtalgnc">{{doc.item_dc}}</td>
+            <td class="txtalgnc">INR {{doc.item_sale_price|floatformat:-2}}</td>
+            <td class="txtalgnc">{{doc.item_sap_status|upper}}</td>
+        </tr>
+        {% endif %}
+        {% if doc_type == 'shipment' %}
+        <tr>
+            <td class="txtalgnc"><a href="{% cc_url request 'order/' %}{{doc.order_id}}/">{{doc.reference_order_id|default:doc.order_id}}</a></td>
+            <td class="txtalgnc">{{doc.shipment_delivery_number}}</td>
+            <td class="txtalgnc">{{doc.shipment_tracking_number}}</td>
+            <td class="txtalgnc">{{doc.shipment_invoice_number}}</td>
+            <td class="txtalgnc">{{doc.shipment_lsp}}</td>
+            <td class="txtalgnc">{{doc.shipment_status|title}}</td>
+        </tr>
+        {% endif %}
+        {% if doc_type == 'payment' %}
+        <tr>
+            <td class="txtalgnc"><a href="{% cc_url request "order/" %}{{doc.order_id}}">{{doc.reference_order_id|default:doc.order_id}}</a></td>
+            <td class="txtalgnc">{{doc.payment_transaction_id|default:doc.payment_transaction_id}}</td>
+            <td class="txtalgnc">{{doc.payment_created_on|date:'d-m-Y H:i'}}</td>
+            <td class="txtalgnc">{{doc.payment_gateway|title}}</td>
+            <td class="txtalgnc">{{doc.payment_currency}} {{doc.payment_amount|floatformat:-2}}</td>
+            <td class="txtalgnc">{{doc.payment_status|title}}</td>
+            <td class="txtalgnc">{%firstof doc.support_state|title doc.state|title%}</td>
+        </tr>
+        {% endif %}
+        {% if doc_type == 'refund' %}
+        <tr>
+            <td class="txtalgnc"><a href="{% cc_url request "order/" %}{{doc.order_id}}">{{doc.reference_order_id|default:doc.order_id}}</a></td>
+            <td class="txtalgnc">{{doc.payment_mode}}</td>
+            <td class="txtalgnc">{{doc.refund_amount|floatformat:-2}}</td>
+            <td class="txtalgnc">{{doc.refund_created_on|date:'d M Y'}}</td>
+            <td class="txtalgnc">{%if doc.refund_status == 'closed'%}{{doc.refund_modified_on|date:'d M Y'}}{%endif%}</td>
+            <td class="txtalgnc">{{doc.refund_status|title}}</td>
+            <td class="txtalgnc">{{doc.support_state|title}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    {% endif %}
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+$("#q").autocomplete({
+    source: "/search/suggest/",
+    minLength: 3,
+    select: function(event, ui) {
+    }
+});
+//
+//var filtersubmit = null;
+//
+//function submitFilterForm() {
+//    $("#filterform").submit();
+//}
+
+//$("#filter_div input[type='checkbox']").click(function() {
+//    if (filtersubmit != null ) {
+//        clearTimeout(filtersubmit);
+//    }
+//    filtersubmit = setTimeout("submitFilterForm();", 1000);
+//});
+
+{% endblock %}

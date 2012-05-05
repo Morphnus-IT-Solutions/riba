@@ -1,0 +1,62 @@
+{%extends "web/base.html"%}
+{%load web_tags%}
+{%load cc_tags%}
+{%block content%}
+<div id="breadcrumb"> <a href="/">Home</a> <span></span><a href="/{{category.slug}}/ch/{{category.id}}/">{{category.name}}</a> </div>
+<div id="compare_page">
+  <div class="search_header marb10">
+    <h1>Compare {{category.name}}</h1>
+  </div>
+  <div class="greed_view gcontainer">
+    <ul class="home_greed home_prod_greed">
+      <li style="width:238px;"></li>
+        {% render_deals request product_info %}
+    </ul>
+  </div>
+  <div class="clear"></div>
+  <div class="search_header mart10">
+    <h1>Specification</h1>
+  </div>
+{% if datas %}
+<div class="product_desc_details">
+<div class="product_features">
+{% for data in datas %}
+    <!--div class="featuregroup">
+       <h3>{{data.name}}</h3>
+        {% for feature in data.features %}
+        <table class="feature {%if not forloop.last%}collapse{%endif%}" style="width:978px;">
+	    <tr>
+        	    <td class="featurelabel fdgray" style="width:220px !important; overflow:hidden;">{{feature.name}}</td>
+		{%for value in feature.values%}
+        	    <td style="width:220px" class="featurevalue">{{value|safe}}</td>
+		{%endfor%}	            
+	    </tr>
+        </table>
+        {% endfor %}
+    </div-->
+    
+    <div class="featuregroup">
+       <h3>{{data.name}}</h3>
+        {% for feature in data.features %}
+        <div class="feature {%if not forloop.last%}collapse{%endif%}">
+	    <ul class="compare_ul">
+        	    <li class="featurelabel fdgray" style="width:196px !important;">{{feature.name}}</li>
+		{%for value in feature.values%}
+        	    <li style="width:212px" class="featurevalue">{{value|safe}}</li>
+		{%endfor%}	            
+	    </ul>
+	    <div class="clear"></div>
+        </div>
+	
+        {% endfor %}
+    </div>
+    
+    
+{% endfor %}
+</div>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+{%endblock%} 

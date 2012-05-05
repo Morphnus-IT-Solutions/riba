@@ -1,0 +1,35 @@
+{%extends "web/base.html"%}
+{% load web_tags %}
+{%load cc_tags%}
+{%block content%}
+<div id="breadcrumb" class="fdgray"><a href="{% cc_url request '' %}">Home</a><span></span>{% if title %}{{title}}{% else %}Search Results{% endif %}</div>
+{% if deal == 'recommendations' %}
+    {% if logged_through_facebook %}
+        <div class="deals_for_you_2">
+            <img width="45" height="45" class="left marr10" src="https://graph.facebook.com/{% get_facebook_profile_id request%}/picture">
+            <div class="left marr30 f18 padt5">
+                <span class="fb">Hi {% get_username request %}, Welcome Aboard!</span> <br>
+                <div class="f12 fdgray padt2">
+                    We are yet to know your shopping preferences. As we interact more, we will begin providing you with Personal Recommendations.  
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div> 
+    {% else %}
+        {% include "user/guest_recommendation.html" %}
+    {% endif %}
+{% else %}
+    <div class="search_text">
+       Your search <strong>{%if request.GET.q%}"{{request.GET.q}}"{%endif%}</strong> did not match any products on FutureBazaar.
+    </div>
+    <div class="search_tips">
+       <h5 class="fb">Search Tips:</h5>
+       <ul>
+          <li>Check for typos and spelling errors </li>
+          <li>Try a different keyword or alternate search terms </li>
+          <li>Broaden your search using fewer keywords or use simpler language </li>
+       </ul>
+       <p class="marb10 f13"><strong>Kindly try again using the above search tips.</strong></p>
+    </div>
+{% endif %}
+{%endblock%} 

@@ -1,0 +1,291 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+{%comment%}
+<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+{%endcomment%}
+<div class="content_head">
+  <div class="header rc5">
+    <h1>{{client.name|title}} - Option Settings</h1>
+  </div>
+  <div class="clear bordergray"></div>
+</div>
+<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />
+<div class="clear marb30"></div>
+<div class="inner-content"> {%if settings_saved %}
+  Your settings have been saved.
+  {%endif%}
+  <h1 class="head1">Payment Mode Details</h1>
+  <form method="POST" id="payment_options_form" name="payment_options_form">
+    <div class="fb fdgray prof_sub_head">Please select a mode to see the details</div>
+    {% if ungrouped_forms_errors %}
+    <p style="color: red;"> Please correct the error{{ ungrouped_forms_errors|pluralize }} below. </p>
+    {% endif %}
+    <table width="500" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td width="150" style="vertical-align:top !important; padding: 0px 0px 0px 0px !important;"> {%include "ppd/settings_options_display.html"%} </td>
+        <td width="400" style="vertical-align:top !important; padding: 0px 0px 0px 0px !important;"><div id="bg"></div>
+          <div class="clear"></div>
+          <div id="address_container"></div>
+          <div class="div_optdetails">
+            <div class="form_errors" style="color:red;"></div>
+            <div class="payment_form"></div>
+          </div></td>
+      </tr>
+    </table>
+  </form>
+</div>
+</div>
+<script type="text/javascript">
+//Initial default display of a payment mode form 
+
+$("#payment_options_form").submit(function(){
+    var form_id = $("#form_id").val();
+    var pm_code = form_id.split("_")[0];
+    $(".form_errors").html("");
+    var onSuccess=function(responseText){
+    if(responseText){
+        if(pm_code == 'deposit-transfer'){
+            $(".payment_form").html(responseText);
+            }
+      else{
+        var response = $.parseJSON(responseText);
+
+          if(response.status == 'error'){
+              var errorMsg = '<ul>';
+              for (var error in response.errors){
+                errorMsg = errorMsg + '<li>' + error + ":" + response.errors[error] + '</li>';     
+              }
+              errorMsg = errorMsg + '</ul>';
+            $(".form_errors").html(errorMsg);
+          }
+          else{
+            $(".form_errors").html("<b>Your Setting has been saved.</b>");
+          }
+        }
+      }
+  };
+  var onError=function(){
+  };
+  $.ajax({
+            url : '/payments/payment_form_fields/',
+            success : onSuccess,
+            error : onError,
+            data : $("#payment_options_form").serialize(),
+            type : "POST",
+            async: false
+            });
+  return false;
+
+    });
+
+$(".mode_select").click(function(){
+    $(".form_errors").html("");
+        var id = this.id;
+        var mode = id.split('mode_list_')[1];
+       // show_payment_option_details(this, id, mode);_
+        if (!($("#" + id).hasClass("hide_this_option")))//i.e, if the option is not active
+        {
+            $(".start_text").hide();
+            $(".save-cancel").show();
+            if ($("#"+id).hasClass("option_is_grouped"))
+            {
+                var showndiv = "#div_opt_grouped_details_" + mode;
+               // $(".div_optdetails").addClass("hide");
+                $(".div_opt_grouped_details").addClass("hide");
+                $(showndiv).removeClass("hide");
+                $(".mode_select").removeClass("selected");
+                $(this).addClass("selected");
+            }
+            else
+            {
+            var url = '/payments/payment_form_fields/?pm_id='+mode + "&cid={{client_id}}";
+                $.get(url, function(html){
+                    $(".payment_form").html(html)
+                });
+                var showndiv = "#div_optdetails_" + mode;
+                //$(".div_optdetails").addClass("hide");
+                $(".div_opt_grouped_details").addClass("hide");
+                $(showndiv).removeClass("hide");
+                $(".mode_select").removeClass("selected");
+                $(this).addClass("selected");
+            }
+        }
+    });
+   
+
+    // ----------------
+    // activate option
+    // ----------------
+    $(".activate_option").click(function(){
+        var id = this.parentNode.parentNode.id;
+        var current_seller_id = $("#current_seller_id").val();
+        var mode = id.split('mode_list_')[1];
+        var name = this.parentNode.parentNode.getAttribute("name");
+        if (!($("#" + id).hasClass("hide_this_option"))){//i.e, if the option is not active {
+            if ($("#"+id).hasClass("option_is_grouped")){
+                var showndiv = "#div_opt_grouped_details_" + mode;
+            }
+            else{
+                var showndiv = "#div_optdetails_" + mode;
+            }
+        }
+        //$(".div_optdetails").addClass("hide");
+        $(".div_opt_grouped_details").addClass("hide");
+        $(showndiv).removeClass("hide");
+        $(".mode_select").removeClass("selected");
+        $(this.parentNode.parentNode).addClass("selected");
+        /*for(i=0;i<$(this.parentNode.parentNode).children().length;i++){
+            var children = $(this.parentNode.parentNode).children().eq(i);
+            if(children.attr('class')=='deactivate_option'){
+                children.show();
+            }
+        }*/
+        $(this.parentNode.parentNode).removeClass("hide_this_option");
+        $(this).removeClass("bgray");
+        $(this).addClass("bgreen");
+        $('#'+name+'off').removeClass("bred");
+        $('#'+name+'off').addClass("bgray");
+
+        var onSuccess=function(){
+        };
+        var onError=function(){
+        };
+        var data='option=' + name + '&activate=True' + "&cid={{client_id}}";
+        $.ajax({
+            url : '/payments/activate_payment_option',
+            success : onSuccess,
+            error : onError,
+            data : data,
+            type : "POST"
+        });
+    });
+
+    // ------------------
+    // deactivate option
+    // ------------------
+    $(".deactivate_option").click(function(){
+        var show_div = "#mode_list_" + "{{payment_modes.0.code}}";  
+        
+        var id = this.parentNode.parentNode.id;
+        var mode = id.split('mode_list_')[1];
+        var name = this.parentNode.parentNode.getAttribute("name");
+        var current_seller_id = $("#current_seller_id").val();
+
+        if ($("#"+id).hasClass("option_is_grouped")){
+            var showndiv = "#div_opt_grouped_details_" + mode;
+        }
+        else{
+            var showndiv = "#div_optdetails_" + mode;
+        }
+        //$(showndiv).addClass("hide");
+        $(this.parentNode.parentNode).removeClass("selected");
+        /*for(i=0;i<$(this.parentNode).children().length;i++){
+            var children = $(this.parentNode).children().eq(i);
+            if(children.attr('class')=='activate_option'){
+                children.show();
+            }
+        }*/
+        $(this.parentNode.parentNode).addClass("hide_this_option");
+        $(this).removeClass("bgray");
+        $(this).addClass("bred");
+        $('#'+name+'on').removeClass("bgreen");
+        $('#'+name+'on').addClass("bgray");
+
+        var onSuccess=function(){
+            $(".payment_form").html('')
+        };
+        var onError=function(){
+        };
+        var data='option=' + name + '&activate=False' + "&cid={{client_id}}";
+        $.ajax({
+            url : '/payments/activate_payment_option',
+            success : onSuccess,
+            error : onError,
+            data : data,
+            type : "POST"
+            });
+    });
+    
+
+    function editThisOption(code, option_id)
+      {
+
+       var current_seller_id = $("#current_seller_id").val();
+       var url= '/a/mixed_modes_popup/' + option_id;
+       var dialog;
+       $.get(url,function(html){
+            var showndiv = "#div_opt_grouped_details_" + code;
+           $('#address_container').html(html);
+           $('#bg,#address_container').fadeIn(100);
+           var onSubmitAlias = null;
+           var onSuccess = function(responseText){
+               if(responseText)
+               {
+                   var response = $.parseJSON(responseText);
+                   if (response.status == 'ok')
+                   {
+                       $('#bg,#address_container').fadeOut(100);
+                       var refreshdiv = "#div_opt_grouped_details_" + response.group_code;
+                       var url2 = "/a/grouped_modes_content/" + code + '/' + current_seller_id;
+                       $.get(url2,function(html){
+                           $(refreshdiv).html(html);
+                        });
+                   }
+                   if (response.status == 'error')
+                   {
+                        $('#error_msg').removeClass('hidden');
+                        var error_msg = '<ul>';
+                        for(var key in response.error){
+                            if(response.error[key]){
+                                for (var i in response.error[key]){
+                                    error_msg = error_msg + '<li>' + response.error[key][i] + '</li>';
+                                }
+                            }
+                        }
+                        error_msg = error_msg +  '</ul>';
+                        $('#error_msg').html(error_msg);
+                   }
+               }
+           };
+            var onError = function(){
+                alert("onError");
+                $("#address_container").submit(onSubmitAlias);
+            };
+            var onSubmit = function(){
+                var form = this;
+                var action = form.action;
+                var form_data = $('#payment_options_form').serialize();
+                $.ajax({
+                    url : action,
+                    data : form_data,
+                    success : onSuccess,
+                    error : onError,
+                    type : "POST"
+                });
+                return false;
+            };
+            onSubmitAlias = onSubmit;
+            $('#payment_options_form').submit(onSubmit);
+            });
+
+
+    }
+
+
+
+$("#submit_button").click(function(){
+        /*
+    for (option in payment_options)
+    {
+        if ($("#" + option.payment_mode.code + "on").hasClass("bgreen"))
+        {
+        }
+    }
+        */
+})
+
+</script>
+<div class="clear"></div>
+{% endblock %} 

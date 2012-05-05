@@ -1,0 +1,52 @@
+{% load web_tags %}
+        <form action="/auth/signin/" method="POST" id="form_signin_refer">
+        <div class="mart10 marb5 f20">Sign in to refer your friends</div>         
+        {%if request.GET.msg %}
+            <div class="notice marb10 mart10"><h3>Your Session has expired. Please login again.</h3></div>
+        {%endif%}
+        {%if request.GET.cuf %}
+            <div class="error marb10 mart10"><h3>User already exists!</h3></div>
+        {%endif%}
+        {% if signin_error %}
+            <div class="error marb10 mart10"> <span id="errors">{{signin_error}}</span> </div>
+        {% endif %}
+        <div> 
+            <input type="hidden" name="source" value="refer_friend">
+            <input type="hidden" name="action" value="signin">
+            <input type="text" onblur="if(this.value=='') {this.value='Email or Mobile'; }" onfocus="if(this.value=='Email or Mobile') { this.value='';}" name="username" value="Email or Mobile"  id='signin_username_refer' />
+        </div>
+        <div class="mart10">
+            <input type="password" onblur="if(this.value=='') {this.value='Password'; }" onfocus="if(this.value=='Password') { this.value='';}" value="Password" name="password" title="Password" id='signin_password_refer' class="marb5" />
+        </div>
+        <div>
+            <div class="signin_submit cp mart5 left">        
+                <a title="Sign in Now" name="signin_refer" class="signin_submit" id="signin_submit_refer" value="SIGN IN NOW" href="#">SIGN IN</a>
+            </div>
+            <div class="pad5">
+                &nbsp;<img src="/media/images/signin-ajax-loader.gif" class="hide" id="signin_ajax_loader_refer" />
+            </div>
+            <div class="ra right f11">
+                <a href="/forgotpassword/" title="Forgot Your Password" >Forgot Password?</a>
+                <div><a href="/auth/signin/">Sign up</a></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        </form>
+<script type="text/javascript">
+    function refresh_signin_refer_form(){
+        $("#signin_submit_refer").click(function(e){
+            e.preventDefault();
+            $("#signin_submit_refer").addClass("hide")
+            $("#signin_ajax_loader_refer").removeClass("hide")
+            var user_action = $(this).attr("name");
+            if($("#signin_username_refer").attr("value") == "Email or Mobile"){
+                $("#signin_username_refer").val("");
+            }
+            if($("#signin_password_refer").attr("value") == "Password"){
+                $("#signin_password_refer").val("");
+            }
+            signin_user_actions(user_action)
+            $("#signin_submit_refer").removeClass("hide")
+        });
+    }
+</script>

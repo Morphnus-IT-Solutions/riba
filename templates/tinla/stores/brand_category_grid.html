@@ -1,0 +1,22 @@
+{% load cc_tags %}
+<div class="">
+    <table cellpadding="0" cellspacing="0">
+        {% for group in groups %}
+            <tr>
+                <td colspan="{{group.cols}}" class="submenu_heading fb">{{group.heading}}</td>
+            </tr>
+            {% for row in group.rows %}
+            <tr>
+                {% for column in row.columns %}
+                <td {%if not forloop.last %}class="border"{% endif %}>{% if column %}<a href="{% cc_url request column.url %}">{{column.name}}</a>{% endif %}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            {% if not forloop.last %}
+            <tr class="border">
+                <td colspan="{{group.cols}}"><br/><hr/></td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>

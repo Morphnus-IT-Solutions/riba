@@ -1,0 +1,26 @@
+<style>
+	select, select:focus{border: 1px solid #ECECEC;}
+</style>
+<div>
+    <form name="client_account_display" id="form" action="{{url}}" method="POST" style="position:relative;z-index:2"> 
+        <select name="user_clients" id="cid" class="select_height fdgray" >
+        {%for client in clients%}
+           <option style="padding:2px 9px;" class="" {%ifequal client|slugify client_name%}selected="selected"{%endifequal%} value="{{client.name|slugify}}">{{client.name}}</option>
+        {%endfor%}
+    </select>	
+    <input type="hidden" name="name" value="change">
+    {%if acc_section_type%}
+        <input type="hidden" name="acc_section_type" value="{{acc_section_type}}">
+    {%endif%}
+    <input type="hidden" name="url" value="{{url}}"/>	
+
+</form>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#cid").change(function(){
+		$("#form").submit();
+	});
+});
+</script>

@@ -1,0 +1,25 @@
+<div id="user_content">
+{% extends 'ppd/user_home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block user_content%}
+<table class="right ppd_date_range" width="980">
+  <tr>
+    <td> {% daterange "Sales Summary by Geography" search_trend from_date to_date request %} </td>
+  </tr>
+</table>
+<table>
+  {% for city in city_list %}
+  <tr>
+    <td> {{city.0|title}}
+    <td/>
+    <td><span class="WebRupee"> Rs. </span>{{city.1|floatformat:0|money}}
+    <td/>
+    <td> {{city.2}}
+    <td/>
+    <td><span class="WebRupee"> Rs. </span>{% avg_order_value city.1 city.2 %}
+    <td/>
+  <tr/>
+  {% endfor %}
+</table>
+{% endblock %} 

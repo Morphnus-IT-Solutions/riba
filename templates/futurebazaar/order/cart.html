@@ -1,0 +1,206 @@
+{%load cc_tags%}
+{%load web_tags%}
+{% checkout_tabs request "cart" %}
+<div class="cartbox">
+	<div>
+		{%if item_found_msg%}
+		<div class="error marb10">
+			<ul style="margin:0px;">
+				{%for msg in item_found_msg%}
+					<li>{{msg}}</li>
+				{%endfor%}
+			</ul>
+		</div>
+		{%endif%}
+		{%if errors%}
+		<div class="error marb10">
+			<ul style="margin:0px;">
+				{%for error_msg in errors%}
+					<li>{{error_msg}}</li>
+				{%endfor%}
+			</ul>
+		</div>
+		{%endif%}
+		{%if availability_errors%}
+		<div class="error marb10">
+			<ul style="margin:0px;">
+				{%for error_msg in availability_errors%}
+					<li>{{error_msg}}</li>
+				{%endfor%}
+			</ul>
+		</div>
+		{%endif%}
+		
+		{% if order|is_totalprice_lte:499 %}
+		<div class="fb notice pad2 marb10">Shop for above <span class="WebRupee">Rs.</span> 500 and we'll ship it for FREE</div>
+		{% endif %}
+	
+		<table id="cart" class="checkout_table mart10">
+			<tr>
+				{% if order.state|order_state_conf_or_mod %}
+				<th><input type="checkbox" id="cancel_all"/></th>
+				{%endif%}
+				<th colspan="2" class="padl20" width="*">Item</th>
+				<th width="110">Price</th>
+				<th width="40" class="ca">Qty</th>
+				<th width="80" class="ra">Amount</th>  
+			</tr>
+			{%for item in orderItems%}
+			<tr> 
+				 <td width="60" >
+				<img src="{{item.seller_rate_chart.product.get_default_img}}" width="48" height="48" alt=""  title="{{item.item_title}}"/>
+				</td>
+				<td>
+				 <span class="f12">{{item.item_title}}</span><br />
+				  {%if request|is_future_ecom %}
+				<div class="marb5 f11 fdgray">FBID: {{item.seller_rate_chart.sku}}</div>
+				{%endif%}
+				<div class="wishlist_remove">
+					
+				{% if request.user.is_authenticated and  not order.state|order_state_conf_or_mod_or_canc %}
+					<!--<div class="marr10">
+					<form method="post" action="/user/wishlist/">
+						<input type="hidden" name="action" value="add_to_wishlist"/>
+						<input type="hidden" name="itemid" value="{{item.id}}"/>
+						<input type="hidden" name="next" value="{{request.path}}"/>
+						 <button class="linkButton" type="submit" title="Move this item to your wishlist and buy later">Move to Wishlist</button> |
+					</form>
+					</div>-->
+				{%endif%}
+					
+					<form method="post" action="">
+						<input type="hidden" name="action" value="remove_cart_item"/>
+						<input type="hidden" name="itemid" value="{{item.id}}"/>         
+						<button class="linkButton" type="submit" title="Remove this item from your cart">Remove item x</button>
+					</form>
+				</div> 
+				</td>
+				<td>
+					<div class="f15 forange fb"><span class="WebRupee">Rs.</span> {{ item.get_unit_price|money }}</div>
+					{%if request|isAnySaving:item.seller_rate_chart %}
+					<span class="f11 fdgray fs"><span class="WebRupee">Rs.</span> {{ item.get_unit_list_price|money }}</span>
+					{%endif%}
+				</td>
+				<td>
+        <form method="post" action="" id="{{item.id}}_update" name="{{item.id}}_update">
+					  <input type="hidden" value="update_cart_item" name="action"/>
+            <input type="hidden" value="{{item.id}}" name="itemid"/>
+          {% with stock=item.seller_rate_chart|check_stock_availability %}
+            <select id="{{item.id}}_qty" name="{{item.id}}_qty" style="width:50px; padding:0px;" onChange="ChangeItemQuantity('{{item.id}}');">
+                {% if stock > item.qty %}
+                  {% if stock > 12 %}
+                    {% for count in 12|get_range:item.seller_rate_chart.min_qty %}
+                        <option value="{{count}}" {% ifequal count item.qty %}selected{% endifequal %}>{{count}}</option>
+                    {% endfor %}
+                  {% else %}
+                    {% for count in stock|get_range:item.seller_rate_chart.min_qty %}
+                        <option value="{{count}}" {% ifequal count item.qty %}selected{% endifequal %}>{{count}}</option>
+                    {% endfor %}
+                  {% endif %}
+                {% else %}
+                  {% for count in item.qty|get_range:item.seller_rate_chart.min_qty %}
+                      <option value="{{count}}" {% ifequal count item.qty %}selected{% endifequal %}>{{count}}</option>
+                  {% endfor %}
+                {% endif %}
+					</select>
+          {% endwith %}
+					</form>
+				</td>
+				<td valign="top" class="ra"><span class="fb f15 forange"><span class="WebRupee">Rs.</span> {{item.sale_price|money}}</span></td>
+			</tr>
+			{%endfor%}
+		</table>
+	</div>
+	
+	<!-- i-mint -->
+	<div class="pad5 mart10 dbox">
+		{%if request.session.payback_msg %}
+			<p id="coupon_apply_msg" style="margin-bottom:5px; color:#8A1F11;">{% applied_payback_message request%}</p>
+		{%endif%}
+		{% if order.payback_id %}
+			<form action='' method='post'>
+				<input type="hidden" name="action" value="remove_payback"/>
+				<input type="hidden" name="payback_id" value="{{order.payback_id}}"/>
+				<p id="paybackbox_error" class="f13">You will earn {% get_payback_points order %} points on your payback card <span class="fblack">{{order.payback_id}}</span>
+					<button class="linkButton" type="submit" title="Remove payback card">Remove x</button>
+				</p>
+			</form>
+		{% else %}
+			<div class="payback_form">
+				<p id="paybackbox_error" style="display: none; color:#8A1F11;">Invalid Payback ID. Please enter a 16 digit numeric payback ID</p>
+				<label class="left fblack" style="line-height:22px;">Earn {% get_payback_points order %} points on this order with your PAYBACK card (<a href="/info/payback_whats_this.html" class="f11 popup" target="_blanck">What's this?</a>)</label>
+				<form method="post" action="{% cc_url request 'orders/mycart/' %}" class="left marl10" id="payback_form">
+					<span>
+						<input type="text" id="payback_id" maxlength="16" name="payback_id" size="10" style="width:155px; font-size:12px; padding:3px; margin-right:5px; color:#666;" onblur="if (value== '') {value='16 digit card number'}" onfocus="if (value == '16 digit card number') {value=''}" value={% if order.payback_id %}"{{order.payback_id}}"{% else %}"16 digit card number"{% endif %} />
+						<input type="hidden" id="redirect_to" name="redirect_to" value="{{request.path}}" />
+						<input type="hidden" name="action" value="apply_payback" />
+						<!-- <button type="submit" title="Apply and Earn Points" class="btn_c btn_c_s" id="apply_payback">Apply</button> -->
+						<!--<input type="submit" title="Apply and Earn Points" class="btn_c btn_c_s" id="apply_payback" value="Apply" />-->
+						<a id="payback_form_btn" class="btn_c btn_c_s">Apply</a>
+					</span>
+				</form>
+			</div>
+		{% endif %}
+		<div class="clear"></div>
+	</div>
+    <!-- /i-mint -->
+	
+	<!-- Total and Button -->
+	<div class="padt10 right" style="position: relative;">
+		<div class="carttotal" style="width:188px;">
+			<table style="width:100%;">
+				{% if order.auto_promotions_discount or order.shipping_charges or order.coupon_discount %} 
+					<tr>
+						<td class="ra">Sub-total:</td>
+						<td class="ra"><span class="WebRupee">Rs.</span> {{order.get_offerprice_total|money}}</td>
+					</tr>
+				{% endif %}
+				
+				{% if order.auto_promotions_discount > 0 %}
+					<tr>
+						<td class="ra">Special Discount:</td>
+						<td class="ra"><span class="WebRupee">Rs.</span> {{order.auto_promotions_discount|money}}</td>
+					</tr>
+				{% endif %}
+				
+				{% if order.shipping_charges > 0 %} 
+				   <tr><td class="ra">Shipping:</td><td class="ra"> <span><span class="WebRupee">Rs.</span> {{order.shipping_charges|money}}</span></td></tr>
+				{% endif %}
+				
+				{%if order.coupon_discount%}
+				<tr>
+					  <td class="ra">Special Discount:</td>
+					  <td class="ra"> <span><span class="WebRupee">Rs.</span> {{order.coupon_discount|money}}</td>
+				</tr>
+				{%endif%}
+				{% if not order.state|order_state_conf_or_mod %}
+					<tr>
+						<td class="ra f13 bbnone fb" style="width:100px;">Total:</td>
+						<td class="ra f15" style="width:80px;"><span class="fb" id="oPayableAmount"><span class="WebRupee">Rs.</span> {{order.payable_amount|money}}</span></td>
+					</tr>
+				{% endif %}	
+			</table>	
+		</div>
+	</div>
+	<div class="clear"></div>
+	{%if not block_shipping%}
+    <div class="cart_checkout_btn ra btg padt5">
+		{% ifnotequal order.state 'cancelled' %}
+		<form method="post" action="{% cc_url request next_action %}" id="next_action">
+			<input type="submit" name="Proceed" value="Continue" class="btn_c btn_c_m btn_orange" />
+		</form>
+		{% endifnotequal %}
+	</div>
+    {%endif%}
+	<!-- /Total and Button -->
+	<div class="clear"></div>
+{%if orderItems%}
+<iframe src="http://www.vizury.com/analyze/analyze.php?account_id=VIZVRM144&param=e400{%for item in orderItems%}&pid{{forloop.counter}}={{item.seller_rate_chart.product.id}}&catid{{forloop.counter}}={{item.seller_rate_chart.product.category.id}}&quantity{{forloop.counter}}={{item.qty}}&price{{forloop.counter}}={{ item.get_unit_price }}{% if forloop.last %}&currency=inr{%endif%}{%endfor%}&section=1&level=1" scrolling="no" width="1" height="1" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+{%endif%}
+</div>
+{%if not order.state|order_state_conf_or_mod_or_canc%}
+<div class="f14 fb padt20">
+    <img src="{{MEDIA_URL}}images/plus12x12.gif" alt=""/> <a href="{% cc_url request "" %}" title="Continue shopping, add more items to your cart">Add more items</a> to your cart
+</div>
+
+{%endif%}

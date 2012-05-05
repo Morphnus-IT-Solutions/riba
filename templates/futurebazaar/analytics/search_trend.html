@@ -1,0 +1,85 @@
+{%extends 'web/base.html' %}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+            <div id="header" style="border-bottom: 1px solid #FCED67">
+                <div id="logo">
+                    <div><a href="{% cc_url request "" %}" title="Home"><img src="{{MEDIA_URL}}images/{% wstore_logo request %}" alt="Logo" width="133" height="69" /></a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+{%endblock%}
+{%block content %}
+
+
+<div>
+  <div>
+    <h2><b>Search Trend</b></h2>
+    {% if from_date and to_date %}
+    <div class="right"><b>Duration:</b> {{from_date}}<b>-</b>{{to_date}}</div>
+    {% endif %}
+    <div class="clear"></div>
+  </div>
+</div>
+
+{% if errors %}
+<div>
+  <div class="error">
+<ul style="list-style-type:disc; padding-left:10px;">
+   <li>{{errors}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+<form method='GET' action=''>
+  <div  class="select_range">
+    <table class="tbl_select_range">
+      <tr>
+        <td width="50" style="text-align:right" class="fgray f11">&nbsp;From&nbsp;</td>
+        <td width="160"><input type="textbox" Name="from" id="id_from" class="bg_down_arr" value="{{from_date|date:'m/d/Y'}}" Autocomplete="OFF" /></td>
+        <td width="50" style="text-align:right" class="fgray f11">&nbsp;To&nbsp; </td>
+        <td width="160"><input type="textbox" Name="to" id="id_to" class="bg_down_arr" Autocomplete="OFF" value="{{to_date|date:'m/d/Y'}}" /></td>
+        <td  width="50" style="text-align:right" class="f11">&nbsp;Source&nbsp; </td>
+        <td width="180">
+            <select name="domaindropdown">
+            {%for domain in domains %}
+                <option {%if selected_domain == domain.domain%} selected="selected" {%endif%} value={{domain.domain}}>{{domain.domain}}</option>
+            {%endfor%}
+            </select>
+                </td>
+        <td width="70" style="text-align:right"><button id="btn" type="submit" class="button white fn">Go</button></td>
+        <td width="*"></td>
+      </tr>
+    </table>
+  </div>
+</form>
+<br/>
+<style type="text/css">
+.tbl_serch_trend {border-collapse:collapse;}
+.tbl_serch_trend th{background-color:#eee; padding-top:10px; padding-bottom:10px;border:1px solid #ccc;}
+.tbl_serch_trend td{border:1px solid #ccc;}
+</style>
+<table class="tbl_serch_trend">
+{%if from_date and to_date %}
+<tr>
+<th>{%if sort == '1' or sort not in "-11" %}<a href="{{base_url}}&sort=-1">Keyword</a>{%endif%}{%if sort == '1'%}&#9650{%endif%}{%if sort == '-1'%}<a href="{{base_url}}&sort=1">Keyword</a>{%endif%}{%if sort == '-1'%}&#9660{%endif%}</th>
+<th>{%if sort == '2' or sort not in "-22" %}<a href="{{base_url}}&sort=-2">Total Searches</a>{%endif%}{%if sort == '2'%}&#9650{%endif%}{%if sort == '-2'%}<a href="{{base_url}}&sort=2">Total Searches</a>{%endif%}{%if sort == '-2'%}&#9660{%endif%}</th>
+<th>{%if sort == '3' or sort not in "-33" %}<a href="{{base_url}}&sort=-3">Average Results</a>{%endif%}{% if sort == '3' %}&#9650{%endif%}{%if sort == '-3'%}<a href="{{base_url}}&sort=3">Average Results</a>{%endif%}{%if sort == '-3' %}&#9660{%endif%}</th>
+</tr>
+{% for search in search_list %}
+<tr>
+<td>{{search.keyword}}</td>
+<td>{{search.total_searches}}</td>
+<td>{{search.avg_results}}</td>
+</tr>
+{% endfor %}
+{%endif%}
+</table>
+<script type="text/javascript">
+    $('#id_from').datepicker()
+    $('#id_to').datepicker()
+    </script>
+
+{%endblock%}

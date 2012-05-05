@@ -1,0 +1,121 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form input[type=submit]{width:50px;}
+#id_notes {height:50px;}
+ul, ol { padding-left: 0px !important; }
+</style>
+<form method='POST' action=''>
+<div class='clear'>
+<div>
+    {% if errors %}
+        <div class="orders_msg">
+          <div class="error"> 
+            {% for error in errors %}
+                {{error}}<br/>
+            {% endfor %} 
+          </div>
+        </div>
+        <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok'/></div> 
+    {% else %}
+        {% if entry_edited_successfully %}
+            <div class="success"> Physical Stock Entry edited successfully.</div>
+
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                  <th>DC</th>
+                  <th>A.T.S.</th>
+                  <th>Threshold</th>
+                  <th>Is Active</th>
+                </tr>
+                <tr>
+                    <td class="ca">{{inventory.dc.code}}</td>
+                    <td class="ca">{{inventory.compute_ats|floatformat}}</td>
+                    <td class="ca">{%if inventory.threshold%}{{inventory.threshold|floatformat}}{%else%}--{%endif%}</td>
+                    <td class="ca">{%if inventory.is_active%}Yes{%else%}No{%endif%}</td>
+                </tr>
+               </tbody>
+            </table>
+            <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok'/></div>
+        {% else %}
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                  <th>DC</th>
+                  <th>Backorderable</th>
+                  <th>Expected In (days)</th>
+                  <th>Is Active</th>
+                </tr>
+                <tr>
+                    <td class="ca">{{backorder.dc.code}}</td>
+                    <td class="ca">
+                        <select name='backorderable' id='backorderable'>
+                            <option value="yes" {%if backorder.backorderable%}selected{%endif%}>Yes</option>
+                            <option value="no" {%if not backorder.backorderable%}selected{%endif%}>No</option>
+                        </select>
+                    </td>
+                    <td class="ca">
+                        <input class="ca" maxlength="2" size="1" type="text" value="{%if backorder.expected_in%}{{backorder.expected_in|floatformat}}{%else%}0{%endif%}" name="expected_in" id="expected_in" /> 
+                    </td>
+                    <td class="ca">
+                        <select name='is_active' id='is_active'>
+                            <option value="yes" {%if inventory.is_active%}selected{%endif%}>Yes</option>
+                            <option value="no" {%if not inventory.is_active%}selected{%endif%}>No</option>
+                        </select>
+                    </td>
+                </tr>
+               </tbody>
+            </table>
+            <div><input type="submit" name="submit" value="Save Changes" class="uiButton" id='submit'/></div>
+        {% endif %}
+    {% endif %}
+</div>
+</form>
+
+<script type='text/javascript'>
+    $('#submit').click(function() {
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#apply_action').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#apply_action').html(xhr.responseText);
+        };
+        var url = '/inventory/{{client_name}}/{{seller_name}}/edit_backorder/';
+        var is_active = $('#is_active option:selected').val();
+        var backorderable = $('#backorderable option:selected').val();
+        var expected_in = $('#expected_in').val();
+        var id = {{backorder.id}};
+        var data = 'id=' + id;
+        data += '&expected_in=' + expected_in;
+        data += '&is_active=' + is_active;
+        data += '&backorderable=' + backorderable;
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+    
+    $('#ok').click(function() {
+        $(".ui-dialog-titlebar-close").trigger('click');
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#edit_physical').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#edit_physical').html(xhr.responseText);
+        };
+        var data = 'article_id=' + {{inventory.rate_chart.article_id}};
+        var url = '/inventory/{{client_name}}/{{seller_name}}/all_inventory/'
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        window.location.reload();
+        return false;
+    });
+    
+</script>

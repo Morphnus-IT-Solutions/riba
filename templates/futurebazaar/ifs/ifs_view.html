@@ -1,0 +1,92 @@
+{% extends 'web/ppd_base.html' %}
+{% load ppd_tags %}
+
+{% block content %}
+
+{% if loggedin %}
+{% endif %}
+<div class="padding_top10"> 
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{title_table}} - {{selected_action}} interface</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+	{% if title_table == "Pincode Zipgroup Map"%}
+		<div class="mart10">
+			  <form method="POST" action="">
+				 <span class="f11 flgray">Pincode</span>
+				  <input type="text" id="pincode" name="pincode" value= "{{pincode}}" />
+				 <span class="f11 flgray">Zipgroup Code</span>
+				  <input type="text" id="zipgroup_code" name="zipgroup_code" value="{{zipgroup_code}}" />
+				 <span class="f11 flgray">Lsp code</span>
+				  <input type="text" id="lsp_code" name="lsp_code" value="{{lsp_code}}" />
+				  <input type="submit" id="pin_zip_submit" value="Search" class="uiButton mart6" />
+			</form>
+		</div>
+	{% endif %}
+	{% if title_table == "Article ProductGroup Map"%}
+		<div class="mart10">
+			  <form method="POST" action="">
+			 <span class="f11 flgray">SAP Article ID</span>
+			  <input type="text" id="article_id" name="article_id" value="{{article_id}}" />
+			 <span class="f11 flgray">Product Group</span>
+			  <input type="text" id="prod_grp" name="prod_grp" value="{{prod_grp}}" />
+			  <input type="submit" id="art_prod_submit" value="Search" class="uiButton mart6" />
+			</form>
+			</div>
+	{% endif %}
+	{% if title_table == "DC Zipgroup LSP Map"%}
+		<div class="mart10">
+			  <form method="POST" action="">
+			 <span class="f11 flgray">Dc Code</span>
+			  <input type="text" id="dc_code" name="dc_code" value="{{dc_code}}" />
+			 <span class="f11 flgray">Zipgroup Code</span>
+			  <input type="text" id="zipgroup_code" name="zipgroup_code" value="{{zipgroup_code}}" />
+			 <span class="f11 flgray">Lsp code</span>
+			  <input type="text" id="lsp_code" name="lsp_code" value="{{lsp_code}}" />
+			  <input type="submit" id="delv_chart_submit" value="Search" class="uiButton mart6" />
+			</form>
+			</div>
+	{% endif %}
+    <div class="clear">&nbsp;</div>
+     <table cellspacing="0" cellpadding="0" border="0" class="tbl_response left mart10">
+         <tr> 
+         {% for item in header_list %}
+             <th>{{item}}</th>
+         {% endfor %}
+         </tr>   
+         {% for item in content_list %}
+            <tr> 
+            {% for item_no in item %}
+                 <td class="la">{{ item_no }}</td>
+             {% endfor %}
+            </tr>
+         {% endfor %}
+    </table>
+  {% if display_list.paginator.num_pages > 1 %}
+  <div class="clear">
+  <div class="pagination">
+ {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+   {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+   {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   <div>{{pagination.cur_page}}</div>
+   {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+   {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a>{% else %}<a class="gray_link">Next</a> {% endif %}</div>
+ {% endif %}
+ <div class="clear">&nbsp;</div>
+</div>
+{% endblock %}
+{% block script_footer %}
+    <script type="text/javascript">
+        $("#back_button").click(function(){
+            history.go(-1);
+            return true;
+        })
+    </script>
+{% endblock %}
+

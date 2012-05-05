@@ -1,0 +1,168 @@
+{% extends "ppd/user_home.html" %}
+{% block user_content %}
+{% load pagination_tags %}
+{% load ppd_tags %}
+{% load web_tags %}
+<div class="f18 fb">
+	<h1>{{client_display_name}} - Approve Pricing Job</h1>
+</div>
+
+<style type="text/css">
+.tr_hide{display:none}
+</style>
+{%comment%}{% autopaginate response_list 20 %}{%endcomment%}
+<div class="padding_top10">
+<form method="POST" action="" id="approve_pricing_jobs" name="approve_pricing_jobs">
+    {% if not rate_charts %}
+        {% if errors %}
+            <div class="orders_msg rc5">
+                <div class="rc5 error">       
+                    {% for error in errors %}
+                        {{error}}<br/>
+                    {% endfor %}   
+                </div>
+            </div>   
+        {% endif %}
+        {% if failed_to_update_in_atg %}
+            <div class="orders_msg rc5">
+                <div class="rc5 error">       
+                    Failed to update price in ATG for Articleids -&nbsp;
+                    {% for i in failed_to_update_in_atg %}
+                        {{i}},&nbsp;<br/>
+                    {% endfor %}   
+                </div>
+            </div>   
+        {% endif %}
+
+  	    <div class="clear message">
+            {%if prices_approved %}
+                <div class="orders_msg rc5">
+                    <div class="rc5 success">Prices are approved for Article-ids: {%for i in prices_approved%}{{i}},&nbsp;{%endfor%}</div>
+                </div>
+            {% endif %}
+            <br/>
+            {% if prices_rejected %}
+                <div class="orders_msg rc5">
+                    <div class="rc5 success">Prices are rejected for Article-ids: {%for i in prices_rejected%}{{i}},&nbsp;{%endfor%}</div>
+                </div>
+            {% endif %}
+            <br/>
+            <h2 class="f20">No Pending Approvals!!!</h2><br />
+        </div>
+    {% else %}
+  <div class="main">
+    {% if errors %}
+        <div class="orders_msg rc5">
+	        <div class="rc5 error">       
+                {% for error in errors %}
+                    {{error}}<br/>
+                {% endfor %}   
+	        </div>
+        </div>   
+    {% endif %}
+    {% if failed_to_update_in_atg %}
+        <div class="orders_msg rc5">
+	        <div class="rc5 error">       
+                Failed to update price in ATG for Articleids -&nbsp;
+                {% for i in failed_to_update_in_atg %}
+                    {{i}},&nbsp;<br/>
+                {% endfor %}   
+	        </div>
+        </div>   
+    {% endif %}
+
+    {%if prices_approved %}
+        <div class="orders_msg rc5">
+            <div class="rc5 success">Prices are approved for Article-ids: {%for i in prices_approved%}{{i}},&nbsp;{%endfor%}</div>
+        </div>
+    {% endif %}
+    <br/>
+    {% if prices_rejected %}
+        <div class="orders_msg rc5">
+            <div class="rc5 success">Prices are rejected for Article-ids: {%for i in prices_rejected%}{{i}},&nbsp;{%endfor%}</h2>
+        </div>
+    {% endif %}
+	<table class="tbl_response" id="response_list">
+		<tr>
+			<th>Product Name</th>
+			<th>Article Id</th>
+            <th>Ok/Not Ok </th>
+		</tr>
+		{% for rc in rate_charts %}
+		<tr class="cursorp" id="{{rc.id}}">
+			<td class="rah">{{ rc.product.title }}</td>
+			<td class="rah">{{ rc.article_id }}</td>
+            <td >
+                <input class="rah1" type="radio" value="approve" name="{{rc.id}}" />Approve &nbsp;
+                <input class="rah1" type="radio" value="reject" name="{{rc.id}}" />Reject
+            </td>
+		</tr>
+		<tr class="list_row rah_td" id="{{rc.id}}_tr">
+			<td colspan="10" style="padding:0px 10px; border-width:0px 0px 1px;">
+				<div id="{{rc.id}}_details" style="margin:0px;"></div>
+                {%get_price_versions rc.id%}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+        <div class="clear"></div>
+        
+        {%if pagination.enable_prev or pagination.enable_next%}
+            <div class="pagination mart20"> {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+            {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+            {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            <div>{{pagination.cur_page}}</div>
+            {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+            {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+        </div>
+        {%endif%}
+        <div class="clear"></div>
+    <div class="ca">
+        <INPUT TYPE="submit" id="confirm_button" VALUE="Confirm" class="button orange" name="confirm">
+        <INPUT TYPE="button" VALUE="Back" id="back_button" class="button orange" />
+    </div>
+  </div>
+  {% endif %}
+</form>
+</div>
+<div class="clear"></div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$('display').toggleClass('tr_show', $('body').hasClass('tr_hide') );
+$('.rah1').click(function() {
+    var rc_id = $(this).attr("name");
+    var div_id = rc_id + '_details';
+    var tr_id = rc_id + '_tr';
+    var that = this.parentNode;
+    var data = 'rc_id=' + rc_id;
+    $("#"+rc_id).addClass('show');
+    $('#' + tr_id).addClass('tr_hide');
+    $('#head_1100 td').each(function(){ $("#"+rc_id).css('border-bottom','1px solid #DDDDDD')});
+});
+
+$('.rah').click(function() {
+    var div_id = this.parentNode.id + '_details';
+    var tr_id = this.parentNode.id + '_tr';
+    var rc_id = this.parentNode.id;
+    var that = this.parentNode;
+    var data = 'rc_id=' + rc_id;
+ 
+    if($(this.parentNode).hasClass('show')) {
+        $('#' + tr_id).removeClass('tr_hide');
+        $(that).removeClass('show');
+        $('#head_1100 td').each(function(){ $(this.parentNode).css('border-bottom','1px dotted #DDDDDD')});
+    } else {
+        $(that).addClass('show');
+        $('#' + tr_id).addClass('tr_hide');
+        $('#head_1100 td').each(function(){ $(this.parentNode).css('border-bottom','1px solid #DDDDDD')});
+    }
+    return false;
+});
+
+</script>
+{% endblock %}

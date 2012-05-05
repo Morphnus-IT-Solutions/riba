@@ -1,0 +1,66 @@
+/* base.css */
+*{margin:0px;line-height:1.5em}
+@font-face{
+font-family: 'Lucida';
+src: url('Lucida/Lucida.ttf') format('truetype');
+font-style: normal;
+font-weight: normal;
+}
+
+body{font-family: Lucida, Arial, Verdana, sans-serif !important;color:#333  !important; font-size:12px  !important;}
+
+p{margin:10px 0px 0px;text-align:justify}
+textarea{font-family:Lucida, Helvetica, Arial, Verdana, sans-serif;}
+select{padding:2px;}
+ol{padding-left:20px}
+a img{border:none;text-decoration:none}
+a:link,a:visited{color:#000099;text-decoration:none}
+a:active,a:hover{color:#000099;text-decoration:underline}
+.content{font-size:12px;padding:10px;text-align:left;min-height:300px}
+.topr5{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}
+.botr5{-webkit-border-bottom-right-radius:5px;-webkit-border-bottom-left-radius:5px;-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;border-bottom-right-radius:5px;border-bottom-left-radius:5px}
+.topr10{-webkit-border-top-left-radius:10px;-webkit-border-top-right-radius:10px;-moz-border-radius-topleft:10px;-moz-border-radius-topright:10px;border-top-left-radius:10px;border-top-right-radius:10px}
+.botr10{-webkit-border-bottom-right-radius:10px;-webkit-border-bottom-left-radius:10px;-moz-border-radius-bottomright:10px;-moz-border-radius-bottomleft:10px;border-bottom-right-radius:10px;border-bottom-left-radius:10px}
+.container {width:980px;margin:0 auto; background-color: #fff; font-size:12px;}
+/*.cc_container {width:1260px;margin:0 auto; background-color: #fff;}
+*/
+.cc_container {width:980px; margin:0 auto 0 18px; background-color: #fff; float:left; font-size:12px;}
+.blue{color:#00f}
+.header_links{display:block;padding-left:400px}
+.nav_item_small{float:left;padding-top: 13px;}
+.first_small{border-left:0}
+.header_logo{float:left;display:block}
+.header_bar{display:block;border-bottom:solid 2px #ffce00}
+#wrapper{padding:0;margin:0px auto;}
+#main{ width:980px; overflow:hidden}
+.mrp{font-size:105%;color:#333;text-decoration:line-through}
+.rightbar{width:180px;float:left;margin:25px 20px 0 0;padding:0;border:solid 1px #555}
+.rightbar .head{margin:0;padding:5px;background-color:#eee;text-align:center}
+.rightbar .cont{padding:10px}
+.rightbar .cont ul{padding-left:15px;margin:0}
+.grayLabel{font-size:11px;color:#666;padding-right:8px}
+.offerPrice{padding-top:3px;font-size:14px;font-weight:bold;color:#900}
+.pagination {background-color: #FFFFFF;}
+.pagination div{background-color: #666666;border: 1px solid #000000;color: #F4F4F4;display: inline;font-size: 11px;padding: 2px 7px;}
+.pagination span{background-color: #F4F4F4; border: 1px solid #666666;padding:2px 7px;font-size:11px}
+.pagination a{background-color: #F4F4F4; border: 1px solid #666666; color: #000000; font-size: 11px; padding: 2px 7px;}
+.pagination a.gray_link{border: 1px solid #aaa;color: #aaa;text-decoration: none;}
+.pagination a:hover{background-color:#DCDBDB;color:#000;text-decoration:none}
+.pagination a.gray_link:hover{color:#aaa;border:1px solid #aaa;text-decoration:none;background-color:#F4F4F4}
+.sort_bar .selected_link{color:black;font-weight:bold}
+.user_account_link{display:inline;font-size:14px;font-weight:bold;padding:8px;-moz-border-radius-topleft:4px;-moz-border-radius-topright:4px}
+.selected_account_link{background-color:#FCCE00;color:black}
+.black_link a{color:#000}
+.black_link a:hover{text-decoration:none}
+.user_links{padding:0 10px;text-align:left}
+.fgc-body{width:980px; float:left; overflow:hidden}
+.fgc-banner{margin-bottom:26px}
+.fgc-shops{width:970px; height:310px; border:1px solid #e7e7e7; background:#fff; padding:8px 0 0 8px; margin-bottom:45px;}
+.fgc-shops img{overflow:hidden; float:left; margin:0 10px 8px 0}
+.mar0{margin-right:0px !important}
+.fgc-titles{color:#bb1111; float:left;padding-left:2px; display:block; font-weight:bold; font-size:17px; padding-bottom:10px;}
+
+.content2{font-size:12px;padding:10px 0 10px 20px;text-align:left}
+.option{padding:0px 10px}
+/*end base.css*/
+

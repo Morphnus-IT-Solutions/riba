@@ -1,0 +1,403 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+<style type="text/css">
+	.tbl_price{border-collapse:collapse;}
+	.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+	.tbl_price th{background-color:#f3f3f3; text-align:center;}
+	.tbl_price td{text-align:center;}
+</style>
+{% block user_content %}
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+    <div class="content_head">
+        <div class="header rc5">
+          <h1>{{client_display_name|title}} - Bulk Upload using Excel</h1>
+        </div>
+        <div class="clear bordergray"></div>
+    </div>
+    <div class="clear"> 
+        {% if backorder_errors %}
+            <div>
+                <div> Please correct following errors in BACKORDER sheet and try to upload again.</div>
+                <div class="error"> 
+                    {% for error in backorder_errors %}
+                        {{error}}<br/>
+                    {% endfor %} </div>
+            </div>
+        {% endif %} 
+        <div class="clear"></div> 
+
+        {% if madetoorder_errors %}
+            <div>
+                <div> Please correct following errors in MADETOORDER sheet and try to upload again.</div>
+                <div class="error"> 
+                    {% for error in madetoorder_errors %}
+                        {{error}}<br/>
+                    {% endfor %} </div>
+            </div>
+        {% endif %} 
+        <div class="clear"></div> 
+
+        {% if preorder_errors %}
+            <div>
+                <div> Please correct following errors in PREORDER sheet and try to upload again.</div>
+                <div class="error"> 
+                    {% for error in preorder_errors %}
+                        {{error}}<br/>
+                    {% endfor %} </div>
+            </div>
+        {% endif %} 
+        <div class="clear"> </div>
+
+        {% if errors_across_sheets %}
+            <div>
+                <div> Please correct following errors in excel and try to upload again.</div>
+                <div class="error"> 
+                    {% for error in errors_across_sheets %}
+                        {{error}}<br/>
+                    {% endfor %} 
+                </div>
+            </div>
+        {% endif %} 
+        <div class="clear"></div> 
+    </div>
+    
+  <div class="mart20">
+  <form method="post" enctype="multipart/form-data">
+        {% if flag == 'show_details' %}
+            {% if backorder_conflicts %}
+                <div class="success">Backorderable Inventory</div>
+                <table class="tbl_response mart5 marb10">
+                    <tbody>
+                    <tr>
+                        <th>ARTICLEID</th>
+						<th>DC</th>
+						<th>TYPE</th>
+						<th>STOCK</th>
+						<th>STARTS ON</th>
+						<th>ENDS ON</th>
+						<th>EXPECTED IN</th>
+						<th>EXPECTED ON</th>
+                    </tr>
+                    {% for item in backorder_conflicts %}
+                        <tr>
+                            <td class="ca">{{item.excel_entry.article_id}}</td>
+                            <td class="ca">{{item.excel_entry.dc}}</td>
+                            <td class="ca">Backorder</td>
+                            <td class="ca">{{item.excel_entry.stock|floatformat}}</td>
+                            <td class="ca">{{item.excel_entry.starts_on|date:'d-m-Y H:i'}}</td>
+                            <td class="ca">{{item.excel_entry.ends_on|date:'d-m-Y H:i'}}</td>
+                            <td class="ca">--</td>
+                            <td class="ca">--</td>
+                        </tr>
+                        {% if item.conflicting_inventory %}
+                            {% for inventory in item.conflicting_inventory %}
+                                <tr>
+                                    {%if forloop.first%}
+                                        <td class="ca"  style="background-color:#dddddd" colspan="2" rowspan="{{item.conflicting_inventory|length}}"> Existing entries</td>
+                                    {% endif %}
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.type|title}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.compute_ats|floatformat}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.starts_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.ends_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{%if inventory.expected_in%}{{inventory.expected_in|floatformat}}{%else%}--{%endif%}</td>
+                                    <td class="ca" style="background-color:#dddddd">{%if inventory.expected_on%}{{inventory.expected_on|floatformat}}{%else%}--{%endif%}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" name="parsed_backorder_excel_json" value="{{parsed_backorder_excel_json}}" />
+            {% endif %}
+
+            {% if madetoorder_conflicts %}
+                <div class="success">Made-to-Order Inventory</div>
+                <table class="tbl_response mart5 marb10">
+                    <tbody>
+                    <tr>
+                        <th>ARTICLEID</th>
+						<th>DC</th>
+						<th>TYPE</th>
+						<th>STOCK</th>
+						<th>STARTS ON</th>
+						<th>ENDS ON</th>
+						<th>EXPECTED IN</th>
+						<th>EXPECTED ON</th>
+                    </tr>
+                    {% for item in madetoorder_conflicts %}
+                        <tr>
+                            <td class="ca">{{item.excel_entry.article_id}}</td>
+                            <td class="ca">{{item.excel_entry.dc}}</td>
+                            <td class="ca">Madetoorder</td>
+                            <td class="ca">{{item.excel_entry.stock|floatformat}}</td>
+                            <td class="ca">{{item.excel_entry.starts_on|date:'d-m-Y H:i'}}</td>
+                            <td class="ca">{{item.excel_entry.ends_on|date:'d-m-Y H:i'}}</td>
+                            <td class="ca">{{item.excel_entry.expected_in|floatformat}}</td>
+                            <td class="ca">--</td>
+                        </tr>
+                        {% if item.conflicting_inventory %}
+                            {% for inventory in item.conflicting_inventory %}
+                                <tr>
+                                    {%if forloop.first%}
+                                        <td class="ca"  style="background-color:#dddddd" colspan="2" rowspan="{{item.conflicting_inventory|length}}"> Existing entries</td>
+                                    {% endif %}
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.type|title}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.compute_ats|floatformat}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.starts_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.ends_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{%if inventory.expected_in%}{{inventory.expected_in|floatformat}}{%else%}--{%endif%}</td>
+                                    <td class="ca" style="background-color:#dddddd">{%if inventory.expected_on%}{{inventory.expected_on|floatformat}}{%else%}--{%endif%}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" name="parsed_madetoorder_excel_json" value="{{parsed_madetoorder_excel_json}}" />
+            {% endif %}
+
+            {% if preorder_conflicts %}
+                <div class="success">Pre-order Inventory</div>
+                <table class="tbl_response mart5 marb10">
+                    <tbody>
+                    <tr>
+                        <th>ARTICLEID</th>
+						<th>DC</th>
+						<th>TYPE</th>
+						<th>STOCK</th>
+						<th>STARTS ON</th>
+						<th>ENDS ON</th>
+						<th>EXPECTED IN</th>
+						<th>EXPECTED ON</th>
+                    </tr>
+                    {% for item in preorder_conflicts %}
+                        <tr>
+                            <td class="ca">{{item.excel_entry.article_id}}</td>
+                            <td class="ca">{{item.excel_entry.dc}}</td>
+                            <td class="ca">Preorder</td>
+                            <td class="ca">{{item.excel_entry.stock|floatformat}}</td>
+                            <td class="ca">{{item.excel_entry.starts_on|date:'d-m-Y H:i'}}</td>
+                            <td class="ca">{{item.excel_entry.ends_on|date:'d-m-Y H:i'}}</td>
+                            <td class="ca">--</td>
+                            <td class="ca">{{item.excel_entry.expected_on|date:'d-m-Y H:i'}}</td>
+                        </tr>
+                        {% if item.conflicting_inventory %}
+                            {% for inventory in item.conflicting_inventory %}
+                                <tr>
+                                    {%if forloop.first%}
+                                        <td class="ca"  style="background-color:#dddddd" colspan="2" rowspan="{{item.conflicting_inventory|length}}"> Existing entries</td>
+                                    {% endif %}
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.type|title}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.compute_ats|floatformat}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.starts_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{{inventory.ends_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca" style="background-color:#dddddd">{%if inventory.expected_in%}{{inventory.expected_in|floatformat}}{%else%}--{%endif%}</td>
+                                    <td class="ca" style="background-color:#dddddd">{%if inventory.expected_on%}{{inventory.expected_on|date:'d-m-Y H:i'}}{%else%}--{%endif%}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" name="parsed_preorder_excel_json" value="{{parsed_preorder_excel_json}}" />
+            {% endif %}
+
+
+            {% if backorder_conflicts or madetoorder_conflicts or preorder_conflicts %}
+                <input type="submit" value="Update" name="update" id="update" class="uiButton"/>
+            {% else %}
+                <div class="error"> 
+                    No data to upload in the excel!
+                </div>
+            {% endif %}
+            <INPUT class="uiButton" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+
+        {% else %} 
+            {% if flag == 'updated' %}
+                <div class="success">Inventory is updated successfully.</div>
+                <div>Select an Excel (.xls) file for upload</div>
+                {{forms.errors}}
+                {{forms.status_file}}
+                <div class="mart5">
+                    <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton" style="padding: 2px 6px;"/>
+                </div>
+                <input type="hidden" name="parsed_excel_json" value="" />
+            {% else %}
+                {% if flag == 'new' %}
+                    <div>Select an excel (.xls) file for upload</div>
+                    {{forms.errors}}
+                    {{forms.status_file}}
+                    <div class="mart5">
+                        <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton" style="padding: 2px 6px;"/>
+                    </div>
+
+                    <div class="mart20"> Please upload files in Excel (.xls) format with the following columns and headers. </div>
+					
+                      <div class="clear mart20">
+					  	<div class="f18 fb fdgray marb10">Back Order</div>
+                        <div class="box-shadow pad20">
+                          <center>
+                            <table class="tbl_excel">
+                              <tr>
+                                <th style="padding:0px !important; width:30px;"><img src="/media/rms/images/excel.gif" width="25" height="19"/></th>
+                                <th>ARTICLEID<span class="fred">*</span></th>
+                                <th>DC<span class="fred">*</span></th>
+                                <th>STOCK<span class="fred">*</span></th>
+                                <th>STARTSON</th>
+                                <th>ENDSON</th>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">1</td>
+                                <td class="ca">800020341</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">100</td>
+                                <td class="ca">01-01-2012 10:40</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">2</td>
+                                <td class="ca">800020342</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">90</td>
+                                <td class="ca">01-01-2012 10:40</td>
+                                <td class="ca">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">3</td>
+                                <td class="ca">800020343</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">80</td>
+                                <td class="ca">&nbsp;</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                              </tr>
+							  <tr>
+                                <td colspan="6"><img src="/media/rms/images/backorder.jpg" alt="" title=""></td>
+							  </tr>
+                            </table>
+                          </center>
+                        </div>
+                      </div>
+					  
+					  <div class="clear border-dotted-gray mart30">&nbsp;</div>
+					  <div class="f18 fb fdgray marb10">Made to Order</div>
+					  <div class="clear">
+                        <div class="box-shadow pad20">
+                          <center>
+                            <table class="tbl_excel">
+                              <tr>
+                                <th style="padding:0px !important; width:30px;"><img src="/media/rms/images/excel.gif" width="25" height="19"/></th>
+                                <th>ARTICLEID<span class="fred">*</span></th>
+                                <th>DC<span class="fred">*</span></th>
+                                <th>STOCK<span class="fred">*</span></th>
+								<th>EXPECTEDIN<span class="fred">*</span></th>
+                                <th>STARTSON</th>
+                                <th>ENDSON</th>                         
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">1</td>
+                                <td class="ca">800020341</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">100</td>
+                                <td class="ca">7</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">2</td>
+                                <td class="ca">800020342</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">90</td>
+                                <td class="ca">3</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                                <td class="ca">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">3</td>
+                                <td class="ca">800020343</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">80</td>
+                                <td class="ca">4</td>
+                                <td class="ca">&nbsp;</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                              </tr>
+							  <tr>
+                                <td colspan="7"><img src="/media/rms/images/madetoorder.jpg" alt="" title=""></td>
+							  </tr>
+                            </table>
+                          </center>
+                        </div>
+                      </div>
+					  
+					  
+					  <div class="clear border-dotted-gray mart30">&nbsp;</div>
+					  <div class="f18 fb fdgray marb10">Pre Order</div>
+					  <div class="clear">
+                        <div class="box-shadow pad20">
+                          <center>
+                            <table class="tbl_excel">
+                              <tr>
+                                <th style="padding:0px !important; width:30px;"><img src="/media/rms/images/excel.gif" width="25" height="19"/></th>
+                                <th>ARTICLEID<span class="fred">*</span></th>
+                                <th>DC<span class="fred">*</span></th>
+                                <th>STOCK<span class="fred">*</span></th>
+								<th>EXPECTEDON<span class="fred">*</span></th>
+                                <th>STARTSON</th>
+                                <th>ENDSON</th>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">1</td>
+                                <td class="ca">800020341</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">100</td>
+                                <td class="ca">08-01-2012 10:40</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">2</td>
+                                <td class="ca">800020342</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">90</td>
+                                <td class="ca">07-01-2012 10:40</td>
+                                <td class="ca">&nbsp;</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                              </tr>
+                              <tr>
+                                <td style="background-color:#e4ecf7; text-align:center">3</td>
+                                <td class="ca">800020343</td>
+                                <td class="ca">2786</td>
+                                <td class="ca">80</td>
+                                <td class="ca">08-01-2012 10:40</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                                <td class="ca">07-01-2012 23:59</td>
+                              </tr> 
+							  <tr>
+                                <td colspan="7"><img src="/media/rms/images/preorder.jpg" alt="" title=""></td>
+							  </tr>
+                            </table>
+                          </center>
+                        </div>
+						<div class="clear mart5">&nbsp;</div>
+					  	<div class="marb10 fdgray f11"><span class="fred">*</span>Mandatory&nbsp;&nbsp;&nbsp;&nbsp;ENDSON date should be earlier than or same as EXPECTEDON date</div>
+                      </div>
+					  					  
+					  
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </form>
+  	</div>
+</div>
+
+{% endblock %}
+{% block script_footer %}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#back_button").click(function(){
+		history.go(-1);
+		return true;
+	})
+});
+</script>
+{% endblock %} 

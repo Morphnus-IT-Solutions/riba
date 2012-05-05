@@ -1,0 +1,112 @@
+{% extends "analytics/pentaho_base.html" %}
+{% load order_tags %}
+{% block content %}
+<style>
+	#id_start_date_month{width:80px}#id_start_date_year{width:55px}#id_start_date_day{width:40px}
+	#id_end_date_month{width:80px}#id_end_date_year{width:55px}#id_end_date_day{width:40px}
+	label {font-weight:normal;}
+</style>
+{% if form.error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{form.error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+<div>
+<form method="POST" id="report_form" name="report_form" action="">
+{%form_daterange request form title%}
+
+<table>
+    <tr>
+		<td>&nbsp;</td>
+        <td class="col1 f11 flgray left hidden">{{form.page_no}} </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Invoice numbers: </td>
+        <td>
+            {{form.invoice_numbers}}
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <i>(seperate multiple entries by commas)</i>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Article numbers: </td>
+        <td>
+            {{form.article_numbers}}
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Order ids: </td>
+        <td>
+            {{form.order_ids}}
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <i>(seperate multiple entries by commas)</i>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Site codes: </td>
+        <td>
+            {{form.site_codes}}
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <i>(seperate multiple entries by commas)</i>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Report Format: </td>
+        <td>
+            {{form.report_format}} 
+        </td>
+    </tr>
+	<tr><td>&nbsp;</td><td></td></tr>
+	<tr><td>&nbsp;</td><td><input type="submit" value="Evaluate" class="uiButton" style="width:80px\9; padding:5px;"></td></tr>
+</table>
+
+</div>
+<div class="clear">&nbsp;</div>
+{%ifequal request.method "POST"%}
+<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px; min-height:200px; max-height:500px;" id="order_report_content">
+<table class="tbl_response marb10" >
+{%for item in data_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+{%show_pagination paginator page%}
+{%endifequal%}
+
+</form>
+
+{% endblock %}
+

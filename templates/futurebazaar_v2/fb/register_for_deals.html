@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>deals pop up</title>
+<style type="text/css">
+*{ margin:0px; padding:0px; font-family:arial; font-size:12px}
+body{background:url('{{MEDIA_URL}}images/fb-bg.jpg') no-repeat;}
+.overlay{background:#ccc; position:absolute; height:130%; width:100%; border:1px solid; opacity:0.6; filter:alpha(opacity=60); top:0px; left:0px; _height:1024px;}
+
+.outer{background:#fff; /*height:382px;*/ width:656px; /*overflow:hidden;*/ margin:0 auto; position:relative; top:100px; border:4px solid #00529c; font-family:Arial, Helvetica, sans-serif;}
+.header{background-color:#00529c; padding:5px 10px 9px;}
+.padl10{padding-left:10px;}
+.main_content{width:656px; height:314px; padding-top:15px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/signup-new-pop2.jpg) no-repeat;/*overflow:hidden;*/}
+.data_field{margin-left:280px;  padding:0px; border-collapse:collapse; }
+.input{width:224px;border:1px solid #b3b3b3;height:24px; line-height:22px; vertical-align:middle;  -moz-box-shadow: 0 2px 5px #BDBCBD inset;
+	-webkit-box-shadow: 0 2px 5px #BDBCBD inset;
+	box-shadow: 0 2px 5px #BDBCBD inset;margin-top:5px; padding:0 4px;}
+.btn_subscribe{margin-top:5px}
+.error {background:#FDD;color:#8A1F11; border:1px solid; overflow:hidden;  margin-bottom:5px; padding:4px; width:216px;}
+.td_label{width:90px; font-weight:bold; color:#555;}
+	
+.box_footer{ height:68px ;margin-top:64px; }
+.box_footer_logo{width:211px; overflow:hidden;}
+.box_footer_logo img{ padding-top:13px; padding-left:18px;}
+.box_footer_txt{padding-left:15px; font-size:14px; color:#242424;padding-top:10px;}
+.step{font-size:15px;font-weight:bold;color:#fed000}
+.step2{font-size:12px;color:#fed000}
+.fred{color:#ff0000;}	
+</style>
+
+</head>
+
+<body>
+<div class="overlay">&nbsp;</div>
+<div class="outer">
+<div class="header">
+<table width="100%"> 
+<tr> 
+{%if affiliate_logo%}    
+<td width="170" valign="top">
+    <img src="{{affiliate_logo.url}}" /> 
+ </td>
+ {%endif%}
+<td class="padl10" valign="top">
+ <div class="step">{{affiliate_text}}</div>  
+{%if show_avail_coupon%}
+            <div class="step2">Subscribe below to avail your coupon code</div>
+{%endif%}    
+</td>
+{%if affiliate_name == "vcomm"%}
+<td valign="top" width="170" align="right">
+        <img src="{{MEDIA_URL}}images/vcomm_logo.jpg" height="30" /> 
+ </td>
+ {%endif%}
+</tr>
+</table>
+</div>
+<div class="main_content">
+<form method = "post" action=""> 
+<table class="data_field">
+<tr>
+<td></td>
+<td>&nbsp;</td>
+<td  style="height:50px;">
+{%if form.errors%}
+<div class="error">
+{% for field in form %}
+	{%for error in field.errors%}
+		<div>{{error}}</div>
+	{%endfor%}
+{% endfor %}
+</div>
+{%endif%}
+{%if errors%}
+<div class="error" >
+{%for error in errors%}
+<div style="float:left;">{{error}}</div>
+{%endfor%}
+</div>
+{%endif%}
+</td>
+</tr>
+<tr>
+<td class="td_label" style="width:90px;">Name</td>
+<td>&nbsp;</td>
+<td style="width:238px;"><input type="text" class="input"  id="name" name="name"></td>
+</tr>
+<tr>
+<td class="td_label">Email<span class="fred">*</span></td>
+<td>&nbsp;</td>
+<td>
+<input type="text" class="input"  id="email" name="email"></td>
+</tr>
+
+<tr>
+<td class="td_label">Mobile<span class="fred">*</span></td>
+<td>&nbsp;</td>
+<td> <input type="text" class="input"  id="mobile" name="mobile"/></td>
+</tr>
+<tr>
+<td></td><td></td>
+<td>{%if not do_post%}<input type="hidden" name="selected_affiliates" value="selected_affiliates"/>{%endif%}
+<input type="image" id="affiliate_subscription" class="btn_subscribe" src="http://images.futurebazaar.com/catalog/fb_new/FutureBazaar/deals-popup/subsNow.gif"/></td>
+</tr>
+</table>
+</form>
+<div class="box_footer">  
+ <table>
+ <tr>
+<td class="box_footer_logo"><img src="/media/images/fb_logo_one.gif" border="0" /></td>
+<td class="box_footer_txt">
+<div>Our merchandizers scrape all corners of Indian markets to<br />
+ bring you best deals at your doorstep.<b> Come join the gang!</b>
+</div>
+</td>
+</tr>
+</table>						
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$('#affiliate_subscription').click(function(){
+    $.cookie('subscribed','yes');
+    })
+</script>
+</body>
+</html>

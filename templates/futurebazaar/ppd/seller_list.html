@@ -1,0 +1,25 @@
+<style type="text/css">
+	#user_clients{width:130px}
+	#user_sellers {width: 130px}
+</style>
+    <div class="seller_div">
+        <form name="seller_account_display" id="seller_form" action="/seller_change/" method="POST">
+            <span style="padding-left:10px;" class="f10 fdgray">Seller</span>
+                <select name="user_sellers" id="seller_id" class="f10 fdgray">
+                    <option class="f11 fdgray option" value="all-sellers">All Sellers</option>
+                        {%for account in request.session.all_sellers%}
+                            <option class="f11 fdgray option" {%if request.session.seller|length == 1%}{%ifequal account request.session.seller.0%} selected="selected"{%endifequal%}{%endif%} value="{{account.id}}">{{account.name}}</option>
+                        {%endfor%}
+                    </select>
+                    <input type="hidden" name="name" value="change">
+                    <input type="hidden" name="url" value="{{request.path}}">
+        </form>
+    </div>
+        
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#seller_id").change(function(){
+		$("#seller_form").submit();
+	});
+});
+</script>

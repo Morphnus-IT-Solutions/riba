@@ -1,0 +1,511 @@
+{%extends "web/base.html"%}
+{%load web_tags%}
+{%load cc_tags%}
+{% block page_title %}
+    {% if clearance_sale %}
+        {% if clearance_tag %}
+			{{clearance_tag.display_name}} 
+        {% endif %}
+        Clearance Sale - Future Bazaar
+    {% else %}
+        {% if promotion %}
+            Future Bazaar - Promotional Offers
+        {% else %}
+            {% if category and not is_brand_page %}
+                Buy {{category.name}} Online in India at FutureBazaar.com
+            {% else %}
+                {% if is_brand_page %}
+                    {% if request.GET.c %}
+                        Buy {{title}} {{category.name}} Online in India at lowest price from FutureBazaar.com
+                    {% else %}
+                        Buy {{title}} Products Online in India at lowest price from FutureBazaar.com
+                    {% endif %}
+                {% else %}
+                   {% page_title request %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+{% block page_desc %}
+    {% if clearance_sale %}
+        Get upto 50% discount on Clearance Sale at Future Bazaar
+    {% else %}
+        {% if category and not is_brand_page %}
+            Buy {{category.name}} online from a wide range of products at discounted prices only on FutureBazaar.com - India's Best Online Shopping Site.
+        {% else %}
+            {% if is_brand_page %}
+                {% if request.GET.c %}
+                    Buy {{title}} {{category.name}} Online from a wide range of products at discounted prices only from FutureBazaar.com - India's Best Online Shopping Site
+                {% else %}
+                    Buy {{title}} Products Online from a wide range of products at discounted prices only from FutureBazaar.com - India's Best Online Shopping Site
+                {% endif %}
+            {% else %}
+                FutureBazaar.com: Discover great deals in Laptops, Mobiles, Computers, Electronics, Home Fashion and Clothing from India's foremost retailers.
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+{%block content%}
+<div id="breadcrumb" class="fdgray"><a href="{% cc_url request ''%}">Home</a><span></span>
+{%if "/sabsesasta/" in request.get_full_path%}
+<a href="{%cc_url request "sabsesasta"%}">Sabse Saste 5 Din</a><span></span>
+{%endif%}
+        {%if filter_form.fields.hc.choices %}
+            {% if deal_url and title %}
+                <a href="{% cc_url request deal_url %}">{{title}}</a> <span></span>
+            {% endif %}
+            {% for cat in filter_form.fields.hc.choices %}
+                {% if not leaf_category and forloop.last %}
+                    <div>{{cat.1}}</div>
+                {% else %}
+                    <a href="{% cc_url request cat.0.url %}">{{cat.1}}</a> <span></span>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div>{{title}}</div>
+        {%endif%}
+        {% if leaf_category and category %}
+            <div>{{category.name}}</div>
+        {% endif %}
+        {%if show_compare%}
+        <div class="compare right">
+            <button class="btn_c btn_orange btn_c_s f11" id="id_compare" title="compare">Compare</button>
+        </div>
+        {%endif%}
+		{% if category %}
+		<iframe src="http://www.vizury.com/analyze/analyze.php?account_id=VIZVRM144&param=e200{% for cat in filter_form.fields.hc.choices %}{% if forloop.first %}&catid={{cat.0.id}}{% else %}&subcat{{forloop.counter0}}id={{cat.0.id}}{% endif %}{% if leaf_category and forloop.last %}&subcat{{forloop.counter}}id={{category.id}}{% endif %}{% endfor %}&section=1{% if filter_form.fields.hc.choices|length == 1 %}&level=1{%else%}&level=2{% endif %}" scrolling="no" width="1" height="1" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+		{%endif%}
+	</div>
+
+{%if products%}
+	<!-- search Results -->
+	<div class="gcontainer">
+		<div class="grid_5">
+			{%include "categories/filters.html"%}
+		</div>
+		<div id="srp_content" class="srp_content">
+			{% if category %}
+                <div class="marb10">
+                    <a href="{% cc_url request "supermarket/ch/2515/" %}" title="Monthly Bachat Bazaar">
+                        <img src="/media/images/mbb-category-banner.jpg" width="780" height="150" />
+                    </a>
+                </div>
+			{%endif%}
+			{% if clearance_tag and clearance_tag.tag == 'big-bazaar' %}
+				<img src={% media_url request "/media/images/bigbazaar_clearance_banner.jpg" %} class="padb10" width="730" />
+			{% endif %}
+	
+			{% if deal == 'gift_ideas' %}
+			<!-- Gift Ideas Banner -->
+			<div class="gift_ideas marb10">
+				<div class="left"><img src="/media/images/gift_ideas_banner.jpg" width="244" height="148" alt="Gift Ideas" /></div>
+				<div class="gift_ideas_cnt">
+					<p>It is always a tough task to decide on the perfect gift for your loved ones. To make your life easy, we have gathered some well-thought <span class="cmarun">unique</span> &amp; <span class="cmarun">special gift ideas.</span></p>
+					<p class="mart20"><strong>Check out the entire range</strong> and <strong>decide on the most suitable one.</strong></p>
+				</div>
+				<div class="clear"></div>
+			</div><!-- /Gift Ideas Banner -->
+			{% endif %}
+			{% if deal == 'eureka' %}
+			<!-- Concept Banner -->
+			<div class="concept_ideas marb10">
+				<div class="concept_ideas_cnt">
+					<p>The human mind has always been racing to achieve the unthinkable.  And in this quest we have introduced some of the most crazy concepts and wackiest range of <strong class="cmarun">innovative products</strong> - strangely practical & designed for a life of ease.</p>
+					<p class="mart10"><strong>So go on, Surprise yourself!</strong></p>
+				</div>
+				<div class="clear"></div>
+			</div><!-- /Concept Banner -->
+			{% endif %}
+			
+			{% if deal == 'recommendations' %}
+			<div class="guest_login marb10" style="margin-top:0px;">
+				<img src="https://graph.facebook.com/{% get_facebook_profile_id request%}/picture" width="45" height="45" class="left marr10"/>
+				<div class="left marr30 f18 padt5">
+					<span class="fb">Hi {%get_username request%},</span>
+					Recommendations for you.    <br />
+					<div class="f12 fdgray padt2">Here are few products we thought you would like.</div>
+				</div>          
+				<div class="clear"></div>
+			</div>  
+			{% endif %}
+			{% if q%}
+			<div class="search_header">
+				 <h1>You searched for: <strong>{{q}}</strong></h1>
+			 </div>
+			{% endif %}
+			
+			<!-- Search Sort by -->
+			<div class="sort_bar">
+				<div class="left">
+					<span>Sort by </span>
+					{%for k,v in filters.items%}
+						{%if k == "popular"%} 
+							<a title="Sort product by {{k|title}}" href="{% link_filter_href request "sort" v.original %}" class="{%if request|has_param:"sort"%}{%filter_class "" request "sort"  v.original%} {%else%} selected_link {%endif%}">{{k|title}}</a> 
+						{%else%} 
+							<a title="Sort products by {{k|title}}" href="{% link_filter_href request "sort" v.opposite %}" class="{% if k == 'price' and 'price' in sort %}{%filter_class "" request  "sort" v.original%}{{v.original}}{% endif %} {%filter_class "" request  "sort" v.original %}">{{k|title}}</a>
+						{%endif%}
+						{%if not forloop.last%} &middot; {% endif %}
+					{%endfor%}
+				</div>
+				<div class="right">
+					<span> 
+						{% if pagination.enable_prev %}&laquo; <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% endif %}
+						{{pagination.result_from}} - {{pagination.result_to}} of {{total_results}} 
+						{% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> &raquo;{% endif %}
+					</span>
+				</div>
+				<div class="clear"></div>
+			</div><!-- /Search Sort by -->
+			
+			<div class="srp_greed_view">
+				<ul class="srp_greed" id="greed_products">
+					  {% get_grid_products request products show_compare pagination "True" %}
+				</ul>    
+				<div id="go_top" class="go_top mart20"><a href="#">Go Back to Top</a></div>
+			</div>
+			
+			<div class="clear"></div>
+			
+			<!-- Pagination -->
+			{% if pagination.enable_prev or pagination.enable_next %}
+			<div class="mart10">
+				<div class="pagination right">    
+				   {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+					{% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+					{% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+					{% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+					<div>{{pagination.cur_page}}</div>
+					{% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+					{% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+					{% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+					{% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+				</div>
+				<div class="clear"></div>
+				
+			</div>
+			{% endif %}
+			<!-- /Pagination -->
+			
+		</div>
+	
+	</div><!-- search Results -->
+</div>
+<div class="clear"></div> 
+{%else%}
+<!-- search Suggestions -->
+<div class="padl200">
+	<div class="f14 ca"> <strong>Your search <span class="forange">{%if request.GET.q%}"{{request.GET.q}}"{%endif%}</span> did not match any products on FutureBazaar.</strong> </div>
+	<br />
+	<div>
+		<strong>Suggestions :</strong><br />
+		<ul>
+		  <li>Make sure all words are spelled correctly.</li>
+		  <li>Make sure you have selected correct category.</li>
+		</ul>
+		<div> <a href={% cc_url request '' %}>Click here</a> to go to Home </div>
+	</div>
+</div><!-- /search Suggestions -->
+
+{%endif%}
+{% if category %}{%get_admagnet_url category%}{%endif%}
+{%endblock%}
+{%block script_footer%}
+{{block.super}}
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+	$('.filter_title').click(function(){
+		var div_name = $(this).attr('id') + '_filter';
+		var div = $('#' + div_name);
+		if(div.hasClass('hide')){
+			div.removeClass('hide');
+			$(this).removeClass('hide_filter');
+			$(this).addClass('show_filter');
+		}
+		else{
+			div.addClass('hide');
+			$(this).removeClass('show_filter');
+			$(this).addClass('hide_filter');
+		}	
+	});
+});	
+</script>  
+<script type="text/javascript">
+$(document).ready(function(){
+    var nxt_page_no = 2;
+    var total_pages = "{{total_pages}}";
+    if(nxt_page_no > total_pages){
+        $("#see_more_tab").addClass("hide");
+    };
+    var status = "1 - {{pagination.result_to}} of {{total_results}} Items";
+    $(".see_more_deals").html("Click Here to See More Deals (" + status + ")");
+    $(".top_nav_status").html(status);
+    $("#see_more_tab").click(function(){
+        var items_per_page = "{{pagination.items_per_page}}";
+        $("#ajax_loader").removeClass("hide");
+        $("#see_more_tab").addClass("hide");
+        var action = "{{pagination.base_url|safe}}" + "page=" + nxt_page_no;
+        var data = "";
+        var onSuccess = function(response){
+            $("#greed_products").append(response);
+            var OffsetTarget = "#grid_page_" + nxt_page_no;
+            $("html,body").animate({scrollTop:$(OffsetTarget).offset().top}, 1000,"linear" , function(){});
+            
+            $("#see_more_tab").removeClass("hide");
+            $("#ajax_loader").addClass("hide");
+            nxt_page_no += 1;
+            if(nxt_page_no > total_pages){
+                $("#see_more_tab").addClass("hide");
+            }
+        };
+        var onError = function(){};
+
+        $.ajax({
+            url : action,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type: "GET"
+        });
+        return false;
+    });
+    
+    //go back to top
+  /*  $(window).scroll(function(){
+      var winheight= ($(window).height());
+      var scrolltop=($(window).scrollTop());      
+        
+        if (scrolltop > winheight)
+        {
+            $('.go_top').css('display','block').fadeIn(500);
+        }
+        else
+        {
+            $('.go_top').css('display','none').fadeOut(500);
+        }       
+    });*/
+})
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.sort').change(function(){
+        var url = $(this).val();
+        var p = $('#' + url).val();
+        location.href=p;
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    {%if products%}
+    var slider_discount = $("#slider-range-discount").slider({
+            range: true,
+            min:{{filter_form.dmin}},
+            max:{{filter_form.dmax}},
+            values: [{{filter_form.dlmin}},{{filter_form.dlmax}} ],
+            slide: function(event, ui) {
+                $("#discount-slide").html(ui.values[0] + '%' + ' - ' + ui.values[1] + '%');
+                $("#id_min_discount").val(ui.values[0]);
+                $("#id_max_discount").val(ui.values[1]);
+                var step = 10;
+                if (ui.values[0] >= 0 && ui.values[1] <= 100)
+                    step = 10;
+                if (ui.values[0] >= 100 && ui.values[1] < 1000)
+                    step = 100;
+                if (ui.values[0] >= 1000)
+                    step = 500;
+                slider.slider('option','step',step);
+            },
+            stop : function(event, ui) {
+                $('#filter_form').submit();
+            }
+    });
+    $("#discount-slide").html({{filter_form.dlmin}} + " % - " + {{filter_form.dlmax}} + " %" );
+    $("#id_min_discount").val($("#slider-range-discount").slider("values", 0));
+    $("#id_max_discount").val($("#slider-range-discount").slider("values", 1));
+    
+    var slider = $(".slider-range").slider({
+            range: true,
+            min:{{filter_form.gmin}},
+            max:{{filter_form.gmax}},
+            values: [{{filter_form.cmin}},{{filter_form.cmax}} ],
+            slide: function(event, ui) {
+                $(".points-slide").html(ui.values[0]*4 + ' - ' + ui.values[1]*4);
+                $(".amount").html('Rs ' + ui.values[0] + ' - Rs ' + ui.values[1]);
+                $("#id_min").val(ui.values[0]);
+                $("#id_max").val(ui.values[1]);
+                var step = 10;
+                if (ui.values[0] >= 0 && ui.values[1] <= 100)
+                    step = 10;
+                if (ui.values[0] >= 100 && ui.values[1] < 1000)
+                    step = 100;
+                if (ui.values[0] >= 1000)
+                    step = 500;
+                slider.slider('option','step',step);
+            },
+            stop : function(event, ui) {
+                $('#filter_form').submit();
+            }
+    });
+    $(".points-slide").html( $(".slider-range").slider("values", 0)*4 + " - " + $(".slider-range").slider("values", 1)*4);
+    $(".amount").html("<span class='WebRupee'>Rs.</span> " + $(".slider-range").slider("values", 0) + " - <span class='WebRupee'>Rs.</span> " + $(".slider-range").slider("values", 1));
+    $("#id_min").val($(".slider-range").slider("values", 0));
+    $("#id_max").val($(".slider-range").slider("values", 1));
+    
+    {%endif%}
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".filters a").click(function() {
+        if ($(this).attr("t") == 'hide'){
+            elems = $('input[name=' + $(this).attr("field") + ']');
+            for(var i=0; i<elems.length; i++){
+                elems[i].checked = false;
+            }
+        }
+        if($(this).attr("t") == 'show'){
+            elems = $("input[name="+ $(this).attr("field") + "]");
+            for(var i=0; i<elems.length; i++){
+                elems[i].checked = true;
+            }
+            $('#filter_form').submit();
+        }
+    });
+
+    $(".filters input[type=checkbox]").click(function() {
+        $('#filter_form').submit();
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#id_compare").click(function(){
+        var category_page = "{{is_category_page}}";
+        if(!category_page){
+            url = '{% category_url request c %}';
+        }
+        else{
+            var url = window.location.pathname;
+        }
+        var flag = 0;
+        url += 'compare/';
+        jQuery.each($('.selected'),function(){
+                if($(this).attr('checked')){
+                    flag += 1;
+                    url += $(this).val() + '/';
+                }
+            });
+        if(flag > 1){
+            location.href = url;
+        }
+        else{
+            alert("Please Select minimum 2 Products to compare.");
+        }
+    });
+    $('.selected').click(function(){
+        var flag = 0;
+        jQuery.each($('.selected'),function(){
+                if($(this).attr('checked')){
+                    flag += 1;
+                }
+            });
+        if(flag == 4){
+            $(this).removeAttr("checked");
+            alert("You can select Maximum 3 Products to compare.");
+        }
+    });
+});
+</script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+	$('.filter_option').click(function(){
+		var div_name = $(this).attr('id') + '_filter';
+		var div = $('#' + div_name);
+		if(div.hasClass('hide')){
+			div.removeClass('hide');
+			$(this).removeClass('hide_filter');
+			$(this).addClass('show_filter');
+		}
+		else{
+			div.addClass('hide');
+			$(this).removeClass('show_filter');
+			$(this).addClass('hide_filter');
+		}	
+	});
+});	
+</script>   
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+	$('.filter_option_discount').click(function(){
+		var div_name = $(this).attr('id') + '_filter';
+		var div = $('#' + div_name);
+		if(div.hasClass('hide')){
+			div.removeClass('hide');
+			$(this).removeClass('hide_filter');
+			$(this).addClass('show_filter');
+		}
+		else{
+			div.addClass('hide');
+			$(this).removeClass('show_filter');
+			$(this).addClass('hide_filter');
+		}	
+	});
+});
+</script>  
+{% if not is_category_page %} 
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+    $(".select_category").click(function(){
+        var cat_id = $(this).attr("id");
+        if(document.getElementById("selected_category") != null){
+            var current_cat_id = $("#selected_category").attr("value");
+            if(current_cat_id == cat_id){
+                return false;
+            }
+            $("#selected_category").val(cat_id);
+        }
+        else{
+            //Assign different attributes to the element.
+            var element = document.createElement("input");
+            element.setAttribute("type", "hidden");
+            element.setAttribute("value", cat_id);
+            element.setAttribute("name", "c");
+            element.setAttribute("id", "selected_category");
+         
+            var category = document.getElementById("cat_filter");
+            category.appendChild(element) 
+        };
+        $("#filter_form").submit();
+    });
+});
+</script>
+{% else %}
+    {% get_remarketing_code category %}
+{% endif %}
+
+{%if "/sabsesasta/" in request.get_full_path%}
+<!-- Google Code for Saabse Saaste Paanch Din Remarketing List -->
+<iframe src="http://www.vizury.com/analyze/analyze.php?account_id=VIZVRM144&param=e100&section=1&level=1" scrolling="no" width="1" height="1" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+
+<iframe id='a725765b' name='a725765b' src='http://n.admagnet.net/d/fr/?n=a725765b&amp;zoneid=5974&amp;target=_blank&amp;cb=960642311&amp;z=MD8wPA%3D%3D;'framespacing='0' frameborder='no' scrolling='no' width='1' height='1'></iframe>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 989445909;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "fiH0CLPdtwMQlf7m1wM";
+var google_conversion_value = 0;
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/989445909/?label=fiH0CLPdtwMQlf7m1wM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+{%endif%}
+{%endblock%} 

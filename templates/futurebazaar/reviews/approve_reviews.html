@@ -1,0 +1,88 @@
+{% load web_tags%}
+{% load ppd_tags%}
+<style type="text/css">
+    .text{cursor:pointer;}
+    .text:hover span.msg{ display:block; position:absolute; left:330px; z-index:10; text-align:left;}
+    .msg{display:none; border:2px solid #ccc; padding:5px; width:700px; background-color:#FBF0A8; cursor:default; border-radius:5px;}
+    .tbl_pay_option {border-collapse:collapse;}
+    .tbl_pay_option td{border:1px solid #ccc; text-align:center; }
+    .tbl_pay_option th{border:1px solid #ccc; background-color:#f2f2f2; text-align:center;}
+</style>
+
+
+<div class="left"> 
+    {% if "status=pending" not in url %}
+    {% for pr in product_reviews.object_list%}
+    <form name="product_review" id="product_review_{{pr.id}}" action="/category/product_reviews/approve_or_disapprove_review/" method="POST">
+        <div class="left margin-b10 w960 bb">
+     	    <div class="w750"> 
+        	<span class="f12 fblack fb">{{pr.product}}</span>
+            </div>
+	    <div>
+               <span class="f11">   sku id - {{pr.rate_chart.sku}}</span>
+			   <br/>
+			   <span class="f11">	Display Name: {{pr.display_name}}</span>
+			   <br/>
+			   <span class="f11">	Star Rating: {{pr.rating}}/5 </span>
+	    </div>
+	    <div class="w750">
+		<span class="f11">
+		    <a href = "http://www.{{pr.rate_chart.seller.client.clientdomain_name}}/{{pr.product.slug}}/pd/{{pr.product.id}}" target="_blank">http://www.{{pr.rate_chart.seller.client.clientdomain_name}}/{{pr.product.slug}}/pd/{{pr.product.id}}</a>
+		</span>
+	    </div>
+	    <div class="left">
+		<span class="f12 fblack fb"></span>
+	    </div>
+            <div class="w750 left">
+		<span class="f12 fblack">{{pr.review|linebreaks}}{{review.id}}</span> 
+	   </div>
+	   <div class="clear"></div>
+           <div class="w750 left">
+               {% if not pr.user %} <span class="f11 fdgray">Anonymous</span>&nbsp;<span class="f11 fdgray">&middot;&nbsp;</span><span class="f11 fdgray">{{pr.reviewed_on}}</span> {% else %} <span class="f11 fdgray">{{pr.user}}</span>&nbsp;<span class="f11 fdgray">&middot;&nbsp;</span><span class="f11 fdgray">{{pr.reviewed_on}}&middot;&nbsp;{% if 'approved' in url or 'removed' in url %} Reviewed By - {{pr.reviewed_by}}{% endif %}</span> {% endif %} 
+           </div>
+           <div class="right margin-b10 w145"> 
+               {% if "status=approved" not in url %} 
+                    <span>
+                        <input id="on"  name="{{pr.id}}" class="uibutton review_on" type="submit" value="Publish">
+                    </span> 
+               {% endif %} 
+                    <span> 
+                        {% if "removed" not in url %}
+                            <input id="off" name="{{pr.id}}" class="uibutton review_off" type="submit" value="Remove">
+                        {% endif %}
+                        <input type="hidden" name="url" value="{{url}}">
+                        <input type="hidden" name="on_or_off"  id="check_{{pr.id}}">
+                        <input type="hidden" name="on_id" value="{{pr.id}}">
+                    </span> 
+            </div>
+        </div>
+    </form>
+	</div>
+    {% endfor %}
+    {% endif %}
+  <div class="clear"></div>
+
+  {% if "status=pending" not in url %}    
+    {% if product_reviews.paginator.num_pages > 1 %}
+        <div class="clear"></div>
+        <div class="pagination"> {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+        {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+        {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+        {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+        <div>{{pagination.cur_page}}</div>
+        {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+        {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+        {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+        {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {%     endif %} </div>
+  {% endif %}
+  {% endif %} </div>
+<script type="text/javascript">
+    $(".review_on").click(function(){
+            var prod_id = $(this).attr("name");
+            $("#check_"+prod_id).val("on")
+    });
+    $(".review_off").click(function(){
+            var prod_id = $(this).attr("name");
+            $("#check_"+prod_id).val("off")
+    });
+</script> 

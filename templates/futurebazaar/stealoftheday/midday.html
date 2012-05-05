@@ -1,0 +1,79 @@
+{%extends "web/base.html"%}
+{%load cc_tags%}
+{%load web_tags%}
+{%block content%}
+<div class="midday mart10">
+  <div> <img src="/media/images/midday-banner.jpg" width="988" height="52" /> </div>
+  <div>
+  <div class="midday_item_wrapper">
+    {%for product in products%}
+    <div class="midday_item">
+      <div class="midday_item_image rc10"> 
+        <img src="{{product.product_images.0.get_display_url}}" width="270" height="340" alt="{{product.product.title}}" title="{{product.product.title}}"  /> 
+     <div class="midday_deal_tag"></div>
+      </div>
+      <div class="midday_item_desc">
+        <h2><a href="{% cc_url request product.product.url %}" title="{{product.product.title}}">{{product.product.title}}</a></h2>
+        <div>
+              <ul class="midday_features left">
+              {%for feature in product.key_features%}
+                  <li>{{feature}}</li>
+              {%endfor%}       
+              </ul>
+          <div class="clear"></div>
+        </div>
+        <div class="midday_mrp"> MRP <span class="WebRupee">Rs. </span>
+        <span class="fs"> {% get_price_info request product.rateChart 'list_price' %}</span> </div>
+
+        <table class="mart10">
+          <tr>
+            <td class="midday_price" width="10%"><div class="f18">SPECIAL PRICE</div>
+              <div> <span class="WebRupee">Rs. </span> {% get_price_info request product.rateChart 'offer_price' %} </div></td>
+            {%if product.rateChart.getSavings > 0 %}
+                <td class="midday_save"> YOU SAVE
+                  <div>
+                        <span class="WebRupee">Rs. </span> {%getSavings request product.rateChart%}
+                  </div>
+                </td>
+            {%endif%}
+          </tr>
+        </table>
+        <div class="mart10">
+
+          <a href="{% cc_url request  product.product.url %}" title="Buy Now" class="btn_midday_buynow" ></a>
+        </div>
+         
+      </div>
+      <div class="clear"></div>
+    </div>
+    {%endfor%}
+       </div>
+         <div class="midday_rightbar">
+         {%for midday in previous_deals%}
+            <div class="midday_rightbar_title ca">
+                Previous Deals : {{midday.starts_on|date:'d M Y'}} 
+            </div>
+            {%for src in midday.middayproducts_set.all%}
+            <div class="ca pad10 mart10">
+                <div class="midday_pev_prod_img posr">
+                    <a href="{% cc_url request src.sku.product.url %}" title="{{src.sku.product.title}}">
+                    <img src="{{src.sku.product.battle_image_url}}" width="150" height="150" alt="" title="" /></a>
+                    {%if src.sku.getSavings > 0%}
+                    <div class="save fblack">Save<br>
+                        <span class="WebRupee">Rs.</span> {{src.sku.getSavings|money}}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="pad5"><a href="{% cc_url request src.sku.product.url %}" title="{{src.sku.product.title}}">{{src.sku.product.title|truncate:50}}</a></div>
+                <div class="fdgray">Market Price <span class="WebRupee">Rs. </span><span class="fs">{{src.sku.list_price|money}}</span></div>
+                <div class="pad5 fb forange f14">Special Price <span class="WebRupee">Rs. </span> {{src.sku.offer_price|money}}</div>
+            </div>
+            {%endfor%}
+        {%endfor%}
+            </div>
+            <div class="clear">        
+        </div>
+  </div>
+ 
+</div>
+{%endblock%} 

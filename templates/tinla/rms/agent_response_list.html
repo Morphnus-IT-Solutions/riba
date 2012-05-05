@@ -1,0 +1,196 @@
+{% extends "rms/base.html" %}
+{% block content %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Home Stream</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Home Stream</h1>
+    </div>
+	<div class="right content_head ">
+		<table cellpadding="0" cellspacing="0" border="0" class="right">
+			<tr>
+			  <td><a href="?choice=followup"{% if choice == 'followup' %} class="tab_selected fb" {% endif %}>Followup</a>&nbsp;|&nbsp;</td>
+			  <td><a href="?choice=new"{% if choice == 'new' %} class="tab_selected fb" {% endif %}>New</a>&nbsp;|&nbsp;</td>
+			  <td><a href="?choice=onhold"{% if choice == 'onhold' %} class="tab_selected fb" {% endif %}>On Hold</a></td>
+			</tr>
+		</table>
+	</div>
+  </div>
+
+  <div class="clear bordergray"></div>
+  {% if not assigned_responses %}
+    <div class="clear message">
+    {% if clean %}
+    <p>You do not have any pending responses</p><br />
+    <form method="post">
+        <input type='submit' name='submit' value='Get New Responses' class="uiButton"/>
+    </form>
+    <br />
+    {% else %}
+  	<p>No responses found</p>
+    {% endif %}
+    </div>
+  {% else %}
+  <div class="main clear">
+	<table class="clear tbl_response" id="response_list">
+		<thead>
+			<tr>
+				<th>Phone</th>
+				<th>Name</th>
+				<th>Campaign</th>
+				<th>Follow Up</th>
+				<th>Last Interacted By</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+        	{% for response in assigned_responses %}
+			<tr class="cursorp rah" id="{{response.id}}">
+				<td class="w75">{{ response.phone }}</td>
+				<td class="w150 word-wrap">{{ response.phone.user.full_name|title }}</td>
+				<td class="txtalgnc w150 word-wrap">{{ response.campaign|title }}</td>
+				<td class="txtalgnc">{{ response.followup_on|date:"h:i A o\n D, d M y" }}</td>
+				<td class="txtalgnc w150 word-wrap">{{ response.last_interacted_by|title }}</td>
+			    <td class="action">
+				    {% if not response.call_in_progress %}
+                    <button type="button" id="call_{{response.id}}" class="uiButton call">Call</button>
+                    {% endif %}
+				    {% if response.call_in_progress %}
+				    <button type="button" id="callclose_{{response.id}}" class="uiButton closecall">Close Call</button>
+                    {% endif %}
+			    </td>
+			</tr>
+			<tr class="list_row rah_td tr_hide" id="{{response.id}}_tr">
+    	        <td colspan="6" style="padding:0px 10px; border-width:0px 0px 1px;">
+            		<div id="{{response.id}}_details" style="margin:0px;"></div>
+        		</td>
+    		</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+{%comment%}
+/*
+var response_ids = [{%for response in assigned_responses%}'{{response.id}}',{%endfor%}];
+
+setInterval(function() {
+    var onSuccess = function(data, textStatus, xhr) {
+        var new_list = data.split(',');
+        for(var i=0; i < response_ids.length; i++) {
+            if($.inArray(response_ids[i],new_list) == -1)
+                $('#'+response_ids[i]).remove();
+        }
+        response_ids = new_list;
+    };
+
+    var onError = function(xhr, textStatus, error) {};
+    
+    $.ajax({ url:'/agent/JSlist/?choice={{choice}}',
+        data : null,
+        success : onSuccess
+    });
+}, 30000);
+*/
+{%endcomment%}
+$('display').toggleClass('tr_show', $('body').hasClass('tr_hide') );
+
+var closecall = function() {
+	var resp_id = this.id.split('_')[1];
+    var width = 340;
+    var url = '/response/' + resp_id + '/callclose';
+    {% if choice == 'inbound' %}
+    url += '?type=inbound';
+    {% else %}
+    url += '?type=outbound';
+    {% endif %}
+    $.get(url, function(data) {
+        $('#call_popup').html(data);
+        var dialog = $('#call_popup').dialog({modal:true, title:'Close Interaction', 
+            width:width, resizable:false});
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#call_popup').html(data);
+        setTimeout(function(){$('#call_popup').dialog('close');},2000);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#call_popup').html(xhr.responseText);
+        setTimeout(function(){$('#call_popup').dialog('close');},4000);
+	};
+	var onSubmit = function() {
+        var data = $('#form_add_interaction').serialize()+"&submit="+this.id;
+        $.ajax({ url:url,
+			data : data,
+			success : onSuccess,
+			error : onError,
+			type : 'POST'
+			});
+        return false; 
+	};
+    $('#closecall').click(onSubmit);
+    $('#hold').click(onSubmit);
+    });
+};
+
+$('.closecall').click(closecall);
+
+$('.call').click(function() {
+    var link = this;
+    var response_id = link.id.split('_')[1];
+    //link.innerHTML = 'Close Call';
+    //link.disabled = false;
+    par = link.parentNode;
+    par.removeChild(link);
+    par.innerHTML = '<button type="button" id="callclose_'+response_id+'" class="uiButton closecall">Close Call</button>';
+    $('.closecall').click(closecall);
+
+    var onSuccess = function(data, textStatus, xhr) { 
+        //link.disabled = true;
+        //link.innerHTML = 'Called';
+        //$('.close_wip').removeClass('hide');
+        //$('.c2c').addClass('hide');
+    };
+
+    var onError = function(xhr, textStatus, error) {
+        //link.disabled = false;
+        var json = $.parseJSON(xhr.responseText);
+        alert(json.msg);
+        //$('.message').html(json.msg);
+    };
+
+    $.ajax({
+        url:'/response/'+ response_id + '/call',
+        type: 'POST',
+        data: null,
+        success: onSuccess,
+        error: onError
+    });
+});
+
+$('.rah').click(function() {
+    var div_id = this.id + '_details';
+    var tr_id = this.id + '_tr';
+    var that = this;
+ 
+    if($(this).hasClass('open')) {
+		$(that).removeClass('open');
+        $('#' + tr_id).addClass('tr_hide');
+        $('#head_1100 td').each(function(){ $(this).css('border-bottom','1px solid #DDDDDD')});
+	} else {
+		var url = '/response/' + this.id
+        $.get(url + '?mode=details_only', function(data) {
+        	$('#' + div_id).html(data);
+            $('#' + tr_id).removeClass('tr_hide');
+            $(that).addClass('open');
+            $('#head_1100 td').each(function(){ $(this).css('border-bottom','1px dotted #DDDDDD')});
+        });
+    }
+    return false;
+});
+
+{% endblock %}

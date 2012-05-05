@@ -1,0 +1,22 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+	{%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+	<div class="content_head">
+		<div class="header rc5">
+		  <h1>{{request.client.client.name|title}} - Orders Dashboard</h1>
+		</div>
+		<div class="clear bordergray"></div>
+	</div>
+	<div class="inner-content">
+		<ul>
+			<li class="f12"><a href="/sales/orders/confirmed/"><span class="left cursorp">Confirmed Orders</span><div class="clear"></div></a></li>
+			<li class="f12"><a href="/sales/orders/booked/"><span class="left cursorp">Booked Orders</span><div class="clear"></div></a></li>
+			<li class="f12"><a href="/sales/orders/cancelled/"><span class="left cursorp">Cancelled Orders</span><div class="clear"></div></a></li>
+		</ul>
+	</div>
+</div>
+{%endblock%} 

@@ -1,0 +1,24 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+<style type="text/css">
+	.tbl_price{border-collapse:collapse;}
+	.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+	.tbl_price th{background-color:#f3f3f3; text-align:center;}
+	.tbl_price td{text-align:center;}
+</style>
+{% block user_content %}
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+    <div class="content_head">
+        <div class="header rc5">
+          <h1>{{client_display_name}} - Bulk Upload using Excel</h1>
+        </div>
+        <div class="clear bordergray"></div>
+    </div>
+    <form method="post" action="" name="upload_success">
+        <div class="success">Inventory is uploaded successfully.</div>
+        <div class="clear"></div>
+        <input type="submit" value="Update more stock levels" name="action" id="update" class="uiButton"/>
+        <input type="submit" value="Go back to Inventory Dashboard" name="action" id="update" class="uiButton"/>
+    </form>
+{% endblock %}

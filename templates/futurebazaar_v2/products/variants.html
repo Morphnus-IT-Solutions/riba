@@ -1,0 +1,27 @@
+{%load web_tags%}
+{%load cc_tags%}
+{%if variants%}
+     <td class="price_lable padt10">Size: <span class="f12 fn"> {% variant_features product %}</span></td>
+     <td class="price_value padt10">
+        <ul class="size_box">
+            {%for variant in variants%}
+                <li {%ifequal product.id variant.variant.id %}class="sel">{%else%}><a href="{% cc_url request variant.variant.url%}">{%endifequal%}{% variant_features variant.variant %}{%ifnotequal product.id variant.variant.id%}</a>{%endifnotequal%}
+                </li>
+            {%endfor%}
+            {%if product.brand|is_sizechart%}
+                <li class="size_chart"><a href="/sizechart/{{product.brand.slug}}.html" class="popup">Size Chart</a></li>
+            {%endif%}
+        </ul>
+    </td>
+              
+            {%comment%}
+            <tr {%ifequal product.id variant.variant.id %}class="selected_variant"{%endifequal%}>
+                <td width="20" class="bt vatop la">
+                <input type="radio" name="group" url="{% cc_url request variant.variant.url %}" id="{{variant.variant.id}}" {%ifequal product.id variant.variant.id %} checked="checked"{%endifequal%}>
+                </td>
+                <td class="bt vatop"><a href="{% cc_url request variant.variant.url %}">{{variant.variant.title}}</a><br />
+                {% if variant.variant.primary_rate_chart.gift_title %}<span class="fn">+ {{variant.variant.primary_rate_chart.gift_title}}</span>{%endif%}</td>
+                <td class="bt vatop" width="40" align="right">{%if request|isAnySaving:product.primary_rate_chart %}{{product.product.formatted_currency}} <strike>{% get_price_info request variant.variant.primary_rate_chart 'list_price' %}</strike> <br/>{%endif%}<span class="fmaroon fb">{{product.product.formatted_currency}} {% get_price_info request variant.variant.primary_rate_chart 'offer_price' %}</span></td>
+            </tr>
+            {%endcomment%}
+{% endif %}

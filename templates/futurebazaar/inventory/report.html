@@ -1,0 +1,68 @@
+{% extends "ppd/user_home.html" %}
+{% block user_content %}
+{% load pagination_tags %}
+{% load ppd_tags %}
+{% load web_tags %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />
+<style>
+.tr_hide{display:none}
+.tbl_price{border-collapse:collapse;}
+.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+.tbl_price th{background-color:#f3f3f3; text-align:center;}
+.tbl_price td{text-align:center;}
+</style>
+
+{%comment%}{% autopaginate response_list 20 %}{%endcomment%}
+  <div style="padding:0px; margin-top:10px;">
+<form method="POST" action="" id="approve_pricing_jobs" name="approve_pricing_jobs" enctype="multipart/form-data">
+    {% comment %}
+    {% if not rate_charts %}
+  	    <div class="clear message">
+            <h2 class="f20">No Pending Approvals!!!</h2><br />
+        </div>
+    {% else %}
+    {% endcomment %}
+    {% if flag == 'new' %}
+        {% if errors %}
+            {% for error in errors %}
+                <div class="orders_msg rc5">
+	                <div class="rc5 error">       
+                        {% for error in errors %}
+                            {{error}}<br/>
+                        {% endfor %}   
+	                </div>
+                </div>            
+            {% endfor %}
+        {% endif %}
+        {{forms}}
+        <input type="submit" value="Generate Report" name="upload" id="uplaod" class="grayButton" style="padding: 2px 6px;"/>
+    {% else %}
+        {% if flag == 'report' %}
+	<table class="tbl_price">
+		<tr>
+			<th>Product Name</th>
+			<th>Article Id</th>
+			<th>Stock </th>
+			<th>OTC</th>
+			<th>COD</th>
+			<th>SO</th>
+		</tr>
+		{% for item in current_inventory %}
+		<tr>
+			<td class="la">{{ item.product_name }}</td>
+			<td>{{ item.article_id }}</td>
+			<td>{{ item.current_stock }}</td>
+			<td>{{ item.current_otc }}</td>
+			<td>{{ item.current_cod }}</td>
+			<td>{{ item.current_so }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+        {% endif %}
+    {% endif %}
+</form>
+</div>
+<div class="clear"></div>
+{% endblock %}
+
+

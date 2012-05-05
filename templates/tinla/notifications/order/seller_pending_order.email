@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Order-Confirmation</title>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif; size:12px;">
+    <table cellpadding="0" cellspacing="14px" border="0" width="100%">
+        <tr>
+            <td>Dear {{shop_name}},</td>
+        </tr>
+        <tr>
+            <td>{{customer_name}}{%if customer_phone%}, {{customer_phone}}{%endif%}{%if customer_email%}, {{customer_email}}{%endif%} {%if customer_delivery_city%}from {{customer_delivery_city}}{%endif%} selected the following for purchase:
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellpadding="2" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background:#ddd;">S.No</td>
+                        <td style="background:#ddd;">Item</td>
+                        <td style="background:#ddd;">Price</td>
+                        <td style="background:#ddd;">Qty</td>
+                        <td style="background:#ddd;">Delivery</td>
+                        <td style="background:#ddd;text-align:right;">Amount</td>
+                    </tr>
+                    {% for item in seller_items %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                            {{item.title}} [{{item.sku}}]
+                            {%if item.gift %}
+                                + {{item.gift}}
+                            {%endif%}
+                        </td>
+                        <td>{{item.offer_price}}</td>
+                        <td>{{item.qty}}</td>
+                        <td>Within {{item.delivery_days}} days after payment</td>
+                        <td style="text-align:right;">{{item.total_item_offer_price}}</td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="6"><hr/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td>
+                            {%if seller_offer_price_total != seller_total%}Sub-total<br/>{%endif%}
+                            {%if seller_coupon_discount %}Discount {%if coupon%}[{{coupon_code}}]{%endif%}(-)<br/>{%endif%}
+                            {%if is_seller_cashback %}Cashback (-)<br/>{%endif%}
+                            {%if seller_shipping_charges %}Shipping Charges<br/>{%endif%}
+                            Total
+                        </td>
+                        <td style="text-align:right;">
+                            {%if seller_offer_price_total != seller_total%}{{seller_offer_price_total}}<br/>{%endif%}
+                            {%if seller_coupon_discount%}{{seller_coupon_discount}}<br/>{%endif%}
+                            {%if is_seller_cashback %}{{seller_cashback}}<br/>{%endif%}
+                            {%if seller_shipping_charges %}{{seller_shipping_charges}}<br/>{%endif%}
+                            {{seller_total}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6"><hr/></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>Customer wants to pay using {{payment_mode_string}}.{%ifequal payment_option.payment_mode.code 'cod'%}{%else%} We will notify you again when payment is received.{%endifequal%} Order ID: {{order_id}}</td>
+        </tr>
+        <tr>
+            <td><br/>{{signature|linebreaks}}</td>
+        </tr>
+    </table>
+</body>
+</html>

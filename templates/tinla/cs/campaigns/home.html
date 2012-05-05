@@ -1,0 +1,19 @@
+{% extends "cs/base.html" %}
+{% block content %}
+{% load cs_tags %}
+<div class="span-18">
+    <hr class="space"/>
+    <div class="buttons">
+        <a href="add">+ Add Campaign</a>
+    </div>
+    <div class="list_wrapper">
+        {% campaign_list_header %}
+        {% for campaign in campaigns %}
+        {% campaign_list campaign %}
+        {% endfor %}
+        {% campaign_list_footer %}
+    </div>
+</div>
+<div class="span-6 last">
+</div>
+{% endblock %}

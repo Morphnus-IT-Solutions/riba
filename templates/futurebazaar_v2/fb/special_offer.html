@@ -1,0 +1,163 @@
+{% extends "web/base.html" %}
+{% block content %}
+<style>
+.subscription_outer{background:url('/media/images/12august-popbg.jpg') no-repeat 0 0; height:670px; padding-top:415px; margin-top:0px;}
+#id_name, #id_email, #id_mobile{width:340px !important; height:36px !important;line-height:36px !important; padding:2px; font-size:15px;}
+.data_fields .submit{width:100px !important; height:40px !important; padding:2px; cursor:pointer; border:none; background:url('/media/images/btn_popup_submit.gif') no-repeat 0 0; }
+.data_fields label{color:#fff; font-size:15px;}
+.fyellow{color:#ebdb26;}
+.data_fields {width:340px; padding:0px;  margin-left:340px;}
+.data_fields td{ padding:0 0 20px ;}
+.video_slider_wrapper{margin-top:50px;}
+.video_slider{background-color:#222;}
+.video_slider img{ margin:15px 13px;}
+.btn_prev_dis,.btn_prev, .btn_next, .btn_next_dis{margin:65px 0px 50px !important; width:36px; height:60px; }
+.btn_prev_dis{background:url('/media/images/slider-lad.gif') no-repeat 0 0;}
+.btn_prev{background:url('/media/images/slider-la.gif') no-repeat 0 0; cursor:pointer;}
+.btn_next{background:url('/media/images/slider-ra.gif') no-repeat 0 0; cursor:pointer;}
+.btn_next_dis{background:url('/media/images/slider-rad.gif') no-repeat 0 0;}
+
+.video_slider_outer{width:916px; overflow:hidden; height:180px;}
+.video_slider_inner{width:3645px;}
+</style>
+<div class="subscription_outer">
+<form action="" method="POST">
+ <table class="data_fields">
+
+     {% for field in form %}
+        <tr>
+            <td colspan="2">
+                <div class="marb5"><label for="name">Enter your {{field.label}}{% if field.field.required %}<span class="fyellow"> *</span>{% endif %}:</label></div>
+               <div>{{field}}</div>
+            </td>
+        </tr>
+    {% endfor %}
+ <tr>
+{%if form.errors%}
+        <td style="padding:0px;vertical-align:top;">
+            <ul class="fred" >
+               {% for field in form %}
+                    {% for error in field.errors %}
+                            <li width="150">{{error}}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </td>
+{%endif%}
+{%if errors%}
+        <td style="padding:0px;vertical-align:top;">
+            <ul class="fred" >
+               {% for error in errors %}
+                    <li width="150">{{error}}</li>
+                {% endfor %}
+            </ul>
+        </td>
+{%endif%}
+ <td align="right">
+ <div><input type="submit" value="" title="SUBMIT" class="submit" /></div>
+ </td>
+ </tr>
+ </table>
+ <div class="video_slider_wrapper">
+ <div style="background:url('/media/images/creazy_deals_header.gif') 0 0 no-repeat; height:54px; width:988px;">
+ </div>
+ <div class="video_slider">   
+<div class="left btn_prev_dis" id="prev"></div>
+    <div class="left video_slider_outer">
+    <div class="video_slider_inner">
+        <div id="you_tube_slider" class="left">
+        <a href="http://www.youtube.com/watch?v=GKQwoudsWck" title="Ji Haan Doston Mast Deal Che!"><img src="/media/images/you-tube1.jpg"/></a>
+        <a href="http://www.youtube.com/watch?v=Lqur__RKEZ4" title="Lady Gaga-ing!"><img src="/media/images/you-tube2.jpg"/></a>
+        <a href="http://www.youtube.com/watch?v=c9zbzaq8v24" title="Mera Boss Ab Meri Nahi Leta!"><img src="/media/images/you-tube3.jpg"/></a>
+        <a href="http://www.youtube.com/watch?v=ETECmndEE80" title="Anniversary Ka Tohfa!"><img src="/media/images/you-tube4.jpg"/></a>
+        </div>
+        <div class="left" id="offer-loader">
+            {% for i in 1234|make_list%}
+                <img src="/media/images/offer-loader.gif" style="padding:70px 95px;;"/>
+            {% endfor %}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="offer-loader" class='hide'>
+    {% for i in 1234|make_list%}
+        <a ><img src="/media/images/offer-loader.jpg"/></a>
+    {% endfor %}
+    </div>
+    </div>
+     
+ <div class="left btn_next" id="next"></div>
+     <div class="clear"></div>
+ </div>
+ </div>
+</form>
+</div>
+{% endblock %}
+{%block script_footer%}
+{{block.super}}
+<script type="text/javascript">
+var speed = 500;
+var current = 0;
+var page_done = 0;
+function get_video_items(){
+    if( page_done <= 3 ){
+        page_done += 1;
+        var action = "/special-offer/get_video_items/";
+        var data = "page=" + page_done;
+        $("#offer-loader").addClass('show');
+        $("#offer-loader").removeClass('hide');
+        var onSuccess = function(response){
+            $("#offer-loader").removeClass('show');
+            $("#offer-loader").addClass('hide');
+            $("#you_tube_slider").append(response);
+        };
+        var onError = function(){
+        };
+        $.ajax({
+            url : action,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : "GET"
+        });
+    };
+};
+$('#next').click(function(){
+    if(current < 3){
+        if (current < 0){
+            current = 0;
+        }
+        current+= 1;        
+        get_video_items();            
+        var margin = current * -909;
+        var marginpx = margin + 'px';
+        //And now lets move back to the start of the Carousel
+        $('.video_slider_inner').animate({marginLeft:margin}, speed, 'linear' , function(){});
+        $("#prev").removeClass("btn_prev_dis");
+        $("#prev").addClass("btn_prev");
+        if(current >= 3){
+            $("#next").addClass("btn_next_dis");
+            $("#next").removeClass("btn_next");
+        }
+    }       
+});
+
+$('#prev').click(function(){
+    if(current >= 1){
+        if(current > 3){
+           current = 4;
+        }
+        current -= 1;            
+        var margin = current * -909;
+        var marginpx = margin + 'px';
+    	//And now lets move back to the start of the Carousel
+        $('.video_slider_inner').animate({marginLeft:margin}, speed,'linear' , function(){});
+        $("#next").removeClass("btn_next_dis");
+        $("#next").addClass("btn_next");
+        if(current <= 0){
+            $("#prev").addClass("btn_prev_dis");
+            $("#prev").removeClass("btn_prev");
+        }
+    }
+});
+</script> 
+{% endblock%}

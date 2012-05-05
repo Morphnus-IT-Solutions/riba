@@ -1,0 +1,119 @@
+{% load cc_tags %}
+{% load web_tags %} 
+<div class="buy_now_box marb5">
+        <div class="buy_now_box_left">
+          <div>Availability - <span class="fb">
+           {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+                       <span class="fgreen">In Stock</span>{#% check_stock_availability request product.primary_rate_chart  %#}
+                    {%else%} 
+                        <span class="fb fred">Out of Stock<span> 
+                    {%endifequal%}
+          </span></div>        
+          
+          <div>Delivered in <span class="fb">2-3 business days</span>.</div>
+          
+            {% if product.primary_rate_chart.is_cod_available %}
+                  <div>Also available on <span class="fb">CASH ON DELIVERY</span></div>
+            {% endif %}
+                
+         
+          <div>Buy using <span class="fred">{% get_price_info request product.primary_rate_chart 'payback_points' %}</span> PayBack points.<br />
+ <a href="/payback.html" class="f11" target="_blanck">Whats this?</a></div>
+          <!--<div class="payback_whats_this"> <a href="/payback.html" target="_blanck">Whats this?</a></div>-->
+        </div>
+        
+        <div class="buy_now_box_right">
+        {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+    <form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form_{{product.id}}" method="post">
+{% endifequal %}
+        {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+              <input type="hidden" name="rate_chart_id" value="{{rate_chart.id}}"/>
+              <input type="hidden" name="product_id" value="{{product.id}}"/>
+              <input type="hidden" name="action" value="add_to_cart"/>       
+              <a class="pdp_btn_buy_now button orange marb5 add_product_to_cart" value="{{product.id}}" title="Buy this product now">Buy Now <span></span></a>
+    </form> 
+            <form method="{% if request|is_user_authenticated %}post{%else%}get{%endif%}" action="{% if request|is_user_authenticated %}/user/wishlist/{%else%}/auth/signin/?next={{request.get_full_path|urlencode}}{%endif%}">
+                <input type="hidden" name="action" value="add_to_wishlist"/>
+                <input type="hidden" name="src_id" value="{{rate_chart.id}}"/>
+                <input type="hidden" name="next" value="{{request.path}}"/>
+                <input style="background-color:#F9F7E5;" class="linkButton" type="submit" title="Move this item to your wishlist and buy later" value="Add to Wishlist"/>            </form>
+          <div class="phone_no">0922-222-1947 </div>
+          <div class="shop_on">Shop on Phone (24x7)</div>
+           {%endifequal%}
+        </div>
+        <div class="clear"></div>
+      </div>
+
+    
+        
+        
+
+{% comment%} 
+{%ifequal product.primary_rate_chart.stock_status "instock"%} 
+    <form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form" method="post">
+{% endifequal %}
+      <div class="mart10 padl10 buy_now_outer">
+          <div class="buy_now_wrapper">
+            <div class="qty_size">             
+              <div class="marb10">
+
+                <label class="f14 left padr5">Quantity:</label>
+                <select name="qty" class="prod_qty left" {%if product.primary_rate_chart.stock_status != "instock"%} disabled="disabled" {% endif %}>
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
+                     <option value="6">6</option>
+                     <option value="7">7</option>
+                     <option value="8">8</option>
+                     <option value="9">9</option>
+                     <option value="10">10</option>
+                 </select>
+                
+                <div class="left marl20 f14">
+                    <span>Availability: </span> 
+                    {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+                        <span class="fb">In Stock</span>{# check_stock_availability request product.primary_rate_chart  #}
+                    {%else%} 
+                        <span class="fb" style="color:#970912;">Out of Stock<span> 
+                    {%endifequal%}
+                </div>
+                <div class="clear"></div>
+              </div>              
+                {% product_variants product request %}       
+            </div>
+            
+            {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+              <input type="hidden" name="rate_chart_id" value="{{rate_chart.id}}"/>
+              <input type="hidden" name="product_id" value="{{product.id}}"/>
+              <input type="hidden" name="action" value="add_to_cart"/>
+              <a id="add_product_to_cart">
+                  <input type="button"  title="Buy this product now" class="prod_btn_buynow" {%if id%}id="{{id}}"{%endif%}></button>
+              </a>
+                
+                {% if product.primary_rate_chart.is_cod_available %}
+                    <div class="left prod_cod"> Also available with<br />
+                      <span class="f18 fb text_shd_one">CASH ON DELIVERY</span>
+                    </div>
+                {% endif %}
+                <div class="clear"></div>
+                <div class="call_us_at">You may also call us at <span class="fb f14">0922-222-1947</span> to Buy (24x7)</div>
+              </form>
+            {%else%}
+                <button type="submit" title="Buy this product now" class="prod_btn_nitify" id="btn_notify_me"></button>
+                
+                <div class="left prod_nitify_msg" style="position:relative;">Alert me instantly when it's back in stock<br />
+                     <input type="text" value="" placeholder="Enter your email address" id="email_notify_me"/>
+                     <div class="msg msg_yes hide fb rc3 ca" id="notify_type" style="top:44px; left:20px;"><div id="msg_notify_me"> </div>
+                         <div class="msg_ra"></div>
+                     </div>
+
+                  <img src="/media/images/notify-loader.gif" id="loader_notify_me" class='hide'/>
+                     <br/>
+                </div>
+                <div class="clear"></div>           
+            {%endifequal%}
+          </div>
+        </div>
+{% endcomment%}

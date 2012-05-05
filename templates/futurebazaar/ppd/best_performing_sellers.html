@@ -1,0 +1,67 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{%load cc_tags%}
+{%load web_tags%}
+{% block user_content %}
+<style type="text/css">
+	table {
+    width: 100%;
+}
+</style>
+<div class="padding_top10">
+    <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Reports</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  {% daterange "Best Performing Sellers" search_trend from_date to_date request '' client_display_name%}
+  <div class="clear">&nbsp;</div>
+  <div>
+    {%if show_volume%}
+    <table class="clear tbl_graph">
+      <tr>
+        <td><img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{vol_data.book_vol_count|join:'|'}}&chtt=Top+5+Sellers+by+Volume|(Booked)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Volume|2:|{{vol_data.book_vol_name}}&chxp=1,50|2,{{tick.2|join:','}}&chds=0,{{vol_data.book_max_seller_vol}}&chxr=0,0,{{vol_data.book_max_seller_vol}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/> </td>
+        <td><img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{vol_data.confirm_vol_count|join:'|'}}&chtt=Top+5+Sellers+by+Volume|(Confirmed)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Volume|2:|{{vol_data.confirm_vol_name}}&chxp=1,50|2,{{tick.3|join:','}}&chds=0,{{vol_data.confirm_max_seller_vol}}&chxr=0,0,{{vol_data.confirm_max_seller_vol}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325" align="right"/> </td>
+      </tr>
+    </table>
+    {%endif%}
+    <table class="clear tbl_graph mart10">
+      <tr>
+        <td><img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{data.book_seller.1|join:'|'}}&chtt=Top+5+Sellers+by+Value|(Booked)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Rs ('000)|2:|{{data.book_seller.0}}&chxp=1,50|2,{{tick.0|join:','}}&chds=0,{{max_data.book_max_seller}}&chxr=0,0,{{max_data.book_max_seller}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/> </td>
+        <td><img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{data.confirm_seller.1|join:'|'}}&chtt=Top+5+Sellers+by+Value|(Confirmed)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Rs ('000)|2:|{{data.confirm_seller.0}}&chxp=1,50|2,{{tick.1|join:','}}&chds=0,{{max_data.confirm_max_seller}}&chxr=0,0,{{max_data.confirm_max_seller}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325" align="right"/> </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<br/>
+<br/>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    $('#id_source').change(function(){
+        if($('#id_source').val()){
+            var data = 'client=' + $('#id_source').val();
+            var action = '/reports/get_seller_from_client/';
+            var onSuccess = function(response) {
+                $('#drop_seller').html(response);
+            };
+            var onError = function() {
+            };
+    
+            $.ajax({ url:action,
+                   data : data,
+                   success : onSuccess,
+                   error : onError,
+                   type : 'POST'
+                   });
+            return false;
+        }
+        else{
+        }
+    });
+
+</script>
+{%endblock%} 

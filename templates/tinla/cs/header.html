@@ -1,0 +1,17 @@
+{%load cc_tags%}
+{%load web_tags%}
+{%load cache %}
+
+<div id="top-stuff">
+        <div id="top-bar-outer">
+            <div class="top-bar-inside" style="left: 0px;">
+                  <div class="static-links">
+                        <span>Hi {% get_agentname request %}!</span>
+                      </div>
+                      <div class="active-links">
+                        <span>My performance</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/auth/signout/" id="asout" title="Agent sign out">Agent sign out </a>
+                  </div>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,93 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form input[type=submit]{width:50px;}
+#id_notes {height:50px;}
+ul, ol { padding-left: 0px !important; }
+</style>
+<form method='POST' action=''>
+<div class='clear'>
+<div>
+    {% if errors %}
+        <div class="orders_msg">
+          <div class="error"> 
+            {% for error in errors %}
+                {{error}}<br/>
+            {% endfor %} 
+          </div>
+        </div>
+        <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok' style="width:80px\9; padding:5px;"/></div> 
+    {% else %}
+        {% if entry_deleted_successfully %}
+            <div class="success mart10"> Virtual Stock Entry deleted successfully.</div>
+            <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok' style="width:80px; padding:5px;"/></div>
+        {% else %}
+            <div class="error"> Are you sure that you want to delete following entry? </div>
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                  <th>DC</th>
+                  <th>A.T.S.</th>
+                  <th>Starts On</th>
+                  <th>Ends On</th>
+                  <th>Expected On</th>
+                  <th>Expected In</th>
+                  <th>Is Active</th>
+                </tr>
+                <tr>
+                    <td class="ca">{{inventory.dc.code}}</td>
+                    <td class="ca">{{inventory.compute_ats|floatformat}}</td>
+                    <td class="ca">{{inventory.starts_on|date:'d-m-Y H:i'}}</td>
+                    <td class="ca">{{inventory.ends_on|date:'d-m-Y H:i'}}</td>
+                    <td class="ca">{%if inventory.expected_on%}{{inventory.expected_on|date:'d-m-Y H:i'}}{%else%}--{%endif%}</td>
+                    <td class="ca">{%if inventory.expected_in%}{{inventory.expected_in|floatformat}}{%else%}--{%endif%}</td>
+                    <td class="ca">{%if inventory.is_active%}Yes{%else%}No{%endif%}</td>
+                </tr>
+               </tbody>
+            </table>
+            <div><input type="submit" name="submit" value="Delete Entry" class="uiButton" id='submit'  style="width:100px; padding:5px;"/></div>
+        {% endif %}
+    {% endif %}
+</div>
+</form>
+
+<script type='text/javascript'>
+    $('#submit').click(function() {
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#apply_action').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#apply_action').html(xhr.responseText);
+        };
+        var url = '/category/category_management/inventory/delete_vi/';
+        var id = {{inventory.id}}
+        var data = 'id=' + id;
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+    
+    $('#ok').click(function() {
+        $(".ui-dialog-titlebar-close").trigger('click');
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#apply_action').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#apply_action').html(xhr.responseText);
+        };
+        var data = 'article_id=' + {{inventory.rate_chart.article_id}};
+        var url = '/category/category_management/inventory/all_inventory/'
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        window.location.reload();
+        return false;
+    });
+    
+</script>

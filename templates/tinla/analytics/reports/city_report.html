@@ -1,0 +1,153 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %} <br/>
+{%daterange "Sales by City - " search_trend dur.0 dur.1 request "" mode%}
+<form method='GET' action="/reports/citywise_report/search/">
+  <div class="select_range">
+    <table>
+      <tr>
+        <td><input type="radio" name="mode" value="1" checked>
+          Booked Orders &nbsp;
+          <input type="radio" name="mode" value="2">
+          Invoiced Orders </td>
+      </tr>
+    </table>
+  </div>
+</form>
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5">
+    <ul style="list-style-type:disc; padding-left:10px;">
+      <li>{{error}}</li>
+    </ul>
+  </div>
+</div>
+{% endif %}
+
+{% if not hide_it%} <br/>
+<br/>
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top"><table class="tbl_order">
+        <div>
+        <caption style="font-size:12pt;">
+        <b>Contribution-wise:</b>
+        </caption>
+        </div>
+        
+        <tr>
+          <th>Shipto City</th>
+          <th>Sum Of Quantities</th>
+          <th>Sum Of Values</th>
+          <th>% Contribution-by Value</a></th>
+        </tr>
+        {% for ff in fields_top10.2 %}
+        <tr class="{%cycle "row1" "row2" %}">
+          <td style="text-align:left;">{{ff.0}}</td>
+          <td style="text-align:center;">{{ff.1}}</td>
+          <td style="text-align:right;">{{ff.2}}</td>
+          <td style="text-align:right;">{{ff.3}}%</td>
+        </tr>
+        {% endfor %}
+        <tr class="{%cycle "row1" "row2" %}">
+          <td><b>TOTAL</td>
+          <td><b>{{total.0}}</b></td>
+          <td><b>{{total.1}}</b></td>
+          <td><b>{{total.2}}%</b></td>
+        </tr>
+      </table>
+      <input type="button" VALUE="View More" OnClick="location.href=window.location+'&view=contribution';">
+    </td>
+    <td width="1%"></td>
+    <td width="*%"><img style="border:1px solid grey;" src="http://chart.apis.google.com/chart?chxl=0:|City|2:|Contribution&chxp=0,50|2,50&chco=FF9900,76A4FB,636C7E,80C65A,3072F3,FF0000,00A789,FF6342,000000,AA0033&chxt=x,y,y&chs=550x325&cht=bvg&chd=t:{{chart_data.0|join:'|'}}&chdl={{city.2}}&chtt=Contribution+by+Top-10 Cities&chts=923800,18&chm=N*p0*,000000,0,-1,11|N*p0*,000000,1,-1,11|N*p0*,000000,2,-1,11|N*p0*,000000,3,-1,11|N*p0*,000000,4,-1,11|N*p0*,000000,5,-1,11|N*p0*,000000,6,-1,11|N*p0*,000000,7,-1,11|N*p0*,000000,8,-1,11|N*p0*,000000,9,-1,11|h,000000,0,0:0,1&chds=0,{{c_range.0}}&chxr=1,0,{{c_range.1}}&chxs=0,000000,11.5,0,lt,000000|1,000000,11.5,0,lt,000000|2,000000,11.5,0,l,000000" width="550" height="325"/> </td>
+  </tr>
+  <tr>
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top"><table class="tbl_order">
+        <div>
+        <caption style="font-size:12pt;">
+        <b>Quantity-wise:</b>
+        </caption>
+        </div>
+        
+        <tr>
+          <th>Shipto City</th>
+          <th>Sum Of Quantities</th>
+          <th>Sum Of Values</th>
+          <th>% Contribution-by value</th>
+        </tr>
+        {% for ff in fields_top10.0 %}
+        <tr class="{%cycle "row1" "row2" %}">
+          <td style="text-align:left;">{{ff.0}}</td>
+          <td style="text-align:center;">{{ff.1}}</td>
+          <td style="text-align:right;">{{ff.2}}</td>
+          <td style="text-align:right;">{{ff.3}}%</td>
+        </tr>
+        {% endfor %}
+        <tr class="{%cycle "row1" "row2" %}">
+          <td><b>TOTAL</td>
+          <td><b>{{total.0}}</b></td>
+          <td><b>{{total.1}}</b></td>
+          <td><b>{{total.2}}%</b></td>
+        </tr>
+      </table>
+      <input type="button" VALUE="View More" OnClick="location.href=window.location+'&view=quantity';">
+    </td>
+    <td width="1%">&nbsp;</td>
+    <td><img style="border:1px solid grey;" src="http://chart.apis.google.com/chart?chxl=0:|City|2:|Quantity&chxp=0,50|2,50&chco=FF9900,76A4FB,636C7E,80C65A,3072F3,FF0000,00A789,FF6342,000000,AA0033&chxt=x,y,y&chs=550x325&cht=bvg&chd=t:{{chart_data.1|join:'|'}}&chdl={{city.0}}&chtt=Quantity+by+Top-10 Cities&chds=0,{{q_range}}&chxr=1,0,{{q_range}}&chts=923800,18&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|N,000000,5,-1,11|N,000000,6,-1,11|N,000000,7,-1,11|N,000000,8,-1,11|N,000000,9,-1,11|h,000000,0,0:0,1&chxs=0,000000,11.5,0,lt,000000|1,000000,11.5,0,lt,000000|2,000000,11.5,0,l,000000" width="550" height="325"/> </td>
+  </tr>
+  <tr>
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top"><table class="tbl_order">
+        <div>
+        <caption style="font-size:12pt;">
+        <b>Volume-wise:</b>
+        </caption>
+        </div>
+        
+        <tr>
+          <th>Shipto City</th>
+          <th>Sum Of Quantities</th>
+          <th>Sum Of Values</th>
+          <th>% Contribution-by value</th>
+        </tr>
+        {% for ff in fields_top10.2 %}
+        <tr class="{%cycle "row1" "row2" %}">
+          <td style="text-align:left;">{{ff.0}}</td>
+          <td style="text-align:center;">{{ff.1}}</td>
+          <td style="text-align:right;">{{ff.2}}</td>
+          <td style="text-align:right;">{{ff.3}}%</td>
+        </tr>
+        {% endfor %}
+        <tr class="{%cycle "row1" "row2" %}">
+          <td><b>TOTAL</td>
+          <td><b>{{total.0}}</b></td>
+          <td><b>{{total.1}}</b></td>
+          <td><b>{{total.2}}%</b></td>
+        </tr>
+      </table>
+      <input type="button" VALUE="View More" OnClick="location.href=window.location+'&view=value';">
+    </td>
+    <td width="1%"></td>
+    <td><img style="border:1px solid grey;" src="http://chart.apis.google.com/chart?chxl=0:|City|2:|{{v_range.2}}&chxp=0,50|2,50&chco=FF9900,76A4FB,636C7E,80C65A,3072F3,FF0000,
+00A789,FF6342,000000,AA0033&chxt=x,y,y&chs=550x325&cht=bvg&chd=t:{{chart_data.2|join:'|'}}&chdl={{city.1}}&chtt=Volume+by+Top-10 Cities&chds=0,{{v_range.0}}&chxr=1,0,{{v_range.1}}&chts=923800,18&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|N,000000,5,-1,11|N,000000,6,-1,11|N,000000,7,-1,11|N,000000,8,-1,11|N,000000,9,-1,11|h,000000,0,0:0,1
+&chxs=0,000000,11.5,0,lt,000000|1,000000,11.5,0,lt,000000|2,000000,11.5,0,l,000000" width="550"/> </td>
+  </tr>
+</table>
+<br/>
+<br/>
+{% endif %}
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function() { 
+    $('#id_from').datepicker({dateFormat:'dd M, yy'})
+    $('#id_to').datepicker()
+});
+</script>
+{% endblock %} 

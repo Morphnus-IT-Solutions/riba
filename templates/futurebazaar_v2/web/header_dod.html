@@ -1,0 +1,15 @@
+{% load web_tags %}
+{% load cc_tags %}
+{% if deal_rate_chart %}
+    <div class="search_dod">
+        <a title="{{deal_rate_chart.product.title}}" href="{% cc_url request deal_rate_chart.product.url %}">
+            <img src="{{deal_rate_chart.product.get_default_img}}" width="46" height="46" />
+            <div class="search_dod_con">
+                <div class="fb">DEAL OF THE DAY</div>
+                <div class="search_dod_name">{{deal_rate_chart.product.title}}</div>
+                <div class="fb forange">Offer Price <span class="WebRupee">Rs.</span> {% get_price_info request deal_rate_chart 'offer_price' %}</div>
+            </div>
+            <div class="clear"></div>
+        </a>
+    </div>
+{% endif %}

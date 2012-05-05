@@ -1,0 +1,10 @@
+{% extends "web/base.html" %}
+{% block content %}
+<div class="pad5">
+    <form method="post" action="/tools/pricecompare/">
+        {{form.search_for}}&nbsp;&nbsp;
+        <input type="submit" value="compare" class="pad5">
+    </form>
+</div>
+{% include "pricespider/results_list.html" %}
+{% endblock %}

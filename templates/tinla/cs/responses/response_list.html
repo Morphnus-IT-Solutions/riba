@@ -1,0 +1,30 @@
+<tr class="{%if is_last %}last_row {%else%} list_row{%endif%}">
+        <td class="first_col">{{response.id}}
+            <br/><a href="/responses/{{response.id}}/attempts" id="history_{{response.id}}" class="rah">+ History</a><br/>
+        </td>
+        <td>{{response.order_id}}</td>
+        <td>{{response.name|title}}
+        </td>
+        <td>{{response.message}}</td>
+        <td>{{response.phone}}</td>
+        <td>{% if response.created_on %}{{response.created_on|date:"D, d M h:i A"}}{% endif %}</td>
+        <td>{% if response.last_call %}{{response.last_call|date:"D, d M h:i A"}}{% endif %}</td>
+        <td>{% if response.next_call %}{{response.next_call|date:"D, d M h:i A"}}{% endif %}</td>
+        <td>{{response.attempts}}</td>
+        <td>{{response.connections}}</td>
+        <td class="last_col">
+            <!--{% if not response.wip %}<button type="button" id="call_{{response.id}}" class="c2c button">Call</button>{% endif %}-->
+            {%if not response.closed%}
+                <a href="/users/{{response.user.id}}/responses/{{response.id}}/attempts/add/">Add Attempt</a>
+            {%else%}
+                <b>Closed</b>
+            {%endif%}
+            {% if response.wip %}<button type="button" id="call_{{response.id}}" class="c2c button" disabled>Calling</button>{% endif %}
+            <!--<button type="button" id="call_{{response.id}}" title="Close Active Call" class="close_wip button {% if not response.wip %}hide{%endif%}" disabled>Close</button>-->
+        </td>
+    </tr>
+    <tr class="list_row rah_td last_row" id="history_{{response.id}}_tr">
+        <td colspan="7">
+            <div id="history_{{response.id}}_details"></div>
+        </td>
+    </tr>

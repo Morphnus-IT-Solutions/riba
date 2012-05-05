@@ -1,0 +1,98 @@
+<!--Pop Up-->
+{%extends "web/base.html"%}
+{%block content%}
+
+<div  class="pad10" id="feedback_outer">
+<form method="POST" id="feedback_form"  action="" name="feedback_form1">
+<div id="error_msg" class="error hidden"></div>
+ {% if form.errors %}
+          <p class="fred">
+                      Please correct the error{{ form.errors|pluralize }} below.
+          </p>
+  {% endif %}
+   
+                    <div class="f11">
+                        <div class="padb5">
+                            {{form.name.errors}}
+                            <div> {{form.name.label}} <span class="mand">*</span><div id="name_error"></div></div>
+                            {{form.name}}
+                        </div>
+                        {{form.feedback.errors}}
+                        <div class="padb5">
+                            <div>{{form.feedback.label}} <span class="mand">*</span><div id="feedback_error"></div></div>
+                            {{form.feedback}}
+                        </div>
+                        <div class="padb5">
+                            <div class="left">
+                                {{form.phone.errors}}
+                                <div class="f11">{{form.phone.label}} <span class="mand">*</span><div id="phone_error"></div></div>
+                                <div id="phone_entry">
+                                {{form.phone}}
+                                &nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="left">
+                                {{form.email.errors}}
+                                <div class="f11" id="email_image">{{form.email.label}} <span class="mand">*</span><div id="email_error"></div></div>
+                                {{form.email}}
+                            </div>
+                        </div>
+                    <br/>
+                    <br/>
+                    <div class="clear"></div>
+  <INPUT TYPE="button" class="submit_feedback" value="Save" id="submit_feedback"/>
+  <INPUT TYPE="reset" VALUE="Reset">
+                    </div>
+</form>
+</div>
+<script type="text/javascript">
+$('#submit_feedback').click(function()
+{
+   alert("in form");
+   alert('kristy');
+   var onSuccess = function(responseText){
+       alert("success");
+           if(responseText)
+           {
+               var response = $.parseJSON(responseText);
+               if (response.status == 'ok')
+               {
+                   location.reload();
+               }
+               if (response.status == 'error')
+               {
+                   alert("error");
+                    $('#error_msg').removeClass('hidden');
+                    var error_msg = '<ul>';
+                    for(var key in response.error){
+                        if(response.error[key]){
+                            for (var i in response.error[key]){
+                                error_msg = error_msg + '<li>' + response.error[key][i] + '</li>';
+                            }
+                        }
+                    }
+                    error_msg = error_msg +  '</ul>';
+                    $('#error_msg').html(error_msg);
+               }
+           }
+       };
+        var onError = function(){
+            alert("ONERROR");
+        };
+            var action = '/feedback_popup/';
+            alert(action);
+            var form_data = $('#feedback_form').serialize();
+            alert(form_data);
+            $.ajax({
+                url : action,
+                data : form_data,
+                success : onSuccess,
+                error : onError,
+                type : "POST"
+            });
+    return false;
+        });
+
+//    $(".address_container").removeClass("hide");
+</script>
+{%endblock%}

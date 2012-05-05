@@ -1,0 +1,130 @@
+{% extends request.ws_base|default:'web/base.html'%}
+{% load cc_tags %}
+{% load web_tags %}
+
+{%block page_title%}FutureBazaar: Give your Email or Mobile Number | Discover Great Deals{%endblock%}
+{%block page_desc%}Here you can review your shopping cart details.{%endblock%}
+
+{% block content %}
+    <div class="mart20">
+        <div class="cart_left">        
+            {% checkout_tabs request "login" %}
+            <div style="border:1px solid #3E3E3E; padding:10px;">
+                <form method="post" action="" name="myform" id="guest_checkout_form">
+                    <div class="guest_Check">
+                        {% if error %}
+                            <div class="error">{{error}}</div>
+                        {% endif %}
+                        <!-- Facebook Loging Button -->
+                        <div id="fblogingbtn">
+                            <div>
+                                <div class="llabel left ra fb fblack">Proceed with your Facebook ID</div>
+                                <div class="rcan marl10">
+                                    {% if  request|user_connected_to_facebook %}
+                                        <a class="flogin_retry cp fb-login-button via_checkout"><img src={% media_url request "images/login_with_facebook_btn.png" %}></a>
+                                    {% else %}                   
+                                        <div class="marr10">
+                                          {% include "order/facebook_login.html" %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div style="border-bottom:1px solid #eee; padding:13px 0px 0px 0px;">
+                                <span style="margin:0px 0px -8px 214px; padding:0px 5px; background-color:#fff; float:left;">OR</span>
+                                <div class="clear"></div>
+                            </div>
+                        </div><!-- /Facebook Loging Button -->
+                        
+                        <div>
+                            <div class="llabel left ra fb fblack">Proceed with your email or mobile</div>
+                            <div class="rcan marl10">
+                                <p><input type="text" value="{% if username %}{{username}}{% endif %}" name="username" id="mobileLabel" autocomplete="false" title="Enter your Email/Mobile number" class="checkout_mobile w308" /></p>
+                                <p class="f11 fgray">You don't need a password right now. You will have the option to sign up for an account after purchase.</p>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div>
+                            <div class="llabel">&nbsp;</div>
+                            <div class="rcan marl10 fblack">
+                                <input type="checkbox" name="have_account" id="AlreadyCustomer" value="sign-in"/> I already have a Future Bazaar account and password
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="password_row" style="display:none;">
+                            <div class="llabel ra fb fblack">Enter your password</div>
+                            <div class="rcan marl10">
+                                <p><input type="password" maxlength="1024" id="userPassword" title="Enter your password" name="password" class="checkout_password w308"/></p>
+                                <div class="f11 fgray la w320 line-hieght12">
+                                    <span>Forgot password? No worries.</span><input id="continue" value="Continue with your purchase now" type="submit" class="linkButton link" style="width:173px; font-size:11px;" name="continue_with"/> and we will help you reset your password later.
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="marb10">
+                            <div class="llabel">&nbsp;</div>
+                            <div class="rcan marl10">
+                                <p><input value="Continue" type="submit" class="btn_c btn_c_m btn_orange"/></p>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </form>
+                
+            </div>
+        </div>
+       
+        <div class="cart_right">
+            {% include "order/right.html" %}
+            <!-- Chat Link -->
+            <div class="marb10 c666">
+                <p class="marb10 fb">Have a Question? Chat for live assistance.</p><a class="chat_now_btn"  onclick="window.open('http://chatserver.comm100.com/ChatWindow.aspx?siteId=24850&amp;planId=597&amp;partnerId=-1&amp;visitType=1&amp;byHref=1', 'popupwindow', 'width=540,height=400,left=200,top=5,scrollbars,resizable');">Chat Now</a>
+            </div><!-- /Chat Link -->
+        </div>
+        <div class="clear"></div>
+    </div>
+{%endblock%}
+    
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+  $(document).ready(function() {  
+    
+    $('#AlreadyCustomer').removeAttr('checked');
+    
+    $('#continue').click(function(){
+        $('#AlreadyCustomer').removeAttr('checked');
+        $('#userPassword').val('');
+    });
+    
+    $('#guest_checkout_form').submit(function(){
+        if(!$('#AlreadyCustomer').attr('checked')) {
+            $('#userPassword').val('');
+            $('#password_row').addClass('hide');
+        }
+        
+    });
+
+    $('#AlreadyCustomer').click(function() {
+        if($(this).attr('checked')) {
+            $('#password_row').slideDown();
+            $('#fblogingbtn').slideUp();
+            $('#userPassword').focus();
+        } else {
+            $('#userPassword').val('');
+            $('#password_row').slideUp();
+            $('#fblogingbtn').slideDown();
+        }
+    });
+   
+    $('*').keypress(function (e){
+        if (e.keyCode == 13){
+            $('#guest_checkout_form').submit();
+        }
+    });
+
+  });
+</script>
+{% endblock %}

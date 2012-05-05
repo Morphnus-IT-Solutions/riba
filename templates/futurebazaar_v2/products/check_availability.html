@@ -1,0 +1,97 @@
+<html>
+<head>
+<link rel="stylesheet" href="/media/css/popup_style.css" media="all" type="text/css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+            $(document).ready(function(){
+                $("#pincode").keypress(function (e)  
+                { 
+                  if( e.which!=8 && e.which!=0 && (e.which < 48 || e.which > 57) && !(e.which == 13))
+                  {
+                    //display error message		
+                    $("#infomsg").html("").hide(); 
+                    $("#errmsg2").html("").hide();
+                    $("#errmsg2").html("<span style='color:red'>Please enter digits only</span>").show(); 
+                    return false;
+                  }	$("#errmsg2").html("").hide(); 
+                });
+
+              });
+            $(document).ready(function(){
+                $("#qty").keypress(function (e)  
+                { 
+                $("#errmsg").html("<span style='color:red'>Digits Only</span>").hide(); 
+                
+                  if( e.which!=13 && e.which!=8 && e.which!=0 &&  (e.which < 48 || e.which > 57))
+                  {
+                    $("#errmsg").html("<span style='color:red'>Digits Only</span>").show(); 
+                    return false;
+                  }	
+                });
+              });
+
+        </script>
+</head>
+<body>
+<div>
+  <h1>{{product.title}}</h1>
+  <div class="content">
+  <div class="marb10 pad10">
+    <form id="pincodeForm" method="post" action="/product/check_availability/">
+      <p>Quantity:&nbsp;
+        <input type="text" id="qty" name="qty" style="width: 20px;" maxlength="3" value="1">
+        <input type="hidden" id="rc" name="rc" value="{{rc.id}}"/>
+        <span  id="errmsg"></span> </p>
+      <p>Please enter pincode of shipping location:</p>
+      <div class="marb10">Pincode:&nbsp;&nbsp;
+        <input type="text" id="pincode" name="pincode" maxlength="6" value="">
+         <button type="submit" id="check" class="btn_submit"></button>
+      </div>
+      <div  id="errmsg2"></div>
+    </form>
+    <p id="response_message" class="hidden pad10"></p>
+    <div class="padt20" id="ccInfo">
+      Please call us on <strong>0922-222-1947</strong> or mail us at <strong>support@futurebazaar.com</strong> if you have any questions.
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+        $('#check').click(function(){
+            var onSuccess = function(responseTxt){
+                var response = $.parseJSON(responseTxt);
+                if(response.status == 'available'){
+                    $('#response_message').removeClass('hidden');
+					 $('#response_message').removeClass('error');
+					  $('#response_message').removeClass('w190');
+					   $('#response_message').addClass('notice');
+					    $('#response_message').addClass('w560');
+                    $('#response_message').html("<span style='color:green'>" + response.msg + "</span>");
+                }
+                else{
+                    $('#response_message').removeClass('hidden');
+					 $('#response_message').removeClass('notice');
+					  $('#response_message').removeClass('w560');
+					  $('#response_message').addClass('error');
+					   $('#response_message').addClass('w190');
+                    $('#response_message').html("<span>" + response.msg + "</span>");
+                }
+            };
+            var onError = function() {
+                $('#pincodeForm').submit(onSubmitAlias);
+            };
+            var form = $('#pincodeForm');
+            var action = form.action;
+            var data = $('#pincodeForm').serialize();
+            $.ajax({ url:action,
+                data : data,
+                success : onSuccess,
+                eroor : onError,
+                type : 'POST'
+            });
+            return false;
+        });
+    </script>
+</body>
+</html>

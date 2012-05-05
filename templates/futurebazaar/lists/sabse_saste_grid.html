@@ -1,0 +1,52 @@
+{% load web_tags %}
+{% load cc_tags %}
+{% for ctxt in data %} 
+<li>
+    <div class="greed_inner">
+      <div class="item_img ca"> 
+        <a href="{% cc_url request ctxt.product.url %}"> 
+            <img src="{{ctxt.product_images.0.get_display_url}}" title="{{ctxt.product.title}}" alt="{{ctxt.product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='/media/images/noimage_p.jpg';}return false;" onerror_cnt="0" height="290" width="230">
+        </a>            
+         <a href="{% cc_url request ctxt.product.quick_look_url %}" class="lightbox lightbox_overlay product_quick_look" style="position:static !important;">
+            <span style="display: none;" class="btn_qv">Quick View</span>
+         </a>
+        {%if request|isAnySaving:ctxt.rate_chart %}
+        <div class="save ca fb fwhite">
+            <span>{% getDiscount request ctxt.rate_chart%}% off</span>   <br>
+            <span> SAVE</span>
+            <span><span class="WebRupee">Rs. </span>{% getSavings request ctxt.rate_chart %}</span>                         
+        </div>
+        {% endif %}
+        <div class="ss5d_icon">                    
+        </div>
+         <div class="menu_icons">
+         </div>                
+      </div>         
+     <h3> 
+          <a href="{% cc_url request ctxt.product.url %}" title="{{ctxt.product.title}}">{{ctxt.product.title|truncate:65}}</a>
+     </h3>
+      <div style="padding:3px 10px 7px;">
+        <div class="price left">               
+              <span class="offer_price f15 fb">
+                    <span class="WebRupee">Rs.</span> <span>{% get_price_info request ctxt.rate_chart 'offer_price' %}</span>
+              </span>
+              {%if request|isAnySaving:ctxt.rate_chart %}
+              <span class="mrp f11">
+                    <span class="WebRupee">Rs.</span> <span class="fs">{% get_price_info request ctxt.rate_chart 'list_price' %}</span>
+              </span>
+              {% endif %}
+        </div>             
+        {%ifequal ctxt.rate_chart.stock_status "instock"%}
+            <form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form_{{ctxt.product.id}}" method="post">
+                <input name="rate_chart_id" value="{{ctxt.rate_chart.id}}" type="hidden">
+                <input name="product_id" value="{{ctxt.product.id}}" type="hidden">
+                <input name="action" value="add_to_cart" type="hidden">
+                <button type="submit" class="add_product_to_cart button orange right f11 fn" style="padding:3px 2px;" value="{{ctxt.product.id}}" title="Add To Cart">Add To Cart</button>
+                <!--<input type="submit" class="add_product_to_cart button orange right mart8 f11" title="Add To Cart" value="Add To Cart" />-->
+            </form>
+        {% endifequal %}  
+        <div class="clear"></div>
+      </div>
+    </div>        
+</li>
+{% endfor %}

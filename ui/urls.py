@@ -1,0 +1,27 @@
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^$', 'ui.views.home'),
+    (r'^call/', 'ui.views.call'),
+    (r'^followup/', 'ui.views.followup'),
+    #(r'^abandoned/', 'ui.views.abandoned'),
+    (r'^campaigns/(?P<campaign_id>\d+)/summary_report$', 'ui.views.mail_summary_report'),
+    (r'^campaigns/(?P<campaign_id>\d+)/datebreakup$', 'ui.views.campaign_daily_breakup'),
+    (r'^campaigns/$', 'ui.views.campaigns_home'),
+    (r'^campaigns/add$', 'ui.views.add_campaign'),
+    (r'^campaigns/edit/(?P<campaign_id>\d+)$', 'ui.views.edit_campaign'),
+    (r'^campaigns/(?P<campaign_id>\d+)$', 'ui.views.campaign_detail'),
+    (r'^campaigns/(?P<campaign_id>\d+)/responses/upload$', 'ui.views.upload_campaign_responses'),
+    (r'^campaigns/(?P<campaign_id>\d+)/responses/', 'ui.views.manage_campaign_responses'),
+    (r'^campaigns/(?P<campaign_id>\d+)/responses', 'ui.views.campaign_responses'),
+    (r'^campaigns/(?P<campaign_id>\d+)/response_statuses$', 'ui.views.manage_campaign_response_statuses'),
+    (r'^responses/$', 'ui.views.responses_home'),
+    (r'^responses/add$', 'ui.views.add_response'),
+    (r'^responses/edit/(?P<response_id>\d+)$', 'ui.views.edit_response'),
+    (r'^responses/call/(?P<response_id>\d+)$', 'ui.views.call_response'),
+    (r'^responses/(?P<response_id>\d+)$', 'ui.views.response_detail'),
+    (r'^responses/(?P<response_id>\d+)/attempts$', 'ui.views.response_attempts'),
+    (r'^responses/(?P<response_id>\d+)/close_wip$', 'ui.views.close_response_wip'),
+    (r'^attempts/(?P<attempt_id>\d+)/close$', 'ui.views.close_attempt'),
+)
+

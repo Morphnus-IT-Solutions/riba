@@ -1,0 +1,106 @@
+# Lets buy category transformation map. Translates letsbuy category strings to category strings
+# we understand. This is not used in the sync process, but used to populate the feeds category mapping 
+# table. We run this process manually
+
+"Gaming Hardware","Gaming Consoles","Personal"
+"Game Accessories","Gaming Accessories","Personal"
+"PlayStation 3","Games","Personal"
+"PlayStation 2","Games","Personal"
+"Microsoft Xbox","Games","Personal"
+"PSP","Games","Personal"
+
+"Mp3 Players","Music Players","Personal"
+"ipods","Music Players","Personal"
+
+"Media Players","Media Players","Personal"
+
+"Home","DVD Players","Personal"
+"Portable","DVD Players","Personal"
+
+"Cordless Handsets","Telephones","Home"
+"Corded Phones","Telephones","Home"
+
+"GSM Handsets","Mobiles","Personal"
+"CDMA Handsets","Mobiles","Personal"
+
+"Batteries","Mobile Batteries","Personal"
+"Bluetooth","Bluetooth Accessories","Personal"
+"Stylus","Mobile Stylus","Personal"
+"Adapters & Chargers","Mobile Chargers","Personal"
+"Cradles","Mobile Stands","Personal"
+"Vehicle Mounts","Mobile Stands","Personal"
+"Screen Protectors","Screen Gaurd","Personal"
+"Music Accessories","Headphones & Earphones","Personal"
+"Cases","Mobile Cases","Personal"
+"Headphones","Headphones & Earphones","Personal"
+"Headsets","Mobile Headsets","Personal"
+"Cables","Mobile Data Cables","Personal"
+
+"Memory Cards","Memory Cards","Personal"
+
+"Laptops","Laptops","Personal"
+"Desktop PC"s","Desktops","Personal"
+
+"Adapters","Laptop Adapters","Personal"
+"Carry Case","Laptop Bags","Personal"
+"Battery","Laptop Batteries","Personal"
+"USB","Pendrives","Personal"
+"Speakers","Speakers","Personal"
+"LCD Monitors","Monitors","Personal"
+"Fine Cartridges","Printer Cartridges","Personal"
+"Mouse","Mouse","Personal"
+"Individual Ink Tanks","Ink Tanks","Personal"
+"Scanners","Scanners","Personal"
+"Webcams","Webcams","Personal"
+"Wi-Fi Networking","Routers","Personal"
+"Keyboard","Keyboard","Personal"
+"Internet Services","USB Modem","Personal"
+
+"Softwares","Softwares","Personal"
+"All in One","Printer & Scanner","Personal"
+"Compact Photo","Printers","Personal"
+"Inkjet","Printers","Personal"
+"Laserjet","Printers","Personal"
+
+"Mobile Application","Mobile Maps","Personal"
+
+"Map Books","Books","Personal"
+"Devices","GPS Navigators","Home"
+
+"Home Theatres","Home Theaters","Home"
+"LCD","LCD Televisions","Home"
+"Set Top Box","Set Top Box","Home"
+
+"Irons","Irons","Home"
+
+"Washing Machines","Washing Machines","Home"
+"Geysers","Geysers","Home"
+
+"Dish Washers","Dish Washers","Home"
+"Refrigerators","Refrigerators","Home"
+"Microwave Ovens","Microwave Ovens","Home"
+"Toasters","Toaster, Grill","Home"
+"Mixers & Grinders","Juicer, Mixer, Grinders","Home"
+"Food Processors","Juicer, Mixer, Grinders","Home"
+
+"Air Conditioners","Air Conditioners","Home"
+
+"Camcorders","Camcorders","Personal"
+"Digicams","Cameras","Personal"
+"Digital Photo Frames","Digital Photo Frames","Personal"
+
+"Pen Tablets","Pen Tablets","Personal"
+"eDiary","eDiary","Personal"
+
+"International Maps","Blacklisted",""
+"Servers","Blacklisted",""
+"Spare Parts","Blacklisted",""
+"Special Offers","Blacklisted",""
+"Combo Packs","Blacklisted",""
+
+"1 GB to 2GB","Uncategorized","Personal"
+"Others","Uncategorized","Personal"
+"UCB","Uncategorized","Personal"
+"4 GB to 16GB","Uncategorized","Personal"
+"Miscellaneous","Uncategorized","Personal"
+"Computer Accessories","Uncategorized","Personal"

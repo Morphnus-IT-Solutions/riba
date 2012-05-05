@@ -1,0 +1,63 @@
+<div style="border-top:1px solid #ccc;"></div>
+{% if options %}
+&nbsp; <b>Select the payment mode:-</b>
+{%for option in options%} 
+<input type="radio" {%if forloop.first%}CHECKED{%endif%} name="select_mixed_mode_display_{{option.payment_mode.group_code}}" onclick="display_mode('{{option.payment_mode.id}}')">{{option.payment_mode.name}} &nbsp; &nbsp;
+{%endfor%}
+
+{%for option in options%}
+{%if selected_option%}
+<div class="show_mode_{{option.payment_mode.id}} show_mode {%ifequal option selected_option%}{%else%}hidden{%endifequal%}">
+{%else%}
+<div class="show_mode_{{option.payment_mode.id}} show_mode {%if forloop.first%}{%else%}hidden{%endif%}">
+{%endif%}
+<div style="border-right:1px solid #ccc; border-bottom:1px dotted #ccc; padding:20px 20px 20px 40px;">  
+    {%if option.payment_mode%}
+      <div class="dname">{{option.payment_mode}}
+      </div>
+    {%endif%}
+    {%if option.payment_delivery_address%}
+       <div class="daddress" style="overflow:hidden; height:18px;"><span style="color:#929090;">Payment delivery address:</span> {{option.payment_delivery_address}}</div>
+    {%endif%}
+
+    <div class="dcity">
+    {%if option.bank_branch%}
+       <span style="color:#929090;">Bank branch:</span> {{option.bank_branch}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {%endif%}
+    {%if option.bank_ac_name%}
+       <span class="dpincode" style="color:#929090;">Account name:</span> {{option.bank_ac_name}} 
+    {%endif%}
+    </div>
+
+    <div class="dstate">
+    {%if option.bank_ac_type%}
+    <span style="color:#929090;">Account type:</span> {{option.bank_ac_type}}{%if option.bank_ac_no%},{%endif%}
+    {%endif%}
+    {%if option.bank_ac_no%}
+    <span class="dcountry" style="color:#929090;">Account number:</span> {{option.bank_ac_no}}</span>
+    {%endif%}
+    </div>
+
+    {%if option.bank_address%}
+       <div class="daddress" style="overflow:hidden; height:18px; color:#929090;">Bank Address:</span> {{option.bank_address}}</div>
+    {%endif%}
+    {%if option.bank_ifsc%}
+       <div class="dphone"><span style="color:#929090;">IFSC code:</span> {{option.bank_ifsc}}</div>   
+    {%endif%}
+      <div class="la">
+      <button type="button" class="linkButton edit_grouped_option" id="edit_grouped_{{option.payment_mode.code}}" onclick='editThisOption( "{{option.payment_mode.code}}", "{{option.id}}");'>Edit</button><!--&middot;<button type="button" id="delete_grouped_{{option.payment_mode.code}}" class="linkButton delete_grouped_option">Delete</button>--> 
+      </div>
+    </div> 
+</div>
+{%endfor%}
+{% endif %}    	
+<div class="clear"></div><br /><br /><br />
+
+<script type="text/javascript">
+function display_mode(option_id)
+{
+    var option_class = ".show_mode_" + option_id;
+    $(".show_mode").addClass("hidden");
+    $(option_class).removeClass("hidden");
+}
+</script>

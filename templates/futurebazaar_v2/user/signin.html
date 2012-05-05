@@ -1,0 +1,109 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load cc_tags %}
+{% load web_tags %}
+<div class="user_info h400">
+  <div class="h306">
+    {%if request.GET.msg %}
+    <div class="marb30">
+    <div class="notice"><h3>Your Session has expired. Please login again.</h3></div>
+    </div>
+    {%endif%}
+    {%if request.GET.cuf %}
+    <div class="marb30">
+    <div class="notice"><h3>User already exists!</h3></div>
+    </div>
+    {%endif%}
+    <div class="left bgskyblue pad20 marr10">
+      <h1 id="sigin_text" class="marb20 flblue">Already a Member? Sign in Now</h1>
+      <form method="post" action="/auth/signin/" id="form_signin" name="form_signin">
+        <input type="hidden" name="next" value="{{next}}"/>
+        <input type="hidden" name="action" value="signin"/>
+        {% if signin_error %}
+        <div id="trsignin_error" class="mart10 marb10 error marb5 pad5 w254"> <span id="errors">{{signin_error}}</span> </div>
+        {% endif %}
+        <div class="marb5 marb10"> <span class="f12 fdgray">Email or Mobile</span><br />
+          <input type="text" id="username" name="username" value="{{username}}" />
+        </div>
+        <div class="marb5 marb10"><span id="lpassword" class="f12 fdgray">Password</span><br />
+          <input type="password" id="password" name="password"/>
+          &nbsp; <a href="/forgotpassword/" id="forget_password">Forgot password?</a> </div>
+        <div class="mart10">
+          <input type="submit" value="" class="btn btn_signin" id="login" title="Sign in now"/>
+        </div>
+      </form>
+      <div class="mart20">
+        <p class="flblue fb f13"><span>Or, sign in using your Facebook account</span></p>
+        <div class="mart2">
+          <fb:login-button perms="email,user_likes,friends_likes,publish_stream">Sign in with Facebook</fb:login-button>
+        </div>
+      </div>
+    </div>  
+   <div class="left pad20">
+    <h1 id="sigin_text" class="marb20 flblue">New Member? Sign Up Now</h1>      
+      <form method="post" action="/auth/signin/" id="form_signin" name="form_signin">
+        <input type="hidden" name="next" value="{{next}}"/>
+        <input type="hidden" name="action" value="signup"/>
+        {% if signup_error %}
+        <div id="tr_error" class="mart10 marb10 error marb5 pad5 w254"> <span id="errors">{{signup_error}}</span> </div>
+        {% endif %}
+        <div class="marb5 marb10"> <span class="f12 fdgray">Email or Mobile</span><br />
+          <input type="text" id="username" name="username" value="{{signup_username}}"/>
+        </div>
+        <div class="marb5 marb10"> <span id="lpassword" class="f12 fdgray">Password</span><br />
+          <input type="password" id="password" name="password"/>
+        </div>
+        <div id="lcpassword" class="marb5 marb10"> <span  class="f12 fdgray">Confirm Password</span><br />
+          <input type="password" id="cpassword" name="cpassword"/>
+        </div>
+        <div class="mart10">
+          <input type="submit" value="" class="btn btn_signup" id="login" title="Sign up now"/>
+        </div>
+      </form>
+    </div>
+  <div class="clear"></div>
+  </div>
+ 
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('#username').focus();
+    function attach_fb(res_data) {
+        //$.each(res_data, function(k, v){
+        //    alert(k + " : " + v);
+        //});
+        //alert('attach called');
+
+        var data = {
+                "id":res_data.id,
+                "first_name":res_data.first_name, 
+                "last_name":res_data.last_name,
+                "email": res_data.email
+            };
+        $.ajax({
+            type: "POST",
+            url: "/fb/attach-fb/",
+            data: data,
+            success: function(msg){
+                if (msg == "OK"){
+                        location.href = "/";
+                };
+            }
+        });
+    };
+    FB.Event.subscribe('auth.login', function(response) {
+        FB.getLoginStatus(function(res) {
+            if(res.session.uid) {
+            FB.api('/me', function(response1) {
+                attach_fb(response1);
+                }); 
+            }
+        });
+    });
+});
+</script>
+{%endblock%} 

@@ -1,0 +1,72 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load cc_tags web_tags %}
+<!--header class="header">
+	<h1 class="header-title">Product Details</h1>
+</header><!-- /header -->
+<section class="content prod-info">
+	<h3 class="c000 mb5 fs17">{{ product.title}}</h3>
+		<article>
+			<div class="block-a">
+				<img width="110" height="139" class="bbs" title="{{ product.title}}" alt="{{ product.title}}" src="{{ product_images.0.get_display_url }}"/>
+			</div>
+			<div class="block-b">
+				<p class="fs14">
+			   <span class="co fs16 mw-80"><span class="WebRupee">Rs.</span> {% get_price_info request product.primary_rate_chart 'offer_price' %}</span>
+                {%if request|isAnySaving:product.primary_rate_chart %}
+                <span class="td-lt"><span class="WebRupee">Rs.</span> {% get_price_info request product.primary_rate_chart 'list_price' %}</span>
+				 {%endif%}
+			   
+            </p>
+                {%if request|isAnySaving:product.primary_rate_chart %}
+				<p>Save <span class="WebRupee">Rs.</span> <span>{%getSavings request product.primary_rate_chart%}</span><span> ({% getDiscount request product.primary_rate_chart %}%)</span></p>
+                {%endif%}
+				<p>{%ifequal product.primary_rate_chart.stock_status "instock"%}<span class="cg fb f15">In Stock</span>{#{% check_stock_availability request product.primary_rate_chart  %}#}
+        {%else%} 
+            <span class="fb f16">Sold Out</span> 
+        {%endifequal%}
+            </p>
+				<!--div class="row-qty">
+					<div for="select-choice-1" style="display:inline-block; vertical-align:super;">Quantity :</div>
+					<select name="select-choice-1" id="select-choice-1">
+						<option value="standard">1</option>
+						<option value="rush">2</option>
+						<option value="express">3</option>
+						<option value="overnight">4</option>
+					</select>
+				</div-->
+				<p>
+					<div>
+						 <form action="{% cc_url request "orders/mycart" %}" id="add_to_cart_{{product.primary_rate_chart.id}}" method="post">
+							  <input type="hidden" name="rate_chart_id" value="{{product.primary_rate_chart.id}}"/>
+							  <input type="hidden" name="product_id" value="{{product.id}}"/>
+							  <input type="hidden" name="action" value="add_to_cart"/>
+							  <input type="submit"  title="Buy this product now" class="btn" {%if id%}id="{{id}}"{%endif%} value="Buy Now"/>
+						 </form>
+					</div>
+			  </p>
+				
+			</div>
+		 </article><!-- /article -->
+		 <article class="call-us-box">
+			<p>Speak to us between 8 am - 10 pm</p>
+			<p class="tac"><a class="btn-call" href="tel:09222221947" style="width:150px;">Call 922-222-1947</a></p>
+		 </article>
+		 
+			 
+		 {%if product.description != '--'%}
+		 <div class="pro-details mt15">
+			<h3>Product Details</h3>
+			<div class="pad10 marb10">{{product.description|safe}}</div>
+		 </div>
+		 {%endif%}
+		 
+		 {% if product.primary_rate_chart.key_feature %}
+		 <div class="pro-details mt15">
+			<h3>Key Features</h3>
+			<div class="pad10">{{product.primary_rate_chart.key_feature|safe }}</div>
+		 </div>
+		 {% endif %} 
+		 </div>  
+</section><!-- /content -->
+{% endblock %}	

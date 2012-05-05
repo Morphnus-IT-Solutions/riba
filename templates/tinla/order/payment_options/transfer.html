@@ -1,0 +1,7 @@
+<b>Select Transfer Bank:</b>
+<br />
+<select id="id_payment_group_member" name="payment_group_member">
+    {%for option in grouped_options%}
+        <option value="{{option.payment_mode.code}}">{{option.payment_mode.name}}</option>
+    {%endfor%}
+</select>

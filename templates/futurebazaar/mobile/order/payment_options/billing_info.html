@@ -1,0 +1,116 @@
+{%load cc_tags%}
+{%load web_tags%}
+<!--<div class="breadcrumb"> &nbsp;       
+</div>-->
+<div class="mt25">
+<form method="post" action="" id="billing_info_form" name="billing_info_form">
+    <div>
+        <div id="billing_form_errors_div" class="dn"></div>
+        <div>
+            <input type="hidden" name="old_address" id="old_address" value="{{shipping_address.address}}"/>
+            <input type="hidden" name="order_user_id" id="order_user_id" value="{{order_user_id}}"/>
+            {% if order.id %}
+                <input type="hidden" name="order_id" id="order_id" value="{{order.id}}"/>
+            {% endif %}
+            {% if id_order %}
+                <input type="hidden" name="id_order" id="order_id" value="{{id_order}}"/>
+            {% endif %}
+        </div>
+    </div>
+    <h3 class="fb-form-hd">Billing Information</h3>
+    <div class="fb-form" id="delivery_table">
+        <ul>                
+            <li class="pay-same-shipp">
+                <div >
+                    <input type="checkbox" name="shipping_address" id="shipping_address_checkbox" class="tbg" /> <div class="dib" style="padding: 10px 10px 10px 0px;">Same as Shipping Address</div>
+                </div>
+            </li>
+            <li>
+                <div class="dlabel"><span>First Name {%if not request|is_cc%}<span class="">*</span>{%endif%}</span></div>
+                <div class="fbf-dcant">{{billing_info_form.billing_first_name}}</div>
+            </li>
+            <li>
+                <div class="dlabel"><span>Last Name</span></div>
+                <div class="fbf-dcant">{{billing_info_form.billing_last_name}}</div>
+            </li>
+            <li>
+                <div class="dlabel"><span>Address {%if not request|is_cc%}<span class="">*</span>{%endif%}</span></div>
+                <div class="fbf-dcant textarea100">{{billing_info_form.billing_address}}</div>
+            </li>
+            <li>
+                <div class="dlabel"><span>Pincode {%if not request|is_cc%}<span class="">*</span>{%endif%}</span></div>
+               <div class="fbf-dcant"><span>{{billing_info_form.billing_pincode}}</span></div>
+            </li>
+            <li>
+                <div class="dlabel"><span>City {%if not request|is_cc%}<span class="">*</span>{%endif%}</span></div>
+               <div class="fbf-dcant">{{billing_info_form.billing_city}}</div>
+            </li>
+            <li>
+                <div class="dlabel"><span>State {%if not request|is_cc%}<span class="">*</span>{%endif%}</span></div>
+               <div class="fbf-dcant sw150">{{billing_info_form.billing_state}}</div>
+            </li>
+            <li>
+                <div class="dlabel"><span>Country {%if not request|is_cc%}<span class="">*</span>{%endif%}</span></div>
+               <div class="fbf-dcant">{{billing_info_form.billing_country}}</div>
+            </li>
+            <li>
+                <div class="dlabel"><span>Phone {%if not request|is_cc%}<span class="">*</span>{%endif%}</span></div>
+               <div class="fbf-dcant">{{billing_info_form.billing_phone}}</div>
+            </li>
+            <li>
+                <div class="dlabel"><span>Email</span></div>
+               <div class="fbf-dcant">{{billing_info_form.email}}</div>
+            </li>
+        </ul>
+    </div>
+</form>
+</div>
+<script type="text/javascript">
+$('#shipping_address_checkbox').click(function(){
+    if (document.billing_info_form.shipping_address.checked)
+    {
+        {% if shipping_address.address.first_name %}
+            $('#id_billing_first_name').val('{{shipping_address.address.first_name}}');
+        {% endif %}
+        {% if shipping_address.address.last_name %}
+            $('#id_billing_last_name').val('{{shipping_address.address.last_name}}');
+        {% endif %}
+        {% if shipping_address.address.address %}
+            $('#id_billing_address').val('{{shipping_address.address.address}}');
+        {% endif %}
+        {% if shipping_address.address.city %}
+            $('#id_billing_city').val('{{shipping_address.address.city.name}}');
+        {% endif %}
+        {% if shipping_address.address.pincode %}
+            $('#id_billing_pincode').val('{{shipping_address.address.pincode}}');
+        {% endif %}
+        {% if shipping_address.address.state %}
+            {% if state_map %}
+                var state = '{{shipping_address.address.state.name}}';
+                var state_map = $.parseJSON('{{state_map|safe}}');
+                var state_id=0;
+                $.each(state_map, function(s,id){
+                    if(s==state)
+                        state_id=id;
+                });
+            {% else %}
+                var state_id = '{{shipping_address.state.name}}';
+            {% endif %}
+            $('#id_billing_state').val(state_id);
+        {% endif %}
+        {% if shipping_address.address.country %}
+            $('#id_billing_country').val('{{shipping_address.address.country.name}}');
+        {% endif %}
+        {% if shipping_address.address.phone %}
+            $('#id_billing_phone').val('{{shipping_address.address.phone}}');
+        {% endif %}
+        {% if shipping_address.address.email %} 
+            $('#id_email').val('{{shipping_address.address.email}}');
+        {% endif %}
+    }
+    else
+    {
+        document.billing_info_form.reset();
+    }
+});
+</script>

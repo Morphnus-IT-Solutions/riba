@@ -1,0 +1,19 @@
+{% load cc_tags %}
+{% load web_tags %}
+<div class="product_grid_item norb nobb ">
+    <div class="thumb">
+        <a href="{%cc_url request product.url%}">
+
+            {% if product.productimage_set.all.0 %}<img src="{{product.productimage_set.all.0.thumbnail_image.url}}" title="{{product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{{MEDIA_URL}}images/noimage.png';}return false;" onerror_cnt="0"  height="75" alt="{{product.title}}"/>{%else%}<img src="{{MEDIA_URL}}images/noimage.png" width="75" height="75" alt="" title="No image available for {{product.product.title}}"/>{% endif %}</a>
+    </div>
+    <div class="summary">
+        <h3><a href="{%cc_url request product.url%}" title="{{product.title}}">{{product.title|truncate:40}}</a></h3>
+        <div class="pricing">
+            {% if product.primary_rate_chart.list_price > product.primary_rate_chart.offer_price %}
+            <div class="f11 fdgray fs">{{product.formatted_currency}} {{product.primary_rate_chart.list_price|money}}</div>
+            {% endif %}
+            <div class="fb fmaroon f14">{{product.formatted_currency}} {{product.primary_rate_chart.offer_price|money}}</div>
+        </div>
+    </div>
+</div>
+{% if counter|divisibleby:4 %}<div class="clear"></div>{% endif %}

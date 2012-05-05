@@ -1,0 +1,23 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+<div class="inner-content" %>
+	<h1 class="head1">{{client_display_name}} - Item Display</h1>
+	<form method="POST" action="" id="seller_profile_form" name="seller_profile_form">
+	<div id="post_errors"></div>
+	{% if form.errors %}
+  		<p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+  	{% endif %}
+
+<tr>
+	{% for i in listitem_objects %}
+		{% if i.sku_id %}
+		<td class="f11 fdgray" width="140">Product with sku id {{i.sku_id}} </td>	{% else %}		{% endif %}
+		{% if i.user_title %}
+		<td class="f11 fdgray" width="140">has user_title {{i.user_title}}</td>	{%else %} {% endif %}
+		<br />
+		<br />
+	{% endfor %}
+	<br />
+<a href = "/lists/{{client_name}}/{{seller_name}}">Back to Lists</a>
+
+{%endblock%}

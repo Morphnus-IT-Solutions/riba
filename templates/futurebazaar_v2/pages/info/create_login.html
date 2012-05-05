@@ -1,0 +1,64 @@
+{% extends "web/base.html" %}
+{%load web_tags%}
+{% block content %}
+<style>
+.win_top{width:988px; height:500px; background:url("/media/images/ccd-signup-top.gif") no-repeat 0px 0px; zoom:1;}
+.win_bottom{width:988px; height:304px;  background:url("/media/images/ccd-signup-bottom.gif") no-repeat 1px 0px}
+.btn_win_submit{background:#fff url('/media/images/win_submit.gif') no-repeat 0 0 !important; width:93px; height:31px;  border:none; cursor:pointer;  }
+.win_input input[type="password"]{font-size:11px; width:167px;}
+label{font-weight:bold;}
+</style>
+<div class="mart10">
+ <div class="win_top" style="border-top:1px solid #fff;">
+ <div class="f20" style="margin-left:116px; margin-top:120px; color:#666666;">
+Only registered members can avail the gift coupons. Since you are <br />
+not registered with us, kindly do so by using your email address as User ID and<br />
+choose a password of your own.<br /><br />
+
+
+
+</div>
+<br />
+<br />
+<br />
+
+<form action="" method="POST">
+<table style="margin-left:370px; margin-top:56px; width:330px;">
+    <tr>
+        <td width="110"><label>User Name</label></td>
+        <td width="18">:</td>
+        <td class="win_input" width="202" style="overflow:hidden;"><input type="hidden" name="scratch_id" value="{{scratch_card.id}}" /><input type="hidden" name="email" value="{{scratch_card.email}}"/><span title="{{scratch_card.email}}">{{scratch_card.email|truncate:30}}</span></td>
+    </tr>
+    <tr>
+        <td width="110"><label>Password</label></td>
+        <td width="18">:</td>
+        <td class="win_input"><input type="password" name="password" /></td>
+    </tr>
+    <tr>
+        <td width="110"><label>Confirm Password</label></td>
+        <td width="18">:</td>
+        <td class="win_input"><input type="password" name="c_password"/></td>
+    </tr>
+    <tr>
+        <td></td> <td></td>
+        <td> 
+            <input type="hidden" name="action" value="create_user"/> <span> </span>
+            <input type="submit" value="" class="btn_win_submit"/> <span> </span>
+        </td>
+    </tr>
+    {%if errors%}
+        {%for error in errors%}
+            <tr>
+                <td colspan="3" class="fred">{{error|safe}}</td>
+            </tr>
+        {%endfor%}
+    {%endif%}
+</table>
+</form>
+
+</div>
+<div class="win_bottom">
+</div>
+</div>
+
+{%endblock%}

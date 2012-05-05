@@ -1,0 +1,220 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block user_content %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />
+<style>
+.tbl_price{border-collapse:collapse;}
+.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+.tbl_price th{background-color:#f3f3f3; text-align:center;}
+.tbl_price td{text-align:center;}
+</style>
+<div class="inner-content">
+  <form method="POST" action="" id="search_by_sku_form" name="search_by_sku_form">
+    {% if flag == 'searched' %}
+        {% if searched_by == 'skuid'%}
+            <h2 class="f18">Search Results for SKU:&nbsp;{{sku}} </h2>
+        {% else %}
+            {% if searched_by == 'article_id' %}
+                <h2 class="f18">Search Results for Article Id:&nbsp;{{article_id}} </h2>
+            {% endif %}
+        {% endif %}
+        
+        <input type="hidden" name="articleid" value="{{article_id}}" />
+        <input type="hidden" name="sku" value="{{sku}}" />
+
+        <div>
+            <img class="left" src="{{product_image.get_large_thumb_url}}" width="150" height="150" title="{{rate_chart.product.title}}" alt="{{rate_chart.product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" />
+            <div class="left" style="padding:15px;">
+            <div><strong>Product Name:</strong> {{rate_chart.product.title}}</div>
+            <div><strong>Article Id:</strong> {{article_id}}</div>
+            <div><strong>SKU:</strong> {{sku}}</div>
+        </div>
+        <div class="clear"></div>
+        {% if errors %}
+            {% for error in errors %}
+                <h2 class="f18">{{error}}</h2>
+                <br/>
+            {% endfor %}
+        {% else %}
+            {% if inventory %}
+            {% comment%} {% if catalog_specific_prices %} {% endcomment %}
+                <!-- <h4 class="f15">Catalog Specific Prices</h4> -->
+                <table class="tbl_price">
+                    <tr>
+                        <th> Stock </th>
+                        <th> Delivery Time </th>
+                        <!-- <th> Over the counter </th> -->
+                        <th> Ship local only </th>
+                        <th> COD </th>
+                        <th> Clearance </th>
+                    </tr>
+                            <tr> 
+                                <td> <input type="text" size="5" id="stock" name="stock" value="{{inventory.stock}}" /> </td>
+                                <td> <input type="text" size="1" id="delivery_time" name="delivery_time" value="{% if rate_chart.shipping_duration %} {{rate_chart.shipping_duration}} {% else %} 0 {% endif %}" /> </td>
+                                <!-- <td> <input type="checkbox" id="otc" name="otc" {%if rate_chart.otc%}checked{%endif%} value="selected" /> </td> -->
+                                <td> <input type="checkbox" id="so" name="so" {%if rate_chart.ship_local_only%}checked{%endif%} value="selected" /> </td>
+                                <td> <input type="checkbox" id="cod" name="cod" {%if rate_chart.is_cod_available%}checked{%endif%} value="selected" /> </td>
+                                <td> <input type="checkbox" id="clearance" name="clearance" {%if is_clearance_item%}checked{%endif%} value="selected" /> </td>
+                            </tr> 
+                </table>
+            {% comment %} {% endif %} {% endcomment %}
+           <div class="ca">
+                    <INPUT TYPE="submit" id="update" VALUE="Update" class="button orange" name="update">
+                    <!-- <INPUT TYPE="button" VALUE="Back" id="back_button" class="button orange" /> -->
+                    <INPUT class="button orange" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+            </div>
+
+            {% else %}
+                No results found.
+            {% endif %}
+        {% endif %}
+    {% else %}
+        {% if flag == 'updated' %}
+    {% if errors %}
+        <div class="orders_msg rc5">
+	        <div class="rc5 error">       
+                {% for error in errors %}
+                    {{error}}<br/>
+                {% endfor %}   
+	        </div>
+        </div>   
+    {% endif %}
+        <div class="clear"></div>
+        <div>
+            <img class="left" src="{{product_image.get_large_thumb_url}}" width="150" height="150" title="{{rate_chart.product.title}}" alt="{{rate_chartproduct.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" />
+            <div class="left" style="padding:15px;">
+            <div><strong>Product Name:</strong> {{rate_chart.product.title}}</div>
+            <div><strong>Article Id:</strong> {{article_id}}</div>
+            <div><strong>SKU:</strong> {{sku}}</div>
+        </div>
+        <input type="hidden" name="articleid" value="{{article_id}}" />
+        <input type="hidden" name="sku" value="{{sku}}" />
+
+        <div class="clear"></div>
+                <table class="tbl_price">
+                    <tr>
+                        <th colspan="2"> Stock </th>
+                        <th colspan="2"> Delivery Time </th>
+                        <!-- <th colspan="2"> Over the counter </th> -->
+                        <th colspan="2"> Ship local only </th>
+                        <th colspan="2"> COD </th>
+                        <th colspan="2"> Clearance </th>
+                    </tr>
+
+                    <tr>
+                        <th> Was </th>
+                        <th> New </th>
+                        <th> Was </th>
+                        <th> New </th>
+                        <!-- <th> Was </th>
+                        <th> New </th> -->
+                        <th> Was </th>
+                        <th> New </th>
+                        <th> Was </th>
+                        <th> New </th>
+                        <th> Was </th>
+                        <th> New </th>
+                   </tr>
+                    <tr>
+                        <td {%if inventory.stock != updates.stock%} style="background-color:orange" {%endif%}> {{inventory.stock}} </td>
+                        <td {%if inventory.stock != updates.stock%} style="background-color:orange" {%endif%}> {{updates.stock}} </td>
+                        <td {%if rate_chart.shipping_duration != updates.delivery_time%} style="background-color:orange" {%endif%}>{% if rate_chart.shipping_duration %} {{rate_chart.shipping_duration}} {% else %} -- {% endif %} </td>
+                        <td {%if rate_chart.shipping_duration != updates.delivery_time%} style="background-color:orange" {%endif%}> {{updates.delivery_time}} </td>
+                        {% comment %}
+                        <td {%if rate_chart.otc != updates.otc%} style="background-color:orange" {%endif%}> {%if rate_chart.otc%} YES {%else%} NO {%endif%} </td>
+                        <td {%if rate_chart.otc != updates.otc%} style="background-color:orange" {%endif%}> {%if updates.otc%} YES {%else%} NO {%endif%} </td>
+                        {% endcomment %}
+                        <td {%if rate_chart.ship_local_only != updates.so%} style="background-color:orange" {%endif%}> {%if rate_chart.ship_local_only%} YES {%else%} NO {%endif%} </td>
+                        <td {%if rate_chart.ship_local_only != updates.so%} style="background-color:orange" {%endif%}> {%if updates.so%} YES {%else%} NO {%endif%} </td>
+                        <td {%if rate_chart.is_cod_available != updates.cod%} style="background-color:orange" {%endif%}> {%if rate_chart.is_cod_available%} YES {%else%} NO {%endif%} </td>
+                        <td {%if rate_chart.is_cod_available != updates.cod%} style="background-color:orange" {%endif%}> {%if updates.cod%} YES {%else%} NO {%endif%} </td>
+                        <td {%if is_clearance_item != updates.clearance%} style="background-color:orange" {%endif%}> {%if is_clearance_item%} YES {%else%} NO {%endif%} </td>
+                        <td {%if is_clearance_item != updates.clearance%} style="background-color:orange" {%endif%}> {%if updates.clearance%} YES {%else%} NO {%endif%} </td>
+
+                        <input type="hidden" name="stock" value="{{updates.stock}}" />
+                        <input type="hidden" name="delivery_time" value="{{updates.delivery_time}}" />
+                        <!-- <input type="hidden" name="otc" value="{%if updates.otc%}selected{%endif%}" /> -->
+                        <input type="hidden" name="hd" value="{%if updates.hd%}selected{%endif%}" />
+                        <input type="hidden" name="so" value="{%if updates.so%}selected{%endif%}" />
+                        <input type="hidden" name="cod" value="{%if updates.cod%}selected{%endif%}" />
+                        <input type="hidden" name="clearance" value="{%if updates.clearance%}selected{%endif%}" />
+                    </tr>
+                </table>
+            <div class="ca">
+                {% if not errors %}
+                <INPUT TYPE="submit" id="confirm_button" VALUE="Confirm" class="button orange" name="confirm">
+                {% endif %}
+                <!-- <INPUT TYPE="button" VALUE="Back" id="back_button" class="button orange" /> -->
+                <INPUT class="button orange" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+            </div>
+
+        {% else %}
+    {% if errors %}
+        <div class="orders_msg rc5">
+	        <div class="rc5 error">       
+                {% for error in errors %}
+                    {{error}}<br/>
+                {% endfor %}   
+	        </div>
+        </div>   
+    {% endif %}
+            {% if flag == 'confirmed' %}
+                <h2 class="f20"> Inventory updated successfully for {%if sku%}SKU: {{sku}}{%else%} {%if article_id%} Article Id:{{article_id}}{%endif%} {%endif%}!!!</h2> 
+                <br/>
+            {% endif %}
+            <strong>Article Id :</strong> <input type="text" name="articleid" value=""></input>&nbsp; &nbsp;
+            <strong>SKU :</strong> <input type="text" name="sku" value=""></input> 
+            <br/><br/>
+            <table>
+                <tr>
+                    <td><INPUT TYPE="submit" id="submit_button" VALUE="Search" class="button orange" name="search"></td>
+                </tr>
+            </table>
+        {% endif %}
+    {% endif %}
+  </form>
+</div>
+
+
+<div class="clear"></div>
+
+{% endblock %} 
+
+{% block script_footer %}
+
+<script type="text/javascript">
+/*
+$(document).ready(function(){
+
+$('#update').click(function checknumber(){
+    var x=document.search_by_sku_form.stock.value
+    var y=document.search_by_sku_form.delivery_time.value
+    var anum=/(^\d+$)|(^\d+\.\d+$)/
+    if (anum.test(x)){
+        testresult1=true
+    }else{
+            testresult1=false
+    }
+
+    if (anum.test(y))
+        testresult2=true
+    else{
+            testresult2=false
+    }
+
+    if(!testresult1 && !testresult2){
+        alert("Please enter a valid stock and delivery time!!!");
+    }else if(!testresult1 && testresult2){
+        alert("Please enter a valid stock!!!");
+    }else if(testresult1 && !testresult2){
+        alert("Please enter a valid delivery time!!!");
+    }
+    return (testresult1 && testresult2)
+})
+
+});
+*/
+</script>
+{% endblock %}

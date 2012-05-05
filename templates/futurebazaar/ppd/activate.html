@@ -1,0 +1,108 @@
+{% extends 'web/ppd_base.html' %}
+{% block content %}
+{% load ppd_tags %}
+<div class="inner-content">
+  <h1 class="head1">Activate</h1>
+  <div class="head4">
+    Please answer a few questions to help us understand how we can help you.  </div>
+  <div id="activate_form">
+    <form method="post">
+      {% if form.errors %}
+      <div class="error">
+        <ul>
+          {% for error in form.errors %}
+          <li>{{error}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <div class="span-4 label">Name<span class="required">*</span></div>
+        <div class="span-18 last">
+            <input type="text" name="name" value="{{request.POST.name}}"/>
+        </div>
+        <div class="span-4 label">Mobile<span class="required">*</span></div>
+        <div class="span-18 last">
+            <input type="text" name="mobile" value="{{request.POST.mobile}}"/>
+        </div>
+        <div class="span-4 label">Email<span class="required">*</span></div>
+        <div class="span-18 last">
+            <input type="text" name="email" value="{{request.POST.email}}"/>
+        </div>
+        <div class="span-4 label">Company<span class="required">*</span></div>
+        <div class="span-18 last">
+            <input type="text" name="company" value="{{request.POST.company}}"/>
+        </div>
+        <div class="span-4 label">Website</div>
+        <div class="span-18 last">
+            <input type="text" name="website" value="{{request.POST.website}}"/>
+        </div>
+          
+    	<div class="span-4 label">Products You Sell<span class="required">*</span></div>
+          
+	    <div class="span-18 last">
+	      <input type="checkbox" name="category" value="Childrens Products" {% is_selected request.POST "category" "Childrens Products" %} /> Childrens Products<br />
+	      <input type="checkbox" name="category" value="Magazines" {% is_selected request.POST "category" "Magazines" %} /> Magazines<br />
+	      <input type="checkbox" name="category" value="Appliances" {% is_selected request.POST "category" "Appliances" %} /> Appliances<br />
+	      <input type="checkbox" name="category" value="Other" {% is_selected request.POST "category" "Other" %} /> Other        </div>
+        <div class="span-4 label">Average Sale Price</div>
+        <div class="span-18 last">
+            <select name="average_price">
+              <option value="" {%ifequal request.POST.average_price '' %}selected{% endifequal %}>Select Average Sale Price</option>
+              <option value="Under Rs. 1,000" {%ifequal request.POST.average_price 'Under Rs. 1,000' %}selected{% endifequal %}>Under Rs. 1,000</option>
+              <option value="Rs. 1,000 - 3,000" {%ifequal request.POST.average_price 'Rs. 1,000 - 3,000' %}selected{% endifequal %}>Rs. 1,000 - 3,000</option>
+              <option value="Rs. 3,000 - 10,000" {%ifequal request.POST.average_price 'Rs. 3,000 - 10,000'%}selected{% endifequal %}>Rs. 3,000 - 10,000 </option>
+              <option value="Above Rs. 10,000" {%ifequal request.POST.average_price 'Above Rs. 10,000'%}selected{% endifequal %}>Above Rs. 10,000</option>
+            </select>
+        </div>
+        <div class="span-4 label">Average Retail Margins</div>
+        <div class="span-18 last">
+            <select name="average_commissions">
+              <option value="" {%ifequal request.POST.average_commissions '' %}selected{% endifequal %}>Select Average Retail Margins</option>
+              <option value="Under 10%" {%ifequal request.POST.average_commissions 'Under 10%'%}selected{% endifequal %}>Under 10%</option>
+              <option value="10% - 20%" {%ifequal request.POST.average_commissions '10%-20%'%}selected{% endifequal %}>10% - 20%</option>
+              <option value="20% - 30%" {%ifequal request.POST.average_commissions '20%-30%'%}selected{% endifequal %}>20% - 30%</option>
+              <option value="Above 30%" {%ifequal request.POST.average_commissions 'Above 30%'%}selected{% endifequal %}>Above 30%</option>
+            </select>
+        </div>
+        <div class="span-4 label">Daily Responses</div>
+        <div class="span-18 last">
+            <select name="daily_responses">
+              <option value="" {%ifequal request.POST.daily_responses '' %}selected{% endifequal %}>Select Daily Responses</option>
+              <option value="10-100" {%ifequal request.POST.daily_responses '10-100%'%}selected{% endifequal %}>10-100</option>
+              <option value="100-300" {%ifequal request.POST.daily_responses '100-300%'%}selected{% endifequal %}>100-300</option>
+              <option value="300-1000" {%ifequal request.POST.daily_responses '300-1000%'%}selected{% endifequal %}>300-1000</option>
+              <option value="Above 1000" {%ifequal request.POST.daily_responses 'Above 1000%'%}selected{% endifequal %}>Above 1000</option>
+            </select>
+        </div>
+        <div class="span-4 label">Time to Ship</div>
+        <div class="span-18 last">
+            <select name="delivery_time">
+              <option value="" {%ifequal request.POST.delivery_time '' %}selected{% endifequal %}>
+                Select Time to Ship                </option>
+              <option value="1-3 working days" {%ifequal request.POST.delivery_time '1-3 working days'%}selected{% endifequal %}>
+                1-3 working days                </option>
+              <option value="4-7 working days" {%ifequal request.POST.delivery_time '4-7 working days'%}selected{% endifequal %}>
+                4-7 working days                </option>
+              <option value="7-10 working days" {%ifequal request.POST.delivery_time '7-10 working days'%}selected{% endifequal %}>
+                7-10 working days                </option>
+            </select>
+        </div>
+        <div class="span-4 label">Stocking</div>
+        <div class="span-18 last">
+            <input type="radio" name="stocking" value="Central" {%ifequal request.POST.stocking 'Central'%}checked="checked"{% endifequal %}/> Central
+            <input type="radio" name="stocking" value="State" {%ifequal request.POST.stocking 'State'%}checked="checked"{% endifequal %}/> State
+            <input type="radio" name="stocking" value="Local" {%ifequal request.POST.stocking 'Local'%}checked="checked"{% endifequal %}/> Local        </div>
+        <div>&nbsp;</div>
+        <div class="span-4 label">Remarks</div>
+        <div class="span-18 last">
+            <textarea name="remarks" rows="3" cols="40">{{request.POST.remarks}}</textarea>
+        </div>
+        <div class="prepend-4 span-18 last">
+            <input type="submit" value="Submit"/>
+        </div>
+      </form>
+    </div>
+</div>
+<div class="clear"></div>
+{% endblock %}

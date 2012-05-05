@@ -1,0 +1,247 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% block user_content %}
+<style type="text/css">
+	.tbl_price{border-collapse:collapse; width:960px;}
+	.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+	.tbl_price th{background-color:#f3f3f3; text-align:center;}
+	.tbl_price td{text-align:center; width:20px; padding:0px;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Bulk Upload</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="clear"> {% if errors %}
+    <div class="orders_msg">
+      <div class="error"> {% for error in errors %}
+        {{error}}<br/>
+        {% endfor %} 
+	  </div>
+    </div>
+    {% endif %} 
+  </div>
+</div>
+<div class="mart20"> Please upload file in Excel (.xls) format with the following columns and headers. </div>
+<div class="clear mart20">
+  <div class="box-shadow pad20">
+    <center>
+      <table class="tbl_excel">
+        <tr>
+          <th style="padding:0px !important;"><img src="/media/rms/images/excel.gif" width="25" height="19"/></th>
+          <th>ARTICLEID</th>
+          <th style="background-color:#f4ca78 !important; background-image:none !important; border:1px solid #f29536 !important">MRP</th>
+          <th>SALES PRICE</th>
+          <th>START TIME</th>
+          <th>END TIME</th>
+          <th>CATALOG</th>
+          <th>CASHBACK AMOUNT</th>
+        </tr>
+        <tr>
+          <td style="background-color:#e4ecf7; text-align:center">1</td>
+          <td>600331676</td>
+          <td>1599</td>
+          <td>525</td>
+          <td>2010-12-21 10:00:00</td>
+          <td>9999-12-31 10:00:00</td>
+          <td>futurebazaar</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td style="background-color:#f4ca78; border:1px solid #f29536; text-align:center">2</td>
+          <td>600360265</td>
+          <td>2099</td>
+          <td>725</td>
+          <td>2010-12-21 10:20:20</td>
+          <td>9999-12-31 10:20:20</td>
+          <td>futurebazaar</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td style="background-color:#e4ecf7; text-align:center">3</td>
+          <td>600320568</td>
+          <td>1099</td>
+          <td>755</td>
+          <td>2010-12-21 11:00:00</td>
+          <td>9999-12-31 11:00:00</td>
+          <td>futurebazaar</td>
+          <td>0</td>
+        </tr>
+      </table>
+    </center>
+  </div>
+</div>
+	<div>
+		<div class="mart20">Select an excel (.xls) file for upload</div>
+	  <form method="post" enctype="multipart/form-data">
+		{% if flag == 'show_details' %}
+		{% if all_prices.update %}
+		<h2 class="f18">Updates/Additions</h2>
+		<table class="tbl_price">
+		  <tr>
+			<th rowspan="2"> Product Name </th>
+			<!-- <th rowspan="2"> SKU </th> -->
+			<th rowspan="2"> Article Id </th>
+			<th rowspan="2"> Catalog </th>
+			<th colspan="2"> List Price </th>
+			<th colspan="2"> Sale Price </th>
+			<th colspan="2"> Cashback Amount </th>
+			<th colspan="2"> Start Time </th>
+			<th colspan="2"> End Time </th>
+			<th rowspan="2"> Action </th>
+		  </tr>
+		  <tr>
+			<th>Was</th>
+			<th>New</th>
+			<th>Was</th>
+			<th>New</th>
+			<th>Was</th>
+			<th>New</th>
+			<th>Was</th>
+			<th>New</th>
+			<th>Was</th>
+			<th>New</th>
+		  </tr>
+		  {% for price in all_prices.update %}
+		  {% if price.price_list.name|is_timed_pricelist %}
+		  <tr>
+			<td class="la"> {{price.price.rate_chart.product.title}} </td>
+			{%comment%}
+			<td> {{price.price.rate_chart.sku}} </td>
+			{%endcomment%}
+			<td> {{price.price.rate_chart.article_id}} </td>
+			<td> {{price.price.price_list.name}} </td>
+			<td class="ra" {%if not price.price.list_price|compare_prices:price.list_price %} style="background-color:orange" {%endif%}> {{price.price.list_price}} </td>
+			<td {%if price.list_price%}class="ra"{%endif%} {%if not price.price.list_price|compare_prices:price.list_price %} style="background-color:orange" {%endif%}>
+			{%if price.list_price%} {{price.list_price}} {%else%} -- {%endif%}
+			</td>
+			<td class="ra" {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}> {{price.price.offer_price}} </td>
+			<td {%if price.offer_price%}class="ra"{%endif%} {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}>
+			{%if price.offer_price%} {{price.offer_price}} {%else%} -- {%endif%}
+			</td>
+			<td class="ra" {%if price.price.cashback_amount != price.cashback_amount %} style="background-color:orange" {%endif%}> {{price.price.cashback_amount}} </td>
+			<td {%if price.cashback_amount%}class="ra"{%endif%} {%if price.price.cashback_amount != price.cashback_amount %} style="background-color:orange" {%endif%}>
+			{{price.cashback_amount}}
+			</td>
+			<td> -- </td>
+			<td> -- </td>
+			<td> -- </td>
+			<td> -- </td>
+			<td> {{price.action}} </td>
+		  </tr>
+		  {% endif %}
+		  {% endfor %}
+		  {% for price in all_prices.update %}
+		  {% if not price.price_list.name|is_timed_pricelist %}
+		  <tr>
+			<td class="la"> {{price.price.rate_chart.product.title}} </td>
+			{%comment%}
+			<td> {{price.price.rate_chart.sku}} </td>
+			{%endcomment%}
+			<td> {{price.price.rate_chart.article_id}} </td>
+			<td> {{price.price.price_list.name}} </td>
+			<td class="ra" {%if not price.price.list_price|compare_prices:price.list_price %} style="background-color:orange" {%endif%}> {{price.price.list_price}} </td>
+			<td {%if price.list_price%}class="ra"{%endif%} {%if not price.price.list_price|compare_prices:price.list_price %} style="background-color:orange" {%endif%}>
+			{{price.list_price}}
+			</td>
+			<td {%if price.offer_price%}class="ra"{%endif%} {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}>
+			{{price.price.offer_price}}
+			</td>
+			<td {%if price.offer_price%}class="ra"{%endif%} {%if not price.price.offer_price|compare_prices:price.offer_price %} style="background-color:orange" {%endif%}>
+			{{price.offer_price}}
+			</td>
+			<td class="ra" {%if price.price.cashback_amount != price.cashback_amount %} style="background-color:orange" {%endif%}> {{price.price.cashback_amount}} </td>
+			<td {%if price.cashback_amount%}class="ra"{%endif%} {%if price.price.cashback_amount != price.cashback_amount %} style="background-color:orange" {%endif%}>
+			{{price.cashback_amount}}
+			</td>
+			<td {%if price.price.start_time != price.start_time %} style="background-color:orange" {%endif%}> {{price.price.start_time}} </td>
+			<td {%if price.price.start_time != price.start_time %} style="background-color:orange" {%endif%}> {{price.start_time}} </td>
+			<td {%if price.price.end_time != price.end_time %} style="background-color:orange" {%endif%}> {{price.price.end_time}} </td>
+			<td {%if price.price.end_time != price.end_time %} style="background-color:orange" {%endif%}> {{price.end_time}} </td>
+			<td> {{price.action}} </td>
+		  </tr>
+		  {% endif %}
+		  {% endfor %}
+		</table>
+		{% endif %} <br/>
+		{% if all_prices.skip %}
+		<h2 class="f18">Skip</h2>
+		<table class="tbl_price">
+		  <tr>
+			<th> Article Id </th>
+			<th> Catalog </th>
+			<th> List Price </th>
+			<th> Sale Price </th>
+			<th> Cashback Amount </th>
+			<th> Start Time </th>
+			<th> End Time </th>
+			<th> Action </th>
+		  </tr>
+		  {% for price in all_prices.skip %}
+		  <tr>
+			<td> {{price.article_id}} </td>
+			<td> {{price.catalog}} </td>
+			<td class="ra"> {{price.list_price}} </td>
+			<td class="ra"> {{price.offer_price}} </td>
+			<td class="ra"> {{price.casback_amount}} </td>
+			<td> {%if price.start_time%} {{price.start_time}} {%else%}--{%endif%} </td>
+			<td> {%if price.end_time%} {{price.end_time}} {%else%}--{%endif%} </td>
+			<td> {{price.action}} </td>
+		  </tr>
+		  {% for conflict in price.conflicts %}
+		  <tr>
+			<td colspan="2" rowspan="{{rowspan}}" style="color:red">Conflicting Entries</td>
+			<td class="ra" style="background-color:#dddddd"> {{conflict.new_list_price}} </td>
+			<td class="ra" style="background-color:#dddddd"> {{conflict.new_offer_price}} </td>
+			<td class="ra" style="background-color:#dddddd"> {{conflict.new_cashback_amount}} </td>
+			<td style="background-color:#dddddd"> {{conflict.new_start_time}} </td>
+			<td style="background-color:#dddddd"> {{conflict.new_end_time}} </td>
+			<td style="background-color:#dddddd">&nbsp;</td>
+		  </tr>
+		  {% endfor %}
+		  {% endfor %}
+		</table>
+		{% endif %}
+		{% if all_prices.update or all_prices.skip %}
+		<input type="hidden" name="path_to_save" value="{{path_to_save}}" id="path_to_save" />
+		<input type="hidden" name="all_prices_json" value="{{all_prices_json}}"/>
+		<input type="submit" value="Update" name="update" id="update" class="button orange"/>
+		<INPUT TYPE="button" VALUE="Back" id="back_button" class="button orange" />
+		{% else %}
+		<h2 class="f18">Excel sheet does not contain appropriate data!</h2>
+		{% endif %}
+		{% else %} 
+		{% if flag == 'updated' %}
+		<h2 class="f18">Prices are uploaded successfully!</h2>
+		{{forms.errors}}
+		{{forms.status_file}}
+		<div class="mart5">
+		  <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton" style="padding: 2px 6px;"/>
+		</div>
+		{% else %}
+		{% if flag == 'new' %}
+		{{forms.errors}}
+		{{forms.status_file}}
+		<div class="mart5">
+		  <input type="submit" value="Upload" name="upload" id="uplaod" class="uiButton" style="padding: 2px 6px;"/>
+		</div>
+		{% endif %}
+		{% endif %}
+		{% endif %}
+	  </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+<script type="text/javascript">
+	$("#back_button").click(function(){
+		history.go(-1);
+		return true;
+	})
+</script>
+{% endblock %} 

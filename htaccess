@@ -1,0 +1,5 @@
+AddHandler fastcgi-script .fcgi
+Options +ExecCGI 
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !(fbprod.fcgi)
+RewriteRule ^(.*)$ cgi-bin/fbprod.fcgi

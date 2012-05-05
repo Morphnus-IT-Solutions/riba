@@ -1,0 +1,28 @@
+{% load web_tags %}
+<div class="guest_login">        
+    <img src="{% get_user_picture request %}" width="45" height="45" class="left marr10"/>        
+    <div class="left marr30 f18 padt5">
+        <span class="fb">Hi 
+        {% if request|is_user_authenticated %}
+            {%get_username request%},
+        {% else %}
+            Guest,
+        {% endif %}
+        </span> get recommendations for you.<br/><div class="f12 fdgray padt2"> Connect using Facebook and get personalized recommendations.</div> 
+    </div>
+    {% if request|user_connected_to_facebook %}
+        <div class="left mart10 marr30">
+            <a class="flogin_retry cp"><img src={% media_url request "images/login_with_facebook_btn.png" %}></a>
+        </div>
+    {% else%}
+        <div class="mart10 marr10 left">
+            <div class="fb-login-button" data-scope="email" autologoutlink="true">Login with Facebook</div>
+        </div>
+    {% endif %}
+    <div style="height:35px; overflow:hidden;">
+        <iframe src="http://www.facebook.com/plugins/facepile.php?
+        app_id={{app_settings.facebook_app_id}}" scrolling="no" frameborder="0" style="border:none;
+        overflow:hidden; width:230px;" allowTransparency="true"></iframe> 
+    </div>
+    <div class="clear"></div>
+</div>

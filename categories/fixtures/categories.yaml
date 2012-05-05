@@ -1,0 +1,313 @@
+- fields: {ext_id: null, image: '', moderate: true, name: Air Conditioners, owner: null,
+    parent: null, slug: air-conditioners, store: 8}
+  model: categories.category
+  pk: 83
+- fields: {ext_id: null, image: '', moderate: false, name: Baby Care, owner: null,
+    parent: null, slug: baby-care, store: 1}
+  model: categories.category
+  pk: 30
+- fields: {ext_id: null, image: '', moderate: true, name: Bluetooth Accessories, owner: null,
+    parent: null, slug: bluetooth-accessories, store: 6}
+  model: categories.category
+  pk: 42
+- fields: {ext_id: null, image: '', moderate: false, name: Books, owner: null, parent: null,
+    slug: books, store: 4}
+  model: categories.category
+  pk: 19
+- fields: {ext_id: null, image: '', moderate: false, name: Books & Comics, owner: null,
+    parent: null, slug: books-comics, store: 4}
+  model: categories.category
+  pk: 31
+- fields: {ext_id: null, image: '', moderate: true, name: Camcorders, owner: null,
+    parent: null, slug: camcorders, store: 8}
+  model: categories.category
+  pk: 84
+- fields: {ext_id: null, image: '', moderate: true, name: Cameras, owner: null, parent: null,
+    slug: cameras, store: 8}
+  model: categories.category
+  pk: 85
+- fields: {ext_id: null, image: '', moderate: false, name: Computer Accessories, owner: null,
+    parent: null, slug: computer-accessories, store: 7}
+  model: categories.category
+  pk: 23
+- fields: {ext_id: null, image: '', moderate: false, name: Computers & Laptops, owner: null,
+    parent: null, slug: computers-laptops, store: 7}
+  model: categories.category
+  pk: 22
+- fields: {ext_id: null, image: '', moderate: false, name: Cooking Range, owner: null,
+    parent: null, slug: cooking-range, store: 8}
+  model: categories.category
+  pk: 2
+- fields: {ext_id: null, image: '', moderate: true, name: Desktop PC's, owner: null,
+    parent: null, slug: desktop-pcs, store: 7}
+  model: categories.category
+  pk: 91
+- fields: {ext_id: null, image: '', moderate: true, name: Digital Photo Frames, owner: null,
+    parent: null, slug: digital-photo-frames, store: 8}
+  model: categories.category
+  pk: 86
+- fields: {ext_id: null, image: '', moderate: true, name: Dish Washers, owner: null,
+    parent: null, slug: dish-washers, store: 8}
+  model: categories.category
+  pk: 79
+- fields: {ext_id: null, image: '', moderate: true, name: DVD Players, owner: null,
+    parent: null, slug: dvd-players, store: 8}
+  model: categories.category
+  pk: 39
+- fields: {ext_id: null, image: '', moderate: true, name: eDiary, owner: null, parent: null,
+    slug: ediary, store: 8}
+  model: categories.category
+  pk: 88
+- fields: {ext_id: null, image: '', moderate: false, name: Food Processor, owner: null,
+    parent: null, slug: food-processor, store: 8}
+  model: categories.category
+  pk: 6
+- fields: {ext_id: null, image: '', moderate: true, name: Games, owner: null, parent: null,
+    slug: games, store: 9}
+  model: categories.category
+  pk: 37
+- fields: {ext_id: null, image: '', moderate: true, name: Gaming Accessories, owner: null,
+    parent: null, slug: gaming-accessories, store: 9}
+  model: categories.category
+  pk: 36
+- fields: {ext_id: null, image: '', moderate: true, name: Gaming Consoles, owner: null,
+    parent: null, slug: gaming-consoles, store: 9}
+  model: categories.category
+  pk: 35
+- fields: {ext_id: null, image: '', moderate: false, name: Gas Stove, owner: null,
+    parent: null, slug: gas-stove, store: 2}
+  model: categories.category
+  pk: 3
+- fields: {ext_id: null, image: '', moderate: true, name: Geysers, owner: null, parent: null,
+    slug: geysers, store: 8}
+  model: categories.category
+  pk: 78
+- fields: {ext_id: null, image: '', moderate: false, name: Gifts, owner: null, parent: null,
+    slug: gifts, store: 10}
+  model: categories.category
+  pk: 20
+- fields: {ext_id: null, image: '', moderate: true, name: GPS Navigators, owner: null,
+    parent: null, slug: gps-navigators, store: 8}
+  model: categories.category
+  pk: 72
+- fields: {ext_id: null, image: '', moderate: true, name: Headphones & Earphones,
+    owner: null, parent: null, slug: headphones-earphones, store: 7}
+  model: categories.category
+  pk: 47
+- fields: {ext_id: null, image: '', moderate: true, name: Home Theaters, owner: null,
+    parent: null, slug: home-theaters, store: 8}
+  model: categories.category
+  pk: 73
+- fields: {ext_id: null, image: '', moderate: true, name: Ink Tanks, owner: null,
+    parent: null, slug: ink-tanks, store: 7}
+  model: categories.category
+  pk: 62
+- fields: {ext_id: null, image: '', moderate: false, name: Inverters, owner: null,
+    parent: null, slug: inverters, store: 8}
+  model: categories.category
+  pk: 9
+- fields: {ext_id: null, image: '', moderate: true, name: Irons, owner: null, parent: null,
+    slug: irons, store: 8}
+  model: categories.category
+  pk: 76
+- fields: {ext_id: null, image: '', moderate: true, name: 'Juicer, Mixer, Grinders',
+    owner: null, parent: null, slug: juicer-mixer-grinders, store: 8}
+  model: categories.category
+  pk: 82
+- fields: {ext_id: null, image: '', moderate: true, name: Keyboard, owner: null, parent: null,
+    slug: keyboard, store: 7}
+  model: categories.category
+  pk: 66
+- fields: {ext_id: null, image: '', moderate: true, name: Laptop Adapters, owner: null,
+    parent: null, slug: laptop-adapters, store: 7}
+  model: categories.category
+  pk: 54
+- fields: {ext_id: null, image: '', moderate: true, name: Laptop Bags, owner: null,
+    parent: null, slug: laptop-bags, store: 7}
+  model: categories.category
+  pk: 55
+- fields: {ext_id: null, image: '', moderate: true, name: Laptop Batteries, owner: null,
+    parent: null, slug: laptop-batteries, store: 7}
+  model: categories.category
+  pk: 56
+- fields: {ext_id: null, image: '', moderate: true, name: Laptops, owner: null, parent: null,
+    slug: laptops, store: 7}
+  model: categories.category
+  pk: 52
+- fields: {ext_id: null, image: '', moderate: true, name: LCD Televisions, owner: null,
+    parent: null, slug: lcd-televisions, store: 8}
+  model: categories.category
+  pk: 74
+- fields: {ext_id: null, image: '', moderate: false, name: Magazines, owner: null,
+    parent: null, slug: magazines, store: 5}
+  model: categories.category
+  pk: 24
+- fields: {ext_id: null, image: '', moderate: true, name: Media Players, owner: null,
+    parent: null, slug: media-players, store: 8}
+  model: categories.category
+  pk: 38
+- fields: {ext_id: null, image: '', moderate: true, name: Memory Cards, owner: null,
+    parent: null, slug: memory-cards, store: 6}
+  model: categories.category
+  pk: 51
+- fields: {ext_id: null, image: '', moderate: true, name: Microwave Ovens, owner: null,
+    parent: null, slug: microwave-ovens, store: 8}
+  model: categories.category
+  pk: 81
+- fields: {ext_id: null, image: '', moderate: false, name: Mobile Accessories, owner: null,
+    parent: null, slug: mobile-accessories, store: 6}
+  model: categories.category
+  pk: 26
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Batteries, owner: null,
+    parent: null, slug: mobile-batteries, store: 6}
+  model: categories.category
+  pk: 41
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Cases, owner: null,
+    parent: null, slug: mobile-cases, store: 6}
+  model: categories.category
+  pk: 48
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Chargers, owner: null,
+    parent: null, slug: mobile-chargers, store: 6}
+  model: categories.category
+  pk: 44
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Data Cables, owner: null,
+    parent: null, slug: mobile-data-cables, store: 6}
+  model: categories.category
+  pk: 50
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Headsets, owner: null,
+    parent: null, slug: mobile-headsets, store: 6}
+  model: categories.category
+  pk: 49
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Maps, owner: null,
+    parent: null, slug: mobile-maps, store: 6}
+  model: categories.category
+  pk: 71
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Stands, owner: null,
+    parent: null, slug: mobile-stands, store: 6}
+  model: categories.category
+  pk: 45
+- fields: {ext_id: null, image: '', moderate: true, name: Mobile Stylus, owner: null,
+    parent: null, slug: mobile-stylus, store: 6}
+  model: categories.category
+  pk: 43
+- fields: {ext_id: null, image: '', moderate: false, name: Mobiles, owner: null, parent: null,
+    slug: mobiles, store: 6}
+  model: categories.category
+  pk: 25
+- fields: {ext_id: null, image: '', moderate: true, name: Monitors, owner: null, parent: null,
+    slug: monitors, store: 7}
+  model: categories.category
+  pk: 59
+- fields: {ext_id: null, image: '', moderate: true, name: Mouse, owner: null, parent: null,
+    slug: mouse, store: 7}
+  model: categories.category
+  pk: 61
+- fields: {ext_id: null, image: '', moderate: false, name: Movies & Music, owner: null,
+    parent: null, slug: movies-music, store: 1}
+  model: categories.category
+  pk: 33
+- fields: {ext_id: null, image: '', moderate: false, name: Music Players, owner: null,
+    parent: null, slug: music-players, store: 8}
+  model: categories.category
+  pk: 27
+- fields: {ext_id: null, image: '', moderate: true, name: Pen Tablets, owner: null,
+    parent: null, slug: pen-tablets, store: 8}
+  model: categories.category
+  pk: 87
+- fields: {ext_id: null, image: '', moderate: true, name: Pendrives, owner: null,
+    parent: null, slug: pendrives, store: 8}
+  model: categories.category
+  pk: 57
+- fields: {ext_id: null, image: '', moderate: true, name: Printer & Scanner, owner: null,
+    parent: null, slug: printer-scanner, store: 8}
+  model: categories.category
+  pk: 69
+- fields: {ext_id: null, image: '', moderate: true, name: Printer Cartridges, owner: null,
+    parent: null, slug: printer-cartridges, store: 8}
+  model: categories.category
+  pk: 60
+- fields: {ext_id: null, image: '', moderate: true, name: Printers, owner: null, parent: null,
+    slug: printers, store: 8}
+  model: categories.category
+  pk: 70
+- fields: {ext_id: null, image: '', moderate: true, name: Refrigerators, owner: null,
+    parent: null, slug: refrigerators, store: 8}
+  model: categories.category
+  pk: 80
+- fields: {ext_id: null, image: '', moderate: true, name: Routers, owner: null, parent: null,
+    slug: routers, store: 7}
+  model: categories.category
+  pk: 65
+- fields: {ext_id: null, image: '', moderate: true, name: Scanners, owner: null, parent: null,
+    slug: scanners, store: 8}
+  model: categories.category
+  pk: 63
+- fields: {ext_id: null, image: '', moderate: false, name: School, owner: null, parent: null,
+    slug: school, store: 4}
+  model: categories.category
+  pk: 32
+- fields: {ext_id: null, image: '', moderate: true, name: Screen Guard, owner: null,
+    parent: null, slug: screen-guard, store: 6}
+  model: categories.category
+  pk: 46
+- fields: {ext_id: null, image: '', moderate: true, name: Set Top Box, owner: null,
+    parent: null, slug: set-top-box, store: 8}
+  model: categories.category
+  pk: 75
+- fields: {ext_id: null, image: '', moderate: true, name: Softwares, owner: null,
+    parent: null, slug: softwares, store: 7}
+  model: categories.category
+  pk: 68
+- fields: {ext_id: null, image: '', moderate: true, name: Spare Parts, owner: null,
+    parent: null, slug: spare-parts, store: null}
+  model: categories.category
+  pk: 90
+- fields: {ext_id: null, image: '', moderate: true, name: Speakers, owner: null, parent: null,
+    slug: speakers, store: 7}
+  model: categories.category
+  pk: 58
+- fields: {ext_id: null, image: '', moderate: false, name: T-Shirts, owner: null,
+    parent: null, slug: t-shirts, store: 10}
+  model: categories.category
+  pk: 28
+- fields: {ext_id: null, image: '', moderate: true, name: Telephones, owner: null,
+    parent: null, slug: telephones, store: 8}
+  model: categories.category
+  pk: 40
+- fields: {ext_id: null, image: '', moderate: false, name: 'Toaster, Grill', owner: null,
+    parent: null, slug: toaster-grill, store: 8}
+  model: categories.category
+  pk: 15
+- fields: {ext_id: null, image: '', moderate: false, name: Toys & Games, owner: null,
+    parent: null, slug: toys-games, store: 9}
+  model: categories.category
+  pk: 34
+- fields: {ext_id: null, image: '', moderate: true, name: Uncategorized, owner: null,
+    parent: null, slug: uncategorized, store: 3}
+  model: categories.category
+  pk: 89
+- fields: {ext_id: null, image: '', moderate: true, name: USB Modem, owner: null,
+    parent: null, slug: usb-modem, store: 7}
+  model: categories.category
+  pk: 67
+- fields: {ext_id: null, image: '', moderate: false, name: Vacuum Cleaners, owner: null,
+    parent: null, slug: vacuum-cleaners, store: 8}
+  model: categories.category
+  pk: 16
+- fields: {ext_id: null, image: '', moderate: true, name: Washing Machines, owner: null,
+    parent: null, slug: washing-machines, store: 8}
+  model: categories.category
+  pk: 77
+- fields: {ext_id: null, image: '', moderate: false, name: Watches, owner: null, parent: null,
+    slug: watches, store: 10}
+  model: categories.category
+  pk: 29
+- fields: {ext_id: null, image: '', moderate: false, name: Water Purifiers, owner: null,
+    parent: null, slug: water-purifiers, store: 8}
+  model: categories.category
+  pk: 18
+- fields: {ext_id: null, image: '', moderate: true, name: Webcams, owner: null, parent: null,
+    slug: webcams, store: 7}
+  model: categories.category
+  pk: 64
+

@@ -1,0 +1,65 @@
+{% extends 'rms/base.html' %}
+{% load web_tags%}
+{% block content %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Campaigns</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+          <h1>Campaigns</h1>
+    </div>
+  		{% if CCManager or Client or Admin %}
+        <div class="right content_head">
+        <div class="clear right">
+			<a href="add" role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Create New Campaign</span></a>
+		</div>
+        </div>
+		{% endif %}    
+  </div>
+  <div class="main clear">
+		<div class="clear"></div>
+		{% if error %}
+            <p>Please check the date value</p><br />
+        {% else %}
+        {% if campaign_list %}
+		<table class="tbl_response tablesorter" id="campaign_list">
+			<thead>
+			<tr>
+				<th>Campaign</th>
+				<th>Client</th>
+				<th>Type</th>
+				<th>DNI</th>
+				<th>Hotline</th>
+				<th>Responses</th>
+				<th>Conversion %</th> 
+			</tr>
+			</thead>
+			<tbody>
+			{% for campaign,total,percentage in campaign_list %}
+			<tr>
+				<td class="w185"><a href="{{campaign.id}}">{{campaign.name|title}}</a></td>
+				<td class="w185">{{campaign.client.name|title}}</td>
+				<td class="txtalgnc">{{campaign.type|title}}</td>
+				<td class="txtalgnc w75">{{campaign.dni_number}}</td>
+				<td class="txtalgnc">{{campaign.hotline}}</td>
+				<td class="txtalgnc">{{total}}</td>
+				<td class="txtalgnc">{%if percentage%}{{percentage|floatformat}}{%else%}0{%endif%}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table><br />
+        {% else %}
+            <p>No campaigns match your constraints</p><br />
+        {% endif %}
+        {% endif %}
+	</div>
+  </div>
+</div>
+
+{%endblock %}
+
+{% block script_footer %}
+$(document).ready(function() { 
+        $("#campaign_list").tablesorter(); 
+    }
+);
+{% endblock %}

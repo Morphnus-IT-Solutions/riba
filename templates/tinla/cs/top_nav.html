@@ -1,0 +1,8 @@
+{% load cc_tags %}
+<div id="nav">
+    <ul>
+        {% for menu_item in menu_items %}
+        <li><a href="{% cc_url request menu_item.url %}" {% if menu_item.selected %}class="selected_menu"{% endif %}>{{menu_item.name}}</a></li>
+        {% endfor %}
+    </ul>
+</div>

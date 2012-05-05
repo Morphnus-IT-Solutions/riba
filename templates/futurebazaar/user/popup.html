@@ -1,0 +1,168 @@
+<!--Pop Up-->
+<script type="text/javascript">
+$(document).keyup(function(e) {
+    if (e.keyCode == 27)
+    { $('.closeit').click(); }   // esc
+});
+$("#id_pincode").blur(function(){
+    $('<img src="{{MEDIA_URL}}images/loading.gif" style="position:absolute; margin-top:6px; z-index:5;margin-left:135px;" />').appendTo("#cityname_image").attr('prepended','yes').fadeOut(2500);
+    $('<img src="{{MEDIA_URL}}images/loading.gif" style="position:absolute; margin-top:6px; z-index:5;margin-left:135px;"/>').appendTo("#statename_image").attr('prepended','yes').fadeOut(3000);
+    $('<img src="{{MEDIA_URL}}images/loading.gif" style="position:absolute; margin-top:6px; z-index:5;margin-left:135px;"/>').appendTo("#countryname_image").attr('prepended','yes').fadeOut(3500);
+    var entered_pincode = $("#id_pincode").val();
+    var jData=entered_pincode;
+    function getLocation(jData){
+        $('#id_cityname').attr('disabled','disabled');
+        $('#id_statename').attr('disabled','disabled');
+        $('#id_countryname').attr('disabled','disabled');
+        var country = 'IN';
+        var postalcode = jData;
+        var requesturl = 'http://api.geonames.org/postalCodeLookupJSON?postalcode=' + postalcode  + '&country=' + country  + '&username=shagun';
+        $.get(requesturl, function(data){
+            $("[prepended=yes]", "#cityname_image").remove();
+            $("[prepended=yes]", "#statename_image").remove();
+            $("[prepended=yes]", "#countryname_image").remove();
+            $('#id_cityname').removeAttr('disabled');
+            $('#id_statename').removeAttr('disabled');
+            $('#id_countryname').removeAttr('disabled');
+            if (data.postalcodes.length)
+            {
+                city = data.postalcodes[0].adminName2;
+                state = data.postalcodes[0].adminName1;
+                country = 'India';
+                $("#id_cityname").val(city);
+                $("#id_statename").val(state);
+                $("#id_countryname").val(country);
+            }
+        });
+    }
+    getLocation(jData);
+});
+$(".closeit").click(function(){
+             $("#bg, #address_container").fadeOut(100);
+});
+$("#id_save").click(function(){
+        if(!$('#error_msg').hasClass('hidden')){
+            $("#after_submit").css("display","block");
+        }
+    });
+$('#id_pincode').keyup(function(e)
+{  
+    var change = 1;
+    var ele = $(this);
+    if(e.which == '36' || e.which == '35' || e.which == '37' || e.which == '39' || e.which == '46' || e.which == '8'){
+        change = 0;
+    }
+    var onSuccess = function(responseText){
+       if(responseText){
+            if(change){
+              ele.val(responseText);
+            }
+       }
+       else{
+           ele.val('');
+       }
+    };
+    var onError = function(){
+    };
+    var action = '/get_numeric/';
+    var data = 'data=' + $(this).val();
+    $.ajax({
+        url : action,
+        data : data,
+        success : onSuccess,
+        error : onError,
+        type : "GET"
+    });
+    return false;
+});
+</script>
+
+<div  class="pad10" id="delivery_table">
+
+
+<form method="POST" action="/user/popup/" id="my_profile_form" name="shipping_info_form">
+<div id="post_errors"></div>
+<div id="error_msg" class="error hidden"></div>
+ {% if form.errors %}
+          <p style="color: red;">
+                      Please correct the error{{ form.errors|pluralize }} below.
+          </p>
+  {% endif %}
+   
+                    <div>
+                            <input type="hidden" value={{idget}} name="old_address">
+                         
+                    </div>
+                    <div class="f11" id="delivery_address_block">
+                        <div class="padb5">
+                            {{form.name.errors}}
+                            <div> {{form.name.label}} <span class="mand">*</span><div id="name_error"></div></div>
+                            {{form.name}}
+                        </div>
+                        {{form.address.errors}}
+                        <div class="padb5">
+                            <div>{{form.address.label}} <span class="mand">*</span><div id="address_error"></div></div>
+                            {{form.address}}
+                        </div>
+                        <div class="padb5">
+                            <div class="left">
+                                {{form.pincode.errors}}
+                                <div class="f11">{{form.pincode.label}} <span class="mand">*</span><div id="pincode_error"></div></div>
+                                <div id="pincode_entry">
+                                {{form.pincode}}
+                                &nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="left">
+                                {{form.cityname.errors}}
+                                <div class="f11" id="cityname_image">{{form.cityname.label}} <span class="mand">*</span><div id="cityname_error"></div></div>
+                                {{form.cityname}}
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                       <div class="padb5">
+                            <div class="left">
+                                {{form.statename.errors}}
+                                <div class="f11" id="statename_image">{{form.statename.label}} <span class="mand">*</span><div id="statename_error"></div></div>
+                                {{form.statename}}
+                                &nbsp;&nbsp;
+                            </div>                         
+                            <div class="left">
+                                {{form.countryname.errors}}
+                                <div class="f11" id="countryname_image">{{form.countryname.label}} <span class="mand">*</span><div id="countryname_error"></div></div>
+                                {{form.countryname}}
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div>
+                            <div class="left padb5">
+                                {{form.phone.errors}}
+                                <div class="f11">{{form.phone.label}} <span class="mand">*</span><div id="phone_error"></div></div>
+                                {{form.phone}}
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="left">
+                                {{form.email.errors}}
+                                <div class="f11">{{form.email.label}} <span class="mand">*</span><div id="email_error"></div> </div>
+                                {{form.email}}
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                       
+                    </div> 
+                      {% if not default_addr %}
+                    <div class="padb5" style="padding-top:10px !important;"> 
+                        <input type="checkbox" value="1" name="default_addr"> Make this the default address
+                    </div>
+                    {% endif %}
+		
+		<div class="mart5" style="padding-top:10px !important;">
+		      <p style="border-top:1px dotted #999999; padding-top:10px; padding-bottom:10px">
+              <input type="submit" value="Save" class="submit_address" id="id_save" style="width:31%; padding:3px !important;"/>&nbsp;&nbsp;
+              <input TYPE="reset" VALUE="Reset" style="width:31%; padding:3px !important;"/></p>
+		</div>
+        <div id="after_submit" style='display:none;'><img src="{{MEDIA_URL}}images/loading.gif" />&nbsp;Updating your Address Book.. </div>
+
+</form>
+  <div class="closeit"  style="">Close</div>   
+  </div> 

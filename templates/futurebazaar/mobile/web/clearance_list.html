@@ -1,0 +1,15 @@
+{% load cc_tags web_tags %}
+<section class="content">
+{% if clearance_sale %}
+    <nav>
+        <ul class="list-inset">
+        {%for item in clearance_sale.format_tags%}
+                <li>
+                    <a href="{%cc_url request item.url%}" title="{{item.tag.display_name}}"><img src="/media/images/{{item.tag.tag}}-small-logo.gif" /></a><span class="icon icon-bg arrow-right"></span>
+                </li>
+        {%endfor%}       
+        </ul>
+    </nav>
+{%endif%}
+</section><!-- /content -->
+

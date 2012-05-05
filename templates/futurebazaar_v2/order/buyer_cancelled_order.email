@@ -1,0 +1,33 @@
+Dear {{customer_name}},
+
+Your order has been modified.The order now is:-
+{%for item in buyer_items%}
+{%if multiple%}{{forloop.counter}}. {%endif%}{{item.title}} [{{item.sku}}]{%if item.gift%} + {{item.gift}}{%endif%}, MRP {{item.price}}, Quantity: {{item.qty}}, shipped{%if wstore.name == 'Chaupaati Marketplace'%} by {{item.seller}}{%endif%}{%if item.preOrder%}{%else%}{%if item.shipping_duration%} in {{item.shipping_duration}}{%endif%}{%endif%}
+{% if item.state %}
+({{item.state}})
+{% endif %}
+{%endfor%}
+Total MRP: {{order_mrp_total}}{%if discount%}
+Discount: {{discount}}{%endif%}{%if order_shipping_charges%}
+Shipping Charges: {{order_shipping_charges}}{%endif%}{%if special_discount%}
+Special Discount: {{special_discount}}{%endif%}
+You Paid: {{order_payable_total}}
+You would be refunded : {{refund}}
+
+
+DELIVERY ADDRESS:
+{{delivery_name}}
+{{delivery_address}}
+{{delivery_city}} - {{delivery_pincode}}{%if delivery_state%}
+{{delivery_state}}{%endif%}{%if delivery_country%}{%if delivery_state%}, {%else%}
+{%endif%}{{delivery_country}}{%endif%}
+Phone: {{delivery_phone}}{%if delivery_notes%}
+
+DELIVERY NOTES:
+{{delivery_notes}}{%endif%}{%if delivery_giftmessage%}
+
+GIFT NOTES:
+{{delivery_giftmessage}}{%endif%}
+
+
+{{signature}}

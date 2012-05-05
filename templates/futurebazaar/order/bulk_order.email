@@ -1,0 +1,18 @@
+<div>
+    <strong>Submitted On:</strong> {{bulk_order.submitted_on|date:"r"}}
+</div>
+<div>
+    <strong>Name:</strong> {{bulk_order.name}}
+</div>
+<div>
+    <strong>E-mail Address:</strong> {{bulk_order.email}}
+</div>
+<div>
+    <strong>Contact No:</strong> {{bulk_order.phone}}
+</div>
+<div>
+    <strong>Organization:</strong> {{bulk_order.organization}}
+</div>
+<div>
+    <strong>Requirement:</strong> {{bulk_order.requirement}}
+</div>

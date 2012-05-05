@@ -1,0 +1,58 @@
+<!--net banking-->
+
+<div id="net_bank_error" class="error marb10" style="display:none;">Please Select Bank</div>
+<div class="">
+    <select name="bank" id="bank">
+      <option selected="selected">Select Bank</option>
+      <option value ="AND_N" >Andhra Bank</option>
+      <option value ="UTI_N" >AXIS Bank</option>
+      <option value ="BBK_N" >Bank of Bahrain &amp; Kuwait</option>
+      <option value ="BOBCO_N" >Bank of Baroda</option>
+
+      <option value ="BOI_N" >Bank of India</option>
+      <option value ="BOM_N" >Bank of Maharashtra</option>
+      <option value ="CBIBAN_N" >Citibank Bank Account Online</option>
+      <option value ="CITIUB_N" >City Union Bank</option>
+      <option value ="COP_N" >Corporation Bank</option>
+      <option value ="DEUNB_N" >Deutsche Bank</option>
+      <option value ="FDEB_N" >Federal Bank</option>
+
+      <option value ="HDEB_N" >HDFC Bank</option>
+
+      <option value ="ICPRF_N" >ICICI Bank</option>
+      <option value ="IDBI_N" >IDBI Bank</option>
+      <option value ="IOB_N" >Indian Overseas Bank</option>
+      <option value ="NIIB_N" >IndusInd Bank</option>
+      <option value ="ING_N" >ING Vysya Bank</option>
+      <option value ="JKB_N" >Jammu &amp; Kashmir Bank</option>
+      <option value ="KTKB_N" >Karnataka Bank</option>
+
+      <option value ="KVB_N" >Karur Vysya Bank</option>
+
+      <option value ="NKMB_N" >Kotak Mahindra Bank</option>
+      <option value ="LVB_N" >Lakshmi Vilas Bank</option>
+      <option value ="OBPRF_N" >Oriental Bank of Commerce</option>
+      <option value ="PNBCO_N" >Punjab National Bank</option>
+      <option value ="SIB_N" >South Indian Bank</option>
+      <option value ="SCB_N" >Standard Chartered Bank</option>
+
+      <option value ="SBI_N" >State Bank of India</option>
+      <option value ="SBM_N" >State Bank of Mysore</option>
+
+      <option value ="SBT_N" >State Bank of Travancore</option>
+      <option value ="SYNBK_N" >Syndicate Bank</option>
+      <option value ="TNMB_N" >Tamilnad Mercantile Bank</option>
+      <option value ="UNI_N" >Union Bank of India</option>
+      <option value ="VJYA_N" >Vijaya Bank</option>
+      <option value ="YES_N" >YES Bank</option>
+    </select>
+<div class="clear"></div>
+<div class="notice"><p>We will redirect you to the bank or payment partner site for your payment.</p></div>
+<div class="clear"></div>
+{% if po.payment_mode.validate_billing_info %}
+{% include "order/payment_options/billing_info.html" %}
+{% endif %}
+
+<input type="hidden" id="state_map" value="{{state_map}}"/>
+</div>
+<!--net banking-->

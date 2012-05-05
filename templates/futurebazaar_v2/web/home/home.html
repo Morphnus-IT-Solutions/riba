@@ -1,0 +1,18 @@
+{% extends "web/base.html" %}
+{% load web_tags cc_tags cache %}
+{%block page_tags%}Future Bazaar, Online Shopping, Shop Online, Buy Books, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Features, Purchase On Web, cheap product, Free Shipping, India{%endblock%}
+{%block content%}
+<div id="home" class="home_content">
+  <div>
+    <ul class="home_greed">
+      {% include "categories/grid_products.html" %}
+    </ul>
+    <div class="clear"></div>
+  </div>
+</div>
+{%endblock%} 
+
+{%block script_footer%}
+{{block.super}}    
+
+{%endblock%} 

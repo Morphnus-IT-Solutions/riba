@@ -1,0 +1,20 @@
+{% extends "web/base.html" %}
+{% load cc_tags %}
+{% load web_tags %}
+{% block content %}
+{% load menu_tags %}
+	<header class="header">
+		<h1 class="header-title">Shop By Category</h1>
+	</header> <!-- /header -->
+    <section class="content">
+        <nav>
+            <ul class="list-inset">
+            {%for item in categories %}
+                <li id="item{{forloop.counter}}">
+                    <a href="{%cc_url request item.category.url%}" title="{{item.category.name}} Deals">{{item.category.name|truncate_category:28}}</a><span class="icon icon-bg arrow-right"></span>
+                </li>
+            {%endfor%}       
+            </ul>
+        </nav>
+    </section><!-- /content -->
+{% endblock %}

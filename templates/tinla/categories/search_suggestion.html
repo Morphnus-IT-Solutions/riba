@@ -1,0 +1,21 @@
+{%extends "web/base.html"%}
+{%load cc_tags%}
+{%block content%}
+<div id="breadcrumb" class="fdgray"><a href="/">Home</a> &raquo; Search Results</div>
+<div class="f20 vm">
+<div class="ca search_text"> 
+ 	<div>Your search <span class="forange">{%if request.GET.q%}"{{request.GET.q}}"{%endif%}</span> did not match any products on FutureBazaar.
+	</div>  
+       <div class="f15 fblack mart20">Did you mean: "<a href="{% cc_url request "search/?q=" %}{{spell_suggestion}}">{{spell_suggestion}}</a>"</div>
+ </div>
+<div class="search_tips mart10 f12 ">
+ <strong>Search Tips:</strong>
+  <ul>
+    <li>Check for typos and spelling errors </li>
+    <li>Try a different keyword or alternate search terms </li>
+    <li>Broaden your search using fewer keywords or use simpler language </li>
+  </ul>
+  <p class="marb10"><strong>Kindly try again using the above search tips.</strong></p>
+</div>
+</div>
+{%endblock%} 

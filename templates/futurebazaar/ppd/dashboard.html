@@ -1,0 +1,120 @@
+<div id="user_content">
+{% extends 'ppd/user_home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block user_content%}
+<style>
+	th, td, caption {
+    	padding: 0px;
+	}
+</style>
+<div class="padding_top10">
+    {%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Reports</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  {% daterange "Sales Summary" search_trend from_date to_date request '' client_display_name%}
+  </td>
+  <div class="sales-report clear"><br />
+    <div class="inner-content">
+      <table cellspacing="0" cellpadding="0" border="0">
+        <tr>
+          <td class="f11 fdgray">Channels</td>
+          <td class="f11 fdgray">Bookings</td>
+          <td class="f11 fdgray">Sales</td>
+          <td class="f11 fdgray">Orders</td>
+          <td class="f11 fdgray">Avg Order</td>
+        </tr>
+        <tr>
+          <td><b>&nbsp;</b></td>
+          {% if total_booking = None %}
+          <td class="f24 fb padtb0"><span class="WebRupee"> Rs.</span>0</td>
+          {%else%}
+          <td class="f24 fb padtb0"><span class="WebRupee"> Rs.</span>{{total_booking|floatformat:0|money}}</td>
+          {%endif%}
+          {% if total_sales = None %}
+          <td class="f24 fb padtb0"><span class="WebRupee"> Rs.</span>0</td>
+          {%else%}
+          <td class="f24 fb padtb0"><span class="WebRupee"> Rs.</span>{{total_sales|floatformat:0|money}}</td>
+          {%endif%}
+          <td class="f24 fb padtb0">{{total_orders|money}}</td>
+          <td class="f24 fb padtb0"><span class="WebRupee"> Rs.</span>{{avg_total_sales|floatformat:0|money}}</td>
+        </tr>
+        <tr>
+          <td width="225"><table cellpadding="0" cellspacing="0" border="0" align="left">
+              <tr>
+                <td class="killpad f11 flgray padtb0 padb0" width="35">Web</td>
+              </tr>
+              <tr>
+                <td class="killpad f11 flgray padtb0" width="35">Phone</td>
+              </tr>
+              <tr>
+                <td class="killpad f11 flgray padtb0" width="35">Store</td>
+              </tr>
+            </table></td>
+          <td width="200"><table cellpadding="0" cellspacing="0" border="0" align="left">
+              <tr> {% if web_booking =  None %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> 0</td>
+                {% else %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{web_booking|floatformat:0|money}}</td>
+                {% endif %} </tr>
+              <tr> {% if cc_booking = None %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> 0</td>
+                {% else %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{cc_booking|floatformat:0|money}}</td>
+                {% endif %} </tr>
+              <tr> {% if store_booking = None %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> 0</td>
+                {% else %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{store_booking|floatformat:0|money}}</td>
+                {% endif %} </tr>
+            </table></td>
+          <td width="200"><table cellpadding="0" cellspacing="0" border="0" align="left">
+              <tr> {% if web_sales = None %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> 0</td>
+                {% else %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{web_sales|floatformat:0|money}}</td>
+                {% endif %} </tr>
+              <tr> {% if cc_sales = None %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> 0</td>
+                {% else %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{cc_sales|floatformat:0|money}}</td>
+                {% endif %} </tr>
+              <tr> {% if store_sales = None %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> 0</td>
+                {% else %}
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{store_sales|floatformat:0|money}}</td>
+                {% endif %} </tr>
+            </table></td>
+          <td width="200"><table cellpadding="0" cellspacing="0" border="0" align="left">
+              <tr>
+                <td class="killpad padtb0 f12" width="100">{{web_orders}}</td>
+              </tr>
+              <tr>
+                <td class="killpad padtb0 f12" width="100">{{cc_orders}}</td>
+              </tr>
+              <tr>
+                <td class="killpad padtb0 f12" width="100">{{store_orders}}</td>
+              </tr>
+            </table></td>
+          <td width="200"><table cellpadding="0" cellspacing="0" border="0" align="left">
+              <tr>
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{avg_web_sales|floatformat:0|money}}</td>
+              </tr>
+              <tr>
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{avg_cc_sales|floatformat:0|money}}</td>
+              </tr>
+              <tr>
+                <td class="killpad padtb0 f12" width="100"><span class="WebRupee"> Rs.</span> {{avg_store_sales|floatformat:0|money}}</td>
+              </tr>
+            </table></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+{% endblock %} 

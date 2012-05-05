@@ -1,0 +1,292 @@
+/*filter*/
+.filter_panel {border:1px solid #eee;}
+.filter_header{color:#4e4e4e; font-weight:bold; font-size:11px;	line-height:12px; padding:0px 8px 8px 8px; text-transform:uppercase; text-align:center;}
+.filter_title {color:#4e4e4e; font-weight:bold; font-size:12px;	line-height:18px; padding:8px 14px 8px 14px; text-transform:uppercase; cursor:pointer;}
+.filter_title .arr_down{background:url('/media/images/arr-down.png') no-repeat 0 0; width:11px; height:7px; display:inline-block; margin-right:5px;}
+	
+.filter_option{padding:6px 6px 6px 16px; cursor:pointer; font-weight:bold; font-size:11px; text-transform:uppercase; border-bottom:1px solid #CDCDCD;}
+.filter_option_discount{padding:6px 6px 6px 16px; cursor:pointer;font-weight:bold; font-size:11px; text-transform:uppercase;}
+
+.filter_content{padding:5px 10px 10px 15px !important;}
+.cat_filter_content li{line-height:20px;}
+.filter_select{margin-bottom:5px; font-size:11px;}
+.filter_content li{line-height:20px;}
+.filter_content input{margin-right:5px;}
+
+.show_filter{background:url("../images/minus-sign.png") no-repeat scroll 159px 7px #ECECEC;}
+.hide_filter{background:url("../images/plus-sign.png") no-repeat scroll 159px 7px #ECECEC; border-bottom:1px solid #d9d9d9;  }
+.filter_bt{border-top:1px solid #feffff;}
+
+.sort_bar {background-color:#f1f1f1; padding:10px; margin-bottom:20px; border-bottom:1px solid #dccdcd;	color:#4e4e4e;}
+.sort_bar .selected_linkpriceasc{padding-right:10px;background:url('/media/images/price-up.png') no-repeat 100% 50%}
+.sort_bar .selected_linkpricedesc{padding-right:10px;background:url('/media/images/price-down.png') no-repeat 100% 50%}
+
+.sort_bar .linkpriceasc{padding-right:10px;background:url('/media/images/price-up.png') no-repeat 100% 50%}
+.sort_bar .linkpricedesc{padding-right:10px;background:url('/media/images/price-down.png') no-repeat 100% 50%}
+
+.search_header{  clear: both;
+    height: 25px;
+    padding-bottom: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 0;
+    vertical-align: middle;}
+ .search_header h1{font-size:13px; font-weight:normal;}   
+    
+.srp_content{
+	width:781px; 
+	float:right;
+}
+.srp_greed_view {float:left;}
+.srp_greed li{float:left; margin-bottom:15px; box-shadow:0px 17px 8px -20px rgba(0,0,0, 0.5); -moz-box-shadow:0px 17px 8px -20px rgba(0,0,0, 0.5); -webkit-box-shadow:0px 17px 8px -20px rgba(0,0,0, 0.5); border-bottom-left-radius:10%; border-bottom-right-radius:10%;}
+.home_greed li h3, .srp_greed li h3{padding:0px 10px 0; height:30px; overflow:hidden; font-size:12px ; font-weight:normal;}
+.home_greed .greed_inner, .srp_greed .greed_inner{border:1px solid #eee; height:300px;box-shadow:0px 17px 8px -20px rgba(0,0,0, 0.5); -moz-box-shadow:0px 17px 8px -20px rgba(0,0,0, 0.5); -webkit-box-shadow:0px 17px 8px -20px rgba(0,0,0, 0.5);}
+.home_greed .item_img, .srp_greed .item_img{position:relative; height:219px; padding:5px; }
+.home_greed .save, .srp_greed .save{width:82px;  background-color:#f47318; position:absolute; z-index:1; left:0px; top:5px; font-size:11px; }
+
+
+.srp_greed .brand{text-align:center; border-top:1px solid #d9d9d9; border-bottom:1px solid #d9d9d9;}
+/*.srp_greed .btn_buy_now{background:url('/media/images/btn_buy_now.jpg') 0 0 no-repeat; width:127px; height:49px; display:block; margin-right:-7px; position:relative;}
+*/
+.srp_greed .price{}
+.srp_greed .mrp{color:#8f8f8f;}
+.srp_greed .offer_price{color:#db5200;}
+.srp_greed .bot_shadow{background:url('/media/images/prod_botom_shadow.gif') 0 0 no-repeat; width:232px; height:4px;}
+.fcolor1{color:#fbcc4a;}
+
+
+.bottom_pagination{	
+	background-color:#f1f9fe;
+	padding:8px 10px;
+	margin-bottom:20px;	
+	font-size:11px;
+	border-bottom:5px solid #d1ebfb;
+	margin-top:10px;
+	
+}
+.bottom_pagination .pagi_inner div{background-color:#05559D; border:1px solid #05559D; padding:3px 6px 3px 6px;font-size:11px;color:#fff;display:inline; float:left; margin-right:3px;}
+
+.bottom_pagination span{color:#333;padding:3px 6px 3px 6px;font-size:11px; float:left; margin-right:3px;}
+.bottom_pagination a{color:#05559D;border:1px solid #05559D;padding:3px 6px 3px 6px;font-size:11px; float:left; margin-right:3px;}
+.bottom_pagination a.gray_link{color:#666;border:1px solid #666;text-decoration:none}
+.bottom_pagination a:hover{background-color:#05559D;color:#fff;text-decoration:none}
+.bottom_pagination a.gray_link:hover{color:#666;border:1px solid #666;text-decoration:none;background-color:#eee}
+.selected_link{color:#000; font-weight:bold; text-decoration:none;}
+.bottom_pagination a.selected_linkrelasc{padding-right:10px;background:url('../images/up.gif') no-repeat 100% 50%}
+.bottom_pagination a.selected_linkreldesc{padding-right:10px;background:url('../images/down.gif') no-repeat 100% 50%}
+
+
+
+/* New pagination --*/
+.pagination span{color:#333; padding:3px 6px 3px 6px;font-size:11px; float:left; margin-right:3px;}
+
+.pagination a{color:#333; padding:3px 6px 3px 6px; font-size:11px; line-height:18px; height:18px; float:left; margin-right:5px; border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;
+border-color:#CCCCCC #CCCCCC #AAAAAA; border-style:solid; border-width:1px;
+background-color:#e0e0e0;filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#ffffffff,EndColorStr=#ffe0e0e0);
+background-image:-moz-linear-gradient(top,#fff 0,#e0e0e0 100%);
+background-image:-ms-linear-gradient(top,#fff 0,#e0e0e0 100%);
+background-image:-o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#fff),color-stop(100%,#e0e0e0));
+background-image:-webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
+background-image:linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
+-moz-box-shadow:inset 0 0 1px #fff;
+-ms-box-shadow:inset 0 0 1px #fff;
+-webkit-box-shadow:inset 0 0 1px #fff;
+box-shadow:inset 0px 0px 1px #fff;
+}
+.pagination a:hover{border-color:#999; text-decoration:none;
+box-shadow:0px 1px 2px rgba(0,0,0, 0.25), 0px 0px 3px #fff inset;
+-moz-box-shadow:0px 1px 2px rgba(0,0,0, 0.25), 0px 0px 3px #fff inset;
+-ms-box-shadow:0px 1px 1px rgba(0,0,0, 0.25), 0px 0px 3px #fff inset;
+-webkit-box-shadow:0px 1px 1px rgba(0,0,0, 0.25), 0px 0px 3px #fff inset;
+
+}
+
+.pagination div{color:#333; padding:3px 6px 3px 6px; font-size:11px; line-height:18px; height:18px; float:left; margin-right:5px; border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;
+border-color:#999999 #AAAAAA #CCCCCC; border-style:solid; border-width:1px; cursor:default;
+background-color:#e0e0e0;filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#E6E6E6,EndColorStr=#DCDCDC);
+background-image:-moz-linear-gradient(top,#E6E6E6 0,#DCDCDC 100%);
+background-image:-ms-linear-gradient(top,#E6E6E6 0,#DCDCDC 100%);
+background-image:-o-linear-gradient(top,#E6E6E6 0,#DCDCDC 100%);
+background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#E6E6E6),color-stop(100%,#DCDCDC));
+background-image:-webkit-linear-gradient(top,#E6E6E6 0,#DCDCDC 100%);
+background-image:linear-gradient(to bottom,#E6E6E6 0,#DCDCDC 100%);
+
+-moz-box-shadow:0px 1px 2px #AAAAAA inset;
+-ms-box-shadow:0px 1px 2px #AAAAAA inset;
+-webkit-box-shadow:0px 1px 2px #AAAAAA inset;
+box-shadow:0px 1px 2px #AAAAAA inset;
+}
+.pagination a.gray_link{color:#999;cursor:default;}
+.pagination a.gray_link:hover{background-color:#999; text-decoration:none;border-color:#CCCCCC #CCCCCC #AAAAAA;
+-moz-box-shadow:inset 0 0 1px #fff;
+-ms-box-shadow:inset 0 0 1px #fff;
+-webkit-box-shadow:inset 0 0 1px #fff;
+box-shadow:inset 0px 0px 1px #fff}
+.pagination .selected_link{color:#000; font-weight:bold; text-decoration:none;}
+.pagination a.selected_linkrelasc{padding-right:10px;background:url('../images/up.gif') no-repeat 100% 50%}
+.pagination a.selected_linkreldesc{padding-right:10px;background:url('../images/down.gif') no-repeat 100% 50%}
+
+
+/*search tips*/
+.search_text{background-color:#ffffcd; border-top:2px solid #fbce9a;border-bottom:2px solid #fbce9a; padding:10px; text-align:center; font-size:18px;}
+.search_text strong{color:#cd0000;}
+.search_tips{padding:10px;}
+.search_tips h5{font-size:13px;}
+.search_tips ul{ margin-bottom:10px;}
+.search_tips ul li{ margin-left:13px; list-style:disc; list-style-position:outside; color:#666; padding-top:3px;}
+
+
+
+#left_bar ul li {}
+
+#price_filter{padding:8px}
+.gmin {float:left;}
+.gmax {float:right;}
+
+#compare_page .greed li{width:240px;}
+#compare_page .greed li .greed_prod{margin:0px; border:none; border-left:1px dotted #999;}
+#compare_page .greed h3{ font-size: 12px;
+    font-weight: normal;
+    height: 30px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;}
+    
+  #compare_page .greed .save  {
+    background-color: #F47318;
+    font-size: 11px;
+    position: absolute;
+    right: 0;
+    top: 200px;
+    width: 82px;
+    z-index: 1;}
+.compare_ul li{float:left; padding:5px 18px;}
+/*visa*/
+h1.visa_search_header{background:url("../images/visa.jpg") no-repeat 0px 3px; padding-left:45px !important;}
+.visa_price{background:url("../images/visa.jpg") no-repeat 14px 1px;
+padding-left:56px;
+text-align:left;}
+div#slider-range-discount{background-color: #F3B70A;}
+
+div.slider-range{background-color: #F3B70A;}
+
+#see_more_tab {background-color:#457AB0; color:#D9EFFC;}
+#see_more_tab:hover{color:#457AB0; background-color:#D9EFFC;}
+
+.go_top{text-align:right; position:fixed; bottom:0px; right:100px; width:110px;  text-align:right; display:none; background:#222 url("/media/images/uparrow.gif") 98% center no-repeat; color:#fff; padding:5px; font-weight:bold; font-size:15px; padding-right:20px;}
+#go_top a{color:#fff; text-decoration:none;}
+
+.top_nav_status{margin-top:3px;}
+
+.filter_scroll{max-height:298px; overflow-y:auto;}
+.filter_scroll input{position:static;}
+
+/* Gift Ideas Banner ----------------------*/
+.gift_ideas{ border:#D9D9D9 1px solid;}
+.gift_ideas_cnt{font-size:15px; padding:20px 10px 0 11px; line-height:1.2 !important; width:455px; float:left; text-align:justify;}
+.cmarun{color:#990000;}
+
+/* Concept Banner ----------------------*/
+.concept_ideas{border:#D9D9D9 1px solid; background:#fff url(/media/images/concept_banner.jpg) scroll no-repeat top left; height:148px;}
+.concept_ideas_cnt{font-size:15px; padding:20px 10px 0 255px; line-height:1.2 !important; width:455px; float:left; text-align:justify;}
+
+/* Four grid style ----------------------*/
+.gcontainer {margin-left: auto; margin-right: auto; width: 980px;}
+
+.grid_1,
+.grid_2,
+.grid_3,
+.grid_4,
+.grid_5 {
+	display:inline;
+	float: left;
+	margin-right: 15px;
+}
+.gcontainer .grid_1 {width:980px;}
+.gcontainer .grid_2 {width:781px;}
+.gcontainer .grid_3 {width:582px;}
+.gcontainer .grid_4 {width:383px;}
+.gcontainer .grid_5 {width:184px;}
+
+.glast{margin-right:0px !important;}/* for remove right side margin */
+
+/* Offer Tag -------------------*/
+.offer-tag{position:absolute; top:5px; left:5px; text-align:center; width:33px; height:28px; font-size:11px; color:#000; line-height:11px; padding-top:5px;
+background:transparent url(/media/images/offer-tag.png) scroll no-repeat top left;}
+.green-offer-tag{background-position:left bottom;}
+
+
+/* Buttons --------------------*/
+.btn_c{display:inline-block; text-decoration:none;  padding:5px 10px; color:#555!important; border-width:1px; border-style:solid; border-radius:3px; -m-border-radius:3px; -webkit-border-radius:3px; -m-border-radius:3px; font-size:12px; font-family:Arial,Helvetica,sans-serif;
+border-color:#bbb #bbb #aaa; color:#000!important; text-shadow:0 1px 0 #eee; box-shadow:0 1px 1px #eee,inset 0 1px 0 #e9e9e9; outline:0px none;
+background:#ddd; cursor:pointer;
+background-image: -ms-linear-gradient(top, #eeeeee 0%, #dddddd 100%);/* IE10 */ 
+background-image: -moz-linear-gradient(top, #eeeeee 0%, #dddddd 100%);/* Mozilla Firefox */ 
+background-image: -o-linear-gradient(top, #eeeeee 0%, #dddddd 100%);/* Opera */ 
+background-image: -webkit-gradient(linear, top, bottom, color-stop(0, #eeeeee), color-stop(1, #dddddd));/* Webkit (Safari/Chrome 10) */
+background-image: -webkit-linear-gradient(top, #eeeeee 0%, #dddddd 100%);/* Webkit (Chrome 11+) */ 
+background-image: linear-gradient(top, #eeeeee 0%, #dddddd 100%);/* Proposed W3C Markup */
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#dddddd');	
+}
+.btn_c:hover{border-color:#aaa; color:#000!important; text-shadow:0 1px 0 #eee; box-shadow:0 1px 1px #eee,inset 0 1px 0 #d9d9d9; text-decoration: none !important;
+background:#eee; cursor:pointer;
+background-image: -ms-linear-gradient(top, #d9d9d9 0%, #eeeeee 100%);/* IE10 */ 
+background-image: -moz-linear-gradient(top, #d9d9d9 0%, #eeeeee 100%);/* Mozilla Firefox */ 
+background-image: -o-linear-gradient(top, #d9d9d9 0%, #eeeeee 100%);/* Opera */ 
+background-image: -webkit-gradient(linear, top, bottom, color-stop(0, #d9d9d9), color-stop(1, #eeeeee));/* Webkit (Safari/Chrome 10) */
+background-image: -webkit-linear-gradient(top, #d9d9d9 0%, #eeeeee 100%);/* Webkit (Chrome 11+) */ 
+background-image: linear-gradient(top, #d9d9d9 0%, #eeeeee 100%);/* Proposed W3C Markup */
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#d9d9d9',endColorstr='#eeeeee');
+}
+
+.btn_c_s{padding:3px 5px !important; font-size:12px; line-height:14px;}
+.btn_c_m{padding:5px 10px !important; font-size:12px; font-weight:bold; line-height:16px;}
+.btn_c_l{padding:8px 12px !important; font-size:15px; font-weight:bold; line-height:18px;}
+
+/* -- Orange Buttons --------------------*/
+.btn_orange{border-color:#F5B74E #E5A73E #D6982F; color:#333!important; text-shadow:0 1px 0 #FEDD9B;box-shadow:0 1px 1px #eee,inset 0 1px 0 #fee395;
+background:#FECC5F; cursor:pointer;
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#feda71',endColorstr='#febb4a');		
+background-image: -ms-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);/* IE10 */ 
+background-image: -moz-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);/* Mozilla Firefox */ 
+background-image: -o-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);/* Opera */ 
+background-image: -webkit-gradient(linear, top, bottom, color-stop(0, #FEDA71), color-stop(1, #FEBB4A));/* Webkit (Safari/Chrome 10) */
+background-image: -webkit-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);/* Webkit (Chrome 11+) */ 
+background-image: linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);/* Proposed W3C Markup */ 
+}
+.btn_orange:hover{border-color:#D29A3A #CC9436 #C89133;text-shadow:0 1px 0 #FEE1A0;box-shadow:0 1px 1px #d4d4d4,inset 0 1px 0 #fed17e;
+background:#FECB5E;
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fec354',endColorstr='#fecd61');		
+background-image: -ms-linear-gradient(top, #FEC354 0%, #FECD61 100%);/* IE10 */ 
+background-image: -moz-linear-gradient(top, #FEC354 0%, #FECD61 100%);/* Mozilla Firefox */ 
+background-image: -o-linear-gradient(top, #FEC354 0%, #FECD61 100%);/* Opera */ 
+background-image: -webkit-gradient(linear, top, bottom, color-stop(0, #FEC354), color-stop(1, #FECD61));/* Webkit (Safari/Chrome 10) */
+background-image: -webkit-linear-gradient(top, #FEC354 0%, #FECD61 100%);/* Webkit (Chrome 11+) */ 
+background-image: linear-gradient(top, #FEC354 0%, #FECD61 100%);/* Proposed W3C Markup */ 
+}
+
+/* -- Red Buttons --------------------*/
+.btn_red{border-color:#DB0704 #E5A73E #D6982F; color:#fff !important; text-shadow:0 1px 0 #cf0404;box-shadow:0 1px 1px #eee,inset 0 1px 0 #FF8C82; cursor:pointer;
+background: #ff3f2d; /* Old browsers */
+background: -moz-linear-gradient(top,  #ff3f2d 0%, #c41414 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3f2d), color-stop(100%,#cf0404)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* IE10+ */
+background: linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3f2d', endColorstr='#cf0404',GradientType=0 ); /* IE6-9 */
+}
+.btn_red:hover{border-color:#D29A3A #CC9436 #C89133;text-shadow:0 1px 0 #000;box-shadow:0 1px 1px #d4d4d4,inset 0 1px 0 #fed17e; color:#fff !important; text-decoration:none;
+background: #ff3f2d; /* Old browsers */
+background: -moz-linear-gradient(top,  #ff3f2d 0%, #cf0404 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3f2d), color-stop(100%,#cf0404)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* IE10+ */
+background: linear-gradient(top,  #ff3f2d 0%,#cf0404 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3f2d', endColorstr='#cf0404',GradientType=0 ); /* IE6-9 */
+}

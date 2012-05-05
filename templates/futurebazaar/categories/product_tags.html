@@ -1,0 +1,99 @@
+{% comment %}
+<div class="timer_outer">
+    <div class="timer left">
+        {% if product_end_time %}
+            <a class="time">
+                <div class="product_time_left comment_outer" name="{{product_context.product.id}}" id="product_deal_timer{{product_context.product.id}}"
+                     day="{{product_end_time.day}}" hour="{{product_end_time.hour}}" min="{{product_end_time.minute}}" sec="{{product_end_time.second}}">
+                    <span class="timer_comment"><strong class="fcolor1">Time Left to buy:</strong>
+                        <br/>
+                        <span class="day" value="{{product_end_time.day}}" > </span> day :
+                        <span class="hr" value="{{product_end_time.hour}}" > </span> hr :
+                        <span class="min" value="{{product_end_time.minute}}" > </span> min :
+                        <span class="sec" value="{{product_end_time.second}}" > </span> sec
+                    </span>
+                </div>
+            </a> 
+        {% endif %}
+            <a class="qty">
+                <div class="comment_outer"><span class="timer_comment"><strong class="fcolor1">Qty left:</strong> 5</span> </div>
+            </a>
+        {% if is_hot_seller %}
+            <a class="seller">
+                <div class="comment_outer"><span class="timer_comment"><strong class="fcolor1">Hot Seller</strong></span> </div>
+            </a> 
+        {% endif %}
+	
+    </div>
+    <div class="clear"></div>
+</div>
+{% endcomment %}
+{% if is_deal %}
+    <div class="menu_icons">
+        <ul class="left">
+        {% if is_new_arrival %}
+        <li class="new">
+             <div class="icons_comment_outer">
+            <div class="icons_comment">New Arrivals</div>
+            </div>
+        </li>
+        {% endif %}
+        {% if product_end_time %}
+        <li class="clock">
+            <div class="product_time_left comment_outer icons_comment_outer" name="{{product_context.product.id}}" id="product_deal_timer{{product_context.product.id}}"
+                 day="{{product_end_time.day}}" hour="{{product_end_time.hour}}" min="{{product_end_time.minute}}" sec="{{product_end_time.second}}">
+                <span class="timer_comment icons_comment"><strong class="fcolor1">Time Left to buy:</strong>
+                    <br/>
+                    <span class="day" value="{{product_end_time.day}}" > </span> day :
+                    <span class="hr" value="{{product_end_time.hour}}" > </span> hr :
+                    <span class="min" value="{{product_end_time.minute}}" > </span> min :
+                    <span class="sec" value="{{product_end_time.second}}" > </span> sec
+                </span>
+            </div>
+        </li>
+        {% endif %}
+        {% if is_hot_seller %}
+        <li class="popular">
+            <div class="icons_comment_outer">
+            <div class="icons_comment">Popular</div>
+            </div>
+        </li>
+        {% endif %}
+        {% if is_recommended %}
+        <li class="recom">
+            <div class="icons_comment_outer">
+            <div class="icons_comment">Recommendations</div>
+            </div>
+        </li>
+        {% endif %}
+        {% if is_concept_deal %}
+        <li class="eur">
+            <div class="icons_comment_outer">
+            <div class="icons_comment">Eureka</div>
+            </div>
+        </li>
+        {% endif %}
+        {% if retailer_tags.clearance and not 'home_clearance' in product_context %}
+        <li class="clearance">
+            <div class="icons_comment_outer">
+            <div class="icons_comment">Clearance</div>
+            </div>
+        </li>
+        {% endif %}
+        </ul>
+        {% if retailer_tags.clearance and not 'home_clearance' in product_context %}
+        <div class="retailer right" >
+            <a class="retailer_icon icon_{{retailer_tags.retailer_name}}">            
+                <img src="/media/images/app-by-{{retailer_tags.retailer_name}}.png"> 
+            </a> 
+        </div>
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+{% else %}
+    <div class="timer_outer">
+        <div class="timer left">
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endif %}

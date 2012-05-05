@@ -1,0 +1,113 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form input[type=submit]{width:50px;}
+#id_notes {height:50px;}
+ul, ol { padding-left: 0px !important; }
+.ui-widget select {width: auto;}
+.ui-widget input {width:80px;}
+.ui-dialog .ui-dialog-content {padding: 2px;}
+.ui-dialog, .ui-widget, .ui-widget-content{width:300px}
+</style>
+<form method='POST' action=''>
+<div class='clear'></div>
+<div style="width:297px;">
+    {% if errors %}
+        <div class="orders_msg">
+          <div class="error"> 
+            {% for error in errors %}
+                {{error}}<br/>
+            {% endfor %} 
+          </div>
+        </div>
+        <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok' style="width:80px\9; padding:5px;"/></div> 
+    {% else %}
+        {% if entry_edited_successfully %}
+            <div class="success"> Physical Stock Entry edited successfully.</div>
+
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                  <th>DC</th>
+                  <th>A.T.S.</th>
+                  <th>Is Active</th>
+                </tr>
+                <tr>
+                    <td class="ca">{{inventory.dc.code}}</td>
+                    <td class="ca">{{inventory.compute_ats|floatformat}}</td>
+                    <td class="ca">{%if inventory.is_active%}Yes{%else%}No{%endif%}</td>
+                </tr>
+               </tbody>
+            </table>
+            <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok' style="width:80px\9; padding:5px;"/></div>
+        {% else %}
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                  <th>DC</th>
+                  <th>A.T.S.</th>
+                  <th>Is Active</th>
+                </tr>
+                <tr>
+                    <td class="ca">{{inventory.dc.code}}</td>
+                    <td class="ca">{{inventory.compute_ats|floatformat}}</td>
+                    </td>
+                    <td class="ca">
+                        <select name='is_active' id='is_active'>
+                            <option value="yes" {%if inventory.is_active%}selected{%endif%}>Yes</option>
+                            <option value="no" {%if not inventory.is_active%}selected{%endif%}>No</option>
+                        </select>
+                    </td>
+                </tr>
+               </tbody>
+            </table>
+            <div>
+				<div><input type="submit" name="submit" value="Save Changes" class="uiButton" id='submit' style="width:115px; padding:5px;"/></div>
+			</div>
+        {% endif %}
+    {% endif %}
+</div>
+</form>
+
+<script type='text/javascript'>
+    $('#submit').click(function() {
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#edit_physical').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#edit_physical').html(xhr.responseText);
+        };
+        var url = '/category/category_management/inventory/edit_physical_inventory/';
+        var is_active = $('#is_active option:selected').val();
+        var id = {{inventory.id}}
+        var data = 'id=' + id;
+        data += '&is_active=' + is_active;
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+    
+    $('#ok').click(function() {
+        $(".ui-dialog-titlebar-close").trigger('click');
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#edit_physical').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#edit_physical').html(xhr.responseText);
+        };
+        var data = 'article_id=' + {{inventory.rate_chart.article_id}};
+        var url = '/category/category_management/inventory/all_inventory/'
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        location.reload();
+        return false;
+    });
+    
+</script>

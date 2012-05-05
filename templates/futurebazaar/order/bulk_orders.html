@@ -1,0 +1,44 @@
+{% extends "web/base.html" %}
+{% block content %}
+<div class="bulk_orders">
+    {% if not form_submitted %}
+        <div class="f15 marb20">To place a bulk order, kindly provide us with the following details:</div>
+        {%if form.errors%}
+            <ul class="error padl20 w300 marb10" style="margin-left:0px; " >
+               {% for field in form %}
+                    {% for error in field.errors %}
+                            <li width="150">{{error}}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        {%endif%}
+
+        <form action="" method="POST">
+            <div>
+                <div class="bulk_orders_left left">
+                    <label>Name<span class="fred">*</span></label>
+                    {{form.name}}
+                    <label>Contact No.<span class="fred">*</span></label>
+                    {{form.phone}}
+                </div>
+                <div class="bulk_orders_right left">
+                    <label>E-mail address<span class="fred">*</span></label>
+                    {{form.email}}
+                    <label>Organization</label>
+                    {{form.organization}}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <label>Requirement (Brief Description)<span class="fred">*</span></label>
+            {{form.requirement}}
+            <button type="submit">SUBMIT</button>
+        </form>
+    {% else %}
+    <div>
+        <div class="fb f15 marb20 ca">Thank you for your interest in our offerings.</div>
+        <div class="f15 ca">
+            A Dedicated Team Member will contact and assist you in your e-shopping experience.</div>
+    </div>
+    {% endif %}
+</div>
+{%endblock%}

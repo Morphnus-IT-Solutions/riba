@@ -1,0 +1,352 @@
+{% extends request.ws_base|default:'web/base.html' %}
+{%block search_menu%}
+{%endblock%}
+{% block content%}
+{%load cc_tags%}
+{%load web_tags%}
+
+    <div class = "clear">&nbsp;</div>
+    <div class="cart_left">     
+        <form method="post" action="" id="shipping_info_form" name="shipping_info_form">
+        <input type="hidden" name="update_addressbook_id" value="{{addressbook_id}}"/>
+        {% checkout_tabs request "shipping" %} 
+        <div class="pad10" style="border:#3E3E3E 1px solid;">
+        <div class="shipping" id="delivery_table" >
+            
+           {% if inventory_errors %}
+            <div class="book_inner">
+                <div class="error">
+                    <ul>
+                        {% for error in inventory_errors %}
+                        <li>{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+           
+            {%if availability_errors%}
+            <div class="error marb10">
+                <ul style="margin:0px;">
+                    {% for error in availability_errors %}
+                        <li>{{error}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {%endif%}
+        
+            {% if failed_payment %}
+            <div class="error marb10">
+                <h3>Payment Failed</h3>
+                Your payment has been rejected by the payment gateway. Your card has not been charged Please try again, perhaps with a different card
+            </div>    
+            {% endif %}
+        
+            {% if gateway_error %}
+            <div class="error marb10">
+                Sorry, we are unable to process your payment request.
+            </div>
+            {% endif %}
+        
+            {% if shipping_form_errors %}
+            <div class="error marb10">
+                <ul style="margin:0px;">
+                    {% for key, value in shipping_form_errors.iteritems %}
+                        <li>{{value}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            {% if user_addresses %}
+            <div>
+                <!-- User Addresses -->
+                <div class="left padr20" style="width:301px; border-right:1px solid #ccc; position:relative;min-height: 385px;">
+                    <p class="fb marb5">Select your shipping address</p>
+                    <span style="background-color: #fff; position: absolute; top:150px; right:-10px; padding:4px 0px;">OR</span>
+                    {% if not request|is_franchise%}
+                    {%for address in user_addresses%}
+                        <div class="ship_address {% if address.defaddress %} def_ship_address{% endif %}">
+                            <!-- <input type="radio" name="del_address" value="{{address.id}}" style="display:none;" />   -->
+                            <p><span name="first_name">{{address.first_name}}</span> <span name="last_name">{{address.last_name}}</span></p>
+                            <p><span name="address">{{address.address}}</span></p>
+                            <p><span name="city">{{address.city.name}}</span> <span name="pincode">{{address.pincode}}</span>, <span name="state">{{address.state.name}}</span>, <span name="country">{{address.country.name}}</span></p>
+                            {%if address.email %}<p>Email: <span name="email">{{address.email}}</span></p>{% endif %}
+                            <p>Tel: <span name="phone">{{address.phone}}</span></p>
+                            <p class="ra address_title address_title_act"><span><!-- {% if address.defaddress %}Default{% endif %} --> Ship to this address</span></p>
+                            <div class="ra">
+                                {% if address.profile.default_address == address.id %}
+                                    <div> Default Address </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+                <!-- User Addresses -->
+
+
+                <!-- Enter New Shipping Details -->
+                <div class="marl20 left">
+                    <p class="fb marb5">Ship to a new address</p>
+                    <div class="address pad10 f11" style="width:332px;">
+                        <input type="hidden" name="old_address" value="{{delivery_address.id}}"/>
+                        <div>
+                            <input type="radio" name="del_address" value="new" checked style="display:none;" />
+                        </div>
+                        <div id="delivery_address_block" class="left">
+                            <div class="padb5 dinput_m">
+                                <div class="left">
+                                    <div>First Name {%if shipping_info_form.delivery_first_name.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_first_name}}&nbsp;&nbsp;
+                                </div>
+                                <div class="right">
+                                    <div>Last Name {%if shipping_info_form.delivery_last_name.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_last_name}}
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="padb5 mart10">
+                                <div>Address {%if shipping_info_form.delivery_address.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                {{shipping_info_form.delivery_address}}
+                            </div>
+                            <div class="padb5 mart10 dinput_m">
+                                <div class="left">
+                                    <div>Pincode {%if shipping_info_form.delivery_pincode.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_pincode}}&nbsp;&nbsp;
+                                </div>
+                                <div class="right">
+                                    <div>City {%if shipping_info_form.delivery_city.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_city}}
+                                </div>
+                                <div class="clear"></div>
+                            </div>                        
+                            <div class="padb5 mart10 dinput_m">
+                                <div class="left ds158">
+                                    <div>State {%if shipping_info_form.delivery_state.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_state}}&nbsp;&nbsp;
+                                </div>
+                                <div class="right ds160">
+                                    <div>Country {%if shipping_info_form.delivery_country.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_country}}
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="mart10 dinput_m">
+                                <div class="left">
+                                    <div>Phone {%if shipping_info_form.delivery_phone.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_phone}}&nbsp;&nbsp;
+                                </div>
+                                <div class="right">
+                                    <div>Email {%if shipping_info_form.delivery_email.field.required%}<span class="fred">*</span>{%endif%}</div>
+                                    {{shipping_info_form.delivery_email}}
+                                </div>
+                                <div class="clear"></div>
+                            </div>                      
+                        </div>
+                        <div class="clear"></div>
+                        <div class="mart10 ra f11"><span class="fred">*</span> Mandatory Fields</div>
+                    </div>
+                </div><!-- /Enter New Shipping Details -->
+            </div>   
+            
+            {% else %}
+            <div>      
+                <!-- Enter New delivery Details -->
+                <p class="fb marb5">Enter new delivery address</p>
+                <div class="address pad10 f11" style="width:332px;">
+                    <div class="hidden">
+                        <input type="hidden" name="old_address" value="{{delivery_address.id}}"/>
+                        <input type="radio" name="del_address" checked="checked" value="new" style="display:none;" />
+                    </div>
+                    <div id="delivery_address_block">
+                        <div class="padb5 dinput_m">
+                            <div class="left">
+                                <div>First Name {%if not request|is_cc%}<span class="fred">*</span>{%endif%}</div>
+                                {{shipping_info_form.delivery_first_name}}&nbsp;&nbsp;
+                            </div>
+                            <div class="right">
+                                <div>Last Name <span class="fred">*</span></div>
+                                {{shipping_info_form.delivery_last_name}}
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="padb5 mart10">
+                            <div class="ieh10">Address {%if not request|is_cc%}<span class="fred">*</span>{%endif%}</div>
+                            {{shipping_info_form.delivery_address}}
+                        </div>
+                        <div class="padb5 mart10 dinput_m">
+                            <div class="left">
+                                <div>Pincode <span class="fred">*</span></div>
+                                {{shipping_info_form.delivery_pincode}}&nbsp;&nbsp;
+                            </div>
+                            <div class="right">
+                                <div>City {%if not request|is_cc%}<span class="fred">*</span>{%endif%}</div>
+                                {{shipping_info_form.delivery_city}}
+                            </div>
+                            <div class="clear"></div>
+                        </div>                       
+                        
+                        <div class="padb5 mart10 dinput_m">
+                            <div class="left ds158">
+                                <div>State</div>
+                                {{shipping_info_form.delivery_state}}&nbsp;&nbsp;
+                            </div>                         
+                            <div class="right">
+                                <div>Country {%if not request|is_cc%}<span class="fred">*</span>{%endif%}</div>
+                                {{shipping_info_form.delivery_country}}
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="dinput_m mart10">
+                            <div class="left">
+                                <div>Phone {%if not request|is_cc%}<span class="fred">*</span>{%endif%}</div>
+                                {{shipping_info_form.delivery_phone}}&nbsp;&nbsp;
+                            </div>
+                            <div class="right">
+                                <div>Email </div>
+                                {{shipping_info_form.delivery_email}}
+                            </div>
+                            <div class="clear"></div>
+                        </div>  
+                    </div>
+                    <div class="clear"></div>
+                    <div class="mart10 ra f11"><span class="fred">*</span> Mandatory Fields</div>
+                </div><!-- /Enter New delivery Details -->
+            
+            </div>
+            {% endif %}
+            <div class="clear"></div>
+
+            <div class="mart10 padt10 ra" style="border-top:#eee 1px dotted;">
+                {%if request|is_cc%}                       
+                    <input type="submit" value="Continue" class="btn_c btn_c_m btn_orange" title="" />
+                {%else%}
+                    <button type="submit" id="proceed" class="btn_c btn_c_m btn_orange" title="" value="">Continue</button>
+                {%endif%}
+            </div>
+        </div>
+        
+        </div>
+        </form>
+    </div>
+    <div class="cart_right">
+        {% include "order/right.html" %}
+        
+        <!-- Chat Link -->
+		<div class="marb10 c666">
+			<p class="marb10 fb">Have a Question? Chat for live assistance.</p><a class="chat_now_btn"  onclick="window.open('http://chatserver.comm100.com/ChatWindow.aspx?siteId=24850&amp;planId=597&amp;partnerId=-1&amp;visitType=1&amp;byHref=1', 'popupwindow', 'width=540,height=400,left=200,top=5,scrollbars,resizable');">Chat Now</a>
+		</div><!-- /Chat Link -->
+    </div>
+    <div class="clear"></div>
+{%endblock%}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">        
+$(document).ready(function(){
+    {%if request.wstore%}
+        $('#proceed_to_pay').click(function(){
+            if($.browser.msie || $.browser.webkit){
+                $('#shipping_info_form').attr("target","_blank"); 
+            }
+        });
+    {%endif%}
+    try {
+        document.shipping_info_form.delivery_name.focus();
+    } catch(err) {
+    }
+
+    $('input[name="del_address"]').click(function() {
+        $('input[name="del_address"]').each(function() {
+            if($(this).attr('checked')) {
+                $($($(this).parent()[0]).parent()[0]).addClass('selected_address');
+            } else {
+                $($($(this).parent()[0]).parent()[0]).removeClass('selected_address');
+            }
+        });
+    });
+    $('input[name="del_address"]').each(function() {
+        if($(this).attr('checked')) {
+            $($($(this).parent()[0]).parent()[0]).addClass('selected_address');
+        } else {
+            $($($(this).parent()[0]).parent()[0]).removeClass('selected_address');
+        }
+    });
+
+    $('div#delivery_address_block input').focus(function() {
+        var radio = $('input[name="del_address"][value="new"]');
+        radio.attr('checked','true');
+        $('input[name="del_address"]').each(function() {
+            if($(this).attr('checked')) {
+                $('.ship_address').removeClass("selected_address");
+                $($($(this).parent()[0]).parent()[0]).addClass('selected_address');
+            } else {
+                $($($(this).parent()[0]).parent()[0]).removeClass('selected_address');
+            }
+        });
+        
+    });
+    
+    $('div#delivery_address_block textarea').focus(function() {
+        var radio = $('input[name="del_address"][value="new"]');
+        radio.attr('checked','true');
+        $('input[name="del_address"]').each(function() {
+            if($(this).attr('checked')) {
+                $('.ship_address').removeClass("selected_address");
+                $($($(this).parent()[0]).parent()[0]).addClass('selected_address');
+            } else {
+                $($($(this).parent()[0]).parent()[0]).removeClass('selected_address');
+            }
+        });
+        
+    });
+
+    $('.ship-address input[name=del_address]:checked').parent().addClass("selected_address"); 
+    $('input:not(:checked)').parent().removeClass("selected_address");
+
+    $("input:radio").change(function() { $('input:not(:checked)').parent().removeClass("selected_address");});
+
+});
+
+$(document).ready(function(){
+    $('.check_tabs').click(function(){
+        var next_tab = $(this).attr('id');
+        current_url = window.location.href;
+        url_splitted = current_url.split("/");
+        new_url = url_splitted[0];
+        for(var i=1;i<url_splitted.length-1;i++){
+            new_url += "/" + url_splitted[i];
+        }
+        new_url += "/" + next_tab;
+        location.href =  new_url;
+    });
+});
+
+
+// user Add. form Submit
+
+$(".ship_address").click(function() {
+
+    $('.ship_address, .address').removeClass("selected_address");
+    $(this).addClass("selected_address");
+
+    $(this).find("span").each(function(){
+        name = $(this).attr("name");
+        value = $(this).text();
+        if (!(name == "" || name == "null" || name == "undefined")) {
+            $("#shipping_info_form [name='delivery_"+name+"']").val(value);
+        }
+    });
+    $('#shipping_info_form').submit();
+});
+
+$('.ship_address').hover(function() {
+    $(this).toggleClass('ship_address_hover');
+});
+
+
+
+</script>
+
+{% endblock %}

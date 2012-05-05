@@ -1,0 +1,172 @@
+{% load web_tags %} 
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form input[type=submit]{width:50px;}
+#id_notes {height:50px;}
+ul, ol { padding-left: 0px !important; }
+.ui-widget select {width: auto;}
+.ui-widget input {width:90px;}
+#stock {width:40px;}
+.ui-dialog .ui-dialog-content {padding: 2px;}
+</style>
+<form method='POST' action=''>
+<div class='clear'></div>
+<div>
+    {% if errors %}
+          <div class="error mart10"> 
+            {% for error in errors %}
+                {{error}}<br/>
+            {% endfor %} 
+          </div>
+        <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok'/></div> 
+    {% else %}
+        {% if virtual_entry_created %}
+            <div class="success">Virtual Stock Entry created successfully.</div>
+            <table class="tbl_response mart5 marb10">
+              <tbody>
+                <tr>
+                    <th>DC</th>
+                    <th>Stock</th>
+                    <th>Starts On</th>
+                    <th>Ends On</th>
+                </tr>
+                    <td class="ca">{{inventory.dc.code}}</td>
+                    <td class="ca">{{inventory.compute_ats|floatformat}}</td>
+                    <td class="ca">{{inventory.starts_on|date:'d-m-Y H:i'}}</td>
+                    <td class="ca">{{inventory.ends_on|date:'d-m-Y H:i'}}</td>
+                <tr>
+                </tr>
+                </tbody>
+            </table>
+            <div><input type="submit" name="submit" value="OK" class="uiButton" id='ok' style="width:80px\9; padding:5px;"/></div>
+        {% else %}
+        <table class="tbl_response mart5 marb10">
+          <tbody>
+            <tr>
+              <th>DC</th>
+              <th>Stock</th>
+              <th>Starts On</th>
+              <th>Ends On</th>
+            </tr>
+            <tr>
+                <td class="ca">
+                    <select name="dc" id="dc">
+                        {% for item in dc %}
+                            <option value="{{item}}" {%if item == 2786 %}selected{%endif%}>{{item}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td> <input class="ca" maxlength="4" size="1" type="text" value="" id="stock" name="stock" /> </td>
+                <td class="ca">
+                    <input class="id_to" maxlength="10" size="7" style="" readonly="True" type="text" name="starts_on" id="starts_on" value="" Autocomplete=OFF style="width:45px;"/>
+                    <select name="starts_on_hr" id="starts_on_hr">
+                        {% for n in 23|get_range:0 %}
+                            <option value="{{n}}">{{n}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="starts_on_min" id="starts_on_min">
+                        <option value="0">0</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                    </select>
+                    <!--
+                    <input class="ca" maxlength="2" size="1" type="text" value="" name="starts_on_hr" id="starts_on_hr" style="width:45px;"/> 
+                    <input class="ca" maxlength="2" size="1" type="text"value="" name="starts_on_min" id="starts_on_min" style="width:45px;" /> 
+                    -->
+                </td>
+                <td class="ca">
+                    <input class="id_to" maxlength="10" size="7" style="" readonly="True" type="text" name="ends_on" id="ends_on" value="" Autocomplete=OFF />
+                    <select name="ends_on_hr" id="ends_on_hr">
+                        {% for n in 23|get_range:0 %}
+                            <option value="{{n}}">{{n}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="ends_on_min" id="ends_on_min">
+                        <option value="0">0</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                    </select>
+                    <!--
+                    <input class="ca" maxlength="2" size="1" type="text" value="" name="ends_on_hr" id="ends_on_hr" style="width:45px;" /> 
+                    <input class="ca" maxlength="2" size="1" type="text"value="" name="ends_on_min" id="ends_on_min" style="width:45px;" /> 
+                    -->
+                </td>
+            </tr>
+           </tbody>
+        </table>
+        <div><input type="submit" name="submit" value="Add Entry" class="uiButton" id='submit' style="width:100px; padding:5px;"/></div>
+        {% endif %}
+    {% endif %}
+</div>
+</form>
+
+<script type='text/javascript'>
+    $('.date').datepicker({dateFormat: 'dd-mm-yy'});
+    $('.id_from').datepicker({dateFormat: 'dd-mm-yy', minDate:0})
+    /*$('#ends_on').change(function(){
+            console.log("ID FROM ON SELECT")
+            var end_value = $(this).val()
+            $('.id_to').datepicker("option", "maxDate", end_value);
+    });*/
+    
+	$('.id_to').datepicker({dateFormat: 'dd-mm-yy', minDate:0});
+    $('#starts_on').change(function(){
+            var from_value = $(this).val()
+            $('.id_to').datepicker("option", "minDate", from_value);
+    });
+    
+    $('#submit').click(function() {
+        var date = $('#starts_on').val();
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#add_vi').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#add_vi').html(xhr.responseText);
+        };
+        var url = '/category/category_management/inventory/add_vi/'
+        var dc = $('#dc option:selected').val();
+        //var starts_on = $('#starts_on').val() + ' ' + $('#starts_on_hr').val() + ':' + $('#starts_on_min').val();
+        //var ends_on = $('#ends_on').val() + ' ' + $('#ends_on_hr').val() + ':' + $('#ends_on_min').val();
+        var article_id = {{article_id}}
+        var stock = $('#stock').val();
+        var data = 'article_id=' + article_id;
+        data += '&starts_on=' + $('#starts_on').val();
+        data += '&starts_on_hr=' + $('#starts_on_hr').val();
+        data += '&starts_on_min=' + $('#starts_on_min').val();
+        data += '&ends_on=' + $('#ends_on').val();
+        data += '&ends_on_hr=' + $('#ends_on_hr').val();
+        data += '&ends_on_min=' + $('#ends_on_min').val();
+        data += '&dc=' + dc;
+        data += '&stock=' + stock;
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+    
+    $('#ok').click(function() {
+        $(".ui-dialog-titlebar-close").trigger('click');
+        window.location.reload();
+        var onSuccess = function(data, textStatus, xhr) {
+            $('#add_vi').html(data);
+        };
+        var onError = function(xhr, textStatus, error) {
+            $('#add_vi').html(xhr.responseText);
+        };
+        var data = 'article_id=' + {{article_id}};
+        var url = '/category/category_management/inventory/all_inventory/'
+        $.ajax({ url:url,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+    
+</script>

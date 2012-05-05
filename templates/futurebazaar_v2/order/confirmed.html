@@ -1,0 +1,273 @@
+{% extends request.ws_base|default:"web/base.html" %}
+{% block extra_header %}
+<META HTTP-EQUIV="expires" CONTENT="0">
+{% endblock %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block content %}
+<div class="breadcrumb"> &nbsp; </div>
+<div>
+<div class="cart_left">
+    <div class="order_booked_msg mart20 marb10">
+        <div class="f18 marb5">Congrats on your purchase. Your Order ID is {{order.get_id}}.</div>
+        {% if payback_points_earned %}<div class="f14 marb5">Subject to payment realization you will be awarded {{ payback_points_earned }} payback points.</div>{% endif %}
+        <div class="fdgray f11"> Use this Order ID in all communication with {{order.client.name}}. We have sent your order details by
+        {% if order.user.get_primary_emails%} email to <strong>{{order.user.get_primary_emails.0}}</strong>{%else%} SMS
+        to <strong>{{order.user.get_primary_phones.0}}</strong>{%endif%}
+    </div>
+        
+    <!--<div class="mart20">
+        <div class="left"> <span class="fb">Spread the Joy :</span> Tell your friends on Facebook and Twitter about your purchase on www.futurebazaar.com 
+        </div>
+            <div class="left">
+              <a href="http://www.facebook.com/sharer.php?u={{fb_share_link}}" target="_blank" class="spone follow_f" onclick="return fbs_click('{{fb_share_link}}', '')" rel="nofollow"/></a> 
+          <a href="http://twitter.com/share" target="_blank" class="spone follow_t" onclick="return twit_click('{{fb_share_link}}','Just bought this product!','')" rel="nofollow"/></a>            </div>
+        <div class="clear"></div>
+    </div>-->
+    </div>
+
+{%if similar_products%}
+{% comment %}
+<div class="f18 h2color padb5 mart20 bbs_one">You may also like</div>
+<div class="mart10 you_may_like">
+  <ul class="left">
+    {%for product in similar_products%}
+     <li class="left" style="width:170px;">
+      <a href="{% cc_url request product.product.url %}"><div class="ca prod_title">{{product.product.title}}</div>
+      <img src="{{product.product_images.0.get_large_thumb_url}}"  title="{{product.product.title}}" alt="" width="150" height="150" /></a>
+      <div class="ca fs fdgray f11">{% get_price_info request product.rate_chart 'list_price_label' %} <span
+      class="WebRupee">Rs. </span>{% get_price_info request product.rate_chart 'list_price' %}</div>
+      <div class="ca forange fb mart5 f11">{% get_price_info request product.rate_chart 'offer_price_label' %} <span
+      class="WebRupee">Rs. </span> {% get_price_info request product.rate_chart 'offer_price' %} </div>
+      <div class="ca mart5 f11">You Steal: <span class="WebRupee">Rs. </span>{%getSavings request product.rate_chart%} ({% getDiscount request product.rate_chart %}%)</div>
+      <div class="ca mart5">
+        <button class="btn btn_buynow_small"></button>
+      </div>
+    </li>
+    {%endfor%}
+  </ul>
+  <div class="clear"></div>
+</div>
+{% endcomment %}
+
+<div class="ord_conf_similar_prod">
+      <h4>You may also like</h4>
+          {%for product in similar_products%}
+              <div class="ord_conf_similar_prod_item ">
+               <a href="{% cc_url request product.product.url %}">
+                 <img src="{{product.product_images.0.get_large_thumb_url}}"  title="{{product.product.title}}" alt="" width="150" height="150" />
+               </a>
+                <div class="ord_conf_similar_prod_desc">
+                  <div><a href="{%cc_url request product.product.url%}" title="{{product.product.title}}">{{product.product.title}}</a></div>
+                  <div><span class="WebRupee">Rs.</span><span class="fs"> {{product.price_info.list_price|money}} </span>&nbsp;&nbsp;
+                  <span class="f18 forange fb"> <span class="WebRupee">Rs.</span> {{product.price_info.offer_price|money}}</span></div>
+                </div>
+                <div class="clear"></div>
+              </div>
+          {%endfor%}
+      <div class="clear"></div>
+    </div>
+
+{%endif%}
+
+
+
+
+<div class="clear"></div>
+</div>
+<div class="cart_right">
+{% include "order/right.html" %}
+    <div id="shipping_address" class="cart_summary mart20">
+      <div class="cart_summary_title pad10">Shipping Address </div>
+      <div class="pad10 vt">
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td><span>{{address_info.first_name}} {{address_info.last_name}}</span><br/>
+                <span>{{address_info.address}}</span><br/>
+                <span>{{address_info.city}} - {{address_info.pincode}},</span><br/>
+                {%if address_info.state%} <span>{{address_info.state}},</span>
+                {%endif%}
+                {%if address_info.country%}{%if address_info.state%}, {%else%}{%endif%} <span>{{address_info.country}}</span><br/>
+                {%endif%}                            
+                {%if address_info.phone%} <span>Phone: {{address_info.phone}}</span> {%endif%} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+{% endblock %}
+{% block ga_extensions %}
+
+{% if not order.ga_tracked %}
+  _gaq.push(['_addTrans',
+    '{{order.get_id}}',
+    '{{request.client}}',
+    '{{order.payable_amount}}',
+    '{{order.taxes}}',
+    '{{order.shipping_charges}}',
+    '{{order.get_delivery_city}}',
+    '{{order.get_delivery_state}}',
+    '{{order.get_delivery_country}}'
+  ]);
+
+    {% for oi in order.orderitem_set.all %}
+  _gaq.push(['_addItem',
+    '{{order.get_id}}',           // order ID - required
+    '{{oi.seller_rate_chart.sku}}',           // SKU/code - required
+    '{{oi.item_title}}',        // product name
+    '{{request.client}}__{{oi.seller_rate_chart.product.category.name}}',   // category or variation
+    '{{oi.seller_rate_chart.product.category.name}}',   // category or variation
+    '{{oi.sale_price}}',          // unit price - required
+    '{{oi.qty}}'               // quantity - required
+  ]);
+    {% endfor %}
+_gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+{{ order.set_tracked }}
+{% endif %}
+{% endblock %} 
+{% block script_footer %}
+{{block.super}}
+<!-- Desidime Offer Conversion: All Categories:  -->
+<img src="https://paritycube.go2cloud.org/SL9?adv_sub={{order.get_id}}&amount={{order.payable_amount}}" width="1" height="1" />
+<!-- // End Offer Conversion -->
+<!-- Offer Conversion: FutureBazaar.com -->
+<img src="http://futurebazaar.go2cloud.org/SL1?adv_sub={{order.get_id}}&amount={{order.payable_amount}}" width="1" height="1" />
+<!-- // End Offer Conversion -->
+<!-- OMG Tracking Code -->
+<script src="https://track.in.omgpm.com/210321/transaction.asp?APPID={{order.get_id}}&MID=210321&PID=8248&status="></script>
+<noscript><img src="https://track.in.omgpm.com/apptag.asp?APPID={{order.get_id}}&MID=210321&PID=8248&status=" border="0" height="1" width="1"></noscript>
+<!-- END of OMG Tracking Code -->
+<!-- Google Code for Future Bazaar Tracking code1 Conversion Page -->
+<script type="text/javascript">
+$(document).ready(function(){
+    /* <![CDATA[ */
+    var google_conversion_id = 986917502;
+    var google_conversion_language = "ar";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "2RwCCOrm3QIQ_tTM1gM";
+    var google_conversion_value = 0;
+    /* ]]> */
+});
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/986917502/?label=2RwCCOrm3QIQ_tTM1gM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Google Code for Future bazaar tracking code Conversion Page -->
+<script type="text/javascript">
+$(document).ready(function(){
+    /* <![CDATA[ */
+    var google_conversion_id = 986363575;
+    var google_conversion_language = "ar";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "RlzHCJmj8gIQt-2q1gM";
+    var google_conversion_value = 0;
+    /* ]]> */
+});
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/986363575/?label=RlzHCJmj8gIQt-2q1gM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<!-- Google Code for Leads Conversion Page -->
+<script type="text/javascript">
+$(document).ready(function(){
+    /* <![CDATA[ */
+    var google_conversion_id = 959831824;
+    var google_conversion_language = "ar";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "RM_wCKj5gwMQkL7XyQM";
+    var google_conversion_value = 0;
+    /* ]]> */
+});
+</script>
+<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/959831824/?label=RM_wCKj5gwMQkL7XyQM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<script language="javascript" src="https://www.everestjs.net/static/st.js"></script>
+<script language="javascript">
+$(document).ready(function(){
+    var ef_event_type="transaction";
+    var ef_transaction_properties = "ev_Leads=<Leads>&ev_transid=<transid>";
+    /*
+    * Do not modify below this line
+    */
+    var ef_segment = "";
+    var ef_search_segment = "";
+    var ef_userid="2820";
+    var ef_pixel_host="pixel.everesttech.net";
+    effp();
+});
+</script>
+<noscript><img src='https://pixel.everesttech.net/2820/t?ev_Leads=<Leads>&ev_transid=<transid>' width='1' height='1'/></noscript>
+
+<!-- DGM Affiliate tracking code -->
+<!-- Sales Order Tag -->
+<img height="0" width="0" src="http://www.s2d6.com/x/?x=a&amp;h=51538&amp;o={{order.get_id}}" alt=""/>
+<!-- Product Detail Tags -->
+{% for item in order_items%}
+    <img height="0" width="0" src="http://www.s2d6.com/x/?x=r&amp;h=51538&amp;o={{order.get_id}}&amp;g={{item.seller_rate_chart.sku}}&amp;s={{item.seller_rate_chart.offer_price}}&amp;q={{item.qty}}"/>
+{% endfor %}
+<!-- End DGM Affiliate -->
+<!-- Google Code for CPA - Sale Conversion Conversion Page -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 989445909;
+    var google_conversion_language = "en";
+    var google_conversion_format = "2";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "73dbCOPykAMQlf7m1wM";
+    var google_conversion_value = {{order.payable_amount}};
+    /* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/989445909/?value={{order.payable_amount}}&amp;label=73dbCOPykAMQlf7m1wM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Yahoo! Conversion code -->
+<script language="javascript" type="text/javascript">
+    window.ysm_customData = new Object();
+    window.ysm_customData.conversion = "transId=,currency=,amount={{order.payable_amount}}";
+    var ysm_accountid  = "1HNAT80JS1URS4SJLODARRR4PM4";
+    document.write("<SCR" + "IPT language='JavaScript' type='text/javascript' "
+    + "SRC=//" + "srv1.wa.marketingsolutions.yahoo.com" + "/script/ScriptServlet" + "?aid=" + ysm_accountid
+    + "></SCR" + "IPT>");
+</script>
+
+<!--  Yahoo! Revenue code   -->
+<script language="javascript" type="text/javascript">
+    window.ysm_customData = new Object();
+    window.ysm_customData.conversion = "transId=,currency=,amount={{order.payable_amount}}";
+    var ysm_accountid  = "1VSPTL2L90N8JT8USC4D1BQLC3C";
+    document.write("<SCR" + "IPT language='JavaScript' type='text/javascript' " 
+    + "SRC=//" + "srv1.wa.marketingsolutions.yahoo.com" + "/script/ScriptServlet" + "?aid=" + ysm_accountid 
+    + "></SCR" + "IPT>");
+</script>  
+<!-- Offer Conversion: Futurebazaar.com (CPA) -->
+<iframe src="http://futurebazaar.go2cloud.org/SL1T" scrolling="no" frameborder="0" width="1" height="1"></iframe>
+<!-- // End Offer Conversion -->
+{% endblock %} 

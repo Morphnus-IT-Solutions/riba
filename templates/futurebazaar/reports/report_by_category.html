@@ -1,0 +1,53 @@
+<div id="user_content">
+{% extends 'ppd/user_home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block user_content%}
+<div class="padding_top10"> 
+  {%comment%}
+  <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+  {%endcomment%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Reports</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  		<div class="left w915">
+		{% daterange "Sales Summary by Category" search_trend from_date to_date request '' client_display_name%}
+		</div>
+		{%include "ppd/show_excel_link.html" %}
+  {% if orders_count %}
+  <div class="clear">&nbsp;</div>
+  <div class="clear padding_top10">
+  <table class="tbl_response mart5 marb10">
+    <tr>
+      <th class="f11 flgray">Categories</th>
+      <th class="f11 flgray">Bookings ( <span class="WebRupee">Rs.</span> )</th>
+      <th class="f11 flgray">Sales ( <span class="WebRupee">Rs.</span> )</th>
+      <th class="f11 flgray">Orders ( # )</th>
+      <th class="f11 flgray">Avg Order ( <span class="WebRupee">Rs.</span> )</th>
+    </tr>
+    <tr>
+      <td>{% for category in categories_list %}
+        <div class="flgray ">{{category}}</div>
+        {% endfor %} </td>
+      <td>{% for ele in bookings %}
+        <div class="ra"> {{ele|floatformat:0|money}} </div>
+        {% endfor %} </td>
+      <td>{% for ele in sales %}
+        <div class="ra"> {{ele|floatformat:0|money}} </div>
+        {% endfor %} </td>
+      <td>{% for ele in orders_count %}
+        <div class="ra"> {{ele}} </div>
+        {% endfor %} </td>
+      <td>{% for ele in avg_order %}
+        <div class="ra"> {{ele|floatformat:0|money}} </div>
+        {% endfor %} </td>
+    </tr>
+  </table>
+  </div>
+  {% else %}
+  <div class="clear padding_top10">No sales for this date range</div>
+  {%endif%} </div>
+{% endblock %} 

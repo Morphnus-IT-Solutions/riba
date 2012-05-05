@@ -1,0 +1,28 @@
+{% extends 'web/ppd_base.html' %}
+{% load ppd_tags %}
+
+{% block content %}
+<div class="padding_top10"> 
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Client - {{client.0.name}}</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="mart20"> 
+  	{% if loggedin %}
+		Welcome to IFS Admin, please select what action you want to take from the Top Menu.
+	{% endif %}
+  </div>
+</div>
+{% endblock %}
+{% block script_footer %}
+    <script type="text/javascript">
+        $("#back_button").click(function(){
+            history.go(-1);
+            return true;
+        })
+    </script>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+<table>   
+ <tr><td class="la fb" width="80"> <span class="label">Card Type</span></td>
+ <td>        
+                  <label>
+                  <input type="radio" name="cardtype" checked="checked" value="visa-card" style="vertical-align:top;">
+                  <img src="{{MEDIA_URL}}images/visa.gif" height="16"/> </label>
+                  &nbsp;&nbsp;
+                  <label>
+                  <input type="radio" name="cardtype" value="master-card" style="vertical-align:top;">                  
+                  <img src="{{MEDIA_URL}}images/master_card25.gif" height="16"/></label>  
+  </td></tr>
+  </table>
+{% include "order/payment_options/billing_info.html" %}
+<br />
+
+  <div class="notice">We will send you the order details by email and SMS. Please click the link in the email to complete your order on the web using a credit card.</div>

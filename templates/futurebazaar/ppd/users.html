@@ -1,0 +1,74 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+{% load pagination_tags%}
+<div class="padding_top10"> 
+	{%comment%}
+  		<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+  	{%endcomment%}
+  	<div class="content_head">
+    	<div class="header rc5">
+      		<h1>Sellers Hub Users</h1>
+    	</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+	<div class="right">
+		{%if 'group' in url%}
+			<a class="btn_c btn_c_s btn_orange fblack" href="{{request.path}}">&laquo; Show All</a>
+		{%else%}
+			<a href="/management/user_rights/add/" class='btn_c btn_c_s btn_orange add_user'>+ Add User</a>
+		{%endif%}
+	</div>
+	<div class="clear">&nbsp;</div>
+  	<div class="inner-content">
+		<div>
+			<div class="tbl_review mart10"><!-- div for header part -->
+					<ul class="left">
+						<li class="w50">Sr. No</li>
+						<li class="w150">User Info</li>
+						<li class="w150">Accounts Access</li>
+						<li class="w453">Feature Access</li>
+						<li style="border:0px none;" class="w130">Action</li>
+					</ul>
+				<div class="clear"></div>
+			</div><!-- /div for header part -->
+            {% autopaginate users 10 %}
+			{%for user in users%}
+			<div class="divider-bottom"><!-- /div  -->
+				<div class="left w40 f11 ca vatop pad-review">{{10|multiply:page|add:forloop.counter}}</div>
+				<div class="left w143 f11 vatop pad-review word-wrap">
+					<div class="flgray la f11">{%if user.get_full_name%}{{user.get_full_name}}{%else%}No Profile Name{%endif%}</div>
+					<div class="flgray la f11 padb5"><a href="/management/user_rights/?group={{group|key:user}}">{{group|key:user}}</a></div>
+					<div class="flgray la f12 fb fblack">{{user.username}}</div>
+					<div class="flgray la">Last login on:</div>
+					<div class="flgray la">{{user.last_login|date:'D d M, Y '}}</div>
+					<div class="flgray la">{{user.last_login|date:'f A'}}</div>
+				</div>
+				<div class="left w143 f11 vatop pad-review word-wrap">{% for acc in account|key:user%} {{acc|title}}</br>{%endfor%}</div>
+				<div class="left w443 f11 pad-review txtaj">
+					<div style="line-height:14px;" class="mart5 marb5">{%for tabs in user|get_accessible_tabs %} {{tabs}}, {%endfor%}</div>
+				</div>
+				<div class="left w120 f11 vatop pad-review ca">
+						<a href="/management/user_rights/add/?action=edit&username={{user.username}}" class='btn_c btn_c_s btn_orange review_on'><span style="padding: 2px 6px !important;">Edit</span></a>                   
+						<a href="/management/user_rights/add/?action=delete&username={{user.username}}" class='marl20'><span style="padding: 2px 6px !important;"><img src="/media/rms/images/dustbin_icon.png" align="absmiddle"/></span></a>
+				</div>
+				<div class="clear"></div>
+			</div><!-- /div  -->
+			{%endfor%}
+            {%paginate%}
+		</div>
+	</div>
+	
+	<!-- modal popup for create new user -->
+	<div id='add_user' style='display:none;'></div><!-- /modal popup for create new user -->
+
+	<!-- modal popup for edit user -->
+	<div id='edit_user' style='display:none;'></div><!-- /modal popup for edit user -->
+	
+</div>
+
+
+{% endblock %} 
+

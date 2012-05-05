@@ -1,0 +1,84 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{%load web_tags%}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+	}
+	table, td, th {
+		vertical-align: middle;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+	.tbl_profile input[type="text"], .tbl_profile input[type="password"], .tbl_profile input.text, .tbl_profile input.title, .tbl_profile textarea, .tbl_profile select {
+		margin: 0;
+		width: 250px;
+	}
+</style>
+<div class="padding_top10">
+{%comment%}
+<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+{%endcomment%}
+<div class="content_head">
+  <div class="header rc5">
+    <h1>{{client_display_name|title}} - Promotion Details</h1>
+  </div>
+  <div class="clear bordergray"></div>
+</div>
+  <div class="inner-content">
+    <table class="tbl_profile">
+      <tbody>
+        <tr>
+          <td width="40" class="f11 flgray">Promotion ID : </td>
+          <td width="140" class="f12">{{promotion.promotion_id}}</td>
+        </tr>
+        <tr>
+          <td width="40" class="f11 flgray vatop">Promotion Name : </td>
+          <td width="140" class="f12">{{promotion.promotion_name}}</td>
+        </tr>
+        <tr>
+          <td width="40" class="f11 flgray">Discount Type : </td>
+          <td width="140" class="f12">{{promotion.promotion_discount_type}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">Discount Value : </td>
+          <td width="140" class="f12">{{promotion.promotion_discount_value}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">Applies On : </td>
+          <td width="140" class="f12">{{promotion.promotion_applies_on}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">Promotion Type : </td>
+          <td width="140" class="f12">{{promotion.promotion_type}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">Min Order Value : </td>
+          <td width="140" class="f12">{{promotion.promotion_min_order_value}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">Start Date : </td>
+          <td width="140" class="f12">{{promotion.promotion_start_date}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">End Date : </td>
+          <td width="140" class="f12">{{promotion.promotion_end_date}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">Active : </td>
+          <td width="140" class="f12">{{promotion.promotion_active}}</td>
+        </tr>
+        <tr>
+          <td width="140" class="f11 flgray">Coupons : </td>
+          {% if promotion.len <= 1 %}
+          <td width="140" class="f12">{{promotion.first_coupon}}</td>
+          {% else %}
+          <td width="140" class="f11"><a href="/show_coupons/{{client_name}}/{{seller_name}}/{{promotion.promotion_id}}/" >coupons list</a></td>
+          {% endif %} </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %} 

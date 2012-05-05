@@ -1,0 +1,46 @@
+- fields: {code: card-web, group_name: card, name: Web}
+  model: accounts.paymentmode
+  pk: 1
+- fields: {code: card-moto, group_name: card, name: Moto}
+  model: accounts.paymentmode
+  pk: 2
+- fields: {code: card-ivr, group_name: card, name: IVR}
+  model: accounts.paymentmode
+  pk: 3
+- fields: {code: deposit-hdfc, group_name: deposit, name: Deposit (HDFC)}
+  model: accounts.paymentmode
+  pk: 4
+- fields: {code: deposit-axis, group_name: deposit, name: Deposit (AXIS)}
+  model: accounts.paymentmode
+  pk: 5
+- fields: {code: deposit-icici, group_name: deposit, name: Deposit (ICICI)}
+  model: accounts.paymentmode
+  pk: 6
+- fields: {code: transfer-axis, group_name: transfer, name: Transfer (AXIS)}
+  model: accounts.paymentmode
+  pk: 7
+- fields: {code: transfer-icici, group_name: transfer, name: Transfer (ICICI)}
+  model: accounts.paymentmode
+  pk: 8
+- fields: {code: transfer-hdfc, group_name: transfer, name: Transfer (HDFC)}
+  model: accounts.paymentmode
+  pk: 9
+- fields: {code: cod, group_name: cod, name: Cash On Delivery}
+  model: accounts.paymentmode
+  pk: 10
+- fields: {code: mail, group_name: mail, name: Cheque}
+  model: accounts.paymentmode
+  pk: 12
+- fields: {code: dd, group_name: mail, name: Demand Draft}
+  model: accounts.paymentmode
+  pk: 13
+- fields: {code: cash, group_name: mail, name: Cash}
+  model: accounts.paymentmode
+  pk: 14
+- fields: {code: emi, group_name: emi, name: EMI}
+  model: accounts.paymentmode
+  pk: 18
+- fields: {code: future-money, group_name: mail, name: Future Money}
+  model: accounts.paymentmode
+  pk: 19
+

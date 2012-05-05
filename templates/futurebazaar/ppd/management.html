@@ -1,0 +1,11 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<a href="/{{client_name}}/{{seller_name}}/management/user_rights/">User Rights</a></br>
+<a href="/{{client_name}}/{{seller_name}}/management/profiles/">Profiles</a></br>
+<a href="/{{client_name}}/{{seller_name}}/management/client_setup/">Client Setups</a></br>
+<a href="/{{client_name}}/{{seller_name}}/management/t&c/">T&C</a></br>
+<a href="/{{client_name}}/{{seller_name}}/management/notifications/">Notifications</a></br>
+{%endblock%} 

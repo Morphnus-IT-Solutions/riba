@@ -1,0 +1,35 @@
+{% load web_tags %}
+{% load cc_tags %}
+<div class="cart" id="header_view_cart">
+  <a id="cart_tab" href={% cc_url request "orders/cart_popup/" %} class="lightbox_overlay cart_lightbox mycart_lightbox"  >
+      <div class="cart_icon"></div>
+      <div class="cart_items">{{cart_info.count}}</div>
+  </a>
+  <div class="clear"></div>
+  <div class="white_patch"></div>
+  <div class="cart_menu" id="header_show_cart">
+  {% if cart_info.order_items %}
+    {% for item in cart_info.order_items %}   
+        <div class="cart_item">
+            <img class="left" title="{{item.item_title}}" src="{{item.seller_rate_chart.product.get_default_img}}" width="40" height="40" />
+            <div class="left cart_item_name">
+                <div><a href="{% cc_url request item.seller_rate_chart.product.url%}" title="{{item.item_title}}">{{item.item_title|truncate:40}}</a></div>
+                <div><span class="fb"><span class="WebRupee">Rs.</span> {% get_price_info request item.seller_rate_chart 'offer_price' %} </span><span> | </span><span>Qty:{{item.qty}}</span></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    {% endfor %}
+    <div class="cart_total">
+        {% if cart_info.coupon_discount %}
+            <div class="forange"><span class="fb">Discounts:</span> <span class="WebRupee">Rs.</span> {{cart_info.coupon_discount}}</div>
+        {% endif %}
+      <div><span class="fb">Total Payable:</span> <span class="WebRupee">Rs.</span> {{cart_info.total_amount}}</div>
+    </div>
+     <a href={% cc_url request "orders/cart_popup/" %} class="lightbox_overlay cart_lightbox mycart_lightbox" ><div class="view_cart_items" id="view_mycart">VIEW CART ({{cart_info.count|upper}})</div></a>
+  {% else %}    
+    <div class="f12 pad10" id="header_show_cart">
+       <span class="fb"> Your Shopping Cart is Empty</span>
+    </div>
+  {% endif %}
+  </div>
+</div>

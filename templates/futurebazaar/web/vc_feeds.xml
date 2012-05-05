@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Products>
+    {% for data in datas %}
+        <Product Row="{{forloop.counter}}">
+            <Name>{{data.productname}}</Name>
+            <URL>{{data.productlink}}</URL>
+        </Product>
+    {% endfor %}
+</Products>

@@ -1,0 +1,47 @@
+{% extends "web/base.html" %}
+{%load cc_tags%}
+{%load web_tags%}
+{% block content %}
+<div class="review_thank_you">	
+	<div class="review_thank_you_msg fblack">		
+		<div class="mart10 f15 fb">Thanks, your review was posted successfully</div>
+		<div class="f12 mart5 marb10">It might take sometime to appear on futurebazaar.com. Please Note that all reviews at Future Bazaar are moderated to check quality and relevance.</div>
+	</div>
+		<div class="f15 mart30">
+			Snapshot of Review how it will appear on futurebazaar.com 
+		</div>
+		<div class="mart20">
+	<div class="left review_thank_you_left">
+ 		<div style="padding-top:2px;">
+	        <input type="radio" class="star" value="1" name="rating-{{obj.id}}" {%ifequal obj.rating 1%}checked{%endifequal%} disabled/>
+	        <input type="radio" class="star" value="2" name="rating-{{obj.id}}" {%ifequal obj.rating 2%}checked{%endifequal%} disabled/>
+	        <input type="radio" class="star" value="3" name="rating-{{obj.id}}" {%ifequal obj.rating 3%}checked{%endifequal%} disabled/>
+	        <input type="radio" class="star" value="4" name="rating-{{obj.id}}" {%ifequal obj.rating 4%}checked{%endifequal%} disabled/>
+	        <input type="radio" class="star" value="5" name="rating-{{obj.id}}" {%ifequal obj.rating 5%}checked{%endifequal%} disabled/>
+   		</div>
+		<div class="clear"></div>
+    	<div class="f12 fb" style="color:#343434;margin-top:8px;">{{obj.display_name}}</div>
+        <div class="clear"></div>  
+		<div class="f11 mart5" style="color:#05559D">{{obj.reviewed_on|date:" d M Y"}}</div>
+	</div>
+		<div class="left review_thank_you_right">
+			<div class="f15 fb"> {{obj.title}}</div>
+			<div class="f12">
+				<p class="mart10">{{obj.review|linebreaks}}</p>
+			</div>
+            {%comment%}
+			<div class="f11 marr10 mart10 left lh25" id="helpful_data{{obj.id}}">Was this review Helpful?</div>
+			<div class="left lh25 mart10">
+				<a class="review_like" id="like" ><span id="rate_yes_{{obj.id}}" >0</span></a> &nbsp;&middot;&nbsp;
+				<a class="review_dislike" id="dislike"><span id="rate_no_{{obj.id}}">0</span></a>
+			</div>	
+            {%endcomment%}
+		</div>
+	</div>
+	<div class="clear"></div>
+	
+	<div class="mart20"><a href="/{{slug}}/pd/{{obj.product_id}}/">View Product Details</a></div>
+</div>
+{% endblock %}
+
+

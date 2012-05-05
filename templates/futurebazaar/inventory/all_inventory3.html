@@ -1,0 +1,336 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - View Current Inventory</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="clear"></div>
+  	<form name="search_by_sku_form" id="search_by_sku_form" action="" method="POST">
+        {% if product and rate_chart %}
+            <div class="left mart5">
+                <img class="left" src="{{product_image.get_large_thumb_url}}" width="150" height="150" title="{{product.title}}" alt="{{product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" />
+                <div class="left" style="padding:0px 15px;">
+                    <table class="f12">
+                        <tr>
+                            <td><strong>Product Name:</strong></td>
+                            <td>{{product.title|truncate:65}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Article Id:</strong></td>
+                            <td>{{rate_chart.article_id}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SKU:</strong></td>
+                            <td>{{rate_chart.sku}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Category:</strong></td>
+                            <td>{{product.category.name}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Product Status:</strong></td>
+                            <td>{{product.status|title}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pricing maintained:</strong></td>
+                            <td>{{rate_chart.pricing_maintained|title}}</td>
+                        </tr>
+                        {% if rate_chart.is_bundle %}
+                            <tr>
+                                <td><strong>Bundled Product:</strong></td>
+                                <td>Yes</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+
+            {% if errors %}
+                <div>
+                  <div class="error"> 
+                    {% for error in errors %}
+                        {{error}}<br/>
+                    {% endfor %} 
+                  </div>
+                </div>
+            {% endif %}
+
+            {% if inventory_levels %}
+                <div>
+                    <table class="tbl_response mart5 marb10">
+                      <tbody>
+                        <tr>
+                          <th>DC</th>
+                          <th>Type </th>
+                          <th>ATS</th>
+                          <th>Starts On</th>
+                          <th>Ends On</th>
+                          <th>Expected On</th>
+                          <th>Expected In</th>
+                          <th>Is Active</th>
+                          <th>Edit</th>
+                          <th>Delete</th>
+                        </tr>
+                        <tr>
+                            {% for inventory in inventory_levels %}
+                            <tr>
+                                <td class="ca">{{inventory.dc.code}}</td>
+                                <td class="ca">{{inventory.type|title}}</td>
+                                <td class="ca">{{inventory.compute_ats|floatformat}}</td>
+                                {% if inventory.type != 'physical' %}
+                                    <td class="ca">{{inventory.starts_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca">{{inventory.ends_on|date:'d-m-Y H:i'}}</td>
+                                    <td class="ca">{%if inventory.expected_on%}{{inventory.expected_on|date:'d-m-Y H:i'}}{%else%}--{%endif%}</td>
+                                    <td class="ca">{%if inventory.expected_in%}{{inventory.expected_in|floatformat}}{%else%}--{%endif%}</td>
+                                {% else %}
+                                    <td class="ca"> -- </td>
+                                    <td class="ca"> -- </td>
+                                    <td class="ca"> -- </td>
+                                    <td class="ca"> -- </td>
+                                {% endif %}
+                                <td class="ca">{%if inventory.is_active%}Yes{%else%}No{%endif%}</td>
+                                {% if inventory.type == 'physical' %}
+                                    <td class="ca"><div><input type='submit' class='uiButton edit_physical' id='{{inventory.id}}' value='Edit' /></div></td>
+                                    <td class="ca"> -- </td>
+                                {% else %}
+                                    <td class="ca"><div><input type='submit' class='uiButton edit_virtual' id='{{inventory.id}}' value='Edit' /></div></td>
+                                    {% if inventory.starts_on <= current_time %}
+                                        <td class="ca"> -- </td>
+                                    {% else %}
+                                        <td class="ca"> <div><input type='submit' class='uiButton delete_vi' id='{{inventory.id}}' value='Delete' /></div></td>
+                                    {% endif %}
+                                {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tr>
+                       </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+			<div class="left"><input type='submit' class='uiButton add_vi' id='{{rate_chart.article_id}}' value='Add Backorder Stock' /></div>
+
+            <div class="clear"></div>
+        {% else %}
+            {% if errors %}
+                <div>
+                  <div class="error"> 
+                    {% for error in errors %}
+                        {{error}}<br/>
+                    {% endfor %} 
+                  </div>
+                </div>
+            {% endif %}
+
+            <div class="left">
+                <strong>Article Id/SKU :</strong> 
+                <input type="text" name="article_id" value=""></input> &nbsp; &nbsp;
+                <input type="submit" name="search" class="uiButton" value="Search" id="submit_button">
+            </div>
+            <div class="clear">&nbsp;</div>
+
+        {% endif %}
+  </form>
+</div>
+<div class="clear"></div>
+<div id='apply_action' style='display:none;'></div>
+<div id='add_vi' style='display:none;'></div>
+<div id='edit_physical' style='display:none;'></div>
+<script>
+$('.apply_action').click(function() {
+    var id = $(this).attr('id');
+    /*
+    var s = x.split('_');
+    var client_name = s[0];
+    var seller_name = s[1];
+    var id = s[2];
+    */
+    var url = '/category/category_management/inventory/edit_virtual_inventory/';
+    var width = 930;
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+	};
+    var data = 'id='+id;
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('.edit_virtual').click(function() {
+    var id = $(this).attr('id');
+    var url = '/category/category_management/inventory/edit_virtual_inventory/';
+    var width = 960;
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Edit Virtual Stock Entry', 
+            width:width, resizable:false});
+	};
+	
+    var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Edit Virtual Stock Entry', 
+            width:width, resizable:false});
+	};
+    
+    var data = 'id='+id;
+    
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('.edit_physical').click(function() {
+    var id = $(this).attr('id');
+
+    var url = '/category/category_management/inventory/edit_physical_inventory/';
+    var width = 300;
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#edit_physical').html(data);
+        var dialog = $('#edit_physical').dialog({modal:true, title:'Edit Physical Stock Entry', 
+            width:width, resizable:false});
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#edit_physical').html(xhr.responseText);
+        var dialog = $('#edit_physical').dialog({modal:true, title:'Edit Physical Stock Entry', 
+            width:width, resizable:false});
+	};
+    var data = 'id='+id;
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('.edit_backorder').click(function() {
+    var id = $(this).attr('id');
+    var url = '/category/category_management/inventory/edit_backorder/';
+    var width = 960;
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Edit Backorderable Entry', 
+            width:width, resizable:false});
+	};
+	
+    var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Edit Backorderable Entry', 
+            width:width, resizable:false});
+	};
+    
+    var data = 'id='+id;
+    
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('.delete_vi').click(function() {
+    var id = $(this).attr('id');
+
+    var url = '/category/category_management/inventory/delete_vi/';
+    var width = 900;
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Delete Stock Entry', 
+            width:width, resizable:false});
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Delete Stock Entry', 
+            width:width, resizable:false});
+	};
+    var data = 'id='+id;
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('.add_vi').click(function() {
+    var article_id = $(this).attr('id');
+    var url = '/category/category_management/inventory/add_vi/';
+    var width = 545;
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#add_vi').html(data);
+        var dialog = $('#add_vi').dialog({modal:true, title:'Add Backorder Stock', 
+            width:width, resizable:false});
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#add_vi').html(xhr.responseText);
+        var dialog = $('#add_vi').dialog({modal:true, title:'Add backorder Stock', 
+            width:width, resizable:false});
+	};
+    var data = 'article_id=' + article_id;
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+/*
+$(document).ready(function(){
+    $('.date').datepicker({dateFormat: 'dd-m-yy'});
+});
+*/
+</script>
+{% endblock %} 
+
+{% block script_footer %}
+{{block.super}}
+{% endblock %} 

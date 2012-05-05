@@ -1,0 +1,6 @@
+<div class="excel_main">{%ifequal request.path full_path%}
+    <a href="{{full_path}}?{{excel}}=True"><img src="http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/excel-16.gif" alt="Excel" title="Excel" /></a>&nbsp;&nbsp;
+{%else%}
+    <a href="{{full_path}}&{{excel}}=True"><img src="http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/excel-16.gif" alt="Excel" title="Excel" /></a>&nbsp;&nbsp;
+{%endifequal%}
+</div>

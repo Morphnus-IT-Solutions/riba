@@ -1,0 +1,149 @@
+ {#%load menu_tags%#}
+  {%load web_tags%}
+  {% load cache %}
+ 
+<!-- Media bar -->
+{% if request.path == '/' %}
+<div class="media_outer">
+    <div class="media_inner">
+        <div class="media_facepile">
+            <div class="padt5 padb0 padl10 padr10">
+                <div class="media_title">FutureBazaar on Facebook</div>
+                <div class="fb-like-box" data-href="http://www.facebook.com/futurebazaar" data-width="292" data-show-faces="false" data-stream="false" data-header="true"></div>
+            </div>
+        </div>
+        <div class="media_twitter">
+            <div class="padt5 padb0 padl10 padr10">
+                <div class="media_title marb10">FutureBazaar on Twitter</div>
+                <div>
+                    <a href="https://twitter.com/FutureBazaar" class="twitter-follow-button">Follow @FutureBazaar</a>
+                    <div class="mart5" id="last-tweet"></div>
+                </div>
+            </div>
+        </div>
+        <div class="media_testimonials">
+            <div class="padt5 padb0 padl10 padr10">{% get_testimonial request %}</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div><!-- /Media bar -->
+{% endif %}
+{% if '/orders' not in request.path %}
+<div class="footer">
+    <div class="footer_inner">
+        <div class="">
+            <!-- DEAL CATEGORIES -->
+            <div class="col1">      
+                <div class="footer_title">DEAL CATEGORIES</div>
+                <ul class="footer_list">
+                    <li><a href="/home-living/ch/2226/">Home & Living</a></li>
+                    <li><a href="/fashion/ch/2349/">Fashion</a></li>
+                    <li><a href="/electronics/ch/2458/">Electronics</a></li>
+                    <li><a href="/essentials/ch/2515/">Essentials</a></li>
+                    <li><a href="/gifts-ideas/ch/2560/">Gifts & Ideas</a></li>
+                    <li><a href="/gift-vouchers/ch/2573/">Gift Vouchers</a></li>
+                    <!--
+                    <li><a href="#">Apparel</a></li>
+                    <li><a href="#">Auto care </a></li>
+                    <li><a href="#">Bed & Bath </a></li>
+                    <li><a href="#">Camera </a></li>
+                    <li><a href="#">Gift Vouchers </a> </li>
+                    <li><a href="#">Jewellery </a></li>
+                    <li><a href="#">Kitchen & Dining </a></li>
+                    <li><a href="#">Luggage </a></li>
+                    <li><a href="#">Memory & Storage </a></li>
+                    <li><a href="#">Mobiles </a></li>
+                    <li><a href="#">Personal care </a></li>
+                    <li><a href="#">TV & Entertainment</a> </li>
+                    -->
+                </ul>
+            </div><!-- /DEAL CATEGORIES -->
+            
+            <!-- PAYMENT OPTIONS -->
+            <div class="col2">
+                <div class="footer_title">PAYMENT OPTIONS</div>
+                <ul class="footer_list_two marb20">
+                  <li>Credit Card / Debit Card</li>
+                  <li>Net Banking</li>
+                  <li>Credit Card EMI</li>
+                  <li>Future Money Finance</li>
+                  <li>Cash on Delivery</li>
+                  <li>Pay Back</li>
+                </ul>
+            </div><!-- /PAYMENT OPTIONS -->
+            
+            <!-- FUTUREBAZAAR TRUST -->
+            <div class="col3">
+                <div class="footer_title">FUTUREBAZAAR TRUST</div>
+                <ul class="footer_list marb20">         
+                  <li><a href="/trust/cod.html" class="popup">Cash on Delivery*</a></li>        
+                  <li><a href="/trust/return_policy.html" class="popup">Easy Returns</a></li>
+                  <li><a href="/trust/future_money_finance.html" class="popup">Finance Available</a></li>
+                  <li><a href="/trust/manufacturer-warranty.html" class="popup">Manufacturer's Warranty</a></li>       
+                </ul>
+                <div class="footer_title">CONNECT WITH US</div>
+                <div class="spone connect">
+                <a href="https://www.facebook.com/FutureBazaar" target="_blank" class="connect_fb" title="Join us on Facebook"></a>
+                <a href="https://twitter.com/futurebazaar" class="connect_tw" target="_blank" title="Follow us on Twitter"></a>
+                <a href="https://blog.futurebazaar.com/" class="connect_bl" target="_blank" title="View our Blog"></a>
+                </div>
+            </div><!-- /FUTUREBAZAAR TRUST -->
+            
+            <!-- SECURE SHOPPING -->
+            <div class="col4">
+                <div class="footer_title">SECURE SHOPPING</div>
+                <p>Our checkout is secured by <br />Thawte latest SSL Technology</p>
+                <div class="spone thawte_icon marb20"></div>
+            </div><!-- /SECURE SHOPPING -->
+            <div class="clear"></div> 
+        </div>
+        
+        <div class="marb10 mart10">
+            <!-- About Futurebazaar -->
+            <div class="ja f11 fl left" style="width:735px; margin-right:15px;">
+            Futurebazaar.com is a part of the Future Group family. Futurebazaar.com is a place to get great deals on your shopping needs. Surprise yourself daily with Today’s Deal or check out the exclusive ‘Eureka’  brimming with innovative ideas.  Stay updated with our new arrivals or shop till you drop at the Clearance Sale. Interested in bulk-buying? We have taken care of that as well.  Moreover, you can also buy your favourite Gift Vouchers from Big Bazaar, Central, Pantaloons, eZone, HomeTown, Planet Sports, Ethnicity & more. To ensure you don’t miss out on any of your favourite deals, you can choose to Buy on Phone or use any of our multiple payment options like Cash on Delivery, Future Money EMI, Net Banking, Cash/ Cheque Deposits, among others. Plus, an incredible opportunity to earn and redeem PAYBACK points every time you shop with us.  
+            </div><!-- /About Futurebazaar -->
+            
+            <!-- CUSTOMER CARE -->
+            <div class="col4">
+                <div class="spone footer_phone">+91 922-222-1947</div>
+                <div class="spone footer_mail">customerservice@futurebazaar.com</div>
+                <div class="spone footer_address">FutureBazaar.com 4th Floor, Tower C,</div>
+                <div class="footer_address">247 Park, LBS Marg, Vikhroli (West),</div>
+                <div class="footer_address">Mumbai - 400 083.</div><!-- /CUSTOMER CARE -->
+            </div><!-- /SECURE SHOPPING -->
+            <div class="clear"></div>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="our_stores marb5"></div>
+    </div>
+    <div class="clear"></div>
+    <img src="https://ad.yieldmanager.com/pixel?id=1547131&t=2" width="1" height="1" /><!-- End of segment tag -->
+    
+</div>
+{% endif %}
+<!-- Footer Bottom -->
+<div class="footer_bottom">
+    <div class="footer_bottom_inner">
+        <div class="spone footer_fb_logo"></div>
+        <div class="footer_links">
+            <ul>
+                <li><a href="/about/about_us.html">About Us</a></li>
+                <li><a href="/about/jobs.html">Jobs</a></li>
+                <li><a href="/about/contact_us/">Contact Us</a></li>
+                {% if 'orders/payment' not in request.path %}
+                    <li><a href="http://pantaloonretail.in/contact-us/Store-Locator.aspx" target="_blank">Store Locator</a></li>
+                    <li><a href="http://blog.futurebazaar.com" target="_blank">Blog</a></li>
+                {% endif %}
+                <li><a href="/info/sitemap/">Sitemap</a></li>
+                <li><a href="/info/return_policy.html">Return Policy</a></li>      
+                <li><a href="/info/cancellation_policy.html">Cancellation Policy</a></li>
+                <li><a href="/info/terms_and_conditions.html">Terms & Conditions</a></li>
+            </ul>
+     
+        </div>
+        <div class="copyright">&copy; 2012 Future Bazaar</div>
+        <div class="clear"></div>
+    </div>
+</div><!-- /Footer Bottom -->

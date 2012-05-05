@@ -1,0 +1,27 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<br/>
+
+<form method="POST" id="report_form" name="report_form" action="">
+{% show_export_link request form 'excel' %}
+{% form_daterange request form title null_form_entries%}
+
+<table class="tbl_report" >
+{%for item in data_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        <td class="la fb">{{item.0}}</td>
+        <td class="ra">{{item.1}}</td>
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</form>
+                    
+{% endblock %}
+

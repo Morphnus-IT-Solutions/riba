@@ -1,0 +1,29 @@
+- fields: {category: null, filters: '', name: Gifts, parent: null, sort_order: 7,
+    store: 10, type: store, url: ''}
+  model: web.menuitem
+  pk: 58
+- fields: {category: null, filters: '', name: Toys, parent: null, sort_order: 6, store: 9,
+    type: store, url: ''}
+  model: web.menuitem
+  pk: 57
+- fields: {category: null, filters: '', name: Electronics, parent: null, sort_order: 5,
+    store: 8, type: store, url: ''}
+  model: web.menuitem
+  pk: 56
+- fields: {category: null, filters: '', name: Computers, parent: null, sort_order: 4,
+    store: 7, type: store, url: ''}
+  model: web.menuitem
+  pk: 55
+- fields: {category: null, filters: '', name: Mobiles, parent: null, sort_order: 3,
+    store: 6, type: store, url: ''}
+  model: web.menuitem
+  pk: 54
+- fields: {category: null, filters: '', name: Magazines, parent: null, sort_order: 2,
+    store: 5, type: store, url: ''}
+  model: web.menuitem
+  pk: 53
+- fields: {category: null, filters: '', name: Books, parent: null, sort_order: 1,
+    store: 4, type: store, url: ''}
+  model: web.menuitem
+  pk: 52
+

@@ -1,0 +1,103 @@
+{% load web_tags%}
+{%for review in product_reviews%}
+<div class="review">
+    <div class="f11 padb5">{{review.reviewed_on|date:"M d, Y"}}</div>   
+        <div class="padb5">
+            <strong>"{{review.title}}"</strong>
+        </div>
+     <div class="padb5">
+      By <strong>{{review.user}}</strong>{%if review.user.addressbook_set.all.0.city%} from {{review.user.addressbook_set.all.0.city}}{%endif%}</div>
+   
+    <div>
+        <div class="left">Rating: &nbsp; </div> 
+       <div>
+            <input type="radio" class="prating-{{review.id}}" value="1" name="rating" {%ifequal review.rating 1%}checked{%endifequal%}>
+            <input type="radio" class="prating-{{review.id}}" value="2" name="rating" {%ifequal review.rating 2%}checked{%endifequal%}>
+            <input type="radio" class="prating-{{review.id}}" value="3" name="rating" {%ifequal review.rating 3%}checked{%endifequal%}>
+            <input type="radio" class="prating-{{review.id}}" value="4" name="rating" {%ifequal review.rating 4%}checked{%endifequal%}>
+            <input type="radio" class="prating-{{review.id}}" value="5" name="rating" {%ifequal review.rating 5%}checked{%endifequal%}>
+            <script type="text/javascript">
+                $('.prating-{{review.id}}').rating({readOnly:true});
+            </script>       
+		</div>
+        <div class="clear"></div>
+    </div>   
+    <p class="mart10">{{review.review}}</p>
+    <div class="f11 mart10" id="helpful_data{{review.id}}">Was this review helpful to you? 
+        <span class="fb">
+        <a class="id_help_yes cp" id="{{review.id}}">Yes</a> | 
+        <a class="id_help_no cp" id="{{review.id}}">No</a>
+        </span>
+    </div>
+
+    <div id="helpful_count{{review.id}}" class="mart5 f11">{{review.no_helpful}} of {{review|get_help_summation}} found this review helpful.</div>
+</div>
+{%endfor%}
+<div class="clear"></div>
+{%if pagination.enable_prev or pagination.enable_next%}
+    <div class="pagination left"> {% if pagination.enable_prev %} <a class="read_pagination" id="{{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+      {% for page in pagination.first_set %} <a class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+      {% for page in pagination.prev_set %} <a class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      <div>{{pagination.cur_page}}</div>
+      {% for page in pagination.next_set %} <a class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+      {% for page in pagination.last_set %} <a class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.enable_next %} <a class="read_pagination" id="{{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+      </div>
+{%endif%}      
+<script>
+$(".id_help_yes").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(response){
+        $('#helpful_count'+review_id).html(response);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.")
+    }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-yes/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+$(".id_help_no").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(response){
+        $('#helpful_count'+review_id).html(response);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.")
+    }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-no/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+</script>
+<script language="javascript" type="text/javascript">
+$('.read_pagination').click(function(){
+    var page_no = $(this).attr('id')
+    var onsuccess = function(response){
+        $('#read_reviews').html(response)
+    }
+    var onerror = function(){
+    }
+    var data = "page="+page_no + "&product_id="+"{{product_id}}";
+    $.ajax({
+        type: "GET",
+        url: "/product/read-reviews/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+</script>
+

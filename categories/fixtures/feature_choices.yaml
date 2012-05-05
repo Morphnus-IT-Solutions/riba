@@ -1,0 +1,286 @@
+- fields: {feature: 8, name: 1 Star}
+  model: categories.featurechoice
+  pk: 1
+- fields: {feature: 8, name: 2 Star}
+  model: categories.featurechoice
+  pk: 2
+- fields: {feature: 8, name: 3 Star}
+  model: categories.featurechoice
+  pk: 3
+- fields: {feature: 8, name: 4 Star}
+  model: categories.featurechoice
+  pk: 4
+- fields: {feature: 8, name: 5 Star}
+  model: categories.featurechoice
+  pk: 5
+- fields: {feature: 9, name: Dolby Sound}
+  model: categories.featurechoice
+  pk: 6
+- fields: {feature: 9, name: Recorder}
+  model: categories.featurechoice
+  pk: 7
+- fields: {feature: 9, name: USB}
+  model: categories.featurechoice
+  pk: 8
+- fields: {feature: 9, name: 5.1 Channel}
+  model: categories.featurechoice
+  pk: 9
+- fields: {feature: 9, name: Progressive Scan}
+  model: categories.featurechoice
+  pk: 10
+- fields: {feature: 6, name: Window}
+  model: categories.featurechoice
+  pk: 11
+- fields: {feature: 6, name: Split}
+  model: categories.featurechoice
+  pk: 12
+- fields: {feature: 10, name: '2.1'}
+  model: categories.featurechoice
+  pk: 13
+- fields: {feature: 10, name: '5.1'}
+  model: categories.featurechoice
+  pk: 14
+- fields: {feature: 10, name: '6.1'}
+  model: categories.featurechoice
+  pk: 15
+- fields: {feature: 12, name: I-Tech}
+  model: categories.featurechoice
+  pk: 16
+- fields: {feature: 12, name: Dual Tech}
+  model: categories.featurechoice
+  pk: 17
+- fields: {feature: 12, name: Eco Tech}
+  model: categories.featurechoice
+  pk: 18
+- fields: {feature: 13, name: Solo}
+  model: categories.featurechoice
+  pk: 19
+- fields: {feature: 13, name: Grill}
+  model: categories.featurechoice
+  pk: 20
+- fields: {feature: 13, name: Convection}
+  model: categories.featurechoice
+  pk: 21
+- fields: {feature: 17, name: Direct Cool}
+  model: categories.featurechoice
+  pk: 22
+- fields: {feature: 17, name: Frost Free}
+  model: categories.featurechoice
+  pk: 23
+- fields: {feature: 15, name: Single}
+  model: categories.featurechoice
+  pk: 24
+- fields: {feature: 15, name: Double}
+  model: categories.featurechoice
+  pk: 25
+- fields: {feature: 18, name: Corded}
+  model: categories.featurechoice
+  pk: 26
+- fields: {feature: 18, name: Cordless}
+  model: categories.featurechoice
+  pk: 27
+- fields: {feature: 21, name: Semi Automatic}
+  model: categories.featurechoice
+  pk: 28
+- fields: {feature: 21, name: Automatic}
+  model: categories.featurechoice
+  pk: 29
+- fields: {feature: 23, name: Electric}
+  model: categories.featurechoice
+  pk: 30
+- fields: {feature: 23, name: Non Electric}
+  model: categories.featurechoice
+  pk: 31
+- fields: {feature: 27, name: 9 Dot 9}
+  model: categories.featurechoice
+  pk: 32
+- fields: {feature: 27, name: India Book House}
+  model: categories.featurechoice
+  pk: 33
+- fields: {feature: 27, name: India Book Distributor}
+  model: categories.featurechoice
+  pk: 34
+- fields: {feature: 27, name: India Today}
+  model: categories.featurechoice
+  pk: 35
+- fields: {feature: 27, name: Next Gen}
+  model: categories.featurechoice
+  pk: 36
+- fields: {feature: 27, name: Outlook}
+  model: categories.featurechoice
+  pk: 37
+- fields: {feature: 27, name: Times}
+  model: categories.featurechoice
+  pk: 38
+- fields: {feature: 26, name: English}
+  model: categories.featurechoice
+  pk: 39
+- fields: {feature: 26, name: Hindi}
+  model: categories.featurechoice
+  pk: 40
+- fields: {feature: 25, name: India}
+  model: categories.featurechoice
+  pk: 41
+- fields: {feature: 25, name: US}
+  model: categories.featurechoice
+  pk: 42
+- fields: {feature: 25, name: UK}
+  model: categories.featurechoice
+  pk: 43
+- fields: {feature: 24, name: Advertising}
+  model: categories.featurechoice
+  pk: 44
+- fields: {feature: 24, name: Art}
+  model: categories.featurechoice
+  pk: 45
+- fields: {feature: 24, name: Audio & Video}
+  model: categories.featurechoice
+  pk: 46
+- fields: {feature: 24, name: Automobile}
+  model: categories.featurechoice
+  pk: 47
+- fields: {feature: 24, name: B2B Journal}
+  model: categories.featurechoice
+  pk: 48
+- fields: {feature: 24, name: Business & Economy}
+  model: categories.featurechoice
+  pk: 49
+- fields: {feature: 24, name: Children}
+  model: categories.featurechoice
+  pk: 50
+- fields: {feature: 24, name: Cooking & Food}
+  model: categories.featurechoice
+  pk: 51
+- fields: {feature: 24, name: Current Affair}
+  model: categories.featurechoice
+  pk: 52
+- fields: {feature: 24, name: Electronics}
+  model: categories.featurechoice
+  pk: 53
+- fields: {feature: 24, name: Entertainment & Film}
+  model: categories.featurechoice
+  pk: 54
+- fields: {feature: 24, name: Fashion & Glamour}
+  model: categories.featurechoice
+  pk: 55
+- fields: {feature: 24, name: General Interest}
+  model: categories.featurechoice
+  pk: 56
+- fields: {feature: 24, name: Health & Fitness}
+  model: categories.featurechoice
+  pk: 57
+- fields: {feature: 24, name: Home Decor}
+  model: categories.featurechoice
+  pk: 58
+- fields: {feature: 24, name: Interiors & Architecture}
+  model: categories.featurechoice
+  pk: 59
+- fields: {feature: 24, name: Investment & Stocks}
+  model: categories.featurechoice
+  pk: 60
+- fields: {feature: 24, name: IT}
+  model: categories.featurechoice
+  pk: 61
+- fields: {feature: 24, name: Lifestyle}
+  model: categories.featurechoice
+  pk: 62
+- fields: {feature: 24, name: Men's}
+  model: categories.featurechoice
+  pk: 63
+- fields: {feature: 24, name: News & Politics}
+  model: categories.featurechoice
+  pk: 64
+- fields: {feature: 24, name: Parenting}
+  model: categories.featurechoice
+  pk: 65
+- fields: {feature: 24, name: Photography}
+  model: categories.featurechoice
+  pk: 66
+- fields: {feature: 24, name: Sports}
+  model: categories.featurechoice
+  pk: 67
+- fields: {feature: 24, name: Teen}
+  model: categories.featurechoice
+  pk: 68
+- fields: {feature: 24, name: Travel & Vacation}
+  model: categories.featurechoice
+  pk: 69
+- fields: {feature: 24, name: Wildlife}
+  model: categories.featurechoice
+  pk: 70
+- fields: {feature: 24, name: Women's}
+  model: categories.featurechoice
+  pk: 71
+- fields: {feature: 3, name: English}
+  model: categories.featurechoice
+  pk: 72
+- fields: {feature: 3, name: Hindi}
+  model: categories.featurechoice
+  pk: 73
+- fields: {feature: 2, name: History}
+  model: categories.featurechoice
+  pk: 74
+- fields: {feature: 2, name: Geography}
+  model: categories.featurechoice
+  pk: 75
+- fields: {feature: 2, name: Science}
+  model: categories.featurechoice
+  pk: 76
+- fields: {feature: 2, name: Mythology}
+  model: categories.featurechoice
+  pk: 77
+- fields: {feature: 2, name: Subscription}
+  model: categories.featurechoice
+  pk: 78
+- fields: {feature: 2, name: Story}
+  model: categories.featurechoice
+  pk: 79
+- fields: {feature: 2, name: Picture}
+  model: categories.featurechoice
+  pk: 80
+- fields: {feature: 1, name: 0 -1 months}
+  model: categories.featurechoice
+  pk: 81
+- fields: {feature: 1, name: 1 - 3 months}
+  model: categories.featurechoice
+  pk: 82
+- fields: {feature: 1, name: 3 - 6 months}
+  model: categories.featurechoice
+  pk: 83
+- fields: {feature: 1, name: 6 - 12 months}
+  model: categories.featurechoice
+  pk: 84
+- fields: {feature: 1, name: 12 - 36 months}
+  model: categories.featurechoice
+  pk: 85
+- fields: {feature: 1, name: 36 - 60 months}
+  model: categories.featurechoice
+  pk: 86
+- fields: {feature: 1, name: 36 - 72 months}
+  model: categories.featurechoice
+  pk: 87
+- fields: {feature: 1, name: 60 - 84 months}
+  model: categories.featurechoice
+  pk: 88
+- fields: {feature: 5, name: CD}
+  model: categories.featurechoice
+  pk: 89
+- fields: {feature: 5, name: DVD}
+  model: categories.featurechoice
+  pk: 90
+- fields: {feature: 5, name: Blu Ray}
+  model: categories.featurechoice
+  pk: 91
+- fields: {feature: 19, name: CTV}
+  model: categories.featurechoice
+  pk: 92
+- fields: {feature: 19, name: Flat}
+  model: categories.featurechoice
+  pk: 93
+- fields: {feature: 19, name: LCD}
+  model: categories.featurechoice
+  pk: 94
+- fields: {feature: 19, name: LED}
+  model: categories.featurechoice
+  pk: 95
+

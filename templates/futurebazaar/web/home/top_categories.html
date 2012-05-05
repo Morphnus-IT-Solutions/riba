@@ -1,0 +1,30 @@
+{%load cc_tags%}
+{%load web_tags%}
+<div class="home_header">
+  <h1>Top Deals Categories</h1>
+</div>
+<div class="cat_wrapper">
+ <div id="top_prev" class="sptwo prev_dis mart65 left"></div>
+ <div class="cat_slider_wrapper left">
+<div class="cat_slider">
+{%for items in top_items%}
+  <div class="cat_col">
+    <h2 class="f15 sptwo {{items.image_class}}_icon"><a title="{{items.parent_name}} Deals" >{{items.parent_name|truncate_category:20}}</a></h2>
+    <ul>
+    {% for category in items.children %}
+      <li> <a href="{% cc_url request category.url %}" title="{{category.name}} Deals">{{category.name|truncate:22}}</a></li>
+    {%endfor%}
+    </ul>
+    <div>   
+    </div>
+  </div>
+{%endfor%}
+</div>
+</div>
+  <div id="top_next" class="sptwo next mart65 left"></div>
+  <div class="clear"></div>
+  <div class="slider_dots">
+    <a id="top_cat_nav_1" class="slider_dots_sel_cat"></a>
+    <a id="top_cat_nav_2"></a>
+    </div>
+</div>

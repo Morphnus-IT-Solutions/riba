@@ -1,0 +1,42 @@
+/*cc_panel.css*/
+#userbox_outer{top:275px; right:0px; position:fixed;  _position:absolute; z-index:100}
+.userbox_close {background: url("../images/fancy_close.png") no-repeat scroll 0 0 transparent;cursor:pointer;height:30px;left:-16px;position:absolute;top:-14px;width:30px}
+.userbox_show {box-shadow:0 0 5px #666;-moz-box-shadow:0 0 5px #666;-webkit-box-shadow:0 0 5px #666;background: #ccc;color: #EEE;cursor: pointer;float: left;font-size: 40px;font-weight: bold;line-height: 40px;padding: 0 5px 7px;vertical-align: middle;top:285px;right:0px;position:fixed}
+.user_box{border:1px solid #ccc; border-left:none; display:block; background-color:#fff; margin-left:1px;border-top-right-radius:5px;border-bottom-right-radius:5px;-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;-moz-border-radius-topright:5px;-moz-border-radius-bottomright:5px; display:none; padding:10px; position:relative; margin-top:10px;  z-index:1000}
+#crm_snippet {padding: 5px 10px;width:150px}
+#top-stuff {left: 0; position: fixed; top: 0;width: 100%; z-index:999999}
+#top-bar-outer {display: block;height: 21px; width: 100%;-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+/*background: -moz-linear-gradient(center top , #333333, #111111) repeat scroll 0 0 transparent;*/
+/* For Mozilla/Gecko (Firefox etc) */
+	background: -moz-linear-gradient(center top , #333333 0pt, #111111 100%) repeat scroll 0 0 transparent;
+	/* For Internet Explorer 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#111111');
+	/* For WebKit (Safari, Google Chrome etc) */
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#333333), to(#111111));	
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+.user_box input[type="text"]{width:150px}
+.top-bar-inside {margin: 0 20px;position: relative;text-align: left;padding-top:4px}
+.static-links {float: left;color:#fff;font-size:11px !important}
+.active-links {float:right;padding-top:0px;color:#fff;font-size:11px !important}
+.active-links a:link{color:#ccc !important; text-decoration:none}
+.active-links a:visited{color:#ccc !important; text-decoration:none}
+.active-links a:hover{color:#fe6d16 !important; text-decoration:underline}
+.mart60{margin-top:60px !important}
+.height50
+{height:50px !important}
+.linkButtonMaroon{ background-color:#FFF; border:0 none; color:#990000; cursor:pointer; font-size:11px; padding:0;}
+.shadow_five {
+box-shadow: 1px 1px 5px #666;
+-moz-box-shadow: 1px 1px 5px #666;
+-webkit-box-shadow: 1px 1px 5px #666;
+}
+.ca {
+text-align: center!important;
+}
+.left{float:left}
+.right{float:right}
+.marl15{margin-left:15px}
+/*cc_panel.css end*/

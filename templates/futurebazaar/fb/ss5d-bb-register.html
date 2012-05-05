@@ -1,0 +1,49 @@
+<style>
+  .ss5d_top{background:url('http://www.futurebazaar.com/media/u/fb/catalog/fb_new/bigbazaar/images/bb-ss5f-top.jpg') no-repeat 0 0; width:500px; height:548px;}
+  .ss5d_bottom{background:url('http://www.futurebazaar.com/media/u/fb/catalog/fb_new/bigbazaar/images/bb-ss5d-bottom.jpg') no-repeat 0 0; width:207px; height:236px;
+padding-left:290px;padding-top:46px;}
+  .tbl {margin:0px; width:160px;}
+  .tbl td{padding-bottom:5px;}
+  .tbl input{width:158px; height:20px;}
+  .tbl .man{color:#76cff2;}
+  
+</style>
+<div class="ss5d_top"></div>
+<div class="ss5d_bottom">
+  <form action="http://www.futurebazaar.com/tp/ss5d-bb/subscr/" method="post">
+  <table class="tbl" cellspacing="2" cellpadding="0">
+  {% if errors %}
+  <tr>
+    <td>
+        {% for error in errors %}
+        {{error}}
+        {% endfor %}
+    </td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td> 
+      <div>Email<span class="mand">*</span> </div>
+       {{form.email}}
+    </td>
+    </tr>
+    <tr>
+    <td> 
+      <div>Mobile<span class="mand">*</span> </div>
+      {{form.mobile}}
+    </td>
+    </tr>
+    <tr>
+    <td> 
+      <div>Name<span class="mand" style="color:#76cff2;">*</span> </div>
+      {{form.name}}
+    </td>
+    </tr>
+    <tr>
+      <td>
+        <button type="submit" style="">Get Invited</button>
+      </td>
+  </tr>
+  </table>
+  </form
+</div>

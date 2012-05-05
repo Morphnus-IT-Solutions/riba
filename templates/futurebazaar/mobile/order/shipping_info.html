@@ -1,0 +1,231 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load cc_tags web_tags %}
+<header class="header">
+		<h1 class="header-title">Shipping Details</h1>
+</header> <!-- /header -->
+
+<section class="content">
+<form method="post" action="" id="shipping_info_form" name="shipping_info_form">
+        <input type="hidden" name="update_addressbook_id" value="{{addressbook_id}}" class="tbg" />
+        <div id="delivery_table">
+				{% if user_addresses %}
+				<div class="tac mb15">
+						<div class="tab">
+							<a class="act" rel="shipping-can">Shipping Address</a>
+							<a rel="new-shipping-can">New Shipping Details</a>
+						</div>
+				</div>
+                {% endif %}
+				{%if request.session.sync_errors%}
+				<div class="error">
+					<ul>
+						{% for error in request.session.sync_errors %}
+							<li>{{error.responseMessage}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				{%endif%}
+				{%if availability_errors%}
+				<div class="error">
+					<ul>
+						{% for error in availability_errors %}
+							<li>{{error}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				{%endif%}
+				{% if failed_payment %}
+				<div class="error">
+					<h3>Payment Failed</h3>
+					<p>Your payment has been rejected by the payment gateway. Your card has not been charged Please try again, perhaps with a different card</p>
+				</div>
+				{% endif %}
+				{% if shipping_info_form.errors %}
+				<div class="error">
+					<ul>
+						{% for field in shipping_info_form %}
+						{% for error in field.errors %}
+							<li>{{error}}</li>
+						{% endfor %}
+						{% endfor %}
+					</ul>
+				</div>
+				{% endif %}
+				{% if order_response %}
+				<div class="error">
+					<ul>
+						<li>{{order_response.responseMessage}}</li>
+					</ul>
+				</div>
+				{% endif %}
+				{% if user_addresses %}
+				<div id="shipping-can" class="tabcan">
+						<h3 class="sa-title">Shipping Address</h3>
+						{%for address in user_addresses%}
+						<div class="ship-address mb15 {% if address.defaddress %} def_ship_address{% endif %}">  
+								<input type="radio" name="del_address" class="sa-btn-radio" value="{{address.id}}"/>
+								
+								<div class="dname marb5">{{address.first_name}} {{address.last_name}}</div>
+								<div class="daddress">{{address.address}}</div>
+								<div class="dcity">{{address.city.name}} <span class="dpincode">{{address.pincode}}</span></div>
+								<div class="dstate">{{address.state.name}}, <span class="dcountry">{{address.country.name}}</span></div>
+								<div class="dstate">Email: {{address.email}}</div>
+								<div class="dphone">Tel: {{address.phone}}</div>                 
+								<div class="ra">
+								<!-- <button type="button" class="linkButton edit_address" id="{{address.id}}">Modify</button> | <button type="button" id="{{address.id}}" class="linkButton delete_address">Remove x</button>-->
+								{% if address.profile.default_address == address.id %}
+									<div> Default Address </div>
+							   {% endif %}
+								</div>
+						</div>
+					{%endfor%}
+				</div>              
+				<div id="new-shipping-can" class="tabcan" style="display:none;">
+						<div>
+								<input type="hidden" name="old_address" value="{{delivery_address.id}}" />
+								 <h3 class="sa-title">New Shipping Details</h3>
+								<div id="delivery_address_block" class="fb-form fb-form-select">
+										<input type="radio" name="del_address" class="sa-btn-radio" value="new" checked="checked" class="tbg" />
+										<ul>
+											<li>
+												<div class="dlabel"><span>First Name</span></div>
+												<div class="fbf-dcant">{{shipping_info_form.delivery_first_name}}</div>
+											</li>
+											<li>
+												<div class="dlabel"><span>Last Name</span></div>
+												<div class="fbf-dcant">{{shipping_info_form.delivery_last_name}}</div>
+											</li>
+											<li>
+												<div class="dlabel"><span>Address</span></div>
+												<div class="fbf-dcant textarea100">{{shipping_info_form.delivery_address}}</div>
+											</li>
+											<li>
+												<div class="dlabel"><span>City</span></div>
+												<div class="fbf-dcant">{{shipping_info_form.delivery_city}}</div>
+											</li>
+											<li>
+												<div class="dlabel"><span>Pincode</span></div>
+												<div class="fbf-dcant">{{shipping_info_form.delivery_pincode}}</div>
+											</li>
+											<li>
+												<div class="dlabel"><span>State</span></div>
+												<div class="fbf-dcant"><div class="sw150" style="margin-top:5px;">{{shipping_info_form.delivery_state}}</div></div>
+											</li>
+											<li>
+												<div class="dlabel"><span>Country</span></div>
+												<div class="fbf-dcant">{{shipping_info_form.delivery_country}}</div>
+											</li>
+											<li>
+												<div class="dlabel"><span>Phone</span></div>
+												<div class="fbf-dcant">{{shipping_info_form.delivery_phone}}</div>
+											</li>
+											<li>
+												<div class="dlabel"><span>Email</span></div>
+												<div class="fbf-dcant">{{shipping_info_form.email}}</div>
+											</li>
+										</ul>
+								</div>                   
+						</div>
+				</div>                 
+        </div>	
+            
+        {% else %}
+		<div>
+                <h3 class="sa-title">Enter new delivery address</h3>
+				<div id="delivery_address_block" class="fb-form">
+				        <input type="hidden" name="old_address" value="{{delivery_address.id}}"/>
+						<input type="radio" name="del_address" checked="checked" value="new" class="sa-btn-radio" />
+								
+						<ul>
+							<li>
+								<div class="dlabel"><span>First Name</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_first_name}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>Last Name</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_last_name}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>Address</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_address}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>City</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_city}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>Pincode</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_pincode}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>State</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_state}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>Country</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_country}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>Phone</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.delivery_phone}}</div>
+							</li>
+							<li>
+								<div class="dlabel"><span>Email</span></div>
+								<div class="fbf-dcant">{{shipping_info_form.email}}</div>
+							</li>
+						</ul>
+				</div>
+		</div>        
+        {% endif %}
+			
+		<div class="tac co fs16 mtb15">Total amount you need to pay: <span class="WebRupee">Rs.</span><!--{{order.formatted_currency}}--> {{order.payable_amount|money}}</div>
+		<div class="tac"><button type="submit" id="proceed" class="btn" title="">Proceed To Payment</button></div>
+
+</form>
+        
+</section><!-- /content -->
+
+
+<script type="text/javascript">
+	
+	
+	$(document).ready(function () { 
+		$('.ship-address input[name=del_address]:checked').parent().addClass("ship-address-select"); 
+		$('input:not(:checked)').parent().removeClass("ship-address-select");
+	
+	});
+	
+	$('.ship-address').click(function() {
+		  $('.ship-address').removeClass("ship-address-select");
+		  $(this).children("input:radio").attr("checked","checked");
+		  $('input[name=del_address]:checked').parent().addClass("ship-address-select");	  
+	});
+	 
+	$("input:radio").change(function() { $('input:not(:checked)').parent().removeClass("ship-address-select");});
+	 
+	$('.tab a').click(function(){
+		
+		$('.tab a').removeClass('act');
+		$(this).addClass('act');
+		
+		var activeTab = $(this).attr("rel");
+		$('.tabcan').hide();
+		$('#' + activeTab).show();
+		
+		var firstredio = $('#' + activeTab).find('input[name=del_address]')[0];
+		$(firstredio).attr("checked","checked");
+		
+		$('.ship-address').removeClass("ship-address-select");
+		$('input[name=del_address]:checked').parent().addClass("ship-address-select");
+	
+		
+	});
+		
+	 
+</script>
+{% endblock %}
+
+
+
+

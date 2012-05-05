@@ -1,0 +1,8 @@
+Dear {{customer.name}},
+
+Thank you for your interest in phone pe deal. Our phone commerce expert will get in touch with you shortly. Below are the details you have mentioned.
+
+{{customer.info}}
+
+Thanks,
+phone pe deal

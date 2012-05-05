@@ -1,0 +1,97 @@
+{% extends "web/base.html" %}
+{% load web_tags%}
+{% block content %}
+  <div class="referal_wrapper mart20">
+    <style>
+      .referal_steps{color:#333;}
+      .referal_step1{width:190px; height:152px; background:url('/media/images/referal-steps-bg1.jpg') no-repeat 0 0; padding:130px 10px 10px 20px; margin-right:6px;}
+      .referal_step2{width:190px; height:152px; background:url('/media/images/referal-steps-bg1.jpg') no-repeat -226px 0; padding:130px 10px 10px 20px; margin-right:6px; }
+      .referal_step3{width:190px; height:152px; background:url('/media/images/referal-steps-bg1.jpg') no-repeat -451px 0; padding:130px 10px 10px 20px;}
+      .refer_now{border-bottom:2px solid #bfbfbf; background:#f2f2f2; padding:65px 20px 0 30px; width:250px; margin-left:8px; height:225px; font-size:30px; color:#666666; line-height:1;}
+   
+    .referal_login{border:1px solid #cfcfcf; padding:20px; width:258px; margin-left:8px; height:250px;}
+    .referal_login input{width:235px; font-size:11px;}
+    .referal_login .signin_submit{ background-color:#000; color:#fff;  border:none; padding:3px 5px; font-weight:bold; text-decoration:none;}
+    .referal_login .signin_submit:hover{box-shadow:1px 1px 5px #666;-moz-box-shadow:1px 1px 5px #666;-webkit-box-shadow:1px 1px 5px #333}
+    .referal_login .or_hr{width:235px; height:14px; background:url('/media/images/or.jpg') 0 0  no-repeat;}
+     a{text-decoration:none !important; }
+    </style>
+      
+    <img src="/media/images/referal-banner1.jpg" width="980" height="200">
+     <div class="referal_steps mart20 ">
+      <div class="left referal_step1">
+        <div class="f16 fb">1. Invite your friends!</div>
+        <div class="f14 mart5">Send an invite to your friends & colleagues through email & social networks!</div>
+        <div class="f14 mart10">Your friend gets Rs.150 off on his/her 1st purchase.</div>
+      </div>
+      <div class="left referal_step2">
+          <div class="f16 fb">2. Ensure 1st Purchase</div>
+          <div class="f14 mart5">Ensure a 1st purchase made by your friend on www.futurebazaar.com          
+          </div>        
+      </div>
+      <div class="left referal_step3">
+        <div  class="f16 fb">3. Earn <span class="WebRupee">Rs.</span> 100!</div>
+        <div class="f14 mart5">Get Gift Coupon worth <span class="WebRupee">Rs.</span> 100 as and when your friend does a 1st purchase. </div>
+      </div>
+    {% if request|is_user_authenticated %} 
+      <div class="left refer_now">        
+        <div>REFER</div>
+        <div style="color:#161616;">YOUR FRIENDS </div>
+        <div>NOW!</div>
+        <a class="btn_c btn_c_m btn_orange" id="st_cta_btn">Refer Now</a>
+       </div>
+    {% else %}        
+        <div class="left referal_login">  
+            <div>
+                <div id="header_signin_refer">
+                    {% include "user/refer_friend_signin.html"%}
+                </div>
+                <div class="or_hr marb10"></div>
+                <div class="ca">
+                {% if request|user_connected_to_facebook %}
+                    <a class="flogin_retry cp fb-login-button"><img src={% media_url request "images/login_with_facebook_btn.png" %}></a>
+                {% else %}
+                    <div class="marr10">
+                        {% include "user/facebook_login.html" %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+      <div class="clear"></div>
+      <img src="/media/images/referal-banner-step4.jpg" width="671" class="mart10" >
+     </div> 
+  </div>
+{%endblock%} 
+{% block script_footer %}
+{{block.super}}
+    <!-- Refer a friend START -->
+    <script type="text/javascript" src="http://cdn.socialtwist.com/2012010955803/script.js">
+    </script>
+    <script type="text/javascript" src="http://content.socialtwist.com/IntroPageTemplate/intropage/js/intro.js">
+    </script>  
+    <link type = "text/css" href = "http://content.socialtwist.com/IntroPageTemplate/intropage/css/css.css" rel = "stylesheet" />
+    <script type="text/javascript" src="http://content.socialtwist.com/themes/2012010955803/images/code.js">
+    </script>
+    <script type="text/javascript">
+    {% if request|is_user_authenticated %} 
+            var ST_REFERRER_MAIL="{{request.user.get_profile.get_email}}"; 
+            var ST_REFERRER_NAME="{{request.user.get_profile.full_name}}"; 
+            $("#st_cta_btn").click(function(){
+                STTAFINTRO.openSharePopup();
+            })
+            {% if 'refer_friend' in request.session %}
+                $("#st_cta_btn").click();
+                {% flush_element_from_session request "refer_friend" %}
+            {% endif %}
+    {% else %}
+        try{
+            refresh_signin_refer_form();
+        }
+        catch(err){
+        }
+    {% endif %}    
+    </script>
+    <!-- Refer a friend END -->
+{% endblock %}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load cc_tags web_tags %}
+<head>
+<title>{% block page_title %}{% page_title request %}{% endblock %}</title>
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="google-site-verification" content="JdO76y1DrPn_Y-F91jjyewqXakhINXXXW3EevIcFHoE" />
+<meta name="description" content="{%block page_desc%}FutureBazaar.com: Discover great deals in Laptops, Mobiles, Computers, Electronics, Home Fashion and Clothing from India's foremost retailers.{%endblock%}"/>
+<meta name="keywords" content="{%block page_tags%}Future Bazaar, Online Shopping, Store Online, Buy Books, Subscribe Magazines, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Purchase On Web, Cheap product, India{%endblock%}"/>
+
+	<link rel="apple-touch-icon" href="media/mobile/images/touch-icon-iphone-web.png" />
+	<link rel="apple-touch-startup-image" href="http://m.futurebazaar.com/media/mobile/images/startup.png" />
+	
+{% block extra_header %}
+{% endblock %}
+
+{%block js%}
+	<script type="text/javascript" src="/media/mobile/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="/media/mobile/js/fbmobile5.js"></script>
+{%endblock%}
+
+{%block css%}
+	<link rel="stylesheet" href="/media/mobile/css/fbmobile5.css" />
+
+{%endblock%}
+
+<link rel="shortcut icon" href="{%render_favicon request%}"/>
+
+</head>
+<body>
+<div class="page">
+	{% ifnotequal request.path "/" %}
+	 <div class="top-header">
+		  <div class="top-header-can">
+				<h1><a href="/"><img src="{% media_url request "mobile/images/Futurebazaar-logo-250.png" %}" width="150" height="20" alt="Future Bazaar" /></a></h1>
+				<div class="dib thtab">
+					 <a class="searchtab">Search</a>
+					 <a class="carttab" href="/orders/mycart/">cart</a>
+					 {%if request|is_user_authenticated%}<a class="actab" href="{% cc_url request "user/orders" %}">{%else%}<a class="actab" href="/auth/signin/?next={{request.get_full_path|urlencode}}">{%endif%}My Account</a>
+				</div>
+		  </div>
+		  <div id="hd-search" style="height:0px; overflow:hidden;">
+				<div style="padding:7px 15px; background-color:#ddd; border-bottom:#aaa 1px solid;">
+					 <div class="search-box">
+						  <form action="{%cc_url request "search"%}" method="get" id="search_form">
+						  {% render_search_form_fb request %}
+						  </form>
+						  <span class="clear-search-btn" style="display: none;"></span>
+					 </div>
+				</div>
+		  </div>
+	 </div>
+	{%endifnotequal%}
+
+	{% block content %}
+	{% endblock %}
+	
+	{%block footer%}
+		<!-- Footer -->
+	  <footer class="footer">
+        {%if request|is_user_authenticated%}
+            <p class="fb"><span>Hi, {%get_username request%}!&nbsp;&nbsp;|<a href="/auth/signout/" id="sout" title="Sign out">&nbsp;&nbsp;Sign out </a> </span> </p>
+        {%else%}
+				<p class="fb"><a href="/auth/signin/?next={{request.get_full_path|urlencode}}">Sign in</a> to your FutureBazaar account</p>
+        {%endif%}
+			  <p class="fs11">&copy; 2011 FutureBazaar India Ltd.</p>
+			  <p><a href="http://www.futurebazaar.com">FutureBazaar's desktop site <span style="font-size:16px;">&#187;</span></a>
+	  </footer> <!-- /Footer -->
+	{% endblock %}
+</div>
+</body>
+<script type="text/javascript">
+	$('.searchtab').click(function() {
+		 $(this).toggleClass("act");
+		 $('#hd-search').animate({
+			   height: ($('#hd-search').height() < 1) ? '51px' : '0px'
+		 }, 500, function() {
+		   $("#search_form input[type=text]").focus();
+		 });
+	});
+	$(".search-box input").focus(function () { $(this).closest('.search-box').addClass('search-box-act'); });	 
+	$(".search-box input").blur(function () { $(this).closest('.search-box').removeClass('search-box-act'); });
+	 
+	 
+	// Disable empty search START 
+	$("#search_form").submit(function(){
+		var query = $("#id_q").val();
+		if(query.trim() == ""){
+			$("#id_q").attr("placeholder", "Start searching deals from here...");
+			return false;
+		}
+	});
+	// Disable empty search END
+	
+	// Search Clear button 
+	$(document).ready(function() {
+		$('.clear-search-btn').click(function(){ $('#id_q').val(''); $(this).fadeOut(); });
+		$('#id_q').keypress(function() { $('.clear-search-btn').fadeIn(); });
+	});
+	
+	
+	
+</script>
+{% block script_footer %}
+
+{% endblock %}
+
+{% if not conf.DONT_SHOW_GOOGLE_ANALYTICS %}
+<script type="text/javascript">	
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-6628622-16']);
+        _gaq.push(['_setDomainName', '.futurebazaar.com']);
+        _gaq.push(['_setAllowHash', false]);
+
+        _gaq.push(['_trackPageview']);
+        _gaq.push(['_trackPageLoadTime']);
+        {% block ga_extensions %}
+        {% endblock %}
+
+        (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
+</script>
+{% endif %}
+</html>

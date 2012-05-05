@@ -1,0 +1,8 @@
+{% load cc_tags %}
+{% for data in emi_datas %}
+    <div class="left marr20">
+        <p><input type="radio" name="emi_plan" {% if forloop.first %}checked="checked"{% endif %} value="{{data.month}}" class="vt"> {{data.month}} months</p>
+        <p class='marl20'><strong class="fblack"><span class="WebRupee">Rs.</span> {{data.emi_plan|money}}</strong> <span class="fbgray f11">per month</span></p>
+        {% if data.transaction_charge > 0%}<p class='marl10'>+ <span class="WebRupee">Rs.</span> {{data.transaction_charge|money}} <span class="f11">one-time PF</span></p> {% else %} <p class='marl20'>No <span class="f11">one-time PF</span></p>{% endif %}
+    </div>
+{% endfor %}

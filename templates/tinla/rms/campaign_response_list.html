@@ -1,0 +1,87 @@
+{% extends "rms/base.html" %}
+{% block content %}
+{% load pagination_tags %}
+{% autopaginate response_list 20 %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/campaign">Campaigns</a>&nbsp;&raquo;&nbsp; <a href="/campaign/{{campaign.id}}">{{campaign.name|title}}</a>&nbsp;&raquo;&nbsp; Funnel</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{% if state == '0' %}NEW RESPONSES{%else%}State: {{state.name}}{%endif%} {% if substate %}| Substate: {{substate.name}}{% endif %}</h1>
+    </div>
+  </div>
+  <div class="clear bordergray"></div>
+  {% if state %}
+  <div style="padding:10px 0px">
+      {% if start_date %}<p class="fdgray">{{start_date|date:"d M Y"}} {% if end_date %} - {{end_date|date:"d M Y"}}{%endif%}</p>{%endif%}
+  </div>
+  {% endif %}
+  {% if not response_list %}
+  	<div class="clear message">
+    <p>No responses found</p><br />
+    </div>
+  {% else %}
+  <div class="main">
+	<table id="response_list" class="tbl_response">
+		<thead>
+			<tr>
+				<th>Phone</th>
+				<th>Name</th>
+				<th>Follow Up</th>
+				<th>Last Interacted By</th>
+				<th>Last Interacted On</th>
+				{% if state == None %}<th>State</th>{% endif %}
+				{% if substate == None %}<th>Substate</th>{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for response in response_list %}
+			
+			<tr class="cursorp rah" id="{{response.id}}">
+				<td class="w75">{{ response.phone }}</td>
+				<td class="w150 word-wrap">{{ response.phone.user.full_name }}</td>
+				<td class="txtalgnc">{{ response.followup_on|date:"h:i A o\n D, d M y" }}</td>
+				<td class="txtalgnc w150 word-wrap">{{ response.last_interacted_by|title }}</td>
+				<td class="txtalgnc">{{ response.last_interacted_on|date:"h:i A o\n D, d M y" }}</td>
+				{% if state == None %}<td class="txtalgnc w100 word-wrap">{{ response.funnel_state.name }}</td>{% endif %}
+				{% if substate == None %}<td class="txtalgnc w150 word-wrap">{{ response.funnel_sub_state.name }}</td>{% endif %}
+			</tr>
+			<tr class="list_row rah_td tr_hide" id="{{response.id}}_tr">
+				<td colspan="6" style="padding:0px 10px; border-width:0px 0px 1px;">
+					<div id="{{response.id}}_details" style="margin:0px;"></div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+  </div>
+</div>
+<div class="clear"></div>
+{% paginate %}
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+
+$('.rah').click(function() {
+    var div_id = this.id + '_details';
+    var tr_id = this.id + '_tr';
+    var that = this;
+ 
+    if($(this).hasClass('open')) {
+		$(that).removeClass('open');
+        $('#' + tr_id).addClass('tr_hide');
+        $('#head_1100 td').each(function(){ $(this).css('border-bottom','1px solid #DDDDDD')});
+	} else {
+		var url = '/response/' + this.id
+        $.get(url + '?mode=details_only', function(data) {
+        	$('#' + div_id).html(data);
+            $('#' + tr_id).removeClass('tr_hide');
+            $(that).addClass('open');
+            $('#head_1100 td').each(function(){ $(this).css('border-bottom','1px dotted #DDDDDD')});
+        });
+    }
+    return false;
+});
+
+{% endblock %}

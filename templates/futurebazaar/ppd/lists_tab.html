@@ -1,0 +1,21 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+	{%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+	<div class="content_head">
+		<div class="header rc5">
+		  <h1>{{request.client.client.name|title}} - Lists</h1>
+		</div>
+		<div class="clear bordergray"></div>
+	</div>
+	<div class="inner-content">
+		<ul>
+			<li class="f12"><a href="{{request.path}}view_all_lists/"><span class="left cursorp">View All Lists</span><div class="clear"></div></a></li>
+		</ul>
+	</div>
+</div>
+
+{%endblock%} 

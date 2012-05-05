@@ -1,0 +1,173 @@
+{% extends 'web/base.html' %}
+{% block content %}
+<div class="breadcrumb">&nbsp;        
+</div>
+{% load cc_tags %}
+{% load web_tags %}
+<style>
+	.payment_options ul {
+		border-top: 1px solid #CCCCCC;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	.payment_options ul li {
+		background-color: #F4F4F4;
+		border-bottom: 1px solid #CCCCCC;
+		border-left: 1px solid #CCCCCC;
+		border-right: 0 solid #CCCCCC;
+		border-top:none;
+		cursor: pointer;
+		line-height: 17px;
+		margin: 0;
+		padding: 6px;
+	}
+	.payment_actions {
+		border-bottom: 1px solid #CCCCCC;
+		border-right: 1px solid #CCCCCC !important;
+		border-top: 1px solid #CCCCCC !important;
+	}
+	.payment_options ul li.selected {
+		background-color: #FFFFFF;
+		border-bottom-right-radius: 0;
+		border-color: -moz-use-text-color -moz-use-text-color #CCCCCC #CCCCCC;
+		border-left: 1px solid #CCCCCC;
+		border-style: none none solid solid;
+		border-top-right-radius: 0;
+		border-width: medium medium 1px 1px;
+		font-weight: bold;
+		margin-right: -1px;
+		color:#666666;
+	}
+	.pm_min_height {min-height:400px;}
+</style>
+<div>
+    <div class="cart_left">     
+        {% checkout_tabs request "payment" %}
+        <form id="book_form" method="post" action="{% cc_url request "orders/book" %}">
+           <div class="checkout_div">
+          	<div class="payment_actions gbor min-height400" style="margin-top:10px; margin-right:10px; margin-bottom:10px; margin-left:none; width:508px; ">
+                <div class="f14 mar5 pad5">
+                    <span>Order Total: &nbsp;</span>
+                    <span id="oPayableAmount" class="fb fmaroon f14"><span class="WebRupee">Rs.</span>  {{order.payable_amount|money}} </span>
+                    <span id="book_button"></span>
+                </div> 
+            <div class = "clear marb10"></div>     
+            <div class="pay_action_bot clear"></div>
+              <div class="book_inner1" id="tbl_book" style="margin:15px;  position:relative;">      
+                    {%if fb_error%}                    
+                    <div class="error">
+                        <ol>
+                            <li>{{fb_error}}</li>
+                        </ol>
+                    </div>                   
+                    {%endif%}
+                  
+                  
+               </div>
+            <div class="pad10" id="tbl_book">
+                <div id="payment_option_page"></div>
+                <div class="clear"></div>
+            </div>
+                
+          		<div class="clear"></div>
+            </div>
+           <div  class="payment_options" style="margin-top:10px">
+           	<input type="hidden" id="order_id" value="{{order.id}}"/>
+           	<input type="hidden" id="selected_payment_mode" value="none"/>
+            <input type="hidden" id="id_payment_mode" name="payment_mode" value="{{payment_mode_code}}"/>
+          
+	  		<input type="hidden" id="payment_options_length" value="{%widthratio payment_options.count|length 1 30 %}px"/>
+           <ul>
+               {%for po in payment_options%}
+               <li class="payment_mode{% if po.payment_mode.code|make_list|slice:"7"|join:"" == 'payback' %} newpm{% endif %}{%if payment_mode_code == po.payment_mode.code %} selected{%endif%}" val="{{po.payment_mode.code}}#{{po.is_instant}}">{{po.payment_mode.name}}</li>
+               {%endfor%}
+           </ul>           
+           </div>
+           <div class="pay_action_bot clear">
+                  <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+            </div>
+        </form>
+    </div>
+    <div class="cart_right">
+        {% include "order/right.html" %}
+    </div>
+<div class="clear">
+</div>
+   
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    var instant_btn = '<button type="submit" name="instant" class="btn btn_make_payment" title="Book"></button>';
+    var non_instant_btn = '<button type="submit" name="non_instant" class="btn btn_submit"></button>';
+    
+$(document).ready(function(){
+    $('.check_tabs').click(function(){
+        var next_tab = $(this).attr('id');
+        current_url = window.location.href;
+        url_splitted = current_url.split("/");
+        new_url = url_splitted[0];
+        for(var i=1;i<url_splitted.length-1;i++){
+            new_url += "/" + url_splitted[i];
+        }
+        new_url += "/" + next_tab;
+        location.href =  new_url;
+        });
+    
+    var po = $('.payment_mode')[0];
+    var first_mode = $(po).attr('val').split('#');
+    var is_instant = $(first_mode)[1]
+    var payment_mode = $(first_mode)[0];
+    var order_id = $('#order_id').val();
+    $.fn.get_payment_page(payment_mode,order_id);
+    $.fn.get_book_button(is_instant);
+    
+});
+        $.fn.get_book_button = function(is_instant){
+            var btn = "";
+            if(is_instant == 1){
+                btn = instant_btn;
+            }
+            else{
+                btn = non_instant_btn;
+            }
+            $("#book_button").html('<div class="right">' + btn + '</div>');
+        };
+        $.fn.get_payment_page = function(payment_mode,order_id){
+            var onSuccess = function(html) {
+                $('#payment_option_page').html(html);
+            };
+            var onError = function() {
+                $('#payment_option_page').empty();
+            };
+            var action = '/orders/payment_option_page'
+            var data = 'payment_mode_code=' + payment_mode + '&order_id=' + order_id;
+            $.ajax({ url:action,
+                data : data,
+                success : onSuccess,
+                error : onError,
+                type : 'POST'
+                });
+        };
+        $('.payment_mode').click(function(){
+            var po = $(this).attr('val').split('#');
+            var payment_mode = po[0];
+            var is_instant = po[1];
+            var order_id = $('#order_id').val();
+            $('#selected_payment_mode').val(payment_mode);
+            $.fn.get_payment_page(payment_mode,order_id);
+            $.fn.get_book_button(is_instant);
+            $('.payment_mode').each(function(){
+                $(this).removeClass('selected');
+            });
+            $(this).addClass('selected');
+            $('#id_payment_mode').val(payment_mode);
+            return false;
+        });
+</script>
+
+{% endblock %}

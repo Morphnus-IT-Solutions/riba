@@ -1,0 +1,418 @@
+{%extends "web/base.html"%}
+{%load cc_tags%}
+{%load web_tags%}
+{% block page_title %}{% render_product_page_title product request%}{% endblock %}
+{% block page_desc %}{% render_product_page_desc product request%}{% endblock %}
+{% block page_tags %}{% render_product_page_tags product request%}{% endblock %}
+{% block extra_header %}
+{% if product.meta_description %}
+<meta content="{{product.meta_description}}" name="Description"/>
+{% endif %}
+<link rel="canonical" href="http://{{request.client.domain}}{{request.path}}"/>
+{% endblock %}
+{% block content %}
+<div id="breadcrumb" class="fdgray"><a href="/">Home</a> &raquo; <a href="{%cc_url request product.category.url%}">{{product.category.name}}</a> &raquo;&nbsp;{{product.title}}
+</div>
+<div id="product">
+  <div class="product_details">  
+    <div class="product_desc">    
+      <h1>{{product.title}}</h1>
+	  <div class="f12">
+		<span class="fblack">By</span> 
+		<a href="{%cc_url request product.brand.url%}" title="{{product.brand}}">{{product.brand}}</a>
+		</div>      
+        <table class="mart10 marb10">
+        <tr>
+        <td width="90" class="pad0">
+        <div id="avg_stars" class="hide">
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 0.25 %} checked="checked" {% endifequal %} title="Poor"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 0.50 %} checked="checked" {% endifequal %} title="Poor"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 0.75 %} checked="checked" {% endifequal %} title="Poor"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.00 %} checked="checked" {% endifequal %} title="Poor"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.25 %} checked="checked" {% endifequal %} title="Average"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.50 %} checked="checked" {% endifequal %} title="Average"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.75 %} checked="checked" {% endifequal %} title="Average"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.00 %} checked="checked" {% endifequal %} title="Average"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.25 %} checked="checked" {% endifequal %} title="Good"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.50 %} checked="checked" {% endifequal %} title="Good"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.75 %} checked="checked" {% endifequal %} title="Good"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.00 %} checked="checked" {% endifequal %} title="Good"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.25 %} checked="checked" {% endifequal %} title="Great"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.50 %} checked="checked" {% endifequal %} title="Great"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.75 %} checked="checked" {% endifequal %} title="Great"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.00 %} checked="checked" {% endifequal %} title="Great"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.25 %} checked="checked" {% endifequal %} title="Excellent"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.50 %} checked="checked" {% endifequal %} title="Excellent"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.75 %} checked="checked" {% endifequal %} title="Excellent"/>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 5.00 %} checked="checked" {% endifequal %} title="Excellent"/>
+            <script type="text/javascript">
+                $('input.prating_avg').rating({readOnly:true});
+            </script>			
+		</div>
+        </td>
+        <td class="pad0"><div>
+            <a href="#read_review" class="top_read">{%if total_reviews%} {{total_reviews}} reviews</a> |  <a href="#write_review" class="top_write">Write a review</a>{%else%}  <a href="#write_review" class="top_write">Be the first to write a review</a>{%endif%}</div></td>
+        </tr>
+        </table>
+		      <div class="product_hr"></div>    
+         <table class="like_buttons">
+      <tr>
+       <td>  
+<div id="plusone-div"></div>
+
+</td>    
+      <td class="like_tw">
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://{{request.client.domain}}{% cc_url request product.url %}" data-text="Would love to buy this!" data-count="horizontal" data-via="futurebazaar">Tweet</a>
+		</td>     
+      <td class="like_fb">  
+      <fb:like href="http://{{request.client.domain}}/{{product.url}}" send="false" layout="button_count" width="226" show_faces="false" font=""></fb:like>
+      </td>      
+      </tr>      
+      </table> 
+       {% product_tags product request%}     
+      <div class="product_hr"></div>
+      <table class="product_price_tbl">
+      {%if request|isAnySaving:product.primary_rate_chart %}
+      <tr>
+      <td width="100">{% get_price_info request product.primary_rate_chart 'list_price_label' %}</td>
+      <td colspan="2"><span class="fs fb"><span class="WebRupee">Rs.</span> {% get_price_info request product.primary_rate_chart 'list_price' %}<span></td>
+      </tr>
+      {%endif%}
+      <tr>
+      <td width="100" class="f16 fb forange">{% get_price_info request product.primary_rate_chart 'offer_price_label' %}</td>
+      <td class="f16 fb forange"><span class="WebRupee">Rs.</span> {% get_price_info request product.primary_rate_chart 'offer_price' %}    {%if product.primary_rate_chart.offer_price >= 3000 %}</td><td class="f11">(3 EMI @ <span class="fb"><span class="WebRupee">Rs.</span> {{emi.3months|money}} PM /-</span> At No Extra Cost){% endif %}
+      </td>  
+        
+      </tr>
+      <tr>
+      {%if request|isAnySaving:product.primary_rate_chart %}
+      <td>You Steal:</td>
+      <td colspan="2"><span class="WebRupee">Rs.</span> {%getSavings request product.primary_rate_chart%}<span class="fb f15"> ({% getDiscount request product.primary_rate_chart %}%)</span></td>
+      {%endif%}    
+      </tr>      
+      </table>
+      <div class="product_hr"></div>      
+            {%add_to_cart request product product.primary_rate_chart%}
+        <div class="clear"></div>
+        {# product_variants product request#}       
+  
+      </div>
+    
+    <div class="product_img_container">
+    <div class="product_img">
+         <img src="{{product_images.0.get_display_url}}"  id="display_img" width="270" height="340" alt="{{product.title}}" title="{{product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_p.jpg" %}';}return false;" onerror_cnt="0" />      
+    </div> 
+  
+     <div class="product_img_thumb filmstrip">
+     {%for image in product_images%}      
+      {% if product_images|length > 1 %}        
+       <img src="{{image.get_filmstrip_url}}" class="steal_thumb_img" width="36" height="36" alt="" title="{{product.title}}" display="{{image.get_display_url}}" />         
+       {% endif %}      
+      {%endfor%}   
+       </div>
+            
+   {% if product_images.0.type == 'scene7' %} 
+	   <div class="zoom_in_wrapper mart5">
+        <div class="zoom_in">
+        <div class="spthree zoom_in_img"></div>
+         <div class="zoom_in_text f11 fblue left" title="Zoom in">View large image</div>
+         <div class="clear"></div>
+        </div>
+        </div>
+	{% endif %}
+    <div class="clear"></div>
+    </div>
+     <div class="clear"></div>
+    <div class="product_desc_details">     
+     <div>
+       <h2>Product Details</h2> 
+       {%if product.description != '--'%}
+        <div class="pad10 marb10">{{product.description|safe}}</div>
+        {%endif%}
+        </div>        
+        <div> 
+	  {% if product.primary_rate_chart.key_feature %}
+          <h3>Key Features</h3>
+          <div class="pad10">{{product.primary_rate_chart.key_feature|safe }}</div>
+          {% endif %} 
+	   </div>       
+	   
+        {% if product.video_embed %}
+        <div>
+         <h2>Product Video</h2>
+         <div class="pad10">
+        <object width="500" height="250">
+          <param name="movie" value="{{product.video_embed}}">
+          <param name="allowFullScreen" value="true">
+          <param name="allowscriptaccess" value="always">
+          <embed src="{{product.video_embed}}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="500" height="250">
+          </embed>
+        </object>
+        </div>
+        {% endif %}  
+               
+        {%feature_tag product%} 
+     <div class="pad5"><b>FBID: </b>{{product.primary_rate_chart.sku}} </div>
+  
+   <div class="tabs_wrapper">
+        <ul class="tabs">     
+           <li class="tab_read_review sel_tab">Read reviews</li>
+          <li class="tab_write_review">Write a review</li>    
+        </ul>
+        {%if total_reviews and 0%}
+            <div class="right all_reviews"><a href="#">View all {{total_reviews}} reviews</a></div>
+        {%endif%}
+        <div class="clear"></div>
+      </div> 
+<div id="read_reviews" class="tab tab1">
+{%if total_reviews%}
+   {%read_product_reviews product_reviews%}
+{%else%}
+<table><tr><td><a href="#write_review" class="top_write">Be the first to write a review</a></td></tr></table>
+{%endif%}
+</div>    
+
+<form method="POST" action="">
+<div id="write_review" class="tab tab2 ">
+<table>
+{%if not request.user.is_authenticated%}
+    <tr>
+     <td><div>Please login to write a reivew. To login <a href="/auth/signin/?next={{request.path}}">click here.</a></div></td>
+    </tr>
+{%else%}
+<tr>
+    {%if form.title.errors%}<td><div class="error">Subject: {{form.title.errors}}</div></td>{%endif%}
+    <td>Subject</td>
+    <td>{{form.title}}</td>
+</tr>
+<tr>   
+    {%if form.review.errors%}<td><div class="error">Review: {{form.review.errors}}</div></td>{%endif%}
+    <td>Review</td>
+    <td>{{form.review}}</td>
+</tr>
+<tr>
+    {%if form.rating.errors%}<td><div class="error">Rating: {{form.rating.errors}}</div></td>{%endif%}
+    <td>Rate this product</td>
+    <td>
+	<input type="radio" class="prating" id="id_rating_0" value="1" title="Poor" name="rating" checked="checked">
+	<input type="radio" class="prating" id="id_rating_1" value="2" title="Average" name="rating">
+	<input type="radio" class="prating" id="id_rating_2" value="3" title="Good" name="rating">
+	<input type="radio" class="prating" id="id_rating_3" value="4" title="Great" name="rating">
+	<input type="radio" class="prating" id="id_rating_4" value="5" title="Excellent" name="rating">
+    </td>
+</tr>
+<tr>
+    <td></td>
+    <td><button type="submit" class="btn btn_post"></button></td>
+</tr>
+{%endif%}    
+</table>
+</div>
+</form>
+    </div>
+   </div>
+   </div>
+  <div class="product_rightbar">    
+
+   <div class="top_border"></div>
+    <div class="spthree delivery_guarantee rc5">
+      <div class="ra">
+        <a href="/product/check_availability/?rc={{product.primary_rate_chart.id}}" class="right_arrow fancybox" title="Check Delivery Tim" id="check_availy">Check Delivery Time </a></div>
+    </div>    
+    {% if product.primary_rate_chart.is_cod_available %}
+   <div class="pay_with_cod_wrapper mar10 rc5">
+     <div class="pay_with_cod spthree left"></div>
+     <div class="right">
+      <div class="marb2 ra"> <span class="f11 fb caps">This item available for</span><br />
+        <span class="f15 fb forange2 caps">Cash on Delivery</span> </div>
+      <div class="ra"><a href="/info/cod.html" class="mart10 right_arrow fancybox" title="Learn More">Learn More</a></div>
+    </div>
+    <div class="clear"></div>
+    </div>
+    {% endif %}
+    {%if product.primary_rate_chart.offer_price >= 3000 %} 
+    <div class="emi mar10 rc5">
+      <div class="marb5"><span class="forange2 fb caps f14">Credit Card EMI</span> Available</div>
+      <table class="spthree">
+        <tr>
+          <th>3 EMI</th>
+          <th>6 EMI</th>
+          <th>9 EMI</th>
+        </tr>
+        <tr>
+          <td><span class="WebRupee">Rs. </span> {{emi.3months|money}}</td>
+          <td><span class="WebRupee">Rs. </span> {{emi.6months|money}}</td>
+          <td><span class="WebRupee">Rs. </span> {{emi.9months|money}}</td>
+        </tr>
+      </table>        
+      <div class="ra mart5"><a class="right_arrow fancybox"   href="/info/emi.html" title="Learn More">Learn More</a> </div>
+    </div>
+    {%endif%}     
+    {% if product.primary_rate_chart.is_fmemi_available %}
+    <div class="future_money_wrapper mar10 rc5">
+     <div class="future_money spthree"></div>
+      <span class="fb">Easy EMI/Finance available </span>
+      <div class="ra f11"><a href="/info/future_money_finance.html" class="mart10 right_arrow fancybox" title="Learn More">Learn More</a></div>
+    </div>
+    {% endif %}
+   
+    <div class="spthree need_assistance f15">
+    <a onclick="window.open('http://chatserver.comm100.com/ChatWindow.aspx?siteId=24850&amp;planId=597&amp;partnerId=-1&amp;visitType=1&amp;byHref=1', 'popupwindow', 'width=500,height=500,left=200,top=5,scrollbars,resizable');" class="tdnone cp" title="Need Assistance?">
+    <span class="fb">Need Assistance?</span>
+      <div class="f11 marl5 mart10"> Chat live with an</div>
+       <div class="f11 marl5">online representative</div>
+       <div class="f11 marl5 mart10"> 
+       <strong>Chat with us &raquo;</strong></div>
+       </a>
+    </div>
+    
+    {%if similarProducts%}
+    <div class="similar_prod">
+    <div class="similar_prod_title">You may also like</div>
+        {%for sp in similarProducts%}
+        <div class="similar_prod_item"> 
+        <div class="left image">         
+           <a href="{%cc_url request sp.product.url%}"><img src="{{sp.product_images.0.get_thumbnail_url}}" width="72" height="72" alt="{{sp.product.title}}" title="{{sp.product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_s.jpg" %}';}return false;" onerror_cnt="0" /></a>
+           <a href="{%cc_url request sp.product.url%}" title="Buy Now">
+           <button class="btn btn_buynow_small"></button>
+           </a>
+        </div>
+            <ul>
+                <li class="fb f12 marb5"><a href="{%cc_url request sp.product.url%}" title="{{sp.product.title}}">{{sp.product.title|truncate:52}}</a></li>
+                {% if request|isAnySaving:sp.rate_chart %}
+                <li>{{ sp.price_info.list_price_label }} <span class="fs"><span class="WebRupee">Rs.</span>
+                {{sp.price_info.list_price|money}}</span></li>
+                {% endif %}
+                <li class="fb forange">{{ sp.price_info.offer_price_label}} <span class="WebRupee">Rs.</span> {{ sp.price_info.offer_price|money }}</li>   
+                {% if request|isAnySaving:sp.rate_chart %}
+                <li class="fb">You Steal <span class="WebRupee">Rs.</span> {%getSavings request sp.rate_chart%} ({% getDiscount request sp.rate_chart %}%)</li>    
+                {% endif %}
+            </ul> 
+        <div class="clear"></div>
+        </div>       
+        {%endfor%}      
+     </div>
+  {%endif%}
+   <div class="top_border"></div>
+</div>  
+
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+{"parsetags": "explicit"}
+</script>
+<script type="text/javascript">
+gapi.plusone.render("plusone-div",{"size": "medium", "count": "true"});
+</script>
+<script>
+    function ajaxws(aType, srcId) {
+        if (srcId == "") {srcId = 0}
+        var url = "/as/write-stream/"+aType+"/"+srcId+"/";        
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "",
+            success: function(msg){              
+            }
+        });
+    };
+</script>
+<script>
+    FB.Event.subscribe('edge.create', function(href) {      
+        var ufid = "{{facebookid}}";
+        var attch_fb = '';
+        FB.api('/me', function(response) {
+            if (ufid != response.id){             
+              //  $("#pop").dialog();
+                auth_check();
+            };     
+        ajaxws("Like", "{{product.primary_rate_chart.id}}");
+        });
+    });
+    function auth_check() {
+        FB.Event.subscribe('auth.login', function(response) {
+            FB.getLoginStatus(function(res) {
+                if(res.session.uid) {
+                    FB.api('/me', function(response1) {                      
+                    }); 
+                };
+            });
+        });
+    };
+</script>
+<script language="javascript" type="text/javascript">
+    	$('.tab_read_review').click(function(){			
+		$(this).addClass('sel_tab');
+		$('.tab_write_review').removeClass('sel_tab');			
+			$('.tab1').removeClass('hide');
+			$('.tab1').addClass('show');
+			$('.tab2').addClass('hide');						
+			$('.tab2').removeClass('show');			
+	});
+	
+	$('.tab_write_review').click(function(){		
+		$(this).addClass('sel_tab');	
+		$('.tab_read_review').removeClass('sel_tab');		
+			$('.tab2').removeClass('hide');
+			$('.tab2').addClass('show');
+			$('.tab1').addClass('hide');
+			$('.tab1').removeClass('show');			
+		
+	});	
+    
+$(document).ready(function(){
+    $('div.filmstrip img').bind('mouseover', function() {
+            var display_url = $(this).attr('display');
+            var current_url = $('#display_img')[0].src;
+            if(display_url) {
+                if (display_url != current_url) {
+                    $('#display_img')[0].src = display_url;
+                    }
+            }
+        });
+
+    $('div.zoom_in').bind('click', function() {
+            var url = $('#display_img')[0].src;
+            var re = new RegExp(".*scene7.*Futurebazaar/([^?]+)")
+            var m = url.match(re);
+            if(m) {
+                 var zoom_url = "http://futurebazaar.scene7.com/s7ondemand/zoom/flasht_zoom.jsp?company=Futurebazaar&sku=noimage&config=ImageSetConfigDefaults&zoomwidth=650&zoomheight=500&vc=image%3dFuturebazaar/" + m[1];
+                 window.open(zoom_url, 'zoom_window', 'location=no, height=550, width=650, toolbar=no, menubar=no, top=100, left=200' );
+            }
+        });
+    });		
+</script>
+<script>
+$('.top_write').click(function(){
+    $(this).addClass('sel_tab');
+    $('.tab_read_review').removeClass('sel_tab'); 	
+    $('.tab_write_review').addClass('sel_tab');		
+    $('.tab2').removeClass('hide');
+	 $('.tab2').addClass('show');  
+    $('.tab1').addClass('hide');
+    $('.tab1').removeClass('show'); 	
+})
+$('.top_read').click(function(){
+    $(this).addClass('sel_tab');
+    $('.tab_write_review').removeClass('sel_tab'); 
+    $('.tab_read_review').addClass('sel_tab');            
+    $('.tab1').removeClass('hide');
+    $('.tab1').addClass('show');
+    $('.tab2').addClass('hide');   	
+    $('.tab2').removeClass('show');  
+})
+$(document).ready(function() {
+    $('.prating').rating({
+        callback: function(value, link) {
+           $('.star-rating-applied').each(function(){
+               $(this).removeAttr('checked');    
+           });
+	   $('input#id_rating_' + (value-1)).attr('checked', "checked");
+        }
+    });
+    $("#avg_stars").removeClass("hide");
+});
+</script>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+{%endblock%} 

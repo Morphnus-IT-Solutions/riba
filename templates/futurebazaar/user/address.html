@@ -1,0 +1,118 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{% block user_content %}
+    
+<div class="mart10"> 
+    <div class="marb10 f13"> Manage your Shipping Addresses here. Add, Edit or Delete Addresses. You can even change your Default Shipping Address.</div>
+    <div class="left address_col">
+
+        {% if addresses %}
+            {%for address in addresses%}
+    
+                <div class="ship_address {% if address.defaddress %} def_ship_address{% endif %}">  
+                    <div class="fb marb5"><input type="radio" name="select_address" id="{{address.id}}" value="{{address.id}}" class="select_address"/> {% if address.defaddress %}Default  {% endif %}Shipping Address</div>
+                    <div class="dname marb5">{{address.first_name}} {{address.last_name}}</div>
+                    <div class="daddress" style="overflow:hidden; height:18px;">{{address.address}}</div>
+                    <div class="dcity">{{address.city.name}} <span class="dpincode">{{address.pincode}}</span></div>
+                    <div class="dstate">{{address.state.name}}, <span class="dcountry">{{address.country.name}}</span></div>
+                    <div class="dstate">Email: {{address.email}}</div>
+                    <div class="dphone">Tel: {{address.phone}}</div>                 
+                    <div class="ra">
+                        <button type="button" class="linkButton edit_address select_address" id="{{address.id}}" value="{{address.id}}">Modify</button> | <button type="button" id="{{address.id}}" class="linkButton delete_address">Remove x</button>
+                       {% if address.defaddress %}
+                           <div> Default Address </div>
+                      {% endif %}
+                    </div>
+                </div> 
+    
+            {%endfor%}
+        {%else%}
+        <div class="f14 marb10"><strong>Your Address Book is empty.</strong></div>
+        {% endif %}    	
+        <div class="clear"></div>
+    </div>
+    <div class="left" style="width:400px;">
+        <form method="POST" action="" id="my_profile_form" name="shipping_info_form">
+            <table class="add_ship_address">
+                <tr>
+                    <td colspan="2">
+                        <div id='fill_address'>
+                            {%fill_address_details form%}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mart10"><button type='submit' class="btn_c btn_m btn_orange">Save</button></td>
+                </tr>
+                <tr>
+                    <td><input type="hidden" id="address_id" name="address_id" value="{{addr_id}}" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="clear"></div>
+</div>
+<div id="address_container"></div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.delete_address').click(function(){
+        var r=confirm("Are you sure you want to delete this address?");
+        if (r==true)
+        {
+            var add_id = this.id;
+            var data = 'id=' + add_id;
+            var onSuccess=function(response){
+                window.location.reload();
+            };
+            var onError=function(){
+                };
+            $.ajax({
+                    url : '/user/delete_address/',
+                    data : data,
+                    success : onSuccess,
+                    error : onError,
+                    type : "POST"
+                });
+            return False;
+        }
+        window.location.reload();
+    });
+ });
+</script>
+<script type='text/javascript'>
+$(document).ready(function(){
+$('.select_address').click(function(){
+        var numericPattern = /^[0-9]+$/;
+
+        if(!numericPattern.test($(this).val())){
+            return false;
+        }
+        var url = "/user/get_address_info/";
+        var data = 'id=' + $(this).val();
+        $('#address_id').val($(this).val());
+        $(this).attr('checked',true);
+        var curr_id = $(this).attr('id')
+        var onSuccess = function(responseTxt) {
+            $('#fill_address').html(responseTxt);
+            $('#'+curr_id).attr('checked','checked');
+        };
+        var onError = function() {
+        };
+
+        $.ajax({ url:url,
+               data : data,
+               success : onSuccess,
+               error : onError,
+               type : 'GET'
+               });
+        return false;
+
+    })
+});
+</script>
+{%endblock%}
+

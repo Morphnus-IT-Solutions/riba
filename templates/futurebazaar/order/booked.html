@@ -1,0 +1,11 @@
+{% extends "web/base.html" %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block content %}
+<div class="breadcrumb"> &nbsp;       
+</div>
+ <div class="checkout_table min-height400"> 
+    {% render_order_snippet order %}
+    <div class="clear"></div>
+</div>
+{% endblock %}

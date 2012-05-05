@@ -1,0 +1,265 @@
+{% extends 'support/base.html' %}
+{% block content %}
+    {% load pagination_tags %}
+    {% autopaginate qs items_per_page %}
+    {% load support_tags %}
+    {% load cc_tags %}
+<style type='text/css'>
+.action_input select{width:120px;height:21px;font-size:11px;}
+.action_input input{height:21px;margin-left:5px;font-size:11px;padding:0 3px;}
+.show_text{display:none;}
+.sort{cursor:pointer;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="{% cc_url request "fulfillment/" %}">Fulfillment</a>&nbsp;&raquo;&nbsp; To be Procured</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Fulfillment: To be Procured</h1>
+    </div>
+	<div class="right content_head mar0 mart15">
+		<table cellpadding="0" cellspacing="0" border="0" class="right">
+			<tr>
+			  <td><a href="?view=cumulative"{% if view == 'cumulative' %} class="tab_selected fb" {% endif %}>Cumulative</a>&nbsp;|&nbsp;</td>
+			  <td><a href="?view=items"{% if view == 'items' %} class="tab_selected fb" {% endif %}>Items</a></td>
+              {%comment%}
+			  <td><a href="?view=orders"{% if view == 'orders' %} class="tab_selected fb" {% endif %}>Orders</a></td>
+              {%endcomment%}
+			</tr>
+		</table>
+	</div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+    {% if filter_form %}
+    <div id='filter_form' style='padding:0;border:none;'>
+        {% if filter_form.errors %}
+        <div class='error'>{{filter_form.errors}}</div>
+        {% endif %}
+        <form name='filter_form' method='get'>
+            <input type='hidden' name='view' value='{{view}}' />
+            <input type='hidden' name='sort' value='{{sort|default:''}}' />
+            <input type='hidden' name='s_ord' value='{{s_ord|default:''}}' />
+            <input type='hidden' name='download' value='' />
+			
+            <div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.article_id.label}}</div>
+			    <div class='col2 left'>{{filter_form.article_id}}</div>
+                <div class='col1 f11 flgray left marl49'>{{filter_form.category.label}}</div>
+			    <div class='col2 left'>{{filter_form.category}}</div>
+                <div class='col1 f11 flgray left marl49'>{{filter_form.state.label}}</div>
+                <div class='col2 left'>{{filter_form.state}}</div>
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.dc.label}}</div>
+			    <div class='col2 left'>{{filter_form.dc}}</div>
+                <div class='col1 f11 flgray left marl49'>Stock Expected</div>
+                <div class='col2 left'>{% support_daterange request 0 0%}</div>
+                <div class='col1 f11 flgray left marl49'>{{filter_form.exclude_sto.label}}</div>
+                <div class='col2 left'>{{filter_form.exclude_sto}}</div>
+            </div>
+            <div class='clear'>
+				<div class="col1 left"></div>
+				<div class="col2 left">
+					<input type="submit" value="Filter" class="uiButton" style="width:80px\9; padding:5px;" title="Filter">
+				</div>
+            </div>
+        </form>
+    </div>
+    <div class="clear border-dotted-gray marb10">&nbsp;</div>
+    {% endif %}
+    
+    {% if errors %}
+    <div class="notice"> 
+        <ul>
+        {% for error in errors %}
+            <li>{{error}}</li>
+        {% endfor %}
+        </ul>
+    <div class="marb10">&nbsp;</div>
+    </div>
+    {% endif %}
+
+    {% if qs %}
+    <div class='right mart10 marl10'>
+        <a href='#' id='download' class='excel_download'></a>
+    </div>
+    <form id='procurement_form'>
+    <div class='action_input marb5 right'>
+        {%choicefield 'orderitem' qs.0.sap_order_item order_item_flows 'action_id'%}
+    </div>
+    <table class="tbl_response tablesorter f11 clear">
+		<thead>
+		<tr>
+            <th class="w20"><input type='checkbox' name='items_select_all'/></th>
+			<th class="w90 sort" id='seller_rate_chart__article_id'>Article ID</th>
+            <th class="w175">Name</td>
+            <th class="w35 sort" id='qty'>Qty</th>
+            <th class="w55 sort" id='sale_price'>Total Value</th>
+            <th class="w45 sort" id='sap_order_item__dc__code'>DC</th>
+            {%if view == 'items'%}
+            <th class="w85 sort" id='order__id'>Order</th>
+            <th class="w75 sort" id='expected_delivery_date'>Delivery Date</th>
+            {%endif%}
+            <!--
+            <th class="w75 sort" id='sap_order_item__revised_stock_arrival'>Stock Expected</th>
+            -->
+            <th class="w85 sort" id='sap_order_item__revised_stock_arrival'>Promised shipping date</th>
+            <th class="w125 sort" id='sap_order_item__status'>State</th>
+            {%if view == 'items'%}
+            <th class="w125">Notes</th>
+            {%endif%}
+		</tr>
+		</thead>
+		<tbody>
+        {% for item in qs %}
+        <tr>
+            <td class="txtalgnc"><input type='checkbox' name='items' value='{{item.sap_order_item.id}}'/></td>
+            <td class="txtalgnc">{{item.seller_rate_chart.article_id}}</td>
+            <td>
+                {{item.item_title}}<br />
+                {{item.seller_rate_chart.product.category.name|title}}&nbsp;&middot;&nbsp;<span class="WebRupee">Rs. </span>{{item.get_unit_price|floatformat:0}}
+            </td>
+            <td class="txtalgnc">{{item.qty}}</td>
+            <td class="txtalgnc"><span class="WebRupee">Rs. </span>{{item.sale_price|floatformat:0}}</td>
+            <td class="txtalgnc">{{item.sap_order_item.dc.code}}</td>
+            {%if view == 'items'%}
+            <td class="txtalgnc">
+                <a href="{% cc_url request "order/" %}{{item.order_id}}">{{item.order.reference_order_id|default:item.order_id}}</a><br />
+                {{item.order.confirming_timestamp|date:'d M Y'}}
+                </td>
+            <td class="txtalgnc">{{item.expected_delivery_date|date:'d M Y'}}</td>
+            {%endif%}
+            <!--
+            <td class="txtalgnc">
+                {%if item.sap_order_item.revised_stock_arrival%}
+                    {{item.sap_order_item.revised_stock_arrival|date:'d M Y'}}
+                    {%if item.sap_order_item.revised_stock_arrival != item.expected_stock_arrival%}
+                    <br /><span class='flgray'><strike>{{item.expected_stock_arrival|date:'d M Y'}}</strike></span>
+                    {%endif%}
+                {%else%}{{item.expected_stock_arrival|date:'d M Y'}}{%endif%}
+            </td>
+            -->
+            <td class="txtalgnc {% rag item.expected_stock_arrival %}">
+                {{item.expected_stock_arrival|date:'d M Y'}}
+            </td>
+            <td class="txtalgnc">{{item.sap_order_item.status|title}}</td>
+            {%if view == 'items'%}
+            <td style='word-break:normal'>
+                <div class='truncate w145' id='notes_{{item.sap_order_item.id}}'>{{item.sap_order_item.notes|title}}</div>
+                <a href='#' id='show_{{item.sap_order_item.id}}' class='show_text right'>[+]</a>
+            </td>
+            {%endif%}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table><br />
+    </form>
+    {% paginate %}
+    {% else %}
+        <p>No items found</p>
+    {% endif %}
+  </div>
+</div>
+<div id='apply_action' style='display:none;'></div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+$('.apply_action').click(function() {
+    var id = $(this).attr('id');
+    var s = id.split('_');
+    var pk = s[1];
+    var width = 250;
+
+    var value = $('#procurement_form select').val();
+    if (value == '' || value == null)
+        return false;
+    if ($('#procurement_form input[name="items"]:checked').size() == 0)
+        return false;
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+        if (xhr.status == 200)
+            setInterval('location.reload();', 2000);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+	};
+    $.ajax({ url: '/fulfillment/procurement/'+pk+'/form/?action_id='+value+'&view={{view}}',
+		data : '',
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('.truncate').each(function(){
+    var pk = $(this).attr('id').split('_')[1];
+    if ($(this).text().length > 24) {
+        $('#show_'+pk).show();
+    }
+});
+
+$('.show_text').toggle(
+    function(){
+        var pk = $(this).attr('id').split('_')[1];
+        $('#notes_'+pk).removeClass('truncate');
+        $(this).text('[-]');
+        return false;
+    },
+    function(){
+        var pk = $(this).attr('id').split('_')[1];
+        $('#notes_'+pk).addClass('truncate');
+        $(this).text('[+]');
+        return false;
+    }
+);
+
+{%if sort%}
+var sort = function(id, s_ord){
+    var e = $('#'+id);
+    var val = e.html();
+    if (s_ord == 'desc')
+        val += "&nbsp;<span class='f16'>&darr;</span>";
+    else
+        val += "&nbsp;<span class='f16'>&uarr;</span>";
+    e.html(val);
+};
+sort('{{sort}}','{{s_ord}}');
+{%endif%}
+
+$('.sort').click(function(){
+    var id = $(this).attr('id');
+    var sort = '{{sort}}';
+    var s_ord = '{{s_ord}}';
+    if (id == sort) {
+        if (s_ord == 'asc')
+            s_ord = 'desc';
+        else
+            s_ord = 'asc';
+    }
+    else {
+        sort = id;
+        s_ord = 'asc';
+    }
+    $('input[name="sort"]').val(sort);
+    $('input[name="s_ord"]').val(s_ord);
+    $('form[name="filter_form"]').trigger('submit');
+    return false;
+});
+
+$('#download').click(function(){
+    $('input[name="download"]').val('1');
+    $('form[name="filter_form"]').trigger('submit');
+    $('input[name="download"]').val('');
+    return false;
+});
+
+CheckboxMultipleSelect('items');
+{% endblock %}

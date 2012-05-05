@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load order_tags %}
+{% block content %}
+<br/>
+
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+<div class="content_head">
+  <div class="header rc5">
+    <h3 class="left">Complaints Analysis Dashboard</h3>    
+    <div class="download_excel">
+        {%show_excel_link request "excel"%}
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div>
+<form method='get' action=''>
+    <div class="left">
+        <h3>{{title}}</h3>
+        <div class="f11"> {{month}},  {{year_index}}
+        </div>
+    </div>
+    <div class="ra">
+        <span><b>Select Month:-</b></span>
+        <select name="month_index" id="month_index" style="width:90px">
+            {%for level in months_list%}
+                <option value={{level.0}} {%ifequal level.1 month%}SELECTED{%endifequal%}>{{level.1}}</option>
+            {%endfor%}
+        </select>
+        &nbsp;
+        &nbsp;
+        <span><b>Year:-</b></span>
+        <select name="year_index" id="year_index" style="width:60px">
+            {%for level in years_list%}
+                <option value={{level.0}} {%ifequal level.0 year_index%}SELECTED{%endifequal%}>{{level.1}}</option>
+            {%endfor%}
+        </select>
+        <button type="submit" id="month_submit" class="rc5">Go!</button>
+    </div>
+</form>
+</div>
+<br />
+<br/>
+<!--<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >-->
+<div style="width:75%; margin-left:100px" >
+<table class="tbl_report" st>
+{%for item in data%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td class={%if forloop.counter in left_ali_cols%}"la fb"{%endif%}>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+<br/>
+<br/>
+<!--<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >-->
+<div style="width:75%; margin-left:100px" >
+<h3>Reason for Unresolved Complaints</h3>
+<table class="tbl_report">
+{%for item in unresolved_data%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td class={%if forloop.counter in left_ali_cols_unresolved%}"la fb"{%endif%}>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+<br/>
+
+<br/>
+<br/>
+<!--<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >-->
+<div style="width:75%; margin-left:100px" >
+<h3>Common Reason for Customer Complaints</h3>
+<table class="tbl_report">
+{%for item in common_data%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td class={%if forloop.counter in left_ali_cols_common%}"la fb"{%endif%}>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+<br />
+<br/>
+<!--<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >-->
+<div style="width:75%; margin-left:100px" >
+<h3>Time Frame Summary</h3>
+<table class="tbl_report">
+{%for item in timeframe_data%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td class={%if forloop.counter in left_ali_cols%}"la fb"{%endif%}>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+<br/>
+<br>
+<br>
+
+{%endblock%}

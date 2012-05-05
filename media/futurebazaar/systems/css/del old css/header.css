@@ -1,0 +1,76 @@
+#header { padding: 0 10px; background-color: #fff; }
+#logo {float: left; width: 200px;}
+#logo div { padding: 5px; }
+#header_right {
+    float: right; width: 760px;
+}
+#user_links { padding: 5px; float: right; }
+#user_links ul { margin: 0 }
+#user_links ul li { float: left;  list-style: none;}
+#user_links ul li span { padding: 0px 5px; border-right: 1px solid #999}
+#user_links ul li span.nopad { border-right: 1px solid #999; padding: 0;}
+#user_links ul li span.noborder { border-right:0 ; padding: 0; padding-left: 5px;}
+#user_links ul li a { padding: 0px 5px;  border-right: 1px solid #999}
+#user_links ul li.l a { border-right: none;}
+
+#stores { float: right; margin-top:33px;}
+
+
+div#menu div { background: #fcce00 url('/media/images/menu_bg.gif');background-repeat:repeat-x; text-align: center; font-size: 16px; height:20px;padding:10px;}
+
+#follow span { position:relative; padding:0; margin:0; align:center; z-index: 100;} 
+#follow span ul {
+    display: none;
+    position: absolute;
+    top:13px;
+    left: -78px;
+    list-style-type:none;
+}
+
+#follow span ul li a {
+    background-color:#ffffff;
+    font-size:10px;
+    border-left:1px solid #cdcdcd;
+    border-right:1px solid #cdcdcd;
+    color:black;
+    display: block;
+    width: 80px;
+    padding-top:5px 0px 5px 10px;
+    text-decoration:none;
+    border-top:1px solid #fff;
+    border-bottom:1px solid #cdcdcd;
+}
+
+#follow span:hover ul,#follow span.over ul{
+  display:block;
+}
+
+#currency span { position:relative; padding:0; margin:0; align:center;} 
+#currency span ul {
+    display: none;
+    position: absolute;
+    top:13px;
+    left: -49px;
+    list-style-type:none;
+}
+
+#currency span ul li a {
+    background-color:#ffffff;
+    font-size:10px;
+    border-left:1px solid #cdcdcd;
+    border-right:1px solid #cdcdcd;
+    color:black;
+    display: block;
+    width: 42px;
+    padding-top:5px;
+    padding-left: 10px;
+    padding-bottom:5px;
+    text-decoration:none;
+    border-top:1px solid #fff;
+    border-bottom:1px solid #cdcdcd;
+}
+
+#currency span:hover ul{
+  display:block;
+}
+

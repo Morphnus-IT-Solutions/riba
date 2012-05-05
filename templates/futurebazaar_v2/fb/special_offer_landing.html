@@ -1,0 +1,110 @@
+{% extends "web/base.html" %}
+{% load web_tags %}
+{% load cc_tags cache%}
+{%block content%}
+<style>
+.banner_12aug_deal{ background: url("/media/images/banner-12aug-page.jpg") 0 0 no-repeat; width:988px; height:170px;}
+.page_wrapper .prod{width:210px; height:278px;  margin-right:15px; margin-left:15px; margin-bottom:50px;}
+.page_wrapper .prod_name{height:30px; overflow:hidden;line-height:30px; border-top:5px solid #ebdb26; border-bottom:5px solid #ebdb26; font-size:14px; text-align:center;}
+.page_wrapper .prod_img{padding-top:20px; position:relative; width:210px;}
+.page_wrapper .price{font-size:12px; height:30px; line-height:30px; color:#000;}
+.page_wrapper .shop_now{background:url('/media/images/shop-now.gif') 0 0 no-repeat; width:210px; height:38px;}
+.page_wrapper .save_tag {
+  font-size: 11px;
+  height: 56px;
+  padding-top: 14px;
+  position: absolute;
+  left: 5px;
+  top: 10px;  
+  width: 64px;
+  text-align:center;
+  background: url("/media/images/blurb-maroon.png") 0 0 no-repeat;
+  color:#fff;  
+}
+.d_tc {position:absolute; margin-top:161px; margin-left:900px;}
+.deals_nav{background-color:#222; padding:10px 10px; margin:10px 15px 20px; text-transform:uppercase; }
+.deals_nav a{color:#fff; padding:3px 10px; text-decoration:none!important; background-color:#222;}
+.deal_timer{font-size:16px; font-weight:bold; color:#fff; text-transform:uppercase; position:absolute; margin-top:80px; margin-left:208px;}
+.deals_nav a.nav_active{color:#222;  background-color:#ebdb26;border-radius:20px;-webkit-border-radius:20px;-moz-border-radius:20px }
+.deals_nav a:hover{color:#222;  background-color:#ebdb26;border-radius:20px;-webkit-border-radius:20px;-moz-border-radius:20px;text-decoration:none!important; }
+</style>
+<div class="12aug_page mart10">
+<div class="banner_12aug_deal">
+    <div class="deal_timer">
+    <div class="steal_timer" style="position:static;background-color:transparent;padding:0px;font-size:18px">
+        <span class=" fb">
+            <span class="hr"></span>hrs : 
+            <span class="min"></span>mins : 
+            <span class="sec"></span>secs
+        </span>
+    </div>
+    </div>
+    <div class="d_tc"><a href="/info/special_offer_tc.html" class="fancybox tdnone" />*T&C Apply</div>
+</div>
+<div class="f14 fb deals_nav">
+<a href="/special-offer/crazy-deals/" class="{%if tag_filter == 'all-offer'%}nav_active{%endif%}">ALL OFFERS</a> &nbsp;&nbsp;&nbsp;
+{% for tag in navigation_filters %}
+    <a href="http://{{request.client.domain}}/special-offer/crazy-deals/{{tag.tag.tag}}/" class="{%if tag_filter == tag.tag.tag%}nav_active{%endif%}">{{tag.tag.display_name}} ({{tag.tag_count}})</a> &nbsp;&nbsp;&nbsp; 
+{% endfor %}
+</div>
+<div class="mart10 page_wrapper" id="special_products">
+{% get_special_products request items%}
+</div>
+
+<div class="clear"></div>
+</div>
+  {%if pagination.enable_next%}
+    <div id="ajax_loader" class="ca hide mart10"><img src="{{MEDIA_URL}}images/ajax-loader.gif" ></div>
+        <div class="fb f16 mart10 pad5 rc5" id="see_more_tab">
+            <div class="ca cp see_more_deals">See More Deals</div>
+        <div class="clear"></div>
+    </div>
+  {%endif%}
+    <div class="ra pad10"><a href="/info/special_offer_tc.html" class="fancybox tdnone" />*T&C Apply</div>
+{% endblock%}
+{% block script_footer%}
+{{block.super}}
+<script type="text/javascript">
+    Timers.initST({{deal.remaining_time.0}}, {{deal.remaining_time.1}}, {{deal.remaining_time.2}}, {{deal.remaining_time.3}});
+    Timers.start();
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var nxt_page_no = 2;
+    var total_pages = {{total_pages}};
+
+    if(nxt_page_no > total_pages){
+        $("#see_more_tab").addClass("hide");
+    };
+    var status = "1 - {{pagination.result_to}} of {{total_results}} Items";
+    
+    $("#see_more_tab").click(function(){
+        $("#ajax_loader").removeClass("hide");
+        $("#see_more_tab").addClass("hide");
+        var action = "{{pagination.base_url|safe}}" + "page=" + nxt_page_no;
+        var data = "";
+        var onSuccess = function(response){
+            $("#special_products").append(response);
+            var OffsetTarget = "#grid_special_" + nxt_page_no;
+            $("html,body").animate({scrollTop:$(OffsetTarget).offset().top}, 1000,"linear" , function(){});
+            $("#see_more_tab").removeClass("hide");
+            $("#ajax_loader").addClass("hide");
+            nxt_page_no += 1;
+            if(nxt_page_no > total_pages){
+                $("#see_more_tab").addClass("hide");
+            };
+        };
+        var onError = function(){};
+
+        $.ajax({
+            url : action,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type: "GET"
+        });
+        return false;
+    });
+})
+</script>
+{% endblock %}

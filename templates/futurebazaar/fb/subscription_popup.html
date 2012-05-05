@@ -1,0 +1,30 @@
+
+<div class="popup_con">
+    <div class="popup_inner sub_info_msg"> 
+    <h1>Never Miss a Deal - Confirmation</h1>
+    <div class="popup_inner_con">
+        {% ifequal email_status 'ok' %}
+        <div class="f13" style="padding:30px 30px 10px 30px;">
+            <div id="email_subscribed">
+                <P class="sus_text marb20">Thank you for subscribing.</P>
+                <p class="email-mass marb20">Please confirm your subscription by clicking the link sent to your email address.</p>
+            </div>
+        {% else %}
+            <p id="email_exist" class="marb20">This e-mail is already subscribed at FutureBazaar.</p>
+        {% endifequal %}    
+        {% ifequal phone_status 'error' %}
+            <p id="phone_subscription_fail" class="marb20">Sorry we can not verify your mobile number at this moment. Please try again.</p>
+        {% else %}
+            {% ifequal phone_status 'ok' %}
+                <div id="phone_subscribed" class="phone-mass marb20">
+                    <p>To verify your mobile number, please call us within 15 minutes at</p>
+                    <p><span class="f18 fb"><img src="{{image_url}}"  /></span> <span class="f11">No charges apply.</span></p>
+                </div>
+            {% endifequal %}
+            {% ifequal phone_status 'fail' %}
+                <p id="phone_exist" class="marb20">This mobile number is already subscribed at FutureBazaar.</p>
+            {% endifequal %}
+        {% endifequal %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="excel_main">
+    <div id="id_excel"><img src="http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/excel-16.gif" alt="Excel" title="Excel" /></div>&nbsp;&nbsp;
+</div>
+<div class="hidden">
+    {{form.report_format}}
+</div>
+
+{%block export_script_footer%}
+<script type="text/javascript" language="javascript">   
+    $('#id_excel').click(function(){
+        var form = $('#report_form');
+        $("#id_report_format").val("{{excel}}");
+        form.submit();
+        $('#id_report_format').val('web');
+    })
+</script>
+{%endblock%}

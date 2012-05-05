@@ -1,0 +1,61 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% block user_content %}
+<!--<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />-->
+<div class="inner-content">
+  <form method="POST" action="" id="seller_profile_form" name="seller_profile_form">
+      <div class="fb f18">{{client_display_name}} - Notification</div>
+    {{formset.management_form}}
+  {% if not formset.errors %}
+    {%ifequal method "POST"%}
+    Your notification settings have been submitted.
+    <br />
+    {%endifequal%}
+  {% endif %}
+  <table class="tbl_profile"  style="width:380px;">
+    <tr align="center">
+      <td class="bbdr bbdb"></td>
+      <td class="f11 fgray ca">Email</td>
+      <td class="f11 fgray ca">Alt Email</td>
+      <td class="f11 fgray ca">Mobile</td>
+    </tr>
+    {%for form in formset.forms%}
+  {% if form.errors %}
+  <p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+
+  {{form.errors}}
+  {% endif %}
+      {% for hid in form.hidden_fields %}
+      {{ hid }}
+      {% endfor %}
+    <tr>
+      <td class="hidden">{{form.event}}</td>
+      {%if new_fields%}
+          <td class="f11 fgray">{%display_value_new form.event forloop.counter%}</td>
+      {%else%}
+          <td class="f11 fgray">{{form.event|display}}</td>
+      {%endif%}
+      <td class="f11 fgray ca">{{form.on_primary_email}}</td>
+      <td class="f11 fgray ca">{{form.on_secondary_email}}</td>
+      <td class="ca">{{form.on_primary_phone}}</td>
+    </tr>
+    {%endfor%}
+    <!--{%comment%}
+    <tr>
+      <td width="120" class="bbdr bbdb">{{form1.event.field.choices.1.1}}</td>
+      <td width="80" align="center" class="bbdr bbdb"  style="background-color:#eee;">{{form1.on_primary_email}}</td>
+      <td width="80" align="center" class="bbdr bbdb" style="background-color:#eee;">{{form1.on_secondary_email}}</td>
+      <td width="80" align="center" class="bbdb" style="background-color:#eee;">{{form1.on_primary_phone}}</td>
+    </tr>
+    {%endcomment%}-->
+    <br/>
+      <tr>
+      <td><INPUT TYPE="submit" id="submit_button" value="Save" class="grayButton">
+      </tr>
+  </table>
+  </form>
+  </div>
+
+<div class="clear"></div>
+
+{% endblock %} 

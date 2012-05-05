@@ -1,0 +1,142 @@
+{% extends 'ppd/user_home.html' %}
+{% load web_tags %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="inner_content">
+	<div class="content_head" style="padding-top:26px; height:34px;">
+		<div class="header rc5" style="width: 960px;">
+			<div class="left">
+				<h1>{{request.client.client.name|title}} - {{ list_objects.title }} Details</h1>
+    		</div>
+			<div class="right" style="height: 37px; padding-top: 7px; padding-right:20px;"> 
+				<a href="/user_experience/site_properties/lists/view_all_lists/" class="uiButton fblack">Back to all List</a>
+				<a href="/user_experience/site_properties/lists/edit/{{ID}}" class="uiButton fblack">Edit</a>
+			</div>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+  	<div class="clear"></div>
+	<form action="" id="seller_profile_form" name="seller_profile_form">
+	
+		<table class="tbl_display" style="border:1px;">
+		<tbody>
+			<tr>
+				<td class="f11 fdgray" style="width: 91px;">Title:</td>
+				<td class="f11 fdblack" style="width: 327px;">{{ list_objects.title }}</td>
+				<td class="f11 fdgray" style="width: 91px;">List Type:</td>
+				<td class="f11 fdblack" style="width: 327px;">{{ list_objects.type }}</td>
+			</tr>
+			<tr>
+				<td class="f11 fdgray" style="width: 91px;">Description:</td>
+				<td class="f11 fdblack" style="width: 327px;">{{ list_objects.description }}</td>
+				<td class="f11 fdgray" style="width: 91px;">Banner Type:</td>
+				<td class="f11 fdblack" style="width: 327px;">{{ list_objects.banner_type }}   
+                {% ifequal coordflag 1 %}
+					<a href="/user_experience/site_properties/lists/coordinates/{{ID}}" class="">     (Add Coordinates)</a>
+					{% if coordobj %}
+						<a href="/user_experience/site_properties/lists/view_coordinates/{{ID}}" class="">     (View Coordinates)</a>
+					{% endif %}
+				{% endifequal %}
+				</td>
+			</tr>
+			<tr>
+				<td class="f11 fdgray" style="width: 91px;">Starts On:</td>
+				<td class="f11 fdblack" style="width: 327px;">{{ list_objects.starts_on }}</td>
+				<td class="f11 fdgray" style="width: 91px;">Ends On:</td>
+				<td class="f11 fdblack" style="width: 327px;">{{ list_objects.ends_on }}</td>
+				<tr>
+					<td style="border-bottom: 2px solid #cccccc;"></td>
+					<td style="border-bottom: 2px solid #cccccc;"></td>
+					<td style="border-bottom: 2px solid #cccccc;"></td>
+					<td style="border-bottom: 2px solid #cccccc;"></td>
+					<td style="border-bottom: 2px solid #cccccc;"></td>
+				</tr>
+				<tr><td></td></tr>
+		</tbody>
+		</table>
+        <div width="940" class="left">
+			{% if list_objects.banner_image %}
+                <p> Banner Image </p>
+				<img width="940" height="150" src="{% media_url request list_objects.banner_image.url %}" />
+			{% endif %}
+         </div>
+			<!--<img src="/media/u/{{ list_objects.banner_image }}" />-->
+			<!--<img src="/home/apps/uploads/u/futurebazaar/{{ list_objects.banner_image }}"/> -->
+		<div class="clear"></div>
+		<div class="left mart10">
+			<h2>Items</h2>
+		</div>
+		<div class="clear"></div>
+		{% if listitemobj %}
+			<div class="left">
+				<h6>{{ request.client.client.name|title }}-{{ list_objects.title }} has {{ len }} items</h6>
+			</div>
+			<div class="clear"></div>
+			<div class="mart5">
+			<div class="" style="padding:0px 15px;">
+			<style>
+				.listitems td, .listitems th{border:1px solid #ddd;}
+			</style>
+            {% for i in listitemobj %}
+               {% if i.user_image %}
+			   		<div class="left">
+                    	<img width="78" height="96" src="{% media_url request i.user_image.url %}" />
+					</div>
+					<div class="right" style="width:731px;">
+						<table>
+							<tr><td>Product: {{ i.sku }}</td></tr>
+							<tr><td>SKU: {{ i.sku.id }}</td></tr>
+							<tr><td>Sequence: {{ i.sequence }}</td></tr>
+						</table>
+					</div>
+               {% endif%}
+			   <div class="clear"></div>
+              {% endfor %}
+			  {% comment %}
+             {% for i in listitemobj %}
+               {% if i.user_image %}
+                    <td>
+                    {{ i }}
+                    </td>
+               {% endif%}
+              {% endfor %}
+			  {% endcomment %}
+    
+
+			<table class="listitems mart5 marb10" style=" border-collapse:collapse;">
+				
+				<tr>
+					<th class="la f11 fdblack" style="width: 250px;"><strong>Seller Rate Chart ID</strong></th>
+					<th class="la f11 fdblack" style="width: 250px;"><strong>Product</strong></th>
+					<th class="la f11 fdblack" style="width: 250px;"><strong>SKU</strong></th>
+				</tr>
+		
+			{% for i in srcobj %}
+				<tr valign="top">
+					<td class="la f11 fdblack" style="width: 154px;">{{i.id}}</td>
+					<td class="la f11 fdblack" style="width: 355px;">{{i.product}}</td>
+					<td class="la f11 fdblack" style="width: 154px;">{{i.sku}}</td>
+				</tr>
+			{% endfor %}
+			</table>
+            <div class="right">
+				<a href="/user_experience/site_properties/lists/edit/{{ID}}" class="uiButton fblack">Edit</a>
+             </div>
+
+		{% else %}
+			<div class="left">
+				<h5>No Items in {{ client_display_name }} - {{ list_objects.title }}</h5>
+			</div>
+		{% endif %}
+
+	</form>
+</div>
+{% endblock %}

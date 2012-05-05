@@ -1,0 +1,67 @@
+ {% if card_form.errors %}
+<div>
+  <div class="error">
+    <ol>
+      {% for field in card_form %}
+      {% for error in field.errors %}
+      <li>{{error}}</li>
+      {% endfor %}
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+{% endif %}
+<table class="pad10">
+  <tr>
+    <td class="ra fb">Card Type</td>
+    <td>
+    <label>
+      <input type="radio" name="cardtype" checked="checked" value="visa-card" class="vt">
+      <img src="/media/images/visa.gif" height="16"/> </label>
+      &nbsp;&nbsp;
+      <label>
+      <input type="radio" name="cardtype" value="master-card" class="vt">
+      <img src="/media/images/master_card25.gif" height="16"/>
+      </label>
+    </td>
+  </tr>
+  {% include "order/card_form.html"%}
+</table>
+{% include "order/payment_options/billing_info.html"%}
+<form name="rmsForm" id="rmsForm">
+    <div id="RMSIDobject"></div>
+</form>
+<!-- script for adding rmsID in request.session START -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+<script type="text/javascript">
+    var __RMSID_SCRIPT_URL = '/orders/RMSID_sendData/';
+    var __RMSID_FORM_ID = 'rmsForm';
+    var __RMSID_READY = false;
+    var __RMSID_READY2 = false;
+    function __RMSID_sendData()
+    {
+        if(__RMSID_READY && __RMSID_READY2)
+        {
+            if(document.rmsForm.__RMSID_RB.value != '')
+            {
+                var dataString = 'data='+ escape(document.rmsForm.__RMSID_RB.value); 
+                $.ajax({
+                    type: "POST",
+                    url: __RMSID_SCRIPT_URL,
+                    data: dataString,
+                    async: false,
+                    success: function(data)
+                    {} 
+                });
+            }
+        }
+        else
+        {
+            setTimeout("__RMSID_sendData()",1000);
+        }
+    }
+    setTimeout("__RMSID_READY2 = true;",3000);
+    __RMSID_sendData();
+</script>
+<script type="text/javascript" src="https://scr.rmsid.com/riskengine/rescrv2.php"></script>
+<!-- script for adding rmsID in request.session END -->

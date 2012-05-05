@@ -1,0 +1,26 @@
+{% extends 'web/ppd_base.html' %}
+{% load ppd_tags %}
+{% block content %}
+<br >
+<form method="post" action="">
+{{formset.management_form}}
+  <table class="manage_payouts">
+    <tr>
+	<th width="150">Seller</th>	
+	<th width="100">Amount Collected by</th>
+	<th width="100">Commission (%)</th>
+    </tr>
+    {%for form in formset.forms%}
+    <tr class="hidden"> {{form.id}} </tr>
+    <tr>
+    <td>{{form.instance.seller}}</td>
+
+    <td>{{form.amount_collected_by}}</td>
+
+    <td>{{form.percentage_commission}}</td>
+    </tr>
+    {%endfor%}
+  </table>
+<input type="submit" value="Save">
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "web/base.html" %}
+{% block content %}
+<div class="mart10">
+  <div><img src="/media/images/testimonials-banner.gif" /></div>
+  <div class="left" style="width:665px;">
+    <div class="testi_header">
+      <h2 class="f14 left flink"> Testimonials</h2>
+          <div class="right"> {% if pagination.enable_prev %}<a title="Go to previous page" href="{{pagination.base_url}}?page={{pagination.prev_page}}">&laquo; prev</a>{%else%} <span class="fdgray">&laquo; prev</span> {% endif %}&nbsp;&nbsp;<strong>{{pagination.result_from}}-{{pagination.result_to}}</strong> of <strong>{{total_results}}</strong>&nbsp;{% if pagination.enable_next %} <a title="Go next page" href="{{pagination.base_url}}?page={{pagination.next_page}}">next &raquo;</a>{%else%} <span class="fdgray">next &raquo;</span>{% endif %} </div>
+
+      <div class="clear"> </div>
+    </div>
+    {%for testimonial in testimonials%}
+        <div class="testi_block">
+            <div class="cust_img left"> 
+                <img src="{{testimonial.customerimage_set.all.0.display.url}}" width="60" height="60"/> 
+            </div>
+            <div class="cust_info left">
+                 <div class="left">
+                 {%if testimonial.submitted_on%}
+                    {{testimonial.submitted_on|date:'M d, Y'}}
+                 {%endif%}
+                <br />
+                    By <span ><strong>{{testimonial.name}}</strong></span>{%if testimonial.city%}, {{testimonial.city}}{%endif%}
+                </div>
+                <div class="testi_text">{{testimonial.feedback}}</div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    {%endfor%}
+  <div class="clear"></div>
+{%if pagination.enable_prev or enable_next%}
+    <div class="pagination right mart10"> {% if pagination.enable_prev %} <a href="{{request.path}}?page={{pagination.prev_page}}" class="read_pagination" id="{{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+      {% for page in pagination.first_set %} <a href="{{request.path}}?page={{page}}" class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+      {% for page in pagination.prev_set %} <a href="{{request.path}}?page={{page}}" class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      <div>{{pagination.cur_page}}</div>
+      {% for page in pagination.next_set %} <a href="{{request.path}}?page={{page}}" class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+      {% for page in pagination.last_set %} <a href="{{request.path}}?page={{page}}" class="read_pagination" id="{{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.enable_next %} <a href="{{request.path}}?page={{pagination.next_page}}" class="read_pagination" id="{{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+      </div>
+    <div class="clear"></div>
+{%endif%}
+  </div>
+  <div class="testi_rightbar right"> <img src="/media/images/testimonials-img.jpg" width="310" height="611" alt="" title=""/> </div>
+  <div class="clear"></div>
+</div>
+</div>
+{%endblock%} 

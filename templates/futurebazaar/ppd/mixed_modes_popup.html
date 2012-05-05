@@ -1,0 +1,88 @@
+<!--Pop Up-->
+{%load ppd_tags%}
+<script type="text/javascript">
+$(document).keyup(function(e) {
+    if (e.keyCode == 27)
+    { $('.closeit').click(); }   // esc
+});
+$(".closeit").click(function(){
+             $("#bg, #address_container").fadeOut(100);
+});
+</script>
+<style type="text/css">
+.payment_options_style td{width:110px;}
+.payment_options_style textarea{height:90px;font-size:12px}
+</style>
+
+<div  class="padding10" id="delivery_table">
+{%ifequal form_obj.type "empty"%}
+No entries required for this payment option.
+<br />
+{%else%}
+<form method="POST" action="/a/mixed_modes_popup/{{option_id}}/" id="payment_options_form" name="payment_options_form">
+<div id="post_errors"></div>
+<div id="error_msg" class="error hidden"></div>
+ {% if form_obj.form.errors %}
+          <p style="color: red;">
+                      Please correct the error{{ form_obj.form.errors|pluralize }} below.
+          </p>
+  {% endif %}
+      <table class="payment_options_style">
+      {%if form_obj.form.bank_name%}
+        <tr>
+          <td>{{form_obj.form.bank_name.label}}</td>
+          <td>{{form_obj.form.bank_name}}</td>
+        </tr>
+      {%endif%}
+      {%if form_obj.form.bank_ac_no%}
+        <tr>
+          <td>{{form_obj.form.bank_ac_no.label}}</td>
+          <td>{{form_obj.form.bank_ac_no}}</td>
+        </tr>
+      {%endif%}
+      {%if form_obj.form.bank_ac_type%}
+        <tr>
+          <td>{{form_obj.form.bank_ac_type.label}}</td>
+          <td>{{form_obj.form.bank_ac_type}}</td>
+        </tr>
+      {%endif%}
+      {%if form_obj.form.bank_ac_name%}
+        <tr>
+          <td>{{form_obj.form.bank_ac_name.label}}</td>
+          <td>{{form_obj.form.bank_ac_name}}</td>
+        </tr>
+      {%endif%}
+      {%if form_obj.form.payment_delivery_address%}
+        <tr>
+          <td>{{form_obj.form.payment_delivery_address.label}}</td>
+          <td>{{form_obj.form.payment_delivery_address}}</td>
+        </tr>
+      {%endif%}
+      {%if form_obj.form.bank_branch%}
+        <tr>
+          <td>{{form_obj.form.bank_branch.label}}</td>
+          <td>{{form_obj.form.bank_branch}}</td>
+        </tr>
+      {%endif%}
+      {%if form_obj.form.bank_address%}
+        <tr>
+          <td>{{form_obj.form.bank_address.label}}</td>
+          <td>{{form_obj.form.bank_address}}</td>
+        </tr>
+      {%endif%}
+      {%if form_obj.form.bank_ifsc%}
+        <tr>
+          <td>{{form_obj.form.bank_ifsc.label}}</td>
+          <td>{{form_obj.form.bank_ifsc}}</td>
+        </tr>
+      {%endif%}
+      </table>
+    <br/>
+    <br/>
+    <div class="clear"></div>
+  <INPUT TYPE="submit" class="submit_grouped_option" value="Save" />
+  <INPUT TYPE="reset" VALUE="Reset">
+</form>
+{%endifequal%}
+  <div class="closeit"  style="">Close</div>   
+</div>

@@ -1,0 +1,104 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block user_content %}
+
+    {%if list_items%}
+<table cellpadding="0" cellspacing="0" border="0" style="border:none !important;">
+    
+    <tr>
+	<td style="width:67%;">
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td class="bb"></td>
+				<td class="bb"><b>Item</b></td>
+				<td class="bb"><b>Price</b></td>
+				<td class="bb"></td>
+			</tr>
+			{%for item in list_items%}
+			<tr>
+			     	<td style="border-bottom:1px dotted #999999;">
+					<a href="{%cc_url request item.sku.product.url%}"><img src="{{item.sku.product.get_default_img}}" width="50px" height="50px" ></a>
+				</td>
+				<td style="border-bottom:1px dotted #999999; max-width:200px">
+					<b>{{item.sku.product.title}}</b><br />
+					{% ifequal item.sku.stock_status 'instock' %}
+						<span class="fgreen">IN STOCK</span>
+					{% else %}
+						<span class="fred">Out of STOCK</span>
+					{% endifequal %}
+					<br />
+				</td>
+				<td style="border-bottom:1px dotted #999999;">
+					<span class="f12"><span class="WebRupee">Rs. </span>{{item.sku.offer_price}}</span><br />
+					<span class="f11 fdgray">Market Price <s><span class="WebRupee">Rs. </span>{{item.sku.list_price}}</s><br />
+					
+				</td>
+				<td style="border-bottom:1px dotted #999999;">
+					<form method="post" action="{%cc_url request "orders/mycart" %}" id="add_to_cart_{{item.sku.id}}">
+						<input type="hidden" name="rate_chart_id" value="{{item.sku.id}}"/>
+						<input type="hidden" name="product_id" value="{{item.sku.product.id}}"/>
+						<input type="hidden" name="action" value="add_to_cart"/>
+						<button class="linkButton" title="Add this item to my cart">Add to Cart</button>
+					</form>
+					<form method="post" action="{%cc_url request "user/wishlist/" %}">
+						<input type="hidden" name="action" value="remove_item"/>
+						<input type="hidden" name="itemid" value="{{item.id}}"/>
+						<button class="linkButton" title="Remove this item">Remove item</button>
+					</form>
+				</td>
+		        </tr>
+			{%endfor%}
+		</table>
+	</td>
+
+	<td style="width:33%;">
+<div style="overflow:hidden; padding-left:40px;">
+ <form method="post" action="{%cc_url request "user/wishlist/" %}">
+        <input type="hidden" name="action" value="alter_visibility"/>
+	<span><b>Wishlist URL</b></span><br>
+        {%ifequal wishlist.visibility 'public'%}
+            <input type="checkbox" name="visibility" id="visibility" checked="checked" />
+            Make this list public
+            <BR/> <p class="f11 fdgray" style="padding-top:2px; padding-bottom:2px;"><a href="http://{{request.client}}/user/wishlists/{{wishlist.slug}}/">http://{{request.client}}/user/wishlists/{{wishlist.slug}}/</a></p>
+            <BR/><span><b>Share</b></span><br>
+	    <div style="float:left; padding-top:2px;">
+		<div style="float:left;"><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://{{request.client}}/user/wishlists/{{wishlist.slug}}/" data-text="Would love to buy this!" data-count="horizontal" data-via="futurebazaar">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div>&nbsp;<div style="float:left; padding-top:1px;"><a name="fb_share" type="button_count" share_url="http://{{request.client}}/user/wishlists/{{wishlist.slug}}/" href="http://www.facebook.com/sharer.php">Share</a> <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script></div>
+	    </div>
+
+           
+        {%else%}
+	    
+            <input type="checkbox" name="visibility" id="visibility"/>
+            Make this list public
+        {%endifequal%}
+    </form>
+</div>
+        </td>
+    </tr>
+
+
+    
+</table>
+{%else%}
+    	<div class="f14 marb10"><strong>Your Wishlist is empty.</strong></div>
+	<p class="f12 marb10">Browse through our products and add items to your wishlist.</p>
+         <p class="f12"><a href="{% cc_url request "" %}" title="Start building your wishlist">Click here</a> to start building your wishlist .</p>
+    {%endif%}
+
+<script>
+    $("#visibility").click(function() {
+        var data = {"action":"alter_visibility"};
+        $.ajax({
+            type: "POST",
+            url: "/user/wishlist/",
+            data: data,
+            success: function(msg){
+                if (msg=="OK"){
+                    window.location.href=window.location.href;
+                };
+            }
+        });
+    });
+</script>
+{%endblock%}

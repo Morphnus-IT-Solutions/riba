@@ -1,0 +1,5 @@
+{%ifequal request.path url%}
+<a href="{{url}}?excel=True&sortby={{sortby}}">Export as excel</a>&nbsp;&nbsp;
+{%else%}
+    <a href="{{url}}&excel=True&sortby={{sortby}}">Export as excel</a>&nbsp;&nbsp;
+{%endifequal%}

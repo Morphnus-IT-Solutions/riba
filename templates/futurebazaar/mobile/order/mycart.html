@@ -1,0 +1,81 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load cc_tags web_tags %}
+<header class="header">
+		<h1 class="header-title">Your Cart</h1>
+</header> <!-- /header -->
+
+<section class="content mycart">
+    {% if orderItems %}
+        {%for item in orderItems%}
+            <div class="cen-box-shadow">
+                <div class="cart-block">
+                    <form method="post" action="">
+                        <input type="hidden" name="action" value="remove_cart_item"/>
+                        <input type="hidden" name="itemid" value="{{item.id}}"/>         
+                        <button class="remove-btn" type="submit" title="Remove this item from your cart"></button>
+                    </form>
+                    <h3 class="tex-ell fs14">{{item.item_title}}</h3>
+                    <div>
+                        <div class="block-a">
+                            <img width="110" height="139" class="bbs" title="{{item.item_title}}" alt="" src="{{item.seller_rate_chart.product.get_default_img}}" />
+                        </div>
+                        <div class="block-b">
+                            <p class="fs14"><span class="co mw-80"><span class="WebRupee">Rs.</span> {% get_price_info request item.seller_rate_chart 'offer_price' %}</span>
+                            {%if request|isAnySaving:item.seller_rate_chart %}
+                            <span class="td-lt"><span class="WebRupee">Rs.</span> {%get_price_info request item.seller_rate_chart 'list_price'%}</span>{%endif%}</p>
+                            {%if request|isAnySaving:item.seller_rate_chart %}
+                            <p>Save <span class="WebRupee">Rs.</span> <span>{%getSavings request item.seller_rate_chart%}</span><span> ({% getDiscount request item.seller_rate_chart %}%)</span></p>
+                            {%endif%}
+                            <p>
+                            {%ifequal item.seller_rate_chart.stock_status "instock"%}<span class="cg">In Stock</span>
+                            {%else%}
+                            <span class="co">Sold Out</span>
+                            {%endifequal%}
+                            </p>
+                            <div class="row-qty">
+                                {% if not order.state|order_state_conf_or_mod_or_canc %}
+                                <form method="post" action="">
+                                    <input type="hidden" value="update_cart_item" name="action"/>
+                                    <input type="hidden" value="{{item.id}}" name="itemid"/>
+                                    <div for="select-choice-1" style="display:inline-block; margin-top:3px;">Quantity :</div>
+                                    <select name="{{item.id}}_qty" id="{{item.id}}_qty" onchange="this.form.submit()";>
+                                        <option value="1"{% if item.qty == 1%} selected="selected"{%endif%}>1</option>
+                                        <option value="2"{% if item.qty == 2%} selected="selected"{%endif%}>2</option>
+                                        <option value="3"{% if item.qty == 3%} selected="selected"{%endif%}>3</option>
+                                        <option value="4"{% if item.qty == 4%} selected="selected"{%endif%}>4</option>
+                                        <option value="5"{% if item.qty == 5%} selected="selected"{%endif%}>5</option>
+                                    </select>
+                                </form>
+                                {%else%}
+                                    <span>{{item.qty}}</span>   
+                                {%endif%}
+                            </div>
+                            <p class="fs14 co">Amount : <span class="WebRupee">Rs.</span> {{item.sale_price|money}}</p>
+                        </div>
+                    </div><!-- /grid-a -->
+                </div>
+            </div>
+        {%endfor%}
+	  
+	  <!-- Total Amount and Buttons -->
+	  <p class="mt15 tac"><a href="/" class="btn btn-blue btn-right-icon" style="width: 170px;">Continue Shopping <span class="icon icon-bg pluse-icon"></span></a></p>
+	  <p class="tac co fs16">Total amount you need to pay : <span class="WebRupee">Rs.</span>{{order.payable_amount|money}}</p>
+	  <form method="post" action="{% cc_url request next_action %}" id="next_action">
+			<p class="tac"><input type="submit" class="btn" value="Proceed to Shipping Details" id="proceed" name="Proceed" title="" /></p>
+	  </form><!-- /Total Amount and Buttons -->
+    {% else %}
+		   <div class="tac">
+				  <p class="f16"><strong>Your shopping cart is empty.</strong></p>
+				  <p>Browse through our products and add items to your cart.</p>
+				  <p><a href="{% cc_url request "" %}" class="btn btn-blue btn-right-icon" style="">Continue Shopping <span class="icon icon-bg pluse-icon"></span></a></p>
+			</div>  
+    {%endif%}
+</section><!-- /content -->
+
+{% endblock %}
+{% block script_footer %}
+<script type="text/javascript">
+$(document).ready(function(){ $('.carttab').addClass('act'); });
+</script>
+{% endblock %}

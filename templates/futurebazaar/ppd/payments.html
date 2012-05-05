@@ -1,0 +1,12 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<a href="/{{client_name}}/{{seller_name}}/payments/payment_options/">Payment Options</a></br>
+<a href="/{{client_name}}/{{seller_name}}/payments/channel_options/">Channel Options</a></br>
+<a href="/{{client_name}}/{{seller_name}}/payments/recon_reports/">Recon Reports</a></br>
+<a href="/{{client_name}}/{{seller_name}}/payments/payouts/">Payouts</a></br>
+<a href="/{{client_name}}/{{seller_name}}/payments/marketplace_receivable/">Marketplace Receivables</a></br>
+<a href="/{{client_name}}/{{seller_name}}/payments/risk/">Risk</a></br>
+{%endblock%} 

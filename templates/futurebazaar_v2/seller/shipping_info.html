@@ -1,0 +1,27 @@
+{%load cc_tags%}
+<div class="dialog" style="padding:20px; font-size:12px; ">
+	<form method="post" action="{%cc_url request 'seller/update_shipping_info/'%}{{order_item_id}}/" id="form_shipping_info">
+		<div>
+        	<div id="shipping_result" class="dialog_error" style="display:none"></div>
+			<span class="shipping_info">Courier:</span>
+			<input type="text" id="courier" size="40" name="courier" class="input_text_box_m" value="{{shipping_details.courier}}" /><br />
+			<span class="shipping_info">URL:</span>
+			<input type="text" id="tracking_url" size="40" name="tracking_url" class="input_text_box_m" value="{{shipping_details.tracking_url}}" /><br />
+			<span class="shipping_info">AWB Number:</span>
+			<input type="text" id="tracking_no" size="40" name="tracking_no" class="input_text_box_m" value="{{shipping_details.tracking_no}}" /><br />
+			<span class="shipping_info">Disptached On:</span>
+            <input type="text" id="dispatched_on" size="40" name="dispatched_on" class="input_text_box_m" value="{{order_item.dispatched_on|date:"m/d/Y"}}" /><br />
+            <span class="shipping_info" style="vertical-align:top; margin-top:5px;">Notes:</span>
+			<textarea id="notes" name="notes" style="width:290px;" cols="40" rows="5">{{shipping_details.notes}}</textarea>
+			<div style="margin-top:5px;">
+           <span class="shipping_info"></span><span> <button type="submit">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="linkButton" id="cancel">Cancel</button><br /></span></div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+    $('#cancel').click(function(){
+        $('#shipping_dialog').dialog('close');
+        return false;
+    });
+    $('#dispatched_on').datepicker();
+</script>

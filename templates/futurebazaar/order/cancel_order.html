@@ -1,0 +1,100 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load cc_tags %}
+{% load web_tags %}
+
+<div>
+  <div class="breadcrumb">
+  	&nbsp;  
+  </div>
+  <div class="cart_left"> {% checkout_tabs request "cancellation" %}
+    <table cellpadding="0" cellspacing="0" id="cart" class="checkout_table">
+      <tr>
+        <th width="5%"></th>
+        <th width="35%">Item</th>
+        <th width="15%">Price</th>
+        <th width="15%">Shipping</th>
+        <th width="10%">Qty</th>
+        <th width="15%" class="ra">Amount</th>
+      </tr>
+      {%for item in order_items%}
+      <tr> 
+        <td class="bb pad5 vertalgt"  width="50" >
+        	<img src="{{item.seller_rate_chart.product.get_default_img}}" width="50" />
+        </td>
+        <td class="bb pad5 vertalgt">
+         <span class="f12 fltleft padl3 fb">{{item.item_title}}</span><br />
+          {%if request|is_future_ecom %}
+	<div class="f11 fdgray marb5">FBId: {{item.seller_rate_chart.sku}}</div>
+        {%endif%}   
+        </td>
+        <td class="bb pad5 vertalgt">
+            <span class="f12 forange2 fb"><span class="WebRupee">Rs.</span><!--{{item.seller_rate_chart.product.formatted_currency}}--> {{item.seller_rate_chart.offer_price|money}}</span>
+            {%if item.seller_rate_chart.list_price > item.seller_rate_chart.offer_price %}<br/><span class="f11 fdgray">MRP <strike>
+            <span class="WebRupee">Rs.</span>
+			{{item.seller_rate_chart.list_price|money}}</strike></span>{%endif%}
+        </td>
+        <td class="bb pad5 vertalgt">{%if item.shipping_charges%}<span class="forange2 fb"><span class="WebRupee">Rs.</span> {{item.shipping_charges|money}}</span>{%else%}<span class="forange2 fb"><span class="WebRupee">Rs.</span> 0</span><br/><span class="f11 fdgray">Free shipping</span>{%endif%}</td>
+        <td class="bb pad5 vertalgt ca">
+            {% if not order.state|order_state_conf_or_mod_or_canc %}
+                <form method="post" action="">
+                <input type="hidden" value="update_cart_item" name="action"/>
+                <input type="hidden" value="{{item.id}}" name="itemid"/>
+                <input size="2" type="text" class="item_qty" id="{{item.id}}_qty" name="{{item.id}}_qty" value="{{item.qty}}" style="font-size: 11px !important;"/><br/>
+                <button type="submit" class="linkButtonGreen update_qty" title="Update quantity" style="margin-top: -5px; _margin-top:0px;">update</button>
+            </form>
+            {%else%}
+                <span>{{item.qty}}</span>   
+            {%endif%}
+        </td>
+        <td class="bb ra pad5 vertalgt">
+        	<span class="forange2 fb"><span class="WebRupee">Rs.</span> {{item.sale_price|money}}</span>
+        </td>
+    </tr>
+      {%endfor%}
+      <form method="post" action="">
+      
+      <input type="hidden" id="cancelled_items" name="cancelled_items" value="{{cancelled_items|join:", "}}"/>
+      {% if order_cancellation_form.errors %}
+      <tr>
+        <td colspan="6" style="border-top:1px solid #A7E8F6;"><div class="error">
+            <ol style="list-style:none;">
+              {% for field in order_cancellation_form %}
+              {% for error in field.errors %}
+              <li>{{error}}</li>
+              {% endfor %}
+              {% endfor %}
+            </ol>
+          </div></td>
+      </tr>
+      {% endif %}
+      {% if error %}
+      <tr>
+        <td colspan="6"><div class="error"> {{error}} </div></td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td colspan="6">
+          {{order_cancellation_form.next_action}}<br /></td>
+      </tr>
+      <tr>
+        <td colspan="6">{{order_cancellation_form.cancellation_notes.label}}<span class="fred">*</span><br />
+          {{order_cancellation_form.cancellation_notes}} </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+        	<!--<input type="image" alt="Cancel Now" title="Cancel Now" src="{{MEDIA_URL}}images/cancelorder.gif"/>-->
+            <button type="submit" class="cancelorder" title="Remove this item from your cart"></button>
+        </td>
+      </tr>
+    </table>
+    </form>
+  </div>
+  <div class="cart_right"> {% include "order/right.html" %} </div>
+  <div class="clear height50"></div>
+</div>
+{% endblock %}
+{% block script_footer %}
+<script type="text/javascript">
+    </script>
+{% endblock %} 

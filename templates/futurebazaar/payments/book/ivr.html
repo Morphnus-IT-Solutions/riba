@@ -1,0 +1,21 @@
+<div id="error_div"></div>
+<form id="ivr_form" name="ivr_form">
+<table>
+  <tr>
+    <td class="fb">Bank</td>
+    <td>
+      {% if gateway_options %}
+        <select id="payment_gateway" name="bank">
+          {%for option in gateway_options%}
+              <option value="{{option.code}}">{{option.name}}</option>
+          {%endfor%}
+        </select>
+      {% else %}
+        <input type="text" id="alt_bank" name="bank" />
+      {% endif %}
+    </td>
+  </tr>
+</table>
+</form>
+</div>
+

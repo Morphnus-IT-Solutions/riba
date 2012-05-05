@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feeds xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<title>{{client_domain.client.name}}</title>
+<tagline>Product Available at {{client_domain.domain}}</tagline>
+{% for data in datas %}
+<entry>
+    <productname>{{data.productname}}</productname>
+    <mrp>{{data.mrp}}</mrp>
+    <saleprice>{{data.saleprice}}</saleprice>
+    {% for cat in data.category %}
+        <{{cat.name}}>{{cat.category}}</{{cat.name}}>
+    {% endfor %}
+    <productid>{{data.productid}}</productid>
+    <skuid>{{data.skuid}}</skuid>    
+    <imagelink>{{data.imagelink}}</imagelink>
+    <productlink>{{data.productlink}}</productlink>
+    <startson>{{data.startson}}</startson>
+    <endson>{{data.endson}}</endson>
+</entry>
+{% endfor %}
+</feeds>
+

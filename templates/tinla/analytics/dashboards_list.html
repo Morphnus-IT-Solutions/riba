@@ -1,0 +1,108 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="content_head">
+  <div class="header rc5">   
+    <h3 class="left">Dashboards</h3>    
+    <div class="clear"></div>
+  </div>
+  </div>
+ <div class="dashboard">
+<div class="dashboard_block dashboard_row1 rc5">
+<h3 class="toprc5">Dashboards by Team</h3>
+        <ul>          
+            <li><a href="/dashboards/pendingactions/accounts/">Accounts</a></li>
+            <!--<li><a href="/orderitems/accounts_upload/">Temporary link for excel upload of ONF-Accounts Team</a></li>-->
+            <li><a href="/dashboards/pendingactions/admin/">Admin</a></li>
+            <li><a href="/dashboards/pendingactions/approvals/">Approvals</a></li>
+            <li><a href="/dashboards/pendingactions/category/">Category</a></li>
+            <li><a href="/dashboards/pendingactions/customerservice/">Customer Service</a></li>
+            <li><a href="/dashboards/pendingactions/dc/">Delivery Creation</a></li>
+            <li><a href="/dashboards/pendingactions/lsp/">LSP</a></li>
+            <li><a href="/dashboards/pendingactions/tech/">Technology</a></li>
+            <li><a href="/dashboards/pendingactions/wh/">Warehouse</a></li>
+            <li><a href="/dashboards/pendingactions/sales/">Sales</a></li>
+            <li><a href="/dashboards/pendingactions/">All teams</a></li>
+        </ul>
+        </div>
+     
+        <div class="dashboard_block dashboard_row1 rc5">
+        <h3 class="toprc5">Dashboards by canned searches</h3>
+        <ul>           
+            <li><a href="/dashboards/pendingverification/?sort=-order__atg_submitted_date">Awaiting Verification</a></li>
+            {%if show_verification%}
+            <li><a href="/dashboards/customer_verification/?sort=-order_item__order__atg_submitted_date">Awaiting Customer Verification</a></li>
+            {%endif%}
+            <li><a href="/dashboards/atompendingverification/?sort=-order__atg_submitted_date">Atom Awaiting Verification</a></li>
+            <li><a href="/dashboards/failedorders/?sort=-order__atg_submitted_date">Failed orders</a></li>
+            <li><a href="/dashboards/deliverycreatednotinvoiced/?sort=-order__sap_created_date">Delivery Generated But Not Invoiced</a></li>
+            <li><a href="/dashboards/deliverytracking/?sort=order__atg_submitted_date">Delivery Tracking</a></li>
+            <li><a href="/dashboards/dispatchednotdelivered/?sort=-order__sap_created_date">Dispatched But Not Delivered</a></li>
+            <li><a href="/dashboards/futuremoneyemi/?sort=-order__atg_submitted_date">Future Money EMI</a></li>
+            <li><a href="/dashboards/invoicednotdispatched/?sort=-order__sap_created_date">Invoiced But Not Dispatched</a></li>
+            <li><a href="/dashboards/pendingorders/?sort=-order__atg_submitted_date">Open orders</a></li>
+            <li><a href="/dashboards/paymentfollowup/?sort=-order__atg_submitted_date">Payment Followup</a></li>
+            <li><a href="/dashboards/paymentnotifications/?sort=-order__atg_submitted_date">Payment Notifications</a></li>
+            <li><a href="/dashboards/abandonedcarts/?sort=-order__last_modified_date">Abandoned Cart</a></li>
+            <li><a href="/dashboards/customerprofile/203032467/?sort=-order__atg_submitted_date">Orders by Kirloskar</a></li>
+            <li><a href="/dashboards/customerprofile/204970475/?sort=-order__atg_submitted_date">Orders by Bajaj Allianz</a></li>
+            {% if not hide_customer_inform%}
+            <li><a href="/dashboards/pending_customer_inform/">Awaiting Customers To Informed</a></li>
+            {% endif %}
+       <!--     <li><a href="/dashboards/todaysorders/?sort=-order__last_modified_date">Today's Assigned Orders</a></li>-->
+        </ul>     
+      
+    </div>
+
+        <div class="dashboard_block dashboard_row2 rc5">
+        <h3 class="toprc5">Orders Exceeding Delivery Commitment</h3>
+        <ul>           
+            <li><a href="/deliveryrisk/invoicedlate/?sort=-order__sap_created_date">Invoiced Orders Exceeding Delivery Commitment</a></li>
+            <li><a href="/deliveryrisk/pendinginvoice/?sort=-order__sap_created_date">Not Invoiced Orders Exceeding Delivery Commitment</a></li>
+       </ul>
+        </div>
+        
+        <div class="dashboard_block dashboard_row2 rc5">
+        <h3 class="toprc5">Reports</h3>
+        <ul>           
+            <li><a href="/reports/overall_report/">Summary Reports Dashboard</a></li>
+            <li><a href="/reports/order_report/">Sales Summary Report</a></li>
+           <li><a href="/reports/summary_report/?aggregate=count">Sales (Order Count) - Phone vs Web vs Store</a></li>
+            <li><a href="/reports/summary_report/?aggregate=sum">Sales (Order Value) - Phone vs Web vs Store</a></li>
+            <li><a href="/reports/summary_report/?aggregate=count&filter=payment_method_noncc">Deferred Sales (Order Count) - Phone vs Web vs Store</a></li>
+            <li><a href="/reports/summary_report/?aggregate=sum&filter=payment_method_noncc">Deferred Sales (Order Value) - Phone vs Web vs Store</a></li>
+            <li><a href="/reports/one_view_dashboard/">One View Dashboard </a></li>
+            <li><a href="/reports/invoiced_paid_report/">Order - Payment - Invoiced Report</a></li>
+            <li><a href="/reports/call_online_report/">Sales Funnel Report</a></li>
+	        <li><a href="/reports/payment_report/">Sales by Payment Mode</a></li>
+            <li><a href="/reports/LOB_dashboard/">Sales Dashboard</a></li>
+            <li><a  href="/reports/category_report/">Sales by Category</a></li>
+            <li><a href="/reports/sku_report/">Sales by SKU</a></li>
+            <li><a href="/reports/formatwise_report/">Sales by Format </a></li>
+    	    <li><a href="/reports/citywise_report/">Sales By City </a></li>
+ 
+            <li><a href="/reports/status_report/">OMS Status Report</a></li>
+            <li><a href="/reports/cancellation_report/">Cancellation Report</a></li>
+            <li><a href="/reports/returned_report/">Returned Order Report</a></li>
+            <li><a href="/reports/mid_day_dashboard/">Mid Day Orders Dashboard</a></li>
+            <li><a href="/reports/deal_reports/">Deal Reports</a><span class="fb fi fblack"> (Updated)</span></li>
+            <li><a href="/reports/subscription_report/">Subscriptions Report</a></li>
+            <li><a href="/reports/scm_dashboard/">SCM Dashboard</a><span class="fb fi fblack"> (Updated)</span></li>
+<!--            <li><a href="/qa_reports/">QA Dashboard</a></li>
+ -->
+            <li><a href="/reports/cancelled_reason_report/">Order Cancellation Reason</a></li>
+            <li><a href="/reports/deferred_sales_orders_report/">Deferred Sales Orders Report</a></li>
+            <li><a href="/reports/open_orders_report/">Open Orders Report</a><span class="fb fi fblack"> (Updated)</span></li>
+            <li><a href="/reports/visa_dashboard/">Visa Dashboard</a></li>
+ 
+            <li><a href="/reports/product_reviews_report/">Product Reviews Report</a></li>
+ 
+            <li><a href="/reports/feedback_report/">Feedback Report</a><span class="fb fi fblack"> (New)</span></li>
+ 
+                 
+                 </ul>
+        </div>
+   <div class="clear"></div>   
+</div>   
+<div class="clear"></div>
+{% endblock %}

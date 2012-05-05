@@ -1,0 +1,113 @@
+{% extends 'rms/base.html' %}
+{% load web_tags%}
+{% load rms_tags%}
+{% block content %}
+{% load pagination_tags %}
+{% autopaginate users 20 %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Users</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+          <h1>Users</h1>
+    </div>
+        <div class="right content_head">
+		<div class="clear right">
+        <a role="button" class="left uiButton" style="color:#333; text-decoration:none;" id='add'><span class="uiButtonText">+ Add User</span></a>
+        </div>
+        </div>
+  </div>
+  <div class="main clear">
+		<div class="clear"></div>
+        {% if users %}
+        <table class='tbl_response marb10'>
+        <thead>
+            <tr>
+                <th class='w185'>User Id</th>
+                <th class='w185'>Name</th>
+                <th>Group</th>
+                <th>Home Stream</th>
+                <th>Campaigns</th>
+                <th>Backlogs</th>
+                <th>Users</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td><a href='{{user.id}}'>{{user.username}}</a></td>
+            <td>{{user.first_name}} {{user.last_name}}</td>
+            {% for group in user.groups.all %}
+                {% if group.name in group_list %}
+                <td>
+                    <a href='group/{{group.id}}'>{{group.name}}</a>
+                </td>
+                {% ifequal group.name 'CallCenter' %}
+                    <td>y</td>
+                    <td>y</td>
+                    <td>N</td>
+                    <td>N</td>
+                {% endifequal %}
+                {% ifequal group.name 'CC Manager' %}
+                    <td>y</td>
+                    <td>y</td>
+                    <td>Y</td>
+                    <td>N</td>
+                {% endifequal %}
+                {% ifequal group.name 'RMS Client' %}
+                    <td>N</td>
+                    <td>N</td>
+                    <td>N</td>
+                    <td>N</td>
+                {% endifequal %}
+                {% ifequal group.name 'RMS Admin' %}
+                    <td>N</td>
+                    <td>y</td>
+                    <td>Y</td>
+                    <td>Y</td>
+                {% endifequal %}
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        {% paginate %}
+        {% else %}
+        <p>No users are present in the system</p>
+        {% endif %}
+  </div>
+</div>
+</div>
+<div id='add_user'></div>
+{%endblock %}
+
+{% block script_footer %}
+$('#add').click(function() {
+    var width = 300;
+    $.get('/user/add/', function(data) {
+        $('#add_user').html(data);
+        var dialog = $('#add_user').dialog({modal:true, title:'Add User', 
+            width:width, resizable:false});
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#add_user').html(data);
+        $('#adduser').click(onSubmit);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#add_user').html(xhr.responseText);
+        $('#adduser').click(onSubmit);
+	};
+	var onSubmit = function() {
+        var data = $('#user_add_form').serialize();
+        $.ajax({ url:'/user/add/',
+			data : data,
+			success : onSuccess,
+			error : onError,
+			type : 'POST'
+			});
+        return false; 
+	};
+    $('#adduser').click(onSubmit);
+    });
+});
+{% endblock %}

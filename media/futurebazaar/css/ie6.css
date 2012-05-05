@@ -1,0 +1,128 @@
+.spone, .new_tag, .t1_l2_inner ul a.t1_l2_item:hover, .t1_l2_inner ul a.t1_l2_item_hover, .t2_l2_item:hover, .t2_l2_item_ho { background-image: url('/media/images/sp-one-ie.gif'); } 
+
+.spthree { background-image: url('/media/images/spthree-ie.png');  } 
+.footer_list li{background-image: url('/media/images/sp-one-ie.gif')}
+.btn { background-image:url('../images/spbtns-ie.png'); background-color:transparent;}
+.cart .carticon{top:-31px !important;}
+.popup .btn_close{position:absolute; top:-10px; right:-10px;}
+
+.like_buttons{width:350px !important; overflow:hidden;}
+
+.search_new{background-color:#ccc;}
+.search_new input{height:29px; width:377px;}
+.search_header .compare input{position:absolute; top:16px; left:94px;}
+.greed_prod .select_item{top:8px;left:0px;}
+
+#promotion_deal_tab{border-right:1px solid #ccc !important;}
+.top10deals_gallery{ width:936px;}	
+#top10_deals .selectbar{border:1px solid #d6dfe6; height:30px; line-height:30px; padding:6px 12px 0; background-color:#e7f6fc;}
+
+.steal_item_price{width:358px;}
+.battle_timer{/*right:265px;*/ right:0px;}
+.battle_page .battle_timer{right:235px !important;}
+.top_border{font-size:1px !important;}
+
+div#fixed_secured {
+position:absolute;
+bottom:0px;
+
+}
+.ui-slider-range{font-size:1px !important;}
+.price_range{height:15px;}
+#amount{height:15px;}
+.ui-slider-horizontal{height:4px !important;}
+
+.btn_viewall_prod{position:relative; top:-50px;}
+
+.product_desc .prod_info_tag{padding:5px 0px 0px; line-height:40px; height:40px;}
+
+.amount{height:50px;}
+#feedback_outer{right:0px; position: absolute;z-index:1300;float:right; top:180px; margin-right:0px;}
+.feedback_box input{width:320px !important; padding:3px;}
+
+
+.browse #arrow{width:10px; height:8px;}
+#main {overflow:hidden}
+.home_main_content {overflow:hidden}
+.home_rightbar {overflow:hidden}
+.greed_view ul.greed {width:770px;}
+.srp_greed li{margin-right:10px;}
+
+.greed_prod .h33{height:38px;}
+/*--------------*/
+.steal_timer .f14{font-size:12px;}
+.search {width:480px; background-color:transparent}
+.search input {width:382px; overflow:hidden;}
+
+.cust_speak{overflow:hidden;}
+.fb_features{width:708px;}
+.deals_tabs{width:987px;}
+#fancybox-close {  
+    background-attachment: scroll;
+    background-color: transparent;
+    background-image: url("/media/js/fancybox/close.png") !important;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+	width:34px;
+	height:34px;
+	right:17px;
+	}
+.payment_actions{height:294px !important;}
+.ieh10{height:10px;}
+.selectbar .mar7{margin-top:0px;}
+#go_top{display:none !important;}
+.filter_scroll{ height: expression(scrollHeight > 305 ? "305px" : "auto")}
+
+.timer_outer{display:none}
+.home_greed li{margin-right:10px;}
+/*.home_greed .greed_inner{height:238px; width:220px;}*/
+.nav_outer{height:46px; overflow:hidden;}
+.nav_t1{height:28px !important;}
+
+.new_item{padding:14px 0; line-height:18px; height:18px;}
+.dellike_us_fb{background-image: url('/media/images/sp-one-ie.gif') !important;}
+.new_item.like_us_fb:hover{background:none !important;}
+.home_greed .greed_clearance{height:344px !important;}
+
+.pdp_btn_buy_now {width:150px;}
+.pdp_btn_buy_now span{display:none;}
+#content_area {overflow:hidden;}
+.shipping_icon{height:35px;}
+
+.t1_l1_item{/*background-image:url("/media/images/menu_bg.gif");background-image:url("/media/images/sp-one-ie.gif");*/  display:block;}
+.t1_l1_item.dod{width:105px;  }
+.t1_l1_item.popular{width:110px;  }
+.t1_l1_item.deals_for_you{width:91px; }
+.t1_l1_item.concepts{ width:70px;}
+.t1_l1_item.arrivals{width:72px; }
+.t1_l1_item.clearance{width:90px; }
+.t1_l1_item.bulk_order{width:110px;}
+
+.t1_l1_item .nav_da{display:none;}
+.t1_l2{height:22px;}
+.t2_l2{height:22px;}
+.pdp_btn_buy_now, .qv_buy_now{width:186px;}
+.greed_inner .button{width:97px;}
+.nav_t1{overflow:hidden; height:40px;}
+.like_us_fb{width:42px;}
+
+.cart_outer{height:20px; overflow:hidden; }
+.white_patch{/*top:26px !important; height:2px;*/ display:none;}
+.cart_menu{display:none;}
+.item_img .btn_qv{display:none !important;}
+.product_desc_details .prod_tabs{float:left; width:980px;}
+.t1_l3_wrapper .t1_menu_sep{display:none;}
+.t1_l3_wrapper ul li, .t2_l3_wrapper ul li{height:20px !important;}
+.our_partner_inner.partner_credit_card {    
+    background-color: #E5E5E5;
+    background-image: url("/media/images/partner-credit-card.jpg");
+    background-origin: padding-box;
+    background-position: 206px 14px;}
+    
+   .pdp_offer_icon{left:-50px;}
+   .footer_inner_top{width:714px; overflow:hidden; }
+    .footer_inner .col4{margin:0px;}
+
+.base_right_panel{position:absolute; top:250px;}
+
+

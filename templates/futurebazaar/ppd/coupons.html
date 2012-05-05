@@ -1,0 +1,24 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+  {%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Coupons</h1>
+    </div>
+	<div class="clear bordergray"></div>
+  </div>
+  <div class="clear"></div>
+  <div class="mart5 marb10">
+   {% for j in promotion_coupons %}
+	<div class="left coupon fmaroon marb10 marr10">
+		<span class="f12">{{j}}</span>
+	</div>
+   {% endfor %}
+  </div>
+</div>
+{% endblock %}
+ 

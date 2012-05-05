@@ -1,0 +1,300 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+<style type="text/css">
+table {
+    margin-bottom: 1.4em;
+}
+table, td, th {
+    vertical-align: middle;
+}
+th, td, caption {
+    padding: 4px 10px 4px 5px;
+}
+.tbl_profile input[type="text"], .tbl_profile input[type="password"], .tbl_profile input.text, .tbl_profile input.title, .tbl_profile textarea, .tbl_profile select {
+    margin: 0;
+    width: 250px;
+}
+textarea {width: 244px !important;}
+#id_profile-type{width:256px;}
+</style>
+<div class="padding_top10">
+    {%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Seller Profile</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+	<div class="inner-content">
+	  <form method="POST" action="" id="seller_profile_form" name="seller_profile_form">
+	  <div id="post_errors"></div>
+	  {% if form.errors %}
+	  <p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+	  {% endif %}
+	  
+	  <div class="fb fdgray  prof_sub_head">Basic Info</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.name.label }}</td>
+		  <td width="300">{{ form.name }}</td>
+		  {% if form.name.errors %}
+		  <td width="150">{{ form.name.errors }}</td>
+		  {% endif %}
+	
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.code.label }}</td>
+		  <td width="300">{{ form.code }}</td>
+		  {% if form.code.errors %}
+		  <td class="error"  width="150">{{ form.code.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.website.label }}</td>
+		  <td width="300">{{ form.website }}</td>
+		  {% if form.website.errors %}
+		  <td class="error"  width="150">{{ form.website.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+	  
+	  {%if login_form_error%}
+	  <div class="error">{{login_form_error}}</div>
+	  {%endif%}
+	  {%if profile_exists%}
+	  <div class="fb fdgray  prof_sub_head">Login Details</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td width="160" class="f11 flgray ">Login Email Id/ Mobile no.</td>
+		  <td width="300">{{ login_form.username }}</td>
+		  {% if login_form.username.errors %}
+		  <td class="error"  width="460">{{ login_form.username.errors }}</td>
+		  {% endif %}
+	
+		</tr>
+		<tr>
+		  <td width="160" class="f11 flgray ">Current Password</td>
+		  <td width="300">{{ login_form.password }}</td>
+		  {% if login_form.password.errors %}
+		  <td class="error"  width="460">{{ login_form.password.errors }}</td>
+		  {% endif %}
+	
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">New Password</td>
+		  <td width="300">{{ login_form.new_password }}</td>
+		  {% if login_form.new_password.errors %}
+		  <td class="error"  width="460">{{ login_form.new_password.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">Confirm Password</td>
+		  <td width="300">{{ login_form.confirm_password }}</td>
+		  {% if login_form.confirm_password.errors %}
+		  <td class="error"  width="460">{{ login_form.confirm_password.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+	
+	  {%else%}
+	
+	  <div class="fb fdgray  prof_sub_head">Login Details</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td width="160" class="f11 flgray ">Login Email Id/ Mobile no.</td>
+		  <td width="300">{{ login_form.username }}</td>
+		  {% if login_form.username.errors %}
+		  <td class="error"  width="460">{{ login_form.username.errors }}</td>
+		  {% endif %}
+	
+		</tr>
+		<tr>
+		  <td width="160" class="f11 flgray ">Password</td>
+		  <td width="300">{{ login_form.password }}</td>
+		  {% if login_form.password.errors %}
+		  <td class="error"  width="460">{{ login_form.password.errors }}</td>
+		  {% endif %}
+	
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">Confirm Password</td>
+		  <td width="300">{{ login_form.confirm_password }}</td>
+		  {% if login_form.confirm_password.errors %}
+		  <td class="error"  width="460">{{ login_form.confirm_password.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+		{%endif%} 
+	
+	  <div class="fb fdgray  prof_sub_head">Order Email Settings</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.confirmed_order_email.label }}</td>
+		  <td width="300">{{ form.confirmed_order_email }}</td>
+		  {% if form.confirmed_order_email.errors %}
+		  <td class="error"  width="460">{{ form.confirmed_order_email.errors }}</td>
+		  {% endif %}
+	
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.pending_order_email.label }}</td>
+		  <td width="300">{{ form.pending_order_email }}</td>
+		  {% if form.pending_order_email.errors %}
+		  <td class="error"  width="460">{{ form.pending_order_email.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.share_product_email.label }}</td>
+		  <td width="300">{{ form.share_product_email }}</td>
+		  {% if form.share_product_email.errors %}
+		  <td class="error"  width="460">{{ form.share_product_email.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.signature.label }}</td>
+		  <td width="300">{{ form.signature }}</td>
+		  {% if form.signature.errors %}
+		  <td class="error"  width="460">{{ form.signature.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.pending_order_helpline.label }}</td>
+		  <td width="300">{{ form.pending_order_helpline }}</td>
+		  {% if form.pending_order_helpline.errors %}
+		  <td class="error"  width="460">{{ form.pending_order_helpline.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.confirmed_order_helpline.label }}</td>
+		  <td width="300">{{ form.confirmed_order_helpline }}</td>
+		  {% if form.confirmed_order_helpline.errors %}
+		  <td class="error"  width="460">{{ form.confirmed_order_helpline.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+	
+	  <div class="fb fdgray  prof_sub_head">Smtp and sms settings</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.sms_mask.label }}</td>
+		  <td width="300">{{ form.sms_mask }}</td>
+		  {% if form.sms_mask.errors %}
+		  <td class="error"  width="460">{{ form.sms_mask.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+	
+	  <div class="fb fdgray  prof_sub_head">Account type</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.type.label }}</td>
+		  <td width="300">{{ form.type }}</td>
+		  {% if form.type.errors %}
+		  <td class="error"  width="460">{{ form.type.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+	
+	  <div class="fb fdgray  prof_sub_head">Contact</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.customer_support_no.label }}</td>
+		  <td width="300">{{ form.customer_support_no }}</td>
+		  {% if form.customer_support_no.errors %}
+			<td class="error"  width="460">{{ form.customer_support_no.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.primary_email.label }}</td>
+		  <td width="300">{{ form.primary_email }}</td>
+		  {% if form.primary_email.errors %}
+			<td class="error"  width="460">{{ form.primary_email.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.secondary_email.label }}</td>
+		  <td width="300">{{ form.secondary_email }}</td>
+		  {% if form.secondary_email.errors %}
+			 <td class="error"  width="460">{{ form.secondary_email.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.primary_phone.label }}</td>
+		  <td width="300">{{ form.primary_phone }}</td>
+		  {% if form.primary_phone.errors %}
+			  <td class="error"  width="460">{{ form.primary_phone.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">{{ form.secondary_phone.label }}</td>
+		  <td width="300">{{ form.secondary_phone }}</td>
+		  {% if form.secondary_phone.errors %}
+			  <td class="error"  width="460">{{ form.secondary_phone.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+	
+	  <div class="fb fdgray  prof_sub_head">Policies</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.shipping_policy.label }}</td>
+		  <td width="300"><style>textarea{overflow:hidden; height:58px; font-size:12px;}</style>{{ form.shipping_policy }}</td>
+		  {% if form.shipping_policy.errors %}
+		  <td class="error"  width="460">{{ form.shipping_policy.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td width="160" class="f11 flgray " >{{ form.returns_policy.label }}</td>
+		  <td width="300">{{ form.returns_policy }}</td>
+		  {% if form.returns_policy.errors %}
+		  <td class="error"  width="460">{{ form.returns_policy.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.tos.label }}</td>
+		  <td width="300">{{ form.tos }}</td>
+		  {% if form.tos.errors %}
+		  <td class="error"  width="460">{{ form.tos.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.dni.label }}</td>
+		  <td width="300">{{ form.dni }}</td>
+		  {% if form.dni.errors %}
+		  <td class="error"  width="460">{{ form.dni.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td width="160" class="f11 flgray ">{{ form.greeting_title.label }}</td>
+		  <td width="300">{{ form.greeting_title }}</td>
+		  {% if form.greeting_title.errors %}
+		  <td class="error"  width="460">{{ form.greeting_title.errors }}</td>
+		  {% endif %}
+		</tr>
+		<tr>
+		  <td class="f11 flgray " width="160">{{ form.greeting_text.label }}</td>
+		  <td width="300">{{ form.greeting_text }}</td>
+		  {% if form.greeting_text.errors %}
+		  <td class="error"  width="460">{{ form.greeting_text.errors }}</td>
+		  {% endif %}
+		</tr>
+	  </table>
+	  <table>
+		<tr>
+			<td width="167">
+			<td width="300">
+				<!--<INPUT TYPE="submit" id="submit_button" VALUE="Save" class="uibutton">
+				&nbsp;&nbsp;&nbsp;
+				<input type="reset" class="uibutton" value="Cancel">-->
+				<input class="uiButton" type="submit" id="submit_button" VALUE="Save" />&nbsp;&nbsp;&nbsp;
+				<input class="uiButton" type="reset" value="Cancel" />
+			</td>
+			<td width="460">&nbsp;</td>
+		</tr>
+	  </table>
+	  </form>
+	</div>
+</div>
+<div class="clear"></div>
+
+{% endblock %} 

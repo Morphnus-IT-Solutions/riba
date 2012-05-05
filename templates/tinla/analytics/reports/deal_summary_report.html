@@ -1,0 +1,82 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.report_option_aa {width:550px;}
+	label{font-weight:normal;}
+	input[type="radio"]{margin-top:2px;}
+	.uiButton{padding:0px 6px;}
+	.sku_id {width:275px; float:left;}
+	.excel_main {margin:8px 0 0 5px !important;}
+</style>
+<form method="POST" id="report_form" name="report_form" action="">
+  {% show_export_link request form 'excel' %}
+  {% form_daterange request form title%}
+  <div class="report_option_main">
+    <div class="report_option_aa">
+    <span class="fb">Order State:</span>{{form.order_state}}&nbsp;
+    <span class="fb">Channel:</span>
+    {{form.channel}}
+    </div>
+    <input type="submit" value="Go!" class="uiButton" style="width:80px\9;">
+  </div>
+</form>
+<div class="clear">&nbsp;</div>
+<div>
+    <b>Note:</b> This report excludes bulk orders (medium = 'support').
+</div>
+<div class="clear">&nbsp;</div>
+<div>
+  <table class="tbl_report">
+    <tr>
+    {%for item in headings%}
+        <th>{{item}}</th>
+    {%endfor%}
+    </tr>
+
+    <span class="hidden">{%cycle "row1" "row2" as rowcolors%}</span>
+    {%if days|length >= 7%}
+        <span class="hidden">{%cycle rowcolors%}</span>
+        {%for deal in deals%}
+            <tr class="{{rowcolors}}">
+                {%if forloop.first%}
+                    <td rowspan="{{deals|length}}" class="fb">Total</td>
+                {%endif%}
+                <td class="la fb">{{deal}}</td>
+                {%for item in sum_total|lookup:deal%}
+                    <td class="ra fb">{%int_to_comma item%}</td>
+                {%endfor%}
+            </tr>
+        {%endfor%}
+    {%endif%}
+    
+    {%for day in days%}
+        {%for deal in deals%}
+            <tr class="{%if forloop.first%}{%cycle rowcolors%}{%else%}{{rowcolors}}{%endif%}">
+                {%if forloop.first%}
+                    <td rowspan="{{deals|length}}">{{day.day|date:"d M"}}</td>
+                {%endif%}
+                <td class="la">{{deal}}</td>
+                {%for item in day.deals|lookup:deal%}
+                    <td class="ra">{%int_to_comma item%}</td>
+                {%endfor%}
+            </tr>
+        {%endfor%}
+    {%endfor%}
+
+    <span class="hidden">{%cycle rowcolors%}</span>
+    {%for deal in deals%}
+        <tr class="{{rowcolors}}">
+            {%if forloop.first%}
+                <td rowspan="{{deals|length}}" class="fb">Total</td>
+            {%endif%}
+            <td class="la fb">{{deal}}</td>
+            {%for item in sum_total|lookup:deal%}
+                <td class="ra fb">{%int_to_comma item%}</td>
+            {%endfor%}
+        </tr>
+    {%endfor%}
+            
+  </table>
+</div>
+{% endblock %}

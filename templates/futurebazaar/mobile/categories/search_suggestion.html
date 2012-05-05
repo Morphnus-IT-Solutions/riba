@@ -1,0 +1,25 @@
+
+
+{% extends "web/base.html" %}
+{% block content %}
+
+<header class="header">
+	<h1 class="header-title">Search Results</h1>
+</header> <!-- /header -->
+
+<section class="content">
+    <div class="note mt0">
+		 Your search <span class="forange">{%if request.GET.q%}"{{request.GET.q}}"{%endif%}</span> did not match any products on FutureBazaar.
+	 </div>
+	<div class="f15 mtb15">Did you mean: "<a style="color:#1833CC !important;" href="/search/?q={{spell_suggestion}}">{{spell_suggestion}}</a>"</div>
+	<div class="mtb15">
+		<strong>Search Tips:</strong>
+		<ul>
+		  <li>Check for typos and spelling errors </li>
+		  <li>Try a different keyword or alternate search terms </li>
+		  <li>Broaden your search using fewer keywords or use simpler language </li>
+		</ul>
+	  <p class="mt15"><strong>Kindly try again using the above search tips.</strong></p>
+	</div>
+</section><!-- /content -->
+{% endblock %}

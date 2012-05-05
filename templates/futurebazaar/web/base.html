@@ -1,0 +1,701 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{%load web_tags%}
+{%load compressed %}
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+<title>{% block page_title %}{% page_title request %}{% endblock %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="google-site-verification" content="JdO76y1DrPn_Y-F91jjyewqXakhINXXXW3EevIcFHoE" />
+<meta name="description" content="{%block page_desc%}FutureBazaar.com - Online shopping deals in India to buy Laptops, Mobile Phones, Accessories, Computers, Cameras, Electronics, Toys and Gifts. Pay Cash on Delivery{%endblock%}"/>
+<meta name="keywords" content="{%block page_tags%}Future Bazaar, Online Shopping, Store Online, Buy Books, Subscribe Magazines, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Purchase On Web, Cheap product, India{%endblock%}"/>
+
+{% block extra_header %}
+    <meta property="og:url" content="https://www.futurebazaar.com" />
+    <meta property="og:image" content="{%media_url request "images/logo.jpg"%}" />
+{% endblock %}
+{% block canonical %}
+{% endblock %}
+
+{%block css%}
+{% compressed_css 'all' request %}
+<!--[if IE 6]>{% compressed_css 'ie6' request %}<![endif]-->
+<!--[if IE 7]>{% compressed_css 'ie7' request %}<![endif]-->
+<!--[if IE 8]>{% compressed_css 'ie8' request %}<![endif]-->
+<!--[if lt IE 9]>
+<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+{%endblock%}
+<link rel="shortcut icon" href="{%render_favicon request%}"/>
+</head>
+<body>
+
+  <div id="dealpopup"></div>
+   {%block header%}
+ 		 {#% render_header request %#}
+   {%endblock%}
+   {% comment %} <div class="wrapper_outer">      
+	 <a href="/sabsesasta/"><div class="base_left_panel"></div></a>   
+	 <a href="{% cc_url request "user/start-referring/" %}" title="Start Sharing Now!"><div class="base_right_panel"></div></a>
+   {% endcomment %}
+   
+   
+	 <!-- /Wrapper -->
+        <div id="wrapper">       
+              <div id="main">
+                <div id="content">
+                  {% block content %}
+                  {% endblock %}
+                 </div>
+               </div>    
+         </div>
+	<!-- /Wrapper -->
+	
+	{% comment %}
+   {% if request.client.type == "website" or request.client.type == "cc" or request.client.type == "store" %}
+	 </div>
+    {% endif %}
+    {% endcomment %}
+    <div id="lightbox"></div>
+{%block footer%}
+        {% render_footer request %}
+{%endblock%} 
+{% if not offer_fb %}
+<div id="dialog" title="Sign in" class="bottomrc5"></div>
+<div id="fb-root"></div>
+<div id='greeting_popup' style="background-color:#fff !important"></div>
+<div id="call_popup" style="background-color:#fff !important"></div>
+{% endif %}
+<div id="linkdialog"></div>
+{% if 'show_subscription_verification' in request.session%}
+    <a class="popup hide" href="/info/subscribe_thank_you.html" id="subscribe_thank_you"></a>
+{% endif %}
+</body>
+{%block js%}
+    {% compressed_js 'all' request %}
+{%endblock%}
+{% block script_footer %}
+<script type="text/javascript">
+{% if request|facebook_user_loggedout %}
+    location.href = '/auth/signout/';
+{% endif %}
+$(document).ready(function(){
+    try{
+        menu_ready();
+    }
+    catch(e){}
+
+    $.fn.isMobileValid = function(){
+
+        var data  = $(this).val();
+
+        var mobilePattern = /^[0-9]{10}$/;
+
+        if(data) {
+            return mobilePattern.test(data);
+        }
+        return false
+    };
+    $.fn.isEmailValid = function(){
+        var data  = $(this).val();
+        if(data){
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return emailPattern.test(data);
+        }
+        return false
+    };
+    $("#id_q").keyup(function(){
+        return false;
+        var url = "/suggest";
+        var data = 'chars=' + $('#id_q').val();
+        var onSuccess = function(response) {
+            $('#id_q').jsonSuggest(response,{onSelect:callback,minCharacters:2});
+        };
+        var onError = function() {
+        };
+    
+        $.ajax({ url:url,
+               data : data,
+               success : onSuccess,
+               error : onError,
+               type : 'GET'
+               });
+        return false;
+
+    });
+    /*function callback(item) {
+        setTimeout(function(){$('#search_form').submit();},100);
+    };*/
+    $(".userbox_close").click(function(){
+        $("#user_box").hide("slide", { direction: "right" }, 500 );
+        $(".userbox_show").show();
+    });
+    $(".userbox_show").click(function(){
+        $("#user_box").show("slide", { direction: "right" }, 500 );
+        $(".userbox_show").hide();
+    });
+    $(".feedback_close").click(function(){
+        $("#error_msg_feedback").hide()
+        $("#feedback_reset").trigger('click');
+        $("#feedback_box").hide("slide", { direction: "right" }, 500 );
+        $(".feedback_show").show();
+    });
+    $(".close_button").click(function(){
+        $("#error_msg_feedback").hide()
+        $("#feedback_reset").trigger('click');
+        $("#feedback_box").hide("slide", { direction: "right" }, 500 );
+        $(".feedback_show").show();
+    });
+    $(".feedback_show").click(function(){
+        $("#feedback_box").show("slide", { direction: "right" }, 500 );
+        $(".feedback_show").hide();
+    });
+     
+    if(getCookie("subscribed")=="yes") {
+        $(".subscribe").hide();
+    }
+
+    $(".close_subscribe").click(function() {
+        $(".subscribe_block").hide();
+        $(".sub_arrow").css('background-position','-2px -552px');
+    });
+    $(".subscribe").click(function(){
+        if("{{request|is_user_authenticated}}" == "True"){
+            location.href = "/user/notification/";
+        }
+        else{
+            $(".subscribe_block").toggle();
+            if($(".subscribe_block").is(':visible')){
+                $(".sub_arrow").css('background-position','-2px -572px');
+            }
+            else{
+                $(".sub_arrow").css('background-position','-2px -552px');
+            }
+        }
+    });
+
+    function MM_openBrWindow(theURL,winName,features) { //v2.0
+        window.open(theURL,winName,features);
+    };
+});
+</script>
+<script type="text/javascript">$(".btn_continue").click(function() { $("#lightbox").empty(); }) ; </script>
+<script type="text/javascript">
+try{
+    slide_customer_testimonials();
+}
+catch(err){};
+function fbs_click(u, t) {
+    if (u=="") { u=location.href; };
+    if (t=="") { t=document.title; };
+    var finalurl = "https://www.facebook.com/sharer.php?t="+encodeURIComponent(t)+"&u="+encodeURIComponent(u);
+    window.open(finalurl,'sharer','toolbar=0,status=0,width=626,height=436');return false;};
+
+function twit_click(url, text, via) {
+    if (url=="") { url=location.href; };
+    if (text=="") { text="Would love to buy this!"; };
+    if (via=="") { via="futurebazaar"; };
+    var finalurl = "https://twitter.com/share?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(text)+"&via="+encodeURIComponent(via);
+    window.open(finalurl,'share','toolbar=0,status=0,width=626,height=436');return false;};
+</script>
+<script type="text/javascript">
+{% comment %}
+    $(document).ready(function() {      
+        {%if request.session.show_fbcart %}
+            view_fbcart();
+        {% endif %}
+    });
+    function view_fbcart(){
+        open_popup("{% cc_url request "orders/cart_popup/" %}");
+        $("#header_view_cart").removeClass("active");
+        $("#header_show_cart").css("display","none");
+    };
+{% endcomment %}
+
+$(".home_prod_greed li:nth-child(5n)").css("margin-right", "0px");
+$(".srp_greed li:nth-child(4n)").css("margin-right", "0");
+$(".cat_compare li:nth-child(4n)").css("margin-right", "0");
+
+$(".prod_tabs li:last").css("border-right", "none");
+$(".pdp_rightbar_inner ul li:first").css("border-top", "none");
+
+
+$(".menu_icons li").hover(function(){
+$(this).find(".icons_comment_outer").css("display", "block");
+})
+
+$(".menu_icons li").mouseleave(function(){
+$(".icons_comment_outer").css("display", "none");
+})
+
+</script>
+
+{% comment %}
+<script type="text/javascript">
+   //ss5d side panel
+    //width=($(window).width() - 1000)/2;
+    //$(".base_left_panel").css('width',width)
+    //$(".base_right_panel").css('width',width)
+    
+    //height=($(document).height() - 890);
+    //$(".base_left_panel").css('height',height)
+    //$(".base_right_panel").css('height',height)    
+  //end ss5d side panel
+</script>
+{% endcomment %}
+
+<script type="text/javascript">  
+    function fancybox_ready(){
+        $(".fancybox").fancybox({
+            'width'				: '80%',
+            'height'			: '100%',
+            'autoScale'			: 'false',
+            'transitionIn'		: 'none',
+            'transitionOut'		: 'none',
+            'type'				: 'iframe'
+        });		
+    };
+    fancybox_ready();
+</script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {      
+      function showDown(){     	 	 
+		  $(this).find('.t1_l2_wrapper').css({'display':'block', 'height': 'auto'});
+		   $(this).find('.t1_l1_item').addClass('item_sel'); 
+        }
+      function showUp(){  
+		 $(this).find('.t1_l2_wrapper').css('display','none');  
+		 $(this).find('.t1_l1_item').removeClass('item_sel'); 	
+        }
+		
+		 var mega_t1l1 = {
+         interval:80,
+         sensitivity: 4,
+         over: showDown,
+         timeout: 200,
+         out: showUp
+    };
+	$(".t1_l1").hoverIntent(mega_t1l1);
+	
+	  function show_t1l2(){   
+		 $(this).find('.t1_l3_wrapper').css('display','block');
+		 $(this).find('.t1_l2_item').addClass('t1_l2_item_ho');
+		  
+		 //$(this).find('.t1_l3_wrapper').css('display','block');
+		 //$('div.t1_l2_wrapper').animate({width:'600px'},200);		 
+		 
+		 l2=$(this).parents('.t1_l2_wrapper').height(); 
+		 l3=$(this).find('.t1_l3_wrapper').height();
+		 
+		 if(l3 >= l2)
+		 {				
+			$(this).parents('.t1_l2_wrapper').css('height', l3+'px');
+			$(this).find('.t1_menu_sep').css('height', l3+'px') ;
+			
+		  }
+			else
+		 {
+			 $(this).find('.t1_l3_wrapper').css('height', l2+'px') ;
+			 $(this).find('.t1_menu_sep').css('height', l2+'px') ;
+		 }
+		 
+		 //$(this).find('.t2_l2_item').addClass('t2_l2_item_ho'); 
+        }
+	  
+      function hide_t1l2(){
+		// $('li').find('.t1_l2_wrapper').css('width', '228px');
+		 //$('li').find('.t1_l2_wrapper').addClass('w190');
+		 
+		  $(this).find('.t1_l3_wrapper').css('display','none');  
+		   $(this).find('.t1_l2_item').removeClass('t1_l2_item_ho'); 		 
+        }
+		
+		 var mega_t1l2 = {
+         interval:0,
+         sensitivity: 4,
+         over: show_t1l2,
+         timeout: 100,
+         out: hide_t1l2
+    };	
+	$(".t1_l2").hoverIntent(mega_t1l2);
+	
+	$(".t1_l2_inner").mouseenter(function(){				
+			
+		 $('li').find('.t1_l2_wrapper').animate({width: '486px'},200);  
+		 $('li').find('.t1_l2_wrapper.min_width').removeClass('w190'); 
+	})
+	$(".t1_l2_inner").mouseleave(function(){	 
+		$('li').find('.t1_l2_wrapper').css('width', '170px'); 
+		$('li').find('.t1_l2_wrapper.min_width').addClass('w190'); 
+	})
+		
+		
+		
+		
+		
+		
+		
+		
+   
+		//-----------t2 menu-----------
+		
+		function showDown_t2(){     
+			 
+		   $(this).find('.t2_l2_wrapper').css({'display':'block', 'height': 'auto'}); 
+		   $(this).find('.t2_l1_item').addClass('item_sel'); 
+		   
+        }
+      function showUp_t2(){  
+		  $(this).find('.t2_l2_wrapper').css('display','none');  
+		   $(this).find('.t2_l1_item').removeClass('item_sel'); 	
+        }	
+	
+	 var mega_t2 = {
+         interval:100,
+         sensitivity: 4,
+         over: showDown_t2,
+         timeout: 100,
+         out: showUp_t2
+    };	
+	  
+	$(".t2_l1").hoverIntent(mega_t2);	
+	
+	/*$(".t2_l2_inner").mouseenter(function(){
+	 $(this).parents('div.t2_l2_wrapper').animate({width:'600px'},200);
+	 })*/
+	 
+	/* $(".t2_l2_inner").mouseenter(function(){
+	 
+	 
+	 })*/
+	 
+	
+	$(".t2_l2_inner").mouseleave(function(){
+		$('li').find('.t2_l2_wrapper').css('width', '170px');
+		$('li').find('.t2_l2_wrapper').addClass('w190');
+	})
+	
+	//---------
+	  function show_l3(){
+		  	$(this).parents('.t2_l2_wrapper').css('height', 'auto');
+			$(this).find('.t2_l3_wrapper').css('height', 'auto');
+
+			 $(this).find('.t2_l3_wrapper').css('display','block');
+			  $('div.t2_l2_wrapper').removeClass('w190');
+	 		 $('div.t2_l2_wrapper').animate({width:'505px'},200);
+			 
+			 l2=$(this).parents('.t2_l2_wrapper').height(); 
+			 l3=$(this).find('.t2_l3_wrapper').height();		
+			 if(l3 >= l2)
+			 {				
+				  $(this).parents('.t2_l2_wrapper').css('height', l3+'px');
+				  $(this).find('.menu_separator').css('height', l3+'px') ;
+			  }
+				else
+			 {
+				 $(this).find('.t2_l3_wrapper').css('height', l2+'px') ;
+				 $(this).find('.menu_separator').css('height', l2+'px') ;
+			 }
+			 
+			 $(this).find('.t2_l2_item').addClass('t2_l2_item_ho'); 		 
+        }
+      function hide_l3(){     
+		 //$('li').find('.t2_l2_wrapper').css('width', '228px');
+		  $(this).find('.t2_l3_wrapper').css('display','none');
+		  $(this).find('.t2_l2_item').removeClass('t2_l2_item_ho');
+        }
+		 var megaL3 = {
+         interval:0,
+         sensitivity: 4,
+         over: show_l3,
+         timeout: 100,
+         out: hide_l3
+    };	
+	$('.t2_l2').hoverIntent(megaL3);
+	
+	/*-------t2 end--------*/
+		   
+	refresh_header_cart();	   
+});
+
+
+	
+function refresh_header_cart(){	   
+    $("#header_view_cart").hover(function(){	
+       $(this).toggleClass("active");
+       $("#header_show_cart").toggle();
+    })
+};
+	
+	$("#id_q").focus( function(){
+		$(".search_dod").show();	
+	})
+	/*$("#id_q").blur( function(){
+		$(".search_dod").hide();	
+	})*/
+	$('body').click( function(){
+		$(".search_dod").hide();	
+	})
+	
+	//sign in
+	 $(".signin").click(function(){	
+       //$(this).toggleClass("active");
+       $(".signin_more").toggle();
+    })
+
+    //qv
+   // $(".item_img").hover(function(){	        
+//          $(this).find(".btn_qv").toggle();
+//    })
+	
+	$(".item_img").mouseenter(function(){	 
+		$(this).find(".btn_qv").show(); 	  
+	})
+	$(".item_img").mouseleave(function(){	 
+		$(this).find(".btn_qv").hide(); 	    
+	})				   
+
+    $(".item_img .btn_qv").hover(function(){	
+         $(this).toggleClass("active");
+    })
+</script>
+<script type="text/javascript">
+{% if not request|is_user_authenticated %}
+    try{
+        refresh_signin_form();
+    }
+    catch(err){
+    }
+    function signin_user_actions(user_action){
+        var form_id = "#form_"+user_action;
+        var form_data = $(form_id).serialize();
+        var onError = function(response){
+            $("#"+user_action+"_ajax_error").removeClass("hide");
+        };
+        var action = $(form_id).attr("action");
+        var onSuccess = function(ajax_response){
+            var response = $.parseJSON(ajax_response);
+            if(response.status == 'ok'){
+                location.reload();
+            }
+            $("#header_"+user_action).html(response.html);
+            try{
+                refresh_signin_form();
+                refresh_signin_refer_form();
+            }
+            catch(err){
+            }
+            return response;
+        }
+        $.ajax({
+            url : action,
+            data : form_data,
+            success : onSuccess,
+            error : onError,
+            type : "POST"
+        });
+        return false;
+    };
+{% endif %}
+    var signin_form=$(".signin_form");
+    $(".signin").click(function(){		
+        if(signin_form.hasClass('hide'))
+        {
+            signin_form.removeClass('hide',20, "easeInExpo");
+            $(this).addClass("active",20, "easeInExpo");
+            return false;
+        } 
+        else
+        {
+            signin_form.addClass('hide');        
+            $(this).removeClass("active");
+        }
+    });
+	
+  $('body').click(function(){ 
+        $(".signin_form").addClass('hide');
+        $(".signin").removeClass("active");
+    }); 
+    $('.signin_form').click(function(){ 
+        return false;
+    });
+    $(".my_account_href").click(function(){
+        location.href = $(this).attr("href");
+    })
+    /*---------*/
+
+    $(".sub_close").click( function(){
+        $(".subscribe_top").slideUp(); 
+        $(".never_miss_deal_span").slideDown();
+        setCookie("nevermissadeal","True", 365);
+    });
+    // set nevermissdeal cookie on page load itself
+    {% if 'nevermissadeal' not in request.COOKIES %}
+        setCookie("nevermissadeal","True", 365);
+    {% endif %}
+
+    $(".never_miss_deal").click( function(){
+        $(".subscribe_top").slideDown(); 
+        $(".never_miss_deal_span").hide();
+    });
+
+    $("#id_q").focus( function(){
+		$(".search_dod").show();	
+	});
+
+	$('body').click( function(){
+		$(".search_dod").hide();	
+	});
+	
+	$("#id_q").click( function(){
+        return false;	
+	});
+    /* Search for atleat 3 alphanumeric chars START */
+    $("#search_form").submit(function(){
+        var query = $.trim($("#id_q").val());
+        var submit_form = false;
+        if(query != ""){
+            var alphanumeric_regex = /^[a-zA-Z0-9]+/;
+            var query_length = query.length;
+            var count = 0;
+            var an_count = 0;            
+            while(an_count < 2 && count < query_length){
+                if(alphanumeric_regex.test(query[count])){
+                    an_count++;
+                }
+                count++;
+            }
+            if(an_count >= 2){
+                submit_form = true;
+            }
+        }
+        if(!submit_form){
+	        $("#id_q").focus();
+            return false;
+        }
+    });
+    /* Search for atleat 3 alphanumeric chars END */
+</script>
+<script type="text/javascript">
+function isMobilePattern(data){
+    var mobilePattern = /^[0-9]{10}$/;
+    return mobilePattern.test(data);
+}
+function isEmailPattern(data){
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(data);
+}
+</script>
+<!-- Facebook Login scripts START-->
+<script type="text/javascript" charset="utf-8">
+$("#f_logout").click(function(e) {
+    e.preventDefault();
+    FB.logout(function(data) {
+        window.location.href = "/auth/signout/";
+    });
+    return false;
+});
+</script>
+<!-- Facebook Login scripts END-->
+<script type="text/javascript">
+$(document).ready(function() {		
+    {% if 'show_subscription_verification' in request.session%}
+        $("#subscribe_thank_you").click();
+        {% flush_element_from_session request 'show_subscription_verification' %}
+    {% endif %}
+$('#deal_subscription').click(function(){
+    document.getElementById('deal_subscription').disabled=true;
+    $('#subscription_error').addClass('hide');
+    var name = $('#deal_name').val();
+    var mobile = $('#deal_mobile').val();
+    var email = $('#deal_email').val();
+    var bool = 'true';
+    var errMsg = "Following errors while submit: \n";
+
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    var mobilePattern = /^\d{10}$/;
+    if(!emailPattern.test(email)){
+        $('#deal_email').addClass('bor_red');
+        $('#deal_email').addClass('error');
+        $('#deal_email').val("Enter a valid email");
+        bool = 'false';
+    } else {
+        $('#deal_email').removeClass('bor_red');
+        $('#deal_email').removeClass('error');
+    }
+    if(mobile != '' && !mobilePattern.test(mobile)){
+        $('#deal_mobile').addClass('bor_red');
+        $('#deal_mobile').addClass('error');
+        $('#deal_mobile').val("Enter a valid mobile no.");
+        bool = 'false';
+    } else {
+        $('#deal_mobile').removeClass('bor_red');
+        $('#deal_mobile').removeClass('error');
+    }
+    if(bool == 'true') {
+        var url = "/fb/register-deals/";
+        var data = {'name':name, 'mobile':mobile, 'email':email};
+        $("#subscribe_loader").removeClass("hide");
+        var Onerror = function(){
+            $('#subscription_error').removeClass('hide');
+            var error_msg = '<ul>';
+            error_msg = error_msg + '<li>' + "Sorry we cannot subscribe you now. Please try it later" + '</li>';
+            error_msg = error_msg +  '</ul>';
+            $('#subscription_error').html(error_msg);
+            $("#subscribe_loader").addClass("hide");
+        }
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            error: Onerror,
+            success: function(msg){
+                var response_text = $.parseJSON(msg);
+                if(response_text.status == 'ok'){
+                    $(".subscribe_top").slideUp(); 
+                    $(".never_miss_deal_span").slideDown();
+                    show_subscription_lightbox(response_text.html);
+                };
+                if(response_text.status == 'failed'){
+                    $('#subscription_error').removeClass('hide');
+                    var error_msg = '<ul>';
+                    for(var key in response_text.error){
+                        error_msg = error_msg + '<li>' + response_text.error[key] + '</li>';
+                    }
+                    error_msg = error_msg +  '</ul>';
+                    $('#subscription_error').html(error_msg);
+                };
+                $("#subscribe_loader").addClass("hide");
+                return false;
+            }
+        });
+    }else{
+    };
+    document.getElementById('deal_subscription').disabled=false;
+});
+});
+</script>
+
+<!-- Digital Timer JS START -->
+<script type="text/javascript">
+$(document).ready(function(){
+    var count = 1;
+    $(".product_time_left").each(function(){
+        var prod_id = $(this).attr("name");
+        var day = $(this).attr("day");
+        var hour = $(this).attr("hour");
+        var min = $(this).attr("min");
+        var sec = $(this).attr("sec");
+        Timers['product_dealTimer' + count] = new DigitalTimer(
+                    "div#product_deal_timer" + prod_id + " span.day", 
+                    "div#product_deal_timer" + prod_id + " span.hr", 
+                    "div#product_deal_timer" + prod_id + " span.min", 
+                    "div#product_deal_timer" + prod_id + " span.sec", 
+        day,hour, min, sec,"steal", prod_id);
+        setInterval("Timers.product_dealTimer"+count+".tick()",1000);
+        count += 1;
+    });
+});
+</script>
+<!-- Digital Timer JS END -->
+{%endblock%}
+</html>

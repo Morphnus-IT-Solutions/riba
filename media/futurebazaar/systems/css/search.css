@@ -1,0 +1,10 @@
+div#search_bar{
+    background-color: #fced67;
+    margin-bottom: 10px;
+}
+
+div#search_bar div#search_menu { float: left; width: 200px ;}
+div#search_bar div#search { }
+div#search input[type=text] { width: 250px; }
+div#search select { }
+div#search input[type=submit] { }

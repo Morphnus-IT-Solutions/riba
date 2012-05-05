@@ -1,0 +1,86 @@
+{%extends 'web/base.html' %}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+            <div id="header" style="border-bottom: 1px solid #FCED67">
+                <div id="logo">
+                    <div><img src="{{MEDIA_URL}}images/ppd-logo.gif" alt="Logo" width="400" height="69" />
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+{%endblock%}
+{%block content %}
+
+{% if errors %}
+<div>
+  <div class="error">
+<ul style="list-style-type:disc; padding-left:10px;">
+   <li>{{errors}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+<br/>
+
+<form method='GET' action=''>
+  <div  class="select_range">
+    <table class="tbl_select_range">
+      <tr>
+        <td width="50" style="text-align:right" class="fgray f11">&nbsp;From&nbsp;</td>
+        <td width="160"><input type="textbox" Name="from" id="id_from" class="bg_down_arr" value="{{from_date|date:'m/d/Y'}}" Autocomplete="OFF" /></td>
+        <td width="50" style="text-align:right" class="fgray f11">&nbsp;To&nbsp; </td>
+        <td width="160"><input type="textbox" Name="to" id="id_to" class="bg_down_arr" Autocomplete="OFF" value="{{to_date|date:'m/d/Y'}}" /></td>
+<!--        <td  width="50" style="text-align:right" class="f11">&nbsp;DID Number&nbsp; </td> -->
+<!--        <td width="180"><input type="textbox" Name= "did_no" value="{{did_no}}"class=''/></td> -->
+        <td  width="50" style="text-align:right" class="f11">&nbsp;Agent:&nbsp; </td>
+        <td width="180">
+            <select name="agent">
+            <option {%if selected_agent == 'All'%} selected = "selected" {%endif%} value = 'All'> All</option>
+            {%for agent in agents %}
+                <option {% if selected_agent == agent.name%}selected="selected"{%endif%} value="{{agent.name}}">{{agent.name}}</option>
+            {%endfor%}
+            </select>
+        </td>
+        <td width="70" style="text-align:right"><button id="btn" type="submit" class="button white fn">Go</button></td>
+        <td width="*"></td>
+      </tr>
+    </table>
+  </div>
+</form>
+<br/>
+
+
+<table class="report_heading">
+  <tbody><tr>
+    <!--<td class="title">-->
+ <td>   <div class="title">Agent login-logout Report </div><!--</td></tr>
+    <tr>
+    <td class="date_range">-->
+    <div class="date_range">{{from_date|date:"d M, Y"}} - {{to_date|date:"d M, Y"}}</div></td>
+  </tr>
+</tbody></table>
+
+<table class="tbl_report">
+<tr>
+<th>Agent</th>
+<th>Login Time</th>
+<th>Logout Time</th> 
+<th>Total Time (Hrs)</th>
+</tr>
+
+{%for detail in logged_in %}
+<tr>
+<td> {{detail.0}}</td>
+<td> {{detail.1}}</td>
+<td> {{detail.2}}</td>
+<td> {{detail.3}}</td>
+</tr>
+{%endfor%}
+</table>
+<script type="text/javascript">
+    $('#id_from').datepicker();
+    $('#id_to').datepicker()
+    </script>
+
+{%endblock%}

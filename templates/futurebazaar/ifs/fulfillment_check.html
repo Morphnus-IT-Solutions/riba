@@ -1,0 +1,130 @@
+{% extends 'web/ppd_base.html' %}
+{% load ppd_tags %}
+
+{% block content %}
+<style type="text/css">
+	table {margin-bottom: 1.4em;}
+	table, td, th {vertical-align: middle;}
+	th, td, caption {padding: 4px 10px 4px 5px;}
+	.tbl_profile input[type="text"], .tbl_profile input[type="password"], .tbl_profile input.text, .tbl_profile input.title, .tbl_profile textarea, {
+		margin:0; width: 250px;}
+	.tbl_profile select {
+		margin:0; width: 154px;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{request.client.client.name|title}} - Check Fulfillment</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="clear"> {% if errors %}
+    <div>
+      <div class="error"> 
+	  {% for error in errors %}
+        {{error}}<br/>
+      {% endfor %} 
+	  </div>
+    </div>
+    {% endif %} </div>
+  <div class="inner-content">
+    <form name="fulfillment" id="fulfillment_form" action="" method="POST">
+      <div class="fb fdgray  prof_sub_head">Check Fulfillment</div>
+	  <table class="tbl_profile">
+		<tr>
+		  <td class="f11 flgray" width="160">Pincode</td>
+		  <td width="300"><input type="text" name="pincode" value="{{pincode}}" /></td>
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">SAP Article ID</td>
+		  <td width="300"><input type="text" name="article_id" value="{{article_id}}" /></td>
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">SKU ID</td>
+		  <td width="300"><input type="text" name="skuId" value="{{skuId}}" /></td>
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">Quantity</td>
+		  <td width="300"><input type="text" name="quantity" value="{{quantity}}" /></td>
+		</tr>
+		<tr>
+		  <td class="f11 flgray" width="160">Paytype</td>
+		  <td width="300">
+		  	<select name="paytype" id="paytype_id" class="f10 fgray">
+				<option class="f11 fdgray option" {%ifequal "ppd" paytype %} selected="selected"{%endifequal%} value="ppd">Prepaid</option>
+				<option class="f11 fdgray option" {%ifequal "cod" paytype %} selected="selected"{%endifequal%} value="cod">COD</option>
+			</select>
+		  </td>
+		</tr>
+	  </table>
+	  <table>
+		<tr>
+			<td width="167">
+			<td width="300">
+				<input type="submit" style="padding: 2px 6px;" class="uiButton" id="uplaod" value="Submit">
+			</td>
+			<td width="460">&nbsp;</td>
+		</tr>
+	  </table>
+    </form>
+    {%if flag == 'submitted' %}
+    
+    {% if not errors%} <strong>This order can be fulfilled!</strong></br>
+    Product fulfillment Information</br>
+    Pincode belongs to ZipGroups : </br>
+    {%for zipgroup in zipgroups%} <strong>{{zipgroup}}</strong></br>
+    {% endfor %}
+    Product Group: <strong>{{productgroup}}</strong></br>
+    Inventory availability time (Only mentioned for primary DC) :<strong> {{inventoryTime}} days</strong></br>
+    Total Delivery Time is : <strong>{{totalDeliveryTime}} days</strong></br>
+    Quantity found in all DCs : <strong>{{totalQuantityFound}}</strong></br>
+    Primary DC and LSP are : <strong>{{primaryDCLsp}}</strong></br>
+    Fulfillment Messages : <strong>{{flfMessages}}</strong></br>
+    Ship Local Only flag : <strong>{{isShipLocalOnly}}</strong></br>
+    High Value flag : <strong>{{isHighValue}}</strong></br>
+    Inventory Check tag : <strong>{{isInvCheck}}</strong></br>
+    </br>
+    Ordered Sequence of DC-LSP for this fulfillment inputs:</br>
+     <table cellspacing="0" cellpadding="0" border="0" class="tbl_response left mart10">
+        <tr>
+            <td> DC </td> 
+            <td> LSP </td> 
+            <td> ORDER TYPE </td> 
+            <td> STOCK EXPECTED </td> 
+            <td> SHIPPING TIME</td> 
+            <td> TOTAL DELIVERY TIME</td> 
+        </tr>
+        {%for items in dcLspSequence%} 
+            <tr>
+                <td><strong>{{items.dc}} </strong>  </td>
+                <td> <strong> {{items.lsp }} </strong> </td> 
+                <td> <strong> {{items.order_type }} </strong> </td> 
+                <td> <strong> {{items.stock_expected }} </strong> </td> 
+                <td> <strong> {{items.shipping}} </strong> </td> 
+                <td> <strong> {{items.delivery}} </strong> </td> 
+            </tr>
+        {% endfor %}
+    </table>
+    Stock availability for DCs(Physical+Virtual):</br>
+    {%for dcstock in dcStockString%} <strong>{{dcstock.0}} - {{dcstock.1}} </strong></br>
+    {% endfor %}
+    Physical Stock available for each DC:</br>
+    {%for dcstock in dcPhysicalStockString%} <strong>{{dcstock.0}} - {{dcstock.1}} </strong></br>
+    {% endfor %}
+    Mode of transport (Only for selected Primary DC-LSP combination):<strong> {{modeOfTransport}}</strong></br>
+    Back Orderable:<strong> {{isBackorderable}}</strong></br>
+    Default DC:<strong> {{defaultDC}}</strong></br>
+{% comment %}    Can all Quantity be fulfilled from primary DC? :<strong> {{isAllQuantityFulfilled}}</strong></br> {% endcomment %}
+    {% endif %}    
+    {% endif %} </div>
+</div>
+{% endblock %}
+{% block script_footer %}
+<script type="text/javascript">
+        $("#back_button").click(function(){
+            history.go(-1);
+            return true;
+        })
+    </script>
+{% endblock %} 

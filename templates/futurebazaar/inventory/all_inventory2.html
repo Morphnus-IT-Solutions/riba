@@ -1,0 +1,116 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb">{%comment%}<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb{%endcomment%}</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name}}</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="clear"></div>
+  	<form name="search_by_sku_form" id="search_by_sku_form" action="" method="POST">
+	<div class="left">
+		<strong>Article Id :</strong> 
+		<input type="text" name="articleid" value=""></input> &nbsp; &nbsp;
+		<input type="submit" name="search" class="uiButton" value="Search" id="submit_button">
+	</div>
+	<div class="clear">&nbsp;</div>
+	<table class="tbl_response mart5 marb10">
+	  <tbody>
+		<tr>
+		  <th>Product Name</th>
+		  <th>Article Id</th>
+		  <th>DC</th>
+		  <th>SKU</th>
+		  <th>Type </th>
+		  <th>ATS</th>
+		  <th>Start On</th>
+		  <th>Ends On</th>
+		  <th>Expected On</th>
+		  <th>Is Active</th>
+		  <th></th>
+		</tr>
+		<tr>
+		  <td class="la">Mewar - Clutch</td>
+		  <td>8903493001696</td>
+		  <td>2786</td>
+		  <td>1234567</td>
+		  <td>Physical</td>
+		  <td>100</td>
+		  <td>12-10-2010 23:29</td>
+		  <td>12-10-2010 23:49</td>
+		  <td>12-10-2010 23:39</td>
+		  <td>Yes</td>
+		  <td><a class="f11" href="/updateinventory.html"> Edit </a></td>
+		</tr>
+		<tr>
+		  <td class="la">Mewar - Clutch</td>
+		  <td>8903493001702</td>
+		  <td>2792</td>
+		  <td>1444567</td>
+		  <td>Virtual</td>
+		  <td>250</td>
+		  <td>13-10-2010 20:10</td>
+		  <td>13-10-2010 20:40</td>
+		  <td>13-10-2010 20:30</td>
+		  <td>No</td>
+		  <td><a class="f11" href="/updateinventory.html"> Edit </a></td>
+		</tr>
+	   </tbody>
+	</table>
+  </form>
+</div>
+<div class="clear"></div>
+{% endblock %} 
+
+{% block script_footer %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.date').datepicker({dateFormat: 'dd-m-yy'});
+});
+/*
+$(document).ready(function(){
+
+$('#update').click(function checknumber(){
+    var x=document.search_by_sku_form.stock.value
+    var y=document.search_by_sku_form.delivery_time.value
+    var anum=/(^\d+$)|(^\d+\.\d+$)/
+    if (anum.test(x)){
+        testresult1=true
+    }else{
+            testresult1=false
+    }
+
+    if (anum.test(y))
+        testresult2=true
+    else{
+            testresult2=false
+    }
+
+    if(!testresult1 && !testresult2){
+        alert("Please enter a valid stock and delivery time!!!");
+    }else if(!testresult1 && testresult2){
+        alert("Please enter a valid stock!!!");
+    }else if(testresult1 && !testresult2){
+        alert("Please enter a valid delivery time!!!");
+    }
+    return (testresult1 && testresult2)
+})
+
+});
+*/
+</script>
+{% endblock %} 

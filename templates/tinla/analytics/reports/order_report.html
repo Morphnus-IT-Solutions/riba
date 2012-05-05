@@ -1,0 +1,110 @@
+{% extends "analytics/base.html" %}
+{% block content %}
+{% load order_tags %}
+<div class="span-24 last">
+    <div class="p5">
+        <h3>Pipeline report</h3>
+
+        <table cellpadding="2" cellspacing="2" style="border-collapse:collapse" class="floating_container">
+            <tr class="header">
+                <td rowspan="2">Date</td>
+                <td rowspan="2">Source</td>
+                <td rowspan="2">Booked</td>
+                <td colspan="5" class="ca">Paid</td>
+                <td colspan="3" class="ca">Approved</td>
+                <td colspan="4" class="ca">Delivery Generated</td>
+            </tr>
+            <tr class="header">
+                <td>To Verify</td>
+                <td>Failed</td>
+                <td>Approved</td>
+                <td>Cancelled</td>
+                <td>Total</td>
+                <td>Not in SAP</td>
+                <td>Open Orders</td>
+                <td>Del. Generated</td>
+                <td>Not Invoiced</td>
+                <td>Not Dispatched</td>
+                <td>In Transit</td>
+                <td>Delivered</td>
+            </tr>
+            {% for day in days %}
+            <tr class="{%cycle "row1" "row2" %}">
+                <td rowspan="2">{{day.day|date:"d N Y"}}</td>
+                <td>Line Items</td>
+                <td>{{day.booked.count}}</td>
+                <td>{{day.awaiting.count}}</td>
+                <td>{{day.failed.count}}</td>
+                <td>{{day.approved.count}}</td>
+                <td>{{day.cancelled.count}}</td>
+                <td>{{day.paid.count}}</td>
+                <td>{{day.inprocess.count}}</td>
+                <td>{{day.open.count}}</td>
+                <td>{{day.delivery_generated.count}}</td>
+                <td>{{day.invoiced.count}}</td>
+                <td>{{day.dispatched.count}}</td>
+                <td>{{day.intransit.count}}</td>
+                <td>{{day.delivered.count}}</td>
+            </tr>
+            <tr class="{%cycle "row1" "row2" %}">
+                <td>Value</td>
+                <td>{{day.booked.value|money}}</td>
+                <td>{{day.awaiting.value|money}}</td>
+                <td>{{day.failed.value|money}}</td>
+                <td>{{day.approved.value|money}}</td>
+                <td>{{day.cancelled.value|money}}</td>
+                <td>{{day.paid.value|money}}</td>
+                <td>{{day.inprocess.value|money}}</td>
+                <td>{{day.open.value|money}}</td>
+                <td>{{day.delivery_generated.value|money}}</td>
+                <td>{{day.invoiced.value|money}}</td>
+                <td>{{day.dispatched.value|money}}</td>
+                <td>{{day.intransit.value|money}}</td>
+                <td>{{day.delivered.value|money}}</td>
+            </tr>
+            {% endfor %}
+            <tr class="{%cycle "row1" "row2" %}">
+                <td rowspan="2">Total</td>
+                <td>Line Items</td>
+                <td>{{sum.booked.count}}</td>
+                <td>{{sum.awaiting.count}}</td>
+                <td>{{sum.failed.count}}</td>
+                <td>{{sum.approved.count}}</td>
+                <td>{{sum.cancelled.count}}</td>
+                <td>{{sum.paid.count}}</td>
+                <td>{{sum.inprocess.count}}</td>
+                <td>{{sum.open.count}}</td>
+                <td>{{sum.delivery_generated.count}}</td>
+                <td>{{sum.invoiced.count}}</td>
+                <td>{{sum.dispatched.count}}</td>
+                <td>{{sum.intransit.count}}</td>
+                <td>{{sum.delivered.count}}</td>
+            </tr>
+            <tr class="{%cycle "row1" "row2" %}">
+                <td>Value</td>
+                <td>{{sum.booked.value|money}}</td>
+                <td>{{sum.awaiting.value|money}}</td>
+                <td>{{sum.failed.value|money}}</td>
+                <td>{{sum.approved.value|money}}</td>
+                <td>{{sum.cancelled.value|money}}</td>
+                <td>{{sum.paid.value|money}}</td>
+                <td>{{sum.inprocess.value|money}}</td>
+                <td>{{sum.open.value|money}}</td>
+                <td>{{sum.delivery_generated.value|money}}</td>
+                <td>{{sum.invoiced.value|money}}</td>
+                <td>{{sum.dispatched.value|money}}</td>
+                <td>{{sum.intransit.value|money}}</td>
+                <td>{{sum.delivered.value|money}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    $('#id_from').datepicker({maxDate:'0'})
+    $('#id_to').datepicker({maxDate:'0'})
+    </script>
+{% endblock %}
+

@@ -1,0 +1,41 @@
+        {% if responses %}
+        <table>
+        <tr>
+            <td style="padding-left: 15px">
+                <div id="related_responses" {% if toLogout and not request.GET.phone%}style="display:none;"{% endif %}>
+                <div style="text-align:right" class="f11"><a class="help" onclick="$('related_responses').style.display='none';">Hide X</a></div>
+                {% for response in responses %}
+                <div class="f12" style="border: 1px solid #fcce00; padding: 5px" id="response_{{response.id}}">
+                    <h2>{%if response.name %}{{response.name}}, {%endif%}{{response.phone}} for {{response.campaign.name}}</h2>
+                    <h4>{{response.current_status.name}} ({{response.current_status.type}})</h4>
+                    <br/>
+                    {% for attempt in response.attempt_history %}
+                    <div >
+                        <span style="{% if attempt.answered %}background-color:#006633{% else %}background-color:#cc3333{% endif %};color:#fff;margin-right:5px;text-align:center;padding:1px 3px;">{% ifequal attempt.dir 'inbound' %}<b>&dArr;</b>In{% endifequal %}{% ifequal attempt.dir 'outbound' %}<b>&uArr;</b>Out{% endifequal %}{%ifequal attempt.dir 'abandoned' %}<b>&dArr;Abandoned</b>{%endifequal%}</span>
+
+                        <b>{{attempt.time}}</b><br/>
+                        {% ifequal attempt.dir 'abandoned' %}
+                        Abandoned call at {{attempt.time}}
+                        {% else %}
+                        {% if attempt.answered %}Spoken with {% else %} Attempted by {% endif %} {{attempt.agent_name}}.
+                        {% if not attempt.answered %} Call was {{attempt.state}} {% endif %}<br/>
+                        {% if attempt.comments %}
+                        Notes: {{attempt.comments|default:""}}
+                        {% endif %}
+                        {% endifequal %}
+                    </div>
+                    <br class="little_break"/>
+                    {% endfor %}
+                    {% ifequal selected_response_id response.id %}
+                    <button disabled>&radic;&nbsp;Using This</button>
+                    {% else %}
+                    <button onclick="Ch.UI.User.SelectResponse('{{callId}}', '{{response.id}}');" id="use_response_{{response.id}}">Use This</button>
+                    {% endifequal %}
+                </div>
+                <br/>
+                {% endfor %}
+                </div>
+            </td>
+        </tr>
+        </table>
+        {% endif %}

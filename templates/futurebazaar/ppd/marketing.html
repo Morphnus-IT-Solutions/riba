@@ -1,0 +1,10 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<a href="/{{client_name}}/{{seller_name}}/marketing/subscriptions/">Subscriptions</a></br>
+<a href="/{{client_name}}/{{seller_name}}/marketing/payback/">Payback</a></br>
+<a href="/{{client_name}}/{{seller_name}}/marketing/manage_affiliates/">Manage Affiliates</a></br>
+<a href="/{{client_name}}/{{seller_name}}/marketing/manage_promotions/">Manage Promotions</a></br>
+{%endblock%} 

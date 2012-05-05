@@ -1,0 +1,28 @@
+<fieldset class="module aligned {{ fieldset.classes }}">
+    {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
+    {% if fieldset.description %}
+        <div class="description">{{ fieldset.description|safe }}</div>
+    {% endif %}
+    {% for line in fieldset %}
+        <div class="form-row{% if line.errors %} errors{% endif %}{% for field in line %} {{ field.field.name }}{% endfor %}">
+            {{ line.errors }}
+            {% for field in line %}
+                <div{% if not line.fields|length_is:"1" %} class="field-box"{% endif %}>
+                    {% if field.is_checkbox %}
+                        {{ field.field }}{{ field.label_tag }}
+                    {% else %}
+                        {{ field.label_tag }}
+                        {% if field.is_readonly %}
+                            <p>{{ field.contents }} {% if field.change_url %}<a href="{{ field.change_url }}" class="readonly_field_change_link"><img src="/adminmedia/img/admin/icon_changelink.gif" width="10" height="10" alt="edit" title="edit"/></a>{% endif %}</p> 
+                        {% else %}
+                            {{ field.field }}
+                        {% endif %}
+                    {% endif %}
+                    {% if field.field.field.help_text %}
+                        <p class="help {% if opts.verbose_name == 'daily deal'%}product_help" id="product_help_text_{{forloop.parentloop.parentloop.parentloop.counter}}{% endif %}">{{ field.field.field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</fieldset>

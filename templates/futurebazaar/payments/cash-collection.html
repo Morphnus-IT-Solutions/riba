@@ -1,0 +1,42 @@
+
+<div id="sel_cash_error" class="error marb10" style="display:none;">Please Select Cash option</div>
+<div>
+  
+  <select id="id_payment_group_member" name="payment_gateway">
+    {% if gateway_options %}
+      <option value="Select Cash option" selected="selected">Select Cash option</option>
+      {%for option in gateway_options%}
+          <option value="{{option.code}}">{{option.name}}</option>
+      {%endfor%}
+    {% endif %}
+  </select>
+</div>
+<p class="mart20"><a href="/orders/payment/pay-by-cash.html" class="popup">Click here</a> to learn How to Pay by Cash &amp; to find a nearest Cash payment location</p>
+<div class="notice"> <b>Note:</b>
+  <ul>
+    <li> Payment through cash must be made within the next 2 days to avoid cancellation of the order.</li>
+    <li> We will begin processing your order only after receipt of the cash payment.</li>
+    <li>Alternately, you may opt for Credit Card or Netbanking as payment modes which are instant payments.</li>
+  </ul>
+</div>
+<!--<div class="notice" id="EBIL">
+    To complete your order, please visit any of the Easybill outlets and make a payment in favor of 'Future Bazaar India Limited' by quoting your order Id. Locate the nearest Easybill outlet here - http://www.easybillindia.com/outlet_locator.php</div>
+<div class="notice" id="ICCA">
+    To complete your order, please visit any of the ICICI bank branches and deposit cash in current account no. 039305002261 using a deposit slip. Your order ID should be clearly mentioned on the face of the deposit slip.</div>
+<div class="notice" id="SUVI">
+  To complete your order, please visit any of the Suvidha outlets and make a payment in favor of 'Future Bazaar India Limited' by quoting your order ID. Locate the nearest Suvidha outlet here - http://www.mysuvidhaa.com/SuvidhaaStoreServices/StoreDetails.aspx</div> -->
+
+<script type="text/javascript">
+      $(document).ready(function(){
+          //$('.notice').hide()
+          var mode = $('#id_payment_group_member').val();
+          $('#' + mode).show()
+
+        });
+        //$('#id_payment_group_member').change(function(){
+        //        $('.notice').hide()
+        //        var mode = $(this).val();
+        //        $('#' + mode).show()
+        //        });
+</script>
+<script type="text/javascript" src="/media/js/popup.js"></script>

@@ -1,0 +1,44 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form select{width:202px;}
+#form input[type=submit]{width:50px;}
+#id_tat input[name='tat_days']{float:none;width:50px;margin:0 21px 0 5px;}
+#id_tat input[name='tat_hours']{float:none;width:50px;margin-left:5px;}
+ul, ol { padding-left: 0px !important; }
+</style>
+{% if form.non_field_errors %}
+<div class="error">{{form.non_field_errors}}</div>
+{%endif%}
+<form method='post' action='/substate/add' id='form'>
+<div class="fieldWrapper marb5 clear">
+	<span class="f11 fdgray">{{ form.name.label }}</span><br/>
+	{{ form.name }}
+</div>
+{% if form.name.errors %}
+<div class='error clear'>{{form.name.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.state.label }}</span><br/>
+	{{ form.state }}
+</div>
+{% if form.state.errors %}
+<div class='error clear'>{{form.state.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.acting_team.label }}</span><br/>
+	{{ form.acting_team }}
+</div>
+{% if form.acting_team.errors %}
+<div class='error clear'>{{form.acting_team.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.tat.label }}</span><br/>
+	{{ form.tat }}
+</div>
+{% if form.tat.errors %}
+<div class='error clear'>{{form.tat.errors}}</div>
+{% endif %}
+<div class='clear'>
+    <input type="submit" name="submit" value="Add" class="uiButton" id='addsubstate'/>
+</div>
+</form>

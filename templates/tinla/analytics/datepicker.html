@@ -1,0 +1,92 @@
+<div class="content_head">
+	<div class="header rc5 left">
+	  <h1>{{title}}</h1>
+	  <div class="f11"> {{input_date|date:"d M, Y"}}</div>
+	</div>
+</div>
+<div id="dr_container">
+<form>
+<ul class="date_range">
+
+<li class="white"> Report Date</li>
+<li id="li_dr">
+<input readonly=True type="text" id="dr" value="{{input_date|date:'d M, Y'}}" /> </li>
+</ul>
+<div class="clear"></div>
+<br/>
+</form>
+
+<form method="get">
+<div id="sr" style="display:none;">
+    <table class="tbl_sr right">
+      <tr>       
+        <td>Choose Report Date </td>
+        <td><input type="text" Name="input" id="id_input" Autocomplete=OFF /></td>
+        <td>
+	   <button type="button" id="id_apply" disabled=True class="uiButton" >Apply</button>
+          </td>
+      </tr>
+    </table>
+  </div>
+</form>
+</div>
+<script type="text/javascript" language="javascript"> 
+$(document).ready(function() {  
+        $(function() {          
+    
+                $('#dr').toggle(function()
+                {           
+                    $( '#sr' ).show("fast", 0);                     
+                    return false;           
+                },
+                
+                function()
+                {                   
+                        $( '#sr' ).hide("fast", 0);                                         
+                        return false;
+                });     
+        }); 
+});
+</script>
+<script type="text/javascript" language="javascript"> 
+$(document).ready(function() {  
+    $('#id_input').datepicker({dateFormat: 'dd M, yy', maxDate:'0',
+        onSelect: function(){
+            document.getElementById('id_apply').disabled = false;
+        }
+    });
+});
+</script>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {   
+    $('#id_apply').click(function(){
+        url_path = '{{url|safe}}';
+        if('{{do_mode}}' == "True"){
+            if(document.getElementById('booked').checked){
+                url_path += "mode=1&";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "mode=2&";
+            }
+        }
+        if('{{do_mode}}' == "lob"){
+            if(document.getElementById('booked').checked){
+                url_path += "mode=1&";
+            }
+            if(document.getElementById('invoiced').checked){
+                url_path += "mode=2&";
+            }
+//            var lob_level = document.getElementById('lob_level').options[document.getElementById('lob_level').selectedIndex].value;
+//            url_path += "lob_level=" + lob_level + "&";
+            if ('{{lob_obj}}' != 'False'){
+                url_path += "lob_obj={{lob_obj}}&";
+            }
+            if ('{{lob_level_page}}' != 'False'){
+                url_path += "lob_level_page=" + "{{lob_level_page}}" + "&";
+            }
+        }
+        url_path +=  "input_date=" + $('#id_input').val();
+        location.href = url_path;
+    });
+});
+</script>

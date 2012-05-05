@@ -1,0 +1,31 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+	{%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+	<div class="content_head">
+		<div class="header rc5">
+		  <h1>{{request.client.client.name|title}} - User Experience Dashboard</h1>
+		</div>
+		<div class="clear bordergray"></div>
+	</div>
+	<div class="inner-content">
+		<ul>
+			{%if "User Experience-Site Propertie" in request|tabs%}
+				<li class="f12"><a href="/user_experience/site_properties/"><span class="left cursorp">Site Properties</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "User Experience-Content" in request|tabs%}
+				<li class="f12"><a href="/user_experience/content/"><span class="left cursorp">Content</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "User Experience-Feedback" in request|tabs%}
+				<li class="f12"><a href="/user_experience/feedback/"><span class="left cursorp">Feedback</span><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "User Experience-Reviews" in request|tabs%}
+				<li class="f12"><a href="/user_experience/reviews/"><span class="left cursorp">Reviews</span><div class="clear"></div></a></li>
+			{%endif%}
+		</ul>
+	</div>
+</div>
+{%endblock%} 

@@ -1,0 +1,146 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+<div class="inner-content" %>
+	<style type="text/css">
+		table{
+			margin-bottom:1.4em;
+			width:100%;
+		}
+		th, td, caption{
+			padding: 4px 10px 4px 5px;
+		}
+	</style>
+	<form action="" id="add_form" name="add_form" method="POST" enctype="multipart/form-data">
+		<div id="post_errors"></div>
+		
+		{% if form.errors %}
+			{% for error in form.errors %}
+				{{error}}
+			{% endfor %}
+			{{form.non_field_errors}}
+			<p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+		{% endif %}
+		{% ifequal nflag 1 %}
+			{% ifequal errorflag 0 %}
+				<div class="content_head" style="width: 948px; height: 36px; padding-top: 26px;">
+					<div class="header rc5" style="width: 960px;">
+						<div class="left">
+							<h1 class="head1">{{request.client.client.name|title}} - Add Coordinates</h1>
+						</div>
+						<div class="clear"></div>
+						<div class="left">
+							<h4 class="f13 fdblack">Coordinates added succesfully</h4>
+						</div>
+						<div class="right" style="padding-right: 7px; padding-top: 5px; width: 104px; height: 28px; border-bottom-width: 22px; margin-bottom: 0px; padding-left: 8px; border-top-width: 0px; margin-top: 0px;">
+							<a href="/user_experience/site_properties/lists/display_list/{{ID}}/" class="uiButton fblack">Back to {{ listobj.title }}</a>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div class="content_head" style="width: 948px; height: 36px; padding-top: 26px;">
+					<div class="header rc5" style="width: 960px;">
+						<div class="left">
+							<h1 class="head1">{{request.client.client.name|title}} - Add Coordinates</h1>
+						</div>
+						<div class="right" style="padding-right: 7px; padding-top: 5px; width: 104px; height: 28px; border-bottom-width: 22px; margin-bottom: 0px; padding-left: 8px; border-top-width: 0px; margin-top: 0px;">
+							<a href="/user_experience/site_properties/lists/display_list/{{ID}}/" class="uiButton fblack">Back to {{ listobj.title }}</a>
+						</div>
+					</div>
+				</div>
+
+		<style>
+		 .tbl_list td, .tbl_list_item td{width:140px !important;}
+		 .tbl_list input, .tbl_list textarea, .tbl_list select, .tbl_list_item input, .tbl_list_item select, #id_lists-banner_image{width:140px !important;}
+		 .tbl_list textarea{width:135px; height=40px; !important}
+		 #id_lists-description{width:140px; height:50px; !important; }
+		 .item_desc textarea{width:135px; height:50px; !important; }
+		 </style>
+		 <div class="clear"></div>
+		<table class="tbl_list" style="width:auto ">
+		{{ formset.management_form }}
+			{% for i in formset.forms %}
+				<div class = "formgroup">
+	
+				<div style="display:none;visibility:hidden;">
+					{{ i.id.label }}
+					{{ i.id }}
+				<!--</div>-->
+					{{ i.list.label }}
+					{{ i.list }}
+				</div>
+					<tr>
+						<td class="f11 fdgray">{{ i.sequence.label }}</td>
+						<td>{{ i.sequence }}</td>
+						{% if i.sequence.errors %}
+							<td class="error">{{ i.sequence.errors }}</td>
+						{% else %}
+							<td></td>
+						{% endif %}
+
+						<td class="f11 fdgray">{{ i.co_ordinates.label }}</td>
+						<td>{{ i.co_ordinates }}</td>
+						{% if i.co_ordinates.errors %}
+							<td class="error">{{ i.co_ordinates.errors }}</td>
+						{% else %}
+							<td></td>
+						{% endif %}
+					</tr>
+					<tr>
+						<td class="f11 fdgray">{{ i.link.label }}</td>
+						<td class="input_banner">{{ i.link }}</td>
+						{% if i.link.errors %}
+							<td class="error">{{ i.link }}</td>
+						{% else %}
+							<td></td>
+						{% endif %}
+					</tr>
+					<tr>
+						<td style="border-bottom: 2px solid #cccccc;"></td>
+						<td style="border-bottom: 2px solid #cccccc;"></td>
+						<td style="border-bottom: 2px solid #cccccc;"></td>
+						<td style="border-bottom: 2px solid #cccccc;"></td>
+						<td style="border-bottom: 2px solid #cccccc;"></td>
+					</tr>
+					<tr><td></td></tr>
+				{% endfor %}
+
+
+			{% comment %}
+			<div style="display:none;visibility:hidden;">
+				{{ form.id.label }}
+				{{ form.id }}
+			</div>
+			{% endcomment %}
+			{% comment %}
+			<tr>
+				<td class="f11 fdgray">{{ form.co_ordinates.label }}</td>
+				<td>{{ form.co_ordinates }}</td>
+				{% if form.co_ordinates.errors %}
+					<td class="error">{{ form.co_ordinates.errors }}</td>
+				{% else %}
+					<td></td>
+				{% endif %}
+				<td class="f11 fdgray">{{ form.link.label }}</td>
+				<td class="input_banner">{{ form.link }}</td>
+				{% if form.link.errors %}
+					<td class="error">{{ form.link }}</td>
+				{% else %}
+					<td></td>
+				{% endif %}
+			</tr>
+			{% endcomment %}
+		</table>
+		<div class="clear"></div>
+		<div class="left">
+			<table class="buttons">
+				<tr>
+					<td><INPUT TYPE="submit" id="save" VALUE="Save" class="uiButton fblack" name="save" /></td>
+				</tr>
+			</table>
+		</div>
+		{% endifequal %}
+		{% endifequal %}
+
+		</form>
+	</div>
+{% endblock %}

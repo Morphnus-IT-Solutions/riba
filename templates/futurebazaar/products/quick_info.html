@@ -1,0 +1,200 @@
+{% load web_tags %}
+{% load cc_tags %}
+<div class="con" id="pop_header">
+    <div class="cart_page con_inner" id="cart_popup" style="width:800px;">
+    <div class="product_quick_view pad10">
+      <div class="image_wrapper">
+        <div class="prod_image"> 
+        <img id="display_img" src="{{product_images.0.get_display_url}}"  width="270" height="340" alt="{{product.title}}" title="{{product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_p.jpg" %}';}return false;" onerror_cnt="0"/>
+        {% if product_images|length > 1 %}    
+            <div class="qv_product_img_thumb filmstrip ca">                        
+                {%for image in product_images%}
+                    <img src="{{image.get_filmstrip_url}}" class="steal_thumb_img" width="36" height="46" alt="{{product.title}}" title="{{product.title}}" display="{{image.get_display_url}}"/>
+                {% endfor %}
+            </div>    
+        {% endif %}
+        </div>
+      </div>
+      <div class="prod_details">
+       <h3><a href="{% cc_url request product.url %}">{{product.title}}</a></h3>
+       <div class="marb10 brand_row f11">           
+                <span class="fblack">Brand: </span>
+                <span><a href="{%cc_url request product.brand.url%}" title="{{product.brand}}">{{product.brand}}</a></span>
+       </div>
+    <div>
+    {%if product.description != '--'%}
+        {{product.description|truncate:245|safe}}<br/>
+    {%endif%}
+    <div class="mart5 f11"><a href="{% cc_url request product.url %}">Read Full Product Details &raquo;</a></div>
+    </div>
+    <table class="pdp_price mart20">
+        <tr>
+          <td class="price_lable">Offer Price:</td>
+          <td class="price_value forange fb f16"><span class="WebRupee">Rs.</span> {{price_info.offer_price|money}} </td>
+        </tr>       
+        {% if price_info.savings %}
+            <tr>
+              <td class="price_lable">MRP:</td>
+              <td class="price_value"><span class="WebRupee">Rs.</span> <span class="fs">{{price_info.list_price|money}}</span></td>
+            </tr>
+            <tr>
+              <td class="price_lable">Discounts:</td>
+              <td class="price_value"><span class="WebRupee">Rs.</span> {{price_info.savings|money}} ({{price_info.discount}}%)</td>
+            </tr>
+        {% endif %}
+        {% product_variants product request %}
+    </table>
+<form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form_{{product.id}}" method="post" style="display:inline;">
+
+<div>
+        <div class="pdp_add_qty">
+                <table class="pdp_price"> 
+                        {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+                        <tr><td class="price_lable">Add Quantity</td>
+                        <td class="price_value">
+                                <select name="qty" class="prod_qty left" {%if product.primary_rate_chart.stock_status != "instock"%} disabled="disabled" {% endif %}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                 </select>
+                        </td>
+                        </tr>
+                        {% endifequal %}
+                        <tr><td class="price_lable">Availability</td>
+                        <td class="price_value">
+                                <span>
+                 {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+                                <span class="fgreen fb">IN STOCK</span>{#% check_stock_availability request product.primary_rate_chart  %#}                              
+                                
+                             {%else%} 
+                                 <span class="fb fred">OUT OF STOCK</span> 
+                          {%endifequal%}
+                                 </span>
+                        </td>
+                        </tr>
+                </table> 
+        </div>
+                                
+        <div class="pdp_buy_now">
+                <div class="left marr10">               
+                        {%ifequal product.primary_rate_chart.stock_status "instock"%} 
+                                     <input type="hidden" name="rate_chart_id" value="{{rate_chart.id}}"/>
+                                     <input type="hidden" name="product_id" value="{{product.id}}"/>
+                                     <input type="hidden" name="action" value="add_to_cart"/>       
+                                     <button type="submit" class="pdp_btn_buy_now btn_c btn_orange marb5 add_product_to_cart" value="{{product.id}}" title="Buy this product now">Buy Now <span></span></button>
+                           </form> 
+                           <form method="{% if request|is_user_authenticated %}post{%else%}get{%endif%}" action="{% if request|is_user_authenticated %}/user/wishlist/{%else%}/auth/signin/?next={{request.get_full_path|urlencode}}{%endif%}">
+                               <input type="hidden" name="action" value="add_to_wishlist"/>
+                               <input type="hidden" name="src_id" value="{{rate_chart.id}}"/>
+                               <input type="hidden" name="next" value="{% cc_url request product.url %}"/>
+                               <input class="linkButton f11" type="submit" title="Move this item to your wishlist and buy later" value="Add to Wishlist"/>            </form>
+                      
+                       {%endifequal%}
+                </div>
+                <div class="left">
+                        <div class="shop_on f11">Buy this on phone (between 8 am - 10 pm)</div>
+                        <div class="phone_no">0922-222-1947 </div>
+                        
+                </div>
+                <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    
+        
+        
+
+
+    {% comment %}
+    <div class="qv_buy_now_box marb5">
+        <div class="qv_buy_now_box_left">
+            <div>Availability - <span class="fb">
+                {%ifequal product.primary_rate_chart.stock_status "instock"%}
+                    <span class="fgreen">In Stock</span>
+                {% else %}     
+                    <span class="fb fred">Out of Stock<span> 
+                {% endifequal %}
+                </span>
+            </div>       
+           
+            {% if product.primary_rate_chart.is_cod_available %}
+                <div>Also available on <span class="fb">CASH ON DELIVERY</span></div>
+            {% endif %}
+            <div>Buy using <span class="fred">{{price_info.payback_points|money}}</span> PayBack points. <br />
+
+            </div>
+        </div>
+
+        {%ifequal product.primary_rate_chart.stock_status "instock"%}
+            <div class="qv_buy_now_box_right">
+            <form action="{% cc_url request "orders/mycart" %}" id="quick_add_to_cart_form" method="post">
+                <input type="hidden" name="rate_chart_id" value="{{rate_chart.id}}"/>
+                <input type="hidden" name="product_id" value="{{product.id}}"/>
+                <input type="hidden" name="action" value="add_to_cart"/>
+                <button type="submit" class="qv_buy_now marb5" id="quick_add_to_cart" value="{{product.id}}" title="Buy this product now" type="submit"><span class="left">ADD TO CART</span> <span class="qv_buy_now_icon"></span></button>
+            </form> 
+            {% if request.user.is_authenticated %}
+            <form method="post" action="/user/wishlist/">
+                <input type="hidden" name="action" value="add_to_wishlist"/>
+                <input type="hidden" name="src_id" value="{{rate_chart.id}}"/>
+                <input type="hidden" name="next" value="{{request.path}}"/>
+                <input type="hidden" name="qty" value="1"/>
+                <input style="background-color:#F9F7E5;" class="linkButton" type="submit" title="Move this item to your wishlist and buy later" value="Add to Wishlist"/>
+            </form>
+            {% endif %}
+             <div class="phone_no">0922-222-1947 </div>
+             <div class="shop_on f11">Shop on Phone (between 8 am - 10 pm)</div>
+            </div>
+        {% endifequal %}
+
+        <div class="clear"></div>
+      </div>
+     {% endcomment %}
+      
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<iframe src="http://www.vizury.com/analyze/analyze.php?account_id=VIZVRM144&param=e300&pid={{product.id}}{% for category, cat_name in product.category|category_heirarchy %}{% if forloop.counter0 == 0 %}&catid={{category.id}}{% else %}&subcat{{forloop.counter0}}id={{category.id}}{% endif %}{% if forloop.last %}&subcat{{forloop.counter}}id={{product.category.id}}{% endif %}{% endfor %}&section=1&level=1" scrolling="no" width="1" height="1" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+<script type="text/javascript">
+{% comment %}
+    $("#quick_add_to_cart").click(function(e){
+        $("#lightbox").css('display','block');
+        e.preventDefault();
+        var href = "/orders/mycart";
+        var form = $("#quick_add_to_cart_form");
+        var form_data = form.serialize();
+        show_overlay();
+        var onSuccess = function(mycart_html){
+            get_cart_popup(mycart_html);
+        };
+        var onError = function(){
+        };
+        $.ajax({
+            url: href,
+            cache: false,
+            data:form_data,
+            type:"POST",
+            success:onSuccess,
+            error:onError
+       });
+    });
+{% endcomment %}
+$('div.filmstrip img').bind('mouseover', function() {
+    var display_url = $(this).attr('display');
+    var current_url = $('#display_img')[0].src;
+    if(display_url) {
+        if (display_url != current_url) {
+            $('#display_img')[0].src = display_url;
+        }
+    }
+});
+</script>

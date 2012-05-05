@@ -1,0 +1,33 @@
+/*a {color:#006699;}*/
+.n_points-wrapper{margin:0 auto;width:988px;height:auto;font-family:Arial, Helvetica, sans-serif}
+.n_points-wrapper a{/*text-decoration:underline*/}
+.n_points-payback{width:988px;float:left; -moz-border-radius:7px;margin-top:10px}
+.n_points-payback-left{width:126px;float:left; padding-left:4px;}
+.n_points-payback-right{width:850px;float:right;background:#004c9d;height:64px; -moz-border-radius:5px;-webkit-border-radius:7px}
+.n_payback-left-left{float:left;color:#FFF;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:11px; line-height:64px; margin-left:13px}
+.n_payback-left-right{float:right;color:#FFF;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:13px;line-height:64px; margin-right:12px}
+
+.n_points-content-header{width:968px;margin-top:12px;padding-left:10px;padding-right:10px;background:url(/media/images/payback-bg.gif) no-repeat;float:left;height:auto;background-color:#cfe4f7;border-bottom:15px solid #cfe4f7}
+.n_points-subheader{float:left;width:700px;display:block;margin-top:20px}
+.n_points-subheader span{color:#003399;font-size:18px;margin-left:8px;font-weight:bold;}
+.points_top{margin-top:15px;}
+.points_bg_b{background-color:#e1f3fe}
+.points_bg_w{background-color:#FFF}
+.n_point-contentA{font-size:12px;color:#333333;margin-left:8px;text-align:justify;line-height:18px;margin-top:7px}
+.n_point-contentB{float:left;width:912px;overflow:hidden;height:auto;padding-right:34px;padding-left:24px;padding-top:16px;padding-bottom:10px;}
+.n_point-qacontaniner{float:left;width:872px;}
+.n_point-quest{float:left;width:54px;}
+.n_point-answr{float:left;width:818px;}
+.n_point-answer-q{float:left;font-size:15px;color:#003399;font-weight:bold;width:600px;}
+.n_point-answer-a{float:left;font-size:12px;color:#333333;/*width:600px;*/margin-top:5px}
+.n_point-answer-a ul{margin:0 auto;padding:0;text-decoration:none;float:left;list-style:none;margin-bottom:10px}
+.n_point-answer-a ul li{list-style:none;line-height:20px;width:800px;line-height:20px}
+.n_paa{float:left;width:630px;font-size:12px;color:#333333;margin-top:10px}
+.n_point-brandA{float:left;}
+
+
+.pb_demo_img_container{float:left;width:970px;}
+.pb_demo-content{float:left;width:920px;padding-left:20px;font-size:12px;margin-top:35px;margin-bottom:7px}
+
+.n_point-footer{float:left;width:872px;margin-bottom:7px}
+.n_point-brand-footer{margin-bottom:10px;font-size:11px;color:#666666;text-align:justify;}

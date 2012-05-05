@@ -1,0 +1,9 @@
+{% extends "web/base.html" %}
+{% load web_tags %}
+{% block content %}
+<h3>Uh-oh</h3>
+We could not cookup the page your are looking for. Our engineers have been notified about this error and they are working on it.<br/><br/>
+
+<a href="{% if request|is_future_ecommerce %}http://www.futurebazaar.com {% else %}http://www.chaupaati.in{% endif %}">Return to the home page</a> or call us at 0970-222-1947 and we will be happy to help.
+
+{% endblock %}

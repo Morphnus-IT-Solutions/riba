@@ -1,0 +1,56 @@
+
+div.jsonSuggestResults {
+	position:absolute;
+	border:1px solid #CCC;
+	padding:0px;
+	margin:0px 2px;	
+	z-index:1;
+	background-color:#DDDDDD;
+	left:-2px !important ;
+	top:32px !important;
+	/*left:439px !important ;
+	top:149px !important;*/
+	z-index:60;
+	width:390px !important;
+}
+
+div.jsonSuggestResults div.resultItem {
+	margin:0px;
+	padding:3px;
+	position:relative;
+	height:auto;
+	cursor:pointer;
+}
+
+div.jsonSuggestResults div.resultItem.odd {
+	background-color:#FFFFFF;
+}
+div.jsonSuggestResults div.resultItem.even {
+	background-color:#FFFFFF;
+}
+
+div.jsonSuggestResults div.resultItem.hover {
+background-color:#D1EBFB;
+	cursor:default;
+}
+
+div.jsonSuggestResults div.resultItem img {
+	float:left;
+	margin-right:10px;
+}
+
+div.jsonSuggestResults div.resultItem p {
+	margin:0px;
+	padding:0px;
+}
+
+div.jsonSuggestResults div.resultItem p strong {
+	font-weight:bold;
+}
+
+div.jsonSuggestResults div.resultItem p.extra {
+	font-size: x-small !important;
+	position:absolute;
+	bottom:3px;
+	right: 3px;
+}

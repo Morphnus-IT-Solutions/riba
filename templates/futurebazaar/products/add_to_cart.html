@@ -1,0 +1,115 @@
+{% load cc_tags %}
+{% load web_tags %} 
+<div>
+    {% with stock=product.primary_rate_chart|check_stock_availability %}
+        <div class="pdp_add_qty">
+            <table class="pdp_price">
+                    {% if stock >= product.primary_rate_chart.min_qty %}
+			<form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form_{{product.id}}" method="post" style="display:inline;">
+                        <tr>
+                            <td class="price_lable">Add Quantity</td>
+                            <td class="price_value">
+                                <select name="qty" class="prod_qty left" id="pdp_prod_qty">
+                                    {% if stock >= 12 %}
+                                        {% for n in 12|get_range:product.primary_rate_chart.min_qty %}
+                                            <option value="{{n}}">{{n}}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for n in stock|get_range:product.primary_rate_chart.min_qty %}
+                                            <option value="{{n}}">{{n}}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                        {% if stock >= product.primary_rate_chart.min_qty %}
+                            {% with availability_status=product.primary_rate_chart.get_availability_status%}
+                            {% if availability_status.status == 'instock' %}
+                            <tr>
+                                <td class="price_lable vt">Availability</td>
+                                <td class="price_value">
+                                <span>
+                                        {% if availability_status.status == 'instock' %}
+                                            <span class="fgreen fb">IN STOCK</span>
+                                            {% if stock <= 5 %} <span class="f333 f11"> -- only {{stock}} left{% endif %}</span>
+                                        {% endif %}
+                                        {% comment %}
+                                            {% if availability_status.status == 'backorder' %}
+                                                <span class="forange fb">BACK ORDER</span>
+                                            {% endif %}
+                                            {% if availability_status.status == 'preorder' %}
+                                                <span class="forange fb">PRE ORDER</span>
+                                            {% endif %}
+                                            {% if availability_status.status == 'madetoorder' %}
+                                                <span class="forange fb">MADE TO ORDER</span>
+                                            {% endif %}
+                                        {% endcomment %}
+                                        <div class="f11">
+                                            {% if availability_status.status != 'instock' %}
+                                                <a href="/info/availability_status.html" class="f10 popup">Whats this?</a>
+                                            {% endif %}
+                                        </div>
+                                </span>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if availability_status.status != 'outofstock' and availability_status.shipping_time > 0 %}
+                            <tr>
+                                <td class="price_lable vt">Shipping</td>
+                                <td class="price_value">
+                                <span>
+                                    <span class="f333">Ships in {{availability_status.shipping_time}} day{% if availability_status.shipping_time > 1%}s{% endif %}</span>
+                                    <div class="f11">
+                                        <a class="popup" href="/product/check_availability/?rc={{product.primary_rate_chart.id}}">Check delivery date for your pincode</a>
+                                    </div>
+                                </span>
+                            {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            <tr>
+                                <td class="price_lable vt">Availability</td>
+                                <td class="price_value">
+                                <span>
+                                    <span class="fb fred">OUT OF STOCK</span> 
+                                    <div class="f11">
+                                        <a href="/info/availability_status.html" class="f10 popup">Whats this?</a>
+                                    </div>
+                                </span>
+                                </td>
+                            </tr>
+                        {% endif %}        
+            </table> 
+        </div>
+        <div class="pdp_buy_now">
+        {% if stock >= product.primary_rate_chart.min_qty %}
+            <div class="left marr10">               
+                <input type="hidden" name="rate_chart_id" value="{{rate_chart.id}}"/>
+                <input type="hidden" name="product_id" value="{{product.id}}"/>
+                <input type="hidden" name="action" value="add_to_cart"/>       
+                <button type="submit" class="pdp_btn_buy_now btn_c btn_orange marb5 add_product_to_cart" value="{{product.id}}" title="Buy this product now">Buy Now <span></span></button>
+                {% comment %}
+                <button type="submit" class="pdp_btn_buy_now button orange marb5 add_product_to_cart" value="{{product.id}}" title="Buy this product now">Buy Now <span></span></button>
+        {% endcomment%}
+               </form> 
+               <form method="{% if request|is_user_authenticated %}post{%else%}get{%endif%}" action="{% if request|is_user_authenticated %}/user/wishlist/{%else%}/auth/signin/?next={{request.get_full_path|urlencode}}{%endif%}">
+                   <input type="hidden" name="action" value="add_to_wishlist"/>
+                   <input type="hidden" name="src_id" value="{{rate_chart.id}}"/>
+                   <input type="hidden" name="next" value="{{request.path}}"/>
+                   {% if not request|is_franchise%}
+                       <input class="linkButton f11" type="submit" title="Move this item to your wishlist and buy later" value="Add to Wishlist"/>
+                   {% endif %}
+               </form>
+            </div>
+            {% if not request|is_franchise%}
+                <div class="left">
+                        <div class="shop_on f11">Buy this on phone (between 8 am - 10 pm)</div>
+                        <div class="phone_no">0922-222-1947 </div>
+                </div>
+            {% endif %}
+        {% endif %}
+                <div class="clear"></div>
+          </div>
+        <div class="clear"></div>
+    {% endwith %}
+</div>

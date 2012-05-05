@@ -1,0 +1,115 @@
+{% extends "analytics/pentaho_base.html" %}
+{% load order_tags %}
+{% block content %}
+
+<style type="text/css">
+	#id_input_date_month{width:90px}
+	#id_input_date_year{width:55px}
+	#id_input_date_day{width:40px}
+</style> 
+{% if form.error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{form.error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+<div class="content_head">
+	<div class="header rc5 left">
+	  <h1>{{title}}</h1>
+	</div>
+</div>
+<div class="clear"></div>
+
+
+<form method="POST" id="report_form" name="report_form" action="">
+<div class="clear">&nbsp;</div>
+<div class="marb20">
+<table>
+    <tr>
+        <td class="col1 f11 flgray left"> Input Date: </td>
+        <td>
+            {{form.input_date}}
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Client: </td>
+        <td>
+            <div style="padding:2px 0">
+              <input type="button" class="linkbutton" value="Select All" onclick=checkall("client")>&nbsp;<span class="linkbutton">|</span>&nbsp;
+              <input type="button" class="linkbutton" value="Select None" onclick=uncheckall("client")>
+            </div>
+            <div style="overflow:auto; max-height:100px; border:1px solid #BBB;padding: 5px;">
+                {{form.client}}
+            </div>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Duration Modes: </td>
+        <td colspan="2">
+            <div style="padding:2px 0">
+              <input type="button" class="linkbutton" value="Select All" onclick=checkall("params")>&nbsp;<span class="linkbutton">|</span>&nbsp;
+              <input type="button" class="linkbutton" value="Select None" onclick=uncheckall("params")>
+            </div>
+            <div style="overflow:auto; max-height:100px; border:1px solid #BBB;padding: 5px;">
+                {{form.params}} 
+            </div>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Payback Queries: </td>
+        <td colspan="2">
+            <div style="padding:2px 0">
+              <input type="button" class="linkbutton" value="Select All" onclick=checkall("queries")> &nbsp;<span class="linkbutton">|</span>&nbsp;
+              <input type="button" class="linkbutton" value="Select None" onclick=uncheckall("queries")>
+            </div>
+            <div style="overflow:auto; max-height:100px; border:1px solid #BBB;padding: 5px;">
+                {{form.queries}} 
+            </div>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td><td></td></tr>
+    <tr>
+        <td class="col1 f11 flgray left"> Report Format: </td>
+        <td>
+            {{form.report_format}} 
+        </td>
+    </tr>
+	<tr><td>&nbsp;</td><td></td></tr>
+	<tr><td>&nbsp;</td><td><input type="submit" value="Evaluate" class="uiButton" style="width:80px\9; padding:5px;"></td></tr>
+</table>
+</div>
+</form>
+{%ifequal request.method "POST"%}
+<div>
+<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >
+<table class="tbl_report" >
+{%for item in data_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            {%if forloop.first%}
+                <td>{{ i}}</td>
+            {%else%}
+                <td>{%int_to_comma i%}</td>
+            {%endif%}
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+</div>
+{%endifequal%}
+
+{% endblock %}

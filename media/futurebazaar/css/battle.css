@@ -1,0 +1,101 @@
+.battle_greed_view {
+	float:left;
+    padding-left:35px;
+}
+.battle_greed_view ul.greed {
+	float:left;
+}
+.battle_greed_view ul.greed li {
+	/*width:226px; */ 
+	width:208px;
+    margin-right: 0;	
+	margin-left: 18px;
+	margin-bottom:20px;
+	float:left;
+	border-left:none;
+	border-top:none;	
+}
+.battle_greed_view .greed_prod{border:1px solid #c6d1d7; /*margin: 0 0 0 18px;*/ margin:0px; position:relative !important; background-color:#fff; /*height:404px;*/ height:460px; overflow:hidden;}
+
+.battle_greed_view .greed_prod h3 {
+	height:27px;
+	font-size:14px;
+	padding:8px 5px 8px 20px;
+	font-weight:bold;
+	background-color:#fff;
+	text-align:center;
+	border-top:1px solid #9B9B9B;	
+}
+.battle_greed_view .greed_prod img{ margin-left: 0; margin-top:14px;/* width:206px; height:206px;*/ width:206px; height:262px;}
+.battle_greed_view  .prod_features{ height:35px; overflow:hidden;}
+
+.greed_prod .battle_you_save {
+  background-position: 0px 0px;
+  font-size: 11px;
+  height: 42px;
+  padding-top: 16px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 60px;
+  text-align:center;
+  background-image:url("/media/images/blurb.png"); 
+}
+
+.battle_greed_view .greed_prod .price{	background-color:#fff; padding:8px 0; color:#333333; font-size:14px; }
+
+.battle_freegifts{background:url(http://images.futurebazaar.com/catalog/fb_new/battle-2/images/homepage_images/free.png) no-repeat scroll 0 0 transparent;color:#90010B;font-size:15px;font-weight:bold;height:50px;padding-top:5px;width:206px; margin-top:10px;}
+.battle_item_goods{width:200px; padding:0 10px; text-align:center;font-size:11px; font-family:arial; height:40px; color:#444; position:relative; top:-21px;}
+.battle_greed_view .greed_prod .select_item{position:absolute;
+	top:10px;
+	left:5px;	}
+
+.battle_greed_view ul.greed ul.price {
+margin-top:5px;
+	float:left;
+}
+.battle_greed_view ul.greed ul.price li {
+	height:14px;
+	padding:1px 5px;
+	border:none;
+}
+.battle_logo{width:250px; left:16px; height:40px; top:15px; position:absolute;}
+.greed_prod .item_tag{ background:url("../images/most-stolen-icon.png") no-repeat 0 0; width:85px; height:71px;
+position:absolute; left:-25px; top:30px; z-index:2;
+}
+.battle_greed_view .category_title{font-size:14px; font-weight:bold; padding:5px; width:200px; height:30px;overflow:hidden;}
+.battle_greed_view  .category_image{background-color:#fff; margin-right:18px;}
+
+.battle_page{background:url(../images/new-battle.jpg) no-repeat #000;}
+.battle_page .greed_view ul.greed li .greed_prod{background-color:#fff;}
+.battle_header{height:60px; position:relative;}
+.battle_page .battle_timer{position:absolute; top:20px; right:243px;}
+.battle_page .battle_timer .day{float:left; width:40px; height:25px;  margin:0 10px; background-image:url("../images/timer-digit-5b.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_page .battle_timer .hr{float:left; width:40px; height:25px;  margin:0 10px; background-image:url("../images/timer-digit-5b.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_page .battle_timer .min{float:left; width:40px; height:25px; margin:0 15px;  background-image:url("../images/timer-digit-5b.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_page .battle_timer .sec{float:left;width:40px; height:25px; margin:0 10px;  background-image:url("../images/timer-digit-5b.jpg"); background-repeat:no-repeat; background-position:center;}
+.battle_page .battle_share{position:absolute; top:20px; right:4px; width:100px;}
+.battle_page .battle_share .fb{width:26px; height:25px; float:left;  margin-right:8px;} 
+.battle_page .battle_share .tw{width:26px; height:25px; float:left; margin-right:8px;} 
+.battle_page .battle_share .mail{width:26px; height:25px; float:left;} 
+
+
+.battle_top_nav{height:40px; padding:5px 50px 0 90px; margin-bottom:20px;}
+.battle_menu{text-transform:uppercase; margin-top:9px; float:left; z-index: 600;}
+
+.battle_menu li.item{padding:5px; position:relative; font-weight:bold;float:left; z-index: 20;}
+.battle_menu li.item a{ color:#fff; text-decoration:none;}
+.battle_menu li.hovering{background-color:#FFDFAA; color:#000;}
+.battle_menu li.item .battle_menu_sub{width:220px; background:#FFDFAA; position:absolute; left:0px; top:20px; z-index:100; padding:0px;}
+.battle_menu li.item .battle_menu_sub li{border-bottom:1px solid #fff; padding:5px;}
+.battle_menu_sub {display:none;}
+.battle_menu li.hovering .battle_menu_sub {display:block;}
+.battle_menu li.hovering a{color:#000 !important;}
+.battle_pagination{float:right; color:#fff; font-weight:bold; font-size:12px; padding-right:0px; padding-top:8px}
+.battle_pagination a{color:#fff; }
+.battle_pagination .prev_page{background:url(http://images.futurebazaar.com/catalog/fb_new/battle-2/images/lft-arrow.gif) no-repeat center left; cursor:pointer; color:#fff; margin-right:6px; padding-left:10px;}
+.battle_pagination .next_page{background:url(http://images.futurebazaar.com/catalog/fb_new/battle-2/images/rt-arrow.gif) no-repeat center right; cursor:pointer; padding-right:10px;}
+.curr-page{float:left; margin-right:6px;height:16px; width:19px; border:1px solid #000; background:#fff; color:#770909; padding-top:2px; text-align:center;}
+.other-page{margin-right:6px;float:left; height:16px; width:19px; border:1px solid #000; background:#770909; color:#fff; padding-top:2px; text-align:center; cursor:pointer}
+
+ 

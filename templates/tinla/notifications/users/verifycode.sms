@@ -1,0 +1,1 @@
+To confirm order no."{{order.reference_order_id}}", use the verification code: {{order.verify_code}}.

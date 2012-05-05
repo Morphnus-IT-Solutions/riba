@@ -1,0 +1,69 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+{%show_excel_link request 'excel'%}
+<form method='GET' action="">
+{% daterange title search_trend from_date to_date request "" %}
+<div class="ca floating_container">
+    <span><b>Search by sku-id:-</b></span>
+        <input type="text" id="sku", name="sku">
+        <button type="button" id="sku_submit" class="rc5">Go!</button>
+</div>
+
+<br/>
+<div style="padding:0 10px 10px 0px;width:940px" class="floating_container" >
+
+<table class="tbl_report">
+    <tr>
+        {%for i in headings%}
+            <th>{{i}}</th>
+        {%endfor%}
+    </tr>
+    {%for item in data%}
+        {%for prod_list in item.entries%}
+            <tr>
+                    {% if forloop.counter == 1 %}
+                        <td rowspan="{{item.entries|length}}" style="vertical-align:middle">{{item.sku}}</td>
+                        <td rowspan="{{item.entries|length}}" class="la" style="vertical-align:middle">{{item.product_name}}</td>
+                    {% endif %}
+                        <td style="width:90px;">{{prod_list.0|date:"d N Y"}}</td>
+                        <td class="la">{{prod_list.1}}</td>
+                        <td style="width:80px; "class="la">{{prod_list.2}}</td>
+                        <td class="la">{{prod_list.3}}</td>
+                        <td>{{prod_list.4}}</td>
+                        <td>{{prod_list.5}}</td>
+                        <td>{{prod_list.6}}</td>
+                    {% if forloop.counter == 1 %}
+                        <td rowspan="{{item.entries|length}}" class="la" style="vertical-align:middle"><a href="http://{{item.product_url}}">{{item.product_url}}</a></td>
+                    {% endif %}
+            </tr>
+        {%endfor%}
+    {%endfor%}
+
+</table>        
+</div>
+<br>
+<br>
+<br/>
+<script type="text/javascript">
+
+    $('#sku_submit').click(function(){
+        url_path = '{{request.path|safe}}';
+        url_path += '?';
+        var sku = document.getElementById('sku').value;
+        url_path += "sku=" + sku + "&";
+        location.href = url_path;
+    });
+</script>
+{% endblock %}

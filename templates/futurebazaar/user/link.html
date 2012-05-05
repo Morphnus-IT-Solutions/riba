@@ -1,0 +1,187 @@
+{% load cc_tags %}
+{% load web_tags %}
+<div class="popup_con">
+    <div class="popup_inner">
+        <div>
+            <div style="position:relative;"><h1>Welcome to futurebazaar.com</h1>
+                <div id='close_link' class="f11 cp fwhite" style="position:absolute; right:10px; top:10px;">close x</div>
+            </div>
+        </div>
+        <div class="popup_inner_con">
+            <div style="width:508px">
+                <div id="fbimg" class="left" style="width:50px; margin-right:10px;">
+                    <img src="http://graph.facebook.com/{{facebook_id}}/picture/" width="50px" height="50px">    
+                </div>
+                <div class="left" style="width:448px;">
+                    {% if email_taken %}
+                        {%if name %}<b>Hi {{name}}</b><br/>{% endif %} {{facebook_email}} is already registered with
+                        {{request.client.client.name}}. Enter your {{request.client.client.name}} password to link Facebook with
+                        this account.
+                    {% else %}
+                        {%if name %}<span class="fb"><b>Hi {{name}},</b></span> <br/>{% endif %} If you already have a {{request.client.domain}} account, then connect your account for a seamless experience.
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <form method="post" action="/auth/link/" id="link_form" name="form_link">
+                <input type="hidden" name="fbemail" id="fbemail" value="{{facebook_email}}" />
+                <input type="hidden" name="via_checkout" id="via_checkout" value="{{via_checkout}}" />
+                <input type="hidden" name="facebook_id" id="facebook_id" value="{{facebook_id}}" />
+                <div id="trlinkform_error" class="mart10 error marb5 pad5 hidden" style="width:383px;">
+                </div>
+                <div class="marb5 marb10">
+                    <span class="f12 fdgray">{%if email_taken %}Email{%else %}Email/Mobile{%endif%}</span><br />
+                    <span id="usernamespan" class="{% if email_taken %}hidden{% endif %}">
+                        <input type="text" id="linkusername" name="username" value="{% if email_taken %}{{facebook_email}}{% endif %}" style="width:250px;"
+                        {%if email_taken %}disabled="true"{%endif%}/>
+                    </span>
+                    {% if email_taken %}
+                        <span class="" id="usernametxtspan">{{facebook_email}}</span>&nbsp;&nbsp;
+                        <a href="#" id="usernamechangelink" class="f11">Change</a>
+                    {% endif %}
+                </div>
+                <div class="marb5 marb10 hidden" id="verifydiv">
+                    <span id="lpassword" class="f12 fdgray">Verification code</span><br />
+                    <input type="text" id="verify_code" name="verify_code" style="width:250px;"/>
+                </div>
+                <div class="marb5 marb10">
+                    <span id="lpassword" class="f12 fdgray">Password</span><br />
+                    <input type="password" id="password" name="password" style="width:250px;"/> &nbsp; <img class="hidden" id="fpajaxwheel" src="/media/images/ajaxwheel.gif">
+                    <span class="marb5 marb10 hidden mart5" id="confirmpwddiv">
+                        <br/><br/>
+                        <span id="lpassword" class="f12 fdgray">Confirm Password</span><br />
+                        <input type="password" id="confirm_password" name="confirm_password" style="width:250px;"/>
+                    </span>
+                    <a href="#" id="forgotpassword" class="f11">Forgot password?</a>
+                </div>
+                <div class="mart10">
+                  <button type="submit" class="f_popup_button" id="login" title="Link Accounts">YES! LINK MY ACCOUNT</button>
+                  <img class="hidden" id="submitajaxwheel" src="/media/images/ajaxwheel.gif">
+                  {% if not email_taken %}
+                    <a href="#" id="continue_link">NO THANKS</a>
+                  {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".popup_close").empty();
+
+    $("#link_form").submit(function(e) {
+        e.preventDefault();
+        var f = $(this);
+        var username = f.find("#linkusername").val();
+        if( !$("#linkusername").isMobileValid() && !$("#linkusername").isEmailValid()){
+            $("#trlinkform_error").html("Please enter a valid Email/Mobile no.");
+            $("#trlinkform_error").removeClass("hidden");
+            return false;
+        }
+        var password = f.find("#password").val();
+        var fbemail = f.find("#fbemail").val();
+        var facebook_id = f.find("#facebook_id").val();
+        var verify_code = f.find("#verify_code").val();
+        var confirm_password = f.find("#confirm_password").val();
+        var data = {
+            username: username,
+            password: password,
+            fbemail: fbemail,
+            fbid: facebook_id,
+            verify_code: verify_code,
+            confirm_password: confirm_password
+            };
+        $("#submitajaxwheel").removeClass("hidden");
+        var xhr = $.ajax({
+            type: 'POST',
+            url: '/auth/link/',
+            data: data,
+            success: function(response) {
+                $("#submitajaxwheel").addClass("hidden");
+                letfbdlialogclose = true;
+                window.location.reload();
+            },
+            error: function(response) {
+                $("#submitajaxwheel").addClass("hidden");
+                $("#trlinkform_error").html(response.responseText);
+                $("#trlinkform_error").removeClass('hidden');
+            }
+        });
+        return false;
+    });
+    $("#close_link").click(function(e) {
+        var fbemail = $("#fbemail").val();
+        var facebook_id = $("#facebook_id").val();
+        var username = $("#linkusername").val();
+        var xhr = $.ajax({
+            type: 'POST',
+            url: '/auth/link/',
+            data: {
+                deny:'deny',
+                fbemail: fbemail,
+                username: username,
+                fbid: facebook_id
+                },
+            success: function(response) {
+                letfbdlialogclose = true;
+                window.location.reload()
+            },
+            error: function(response) {
+                window.location.reload()
+            }
+        });
+    });
+    $("#continue_link").click(function() {
+        $("#submitajaxwheel").removeClass("hidden");
+        var fbemail = $("#fbemail").val();
+        var facebook_id = $("#facebook_id").val();
+        var username = $("#linkusername").val();
+        var xhr = $.ajax({
+            type: 'POST',
+            url: '/auth/link/',
+            data: {
+                cont:'cont',
+                fbemail: fbemail,
+                username: username,
+                fbid: facebook_id
+                },
+            success: function(response) {
+                $("#submitajaxwheel").addClass("hidden");
+                letfbdlialogclose = true;
+                window.location.reload();
+            },
+            error: function(response) {
+                $("#submitajaxwheel").addClass("hidden");
+            }
+        });
+    });
+    $('#forgotpassword').click(function() {
+        var fbemail = $("#linkusername").val();
+        $("#fpajaxwheel").removeClass("hidden");
+        var xhr = $.ajax({
+            type: 'POST',
+            url: '/forgotpassword/single/',
+            data: {username:fbemail},
+            success: function(response) {
+                $("#fpajaxwheel").addClass("hidden");
+                $("#trlinkform_error").html(response);
+                $("#trlinkform_error").removeClass('hidden');
+                $("#verifydiv").removeClass("hidden");
+                $("#confirmpwddiv").removeClass("hidden");
+                $("#forgotpassword").html("Resend Verification Code")
+            },
+            error: function(response) {
+                $("#fpajaxwheel").addClass("hidden");
+                $("#trlinkform_error").html(response.responseText);
+                $("#trlinkform_error").removeClass('hidden');
+            }
+        });
+        return false;
+    });
+	$('#password').focus();
+    $("#usernamechangelink").click(function(){
+        $('#linkusername').attr('disabled',false);
+        $('#usernamespan').removeClass('hidden');
+        $('#usernametxtspan').addClass('hidden');
+        $('#usernamechangelink').addClass('hidden');
+    });
+</script>

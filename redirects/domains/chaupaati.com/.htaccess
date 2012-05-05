@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule (.*) http://www.chaupaati.in/$1 [R=301,L]

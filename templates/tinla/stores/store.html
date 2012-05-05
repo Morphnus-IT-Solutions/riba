@@ -1,0 +1,242 @@
+{% extends "web/base.html" %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load menu_tags %}
+{% if not request.wstore%}
+{%block page_title%}{% render_store_page_title store%}{%endblock%}
+{%block page_desc%}{% render_store_page_desc store %}{%endblock%}
+{%block page_tags%}{% render_store_page_tags store %}{%endblock%}
+{%endif%}
+{% block content %}
+<script src="{{MEDIA_URL}}js/jquery.scrollTo-min.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+    $('#prod_count_popular').val(0);
+    $('#prod_count_latest').val(0);
+    $('#prod_count_top_deals').val(0);
+});
+
+function showHideCat()
+    {
+        var divcat = new String();
+        divcat = document.getElementById("by_category").style.display;
+        if(divcat.toLowerCase()=="block" || divcat == "")
+        {
+            document.getElementById("by_category").style.display = "none";
+			document.getElementById("cat").style.margin = "0px 0px 1px";			
+			document.getElementById("cat").style.borderBottom="1px solid #cdcdcd";			
+			document.getElementById("cat").style.background = "#dedede url('{{MEDIA_URL}}images/arr_right.gif') no-repeat 5px";		
+		
+        }
+        else
+        {
+            document.getElementById("by_category").style.display = "block";
+			document.getElementById("cat").style.margin = "0px";		
+			document.getElementById("cat").style.background = "#dedede url('{{MEDIA_URL}}images/arr_down.gif') no-repeat 5px";
+        }
+    }
+	
+	
+	 function showHideBrands()
+    {
+        var divbrands = new String();
+        divbrands = document.getElementById("by_brands").style.display;
+        if(divbrands.toLowerCase()=="block" || divbrands == "")
+        {
+            document.getElementById("by_brands").style.display = "none";
+			document.getElementById("brands").style.margin = "0px 0px 1px";
+			document.getElementById("brands").style.borderBottom="1px solid #cdcdcd";	
+			document.getElementById("brands").style.background = "#dedede url('{{MEDIA_URL}}images/arr_right.gif') no-repeat 5px";
+			
+		
+        }
+        else
+        { 
+            document.getElementById("by_brands").style.display = "block";
+			document.getElementById("brands").style.margin = "0px";
+			document.getElementById("brands").style.background = "#dedede url('{{MEDIA_URL}}images/arr_down.gif') no-repeat 5px";
+        }
+    }
+	
+	function moveNext(name_list, storeid, some_or_all)
+	{
+        prodcounttemp=0;
+        if (name_list == 'popular')
+        {
+            prodcounttemp = $('#prod_count_popular').val();
+        }
+        if (name_list == 'latest')
+        {
+            prodcounttemp = $('#prod_count_latest').val();
+        }
+        if (name_list == 'top_deals')
+        {
+            prodcounttemp = $('#prod_count_top_deals').val();
+        }
+        if (some_or_all == 'some' && prodcounttemp > 27) return;
+        if (some_or_all == 'back' && prodcounttemp == 0) return;
+        var data='prodcount=' + prodcounttemp + '&storeid=' + storeid + '&name_list=' + name_list + '&some_or_all=' + some_or_all ; 
+        var onSuccess=function(responseText){
+
+            function clientDataFunc(name_list_entry, prod_count_type_entry, type_products_entry, left_image, right_image)
+            {
+                if (name_list == name_list_entry)
+                {
+                    if (some_or_all == 'some')
+                    {
+                        $(prod_count_type_entry).val(parseInt($(prod_count_type_entry).val()) + parseInt(4));
+                    }
+                    if (some_or_all == 'back')
+                    {
+                        $(prod_count_type_entry).val(parseInt($(prod_count_type_entry).val()) - parseInt(4));
+                    }
+                    $(type_products_entry).html(responseText);
+                }
+
+                
+                /* Greying out the left arrow images conditionally */
+                if ($(prod_count_type_entry).val()==0)
+                {
+                    $(left_image).attr('src',"{{MEDIA_URL}}images/arr_left_grey.jpg");
+                }
+                else
+                {
+                    $(left_image).attr('src',"{{MEDIA_URL}}images/arr_left.jpg")
+                }
+
+                /* Greying out the right arrow images conditionally */
+                if ($(prod_count_type_entry).val()>27)
+                {
+                    $(right_image).attr('src',"{{MEDIA_URL}}images/arr_right_grey.jpg");
+                }
+                else
+                {
+                    $(right_image).attr('src',"{{MEDIA_URL}}images/arr_right.jpg");
+                }
+            }
+
+            clientDataFunc('popular', '#prod_count_popular', '#popular_products', '#left_popular_image', '#right_popular_image');
+            clientDataFunc('latest', '#prod_count_latest', '#latest_products', '#left_latest_image', '#right_latest_image');
+            clientDataFunc('top_deals', '#prod_count_top_deals', '#top_deals', '#left_topdeals_image', '#right_topdeals_image');
+
+
+        };
+        var onError=function(){
+          //  alert("onError");
+        };
+        $.ajax({
+            type:'POST',
+            url:'/storepage/movenext/',
+            data:data,
+            success:onSuccess,
+            error:onError, 
+        });
+    }
+
+//	document.getElementById("popular1_img").src = "{{MEDIA_URL}}images/school1.jpeg";
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $(".filters a").click(function() {
+        if ($(this).attr("t") == 'hide'){
+            elems = $('input[name=' + $(this).attr("field") + ']');
+            for(var i=0; i<elems.length; i++){
+                elems[i].checked = false;
+            }
+        }
+        if($(this).attr("t") == 'show'){
+            elems = $("input[name="+ $(this).attr("field") + "]");
+            for(var i=0; i<elems.length; i++){
+                elems[i].checked = true;
+            }
+            $('#filter_form').submit();
+        }
+    });
+
+    $(".filters input[type=checkbox]").click(function() {
+        $('#filter_form').submit();
+    });
+});
+</script>
+
+<div class="countmaintain">
+    <input id="prod_count_popular" value=0 type="hidden">
+    <input id="prod_count_latest" value=0 type="hidden"> 
+    <input id="prod_count_top_deals" value=0 type="hidden">
+</div>
+
+
+<div class="breadcrumb"> <a href="{% cc_url request "" %}" title="Go to Chaupaati Home">Home</a>&nbsp;&raquo;&nbsp;{{store}}
+  <!--{%if filter_form.category%}&nbsp;&raquo;&nbsp;<a href="{% cc_url request filter_form.category.store.url %}">{{filter_form.category.store.name}}</a>{%endif%}
+  -->
+</div>
+    {%include "categories/filters.html"%}
+
+    <div class="results">
+
+        <div class="store_header roundcorner5">
+          	<h1>Popular {{store}}</h1>
+        </div>
+        <div class="store_grid">
+            <div class="store_grid_left" id="left_popular"><img id="left_popular_image" src="{{MEDIA_URL}}images/arr_left_grey.jpg" onclick="moveNext('popular', {{storeid}}, 'back')"/>
+            </div>
+    		<div id="popular_products">
+                {% load_product popularproductitem request %}
+    		</div>
+            <div class="store_grid_right" id="right_popular"><img id="right_popular_image" src="{{MEDIA_URL}}images/arr_right.jpg" onclick="moveNext('popular', {{storeid}}, 'some')"/>
+            </div> 
+        	<div class="clear">
+            </div>
+        </div>
+
+        <div class="clear">
+        </div>
+
+
+
+        <div class="store_header roundcorner5">
+          	<h1>Latest {{store}}</h1>
+        </div>
+        <div class="store_grid">
+            <div class="store_grid_left" id="left_latest"><img id="left_latest_image" src="{{MEDIA_URL}}images/arr_left_grey.jpg" onclick="moveNext('latest', {{storeid}}, 'back')"/>
+            </div>
+    		<div id="latest_products">
+                {% load_product latestproductitem request %}
+    		</div>
+            <div class="store_grid_right" id="right_latest"><img id="right_latest_image" src="{{MEDIA_URL}}images/arr_right.jpg" onclick="moveNext('latest', {{storeid}}, 'some')"/>
+            </div> 
+        	<div class="clear">
+            </div>
+        </div>
+
+        <div class="clear">
+        </div>
+
+
+        <div class="store_header roundcorner5">
+          	<h1>Top Deals</h1>
+        </div>
+        <div class="store_grid">
+            <div class="store_grid_left" id="left_top_deals"><img id = "left_topdeals_image" src="{{MEDIA_URL}}images/arr_left_grey.jpg" onclick="moveNext('top_deals', {{storeid}}, 'back')" />
+            </div>
+    		<div id="top_deals">
+                {% load_product topdealsproductitem request %}
+    		</div>
+            <div class="store_grid_right" id="right_top_deals"><img id="right_topdeals_image" src="{{MEDIA_URL}}images/arr_right.jpg" onclick="moveNext('top_deals', {{storeid}}, 'some')"/>
+            </div> 
+        	<div class="clear">
+            </div>
+        </div>
+
+        <div class="clear">
+        </div>
+
+    </div> 
+    <br />
+     <div class="clear">
+        </div>
+
+</div>
+{%endblock%}

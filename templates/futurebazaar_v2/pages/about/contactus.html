@@ -1,0 +1,86 @@
+{% extends "web/base.html" %}
+{% block content %}
+<div><br />
+
+	<h1>Contact Us</h1>
+</div>
+<div class="page">
+  <p>Providing you with the best customer service and an amazing online shopping experience has always been our goal.<br/>
+    You can Contact Us for complaints, feedback or queries via telephone, email or postal mail.</p>
+    <br />
+  <h3 class="subhead">Contact by phone:</h3>
+  <p>Call at 0922-222-1947  to reach our Customer Care team, manned by dedicated personnel, who are empowered to take decisions and resolve your problems. Customer Service is available 24 hours a day &amp; 7 days a week.<br />
+    If you are calling from outside Mumbai, call us and ask us to call you back. </p>
+    <br />
+  <h3 class="subhead">Contact by email:</h3>
+  <p>Send your emails at <a href="mailto:support@futurebazaar.com">support@futurebazaar.com</a>. We will respond within 1 working day.<br/>
+    Do mention your Order Number in the subject line of your email, if you are contacting us about an order you have placed. This helps us respond to your query faster. </p>
+    <br />
+
+  <h3 class="subhead">Not receiving our replies?</h3>
+  <p class="nopadding">If you are not receiving any replies to your emails: </p>
+  <ul>
+    <li>It's possible our email replies are being blocked by your email program or by your internet service provider (ISP). Many email programs provide protection against spam or bulk mails, but sometimes even legitimate commercial emails, like an email from our customer support department or automatic order status notification emails, can get blocked by mistake.</li>
+    <li>Check your 'Spam' or 'Bulk' folders for mails from us or contact your network administrator or internet service provider for advice.</li>
+    <li>If you are still not receiving our emails, do call us.</li>
+    <li>Please mention your contact numbers in your email so that we could also call you up.</li>
+  </ul>
+  <br />
+
+  <h3 class="subhead">Contact by postal mail:</h3 >
+<p>
+
+<strong>Future Retail Home Office</strong><br />
+FutureBazaar.com<br />
+10th Floor, Tower C, 247 Park, <br />
+LBS Marg, Vikhroli (West),<br />
+Mumbai 400083.<br />
+Phone: +91 22 66194025<br />
+    <br />
+    Customer Service is available 24 hours a day &amp; 7 days a week. We follow the Mumbai holiday calendar.</p>
+    <br />
+<br />
+
+  <h3 class="subhead">Contact Us/Feedback Form</h3 >
+  <p>
+  Fields marked with an asterisk ( <span class="fred">*</span> ) are mandatory.<br/>
+  We will respond within 1 working day.
+  </p>
+  <br />
+
+    {%if form.errors%}
+        <ul class="error padl20 w300" style="margin-left:0px; " >
+           {% for field in form %}
+                {% for error in field.errors %}
+                        <li width="150">{{error}}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {%endif%}
+
+  <table>
+  <form method="POST" action="">
+    {% for field in form %}
+        <tr>
+            <td valign="top" width="110">
+                <strong>{{field.label}}{% if field.field.required %}</strong><span class="fred">*</span>{% endif %} :
+                
+            </td>
+            <td>
+               {{field}}
+                {%if field.label == 'Email ID'%}<span class="fdgray f11">We will correspond with you on this email id</span>{%endif%}
+                {%if field.label == 'Contact No'%}<span class="fdgray f11">This will help us contact you if required</span>{%endif%}
+                {%if field.label == 'Your Comments'%}<span class="fdgray f11">Not more than 800 characters</span>{%endif%}
+
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td>  <input type="submit" class="btn_home_submit spone cp" value="Submit"/>
+        </td>
+    </tr>
+  </form>
+  </table>
+</div>
+{%endblock%}

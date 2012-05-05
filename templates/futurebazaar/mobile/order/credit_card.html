@@ -1,0 +1,60 @@
+
+ {% if card_form.errors %}
+<div>
+  <div class="error">
+    <ol>
+      {% for field in card_form %}
+      {% for error in field.errors %}
+      <li>{{error}}</li>
+      {% endfor %}
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+{% endif %}
+<h3 class="fb-form-hd">Credit Card</h3>
+<div class="fb-form">
+    <ul>
+        <li>
+            <div class="dlabel"><span>Card Type</span></div>
+            <div class="fbf-dcant pt10">
+				<div class="dib mr10 ccrb ccrb-act">
+				  <input type="radio" name="cardtype" checked="checked" value="visa-card" style="display: inline-block; width: 18px; min-height: 0px; background:transparent !important;">
+				  <img src="/media/images/visa.gif" height="16"  class="dib" />
+				</div>
+				<div class="dib ccrb">
+				  <input type="radio" name="cardtype" value="master-card" style="display: inline-block; width: 18px; min-height: 0px; background:transparent !important;">
+				  <img src="/media/images/master_card25.gif" height="16"  class="dib" />
+				</div>
+            </div>
+        </li>
+        {% include "order/card_form.html"%}
+    </ul>
+</div>
+{% include "order/payment_options/billing_info.html"%}
+ <script type="text/javascript">
+	$(document).ready(function() {
+		
+		$(".fancybox").fancybox({
+			'width'				: '80%',
+			'height'			: '100%',
+			'autoScale'			: 'false',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe'
+		});		
+	
+	});
+	</script>
+<script type="text/javascript">
+               // $('#cvv_info').click(function(){
+//                    $.get(this.href, function(data){
+//                        $('#shipping_dialog').html(data);
+//                        var dialog = $('#shipping_dialog').dialog({model:true,
+//                            title:'CVV Information',
+//                            width:500
+//                            });
+//                    });
+//                    return false;
+//                });
+             </script>

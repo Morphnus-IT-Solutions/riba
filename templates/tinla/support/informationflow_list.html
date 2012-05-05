@@ -1,0 +1,90 @@
+{% extends 'support/base.html' %}
+{% block content %}
+
+<style>
+dl {
+    margin: 0 0 1em !important;
+}
+dl dt {
+    font-weight: normal !important;
+}
+ul, ol {
+    padding-left: 0px !important;
+}
+label {
+    font-weight:normal !important;
+}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Information Flows</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Information Flows</h1>
+    </div>
+        <div class="right content_head">
+			<a id='add' role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Add Information Flow</span></a>
+		</div>
+	{% if not flow_list %}
+    <div class="clear bordergray"></div>
+    {% endif %}
+  </div>
+  <div class="main clear">
+    {% if flow_list %}
+	<table class="tbl_response">
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th>State</th>
+			<th>Substate</th>
+			<th>Acting Team</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for flow in flow_list %}
+		<tr>
+			<td class="w200"><a href="{{flow.id}}">{{flow.name|title}}</a></td>
+			<td>{{flow.state.name|title}}</td>
+			<td>{{flow.substate.name|title}}</td>
+			<td>{{flow.acting_team.name|title}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table><br />
+    {% else %}
+    <p>No information flows are present in the system</p>
+    {% endif %}
+  </div>
+</div>
+<div id='add_informationflow'></div>
+{% endblock %}
+
+{% block script_footer %}
+$('#add').click(function() {
+    var width = 280;
+    $.get('/informationflow/add/', function(data) {
+        $('#add_informationflow').html(data);
+        var dialog = $('#add_informationflow').dialog({modal:true, title:'Add Information Flow', 
+            width:width, resizable:false});
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#add_informationflow').html(data);
+        $('#addinformationflow').click(onSubmit);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#add_informationflow').html(xhr.responseText);
+        $('#addinformationflow').click(onSubmit);
+	};
+	var onSubmit = function() {
+        var data = $('#form').serialize();
+        $.ajax({ url:'/informationflow/add/',
+			data : data,
+			success : onSuccess,
+			error : onError,
+			type : 'POST'
+			});
+        return false; 
+	};
+    $('#addinformationflow').click(onSubmit);
+    });
+});
+{% endblock %}

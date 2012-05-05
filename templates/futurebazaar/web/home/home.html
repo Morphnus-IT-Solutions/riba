@@ -1,0 +1,212 @@
+{% extends "web/base.html" %}
+{%block page_tags%}Future Bazaar, Online Shopping, Shop Online, Buy Books, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Features, Purchase On Web, cheap product, Free Shipping, India{%endblock%}
+{%block content%}
+<div id="home">
+    <div class="deals marb20">
+        <div id="slides">
+            <div class="slides_container">
+{%comment%}
+            {% if deal %}
+                {% if is_friday_deals %}
+                    <a href={% cc_url request "freaking-friday-deals" %} title="Freaking Friday Deals" class="tdnone">
+                {%else%}
+                    <a href="{% cc_url request deal.get_url %}" title="Today's Deal" class="tdnone">
+                        <div class="steal_timer steal_timer_banner fblack">Offers closes in 
+                            <span>
+                                <span class="hr fb"></span> hrs : 
+                                <span class="min fb"></span> mins : 
+                                <span class="sec fb"></span> secs
+                            </span>
+                        </div>
+                    {%endif%}
+                    {% if hero_deal.main_banner %}
+                        <img id="dod_home_banner"  width="980" height="300" />
+                    {% endif %}
+                    </a>
+            {% endif %}
+            <a href="http://campaigns.payback.in/pb/MAR-2012/Microsite/index.html" title="Payback 5x Offer" target="_blank"><img src="/media/images/payback-5x3.jpg" border="0"/></a>
+            <img src="/media/images/MBB-april-banner-02april.jpg" border="0" usemap="#Map2" />           
+           {% if promotion_offer %}
+                <a href={% if promotion_offer.template_type == 'dynamic' %}"{% cc_url request promotion_offer.url %}"{% else %}"#" style="cursor:default;"{% endif %}
+                title="{{promotion_offer.title}}">
+                    {% if promotion_offer.banner_main %}
+                        <img id="promotion_offer_home_banner" width="980" height="300" />
+                    {% endif %}
+                </a>
+           {% endif %}
+           {% if promotion %}
+                <a href={% if promotion.template_type == 'dynamic' %}"{% cc_url request "promotion/offers/" %}"{% else %}"#" style="cursor:default;"{% endif %} 
+                title="{{promotion.title}}">
+                    {% if promotion.banner_main %}
+                        <img id="promotion_home_banner" width="980" height="300" />
+                    {% endif %}
+                </a>
+            {% endif %}
+            {%endcomment%}
+            {%if banners%}
+                {%for ban in banners%}
+                    <a href="{{ban.redirect_to}}" title="{{ban.name}}">{% if ban.image %}<img src="{{ban.image.url}}" width="980"  height="300" alt="{{ban.name}}"/>{% endif %}</a>
+                {%endfor%}
+            {%endif%}
+            
+            <img src="/media/images/Fashion-banner_Monday_30March2012.jpg" border="0" usemap="#Map1" />
+        </div>
+        
+          <!-- MBB Banner -->
+       <map name="Map2" id="Map2">            
+            <area shape="rect" coords="4,5,683,296" href="supermarket/ch/2515/?q=&b=1437&b=1657&b=697&b=1524&b=1544&b=815&b=986&b=987&b=1411&b=1627&b=1386&b=1372&b=1431&b=703&b=1520&b=1420&b=1438&b=1516&b=712&b=814&b=47&b=1375&b=1546&b=1384&b=775&b=1383&b=1377&b=1412&b=1625&b=704&b=699&b=1066&b=1533&b=701&b=700&b=1432&b=1624&b=771&b=816&b=985&b=988&b=1433&b=702&b=976&b=1434&b=1160&b=1406&b=698&sort=reldesc&perpage=20" title="Monthly Bachat Bazaar" />
+            <area shape="rect" coords="684,5,976,295" href="search/?q=combos&b=1050&b=697&b=1524&b=986&b=1411&b=712&b=814&b=11&b=1384&b=699&b=1066&b=813&b=976&b=698&sort=discountdesc&perpage=20" title="Exciting Combos" />
+       </map>
+         <!-- / MBB Banner -->
+         
+          <map name="Map1" id="Map1">
+                <area shape="rect" coords="1,1,469,299" href="apparel/ch/2350/?q=&min=77&max=6283&b=1679&b=1678&b=1665&b=1680&sort=pricedesc&perpage=20&page=1" title="Men's" />
+                <area shape="rect" coords="470,0,978,297" href="apparel/ch/2350/?q=&min=77&max=6283&b=1636&b=1664&b=1654&b=1673&sort=reldesc&perpage=20&page=1" title="Women's" />
+          </map>
+        
+        </div> 
+
+    </div>
+     {%comment%}
+    <div class="home_midle mart30 gcontainer" style="margin-top:30px;">
+        {% if daily_deals_context %}
+        <!-- Today's Deals -->
+        <div class="home_header">
+            <h1>Today's Deals</h1>
+        </div>
+        <div>
+            <ul class="home_greed home_prod_greed">
+              {% render_deals request daily_deals_context %}
+            </ul>
+        </div>
+        <div class="clear"></div><!-- /Today's Deals -->
+        {% endif %}
+    
+        
+        {% if clearance_deals_context %}
+        <!-- Clearance -->
+        <div class="home_header">
+            <h1 class="left">Clearance</h1>
+            <div class="right padt10 padl20"><a href={% cc_url request "clearance/" %}>See More Clearance Deals &raquo;</a></div>
+            <div class="clear"></div> 
+        </div>
+        <div>
+            <ul class="home_greed home_prod_greed">
+              {% render_deals request clearance_deals_context %}
+            </ul>
+        </div>
+        <div class="clear"></div><!-- /Clearance -->
+        {% endif %}
+    
+        {% if top_sellers %}
+        <!-- Popular -->
+        <div class="home_header">
+            <h1 class="left">Popular</h1>
+            <div class="right padt10 padl20"><a href={% cc_url request "deals/popular/" %}>See More Popular Deals &raquo;</a></div>
+            <div class="clear"></div> 
+        </div>
+        <div>
+            <ul class="home_greed home_prod_greed">
+              {% render_deals request top_sellers %}
+            </ul>
+        </div>
+        <div class="clear"></div><!-- /Popular -->
+        {% endif %}
+    
+        {% if new_arrivals_context %}
+        <!-- New Arrivals -->
+        <div class="home_header">
+            <h1 class="left">New Arrivals</h1>
+            <div class="right padt10 padl20"><a href={% cc_url request "deals/new_arrivals/" %}>See More New Arrivals &raquo; </a></div>
+            <div class="clear"></div> 
+        </div>
+        <div>
+            <ul class="home_greed home_prod_greed">
+              {% render_deals request new_arrivals_context %}
+            </ul>
+        </div>
+        <div class="clear"></div><!-- /New Arrivals -->
+        {% endif %}
+       
+       {%comment%} 
+        <!-- facebook --->
+        {% if not logged_through_facebook and not request|is_cc %}
+            {% include "user/guest_recommendation.html" %}
+        {% endif %}
+        <div class="home_midle">
+       
+        {% if logged_through_facebook and users_recommendations %}
+            <div class="prod_rec_wrapper">
+                <div class="marb10 prod_rec_header">
+                    <div class='marb10'>
+                        <img src="https://graph.facebook.com/{% get_facebook_profile_id request%}/picture" class="left" width="45" height="45">
+                        <div class="left f18 marl10 padt5">
+                            <span class="fb"> Hi {% get_username request %},</span>
+                            {% if users_recommendations %}
+                                Recommendations for you.    <br /> 
+                                <div class="f12 fdgray padt2">Here are few products we thought you would like.</div>
+                            {% endif %} 
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <ul class="home_greed home_prod_greed prod_rec">
+                        {% render_deals request users_recommendations %}
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        {% endif %}<!-- /facebook --->
+        {%endcomment%}
+        
+        <!-- Our Partners -->
+        <div class="our_partners">
+            <div class="our_partners_header">Our Partners</div>
+            <div class="our_partner left marr10">
+             <!-- <a href="/info/payback-guide.html"><img src="media/images/payback-5xpoints.jpg"/></a>-->
+                <div class="our_partner_inner f15 partner_payback">
+                Shop on <span class="fb">FUTURE BAZAAR</span><br />
+                and earn <span class="fb">5 times</span> Payback<br /> Points</br/>
+                <a href="/info/payback-guide.html" class="f12">Know more &rsaquo;</a>
+                </div>
+            </div>
+            <div class="our_partner left marr10">
+                <div class="our_partner_inner f15 partner_visa">
+                    Upto <span class="fb">55%</span> off exclusively<br />
+                    for VISA Card Holders <br />
+                    <a href="http://visa.futurebazaar.com" class="f12">Know more &rsaquo;</a>
+                </div>
+            </div>
+            
+            <div class="our_partner left">
+                <div class="our_partner_inner f15 partner_credit_card">
+                        <span class="fb">Shop Now. Pay Later.</span> <br/>        
+                        Your Credit Card lets you<br/>
+                        avail 3 EMIs at <span class="fb">Zero Cost</span><br/>
+                        <a href="/info/emi.html" class="popup f12">Know more &rsaquo;</a> 
+             
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div><!-- /Our Partners -->
+    </div>
+</div>
+{%endblock%} 
+
+{%block script_footer%}
+{{block.super}}
+<script src="/media/js/slides.min.jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $(function(){
+        $('#slides').slides({
+            //preload: true,
+            preloadImage: '/media/images/loading-img.gif',
+            play: 10000,
+            pause: 5000,
+            hoverPause: true
+        });
+	});
+});
+</script>
+{%endblock%} 

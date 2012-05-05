@@ -1,0 +1,44 @@
+{% extends "rms/base.html" %}
+{% load rms_tags %}
+{% block content %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Backlogs</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+          <h1>Agent Backlogs</h1>
+    </div>
+  </div>
+  <div class="main clear">
+    <div class="clear"></div>
+    <table class='tbl_response marb10 tablesorter f11' id="agent_backlog" style="width:500px">
+        <thead>
+            <tr>
+                <th class="w150 header">Agent Name</th>
+                <th class="w150 header">Login ID</th>
+                <th class="w150 header">Pending Followups</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agent in agents %}
+            <tr>
+                <td>{{agent.name|title}}</td>
+                <td>{{agent.user}}</td>
+                <td class="ca">{% pending_followups request agent %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>    
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+$(document).ready(function() { 
+        $("#agent_backlog").tablesorter({
+        }); 
+}	
+);
+
+
+
+{% endblock %}

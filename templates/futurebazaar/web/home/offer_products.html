@@ -1,0 +1,17 @@
+{%load cc_tags%}
+{%load web_tags%}
+  {% for item in offer_items %}
+  <li style="overflow:hidden; width:156px">
+   <h3><a href="{% cc_url request item.sku.product.url %}">{{item.sku.product.title|truncate:30}}</a> </h3>
+   <div><a href="{%cc_url request item.sku.product.url%}"><img src="{{item.sku.product.productimage_set.all.0.get_thumbnail_url}}" width="102" height="102" title="{{item.sku.product.title}}" alt="{{item.sku.product.title}}" /></a></div>    
+    <p class="mrp">{% get_price_info request item.sku 'list_price_label' %} <span class="fs"><span class="WebRupee">Rs.</span>  {% get_price_info request item.sku 'list_price' %}</span></p>
+    <p class="op"><strong>Crazy Price: <span class="WebRupee">Rs.</span> {% get_price_info request item.sku 'offer_price' %}</strong></p>
+      <a href="{% cc_url request item.sku.product.url %}" class="tdnone">
+      {%if request|isAnySaving:item.sku %}
+          <div class="sptwo save fblack">Save<br />
+            <span class="WebRupee">Rs.</span> {% getSavings request item.sku %}
+          </div>
+      {%endif%}
+      </a>
+  </li>
+  {%endfor%}

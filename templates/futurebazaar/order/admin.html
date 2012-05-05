@@ -1,0 +1,78 @@
+{% extends 'web/base.html' %}
+{% load cc_tags %}
+{% block content %}
+<style>
+.checkout_table td {
+    border-bottom:none !important;
+    font-weight: normal;
+    padding: 7px 5px;
+}
+</style>
+<div>
+<div class="breadcrumb">
+  	&nbsp;  
+  	</div>
+   <div class="cart_left">      
+   <div id="checkout_tabs">
+    <ul>        
+        <li class="selected"><div class="step_no">1</div><div class="step1">{% ifequal action '/orders/cancel/' %}Specify order id to cancel {%else%}Confirm the Order ID{%endifequal%}</div> </li>   
+    </ul>
+  
+</div>
+    <div class="clear"></div>
+    <form method="POST" action="{{action}}" name="myform">
+    <table cellpadding="0" cellspacing="0" class="checkout_table">
+           <tr>
+           <td colspan="2">
+                <div class="error hidden" id="error"></div>
+        		 {% if error %}
+                  <div class="error">{{error}}</div>
+                  {% else %}
+
+                  {% endif %}
+           </td>
+           </tr>
+            <tr>
+                <td class="label" width="200">Enter Order ID</td>
+                <td>
+                    <input type="text" id="order_id" name="order_id" />
+                </td>
+            </tr>            
+            <tr>
+                <td></td>
+                <td colspan="2" >
+                      <input id="proceed" class="btn btn_proceed" type="submit" src="/media/images/pixel.gif" alt="Proceed" value="">
+                </td>
+            </tr>
+			<tr>
+				<td colspan="3" style="border-bottom: 1px solid #A7E8F6;"></td>
+			</tr>
+    </table>
+    </form>
+    </div>
+     <div class="cart_right">
+        {% include "order/right.html" %}
+    </div>
+    <div class="clear"></div>
+</div>
+{% endblock %}
+{% block script_footer%}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    document.myform.order_id.focus();
+    $('#proceed').click(function(){
+        var order_id = $('#order_id').val();
+        if(! order_id || order_id == null || order_id == ''){
+            $('#error').removeClass('hidden');
+            $('#error').html('Please enter order ID.');
+            return false;
+        }
+        else{
+            $('#error').addClass('hidden');
+        }
+    });
+});
+</script>
+{% endblock %}
+

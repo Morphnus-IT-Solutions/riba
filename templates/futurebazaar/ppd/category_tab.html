@@ -1,0 +1,34 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+	{%comment%} <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+	<div class="content_head">
+		<div class="header rc5">
+		  <h1>{{request.client.client.name|title}} - Category Dashboard</h1>
+		</div>
+		<div class="clear bordergray"></div>
+	</div>
+	<div class="inner-content">
+		<ul>
+			{%if "Category-Deals" in request|tabs%}
+				<li class="f12"><a href="/{{client_name}}/{{seller_name}}/category/deals/"><span class="left">Deals</span></a><div class="clear"></div></li>
+			{%endif%}
+			{%if "Category-Product Planner" in request|tabs%}
+				<li class="f12"><a href="/{{client_name}}/{{seller_name}}/category/product_planner/"><span class="left">Product Planner</span></a><div class="clear"></div></li>
+			{%endif%}
+			{%if "Category-Products" in request|tabs%}
+				<li class="f12"><a href="/category/products/"><span class="left">Products</span></a><div class="clear"></div></li>
+			{%endif%}
+			{%if "Category-Product Reviews" in request|tabs and request.session.seller|length == 1%}
+				<li class="f12"><a href="/category/product_reviews/new/"><span class="left">Product Reviews</span></a><div class="clear"></div></a></li>
+			{%endif%}
+			{%if "Category-Inventory" in request|tabs or "Category-Pricing" in request|tabs or "Category-Velocity" in request|tabs%}
+				<li class="f12"><a href="/category/category_management/"><span class="left">Category Managment</span></a><div class="clear"></div></li>
+			{%endif%}
+		</ul>
+	</div>
+</div>
+{%endblock%} 

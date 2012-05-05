@@ -1,0 +1,46 @@
+{% extends "ppd/user_home.html" %}
+{% block user_content %}
+{% load pagination_tags %}
+{% load ppd_tags %}
+{% load web_tags %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />
+<style>
+.tr_hide{display:none}
+.tbl_price{border-collapse:collapse;}
+.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+.tbl_price th{background-color:#f3f3f3; text-align:center;}
+.tbl_price td{text-align:center;}
+</style>
+
+  <div style="padding:0px; margin-top:10px;">
+<form method="POST" action="" id="all_inventory" name="all_inventory">
+
+	<table class="tbl_price">
+		<tr>
+			<th>Product Name</th>
+			<th>Article Id</th>
+			<th>Stock </th>
+            <th> Delivery Time </th>
+            <th> Ship local only </th>
+			<th>COD</th>
+            <th> Clearance </th>
+			<th>Edit</th>
+		</tr>
+		{% for item in all_inventory %}
+		<tr>
+			<td class="la">{{ item.rate_chart.product.title }}</td>
+			<td>{{ item.rate_chart.article_id }}</td>
+			<td>{{ item.stock }}</td>
+			<td>{{ item.rate_chart.shipping_duration }}</td>
+			<td>{{ item.rate_chart.ship_local_only }}</td>
+			<td>{{ item.rate_chart.is_cod_available }}</td>
+            <td>&nbsp;</td>
+            <td><a href="{{request.client.name}}/inventory/{{client_name}}/{{seller_name}}?articleid={{item.rate_chart.article_id}}" class="button orange"> Edit </a></td>
+		</tr>
+		{% endfor %}
+	</table>
+            <input type="hidden" name="flag" value="search" />
+</form>
+</div>
+<div class="clear"></div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{%load cc_tags%}
+{% block user_content %}
+<div class="padb10">
+    <span class="fb f18">{{client_display_name}} - Payouts</span>
+</div>
+<form method="post" action="">
+{% if payout_home_form.errors %}
+       <div class="row">       
+          <div>
+                <div class="error">
+                    <ol>
+                    {% for field in payout_home_form %}
+                    {% for error in field.errors %}
+                        <li>{{error}}</li>
+                    {% endfor %}
+                    {% endfor %}
+                    </ol>
+                </div>
+        </div>            
+     </div>  
+{% endif %}
+<div class="inner-content">   <!--<span style="margin-right:10px;"><label for="id_month">Seller:</label> {{payout_home_form.seller}} </span>-->
+
+                        
+     <span style="margin-right:10px;"><label class="f11 fgray fn" for="id_year">Year:</label> {{payout_home_form.year}} </span>
+      <span style="margin-right:10px;"><label class="f11 fgray fn" for="id_month">Month:</label> {{payout_home_form.month}} </span>
+                         
+     <input type="Submit"  title="Calculate" class="grayButton" value="Calculate"/>  
+</div>
+</form>   
+{%if seller_payout%}
+    {%include "ppd/payouts_details.html"%}
+{%else%}
+    <p class="padt10 left">Payout details cannot be calculated for this seller. Please contact us to get this page working.</p>
+{%endif%}
+{%endblock%}

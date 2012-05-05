@@ -1,0 +1,76 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load web_tags %}
+<div id="signin">
+	<header class="header">
+		<h1 class="header-title">Sign in</h1>
+	</header><!-- /header -->
+	<section class="content">
+            <div class="sign-in">
+                <form method="post" action="" id="order_signin" name="myform">
+                    {% if error %}
+                        <div id="trsignin_error" class="mart10 marb10 error marb5 pad5 w254"> <span id="errors">{{error}}</span> </div>
+                    {% endif %}
+                    <div class="mtb15">
+                    <input class="in-sign-top" type="text" placeholder="Email or Mobile" value="{{username}}" name="username" id="mobileLabel" autocomplete="false" />
+                    <input type="hidden" name="action" id="radioNewCustomer" value="sign-in"/>
+					<input type="hidden" name="have_account" value="True" />
+                    <input class="in-sign-bot" type="password" id="userPassword" name="password" placeholder="Password" />
+                    </div>
+                    <input type="submit" value="Sign In Now" class="btn w100" id="defaultActionButton" title="Sign in now"/>
+                </form>    
+                <div><a id="sign-up" class="btn btn-gr mt15 db">Sign Up Now</a></div>
+            </div>
+        </section><!-- /content -->
+</div><!-- /signib -->
+<div id="signup" style="display:none;">
+    <header class="header">
+        <h1 class="header-title">Sign up</h1>
+    </header><!-- /header -->
+    <section class="content">
+            <h1 class="tac mt0"><img src="{% media_url request "mobile/images/Futurebazaar-logo-250.png" %}" width="250" height="34" alt="Future Bazaar" /></h1>
+            <div class="sign-in">
+              <form method="post" action="/orders/signup" id="form_signin" name="form_signin">
+                <input type="hidden" name="next" value="/orders/shipping"/>
+                {% if signup_error %}
+                <div id="tr_error" class="mart10 marb10 error marb5 pad5 w254"> <span id="errors">{{signup_error}}</span> </div>
+                {% endif %}
+                <div class="mtb15">
+                <input class="in-sign-top" id="username" name="username" type="text" placeholder="Email or Mobile" />
+                <input class="in-sign-cen" type="password" id="password" name="password" placeholder="Password" />
+                <input class="in-sign-bot" type="password" id="cpassword" name="cpassword" placeholder="Confirm Password" />
+                </div>
+                <input type="submit" value="Sign Up Now" class="btn w100" id="login" title="Sign up now"/>
+              </form>
+		      <div >
+			  <a  id="sign-in" class="btn btn-gr mt15 db">Sign In Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#sign-up').click(function(){
+    $('#signin').hide();
+    $('#signup').show();
+    });
+$('#sign-in').click(function(){
+    $('#signin').show();
+    $('#signup').hide();
+    });
+
+$(document).ready(function(){
+    str=(window.location.pathname);
+    if(str.match('signup'))
+    {
+        $('#signin').hide();
+        $('#signup').show();
+    }
+    else
+    {
+        $('#signin').show();
+        $('#signup').hide();
+    }
+
+});
+</script>
+{% endblock %}

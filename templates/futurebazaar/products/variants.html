@@ -1,0 +1,23 @@
+{%load web_tags%}
+{%load cc_tags%}
+{%if variants%}
+     <td class="price_lable padt10">Size: <span class="f12 fn"> {% variant_features product %}</span></td>
+     <td class="price_value padt10">
+        <ul class="size_box">
+            {%for variant in variants%}
+                {%ifequal product.id variant.variant.id %}
+                    <li class="sel">{% variant_features variant.variant %}</li>
+                {%else%}
+                    <li>
+                        <a href="{% cc_url request variant.variant.url%}" class="product_variant_link" id="{{variant.variant.id}}">
+                            {% variant_features variant.variant %}
+                        </a>
+                    </li>
+                {%endifequal%}
+            {%endfor%}
+            {%if product.brand|is_sizechart%}
+                <li class="size_chart"><a href="/sizechart/red-tape.html" class="popup">Size Chart</a></li>
+            {%endif%}
+        </ul>
+    </td>
+{% endif %}

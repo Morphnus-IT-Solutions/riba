@@ -1,0 +1,7413 @@
+/*********fancy.css starts*************/
+div#fancy_overlay{position:absolute; top:0; left:0; z-index:200; width:100%; background-color:#333}
+
+div#fancy_loading{position:absolute; height:40px; width:40px; cursor:pointer; display:none; overflow:hidden; background:transparent; z-index:999}
+
+div#fancy_loading div{position:absolute; top:0; left:0; width:40px; height:480px; background:transparent url(../images/fancy_progress.png) no-repeat}
+
+div#fancy_close{position:absolute; top:-12px; right:-12px; height:30px!important; width:30px!important; background:transparent url(../images/fancy_closebox.png); cursor:pointer; z-index:999; display:none}
+
+div#fancy_content{position:absolute; top:0; left:0; width:100%; height:100%; padding:0; margin:0; z-index:99}
+div#fancy_content .landing-content{margin:-190px 0 0 -340px!important}
+#fancy_frame{position:relative; width:100%; height:100%; display:none}
+
+img#fancy_img{position:absolute; top:0; left:0; width:100%; height:100%; border:0; padding:0; margin:0; z-index:999}
+
+div#fancy_title{position:absolute; bottom:-35px; left:0; width:100%; z-index:100; display:none}
+
+div#fancy_title table{margin:0 auto}
+
+div#fancy_title div{color:#FFF; font:bold 12px Arial; padding-bottom:2px}
+
+td#fancy_title_left{height:32px; width:15px; background:transparent url(../images/fancy_title_left.png) repeat-x}
+
+td#fancy_title_main{height:32px; background:transparent url(../images/fancy_title_main.png) repeat-x}
+
+td#fancy_title_right{height:32px; width:15px; background:transparent url(../images/fancy_title_right.png) repeat-x}
+
+div#fancy_outer{position:absolute; top:0; left:0; z-index:777; padding:18px 18px 58px 18px; margin:0; overflow:hidden; background:transparent; display:none}
+
+div#fancy_inner{position:relative; width:100%; height:100%; border:1px solid #444; background:#FFF}
+
+a#fancy_left, a#fancy_right{position:absolute; bottom:10px; height:100%; width:35%; cursor:pointer; background-image:url(data:image/gif; base64,AAAA); z-index:100}
+
+a#fancy_left{left:0px}
+
+a#fancy_right{right:0px}
+
+a#fancy_left:hover{background:transparent url(../images/fancy_left.gif) no-repeat 0% 100%}
+
+a#fancy_right:hover{background:transparent url(../images/fancy_right.gif) no-repeat 100% 100%}
+
+#fancy_bigIframe, #fancy_freeIframe{position:absolute; top:0; left:0; width:100%; height:100%; z-index:10}
+
+div#fancy_bg{display:none}
+
+div.fancy_bg{position:absolute; display:block; z-index:70}
+
+div.fancy_bg_n{top:-18px; width:100%; height:18px; background:transparent url(../images/fancy_shadow_n.png) repeat-x}
+
+div.fancy_bg_ne{top:-18px; right:-13px; width:13px; height:18px; background:transparent url(../images/fancy_shadow_ne.png) no-repeat}
+
+div.fancy_bg_e{right:-13px; height:100%; width:13px; background:transparent url(../images/fancy_shadow_e.png) repeat-y}
+
+div.fancy_bg_se{bottom:-18px; right:-13px; width:13px; height:18px; background:transparent url(../images/fancy_shadow_se.png) no-repeat}
+
+div.fancy_bg_s{bottom:-18px; width:100%; height:18px; background:transparent url(../images/fancy_shadow_s.png) repeat-x}
+
+div.fancy_bg_sw{bottom:-18px; left:-13px; width:13px; height:18px; background:transparent url(../images/fancy_shadow_sw.png) no-repeat}
+
+div.fancy_bg_w{left:-13px; height:100%; width:13px; background:transparent url(../images/fancy_shadow_w.png) repeat-y}
+
+div.fancy_bg_nw{top:-18px; left:-13px; width:13px; height:18px; background:transparent url(../images/fancy_shadow_nw.png) no-repeat}
+
+/***********fancy.css ends*********/
+
+/************************* home.css starts************************/
+html, body {
+	border:0;
+	margin:0;
+	padding:0;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#container-outer {
+	background: #FFF none repeat scroll 0 0;
+	margin:0;
+	padding:0;
+}
+body {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:#FFF none repeat scroll 0 0;
+color:#000000;
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+line-height: 16px;
+}
+
+.clearfix:after {
+	clear:both;
+	content:".";
+	display:block;
+	height:0pt;
+	visibility:hidden;
+}
+.clearfix {
+}
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display:block;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin:0;
+	padding:0;
+	font-weight:bold;
+	padding-bottom: 15px
+}
+h1 {
+	padding:30px 0 25px 0;
+	letter-spacing:-1px;
+	font-size:2em;
+	font-weight:bold;
+}
+h2 {
+	padding:20px 0;
+	letter-spacing:-1px;
+	font-size:1.5em;
+	font-weight:bold;
+	display:block;
+}
+h3 {
+	font-size:1em;
+	font-weight:bold;
+}
+#content h3 {
+	color:#00529c!important;
+}
+#content h3.subhead {
+	padding:0;
+	margin:0 0 0 0!important;
+	color:#00529C;
+	clear:both;
+	
+}
+.ie7 #content h3.subhead {
+	display:block;
+	clear:both;
+	width:100%;
+	color:#00529C;
+}
+hr {
+	margin: 1em 0;
+	background:#ccc;
+	height:1px;
+	color:#ccc;
+	border:none;
+	clear:both;
+}
+/* Common Formatting */
+p {
+	margin:0;
+	padding:0 0 1.25em 0;
+}
+ul {
+	margin: 1em 0 1em 15px;
+	padding:0;
+	list-style-type: disc;
+}
+li {
+	display: list-item;
+}
+ol {
+	margin: 1em 0 1em 20px;
+	padding:0;
+	list-style-type: decimal;
+}
+ul ul {
+	margin: 0 0 0 15px;
+	list-style-type: circle;
+}
+ul ul ul {
+	margin: 0 0 0 30px;
+	list-style-type: square;
+}
+dl {
+	margin: 0em 0;
+}
+dd {
+	margin-left: 15px;
+}
+address {
+	margin: 1em 0;
+	font-style: italic;
+}
+blockquote {
+	margin:1.25em;
+	padding:1.25em 1.25em 0 1.25em;
+}
+small {
+	font-size:11px;
+}
+img {
+	border:0;
+}
+sup {
+	position:relative;
+	bottom:0.3em;
+	vertical-align:baseline;
+}
+sub {
+	position:relative;
+	bottom:-0.2em;
+	vertical-align:baseline;
+}
+acronym, abbr {
+	cursor:help;
+	letter-spacing:1px;
+	border-bottom:1px dashed;
+}
+a, a:link {
+	text-decoration:underline;
+	outline:none;
+	color:#00529c;
+}
+/* Forms */
+form {
+	margin:0;
+	padding:0;
+	display:inline;
+}
+input, select, textarea {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	z-index:99;
+}
+textarea {
+	width:100%;
+	line-height:1.25;
+}
+label {
+	cursor:pointer;
+}
+/* Tables */
+table {
+	border-collapse:collapse;
+	border:0;
+	margin:5px 0 0px 0;
+	padding:0;
+	margin:5px 0 0 1px;
+	border:none;
+	width:100%;
+	clear:both;
+}
+table tr th {
+	padding:15px 5px 15px 5px;
+	color:#666;
+	background:#eff7fe;
+	font-size:12px;
+}
+table tr th.nobg {
+	background:none;
+	border:none;
+}
+table td.noborder {
+	border:none!important;
+	padding:0 0 5px 0!important
+}
+table tr td {
+	padding:10px 0 10px 0;
+	border-bottom:1px solid #b8e4fd;
+	font-size:12px;
+}
+table tr td.spec {
+	border-top:solid 1px #C08B4E;
+	background:#AD5E27;
+}
+table tr td p {
+	padding:0;
+}
+table tr.noborder td {
+	border:none
+}
+/* Global Classes */
+.clear {
+	clear:both;
+}
+.f-left {
+	float:left;
+}
+.f-right {
+	float:right;
+}
+.text-left {
+	text-align:left;
+}
+.text-right {
+	text-align:right;
+}
+.text-center {
+	text-align:center;
+}
+.text-justify {
+	text-align:justify;
+}
+.bold {
+	font-weight:bold;
+}
+.italic {
+	font-style:italic;
+}
+.underline {
+	border-bottom:1px solid;
+}
+.highlight {
+	background:#ffc;
+}
+
+.img-left {
+	float:left;
+	margin:4px 10px 4px 0;
+}
+.img-right {
+	float:right;
+	margin:4px 0 4px 10px;
+}
+.nopadding {
+	padding:0!important;
+}
+.noindent {
+	margin-left:0;
+	padding-left:0;
+}
+.nobullet {
+	list-style:none;
+	list-style-image:none;
+}
+.noborder {
+	border:none!important;
+}
+.hide {
+	display:none!important;
+}
+.nomargin {
+	margin:0!important;
+}
+/* @Group Container Style */
+#container {
+	
+	overflow:hidden;
+	margin:0 auto!important;
+	position:relative;
+	z-index:100;
+}
+/*#header {
+	width:985px;
+	float:left;
+	position:relative;
+	background:#ffffff;
+	height:138px;
+}*/
+#header {background:#fff;height:194px;width:100%;}
+.full-list {
+	position:absolute;
+	left:-500px;
+	}
+div.ul-o {
+		display: none
+		}
+
+#logo {
+background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/fb-logo1.png) no-repeat 0 3px;
+display:inline;
+float:left;
+height:90px;
+left:15px;
+margin:0;
+padding:0;
+position:absolute;
+text-indent:-999em;
+top:8px;
+width:142px;
+z-index:999;
+
+}
+.logo_https {
+background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/fb-logo1.png) no-repeat 0 3px;
+display:inline;
+float:left;
+height:90px;
+left:15px;
+margin:0;
+padding:0;
+position:absolute;
+text-indent:-999em;
+top:8px;
+width:142px;
+z-index:999;
+}
+#logo a {
+	display:block;
+	height:90px;
+}
+#support {
+	background:url(/images/bg-pink-strip.gif) no-repeat 0 0;
+	width:980px;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:10;
+	height:25px;
+	overflow:hidden;
+}
+#support small {
+	color:#d7cdd5;
+	font-size:11px;
+	float:left;
+	padding:5px 0 0 0;
+}
+#support ul {
+	padding:3px 90px 0 0;
+	margin:0;
+	float:right;
+}
+#support ul li {
+	float:left;
+	list-style:none;
+	background:url(/images/icon-common.gif) no-repeat -15px 0;
+	padding:0 0px 0 20px;
+	color:#f1ddf4;
+	font-weight:bold;
+	font-size:10px;
+}
+#support ul li.first {
+	background:none;
+}
+#help {
+	color:#000000;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	padding-top:3px;
+	position:absolute;
+	right:20px;
+	top:0;
+	z-index:100;
+}
+#help a {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+	text-decoration:none;
+	display:block;
+}
+#help a * {
+	float:left;
+}
+#help a span {
+	padding-top:2px;
+	display:block;
+}
+ul#nav-main {
+	position:absolute;
+	right:20px;
+	display:inline;
+	margin:0;
+	top:45px;
+}
+
+ul#nav-main li {
+	float:left;
+	list-style:none;
+	background:url(http://www.futurebazaar.com/images/theme/bg-nav-main-li.jpg) no-repeat left 4px;
+	padding:0 0 0 5px;
+	margin-left:5px;
+}
+ul#nav-main li.first {
+	background:none
+}
+ul#nav-main li a {
+	color:#7a4184;
+	text-decoration:none;
+	font-size:10px;
+	font-weight:bold;
+	text-transform:uppercase;
+}
+.contact-header {
+color:#686768;
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:10px;
+padding:5px 15px 0 0;
+position:absolute;
+right:6px;
+top:64px;
+width:390px;
+}
+/* @ Group Top Navigation */
+ul#nav-top {
+font-size:93%;
+height:34px;
+left:15px;
+line-height:normal;
+margin:0;
+padding:0;
+position:absolute;
+text-align:right;
+top:74px;
+z-index:10;
+}
+#nav-top a img {
+	display:inline;
+	position:relative
+}
+#nav-top a span {
+	padding:0!important;
+}
+.mac.ff3 ul#nav-top, .mac.ff2 ul#nav-top {
+	top:68px;
+}
+#nav-top li {
+	display:inline;
+	margin:0;
+	padding:0;
+	float:left;
+}
+.tabs li {
+	display:inline;
+	margin:0 0 0 3px;
+	padding:0;
+	float:left;
+}
+#nav-top a {
+	float:left;
+	margin:0;
+	padding:0;
+	text-decoration:none!important;
+	font-weight:bold;
+	font-size:12px;
+	font-family:Verdana, Arial, Helvetica, sans-serif
+}
+.tabs li a {
+	float:left;
+	background:url(/images/bg-tab-left-new.gif) no-repeat left top;
+	margin:0;
+	padding:0 0 0 11px;
+	text-decoration:none!important;
+	font-weight:bold;
+	font-size:12px;
+	font-family:Verdana, Arial, Helvetica, sans-serif
+}
+.tabs li a {
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/bg-l-tab.gif) no-repeat left top;
+}
+#nav-top a span {
+	float:left;
+	display:block;
+	padding:7px 15px 5px 4px;
+	color:#00529C;
+}
+.tabs li a span {
+	float:left;
+	display:block;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/bg-r-tab.gif) no-repeat right top;
+	padding:7px 15px 5px 4px;
+	color:#00529C;
+}
+.ff3 #nav-top a span, .ie #nav-top a span {
+	padding:0!important;
+}
+.ff3 .tabs li a span, .ie .tabs li a span {
+	padding:7px 15px 6px 4px;
+}
+.tabs li a span {
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/bg-r-tab.gif) no-repeat right top;
+	padding:7px 15px 7px 4px;
+}
+.safari #nav-top a span {
+	padding:0 0 6px 0
+}
+.safari .tabs li a span {
+	padding:7px 15px 6px 4px
+}
+.ff2 #nav-top a span {
+	padding:0 0 6px 0
+}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#nav-top a span, .tabs a span {
+	float:none;
+}
+/* End IE5-Mac hack */
+#tabs a:hover span, .tabs a:hover span {
+	color:#fff;
+}
+#nav-top a:hover {
+	background-position:0% -27px;
+}
+.tabs a:hover {
+	background-position:0% -30px;
+}
+#nav-top a:hover span {
+	background-position:100% -27px;
+	color:#fff;
+}
+.tabs a:hover span {
+	background-position:100% -30px;
+	color:#fff;
+}
+#nav-top #current a {
+	background-position:0% -27px;
+}
+#nav-top #current a span {
+	background-position:100% -27px;
+}
+.tabs #current a {
+	background-position:0% -30px;
+	color:#fff;
+}
+.tabs #current a span {
+	background-position:100% -30px;
+	color:#fff;
+}
+/* @Group Search */
+#meta {
+	width:985px;
+	height:30px;
+	position:absolute;
+	top:80px;
+	left:10px;
+	color:#f9dcfc;
+}
+.welcome {
+color:#000000;
+float:left;
+font-size:11px;
+font-weight:normal;
+left:226px;
+position:absolute;
+top:40px;
+}
+#search {
+	float:right;
+	margin:0;
+	width:500px;
+	padding-top:10px;
+}
+.wid .body {
+	border:#D6D6D6 solid;
+	border-width:0 1px;
+}
+
+#body-container-grid {
+	background: none!important;
+}
+#search label {
+	float:left;
+	padding:6px 15px 0 0px;
+}
+#search select {
+	width:177px;
+	height:19px;
+	border:1px solid #CCCCCC;
+	float:left;
+	padding:2px 0 0 0;
+	margin:0 5px 0 0;
+	color:#666666;
+	background:#ffffff;
+	margin-top:1px;
+	font-size: 11px;
+}
+
+#search input.txt {
+	float:left;
+	border:1px solid #CCCCCC;
+	width:168px;
+	height:15px;
+	background:#ffffff;
+	padding:2px 0 1px 10px;
+	color:#666;
+	margin-top:1px;
+	font-size: 11px;
+}
+#search input.btn-search {
+	float:left;
+}
+#discount {
+	margin:38px 0 0 0;
+	position:absolute;
+	top:45px;
+	right:0;
+}
+#discount label {
+	float:left;
+	padding:6px 5px 0;
+}
+/* @Group Wrap Style */
+/*.full-width {
+	background:#fff!important;
+}*/
+/*#wrap {
+	width:985px;
+	float:left;
+	min-height:400px;
+	height:auto !important;
+	height:400px;
+	background:#fff url(../images/bg-wrap.gif) repeat-y scroll 0 0;
+}*/
+#wrap {
+	width:985px;
+	/*margin:0 12px;*/
+	min-height:400px;
+	height:auto !important;
+	height:400px;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	background:#fff repeat-y scroll 0 0;
+	margin: 0 auto!important;
+	xbackground:#fff url(/images/bg-wrap-bare.gif) repeat-y scroll 0 0;
+}
+.ie6 #wrap{
+	float:none!important;
+}
+* html #wrap {
+	height: 1%;
+}
+#wrap.home {
+	padding-left:10px;
+	width:975px;
+}
+
+.spotlight {
+	float:left;
+	margin-bottom:20px;
+}
+.full-filters {
+	width:980px!important;
+}
+.combobox, .combobox ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	z-index: 999;
+}
+.combobox {
+	z-index:999;
+	position: relative;
+	float:left;
+}
+.combobox li {
+	float: left;
+	margin: 0;
+	padding: 0!important;
+	background:none!important;
+	position: relative;
+	z-index: 999;
+}
+.combobox li a, .combobox li a:link, .combobox li a:active, .combobox li a:visited {
+	display: block;
+	padding: 0 0px 10px!important;
+}
+.combobox ul {
+	background:#FD790D url(/images/selectbox-curverd.gif) no-repeat 0 100%;
+	list-style: none;
+	margin: 0;
+	padding:0 0 10px 0!important;
+	width: 193px;
+	top: -999em;
+	left: -11px;
+	position: absolute;
+	z-index: 999;
+}
+.combobox li:hover ul, .combobox li.sfHover ul {
+	top: 25px;
+}
+.combobox ul li {
+	border: 0;
+	float: left;
+	clear:both;
+	background:none;
+	padding:0 10px!important;
+	margin:0!important;
+}
+.filter-search {
+	background:url(/images/bg-nav-sub.gif) repeat-x 0 0;
+	height:35px;
+	width:979px;
+	float:left;
+	overflow:hidden;
+}
+.filter-search .img-left {
+	margin:0;
+	padding:0 5px 0 10px
+}
+.filter-search p {
+	float:left;
+	font-size:11px;
+	padding:8px 15px 5px 0;
+	background:url(/images/icon-common.gif) no-repeat 111% -382px;
+}
+.filter-search p span {
+	color:#6E3874;
+	font-weight:bold;
+}
+.filter-search p a {
+	color:#333!important
+}
+.filter-search #search {
+	margin:6px 0 0 0;
+	width:490px;
+	display:inline;
+	float:right;
+}
+.filter-search #search span input {
+	width:172px;
+	font-size:11px;
+}
+#search label {
+	padding:2px 10px 0 0;
+	color:#505050;
+	font-weight:bold;
+	font-size:11px;
+}
+.slogan {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/fb-sep.gif) repeat-y scroll 0 0;
+height:55px;
+left:222px;
+padding:10px 0 0 5px;
+position:absolute;
+top:0;
+}
+
+/**************** active filters *********************
+#header .active-filters .combobox ul li a {
+	display:block;
+	padding:0!important;
+}
+#header .active-filters .combobox ul li li a {
+	color:#fff!important;
+}
+.combobox ul a {
+	padding-right: 20px;
+	width: 80px;
+	white-space: nowrap;
+}
+.combobox li a.all-category {
+	display:block;
+	float:left;
+	width:120px;
+	font-weight:bold;
+	background:url(/images/arrow-down.gif) no-repeat 87% 8px;
+	font-size:12px!important;
+	color:#fbfa9c!important;
+}
+#content .active-filters {
+	background:url(../images/bg-filter.gif) repeat-x 0 bottom;
+	width:779px;
+	float:left;
+	height:35px;
+	overflow:hidden
+}
+.active-filters h3 {
+	xbackground:url(../images/bg-filter-head.gif) no-repeat right bottom;
+	float:left;
+	padding:10px 30px 9px 10px
+}
+.active-filters ul {
+	list-style:none;
+	padding:8px 0 0 0;
+	margin:0;
+}
+.active-filters ul li {
+	list-style:none;
+	float:left;
+	xbackground:url(../images/pantaloon-icon-common.gif) no-repeat 0px -362px;
+	padding:0 8px 0 8px;
+}
+.active-filters ul li.first {
+	background:none
+}
+.active-filters ul li a {
+	font-weight:bold;
+	font-size:11px;
+}
+.active-filters small.f-right {
+	color:#333;
+	padding:10px 15px 0 0;
+}
+.active-filters ul li a:hover {
+	color:#666;
+}
+
+#header .active-filtersx {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/ezone/images/ez-menu-bg.gif) repeat-x scroll 0 0;
+display:inline;
+float:left;
+height:31px;
+margin:0 0;
+position:absolute;
+top:108px;
+width:985px;
+z-index:999;
+}
+#header .active-filters-https {
+background:transparent url(https://images.futurebazaar.com/catalog/fb_new/ezone/images/ez-menu-bg.gif) repeat-x scroll 0 0;
+display:inline;
+float:left;
+height:31px;
+margin:0 0;
+position:absolute;
+top:108px;
+width:985px;
+z-index:999;
+}
+#header .active-filters h3 {
+	color:black !important;
+	float:left;
+	font-size:12px;
+	margin:0 0 10px;
+	padding:0;
+	font-weight:bold;
+}
+#header .active-filters h3 a{
+	background:transparent url(/images/down-arrow-pantaloon.gif) no-repeat scroll 75px 18px !important;
+	display:block;
+	font-size:11px;
+	font-weight:bold;
+	height:15px !important;
+	margin-top:0 !important;
+	padding-top:0 !important;
+	width:auto !important;
+	color:#2173AF !important;
+	text-decoration:none !important;
+}
+#header .active-filters h3 span {
+	background:url(../images/bg-filter-right.gif) no-repeat right 4px;
+	padding:9px 20px 10px 0;
+}
+#header .active-filters ul {
+	list-style:none;
+	padding:5px 0 0 0;
+	margin:0 auto;
+	width:986px;
+}
+#header .active-filters ul li.home {
+	padding:4px 10px;
+}
+#header .active-filters ul li {
+	list-style:none;
+	float:left;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/ezone/images/ez-menu-sep.gif) no-repeat 0 -6px;
+	padding:2px 20px;
+	position:relative;
+	height:22px;
+}
+#header .active-filters ul li.first {
+	background:none
+}
+#header .active-filters ul li a {
+	font-weight:bold;
+	font-size:11px;
+	color:#FFFFFF;
+	text-decoration:none!important
+}
+#header .active-filters ul li a:hover, #header .active-filters ul li.current a {
+	color:#FFFFFF!important;
+}
+#header .active-filters ul ul {
+	position:absolute;
+	border:1px solid #bab9b9;
+	border-width:0 1px;
+	background:#fff;
+	z-index:1;
+	width:180px;
+	padding:0;
+	top:25px;
+	left:0;
+	display:none;
+}
+#header .active-filters ul .subCat{
+	position:absolute;
+	z-index:1;
+	width:720px;
+	padding:0;
+	top:24px;
+	left:0;
+	margin:1px 0 0 0;
+	background:#F3FFFB none repeat scroll 0 0;
+	border:1px solid #4B8B02;
+	float:left;
+	height:250px;
+	left:0;
+	top:38px;
+	width:540px;
+}
+#header .active-filters ul .subCat ul{
+	position: relative;
+	border:1px solid #bab9b9;
+	border-width:0 1px;
+	background:#fff;
+	z-index:1;
+	width:170px;
+	padding:0;
+	left:0;
+	margin:1px 0 0 0;
+	display:none;
+}
+.subSubCat ul{
+	left:0;
+	margin:1px 0 0;
+	padding:0;
+	position:relative;
+	z-index:1;background:#FFFFFF none repeat scroll 0 0;
+	display:block;
+	
+}
+#header .active-filters ul ul li {
+	width:180px;
+	height:auto;
+	padding:0;
+	xbackground:url(../images/bg-nav-level2.gif) no-repeat 0 100%;
+	z-index:999;
+}
+#header .active-filters ul ul li.first {
+	xbackground:url(../images/bg-nav-level2.gif) no-repeat 0 100%;
+}
+#header .active-filters ul ul li a, #header .active-filters ul li.current ul li a {
+	font:bold 10px Verdana, Arial, sans-serif;
+	text-transform:capitalize;
+	color:#000!important;
+	display:block;
+	padding:8px 10px;
+	width: 160px;
+}
+#header .active-filters ul ul li a:hover, #header .active-filters ul li.current ul li a:hover {
+	background:#e96325 ;
+	color:#fff!important;
+}
+#header .active-filters ul ul ul.sub {
+	position:absolute;
+	top:0px;
+	left:180px;
+	display:none;
+	z-index: 999;
+}
+#header .active-filters ul ul li a.sub-o {
+	background:url(../images/bg-sub-o.gif) no-repeat 165px 10px
+}
+#header .active-filters ul ul ul.sub li.first {
+	border-top:1px solid #999;
+}
+#header .active-filters ul ul ul li {
+	border:0;
+}
+#header .active-filters ul ul li a.sub-o:hover {
+	background:#e96325 !important;
+}
+
+
+
+//**************** active filters *********************/
+#header .active-filters .combobox ul li a {
+	display:block;
+	padding:0!important;
+}
+#header .active-filters .combobox ul li li a {
+	color:#fff!important;
+}
+.combobox ul a {
+	padding-right: 20px;
+	width: 80px;
+	white-space: nowrap;
+}
+.combobox li a.all-category {
+	display:block;
+	float:left;
+	width:120px;
+	font-weight:bold;
+	background:url(../images/arrow-down.gif) no-repeat 87% 8px;
+	font-size:12px!important;
+	color:#fbfa9c!important;
+}
+#content .active-filters {
+	background:url(../images/bg-filter.gif) repeat-x 0 bottom;
+	width:779px;
+	float:left;
+	height:35px;
+	overflow:hidden
+}
+.active-filters h3 {
+	background:url(../images/bg-filter-head.gif) no-repeat right bottom;
+	float:left;
+	padding:10px 30px 9px 10px
+}
+.active-filters ul {
+	list-style:none;
+	padding:8px 0 0 0;
+	margin:0;
+}
+.active-filters ul li {
+	list-style:none;
+	float:left;
+	xbackground:url(../images/pantaloon-icon-common.gif) no-repeat 0px -362px;
+	padding:0 8px 0 8px;
+}
+.xactive-filters ul li.first {
+	background:none
+}
+.active-filters ul li a {
+	font-weight:bold;
+	font-size:11px;
+}
+.active-filters small.f-right {
+	color:#333;
+	padding:10px 15px 0 0;
+}
+.active-filters ul li a:hover {
+	color:#666;
+}
+
+#header .active-filters {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/tabLeft-fb.gif) repeat-x scroll 0 0;
+display:inline;
+float:left;
+height:44px;
+position:absolute;
+top:160px;
+width:985px;
+z-index:99;
+}
+#header .active-filters-https {
+background:transparent url(https://images.futurebazaar.com/catalog/fb_new/ezone/images/ez-menu-bg.gif) repeat-x scroll 0 0;
+display:inline;
+float:left;
+height:44px;
+position:absolute;
+top:178px;
+width:985px;
+z-index:99;
+}
+#header .active-filters h3 {
+	background:url(../images/bg-filter-new.gif) no-repeat 0 5px;
+	float:left;
+	padding:9px 0px 9px 13px;
+	color:#fbfa9c;
+	font-size:12px;
+}
+#header .active-filters h3 span {
+	background:url(../images/bg-filter-right.gif) no-repeat right 4px;
+	padding:9px 20px 10px 0;
+}
+#header .active-filters ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+#header .active-filters ul li.home {
+	padding:4px 10px;
+}
+#header .active-filters ul li {
+	border-left: 1px solid #1c6db4;
+	border-right: 1px solid #0456a0;
+	list-style:none;
+	float:left;
+	xbackground:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/tabLeft-fb.gif) no-repeat 0 -6px;
+	padding:12px 20px;
+	position:relative;
+	height:20px;
+}
+#header .active-filters ul li.first {
+	border-left: 1px solid #0456a0;
+}
+#xheader .active-filters ul li.first {
+	background:none
+}
+#header .active-filters ul li a {
+	font-weight:bold;
+	font-size:13px;
+	color:#FFFFFF;
+	text-decoration:none!important
+}
+#header .active-filters ul li a:hover, #header .active-filters ul li.current a {
+	color:#FFFFFF!important;
+}
+#header .active-filters ul li.sub-left ul ul.sub { 
+	left:-182px; 
+}
+#header .active-filters ul ul {
+	position:absolute;
+	border:1px solid #bab9b9;
+	border-width:0 1px;
+	background:#fff;
+	z-index:9999;
+	width:180px;
+	padding:0;
+	top:39px;
+	left:0px;
+	display:none;
+}
+#header .active-filters ul ul li {
+	width:180px;
+	height:auto;
+	padding:0;
+	background:url(../images/bg-nav-level2.gif) no-repeat 0 100%;
+	z-index:999;
+}
+#header .active-filters ul ul li.first {
+	background:url(../images/bg-nav-level2.gif) no-repeat 0 100%;
+}
+#header .active-filters ul ul li a, #header .active-filters ul li.current ul li a {
+	font:bold 10px Verdana, Arial, sans-serif;
+	text-transform:capitalize;
+	color:#000!important;
+	display:block;
+	padding:8px 10px;
+	width: 160px;
+}
+#header .active-filters ul ul li a:hover, #header .active-filters ul li.current ul li a:hover {
+	xbackground:#e96325 ;
+	background:url("http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/fb-nav-bg.gif") repeat-x scroll 0 0 transparent;
+	color:#fff!important;
+}
+#header .active-filters ul ul ul.sub {
+	position:absolute;
+	top:0px;
+	left:180px;
+	display:none;
+	z-index: 999;
+}
+#header .active-filters ul ul li a.sub-o {
+	background:url(../images/bg-sub-o.gif) no-repeat 165px 10px
+}
+#header .active-filters ul ul ul.sub li.first {
+	border-top:1px solid #999;
+}
+#header .active-filters ul ul ul li {
+	border:0;
+}
+#header .active-filters ul ul li a.sub-o:hover {
+	xbackground:#e96325 !important;
+	background:url("http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/fb-nav-bg.gif") repeat-x scroll 0 0 transparent !important;
+}
+.customer-container {
+float:left;
+height:68px;
+left:105px;
+position:relative;
+top:7px;
+width:210px;
+}
+.buy-on-phone-con{padding-left:72px; font-family:arial;font-size:14px;}
+.telephone-img-content {
+color:#004F96;
+font-family:arial;
+font-size:20px;
+margin-top:9px;
+}
+.telephone-cust-no{float:left; font-family:arial; font-size:11px; color:#004f96; margin-top: -15px; float:right;}
+.bag-con{
+	background: url('http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/shopping-bag.jpg') no-repeat;width: 24px;height: 32px;float: left; 
+	}
+/************************** active filter end ***************************/
+
+.combobox {
+	position:relative;
+}
+.products {
+	float:left;
+	width:940px;
+	padding-bottom:30px;
+}
+.products h2 {
+	margin:0;
+	padding:0;
+}
+.products ul {
+	list-style:none;
+	float:left;
+	margin:0;
+	padding:20px 0 0 0;
+}
+.products ul li {
+	list-style:none;
+	float:left;
+	width:140px;
+}
+.products ul li.last {
+	width:100px;
+}
+.products ul li p span {
+	display:block;
+	color:#ff6600;
+}
+.products ul li .thumb {
+	height:80px;
+	overflow:hidden
+}
+.products ul li p {
+	padding:0;
+}
+.widget-region {
+	clear:both;
+}
+.widget {
+	float:left;
+	padding:0 18px 0 0;
+	width: 300px;
+	overflow: hidden;
+}
+/* @End */
+/* @Group Footer */
+#footer {
+background:none repeat scroll 0 0 #E5E5E5;
+border-color:#D8D8D8;
+border-style:solid;
+border-width:1px 0;
+display:inline;
+float:left;
+height:149px;
+width:985px;
+}
+#footer .f-left {
+border-right:1px solid #D8D8D8;
+height:119px;
+padding:15px 0 15px 10px;
+width:226px;
+}
+#footer .f-left a.thumb {
+float:left;
+width:27px;
+}
+#footer .f-left .details {
+float:left;
+width:197px;
+}
+.nav-footer {
+	width:985px;
+	background:#fff;
+	float:left;
+	display:inline;
+	padding:15px 0 15px 0;
+}
+.txt-footer {
+	background:#efefef;
+	font-size:9px;
+	font-family:Arial;
+	color:#7d7c90;
+	padding:15px;
+	width:955px;
+	float:left;
+	display:inline;
+	line-height:12px;
+}
+.copyright {
+	font-size:11px;
+	color:#dfb7e3;
+	width:985px;
+	float:left;
+	display:inline;
+	text-align:center;
+	padding:5px 0;
+}
+.nav-footer ul {
+	float:left;
+	border-right:#eaeaea 1px solid;
+	margin:0;
+	padding:5px 10px;
+}
+.nav-footer ul.category-links {
+	width:320px;
+}
+.nav-footer ul.category-links li {
+	float:left;
+	padding-right:10px;
+}
+.nav-footer li {
+	list-style:none;
+	font-size:11px;
+	width:150px;
+	color:#736f74;
+}
+.nav-footer li a {
+	text-decoration:none;
+	color:#736f74;
+}
+.nav-footer li a:hover {
+	color:#333;
+}
+.nav-footer .links {
+	padding-left:10px;
+	float:left;
+}
+.thawte {
+	float:right;
+	padding:10px 25px 0 0;
+}
+
+
+#footer h4 {
+	font-size:12px;
+	font-weight:bold;
+	color:#750591;
+	text-transform:uppercase;
+	margin:0;
+	padding:0;
+}
+#footer .f-left ul {
+	margin:0;
+	padding:5px 0 5px 0;
+	float:left;
+	clear:both
+}
+#footer .f-left ul li {
+color:#F45B00;
+font-size:11px;
+line-height:20px;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin-left:10px;
+padding:0 5px 0 0;
+list-style: square;
+}
+
+#footer .f-left ul li a {
+color:#666666;
+text-decoration:none;
+}
+#footer .f-left ul li a:hover{
+	color:#999;
+}
+#footer .f-left ul li.rss-icon {
+	padding: 0;
+	background: none;
+}
+#footer .f-left ul li.rss-icon a {
+	padding-top:3px;
+	display:block;
+}
+.customer-care {
+	width:240px;
+	border-left:solid 1px #D8D8D8;
+	padding:0 0 0 15px;
+	float:left
+}
+.customer-care h4 {
+	padding:0 0 5px 0px;
+	margin:0;
+	font-weight:bold;
+	text-transform:uppercase;
+	color:#666;
+}
+.customer-care p {
+	font-size:11px;
+	color:#666;
+	padding:0;
+	line-height:17px;
+}
+.search {
+	float:left;
+	width:205px;
+	padding:15px 0 0 20px;
+}
+.search label {
+	display:block;
+	padding-bottom:10px;
+}
+.search select {
+	width:195px;
+	margin-bottom:10px;
+	color:#666;
+	height:20px;
+}
+.search span {
+	background:url(../images/bg-input-search.gif) no-repeat 0 0px;
+	float:left
+}
+.search span input {
+	border:0;
+	width:150px;
+	height:18px;
+	background:none;
+	padding:4px 0 0 10px;
+	color:#666;
+	font-size:11px;
+}
+.search input.btn-search {
+	float:left;
+}
+#footer-main {
+	float:left;
+	padding-bottom:0;
+}
+#footer-main ul {
+	margin:0;
+	padding:0;
+	float:left;
+	list-style:none;
+	width:790px;
+}
+#footer-main ul li {
+	list-style:none;
+	display:inline
+}
+#footer-main ul li ul {
+	float:left;
+	margin:0;
+	min-height:15px;
+	height:auto!important;
+	height:15px;
+	width:583px;
+	padding-bottom:5px;
+}
+#footer-main ul li ul li {
+	background:url(/images/icon-common.gif) no-repeat 0 -363px;
+	padding:0px 8px 0 10px;
+}
+#footer-main ul li ul li a {
+	font-size:11px;
+	color:#6e656f;
+}
+#footer-main ul li ul li a:hover {
+	color:#661C84;
+}
+#footer-main ul li ul li.first {
+	background:none;
+	padding:0 8px 0 0;
+}
+#footer-main .title {
+	color:#661C84;
+	text-align:right;
+	float:left;
+	font-size:11px;
+	font-weight:bold;
+	width:177px;
+	padding-right:20px;
+	min-height:20px;
+	height:auto!important;
+	height:20px;
+}
+.sponser-logos {
+	float:left;
+	width:170px;
+}
+.sponser-logos ul {
+	width:170px!important;
+}
+.sponser-logos li {
+	float:left;
+	clear:both;
+	text-align:center;
+	padding-bottom:10px;
+	width:170px;
+}
+.sponser-logos li table tr td {
+	border:none;
+	padding:0;
+}
+.sponser-logos li a {
+	display:block;
+	text-align:center;
+}
+div.footer-text {
+	width:740px;
+	float:left;
+	padding:0 25px;
+	border-right:1px solid #E0E0E0;
+}
+div.footer-text h4 {
+	color:#661C69;
+	font-size:10px;
+	font-weight:bold;
+	padding:0;
+}
+div.footer-text p {
+	font-size:9px;
+	color:#969696;
+}
+/* @curved drop down */
+.new-filters {
+	background:url('http://images.futurebazaar.com/catalog/fb_new/fb-menu-bg.gif') repeat-x 0 0;
+	float:left; 
+	height:31px;
+	width:985px;
+	margin:0 0px;
+	display: inline;
+	position: absolute;
+	z-index: 999;
+	top:108px;
+}
+.new-filters-https {
+	background:url('https://images.futurebazaar.com/catalog/fb_new/fb-menu-bg.gif') repeat-x 0 0;
+	float:left; 
+	height:31px;
+	width:985px;
+	margin:0 0px;
+	display: inline;
+	position: absolute;
+	z-index: 999;
+	top:108px;
+}
+.new-filters ul {
+	margin:0;
+	padding:0;
+}
+.new-filters ul li {
+	list-style:none;
+	margin:0;
+	float:left;
+	background:url(http://www.futurebazaar.com/images/theme/bg-nav-main-ul-li.gif) no-repeat;
+	position:relative;
+}
+.new-filters ul li a {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#ffffff!important;
+	font-weight:bold;
+	font-size:10px;
+	text-decoration:none!important;
+	padding:7px 7px 7px 7px;
+	height:16px;
+	display:inline-block;
+	margin-left:2px;
+	float:left;
+}
+.new-filters ul li a:hover, .new-filters ul li.hov a {
+	background:#fd790d;
+	color: #fff!important;
+}
+.new-filters ul li ul {
+	position:absolute;
+	top:30px;
+	z-index:999;
+	left:2px;
+	background:url(../images/bg-new-filter-ul.png) no-repeat left bottom;
+	padding-bottom:3px;
+	display:none;
+}
+.new-filters ul li ul.sub {
+	background:url(/images/bg-new-filter-ul.png) no-repeat 1px bottom;
+}
+* html .new-filters ul li ul {
+	background:url(/images/bg-new-filter-ul-ie.gif) no-repeat left bottom;
+}
+* html .new-filters ul li ul.sub {
+	background:url(/images/bg-new-filter-ul-ie.gif) no-repeat 1px bottom;
+}
+.new-filters ul li ul li {
+	clear:left;
+	background:#fd790d url(/images/bg-new-filter-li.gif) repeat-x;
+	width:166px;
+	padding:0;
+}
+.new-filters ul li ul li a {
+	padding:1px 0px 4px 15px;
+	display:block;
+	margin:2px 0 0 0;
+	width:150px;
+	height:auto;
+	color: #fff !important;
+}
+.new-filters ul li ul li a.sub-o {
+	background:url(/images/bg-new-filter-arrow.gif) no-repeat 150px 8px;
+	padding:1px 18px 4px 15px;
+	width:132px;
+}
+.new-filters ul li ul li a.sub-o:hover {
+	background:#ff8c2f;
+}
+.new-filters ul li ul li a:hover {
+	background:#ff8c2f;
+}
+.new-filters ul li a:hover {
+	color:#fefd7e!important;
+}
+.new-filters ul li ul.sub {
+	left:166px;
+	top:0;
+}
+.new-filters ul li ul.sub li {
+	margin-left:1px;
+	display:inline;
+}
+.new-filters ul li.lastmenu ul.sub {
+	left:-168px;
+}
+.new-filters ul li.lastmenu ul.sub li {
+	margin-right:1px;
+}
+.new-filters ul li.lastmenu ul li a.sub-o:hover {
+	background:#ff8c2f;
+}
+
+/* end */
+.txt-footer .seo {
+	width:680px;
+	float:left;
+	text-align:justify;
+	padding-right:15px;
+}
+.feedback {
+border-right:1px solid #D8D8D8;
+float:left;
+height:119px;
+padding:15px 0 15px 5px;
+width:308px;
+}
+.wishform {
+height:23px;
+padding-top:6px;
+width:300px;
+}
+.wishform label, .wishform input {
+	float:left;
+}
+.wishform label {
+color:#666666;
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:11px;
+padding-top:1px;
+width:36px;
+}
+.wishform input.txt {
+color:#666666;
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:11px;
+margin:1px 5px 1px 0;
+width:190px;
+}
+.feedback p {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#666;
+	line-height:18px;
+	padding: 0;
+}
+.feedback p span {
+	color:#ababab;
+}
+.search input.txt-btm {
+background:#FFFFFF none repeat scroll 0 0;
+border-color:#A4A3A3;
+border-style:solid;
+border-width:1px 0 1px 1px;
+color:#666666;
+float:left;
+font-size:11px;
+height:15px;
+margin-top:1px;
+padding:2px 0 0 10px;
+width:150px;
+}
+.show-all {
+float:right;
+margin-top:-18px;
+padding-right:10px;
+}
+div.white {
+left:200px;
+position:absolute;
+margin-top:-65px;
+width:432px;
+z-index: 999;
+}
+div.white .message-box { 
+	padding:11px 10px; 
+	color:#2679cb; 
+	border:solid 1px #7fb0e0; 
+	background:#eef4fc; 
+	float:left ;
+	line-height:15px;
+	margin-bottom:11px;
+	display:inline;
+	position: relative;
+	margin: 15px; 
+	width:340px!important;
+}
+div.white p.ok    { background:url(/images/icon-common.gif) no-repeat 0 -75px; padding:0 0 0px 22px!important; font-size: 15px!important;} 
+.partners{
+	 font-size:11px;
+}
+
+.deal-alerts {
+border-right:1px solid #CCCCCC;
+float:left;
+height:134px;
+padding:15px 0 0 5px;
+position:relative;
+width:200px;
+}
+.dealalert-form{
+padding-top:6px;
+width:200px;
+}
+.dealalert-form .txt{
+border:1px solid #A4A3A3;
+color:#666666;
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:11px;
+margin:3px 5px 1px 0;
+width:130px;
+}
+.dealalert-form input,.dealalert-form label{float:left;}
+
+.deal-alerts label {
+	color:#666666;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	padding-top:1px;
+	width:195px;
+}
+
+div.whites {
+left:547px;
+position:absolute;
+margin-top: -56px;
+width:432px;
+z-index:999;
+}
+div.whites p.ok    { background:url(/images/icon-common.gif) no-repeat 0 -75px; padding:0 0 0px 22px!important; font-size: 15px!important;} 
+div.whites .dealmessage-box { 
+	padding:11px 10px; 
+	color:#2679cb; 
+	border:solid 1px #7fb0e0;
+	background:#eef4fc; 
+	float:left ;
+	line-height:15px;
+	margin-bottom:11px;
+	margin-left:10px;
+	display:inline;
+	margin:5px;
+	width:180px!important;
+}
+#scroll-container {
+background:#FFFFFF none repeat scroll 0 0;
+border-top:1px solid #CCCCCC;
+clear:both;
+float:left;
+height:51px;
+margin:0!important;
+overflow:hidden;
+position:relative;
+width:985px!important;
+}
+
+.scroll-store {
+background:#FFFFFF none repeat scroll 0 0;
+display:inline;
+float:left;
+overflow:hidden;
+margin:0!important;
+padding:10px 0;
+position:relative;
+width:985px;
+z-index:0;
+}
+.new-filters ul li ul.allcat{
+		left:-59px!important;
+}
+/************************* home.css ends************************/
+
+
+
+/* @Group Full width Style */
+.full-width {
+	padding:8px 2px 20px 18px!important;
+	width:967px!important;
+}
+/* @Group Content */
+.pay-option #content {
+	width:965px!important;
+}
+.full-width #content {
+	float:left;
+	padding:0 16px 0 0;
+	margin:0;
+	width:auto;
+}
+#content{
+	padding:0 20px;
+	width:738px;
+	overflow:hidden;
+	float:left
+}
+.ie #content hr{
+	padding:0;
+	margin:0;
+	overflow:hidden;
+	height:1%;
+}
+#content h1{
+	font-size:18px;
+	padding:16px 0 12px 0;
+	margin:0;
+	clear:both;
+	line-height:20px;
+	z-index: 1;
+	color:#00529c;
+}
+.backtocart{
+	position:relative;
+	float:right;
+	top:-9px;
+	font-size:12px;
+	}
+.ff2 .backtocart{
+	right:-11px;
+	}	
+.ie6 .backtocart{
+	left:700px;
+	}
+#content h1 small{
+	font-size: 16px!important;
+	font-weight: normal!important;
+	display:inline!important;
+}
+#content h1.heading{
+	padding:16px 0 2px 0;
+}
+#content h1.title{
+	border-top:solid 1px #dbdada;
+	padding:20px 20px;
+	margin:5px -20px 0 -20px; 
+}
+.full-width #breadcrumb{
+	color:#999;
+	float:left;
+	width:99%;
+	font-size:11px;
+	border:none;
+	padding:5px 0;
+}
+#breadcrumb {
+	width:755px;
+	float:left;
+	overflow:hidden;
+	font-size:11px;
+	padding:10px 0 10px 20px;
+	border-bottom:solid 1px #dbdada;
+}
+#breadcrumb a{
+	color:#999;
+	font-size:11px;
+}
+#breadcrumb span{
+	color:#00529c;
+}
+
+ul.masthead{
+	float:left;
+	margin:20px 0 0 0;
+	padding:0;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/shopping-flow-bg-tabs.gif) no-repeat 0 -150px;
+	width:946px;
+	height:35px;
+	display:inline;
+}
+ul.masthead li{
+	float:left;
+	width:auto;
+	height:35px;
+	list-style:none
+}
+ul.masthead li span{
+	text-indent:-999em;
+	width:auto;
+	height:35px;
+	display:block
+}
+ul.masthead li.step-1 span{
+	width:222px;
+}
+ul.masthead li.step-2 span{
+	width:246px;
+}
+ul.masthead li.step-3 span{
+	width:246px;
+}
+ul.masthead li.step-4 span{
+	width:230px;
+}
+ul.masthead li.step-1 span.active{
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/shopping-flow-bg-tabs.gif) no-repeat 0 1px;
+}
+ul.masthead li.step-2 span.active{
+	background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/shopping-flow-bg-tabs.gif) no-repeat scroll -222px -37px;
+	margin:0 0 0 0;
+	width:246px;
+}
+.ie ul.masthead li.step-2 span.active{
+	position:static;
+	z-index:10;
+}
+ul.masthead li.step-3 span.active{
+	background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/shopping-flow-bg-tabs.gif) no-repeat scroll -470px -74px;
+	margin:0 0 0 0;
+	position:relative;
+	width:246px;
+}
+ul.masthead li.step-4 span.active{
+	background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/shopping-flow-bg-tabs.gif) no-repeat scroll -715px -112px;
+	margin:0 0 0 0;
+	position:relative;
+	width:230px;
+}
+.message-box { 
+	padding: 10px 10px 11px; 
+	color:#000000; 
+	border:solid 1px #0cb000; 
+	background:#cff5cc; 
+	width:97.5%; 
+	float:left ;
+	line-height:15px;
+	margin-bottom:11px;
+	display:inline;
+}
+.ie .message-box {
+	width:920px;
+}
+.clean { } 
+.info  { background:url(../images/icon-common.gif) no-repeat 0 -155px; padding:0 0 5px 22px;} 
+.ok    { background:url(../images/icon-common.gif) no-repeat 0 -75px; padding:0 0 0px 22px;} 
+.alert { } 
+.assurance{
+	float:left;
+	padding-left:17px;
+}
+.wrap-message{
+	width:960px;
+	float:left
+}
+#checkout-content{
+	float:left;
+	width:696px;
+}
+#checkout-content .f-right{
+	padding:0;
+	position:relative;
+}
+.ie6 #checkout-content .f-right,.ie7 #checkout-content .f-right{
+	padding:0;
+	position:static;
+}
+#checkout-content .f-right span{
+	height:18px;
+}
+#checkout-content .btn-checkout{
+	float:right;
+	padding:15px 0;
+}
+#checkout-content .f-right input{
+	margin-left:15px;
+}
+.checkout-wrap{
+	float:left;
+	position:relative;
+	width:100%;
+}
+.lucky-prize{
+	float:left;
+	width:223px;
+	position:absolute;
+	right:0;
+	bottom:0;
+}
+#checkout-items{
+	float:left;
+}
+#checkout-items th{
+	color:#333;
+	padding:8px 0 8px 0px;
+	font-size:12px!important;
+}
+.id-info{
+	padding:0;
+	margin:0;
+}
+.id-info img, .id-info input{
+	vertical-align:middle;
+}
+small.currency{
+	color:#999;
+	font-size:10px;
+}
+#checkout-items .clear{
+	width:700px;
+	float:left
+}
+#checkout-items td a{
+	font-size:12px;
+	text-decoration:none!important;
+}
+#checkout-items td a:hover{
+	text-decoration:underline!important;
+}
+#checkout-items td span{
+	font-size:13px;
+	font-weight:bold;
+	color:#f37a21;
+}
+#checkout-items td p span{
+	font-size:12px;
+	font-weight:normal;
+	color:#333;
+}
+#checkout-items td span.align-middle{
+	vertical-align:top;
+	padding-top:10px;
+	float:left;
+	padding-bottom:5px;
+}
+h3.sub{
+	font-weight:bold!important;
+}
+#checkout-content .clear input{padding:20px 0 20px 20px;}
+input.txtqt{
+	width:15px;
+	height:16px;
+	border:solid 1px #B8E4FD;
+	text-align:center;
+	width:35px;
+	background:#EEF4FC;
+}
+table td.noborder p{font-size:12px; color:#666;}
+table td.noborder span{
+	color:#fd790d;
+	font-size:18px!important;
+	font-weight:bold;
+}
+#checkout-items td{font-size:11px;line-height:15px;}
+#checkout-items td cite{
+	text-decoration: line-through;
+	font-family:arial!important;
+	font-style:normal
+}
+#checkout-items td, #checkout-items th{ padding-right:15px}
+#checkout-items tr.noborder td{border:none;}
+#checkout-items tr.cart-update td{  
+	background:#eff7fe;
+	vertical-align:middle;
+	border:none;
+	padding:10px 15px 10px 0;
+}
+ .order-history tr.cart-update td{
+	background:#f1f1f1;
+	vertical-align:middle;
+	border:none;
+	padding:10px 0px 10px 0;
+ }
+ .orderspec-tab-wrap{
+	width: 899px; 
+	float: left; 
+	margin-bottom: 10px;
+}
+.order-history tr.ship-info td {
+	background:#F1F1F1;
+	padding:10px 15px 10px 15px;
+	border-bottom:1px solid #fff;	
+}
+.ship-info-separator{
+	border-right:1px solid #fff;
+}
+.order-history div.shipment-label{
+	padding: 5px 0 5px 5px;
+	background-repeat: no-repeat;
+	background: #E8E8E8 url(http://images.futurebazaar.com/catalog/fb_new/orderspec-shippment-tab.gif) no-repeat scroll 100px 0;
+	border-color: #FFF;
+	width: 200px;
+}
+#ordviewtab a{
+	text-decoration: none;
+}
+#checkout-items tr.cart-update td span{font-size:12px;}
+#checkout-items td p{font-size:12px;}
+#checkout-items td small{font-size:11px;}
+#checkout-items tr.cart-update td input{ 
+	float:left;
+	margin:0 0 0 15px;
+}
+#checkout-items tr.cart-update td small{
+	font-size:11px;
+	padding:5px 0 0 10px;
+	float:left
+}
+ul.product-list{
+	float:left;
+	padding:0;
+	margin:0;
+}
+ul.product-list li{
+	list-style:none;
+	width:238px;
+	padding-bottom:20px;
+	float:left
+}
+ul.product-list li a{color:#6e3874;}
+ul.product-list li small{display:block}
+ul.product-list li .thumb-img{
+	width:197px;
+	text-align:center;
+	padding:0 0 5px 0
+}
+ul.product-list li cite, div.featured-product ul li cite{
+	text-decoration:line-through;
+	font-family:arial!important;
+	font-style:normal;
+	padding:0 10px 0 0;
+	color:#333;
+	font-size:12px;
+	font-weight:normal
+}
+ul.product-list li p, div.featured-product ul li span{
+	color:#fd790d;
+	font-size:18px;
+	padding:5px 0 10px 0;
+	font-weight:bold
+}
+div.featured-product ul li span {
+	font-size:13px;
+	}
+div.featured-product ul li span, div.featured-product ul li p{padding:5px 0;}
+ul.product-list li.last{width:220px;}
+div.featured-product ul li .detail{
+	float:left;
+	width:163px;
+}
+#checkout-content h2{
+	clear:both;
+	padding:20px 0 15px 0!important;
+}
+.price-info{
+	border:solid 1px #7dafe0!important;
+	padding:5px;
+	width:285px!important;
+	margin-top:5px;
+	background:#FAFBFF;
+	font-size:10px;
+	line-height:13px;
+	color:#2679cb;
+	position: relative;
+}
+.price-info p{font-size:10px!important;}
+
+#sidebar-right, .side-right{
+	float:left;
+	padding:0 0 0 19px
+}
+#sidebar-right h3{
+	padding:20px 0;
+	margin:0;
+}
+#sidebar-right div.featured-product,  div.featured-product{
+	float:left;
+}
+#sidebar-right div.featured-product ul, div.featured-product ul{
+	float:left;
+	padding:0;
+	margin:0;
+}
+div.featured-product ul {
+	width:903px!important;
+	border: 1px solid #00529c;
+	height: 325px;
+}
+div.featured-product ul li a {
+	text-decoration:none;
+	}
+#sidebar-right ul ul.rating{width:90%;}
+#sidebar-right div.featured-product ul li .thumb-img, div.featured-product ul li .thumb-img{
+	padding:0 0 10px 0;
+	width:180px;
+	text-align:left
+}
+.checkout-items td h3{font-size:14px!important;}
+/* @Group Sidebar Left */
+
+#sidebar-left{
+	width:200px;
+	float:left;
+	background:url(../images/bg-sidebar-left.gif) no-repeat right 70px;
+}
+#sidebar-left .category, .category{
+	background:url(../images/bg-side-combo.gif) repeat-x 0 bottom;
+	padding:8px 0px 8px 10px;
+	float:left;
+	width:190px;
+}
+#sidebar-left .category select, .category select{width:189px;}
+#sidebar-left  h2{
+	background:#00529c url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/bg-h2-fb.gif) no-repeat 0 bottom;
+	padding:10px 0 18px 20px;
+	margin-bottom:-2px;
+	margin-left:-20px;
+	position:relative;
+	width:180px;
+	float:left;
+	display:inline;
+	z-index: 0;
+}
+.ie #sidebar-left h2{margin-left:-20px;position:static}
+.related-links{
+	float:left;
+	width:180px;
+	font-size:11px;
+	background:#f5f5f5 url(../images/bg-sidebar-left.gif) no-repeat right 0px;
+	min-height:489px;
+	height:auto!important;
+	height:489px;
+	padding-left:20px;
+	padding-bottom:18px;
+}
+.related-links h3{
+	padding:10px 0 3px 0;
+	float:left;
+	clear:both;
+	width:150px;
+}
+.related-links ul{
+	float:left;
+	padding:0 0 10px 5px;
+	margin:0;
+	list-style:none;
+	width:170px;
+	border-bottom:solid 1px #cdcccc;
+}
+.related-links ul li{padding:0 0 2px 0}
+.related-links ul li span{color:#666;}
+.related-links ul li a{
+	text-decoration:none!important;
+}
+.related-links ul li a:hover{
+	text-decoration:underline!important;
+}
+.ad{
+	float:left;
+	padding:10px 10px 0px 10px;
+	width:400px;
+	overflow:hidden;
+}
+.ad img {
+	padding:0 15px 0 0;
+	text-align:center;
+	vertical-align:top;
+}
+/* @End */
+ul.brand-listing{
+	clear:both;
+	float:left;
+	padding:0 0 15px 0;
+	margin:0 0 15px 0;
+	list-style:none;
+	border-bottom:solid 1px #dfdfdf;
+	width:739px;
+}
+ul.brand-listing li{
+	list-style:none;
+	float:left;
+	width:180px;
+	padding:0 10px 0 0
+}
+ul.brand-listing li span{
+	float:right;
+	padding:0px 15px 0 0;
+	margin-left:0px;
+}
+.full-table{
+	width:100%!important;
+}
+ul.brand-listing li.last{
+	padding:0;
+	width:169px;
+}
+ul.brand-listing li h3{padding:0 0 8px 0;}
+ul.brand-listing li h3 a{
+	text-decoration: none;
+}
+.new-brands{
+	float:left;
+	padding-bottom:15px;
+	margin-bottom:15px;
+	border-bottom:solid 1px #dfdfdf;
+}
+.new-brands ul{
+	float:left;
+	list-style:none;
+	margin:0;
+	padding:19px 0 0 0;
+	width:740px;
+} 
+.new-brands ul li{
+	margin:0;
+	padding:0;
+	list-style:none;
+	width:128px;
+	float:left
+}
+.new-brands ul li h4{
+	font-weight:bold;
+	font-size:12px;
+	padding-left:10px;
+	padding-bottom:5px;
+}
+.new-brands ul li h4 a{
+	color:#333!important;
+	text-decoration: none;
+}
+.new-brands ul li p{
+	padding:0 0 0 10px;
+	margin:0;
+	color:#ff6600;
+}
+.new-brands ul li div.thumb-img{
+	width:100px;
+	text-align:center;
+	vertical-align:middle;
+	height:100px;
+}
+.new-brands ul li.last{width:99px;}  
+.top-brands{
+	float:left;
+	padding:0 0 20px 0;
+}
+.top-brands ul{
+	margin:0 0 0px 0;
+	padding:0;
+	float:left;
+} 
+.top-brands ul li{
+	display:inline;
+	text-align:center;
+	width:120px;
+	float:left
+}
+.top-brands ul li.last{width:100px;}
+/* @Group Star Rating */
+.rating{
+	width:80px;
+	height:16px;
+	margin:7px 0 10px 0!important;
+	padding:0;
+	list-style:none;
+	clear:both;
+	float:left;
+	position:relative;
+	background: url(../images/star-matrix.gif) no-repeat 0 0;
+}
+/* add these classes to the ul to effect the change to the correct number of stars */
+.nostar {background-position:0 0}
+.onestar {background-position:0 -16px}
+.twostar {background-position:0 -32px}
+.threestar {background-position:0 -48px}
+.fourstar {background-position:0 -64px}
+.fivestar {background-position:0 -80px}
+ul.rating li {
+	cursor: pointer;
+	float:left;
+	text-indent:-999em;
+}
+ul.rating li a {
+	position:absolute;
+	left:0;
+	top:0;
+	width:16px;
+	height:16px;
+	text-decoration:none;
+	z-index: 200;
+}
+ul.rating li.one a {left:0}
+ul.rating li.two a {left:16px;}
+ul.rating li.three a {left:32px;}
+ul.rating li.four a {left:48px;}
+ul.rating li.five a {left:64px;}
+ul.rating li a:hover {
+	z-index:2;
+	width:80px;
+	height:16px;
+	overflow:hidden;
+	left:0;	
+	background: url(../images/star-matrix.gif) no-repeat 0 0
+}
+ul.rating li.one a:hover {background-position:0 -96px;}
+ul.rating li.two a:hover {background-position:0 -112px;}
+ul.rating li.three a:hover {background-position:0 -128px}
+ul.rating li.four a:hover {background-position:0 -144px}
+ul.rating li.five a:hover {background-position:0 -160px}
+/* end rating code */
+h3{margin:0 0 2px 0;font-size:110%}
+#content h2{
+	font-size:18px;
+	padding:0px 0 10px 0;
+	color:#00529C;
+	letter-spacing:0px;
+}
+.less-margin{margin-top:-15px!important;}
+#content h3.head{
+	float:left;
+	width:913px;
+	background:#eff7fe;
+	display:inline;
+	color:#333!important;
+	padding:8px 0 8px 25px!important;
+	margin-bottom:10px!important;
+	cursor:pointer;
+}
+h3.head img{vertical-align:middle}
+.wrap-inner{
+	width:936px;
+	float:left;
+	overflow:hidden;
+}
+.wrap-payment{
+	width:900px;
+	padding:20px 0 20px 0px;
+	float:left;
+}
+.wrap-payment{
+	width:96%;
+	padding:0 20px; margin:0 0 16px;
+}
+.ie6 .wrap-payment .submit{
+	width:140px;
+	height:25px!important;
+}
+.ie6 .wrap-payment table{margin:0 0 -30px 0px ;width:903px;display:inline;}
+.wrap-payment table{float:left; margin:0 20px 0 0px ;width:902px;position:relative;}
+.wrap-payment table td{border:none;padding:0 0 10px 0}
+h4.blue-txt{
+	padding:0 0 10px 0px!important;
+	margin:0 0 15px 0;
+	font-size:12px;
+	color:#333;
+	border-bottom:solid 1px #EBEBEB;
+}
+.more-left{padding-left:20px;}
+.credit-card{
+	padding:0 0 0px 20px;
+	display: block;
+}
+.less-padding{padding:5px 0 10px 20px;}
+.help-header {
+	padding-top:6px!important;
+	background: url("http://images.futurebazaar.com/catalog/fb_new/toll-free.jpg") no-repeat 0 0;
+	width: 226px;
+	height: 44px;
+}
+.border-shopping
+{
+	float:left;
+	width:936px;
+}
+.testimonials-outer {
+	float: left; position: relative; padding-left: 7px;
+}
+.testimonials-inner{
+	width: 211px; height: 165px; z-index: 999; background: url('http://images.futurebazaar.com/catalog/fb_new/happy-customer-bg.gif') no-repeat scroll 0pt 0px transparent;
+	position: absolute; top: -7px;	
+}
+
+.testimonials-txt{
+	margin: 0pt 15px; padding-top: 45px;font-family:verdana;font-size:10px;font-weight:bold;height:85px;
+}
+.testimonials-txt span{
+color: rgb(207, 0, 13);float:right;text-decoration:underline
+}                                                   
+.testimonials-txt-inner{
+	border-top: 1px dashed rgb(179, 172, 130); margin: 0pt 15px; text-align: right;font-family:verdana;font-size:10px;font-weight:bold;padding-top:3px;
+}
+.testimonials-txt-inner a{
+color: #000;text-decoration: none;
+}
+p.help{
+	border-top: solid 1px #ccc;
+	float:left;
+	clear:both;
+	width:940px;
+	padding:20px 0 20px 0
+}
+#content p.order-info{
+	margin:0;
+	padding:0 0 5px 0;
+}
+.wrap-payment h4{padding:20px 0 0 0; font-size:13px!important;}
+.wrap-inner div.featured-product, .full-width div.featured-product {
+	padding:15px 0 0px;
+}
+.wrap-inner div.featured-product{margin:5px 0 0px 0!important;display:inline}
+.full-width div.featured-product{margin:0 0 15px 0;	display:inline}
+.wrap-inner div.featured-product, .wrap-inner .featured-product ul, .full-width div.featured-product{
+	width:950px;
+	overflow:hidden;
+}
+.wrap-inner .featured-product ul li, .full-width div.featured-product ul li{width:310px;}
+.wrap-inner .featured-product ul li.last, .full-width div.featured-product ul li.last{width:280px;}
+.wrap-inner .featured-product ul li .thumb-img, .full-width div.featured-product ul li .thumb-img{float:left}
+.full-width div.featured-product ul li .thumb-img{text-align:center;width:117px;}
+.shipping-option{clear:both;}
+.shipping-option label{display:block}
+.shipping-address address{font-style:normal;}
+.shipping-address{
+width: 350px;
+float: left;
+}
+.buttons{width:98%;margin:10px 0 16px;}
+
+/* Cols */
+h3.head small{
+	font:normal 11px Verdana, Arial, Helvetica, sans-serif;
+	color:#333;
+}
+.col1{
+	width:459px;
+	float:left;
+	margin: 20px 20px 0 0;
+}
+#col2{margin:20px 0 0 0;}
+.col1 h3.head{font-size:12px;}
+#content .col1 ul{
+	width:95%;
+	float:left;
+	margin:0 0 20px; padding:0 10px 0 0;
+}
+#content .col1 li{
+	width:95%;
+	float:left;
+	margin:0; padding:0 0 4px 10px;
+	list-style:none;
+	background:url(../images/arrows.gif) no-repeat left 4px;
+	font:normal 11px Verdana, Arial, Helvetica, sans-serif;
+	color:#666;
+}
+#content .col1 li ul{margin:0; padding:5px 0;}
+#content .col1 h3.head{margin:0 0 16px;}
+#content address{
+	width:97%;
+	float:left;
+	padding:14px;
+	margin:0 0 20px;
+	font-style:normal;
+}
+.wrap-payment table td label{
+	width:140px;
+	padding-left:20px;
+	display:block;
+}
+.wrap-payment table td{	padding:0 0 16px;}
+.wrap-payment table tr.last td{padding:0;}
+.wrap-payment input, .wrap-payment select{
+	width:132px;
+	height:17px;
+	border:1px solid #dadada;
+	border-top:1px solid #bbbcbf;
+}
+.wrap-payment input.small{width:60px;}
+.wrap-payment select.small{width:60px;}
+.wrap-payment input.medium{
+	width:186px;
+	height:15px;
+	padding:2px;
+}
+.wrap-payment select.medium{
+	width:190px;
+	height:19px;
+}
+.wrap-payment .submit, .wrap-payment tr.group input{
+	width:auto;
+	height:auto;
+	border:none;
+}
+
+.featured-product div.f-left{
+	width:208px;
+	overflow:hidden;
+	float:right
+}
+
+.list-banks{
+	width:860px;
+	float:left;
+	-moz-border-radius: 3px;
+	border:1px solid #dadada;
+	padding:7px 19px;
+	margin:8px 0 0 0;
+}
+.list-banks img{
+	float:left;
+	margin:0 18px 13px 0;
+}
+/* End */
+
+/* Shiping Detail Styling */
+#content .shipping-address address, #content .billing-address address{
+	border:none!important;
+	padding:0 0 0 0;
+	margin:0 0 15px;
+	background:none;
+}
+#content .shipping-address h3, #content .billing-address h3{
+	padding:0;
+}
+.shipping-address .clear{margin:15px 0;}
+.billing-address{width:250px;}
+.billing-address small{color:#999;padding-top:5px;display:block; line-height:14px;}
+.shipping-option{
+	width:940px; 
+	border-top:solid 1px #dddcdc;
+	border-bottom:solid 1px #dddcdc;
+	clear:both;
+	padding:15px 0px;
+	margin-bottom:15px;
+} 
+.shipping-option h3{padding-bottom:10px;}
+#checkout-items tr.noborder td{border:none!important;}
+.pay-now{
+	float:left;
+	width:900px;
+	margin:0;
+}
+.pay-now h3{padding:0 0 10px;}
+.pay-now .gift{
+	width:400px;
+	float:left;
+	height:88px;
+	padding:15px 20px 0;
+	background:#f1f1f1;
+}
+.pay-now .gift label{
+	float:left;
+	padding-right:10px;
+}
+.pay-now .gift small{
+	display:block;
+	width:200px;
+	padding:5px 0 5px 104px;
+	color:#999;
+}
+.pay-now .gift input{width:175px;}
+.pay-now .gift input.submit-button{
+	padding:0;
+	width:auto;
+	float:left;
+}
+.pay-now .gift h3, .pay-now .f-left h3{
+	padding:0 0 10px 0;
+	margin:0;
+	font-size:12px;
+}
+.pay-now .f-left{padding-left:30px; width:150px;}
+.pay-now span{
+	font-size:18px;
+	color:#fd790d;
+	font-weight:bold
+}
+.pay-method{
+	float:right;
+	width:372px;
+	padding:0 20px 0 20px;
+}
+.pay-method ul{
+	margin:0;
+	padding:0 0 15px 0;
+}
+.pay-method ul li{
+	background:url(../images/arrows.gif) no-repeat 0 5px;
+	padding:0 0 5px 10px;
+	margin:0;
+	list-style:none;
+	font-size:11px;
+	color:#666;
+}
+/* @End */
+/* @Product Detail Style */
+
+.learn{ font-family:Arial, Helvetica, sans-serif;font-size:11px !important;color:#004f96!important;padding-left:5px;}
+.cod-div {
+	border-bottom: 1px solid #DBDADA;
+}
+.cod-logo {
+background: url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/cash.gif) no-repeat;
+border: none;
+height: 49px;
+width: 191px;
+}
+
+.product-display{
+	width:280px;
+	text-align:center;
+	padding:18px 0 20px 0;
+	float:left;
+	margin-right:20px;
+}
+.sorting-pagination form{
+	margin: 0!important;
+	padding:0!important; 
+}
+.altview{
+	float:left;
+	background:#efefef;
+	padding:5px;
+	margin-top:0px;
+	width:270px;
+}
+p.menu{padding:0px 0 0 0;}
+p.menu a{margin-right:10px;color:#999999;}
+p.menu a:hover{
+	color:#661C69!important;
+}
+.altview a.zoom, a.zoom, a.zoom-in{
+	background:url(../images/icon-zoom.gif) no-repeat 0 0;
+	padding:0 0 0px 20px;
+	text-decoration:none!important;
+	font-size:11px;
+	color:#999!important;
+	float:left
+}
+a.zoom-in{background:url(../images/icon-zoom-in.gif) no-repeat 0 0;}
+.altview ul{
+	padding:0;
+	margin:0;
+	list-style:none;
+	float:left;
+	width:100%;
+}
+.altview ul li{
+	float:left;
+	padding-right:10px;
+}
+.altview ul li a img{
+	border:solid 1px #999;
+	display:block
+}
+.altview-ajx ul li{
+	padding-right:7px;
+}
+.product-description{
+	float:left;
+	width:400px;
+}
+.productdetails-generic{
+	float: left;
+	width: 700px;
+	}
+.product-description p{
+	float:left;
+	clear:both;
+	margin:0;
+	width:380px;
+	padding:0px 0 5px 0;
+}
+.product-description small{
+	color:#666;
+	font-size:12px;
+	display:block;
+	padding-bottom:8px;
+}
+.product-description small strong{
+	font-weight:normal;
+	background:#EEF4FC none repeat scroll 0 0;
+	border:1px solid #7FB0E0;
+	padding:3px;
+	color:#2679CB!important;
+}
+.prd-details small {
+	color: #333333;
+	padding-top:7px; 
+	float: left;
+	width: 400px;
+}
+ul.color-pick{
+	float:left;
+	padding-bottom:5px!important;
+}
+.product-description ul{
+	float:left;
+	margin:0;
+	padding:0 0 0px 0;
+	list-style:none;
+	width:400px;
+	font-size:11px;
+}
+.select-size ul{
+	border-bottom:1px solid #dbdada;
+}
+.select-size li a{
+	width:42px;
+	float:left;
+	background:#B9B9B9;
+	color:#FFF !important;
+	text-align:center;
+	text-decoration:none !important;
+	line-height:normal;
+	font-weight:bold;
+	padding:2px 0 3px 0;
+	font-size:10px
+}
+.select-size li a:hover{
+	background:#000;
+	padding:2px 0 3px 0;
+	color:#FFF !important;
+	width:42px;
+}
+.product-description ul li li a img{border:solid 1px #999;width:30px;height:18px;}
+.product-description ul li ul{border:none;}
+.product-description ul li{
+	width:400px;
+	float:left;
+	padding:7px 0;
+}
+.product-description ul li.price{
+	border-top:solid 1px #dbdada;
+	border-bottom:solid 1px #dbdada;
+	}
+.product-description ul li span{
+	font-size:18px;
+	height:17px;
+	color:#fd790d;
+	font-weight:bold;
+	padding-right:10px;
+	margin-right:10px;
+	float:left;
+	line-height: 14px;
+}
+.ie6 .product-description ul li span{
+	float:left;
+	margin:-4px 0 0 0;
+	height:20px;
+}
+.ie7 .product-description ul li span{
+	padding:0 0 5px 0;
+	height:15px;
+	font-size:18px;
+	display:inline;
+}
+.product-description ul li span.save{
+	font-size:11px!important;
+	color:#333!important;
+	font-weight:normal;
+	border:none;
+	float:left;
+	padding-top:0px;
+	margin:0;
+}
+.ie .product-description ul li span.save{
+	margin:-10px 0 0 0;
+}
+.ie .product-description ul li span.save{padding-top:8px;}
+.product-description ul li li{
+	float:left;
+	width:auto;
+	margin-right:6px;
+	border:none;
+	padding:2px;
+}
+.product-description ul li li.select{
+	padding:0;
+	}
+.product-description ul li cite{
+	font-style:normal;
+	font-size:14px;
+	padding-right:10px;
+	float:left;
+}
+.product-description ul li.price cite, .product-description ul li.price span{
+float: none!important;
+}
+.product-description ul li.price p{
+	padding:3px 0 0 0!important;
+}
+.product-description ul li ul.rating{
+	width:100px;
+	margin:0!important;
+}
+ul.mobile-details {
+	margin: 0 0 15px 0px;
+	font-size:12px;
+	display:inline;
+	overflow:hidden;
+	width:370px;
+	list-style:disc!important;
+	float:left;
+}
+ul.mobile-details li{
+	border:none;
+	padding:0 0 0 15px;
+	margin:0 0 0 0px;
+	float:left;
+	background:url(../images/icon-common.gif) no-repeat 0 -448px;
+}
+.freebie{
+	background:#f5f8fd;
+	border:solid 1px #7dafe0;
+	float:left;
+	width:385px;
+	padding:5px;
+	color:#2679cb;
+	margin:5px 0;
+	font-size:12px;
+}
+.freebie p{
+	padding:0;
+	color:#2679cb;
+	font-size:11px;
+}
+.freebie p strong{margin-right:5px;}
+.sub-description{
+	float:left;
+	background:url(../images/bg-cart-shadow.gif) no-repeat 0 0;
+	float:left;
+	margin-left:13px;
+	padding-left:11px;
+	margin-right:-16px;
+	margin-top:0px;
+	width:220px;
+	min-height:240px;
+	height:auto!important;
+	height:240px;
+}
+.sub-description p small{
+	display:block;
+	color:#999;
+	font-size:10px;
+	line-height:13px;
+}
+.upgrade-img{
+	float: left;
+	margin-left:18px;
+	background: url("http://images.futurebazaar.com/catalog/fb_new/sm-banner.gif") no-repeat 0 0;	
+	width: 210px!important;
+	height: 155px!important;
+}
+.express-checkout{
+	float:left;
+	padding:15px 0 15px 15px;
+	width:190px
+}
+.express-checkout p{padding:0 0 8px 0;}
+.add-to-cart{
+	background:url(../images/bg-add-to-cart.gif) no-repeat 0 bottom;
+	margin-top:0px;
+	float:left;
+	width:210px;
+	overflow:hidden;
+	display:inline;
+}
+.add-to-cart .add-to-cart-inner{
+	background:url(../images/bg-add-to-cart.gif) no-repeat 0 0;
+	margin-bottom:10px;
+	padding-left:15px;
+	padding-top:10px;
+	display:inline;
+	float:left;
+	width:195px;
+	padding-left:15px;
+	text-align:center;
+}
+.add-to-cart a{margin-left:-10px;} 
+.add-to-cart .add-to-cart-inner p{
+	padding:0 5px 5px 0;
+	text-align:left;
+}
+.add-to-cart .add-to-cart-inner p span{
+	color:#fd790d;
+	font-weight:bold
+}
+.add-to-cart .add-to-cart-inner input.text{width:20px;}
+.interest{
+	border-top:solid 1px #dfdfdf;
+	float:left;
+	width:180px;
+	margin-left:15px;
+	padding-top:10px;
+	display:inline;
+}
+.interest h3{padding:0 0 10px 0}
+.interest table{
+	border:solid 1px #dbdada;
+}
+.interest table tr td{
+	padding: 0;
+	font-size:10px!important;
+	text-align: center;
+	color:#666;
+	border-right:solid 1px #dbdada;
+}
+.interest ul{
+	margin:0 0 10px 0; 
+	padding:0;
+	float:left;
+	width:177px;
+	list-style:none;
+	border-top:solid 1px #dbdada;
+	border-left:solid 1px #dbdada;
+	border-right:solid 1px #dbdada;
+	border-bottom:solid 1px #dbdada;
+}
+.interest ul li{
+	width:58px;
+	float:left;
+	border-left:solid 1px #dbdada;
+	border-bottom:solid 1px #dbdada;
+	text-align:center;
+	color:#666;
+	font-size:10px;
+}
+.interest a{font-size:11px;}
+.interest p{
+	font-size:10px;
+	color:#999;
+	padding-top:5px;
+	line-height:13px;
+}
+.entry{
+	clear:left;
+	width:940px;
+	float:left;
+	border-bottom:solid 1px #cecece;
+	margin-bottom:10px;
+	padding-bottom:10px;
+}
+.entry small{
+	display:block;
+	color:#999;
+	clear:both
+}
+.entry h3{padding-bottom:10px;}
+.entry h3 a{
+	text-decoration:none;
+	color:#333;
+}
+.entry p{padding:0;}
+a.go{
+	background:url(../images/icon-go.gif) no-repeat 0 4px;
+	padding: 0 0 0 15px;
+	color:#666;
+	font-size:11px;
+}
+dl.product-details {
+	float:left;
+	width:700px;
+	margin-bottom:20px;
+	border-bottom:solid 1px #dbdada;
+} 
+dl.product-details dt{
+	font-weight:bold;
+	width:250px;
+	float:left;
+	padding:3px 0;
+	border-top:solid 1px #dbdada;
+}
+dl.product-details dd{
+	margin:0 0 0 250px!important;
+	padding:3px 0;
+	float: none;
+	border-top:solid 1px #dbdada;
+}
+
+/* @end */
+/* @Group Pagination */
+.safari .sorting-pagination{
+	width:739px;
+	vertical-align:middle
+}
+.block-search{
+	margin: -15px 0 0 0;
+}
+.ie .block-search .f-right{
+	margin:5px 0 0 0!important;
+}
+.safari .pagination{padding:3px 0 0 0;}
+.sorting-pagination{
+	float:left;
+	color:#666;
+	background:#f2f2f2;
+	margin:0 -20px 0 -20px;
+	padding:10px 20px 10px 20px;
+	display:inline;
+	width:739px;
+}
+form.search-list-form{
+	height:20px;
+	float:right;
+}
+.pagination{
+	float:right;
+	width:400px;
+	color:#666;
+}
+.book-paging { width:440px; }
+#content .pagination p{
+	padding:0!important;
+	margin:0!important;
+}
+.pagination span.f-left{padding:0 15px 0 0;}
+.pagination .middle {padding:0 0 0 0px;float:right}
+.pagination .middle ul{
+	padding:0 13px;
+	margin:0;
+	float:left;
+	list-style:none
+}
+.pagination .middle ul li{
+	float:left;
+	background:url(../images/icon-common.gif) no-repeat 2px -231px;
+	padding: 0 5px; 
+}
+.pagination .middle ul li.last{
+	background: none;
+}
+.pagination .middle ul li.current a{
+	text-decoration:none;
+	color:#666;
+}
+.pagination .middle ul li a:hover{
+	color:#666;
+	text-decoration:none;
+}
+/* @End */
+/* @Group Grid View Styling */
+.grid-view{
+	float:left;
+	margin:0;
+	padding:0 0 20px 0;
+	list-style:none;
+	width:739px;
+}
+.grid-view li{
+	width:174px;
+	float:left;
+	padding:20px 10px 0 0;
+}
+.grid-view li h3{
+	font-weight:normal;
+	padding:0 0 0px 0;
+	margin:0;
+}
+.grid-view li h3 a{
+	text-decoration:none!important;
+}
+.grid-view li h3 a:hover{
+	text-decoration:underline!important;
+}
+.grid-view li .thumb{
+	width:150px;
+	text-align:left;
+	padding-bottom:10px;
+	height: 150px;
+	overflow:hidden;
+}
+.grid-view li .thumb a.list-title-lnk {
+	text-decoration:none;
+	}
+/*.grid-view li .thumb-listingpage{
+	width:175px;
+	text-align:left;
+	padding-bottom:10px;
+	xheight: 235px;
+}*/
+.grid-view li cite, .list-view li .f-right cite{
+	font-style:normal;
+	text-decoration:none;
+	font-size:11px;
+	padding:0 5px 0 0px;
+}
+.grid-view li span, .list-view li .f-right span{
+	color:#fd790d;
+	font-size:12px;
+	font-weight:bold;
+	padding-left:0px;
+	width:130px;
+	clear:both;
+	display:block;
+}
+.grid-view li p{
+	padding:0px 0 0 0;
+	margin:0;
+	font-size:11px;
+} 
+.grid-view li.filter{
+	width:735px;
+	padding:15px 0 0 0;
+	margin:0;
+	border-bottom:solid 1px #dbdada;
+}
+cite cite{
+	text-decoration: line-through!important;
+	font-family:arial!important;
+	display:inline!important;	
+}
+.link-list a{
+	display:block;
+	color:#333!important;
+	text-decoration: none!important;
+}
+a.more{
+	color:#6E3874!important;
+	padding: 0 0 0 10px;
+	background:transparent url(../images/next-sub-arrow.gif) no-repeat scroll 2px 6px;
+}
+.link-list a.more:hover{
+	color:#6E3874!important;
+	text-decoration: none!important;
+}
+.link-list a:hover{
+	text-decoration: underline!important;
+}
+/* @Group List View Style */
+.list-view	{
+	width:739px;
+	float:left;
+	list-style:none;
+	padding:20px 0 0 0;
+	margin:0;
+}
+.list-view li .thumb{
+	text-align:center;
+	width:110px;
+	float:left;
+	overflow: hidden;
+}
+.list-view li .f-left{
+	width:445px;
+	overflow:hidden;
+	padding:0 0 0 20px;
+}
+.list-view li .f-left small{
+	margin:-5px 0 0px 0; 
+	width:100%;
+	float:left;
+}
+.list-view li .f-left small a{
+	color:#333!important;
+}
+.list-view li ul.rating{
+	overflow:hidden!important
+}
+.list-view li ul.rating li{
+	border:none;
+}
+.list-view li h2{
+	font-size:12px;
+	font-weight:normal;
+	padding:0 0 5px 0!important;
+}
+.list-view li .f-right cite{display:block}
+.list-view li .f-right span{
+	padding:5px 0 0px 0;
+	display:block
+}
+.list-view li .f-right p{
+	padding:0;
+	font-size:11px;
+}
+.list-view li.last{
+	border:none;
+	padding-bottom:20px
+}
+.list-view li p{padding:0 20px 5px 0}
+.list-view li ul.rating{margin:0 0 0 0!important;}
+.list-view li{
+	border-bottom:solid 1px #dbdada;
+	padding:0 0 15px;
+	margin-bottom:15px;
+	display:inline;
+	float:left;
+	width:739px;
+}
+/* User Account Page Styling */
+.sign-up{
+	padding:20px 20px 15px 20px!important
+}
+#wrap_newsEmail_message{
+	padding-top: 15px;	
+}
+.pstrength-bar, .pstrength-info{
+	clear:both;
+	font-size : 10px;
+	margin:0px 0 0 200px;
+}
+.pstrength-minchar{
+	clear:both; width:250px; height:14px; font-family:arial; font-size:11px; color:#000; margin-left:114px;
+}
+.pstrength-info{
+	margin:12px 0 0 403px;
+	* margin: 12px 0 0 340px;
+	position:absolute;
+	width: 100px;
+}
+.pstrength-bar{
+	margin:5px 0 0 403px;
+	* margin: 5px 0 0 340px;
+	position:absolute;
+}
+
+table.form small { font-size:11px; color:#3a3a3a;}
+.wrap-pass{
+	width:336px;
+	float:left;
+	position:relative;
+}
+.wrap-pass label.error{
+}
+.wrap-pass label.error, ul.form .wrap-pass label.error{
+	float:left!important;
+	padding:0!important;
+	width:200px!important;
+}
+.pstrength-info span{
+	margin:0!important; 
+}
+.login, .register{
+	width:524px;
+	float:left;
+	padding-right:15px;
+}
+.register{
+	margin-left:20px;
+	padding-left:20px;
+	display:inline;
+	border-left:solid 1px #ccc;
+	width:300px;
+}
+.registerForm TABLE{
+	width: 900px!important;
+}
+ul.tabs{
+	line-height:normal;
+	margin:0;
+	padding:3px 0 16px 20px;
+	list-style:none;
+	width:940px;
+	float:left;
+	background:url(../images/bg-tab-bottom-curve.gif) no-repeat 0 0;
+}
+#form-container{
+	background:url(../images/bg-tab-bottom-curve-sign.gif) no-repeat 0 0;
+	padding-top:20px;
+	margin-top:0px;
+	float:left;
+	width:940px;
+}
+.tab-container{
+	float:left;
+	width:899px;
+	overflow:hidden;
+	padding:0 20px 20px 20px;
+	background:#fff url(../images/bg-tab-container.gif) repeat-x;
+}
+.tab-container .errordesc{
+	width:889px!important;
+}
+a.prod-count{
+	text-decoration: none;
+	color:#666;
+}
+table.form{
+	float:left;
+	vertical-align:top;
+	margin-bottom:10px;
+	font-size:12px!important;
+}
+table.form tr td{ 
+	border:none;
+	padding:8px 0;
+	vertical-align:top;
+}
+table.form tr td label, ul.form label{
+	vertical-align:top;
+	float:left;
+	width:84px;
+	color:#000;
+}
+
+table.form tr td span{
+	float:left;
+	width:135px;
+	margin-top:-12px;
+	position:relative;
+}
+table.form tr td span label{
+	display:block;
+	clear:both;
+	width:135px;
+}
+table.form tr td span.mandatory ,ul.form span.mandatory, span.mandatory{
+	float:none;
+	color:#ff3300;
+	font-weight: bold;
+}
+.mandatory-txt {
+	float:right;
+	font-size:11px;
+	margin-right:13px;
+}
+.formsubmit{
+	padding:0 0 15px 0;
+	margin:0 0 15px 0;
+	border-bottom:solid 1px #eae9e9;
+}
+ul.form{
+	margin:0;
+	padding:0 0 20px 0;
+	float:left;
+	width:100%;
+	list-style:none
+}
+ul.form li{padding:8px 0;clear:both;float:left; width:535px;}
+ul.form label{width:164px;}
+/* @group Form Input Sizes */
+.form input, .form textarea, .form select, #content .s2{
+	border-top:1px solid #7c7c7c;
+	border-left:1px solid #c3c3c3;
+	border-right:1px solid #c3c3c3;
+	border-bottom:1px solid #ddd;
+}
+.form input{
+	font-size: 11px;
+	color: #333;
+	padding: 2px 0 0 5px;
+	height:16px;
+}
+select{
+	height:19px!important;
+	font-size:11px;
+	color:#333;
+}
+.ie select{font-size:11px;height:20px!important;}
+textarea, textarea.s4{
+	color:#333;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	height:51px;
+	overflow:auto;
+	font-size:11px;
+}
+textarea.s4{width:254px;}
+.form input.checkbox {
+	height:13px;
+	line-height:1.4em;
+	margin:6px 0pt 0pt 3px;
+	width:13px;
+	border:none
+}
+.form input.radio, input.radio{
+	width:13px;
+	height:13px;
+	border:none;
+}
+label.choice {
+	line-height:1.4em;
+	margin:-1.55em 0pt 0pt 25px!important;
+	padding:0px 0pt 5px!important;
+	width:90%;
+}
+.form input.s0, .form select.s0{width: 30px;}
+.form input.s1, .form select.s1{width: 56px;}
+.form input.s2, .form select.s2, .s2{width: 113px;}
+.form select.medium{width: 145px;}
+.form td .clear{padding:0 0 15px 0}
+.form input.s3{width: 185px;}
+.form select.s3{width: 192px;}
+.form input.s4{width: 250px;}
+select.s4{width: 256px;}
+.form input.s5, .form select.s5{width: 420px;}
+.form input.s6, .form select.s6{width: 550px;}
+.form input.stretch, .form select.stretch{width: 100%;}
+table.card-details{margin:15px 0 20px 0;}
+table.card-details th, table.card-details td{
+	padding:7px 0 7px 20px;
+	color:#666;
+}
+table.card-details th{
+	color:#333;
+	background:#e8e8e8;
+	margin-bottom:5px
+}
+.tab-container h3.head{
+	width:875px !important;
+}
+.new-card{
+	width:100%;
+	overflow:hidden;
+	float:left;
+}
+.new-card ul{
+	list-style:none;
+	padding:0 0 0 26px;
+	margin:0;
+	width:900px;
+	float:left
+}
+.new-card ul li{
+	width:260px;
+	float:left;
+	padding: 0 0 20px 0;
+}
+.new-card ul li label{
+	width:92px;
+	float:left;
+}
+.new-card ul li select.s2{width:135px!important;}
+.note{
+	padding:15px 0 0 0;
+	font-size:11px;
+}
+table.order-history th{
+	padding:5px 0 5px 15px;
+	background:#e8e8e8;
+	color:#333;
+	font-size:12px;
+}
+table.order-history td{
+	padding:10px 0 10px 15px;
+	font-size:11px;
+}
+#content table.order-history  td address{
+	border:none;
+	padding:0;
+	margin:0;
+	color:#666;
+	font-size:11px;
+}
+#content table.order-history  td span{
+	font-size:11px;
+	font-weight:bold;
+	color:#fd790d;
+}
+#content table.order-history tr.total td span{
+	font-size:12px!important;
+}
+#content table.order-history tr.total td span, #content table tr.total td span{font-size:18px}
+#content table tr.total td{font-size:12px!important;}
+table.order-details{margin-bottom:15px;float:left;}
+table.order-details tr th{
+	background:#e8e8e8;
+	padding:8px 10px 8px 15px;	
+	font-size:11px;
+}
+table.order-details tr td{
+	padding:8px 10px 8px 15px;	
+	color:#666;
+}
+.less-width{width:190px!important;}
+table.personal-details{
+	float:left;
+	border-top:solid 1px #ebebeb;
+}
+table.personal-details label{float:none!important;}
+a.right-now{
+	position:relative;
+	margin:0 0px 10px -15px;
+	display:block;
+}
+.free-shipping{
+	float:left;
+	padding:15px 0 0 15px;
+}
+.free-shipping h3{
+	padding-bottom:5px!important;
+}
+.threesixtyimg{
+	background:transparent url(http://images.futurebazaar.com/catalog/fb_new/360view.gif) no-repeat scroll 0 0;
+	width: 36px;
+	height: 36px;
+}
+/* @Generic Style */
+
+
+
+/* FORMS */
+
+form {margin: 0 0 1.5em}
+input {font-family: Verdana, Arial, Helvetica, sans-serif; outline:none;}
+fieldset {border: none}
+label br {clear:left}
+/* FORMS - general classes */
+input.f-submit {padding: 1px 3px;background:#666;color:#fff;font-weight:bold;font-size:96%}
+ul.error{float:left;width: 900px; margin:0 0 10px 15px}
+.ie6 ul.error{float:none;width: auto; }
+ul.error li{
+	font-size: 11px;
+	width: 900px;
+}
+.icici{
+	overflow:hidden;
+}
+.checkout-details, .checkout-details table{
+}
+.checkout-details table#checkout-items{
+	float:none!important;
+	margin-bottom:20px;
+}
+.checkout-details table#checkout-items p strong.f-left{
+	color:#333;
+}
+input.btn-signin, input#paynow{
+	border:none!important;
+	height:auto!important;
+	padding:0!important;
+	float:left;
+	}
+input#paynow{
+	float:right!important;
+}
+p.order{
+	padding:3px 0 0 0;
+}
+a.forget-pass{
+	font-size: 10px;	
+	}
+.sign-up label.error, .sign-up label.messageerror, table.form tr td label.error, table.form tr td label.messageerror, ul.form label.error{
+	clear:both;
+	width:auto;	
+	font-size:11px;
+	color:#ff0000;
+	padding-left:84px;
+}
+.sign-up label.messageerror{
+	width:260px!important;
+}
+ ul.form label.error {
+	padding-left:164px!important;
+ }
+.sign-up span label.error{
+	padding-left:0px!important;
+}
+div.errordesc label.error{
+	clear:both;
+	background:url(../images/error-bullet.gif) no-repeat 5px 6px;
+	width:100%!important;
+	padding:0 0 0 20px;
+	color:#333!important;
+	font-weight:normal!important;
+	font-size:11px!important;
+	display:block;
+}
+input.error{
+	border:1px solid #F58A73;
+}
+.login div.errordesc{
+	width:528px!important;
+}
+div.errordesc, div.errormsg  {
+background-color:#FFDDDD;
+border:solid 1px #E25F53;
+float:left;
+width:943px;
+padding:5px;
+margin-bottom:10px;
+}
+.errormsg{
+	display:none;
+	width:889px!important;
+}
+div.errordesc ul{
+	margin: 0;
+	padding:0px;
+	color:#333!important;
+	list-style:none;
+
+}
+div.errordesc ul li label.error{
+	color:#333!important;
+}
+div.errordesc p{
+	background: transparent none no-repeat 0px 2px;
+	padding: 0 0 0 0px;
+	margin: 0;
+}
+div.errordesc ul li, div.errordesc p {
+	background:url(../images/error-bullet.gif) no-repeat 5px 6px;
+	padding: 0 0 0 20px;
+	list-style:none;
+	font-size:11px;
+	color:#333!important;
+}
+div.errordesc h4, .errormsg h4{
+	background: url(../images/exclamation.gif) no-repeat 0 0;;
+	padding:0 0 5px 20px;
+	margin:0;
+	font-weight:normal;
+	font-size:13px;
+}
+.errormsg h4{
+	padding:0 0 0px 20px;
+}
+div.errordesc strong{
+	display:block;
+	padding:0 0 10px 0;
+}
+div.errordesc a{
+	color: #333;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.price-cut{
+font-size:14px;
+font-style:normal;
+
+color:#000000!important;
+font-weight:normal!important;
+}
+.hidetxt{
+	width:1px;
+	height:1px;
+	border:none;
+	position:absolute;	
+}
+
+/* Skin */
+#spotlight-slide{
+	width:536px;
+	height:167px;
+	position:relative;
+}
+.tabs-nav {
+	list-style: none;
+	margin: 0;
+	padding: 0 0 0 0px;
+	position:absolute;
+	top:130px;
+	left:37px;
+}
+.tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
+	display: block;
+	clear: both;
+	content: " ";
+}
+.tabs-nav li {
+	float: left;
+	margin: 0 3px 0 0px;
+	min-width: 27px; /* be nice to Opera */
+}
+.tabs-nav a, .tabs-nav a span {
+	display: block;
+	padding: 0 10px;
+	background: url(../images/icon-nav-spotlight.png) no-repeat 0 0;
+	color:#6e3874!important;
+}
+.tabs-nav a {
+	position: relative;
+	top: 0px;
+	height:6px;
+	z-index: 2;
+	padding: 5px 0 15px;
+	color: #27537a;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 1.2;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap; /* required in IE 6 */    
+}
+.tabs-nav .tabs-selected a {
+	color: #cccccc;
+}
+.tabs-nav .tabs-selected a, .tabs-nav a:hover {
+	background-position: 100% -26px;
+	outline: 0; /* prevent dotted border in Firefox */
+	color: #cccccc!important;
+}
+.tabs-nav a {
+	background-position: 100% 0px;
+}
+.tabs-nav a span {
+	width: 64px; /* IE 6 treats width as min-width */
+	min-width: 64px;
+	height: 28px; /* IE 6 treats height as min-height */
+	min-height: 28px;
+	padding-top: 6px;
+	padding-right: 0;
+}
+*>.tabs-nav a span { /* hide from IE 6 */
+	width: auto;
+	height: auto;
+}
+.tabs-nav .tabs-selected a span {
+	padding-top: 7px;
+}
+.tabs-nav .tabs-selected a span, .tabs-nav a:hover span, .tabs-nav a:focus span, .tabs-nav a:active span {
+	background-position: 0 -50px;
+}
+.tabs-nav a span, .tabs-nav .tabs-disabled a:hover span, .tabs-nav .tabs-disabled a:focus span, .tabs-nav .tabs-disabled a:active span {
+	background-position: 0 0;
+}
+.tabs-nav .tabs-selected a:link, .tabs-nav .tabs-selected a:visited, .tabs-nav .tabs-disabled a:link, .tabs-nav .tabs-disabled a:visited { /* @ Opera, use pseudo classes otherwise it confuses cursor... */
+	cursor: text;
+}
+.tabs-nav a:hover, .tabs-nav a:focus, .tabs-nav a:active { /* @ Opera, we need to be explicit again here now... */
+	cursor: pointer;
+}
+.tabs-nav .tabs-disabled {
+	opacity: .4;
+}
+.tabs-container {
+	padding: 0;
+	margin:0px 0 0 0;
+	background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
+}
+.tabs-loading em {
+	padding: 0 0 0 20px;
+	background: url(../images/loading.gif) no-repeat 0 50%;
+}
+.prev, .next{
+	padding-top:5px;
+}
+.ie a.prev, .ie a.next{
+	padding-top:0;
+}
+p.forgot input.s3{
+	vertical-align: top!important;
+	margin-top:5px!important;
+}
+.btn-submit{
+	border:0!important;
+	width: auto!important;
+	height: auto!important;
+}
+#showMsg{
+	font-size: 10px;
+	float:left;
+	text-align:left;
+	padding:0 0 10px 0;
+	color:#FF0000; 
+}
+#errmsg{
+	color:#ff0000!important;
+	font-size:10px;
+}
+.product-description ul li dt{
+	font-weight:bold;
+	float:left;
+	width:118px;
+}
+.product-description ul li dd{
+	padding:0 0 5px 0px;
+	display:block;
+	width:260px;
+	float:left;
+}
+.index-bottom tdind_cat_links{
+border:none;
+}
+a.ind_cat_links{
+font-weight:bold;
+}
+
+/* view all category styling */
+
+a.viewall_catlink:hover{
+	text-decoration:underline;
+}
+
+.viewall_subcatlink {
+	color:#333!important; 
+	font-size:11px;
+	text-decoration:none!important;
+	font-weight: normal;
+	padding: 0 0px 0px 8px;
+
+}
+a.viewall_subcatlink:hover {
+	color:#333;
+	text-decoration:underline;
+}
+
+.subsubcat_link {
+	color:#5C5C5C;
+	font-size:11px;
+	text-decoration:none;
+}
+a.subsubcat_link:hover{
+	text-decoration:underline;
+}
+
+.viewall_review_link1 {
+	color:#FC600E;
+	font-size:11px;
+	text-decoration:underline;
+	font-weight: bold;
+}
+a.viewall_review_link1:hover{
+	text-decoration:none;
+}
+.sitemap_cat {
+	float: left;
+	width: 150px;
+	margin: 10px 0px 0 10px;
+	padding:10px;
+	border: 1px solid #CCCCCC;
+	height: 250px;
+	text-align: left;
+}
+.sitemap_comn {
+	float: left;
+	width: 200px;
+	padding:10px;
+	margin: 10px 0px 0 10px;
+	border: 1px solid #CCCCCC;
+	height: 250px;
+	text-align: left;
+}
+.sitemap_link {
+	color: #767289;
+	text-decoration: underline;
+}
+a.sitemap_link:hover {
+	color:#767289;
+	text-decoration: none;
+}
+
+#AMEX .wrap-payment, #ICI .wrap-payment{
+	display:block!important;
+}
+#AMEX h3, #ICI h3{
+	width:400px;
+}
+#AMEX .wrap-payment table, #ICI .wrap-payment table{
+	width:870px!important;
+}
+h3.top-space{
+	margin-top:20px!important;
+	width:870px!important; 
+}
+.ie6 .wrap-payment-inner{
+	float:left;
+	margin-bottom:30px;
+}
+
+.jqzoom{
+	width: 280px;
+	overflow: hidden;
+}
+.jqzoom-panel{
+	position:static!important;	
+}
+.safari .jqzoom-panel{
+	position:relative!important;	
+}
+.chrome .jqzoom-panel{
+	position:relative!important;	
+}
+a.jqzoom{
+	width:280px!important;
+	position:static!important;
+}
+a.jqzoom img{
+	z-index:10!important;
+}
+div.jqZoomTitle
+{
+	z-index:100;
+	text-align:center;
+	font-size:11px;
+	font-family:Tahoma;
+	height:16px;
+	padding-top:2px;
+	position:absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	color: #FFF;
+	background: #999;
+
+}
+
+.jqZoomPup    
+{
+		overflow:hidden;
+		background-color: #FFF;
+		-moz-opacity:0.6;
+		opacity: 0.6;
+		filter:alpha(opacity = 60);
+		z-index:10;
+		border-color:#c4c4c4;
+		border-style: solid;
+		cursor:pointer;
+		margin:215px 0 0 40px;
+}
+.safari .jqZoomPup ,.chrome .jqZoomPup {
+	margin:0px 0 0 0px;
+}
+.jqZoomPup img
+{
+	border: 0px;
+	vertical-align:middle;
+}
+.safari .preload, .chrome .preload{
+	margin:0px 0 0 30px;
+}
+.preload{
+	-moz-opacity:0.8;
+	opacity: 0.8;
+   filter: alpha(opacity = 80);
+	color: #333;
+	font-size: 12px;
+	font-family: Tahoma;
+   text-decoration: none;
+	border: 1px solid #CCC;
+   background-color: white;
+   margin:180px 0 0 30px;
+   padding: 8px;
+	text-align:center;
+   background-image: url(../images/zoomloader.gif);
+   background-repeat: no-repeat;
+   background-position: 43px 30px;
+	width:90px;
+	height:43px;
+	z-index:10;
+	position:absolute;
+	top:3px;
+	left:3px;
+}
+.jqZoomWindow
+{
+	border: 1px solid #999;
+	background-color: #FFF;  
+}
+.target{
+	float:left;
+}
+.target ul{
+	float:left;
+	margin:0 0 0 0;
+	padding:0 0 0 15px;
+}
+p.fbid{
+	padding:0 0 30px;
+}
+.product-description ul li ul.color-pick li.select img{
+	border:solid 2px #FD790D;
+	width:30px;
+	padding:1px;
+}
+.product-description ul li ul.select-size li a.select{
+	background:#000!important;
+}
+.contact li{
+	width:900px!important;   
+}
+.contact li small{
+	padding-left:20px;
+	vertical-align:top;
+	font-size:10px;
+}
+#sitemap{
+	float:left;
+	padding:0;
+	margin:0;
+	width:186px;
+}
+#sitemap ul{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+#sitemap li{
+	background:url(../images/sub-arrow.gif) no-repeat 0 5px;
+	padding:0 0 0 15px;
+	list-style:none;
+}
+#content #sitemap li h3{
+	padding:0;
+	margin:0; 
+	color:#333!important;
+}
+#sitemap li li{
+	background:url(../images/next-sub-arrow.gif) no-repeat 4px 5px;
+	padding:0 0 0 15px;
+	list-style:none;
+}
+.site-l1{
+	background:url(../images/sub-arrow.gif) no-repeat 0 5px;
+	padding:0 0 0 15px;
+	list-style:none;
+}
+.site-l2{
+	background:url(../images/next-sub-arrow.gif) no-repeat 17px 6px;
+	padding:0 0 0 18px;
+	list-style:none;
+}
+site-l2 a{
+	font-size:12px!important;
+}
+.site-l1 a{
+	font-weight:bold!important;
+	text-decoration: none!important;
+	color:#6E3874!important;
+}
+.site-l1 a:hover, .site-l2 a:hover{
+	text-decoration: underline!important;
+}
+.subsubcat {
+	text-align: left;
+	padding: 0px 8px 10px 30px;
+}
+.subsubcat ul{
+	margin:0px; 
+	padding-top:0px;
+	list-style:none;
+}
+.subsubcat li{
+	padding:0px 0 0px 0;
+	display:inline;
+}
+.subsubcat li a{
+	color:#666!important;
+	text-decoration: none!important;
+}
+.subsubcat li a:hover{
+	text-decoration: underline!important;
+}
+
+.subsubcat li a{
+	color:#666!important;
+	text-decoration: none!important;
+}
+.subsubcat li a:hover{
+	text-decoration: underline!important;
+}
+.sitemap-s2{
+	padding:0 0 5px 0;
+}
+#content h4.subhead{
+padding:10px 0 0 0!important;
+margin:0!important;
+}
+#showMsg{
+	padding:5px;
+	font-weight:normal;
+	margin:0 0 10px;
+	width:auto;
+}
+.success-signout{
+	float:left;
+	width:760px;
+	padding:30px 0 37px 120px;
+	margin:90px 0 30px 0;
+	display:inline;
+	background:url(../images/bg-success.gif) no-repeat 95px 0;
+}
+.success-signout img{
+	float:left;
+	margin-right:15px;
+}
+.success-signout h3{
+	color:#333!important;
+	padding:5px 0 13px 0;
+	margin:0;
+	font-size:24px;
+}
+.success-signout p{
+	padding:0px 0 8px 0;
+	font-weight:normal;
+	color:#333!important;
+}
+.terms label.error{
+	float:left!important;
+	padding:0!important;
+}
+.ie .ship-block{
+	padding:20px 0 0 0!important;
+}
+.ie .ship-blockx{
+	margin-bottom:-16px!important;
+}
+dl.order-spec{
+	float:left;
+	width:310px;
+	padding-bottom:10px;
+}
+dl.last{
+	width:293px!important;
+}
+dl.order-spec dt{
+	font-weight:bold;
+	width:145px;
+	float:left;
+}
+dl.last dt{
+	width:125px!important;
+}
+dl.order-spec dd{
+	display:block;
+	float:left;
+	width:150px;
+	padding-bottom:5px;
+}
+dl.last dd{
+	width:151px!important;
+}
+.gbutton span{
+	float:right;
+	padding:5px 0 0 0;
+}
+div.footer-text {
+	width:740px;
+	float:left;
+	padding:0 25px;
+}
+div.footer-text h4 {
+	color:#661C69;
+	font-size:10px;
+	font-weight:bold;
+	padding:0;
+}
+div.footer-text p {
+	font-size:9px;
+	color:#969696;
+}
+
+div.detail cite {
+	text-decoration:none!important;
+}
+div.detail cite cite {
+	text-decoration:line-through!important;
+	font-family:arial!important;
+}
+ul.color-pick li {
+	height:25px;
+	}
+ul.select-size li.current div {
+	border:2px solid #FD790D;
+	float:left;
+}
+ul.select-size li.current div a{
+	border:1px solid #fff;
+	}
+.product-description ul.select-size li {
+	padding-top:2px;
+	padding-left:2px;
+	margin-bottom:3px;
+}
+ul.select-size li.current {
+	padding:0px;
+	margin-bottom: 0px;
+}
+ul.select-size li {
+	min-height: 21px;
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: top;
+	zoom: 1;
+	_height: 21px;
+}
+#continue {
+	position:relative;
+	overflow:visible;
+}
+#continue ul {
+	margin:0;
+	padding:0;
+	background:#f5f5f5;
+	float:left;
+	border:1px solid #a19fa0;
+}
+#continue ul li {
+	list-style:none;
+	float:left;
+	clear:left;
+	border-bottom:1px dashed #ccc;
+	margin:0 7px;
+	padding:0;
+	display:inline;
+}
+#continue ul li.last {
+	border:none;
+}
+#continue ul li a {
+	text-decoration:none;
+	color:#525250;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:22px;
+	display:block;
+}
+#continue ul li a:hover {
+	color:#000;
+}
+#continue ul li a span {
+	color:#7f278a;
+	font-weight:bold;
+}
+.drop-o {
+	padding-top:7px;
+	background:url(../images/btn-continue-shopping-connect.gif) no-repeat 9px 2px;
+	position:absolute;
+	left:5px;
+	top:36px;
+	display:none;
+}
+.drop-o-h {
+	left: -999px;
+	position:absolute;
+}
+.drop-o-h ul {
+	margin: 0;
+	pause: 0;
+	}
+.drop-o-h li {
+	float: left;
+	clear:left;
+	margin:0 7px;
+	list-style: none;
+}
+.drop-o-h li a {
+	direction: block;
+}
+.btn-checkout .btn {
+	margin-left:15px;
+}
+.header-popup{
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/bg-popup-header.gif) no-repeat 0 0;
+	height:40px;
+}
+/* Shiping details */
+div.shipping-details {
+	width:944px;
+	float:left;
+}
+.shipping-details h3 {
+	padding-bottom:0;
+}
+.shipping-details h4 {
+	padding:0;
+	font-size:12px;
+}
+.shipping-details .meta {
+	width:944px;
+	height:30px;
+	color:#000000;
+	font-size:18px;
+	font-weight:bold;
+	padding:10px 0 5px 0;
+	float:left;
+}
+.shipping-details .meta span.order-no {
+	float:left;
+}
+.shipping-details .meta span.order-no strong{
+	color:#666666;
+}
+.shipping-details .meta span.order-total {
+	float:right;
+	color:#000000;
+	width:400px;
+}
+.shipping-details .meta span.order-total span, .shipping-details .meta span.order-total a{
+	float:right;
+}
+.shipping-details .meta span.order-total span {
+	padding:0px 20px 0 0;
+}
+div.address {
+	width:285px;
+	background:#f6f6f5;
+	padding:10px;
+	float:left;
+	color:#000000;
+	font-size:11px;
+	cursor:pointer;
+	min-height:96px;
+  	height:auto !important;
+  	height:96px;
+	
+}
+div.address p{
+	padding:0px;
+	min-height:65px;
+  	height:auto !important;
+  	height:65px;
+	}
+div.address:hover {
+	background:#f1f1f1;
+}
+div.address h4 {
+	padding:0;
+	font-weight:bold;
+	color:#656565;
+	font-size:11px;
+}
+.shipping-address-o {
+	width:944px;
+	float:left;
+	padding-bottom:20px;
+	position:relative;
+}
+.shipping-address-o .address {
+	background:#eff7fe;
+	margin-right:10px;
+	color:#000;
+	font-size:12px;
+	border:1px solid #e0f0ff;
+}
+.shipping-address-o .address h4 {
+	color:#000;
+	font-size:12px;
+}
+.shipping-address-o .button-o {
+	float:left;
+	position:absolute;
+	left:315px;
+	bottom:20px;
+}
+.shipping-address-o .button-o a{
+	float:left;
+	clear:left;
+}
+div.thawte-logo { 
+	float:right;
+	width:60px;
+	height:58px;
+	}
+ul.address-list {
+	margin:0;
+	padding:0;
+}
+ul.address-list li {
+	list-style:none;
+	margin-right:9px;
+	margin-bottom:9px;
+	float:left;
+}
+ul.address-list li.clear {
+	width:944px;
+	line-height:0;
+	height:9px;
+}
+span.order-total{
+	font-size:20px!important;
+	font-weight:bold;
+}
+h3.item-head{
+	padding-bottom:0;
+}
+
+.cart-pop a.close { 
+	position:absolute!important;
+	right:0;
+	top:0;
+	display: block;
+	height: 30px;
+	width:30px;
+	line-height: 30px;
+}
+.ie6 .cart-pop a.close { 
+	position:relative!important;
+	float: right;
+	margin-top: -50px;
+	margin-right:-10px;
+	}
+
+.cart-pop .select-size {
+	width: 345px;
+	margin:0;
+}
+.cart-pop ul {
+	padding-bottom: 10px;
+	float: left;
+	}
+.cart-pop form {
+	margin:0;
+	}
+.cart-pop li {
+	list-style:none;
+	margin:0 10px 0 0!important;
+	float:left;
+	width:auto!important;
+	border:2px solid #fff;
+	min-height:17px!important;
+	height:auto!important;
+	padding:0;
+}
+.cart-pop li.select {
+	border:2px solid #fd790d;
+}
+.cart-pop li.select a{
+	background: #000;
+}
+.add-to-cart-apparels{
+	clear:both;	
+}
+.cart-pop-o {
+	width:392px;
+	background:url(../images/bg-top-pop.png) no-repeat;
+	padding-top:27px;
+	position:fixed;
+	left:50%;
+	top:50%;
+	margin:-50px 0 0 -196px;
+	z-index:999;
+	display:none;
+}
+.ie6 .cart-pop-o {
+	position:absolute;
+	background: #fff;
+	border: #666 1px solid;
+	padding-top: 10px;
+	}
+.cart-pop {
+	background:url(../images/bg-body-pop.png) repeat-y;
+	padding:0 25px;
+	float:left;
+	width: 342px;
+}
+.ie6 .cart-pop {
+	background: none;
+	padding: 0 10px;
+	width: 372px;
+	}
+.cart-pop .size-o {
+	float: left;
+	}
+.cart-pop h4 {
+	margin:0;
+	font-size:18px;
+	position: relative;
+}
+.cart-pop-o .footer {
+	background:url(../images/bg-footer-pop.png) no-repeat;
+	width: 392px;
+	height: 20px;
+	clear: both;
+	float:left;
+}
+.ie6 .cart-pop-o .footer {
+	background: none;
+	}
+a.size-chart{
+	display: none;	
+}
+.sold-out-listing{
+	color: red!important;
+	font-weight: bold;
+	font-size: 11px!important;
+	width: 200px!important;
+}
+/* for buttons */
+.btn-add-to-cart {
+	width:125px;
+	height:45px;
+	xbackground:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/btn-buy-now.png) no-repeat;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/btn-buy-now.png) no-repeat;
+}
+.txt-product-details{
+	width:146px;
+	height:19px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/txt-product-details.jpg) no-repeat;
+	
+}
+.txt-you-may-also-like{
+	width:175px;
+	height:24px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/txt-you-may-also-like.gif) no-repeat;
+}
+.btn-send-your-feedback{
+	width:174px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/btn-send-your-feedback.gif) no-repeat;
+}
+.btn-mail-to-your-friend{
+	width:159px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/btn-mail-to-your-friend.gif) no-repeat;
+}
+.btn-proceed-to-checkout{
+	width:186px;
+	height:35px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-proceed-to-pay.gif) no-repeat;
+}
+.btn-update-cart{
+	width:114px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-update-cart.gif) no-repeat;
+}
+.btn-add-to-cart-white{
+	width:97px;
+	height:24px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/btn-add-to-cart-white.gif) no-repeat;
+}
+.btn-add-to-cart-flf-pp{
+	width:109px;
+	height:26px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/buynow-btn.gif) no-repeat;
+	border: none!important;	
+}
+.btn-proceedToPay{
+	width:186px!important;
+	height:35px!important;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-proceed-to-pay.gif) no-repeat;
+	border: none!important;	
+}
+.btn-cancel{
+	width:67px!important;
+	height:28px!important;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/cancel-btn.gif) no-repeat;
+	border: none!important;
+}
+.btn-updateCart{
+	width:114px!important;
+	height:28px!important;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-update-cart.gif) no-repeat;
+	border: none!important;		
+}
+.btn-claim-it{
+	width:72px;
+	height:28px;
+	margin: 0px 0px -6px 10px; 
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-claim-it.gif) no-repeat;
+}
+.btn-login{
+	width:86px;
+	height:34px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/btn-login-small.gif) no-repeat;
+}
+.btn-sign-up{
+	width:93px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/btn-sign-up.gif) no-repeat;
+}
+.txt-Iamregisterd{
+	width:218px;
+	height:24px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/txt-Iamregisterd.gif) no-repeat;
+}
+.txt-iwantregistered{
+	width:162px;
+	height:22px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/txt-iwantregistered.gif) no-repeat;
+}
+.btn-reset{
+	width:85px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/btn-reset.gif) no-repeat;
+}
+.btn-submitx{
+	width:88px!important;
+	height:28px!important;
+	border:none!important;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/btn-submit.gif) no-repeat;
+}
+.txt-search-in {
+	width:56px;
+	height:9px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/txt-search-in.jpg) no-repeat;
+}	
+	
+.btn-addtocart-list {
+	display:block;
+	background:url(../images/addtocart-trans.gif) no-repeat;
+	height: 15px;
+	width: 86px;
+	border:none;
+	text-indent:-999em;
+	margin-top: 5px;
+}
+.btn-submit-blue {
+	display:block;
+	background:url(../images/btn-submit-blue.gif) no-repeat;
+	height: 24px;
+	width: 79px;
+	border:none;
+	text-indent:-999em;
+}
+.btn-add-this-js img{
+	width:82px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/share.gif) no-repeat;
+}
+.what-box{
+	background:#FAFBFF;
+	border:1px solid #7DAFE0;
+	color:#2679CB;
+	font-size:10px!important;
+	line-height:13px;
+	margin-top:5px;
+	padding:5px;
+	width:285px;
+	display:none;
+	position: absolute;
+	border-top:none;
+	left: -1px;
+	top:13px;
+}
+.what-box p {
+	color:#2679CB!important;
+	font-size:10px!important;
+	font-weight: normal!important;
+	}
+a.what {
+	font-size: 11px!important;
+	font-weight:normal!important;
+	color: #000;
+}
+a.what:hover {
+	color: #666;
+}
+
+.what-order {
+	background:#FAFBFF;
+	border:1px solid #7DAFE0;
+	color:#2679CB;
+	font-size:10px!important;
+	line-height:13px;
+	margin-top:5px;
+	padding:5px;
+	width:330px;
+	display:none;
+	position: absolute;
+	right: 15px;
+	margin-top: -4px;
+}
+.what-order p {
+	color:#2679CB!important;
+	font-size:10px!important;
+	font-weight: normal!important;
+	}
+.what-order p strong {
+	font-size: 11px!important;
+}
+#checkout-items td span.what {
+	position: relative;
+	font-size: 11px!important;
+	font-weight:normal!important;
+	color: #000;
+	cursor: pointer;
+}
+.why-box{
+	background:#f2f2f2;
+	border:1px solid #666;
+	color:#666;
+	font-size:10px!important;
+	line-height:13px;
+	padding:5px;
+	width:300px!important;
+	position: absolute!important;
+	left: 0px;
+	top:30px;
+	float: none!important;
+	display:none;
+	
+}
+a.why {
+	font-size: 11px!important;
+	text-decoration: none;
+	font-weight:normal!important;
+	color: #661C69;
+	position: relative;
+	margin-top: 5px;
+	display: block;
+}
+.ph {
+	margin-top: 6px!important;
+	display: block;
+}
+.promo {
+	position:relative;
+	text-align: left;
+}
+.order {
+	float: right;
+	background: none;
+	border: none;
+	width: auto;
+	margin: 0;
+}
+.promo p {
+	font-size: 11px!important;
+	font-weight: bold;
+	}
+.promo p span {
+	font-size: 9px!important;
+	cursor: pointer;
+	color: #2679CB!important;
+}	
+.promo p a {
+	font-weight: normal;
+	text-decoration: none;
+	}
+#checkout-items td .promo p a:hover {
+	text-decoration: none!important;
+}
+	
+.dropp-o {
+	padding-top:7px;
+	background:url(../images/btn-continue-shopping-connect.gif) no-repeat 9px 0;
+	position:absolute;
+	left:0px;
+	top:100%;
+	z-index:100;
+	display:none;
+	font-size: 11px;
+	color: #333;
+}
+.order .dropp-o {
+	padding: 0;
+	background: none;
+	left:5px;
+}
+.promo ul {
+	margin:0;
+	padding:0;
+	background:#f5f5f5;
+	float:left;
+	border:1px solid #cccccc;
+}
+.promo ul li {
+	list-style:none;
+	float:left;
+	clear:left;
+	margin:0 7px;
+	padding:7px 0;
+	display:inline;
+}
+.promo ul li.last {
+	border:none;
+}
+.promo ul li a {
+	text-decoration:none;
+	color:#525250;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:22px;
+	display:block;
+}
+.promo ul li a:hover {
+	color:#000;
+}
+.promo ul li a span {
+	color:#7f278a;
+	font-weight:bold;
+}
+.hdfcbank img, .hdfcbank .txt-hdfcbank {
+	float: left;
+	}
+.hdfcbank .txt-hdfcbank {
+	padding-left:20px;
+	width:550px;
+	}
+	
+/* for lucky price */
+.steps{
+	padding-bottom:20px;
+}
+.inner-content{
+	float:left;
+	padding:0 32px;
+}	
+.lp-gridview{
+   width:920px;
+   margin:0;
+   padding:0;
+   float:left;
+    }
+.lp-gridview li{
+	background:transparent url(http://images.futurebazaar.com/catalog/fb_new/lp-box-bg2.gif) no-repeat scroll 0 0;
+	float:left;
+	height:290px;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	padding:10px 15px 10px 0;
+	text-align:center;
+	width:215px;
+}
+.lp-title{
+	padding-top:2px;
+	position:relative;
+}
+.title1{
+	position:relative;
+}
+.title1 .max{
+	position:absolute;
+	top:2px;
+	left:150px;
+	color:#ffffff;
+	font-size:18px;
+	font-family:Verdana;
+}
+.title2{
+	position:relative;
+}
+.title2 .units{
+	position:absolute;
+	top:2px;
+	left:25px;
+	color:#ffffff;
+	font-size:18px;
+	font-family:Verdana;
+}		
+	
+.lp-gridview li.filter{
+		width:920px;
+		background:none;
+		height:1px;
+		padding:5px 0;
+}	
+.lp-gridview li .thumb {
+	
+	height:150px !important;
+	padding-bottom:2px;
+	text-align:center;
+	
+}
+.lp-gridview li .thumb a{
+	display:block;
+}
+.lp-gridview h3{
+	font-family:Verdana;
+	font-size:11px;
+	font-weight:bold;
+	color:#000000;
+	padding:0px 5px!important;
+}
+.lp-gridview h3 a{
+	text-decoration:none;
+	display:block;
+	color:#000000;
+}
+.lp-gridview span.offer{
+	color:#D60024;
+	font-size:14px;
+	font-weight:bold;
+	
+}
+.lp-btn{
+	padding-top:3px;
+}
+.xluck-price-bg{width:985px; height:75px; background:url(/images/lucky-price-bg.gif) no-repeat; border-right:2px solid #610303 overflow:hidden; float:left; position:relative; top:-6px;}
+.lp-try-your-luck{
+	background: transparent url(http://images.futurebazaar.com/catalog/fb_new/lp-try-your-luck.gif) no-repeat 0 0;
+	width: 149px;
+	height: 33px;
+}
+.lp-try-your-luck{
+	background: transparent url(http://images.futurebazaar.com/catalog/fb_new/lp-try-your-luck.gif) no-repeat 0 0;
+	width: 149px;
+	height: 33px;
+}
+.lp-units-remaining{
+	background: transparent url(http://images.futurebazaar.com/catalog/fb_new/lp-units-remaining.png) no-repeat 0 0;
+	width: 195px;
+	height: 36px;
+
+}
+.lp-header{
+	background: transparent url(http://images.futurebazaar.com/catalog/fb_new/lp-header.jpg) no-repeat 0 0;
+	width: 985px;
+	height: 153px;	
+}
+.lucky-home .lp-header{
+	background: transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/lucky-price-bg.gif) no-repeat 0 0;
+	width: 985px;
+	height: 74px;	
+}
+.lucky-home .inner-content p{
+	display: none;
+}
+/*********** Compare Products *****************/
+
+.compare {
+float:right;
+position:relative;
+right:20px;
+top:14px;
+}
+.compare-btn{
+	width:79px;
+	height:24px;
+	background:url(/images/btn-compare.gif) no-repeat;		
+}
+.heading{
+	position:static;
+	float: left;
+	width: 760px;
+}
+.heading h1{
+	float: left;	
+}
+.showby{
+	float: right;
+	position: relative;
+	right: 10px;	
+	top: 15px;
+	z-index: 10;
+	color: #666;
+	font-weight: bold;
+}
+.avail-checkbox{
+	margin:3px 5px 0 0;
+	float: left;
+}
+.ie .avail-checkbox{
+	margin:-2px 5px 0 0;
+}
+.prod-compare-btn{
+	position:absolute;
+	top:15px;
+	left:655px;
+	z-index:10;
+}
+.ie7 .prod-compare-btn{40px;}
+
+.prod-checked{
+	position:absolute;
+	top:7px;
+	leftx:525px;
+	right: 335px;
+	z-index:0;
+	/*border:4px solid #EDEDED;*/
+}
+.prod-checked ul{
+	margin:0;
+	padding:0;
+}
+.prod-checked ul li{
+	list-style:none;
+	float:left;
+	padding:1px;
+	border:4px solid #EDEDED;
+	position:relative;
+	
+}
+.prod-checked ul li.last{
+	border:none;
+}
+.prod-checked-icon{
+	display:block;
+	position:absolute;
+	top:13px;
+	leftx:150px;
+	right:-30px;
+	width:16px;
+	height:13px;
+	background: url('http://images.futurebazaar.com/catalog/fb_new/cpr-arrow.gif') no-repeat 0 0;
+}
+
+#compare-prods{
+	margin:5px 0 40px 0;
+	width: 949px;
+}
+#compare-prods td{font-size:11px;padding:4px 20px 3px 0;}
+.table-heading{padding:0;}
+.table-heading h3{padding:0;margin:0;}
+
+#compare-prods td.noborder span.offer {
+		color:#FD790D;
+		font-size:11px!important;
+		font-weight:bold;
+}
+#compare-prods td.noborder span.prod-name {
+		color:#661572;
+		font-size:11px!important;
+		font-weight:bold;
+}
+#compare-prods td.noborder p cite.price-cut{
+		font-size:11px;
+		color:#666666!important;
+}
+#compare-prods td.noborder p cite cite{
+		text-decoration:none!important;
+}
+#compare-prods td.noborder p{
+		font-size:11px;
+}
+.tab-fb-image-FutureBazaar{
+	margin-top: 1px!important;
+}
+.btn-add-a-new-address
+{
+	width:167px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-add-new-address.gif) no-repeat;
+}
+.btn-claimit
+{
+	width:72px;
+	height:28px;
+	margin: 0px 0px -6px 10px; 
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-claim-it.gif) no-repeat;
+}
+.btn-continue-shopping-down
+{
+	width:168px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-continue-shopping-down.gif) no-repeat;
+}
+.btn-edit-this-address
+{
+	width:151px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-edit-this-address.gif) no-repeat;
+}
+.btn-add-to-cart-white {
+	width:156px;
+	height:45px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/btn-add-to-cart-white.gif) no-repeat;
+}
+.btn-pay-by-credit-card
+{
+	width:173px!important;
+	height:35px!important;
+	overflow:hidden !important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-credit-card.gif) no-repeat;
+}
+.ie6 .btn-pay-by-credit-card
+{
+	width:173px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-credit-card.gif) no-repeat;
+	padding-bottom:35px;
+	
+}
+.btn-pay-by-cash
+{
+	width:137px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-cashfb.gif) no-repeat;
+}
+.btn-pay-by-cheque-dd
+{
+	width:155px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-cheque-dd.gif) no-repeat;
+}
+.btn-pay-by-emi
+{
+	width:195px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-future-money.gif) no-repeat;
+}
+.ie6 .btn-pay-by-cheque-dd
+{
+	padding-bottom:25px;
+	width:155px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-cheque-dd.gif) no-repeat;
+}
+.btn-paybyemi
+{
+	width:131px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/txt-paybyemi.gif) no-repeat;
+}
+.ie6 .btn-paybyemi
+{
+	width:131px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/txt-paybyemi.gif) no-repeat;
+	padding-top:25px;
+}
+.btn-pay-by-net-banking
+{
+	width:186px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-net-banking.gif) no-repeat;
+	
+}
+
+.ie6  .btn-pay-by-net-banking
+{
+	width:186px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-by-net-banking.gif) no-repeat;
+	padding-top:15px;
+	
+}
+.btn-pay-now
+{
+	width:126px!important;
+	height:35px!important;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-now.gif) no-repeat;
+}
+.btn-pay-through-mobile
+{
+	width:183px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-through-mobile.gif) no-repeat;
+	padding-bottom:5px;
+}
+.ie6 .btn-pay-through-mobile
+{
+	width:183px!important;
+	height:35px!important;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-pay-through-mobile.gif) no-repeat;
+	margin-top:10px;
+	padding-bottom:25px;
+}
+.btn-save-shopping-cart
+{
+	width:147px!important;
+	height:23px!important;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/btn-save-shopping-cart.gif) no-repeat;
+}
+.txt-interest
+{
+	width:92px;
+	height:14px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/txt-interest.gif) no-repeat;
+}
+.btn-back-to-home
+{
+	width:171px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-back-to-home.gif) no-repeat;
+}
+.btn-print-order
+{
+	width:109px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/btn-print-order.gif) no-repeat;
+}
+.btn-update-address
+{
+	width:156px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/btn-update-address.gif) no-repeat;
+}
+.btn-address-delete
+{
+	width:89px;
+	height:28px;
+	xbackground:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/btn-address-delete.gif) no-repeat;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/btn-address-delete.gif) no-repeat;
+}
+.btn-update-details
+{
+	width:152px;
+	height:28px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/myaccount/btn-update-details.gif) no-repeat;
+}
+
+
+
+.btn-move-to-cart
+{
+	width:120px;
+	height:24px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/btn-move-to-cart.gif) no-repeat;	
+}
+.search-submit{
+margin-bottom:-6px;
+width:65px;
+height:23px;
+background: url('http://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/searchFB.gif') no-repeat 0 0!important;
+}
+.tab-fb-image-FutureBazaar{
+	margin-top: 1px!important;
+}
+/*********** Compare Products *****************/
+
+.compare-btn
+ {
+
+	background-attachment:scroll;
+	background-color:transparent;
+	background-image:url("http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/btn-compare.gif");
+	background-position:0 0;
+	background-repeat:no-repeat;
+	height:28px;
+	width:83px;
+}
+
+.heading{position:relative;}
+.prod-compare-btn{
+	position:absolute;
+	top:15px;
+	left:655px;
+	z-index:10;
+}
+.ie7 .prod-compare-btn{40px;}
+
+
+#compare-prods{margin:5px 0 40px 0;}
+#compare-prods td{font-size:11px;padding:4px 20px 3px 0;}
+.table-heading{padding:0;}
+.table-heading h3{padding:0;margin:0;}
+
+#compare-prods td.noborder span.offer {
+		color:#FD790D;
+		font-size:11px!important;
+		font-weight:bold;
+}
+#compare-prods td.noborder span.prod-name {
+		color:#661572;
+		font-size:11px!important;
+		font-weight:bold;
+}
+#compare-prods td.noborder p cite.price-cut{
+		font-size:11px;
+		color:#666666!important;
+}
+#compare-prods td.noborder p cite cite{
+		text-decoration:none!important;
+}
+#compare-prods td.noborder p{
+		font-size:11px;
+}
+.btn-add-to-cart-white {
+	width:117px;
+	height:35px;
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/btn-buy-now.png) no-repeat;
+}
+.prod-checked ul li .close-img{
+	background: url("http://images.futurebazaar.com/catalog/fb_new/cpr-close.gif") no-repeat 0 0;
+	height: 9px;
+	width: 9px;
+	position: absolute;
+	top: -6px;
+	right: -4px;
+}
+
+/*********coupon-claim****************/
+.coupon-claim
+{
+padding:10px 0 10px 0;
+float:left;
+display:block;
+}
+.coupon-claim-inner
+{
+padding:10px 10px 15px 10px;
+margin-top: 10px;
+display:block;
+width: 510px;
+background:#EFF7FE;
+line-height:23px;
+height: auto;
+min-height: 20px;
+}
+.coupon-claim-left{
+	width: 420px;
+	float: left;
+}
+.coupon-container{
+	float: left;
+	margin-left: 5px;	
+}
+/***************changes for kiosk***********/
+#Scroller-1 { 
+  position: relative; 
+  overflow: hidden;
+  width: auto!important;
+  height: auto!important;
+  float: left;
+}
+#Scroller-2 { 
+  position: relative; 
+  overflow: hidden;
+  width: auto!important;
+  height: auto!important;
+  float: left;
+}
+.shipping-detail-left{
+	width: 938px;
+}
+/*.Payment-right-content #wn{
+	width: 938px!important;
+}*/
+div#wn 
+{
+	width: auto!important;
+	height:auto!important;
+	position: relative!important;
+	margin-top: 0px!important;
+	right: 0!important;
+	top: 0!important;
+	float: left!important;
+}
+#scroll_links
+{
+	display: none!important;
+}
+div#wn1 
+{
+	margin-top: 0px!important;
+	height:auto!important;
+	position: relative!important;
+	width: auto!important;
+}
+#scroll_links1
+{
+	display: none!important;
+}
+div#wn2 
+{
+	margin-top: 0px!important;
+	height:auto!important;
+	position: relative!important;
+	width: auto!important;
+}
+#scroll_links2
+{
+	display: none!important;
+}
+
+/************thank you page**********/
+.header-bg-gray-left {
+font:normal 22px arial;
+font-weight: normal;
+padding:16px 0 12px;
+text-align:left;
+clear: both;
+color:#00529c;
+}
+.order-complete-right-content {
+padding:0 0 5px;
+}
+.order-complete-right-content p{
+color:#333333;
+line-height:18px; 
+}
+.order-complete-right-content p span {
+font-weight: bold;	
+}	
+.product-detail {
+	background:#FFFFFF none repeat scroll 0 0;
+	width:985px;
+	min-height:400px;
+	height:auto !important;
+	height:400px;
+	overflow:hidden;
+	padding:8px 2px 20px 18px!important;
+	width:985px!important;
+	margin: 0 auto;
+}
+.product-detail-content {
+	float:left;
+	padding:0 16px 0 0;
+	margin:0;
+	width:auto;
+	background:#fff;
+	width:auto;
+	overflow:hidden;
+	float:left;
+}
+
+/******** COD update mobile no **************/
+.edit-btn, .save-btn, .cancel-btn {
+float: left;
+background:#25458A none repeat scroll 0 0;
+border:1px solid #000000;
+color:#FFFFFF;
+font-family:Arial,Helvetica,sans-serif;
+font-size:12px;
+font-weight:bold;
+height:20px!important;
+text-align:center;
+width:40px!important;
+padding-top: 2px;
+margin-left: 5px;
+}
+
+.cancel-btn {
+width:50px!important;
+background: #FFF;
+color: #25458A;
+border:none;
+padding-top: 4px;
+}
+
+/***************for cutombilling page/https******************/
+ul.masthead_https{
+	float:left;
+	margin:20px 0 0 0;
+	padding:0;
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/shopping-flow-bg-tabs.gif) no-repeat 0 -150px;
+	width:946px;
+	height:35px;
+	display:inline;
+}
+ul.masthead_https li{
+	float:left;
+	width:auto;
+	height:35px;
+	list-style:none
+}
+ul.masthead_https li span{
+	text-indent:-999em;
+	width:auto;
+	height:35px;
+	display:block
+}
+ul.masthead_https li.step-1 span{
+	width:222px;
+}
+ul.masthead_https li.step-2 span{
+	width:246px;
+}
+ul.masthead_https li.step-3 span{
+	width:246px;
+}
+ul.masthead_https li.step-4 span{
+	width:230px;
+}
+ul.masthead_https li.step-1 span.active{
+	background:url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/shopping-flow-bg-tabs.gif) no-repeat 0 1px;
+}
+ul.masthead_https li.step-2 span.active{
+	background:transparent url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/shopping-flow-bg-tabs.gif) no-repeat scroll -222px -37px;
+	margin:0 0 0 0;
+	width:246px;
+}
+.ie ul.masthead_https li.step-2 span.active{
+	position:static;
+	z-index:10;
+}
+ul.masthead_https li.step-3 span.active{
+	xbackground:transparent url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/shopping-flow-bg-tabs.gif) no-repeat scroll -470px -74px;
+	background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/shopping-cart/shopping-flow-bg-tabs.gif) no-repeat scroll -470px -74px;
+	margin:0 0 0 0;
+	position:relative;
+	width:246px;
+}
+ul.masthead_https li.step-4 span.active{
+	background:transparent url(https://images.futurebazaar.com/catalog/fb_new/futurebazaar/images/shopping-flow-bg-tabs.gif) no-repeat scroll -715px -112px;
+	margin:0 0 0 0;
+	position:relative;
+	width:230px;
+}
+/*************sold-out**********************/
+.sold-out{
+	background:url("http://images.futurebazaar.com/catalog/fb_new/sold-out.gif") no-repeat 0 0;
+	width: 144px;
+	height: 43px;
+}
+.discontinued{
+	background:url("http://images.futurebazaar.com/catalog/fb_new/discontinued-new.gif") no-repeat 0 0;
+	width: 175px;
+	height: 23px;
+}
+.limited-stock{
+	background:url("http://images.futurebazaar.com/catalog/fb_new/limited-stock.gif") no-repeat 0 0;
+	width: 144px;
+	height: 43px;
+}
+.clearance{
+	background:url("http://images.futurebazaar.com/catalog/fb_new/clearance.gif") no-repeat 0 0;
+	width: 144px;
+	height: 43px;
+}
+.sold-span{
+	float: left;
+	margin-left: 15px;
+	text-align: center;
+}
+.discontinued-div{
+	text-align: center;
+}
+.ltd-clr-div{
+	float: left;
+	margin-left: 130px;
+	bottom:50px;
+	position:absolute;
+}
+
+/*************integrated fulfilment style***************/
+.loc-backord{background:url('http://images.futurebazaar.com/catalog/fb_new/localbackorderable-bg.gif') no-repeat scroll 0 0;display:inline;float:left;margin-bottom:5px;text-align:center;width:210px;height:108px;margin-left:5px;position: relative;}
+.loc-backord-lnk{color:#000;position: absolute;right:11px;top:0; font-size:10px;}
+.loc-backord-lnk a{color:#FFFD60;text-decoration:underline;}
+.loc-backord-txt{float: left; width:195px;color:#000;padding:5px 3px 0 3px;font-size:10px;margin-top: 38px;line-height: 12px;}
+.loc-instk{background:url('http://images.futurebazaar.com/catalog/fb_new/local7DDGlogo-bg.gif') no-repeat scroll 0 0;display:inline;float:left;margin-bottom:5px;text-align:center;width:210px;height:108px;margin-left:5px;position: relative;}
+.loc-instk-lnk{color:#FFFD60;font-size:11px;font-weight:bold;position: absolute;right:11px;top:0;}
+.loc-instk-lnk a{color:#FFFD60;text-decoration:underline;}
+.loc-instk-txt{width:195px;color:#000;padding:10px 3px 0 3px;font-size:10px;margin-top: 30px;}
+.reg-instk{background:url('http://images.futurebazaar.com/catalog/fb_new/7DDG-logo.gif') no-repeat scroll 0 0;display:inline;float:left;margin-bottom:5px;text-align:center;width:210px;height:72px;margin-left:5px;position: relative;}
+.reg-backord{background:url('http://images.futurebazaar.com/catalog/fb_new/regularbackorderable-bg.gif') no-repeat scroll 0 0;display:inline;float:left;margin-bottom:5px;text-align:center;width:210px;height:76px;position: relative;}
+.reg-backord-txt{width:195px;color:#000;padding:10px 7px 0 7px;font-size:10px;line-height: 12px;}
+.reg-loc-unavail{background:url('http://images.futurebazaar.com/catalog/fb_new/currentlyunavailable-bg.gif') no-repeat scroll 0 0;display:inline;float:left;margin-bottom:5px;text-align:center;width:210px;height:70px;margin-left:0px;}
+.reg-loc-unavail-lnk{color:#000;padding:28px 26px 0 25px;font-size:11px;line-height: 13px;}
+.del-info-lnk{left: 0; float:left;width:195px;color:#FFF;font-weight:bold;font-size: 11px;position: absolute;bottom: 5px;}
+.del-info-nobanner .del-info-lnk a{color: #F15E00!important;}
+.del-info-lnk a{text-decoration:underline;color:#FFF !important;}
+.del-info-nobanner{display:inline;float:left;margin-bottom:5px;text-align:center;width:210px;height:20px;margin-left:5px;position: relative;}
+.locFinder{
+margin-top: 25px!important;
+}
+.locFinder h3{
+	padding: 0!important;
+}
+
+/*************cart slot style**********/
+.headerPurple  {
+background-attachment:scroll;
+background-color:transparent;
+background-image:url("http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/heading-bg-purple.gif");
+background-position:0 0;
+background-repeat:repeat-x;
+height:29px;
+padding-top: 2px;
+position:relative;
+
+}
+.headerPurple  h3{padding: 6px 6px 6px 12px; *padding: 6px 6px 4px 12px;}
+.hotoffersx {
+border-top-color:#EBEBEB;
+border-top-style:solid;
+border-top-width:1px;
+float: left;
+padding-left:45px!important;
+}
+
+.hotoffersx li {
+
+float:left;
+height:158px;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+padding-bottom:5px;
+padding-left:30px;
+padding-right:30px;
+padding-top:20px;
+text-align:left;
+width:160px !important;
+}
+.hotoffersx .prod-img{width:125px;height:97px;display:inline;}
+.hotoffersx .prod-img a{display:block;}
+.intent
+{
+text-decoration:none !important;
+color:#000000 !important;
+font-weight:bold;
+height: 50px;
+}	
+.detail-in .price cite cite{
+	font-weight: bold;
+	color: #4C4C4C;
+}
+.detail-in .price span{
+color: #E05D10 !important;
+       font-size: 12px;
+}
+.detail-in p{
+	font-size: 11px;
+	padding: 0 !important
+}
+.detail-in p .price{
+	font-size: 12px;
+}
+.hotoffersx .btn-add-to-cart-white{
+	background: url("http://images.futurebazaar.com/catalog/fb_new/ezone/images/buynow.shop.gif");
+	width: 106px;
+	height: 28px;
+	margin-top: 17px;
+}
+
+/**************header-tabs***********/
+
+.texts{border-right:#e4f3f8 1px solid; height:26px; border-left:#c9e1f2  1px solid; float:left; padding:0 10px; padding-top: 7px; font-size: 14px!important;}
+/*.header-tabs{ width: 633px; height: 97px; background:url('http://images.futurebazaar.com/catalog/fb_new/top-nav-sprite-img.gif') no-repeat; background-position: 0 -102px; position: absolute; top: 11px; left: 15px; filter: none; overflow: hidden;}*/
+.tab1{  cursor:pointer;float:left;height:39px;overflow:hidden;width:132px; }
+.tab2{  
+cursor:pointer;
+float:left;
+height:39px;
+margin-left:5px;
+overflow:hidden;
+width:132px;}
+
+.tab3{  
+cursor:pointer;
+float:left;
+height:39px;
+margin-left:5px;
+overflow:hidden;
+width:132px;}
+
+.tab4{  
+cursor:pointer;
+float:left;
+height:39px;
+margin-left:5px;
+
+overflow:hidden;
+width:132px;}
+.tab5{  
+cursor:pointer;
+float:left;
+height:39px;
+margin-left:5px;
+
+overflow:hidden;
+width:132px;}
+
+
+
+/*-----------------------------------TABS AND NAVIGATION----------------------------------*/
+.navigation-container{width:100%; height:44px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/tabLeft-fb.gif) repeat-x; float:left}
+.active-filters{width:100%; height:43px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/fb-nav-bg.gif) repeat-x; float:left}
+.header-tabs{width:552px;overflow:hidden; height:41px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/new-fb-tabs.jpg) no-repeat; float:left; margin-top:21px;}
+
+/*---------------------------------------------------------------------
+-----------------------------------------------------------------------
+							HEADER CONTAINERS											
+-----------------------------------------------------------------------
+---------------------------------------------------------------------*/
+.header-upperband-container{ width:100%; height:33px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/header-upper-bg.gif) repeat-x;}
+.header-upperband-inner{width:986px; height:32px; margin:0 auto;}
+/*-------------left side-----------------*/
+.telephone-img{width:42px; height:28px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/telephone-bop.jpg) no-repeat; float:left; margin:25px 0 0 4px;}
+.telephone-content{width:370px; height:20px; float:left;  margin:7px 0 0 10px;}
+
+/*-------------right side----------------*/
+.upperband-topright-container{ width:400px; height:20px; float:right; margin:5px 8px 0 0;}
+
+
+
+
+
+.header-container{ width:984px;
+/*height:95px;*/
+margin:0 auto;
+}
+.ie7 .header-container{ 
+margin-top: 22px! important;
+}
+.header-middle-container {
+float:left;
+height:82px;
+margin:0;
+padding:10px 0 0;
+width:680px;
+}
+.futurebazaar-logo{width:262px; height:85px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/futurebazaar-logo-new.gif) no-repeat; margin-top: -10px;}
+
+
+.futurebazaar-search {
+height: 41px;
+margin: 10px 0 0 -25px !important;
+position: absolute;
+width:385px;
+}
+    
+.search-select-box{ width:116px; height:35px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/select-bg.gif) no-repeat; border:none; float:left}
+.select-box{font-family:arial;
+font-size:12px;
+font-weight:bold;
+height:25px !important;
+margin-bottom:0;
+margin-left:6px;
+margin-right:0;
+margin-top:5px;
+padding-bottom:2px;
+padding-right:2px;
+padding-top:2px;
+width:105px;
+}
+
+
+.product-search-box{width:378px; height:35px; margin-left:4px; float:left;background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/new-searchbg.jpg) no-repeat;}
+.product-search-input-container{width:246px; height:35px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/search-box.gif) no-repeat; float:left}
+.product-search-button{width:103px; height:35px; float:left;}
+.xproduct-search-input{border:none; height:18px;margin:5px 0 0 7px;width:255px; float:left; font-family:arial; font-size:12px; color:#000;}
+.product-search-input{border:none; height:18px;margin:5px 0 0 5px;width:231px; float:left; font-family:arial; font-size:12px; color:#000;padding:3px 0 3px 5px;}
+.product-search-btn{width:98px; height:26px; float:left; margin:3px 0 0 3px;}
+
+
+.proceed-to-pay-container{width:174px; height:74px;  margin:5px 0 0 20px;}
+.proceed-to-pay-inner-container{ width:168px; height:43px; float:left; margin-top:15px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/proceedtopay-bg1.gif) no-repeat; }
+.proceed-to-pay-inner-container:hover{ width:168px; height:43px; float:left; margin-top:15px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/proceedtopay-bg2.gif) no-repeat; }
+.proceed-to-pay-inner-container-blue{ width:168px; height:43px; float:left; margin-top:15px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/proceedtopay-bg2.gif) no-repeat; }
+.hover-blue{
+	background: url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/proceedtopay-bg2.gif) no-repeat !important;
+}
+
+.proceed-to-pay-img{width:29px; height:43px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/proceed-to-pay-img.gif) no-repeat; position:relative; top:-20px; left:18px; float:left}
+.proceed-to-pay-txt1{position:relative; top:23px; left:-19px; width:auto;float:left}
+.pop-price{ position:relative; top:7px;display: block; text-align: center;}
+.proceed-to-pay-txt2{margin:-20px 0 0 72px;width:auto;float:left}
+
+
+/*---------------------------------------------------------------------
+-----------------------------------------------------------------------
+						STANDALONE CLASSES										
+-----------------------------------------------------------------------
+---------------------------------------------------------------------*/
+.fltrt {float: right;}
+.fltlft { float: left;}
+.err_red{ float: left;color:red;}
+.clearfloat { height:0;font-size: 1px;line-height: 0px}
+.down{xbackground:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/down-arrow.gif) no-repeat right center; xpadding-right:15px}
+.marginrt{ margin-right:4px;}
+.txt-black{ font-family:arial; font-size:12px; color:#181818}
+.darkblue{ font-family:arial; font-size:12px; color:#004f96}
+.white-txt{font-family:arial; font-size:12px; color:#fff}
+
+/**************global settings**********/
+a {outline:none}
+a img { border: none}
+a:link {color:#004f96;text-decoration:none; cursor:pointer;}
+a:visited {color: #004f96; text-decoration:none;cursor:pointer;}
+a:hover, a:active, a:focus {color:#004f96; text-decoration:underline !important;cursor:pointer;}
+
+/*---------------------------------------------------------------------
+-----------------------------------------------------------------------
+							MAIN CONTAINERS											
+-----------------------------------------------------------------------
+---------------------------------------------------------------------*/
+.container {width:986px;max-width:1260px;min-width:780px;margin: 0 auto; overflow:hidden;height:auto}
+.header {background:#fff;height:212px;width:100%}
+.content {float:left;width:986px;height:auto;}
+.footer {background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/foot.gif) repeat-x;clear: both;width:100%;height:513px}
+/*---------------------------------------------------------------------
+-----------------------------------------------------------------------
+							BODY CONTAINERS											
+-----------------------------------------------------------------------
+---------------------------------------------------------------------*/
+
+.why-shop-container{height:35px; width:986px;  float:left; margin-top:10px;}
+.why-shop-img{width:212px; height:35px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/why-shop-fb-img.gif) no-repeat; float:left}
+.why-shop-center{ width:774px; height:35px;background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/why-shop-fb-strech.gif) repeat-x; float:left; }
+.why-shop-fb-links{width:auto; height:23px; float:left;  margin:6px 0 0 10px; overflow:hidden;}
+/*the links*/
+.why-shop-link1{padding-top:3px; width:auto; height:23px; border-right:1px solid #a9ccde; font-weight:bold; float:left; font-family:arial; font-size:14px; padding-right:8px;}
+.why-shop-link2{padding-right:8px;padding-left:7px;}
+.why-shop-link3{padding-right:8px;padding-left:7px;}
+.why-shop-link4{padding-right:8px;padding-left:7px;}
+.why-shop-link5{padding-right:8px;padding-left:7px; border:none;}
+
+
+/*----------------------BIG ROW 1 STARTS-----------------------------------------------------------------------------*/
+
+.big-row1{ width:1000px; height:273px;float:left; margin-top:8px;}
+.dynamic-content{width:707px; height:271px; float:left;}
+.dynamic-content2{width:267px; height:271px;  float:left; margin-left:12px; background:#252525;}
+.advert1{ font-family:arial; font-size:20px; color:#ffffff; font-weight:bold; margin:17px 0 0 15px;float:left; width:200px;}
+.advert-content{width:177px; height:37px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/deal-club-img.gif) no-repeat left center;font-family:arial; font-size:12px; color:#ffffff; padding-left:43px; margin:15px 0 0 14px; float:left;}
+
+.deals-txt1{font-family:arial; font-size:12px; color:#fff; margin:10px 0 0 15px;width:38px; float:left}
+.deals-txt2{font-family:arial; font-size:12px; color:#fff; margin:10px 0 0 15px;width:89px; float:left}
+.deals-email{padding:5px 0 0 10px; width:223px; padding-left:10px; height:24px; border:1px solid #124986; margin-left:15px; font-family:arial; font-size:12px; color:#bfbfbf;}
+
+.deals-phone1{ padding:5px 0 0 5px;width:32px; height:24px; border:1px solid #124986;float:left;margin-left:15px; font-family:arial; font-size:12px; color:#bfbfbf;}
+.deals-phone2{ padding:5px 0 0 10px;width:180px; height:24px; border:1px solid #124986; float:left; margin-left:3px;  font-family:arial; font-size:12px; color:#bfbfbf;}
+.deals-submit-img{background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/deals-submit.gif) no-repeat scroll 0 0 transparent;border:medium none;float:left;height:36px;margin:15px 0 0 15px;overflow:hidden;width:83px;}
+
+#email1_msg{font-family:arial; color:#ff2d3c; font-size:11px; margin:10px 0 0 5px; padding-left:10px;}
+#isdcode_msg{font-family:arial; color:#ff2d3c; font-size:11px; margin:10px 0 0 5px; padding-left:10px; height:17px; width:133px;}
+.mobno_msg1{font-family:arial; color:#ff2d3c; font-size:11px; margin:-17px 0 0 109px; padding-left:10px; height:17px; width:133px;}
+.deals-msg1{float:left;position:relative; top:17px; left:25px; color:#a9edfc}
+
+
+
+/*----------------------BIG ROW 2 STARTS-----------------------------------------------------------------------------*/
+.big-row2{ width:986px; height:300px;float:left; margin-top:8px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/big-row-2.jpg) no-repeat;}
+
+
+/*----------------------BIG ROW 3 STARTS-----------------------------------------------------------------------------*/
+.big-row3{ width:984px; height:456px;float:left; margin-top:8px; border:1px solid #8c8c8c; background:#fff;}
+.big-row-headings{ width:900px; height:31px; float:left;margin:15px 0 0 21px; float:left}
+.row-headings{font-family:arial; font-size:22px; color:#252525; float:left;  padding-right:4px; margin-right:4px}
+.row-viewall{padding-top:8px; padding-right:10px; width:190px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/viewl-all-bg-img.gif) center right no-repeat; background-position:163px 14px; float:left}
+.v-rule2{background:none repeat scroll 0 0 #C9BACB;float:left;height:22px;width:1px; margin:4px 10px 0 0;}
+
+
+.item-container{ height:400px; width:227px;  float:left; margin:7px 0 0 16px;}
+.item-head-bg{width:225px; height:3px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/items-head-bg.gif) no-repeat; float:left;  overflow:hidden;}
+.item-name{width:223px; height:33px; border-bottom:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; background:#f7f7f7; float:left}
+.item-name-style{padding-top:8px;vertical-align:middle;color:#004F96;float:left;font-family:arial;font-size:18px;height:29px;width:219px;text-align:center}
+.item-image-container{width:223px; height:239px;border-bottom:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; float:left; text-align:center; background:#f6f6f6;}
+.item-price-container{width:223px; height:94px;border-top:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; float:left; margin-top:4px; background:#f6f6f6;}
+.item-foot-bg{width:225px; height:3px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/items-foot-bg.gif) no-repeat; float:left;  overflow:hidden;font-family:arial;}
+.item-MRP{width:101px;padding-top:5px; height:26px; border:1px solid  #cbcbcb; text-align:center; float:left; margin:13px 0 0 5px; font-family:arial; font-weight:bold; font-size:16px; color:#252525; text-decoration:line-through;}
+.item-offer-price{width:101px;padding-top:5px; height:26px; border:1px solid  #cbcbcb; text-align:center;float:left; margin:13px 0 0 5px;font-family:arial; font-weight:bold; font-size:16px; color:#f47a21;}
+.item-buy-now{width:170px; height:35px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/item-buy-now-btn.gif) no-repeat; overflow:hidden; float:left; margin:7px 0 0 30px; }
+
+
+
+/*----------------------BIG ROW 4 STARTS-----------------------------------------------------------------------------*/
+
+.big-row4{ width:984px; height:456px;float:left; margin-top:8px; border:1px solid #8c8c8c; background:#fff;}
+
+
+/*----------------------BIG ROW 5 STARTS-----------------------------------------------------------------------------*/
+
+.big-row5{ width:984px; height:456px;float:left; margin-top:8px;margin-bottom:15px; border:1px solid #a64548; background:#fff;}
+
+.luck-price-bg{width:985px; height:75px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/lucky-price-bg.gif) no-repeat; border-right:2px solid #610303 overflow:hidden; float:left; position:relative; top:-6px;}
+.lp-item-container{ float:left;
+height:400px;
+margin:7px 0 0 20px;
+width:172px;}
+.lp-item-head-bg{width:177px; height:2px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/lucky-price-head-bg.gif) no-repeat; float:left;  overflow:hidden;}
+.lp-item-name{width:175px; height:27px; border-bottom:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; background:#f7f7f7; float:left}
+.lp-item-name-style{vertical-align:middle;color:#004f96;float:left;font-family:arial;font-size:13px;height:17px;width:131px;text-align:center}
+.lp-item-image-container{width:175px; height:195px;border-bottom:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; float:left; text-align:center; background:#f6f6f6;}
+.lp-item-price-container{width:175px; height:98px;border-top:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; float:left; margin-top:4px; background:#f6f6f6;}
+.lp-item-foot-bg{width:177px; height:2px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/lucky-price-foot-bg.gif) no-repeat; float:left;  overflow:hidden;font-family:arial;}
+.lp-item-MRP{width:75px; height:26px; border:1px solid  #cbcbcb; text-align:center; float:left; margin:13px 0 0 5px; font-family:arial; font-weight:bold; font-size:13px; color:#252525; text-decoration:line-through;}
+.lp-item-offer-price{width:75px; height:26px; border:1px solid  #cbcbcb; text-align:center;float:left; margin:13px 0 0 5px;font-family:arial; font-weight:bold; font-size:13px; color:#f47a21;}
+.lp-item-buy-now{width:157px; height:30px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/lucky-price-buy-now.gif) no-repeat; overflow:hidden; float:left;margin:7px 0 0 10px; }
+.lucky-home{height:411px;}
+
+/*---------------------------------------------------------------------
+-----------------------------------------------------------------------
+							FOOTER CONTAINERS											
+-----------------------------------------------------------------------
+---------------------------------------------------------------------*/
+.footer-spacer{width:100%; height:14px; float:left; overflow:hidden;}
+.footer-container{ width:984px; height:450px; margin:0 auto; clear:both; padding-top:10px;}
+.footer-row1{width:984px; height:140px; border-bottom:1px solid #aeaeae; float:left}
+.footer-row2{width:984px; height:176px; border-top:1px solid #f6f6f6;border-bottom:1px solid #aeaeae; float:left}
+.footer-row3{width:984px; height:130px; border-top:1px solid #f6f6f6;float:left}
+
+
+/*------------------First Row CONTENT--------------------------------*/
+.future-group-trust-container{width:175px; height:137px;border-right:1px solid #aeaeae; float:left }
+.future-group-trust-img{width:159px; height:14px; overflow:hidden; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/future-grp-trust.gif) no-repeat}
+.future-group-trust-ul{ font-family:arial; font-size:11px; color:#00529c; list-style:none; margin:20px 0 0 0;}
+.future-group-trust-ul li{background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/list-arrow.gif) no-repeat left center;margin-top:6px;padding-left:12px;}
+
+.feedback-container{width:272px; height:137px; border-left:1px solid #f6f6f6; border-right:1px solid #aeaeae; float:left; text-align:center;}
+.feedback-container-img{width:260px; height:14px; overflow:hidden; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/feedback-us.gif) no-repeat; margin:0 0 9px 3px;}
+.feedback-box {
+	border:1px solid #A7B2BE;
+	color:#717171;
+	float:left;
+	font-family:arial;
+	font-size:11px;
+	height:63px;
+	margin:0 0 9px 9px;
+	overflow:hidden;
+	padding:8px 0 0 8px;
+	width:236px;
+}
+.feedback-submit-img{width:67px; border:none; height:28px; overflow:hidden; float:left; margin-left:10px}
+
+
+.sign-up-deals{width:225px; height:137px; border-left:1px solid #f6f6f6; float:left; border-right:1px solid #aeaeae; text-align:center  }
+.sign-up-deals-img{width:139px; height:14px; overflow:hidden; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/sign-up-deals.gif) no-repeat; margin:0 0 9px 10px;}
+
+
+.sign-up-deals-email{width:198px; padding:0 0 0 10px; height:24px; border:1px solid #a8b3bf; float:left; margin:0 0 7px 10px; font-family:arial; font-size:11px; color:#717171}
+.sign-up-deals-phone1{width:25px; padding-left:4px; height:24px; border:1px solid #a8b3bf; float:left;  margin:0 0 0 10px;font-weight:bold; font-family:arial; font-size:11px; color:#717171}
+.sign-up-deals-phone2{width:163px; padding:0 0 0 10px; height:26px; border:1px solid #a8b3bf; float:left;  margin:0 0 0 3px; font-family:arial; font-size:11px; color:#717171}
+.sign-up-deals-submit-img{background:url("http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/feedback-submit.gif") no-repeat scroll 0 0 transparent;border:medium none;float:left;height:28px;margin:5px 0 0 10px;overflow:hidden;width:67px;}
+.deals_msg2{float:left; margin:17px 0 0 10px;}
+.red{color:red;}
+.blue{color:blue;}
+
+
+.customer-testimonials{width:300px; height:137px;border-left:1px solid #f6f6f6; float:left}
+.customer-testimonials-img{width:189px; height:14px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/customer-testimonials.gif) no-repeat;margin:0 0 9px 10px; }
+
+
+/*-----------------SECOND Row CONTENT--------------------------------*/
+.links-multiple{width:361px; height:164px;  border-right:1px solid #aeaeae; float:left; margin-top:6px;}
+
+.future-group-first-ul{margin:0; padding:0;float:left;font-family:arial; font-size:11px; color:#00529c; list-style:none; width:120px; margin-top:8px;margin-left:0px;}
+.future-group-first-ul li{padding-top:1px;}
+.future-group-second-ul{float:left;font-family:arial; font-size:11px; color:#00529c; list-style:none;width:120px;margin-top:8px;margin-left:0px;}
+.future-group-second-ul li{padding-top:1px;}
+.future-group-third-ul{float:left;font-family:arial; font-size:11px; color:#00529c; list-style:none;width:120px;margin-top:8px;margin-left:0px;}
+.future-group-third-ul li{padding-top:1px;}
+
+.promotions-container{width:174px; height:164px;border-left:1px solid #f6f6f6; border-right:1px solid #aeaeae; float:left;  margin-top:6px;}
+.promotions-img{width:155px; height:13px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/deals-promotions.gif) no-repeat; overflow:hidden;margin:3px 0 0 10px;}
+
+.deals-promotions-ul{ font-family:arial; font-size:11px; color:#00529c; list-style:none; margin:10px;}
+.deals-promotions-ul li{margin-top:6px;padding-left:12px;}
+.connectwithus-img{width:114px; height:14px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/connectwithus-img.gif) no-repeat; overflow:hidden; float:left; margin:10px 0 0 10px; }
+.networks{width:117px; height:32px;  float:left; margin:10px 0 0 22px;}
+
+.facebook-logo{width:31px; height:32px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/facebooklogo.gif) no-repeat; overflow:hidden; float:left}
+.twitter-logo{width:31px; height:32px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/twitter-logo.gif) no-repeat; overflow:hidden; float:left; margin-left:3px}
+.youtube-logo{width:31px; height:32px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/youtube-logo.gif) no-repeat; overflow:hidden; float:left; margin-left:3px}
+
+.information-container{width:137px; height:164px;border-left:1px solid #f6f6f6; border-right:1px solid #aeaeae; float:left;  margin-top:6px; }
+.information-img{width:86px; height:14px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/information-img.gif) no-repeat; float:left; margin:3px 0 0 20px; }
+.information-ul{font-family:arial; font-size:11px; color:#00529c; list-style:none; width:126px; margin:1px 0 0 22px; float:left}
+.information-ul li{padding-top:2px;}
+
+
+
+.your-account-container{width:127px; height:164px;border-left:1px solid #f6f6f6; border-right:1px solid #aeaeae; float:left;margin-top:6px;}
+.your-account-img{width:101px; height:14px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/your-account-img.gif) no-repeat; overflow:hidden;margin:3px 0 0 10px; }
+
+.your-account-ul{font-family:arial; font-size:11px; color:#00529c; list-style:none; width:126px;margin:1px 0 0 14px; float:left}
+.your-account-ul li{padding-top:2px;}
+
+
+
+.secure-shopping-container{width:100px; height:164px;border-left:1px solid #f6f6f6;float:left;margin-top:6px;}
+.secure-shopping-img{width:119px; height:14px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/shopping-img.gif) no-repeat; overflow:hidden; float:left;margin:3px 0 0 14px;}
+.secure-content-content{font-family:arial; font-size:11px; color:#45240c; width:150px; height:auto; margin:3px 0 10px 18px; float:left}
+.thawte-logo{width:83px!important; height:83px!important; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/thawte-logo.gif) no-repeat; overflow:hidden;margin:0 0 0 15px;}
+
+/*-----------------Third Row CONTENT--------------------------------*/
+.fb-information{width:740px; height:115px; border-right:1px solid #aeaeae; margin-top:5px; float:left}
+.fb-info1{float:left; width:730px; height:auto;color:#656565; font-family:arial; font-size:11px; float:left; text-align:justify;}
+.customer-care-container{width:209px; height:116px; float:left; border-left:1px solid #f6f6f6;margin-top:6px; }
+.customer-care-tel-img{width:37px; height:27px; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/customer-care-tel.gif) no-repeat; overflow:hidden;}
+.customer-care-img{width:124px; height:14px; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/customer-care-img.gif) no-repeat; overflow:hidden;margin:10px 0 0 5px;}
+
+.customer-care-contact-details{width:197px; height:91px; margin-left:6px; float:left; font-family:arial; font-size:11px; color:black;}
+.FutureBazaarCopyright{width:100%; text-align:center; margin-top:13px;}
+
+/*---------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+						STYLES FOR THE CONTENT SLIDER
+
+-----------------------------------------------------------------------------
+---------------------------------------------------------------------------*/
+
+#featured{background:none repeat scroll 0 0 #fff;height:271px;position:absolute;z-index:1;width:707px}
+#featured ul.ui-tabs-nav{ position:absolute; 
+	top:0; left:565px; 
+	list-style:none; 
+	padding:0; margin:0; 
+	width:141px; 
+	position:absolute;
+	z-index:2;
+	margin-top:1px;
+	text-align:left;
+}
+#featured ul.ui-tabs-nav li{ 
+	padding:0 0 0 19px;
+	font-size:12px; 
+	color:#666;
+	text-align:left;
+	position:relative;
+	z-index:1;
+
+	
+}
+#featured ul.ui-tabs-nav li img{ 
+	float:left; margin:2px 5px; 
+	background:#fff; 
+	padding:2px; 
+	border:1px solid #eee;
+}
+#featured ul.ui-tabs-nav li span{ 
+	font-size:11px; font-family:Verdana; 
+	line-height:18px; 
+}
+#featured li.ui-tabs-nav-item a{ 
+	font-family:arial;
+	line-height:15px;
+	font-size:11px;
+	display:block; 
+	height:44px; 
+	color:#333;  
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/tabs-nor-bg.gif) repeat-x;
+	padding-top:10px;
+	padding-left:10px;
+
+}
+#featured li.ui-tabs-nav-item a:hover{ 
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/tabs-hover-bg.gif)repeat-x;
+	color:#fff;
+}
+#featured li.ui-tabs-selected{ 
+    
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/selection-point4er.png) transparent top left no-repeat;  
+}
+#featured ul.ui-tabs-nav li.ui-tabs-selected a{ 
+	background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/tabs-hover-bg.gif) repeat-x;
+	color:#fff;
+	text-align:left;
+}
+#featured .ui-tabs-panel{ 
+	background:none repeat scroll 0 0 #999999;
+height:270px;
+margin:0 0 0 1px;
+position:relative;
+padding-top:1px;
+width:583px;
+
+}
+#featured .ui-tabs-panel .info{ 
+	position:absolute; 
+	top:180px; left:0; 
+	height:70px; 
+	background:green; 
+}
+#featured .info h2{ 
+	font-size:18px; font-family:Georgia, serif; 
+	color:#fff; padding:5px; margin:0;
+	overflow:hidden; 
+}
+#featured .info p{ 
+	margin:0 5px; 
+	font-family:Verdana; font-size:11px; 
+	line-height:15px; color:#f0f0f0;
+}
+#featured .info a{ 
+	text-decoration:none; 
+	color:#fff; 
+	text-align:center;
+}
+#featured .info a:hover{ 
+	text-decoration:underline; 
+}
+#featured .ui-tabs-hide{ 
+	display:none; 
+}
+
+
+/******************validations for deals*************************/
+
+.err-emailx{
+    z-index: 999;
+	BORDER:1PX SOLID;
+	HEIGHT:30PX;
+	width:200px;
+	float:left;
+	color:yellow;
+	
+}
+
+/*---------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+						STYLES FOR THE TESTIMONIALS SLIDER
+
+-----------------------------------------------------------------------------
+---------------------------------------------------------------------------*/
+
+.paginationstyle {
+float:left;
+width:90px;
+vertical-align:top;
+margin:5px 0 0 0;
+}
+.paginationstyle select{ /*Style for demo pagination divs' select menu*/
+border: 1px solid navy;
+margin: 0 15px;
+}
+
+.paginationstyle a{ /*Pagination links style*/
+padding: 0 5px;
+text-decoration: none;
+border: 1px solid #00529C;
+color: #ffffff !important;
+background-color:#00529c;
+font-family:arial;
+font-size:11px;
+}
+
+.paginationstyle a:hover, .paginationstyle a.selected{
+color:black !important;
+background-color: #ededed;
+border-color:transparent;
+font-family:arial;
+font-size:11px;
+}
+
+.paginationstyle a.disabled, .paginationstyle a.disabled:hover{ /*Style for "disabled" previous or next link*/
+background-color: white;
+cursor: default;
+color:black !important;
+border-color: transparent;
+font-family:arial;
+font-size:11px;
+}
+
+.paginationstyle a.imglinks{ /*Pagination Image links style (class="imglinks") */
+border: 0;
+padding: 0;
+}
+
+.paginationstyle a.imglinks img{
+vertical-align: bottom;
+border: 0;
+}
+
+.paginationstyle a.imglinks a:hover{
+background: none;
+}
+
+.paginationstyle .flatview a:hover, .paginationstyle .flatview a.selected{ /*Pagination div "flatview" links style*/
+color: #000;
+background-color:#ededed;
+border-color:#a7a7a7;}
+
+.customer-testimonials-container{ float:left;margin-top:-6px}
+
+.read-all-anchor{ font-size:11px; height:19px; width:107px;margin:10px 0 0 0px}
+.tes-cont-holder{font-size:11px; font-family:arial; color:black; text-align:left; float:left;  width:228px;}
+.tes-img-holder{margin-right:2px; margin-left: 4px; margin-bottom:4px; height:77px; width:61px; float:left}
+
+.subCatDiv{height:43px; width:99px; border:1px solid;position:relative; top:-44px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/up-arrow-pantaloon.gif) no-repeat; background-position:71px 14px; border-bottom:none;}
+
+/*-----------------------------------
+		Navigation Menu
+-------------------------------------*/
+#nav {xheight: 44px; padding:0; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/tabLeft-fb.gif) no-repeat 0 0; font-family:arial, sans-serif; width:985px; margin:0 auto; border-left:1px solid #064175;}
+
+#menu {height:44px; width:985px; position:relative;font-size:11px; margin: 0; z-index:1000; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/tabLeft-fb.gif) repeat-x; float:left; }
+#menu table.ie6 {border-collapse:collapse; margin:0; padding:0;}
+
+#menu ul {padding:0; margin:0; list-style: none; position: relative;}
+#menu ul li {float:left; width: auto;}
+#menu ul li a {display:block; float:left;padding:2px 25px 0 5px;text-decoration:none; color:#fff; font-weight:bold; height:42px;line-height:40px;font-size:11px; border-right:1px solid #064175; border-left:1px solid #2671b3; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/li-dwn-arrow-fb.gif) right no-repeat}
+#menu ul li a b {display:block; float:left;padding:0 0 0 15px; text-decoration:none; font-weight:bold; height:44px;line-height:44px;font-size:11px; cursor:pointer;}
+
+#menu ul li.level1 .holder {position:absolute;left: 4px; *left: 1px; top: 41px;float: left;}
+.ie7 #menu ul li.level1 .holder {left: 4.5px;}
+#menu ul li.right .holder {position:absolute;right: 0!important; top: 41px;float: left;}
+
+#menu ul li div .leftSide {margin-left:-4px;float:left; border:1px solid #0062bb;border-top:none; padding:10px; background:#f2fefa; margin-top:3px;}
+#menu ul li div .rightSide {float:left; display:inline; padding:0 10px 0 0; }
+
+#menu ul li {position:relative;}
+#menu ul li a:hover {color:#00539e; background-position:right center; white-space:nowrap; position:relative; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/li-up-arrow.gif) right no-repeat}
+#menu ul li a:hover b {color:#00539e; background-position:0 100px;}
+#menu ul li a.sub:hover {color:#00539e; background-position:right bottom; white-space:nowrap; position:relative;}
+#menu ul li a.sub:hover b {color:#00539e; background-position:left bottom;}
+
+#menu ul li:hover > a {color:#00539e !important; position:relative; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/li-up-arrow.gif) right no-repeat}
+#menu ul li:hover a.sub {color:#fff; background-position:right bottom; white-space:nowrap; position:relative;}
+#menu ul li:hover a.sub > b {color:#00539e; background-position:left bottom;}
+
+#menux ul :hover div.holder {position:absolute; top:41px; left:4px; margin: 0; padding: 0;}
+
+#menux ul li.right a:hover div.holder {left:auto; right:3px; top:41px;}
+#menux ul li.right:hover div.holder {left:auto; right:4px; top:41px;}
+
+#menu ul dl {width:auto; margin:0 0 0 0; padding:0 0;list-style:none;}
+#menu ul dl dt {padding-right:10px; margin:0; line-height:20px; color:#2173af; white-space:nowrap; font-size:12px; font-weight:bold}
+#menu ul dl dd {background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/menu/sub-link-arrow.gif) 0 6px no-repeat; display:block; padding:0; margin:0; border:none; padding:0 10px 0 10px;}
+#menu ul dt a {display:block; height: 20px; line-height: 20px; color:#2173AF; text-align:left; margin: 0;font-weight:bold; white-space:nowrap; float:none; border:none; font-size:11px;padding:0; background:none;}
+#menu ul dt a:hover { background:none;}
+#menu ul dd a {display:block; height: 20px; line-height: 20px; color:#000; text-align:left; margin: 0;font-weight:normal; white-space:nowrap; float:none; border:none; font-size:11px;padding:0; background:none;}
+#menu ul dd a:hover { background:#d3d8f2; color:#000; font-size:11px; padding:0;}
+
+#menu ul table td {vertical-align:top;}
+.rightSide td{border: none;}
+
+/*************sign-in page***********/
+@charset "utf-8";
+.sign-up-wrapper #content {
+	float:left;
+	padding:0 13px 0 0;
+	margin:0;
+	width:985px;
+	background:#fff;
+}
+/* Wrapper*/
+* {margin:0px; padding:0px;}
+.sign-up-wrapper{  height:auto; margin:0 auto; width:985px; }
+
+
+/* Headings */
+.sign-up-heading{ font-family:arial; font-size:22px; color:#00529c; width:100px; height:30px; overflow:hidden; margin:30px 0 14px 24px; line-height: 20px;}
+
+
+/* Containers */
+.sign-up-left-container{width:679px; height:252px; margin-left:10px; float:left; }
+.sign-up-left-bg{ width:14px; height:252px; background:url(http://images.futurebazaar.com/catalog/fb_new/sign-up-left-bg.gif) no-repeat; float:left}
+.sign-up-top-bg{width:653px; height:28px; background:#eff7fe; border-top:1px solid #e0f0ff; float:left}
+.sign-up-info {
+background:#FFFFFF none repeat scroll 0 0;
+float:left;
+padding:20px 0 0 20px;
+width:632px;
+}
+.sign-up-center {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/sign-up-centerbg.jpg) repeat-y scroll 0 0;
+float:left;
+padding-left:15px;
+width:666px;
+}
+.sign-up-bottom {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/sign-up-bottombg.jpg) no-repeat scroll 0 0;
+float:left;
+height:47px;
+margin-bottom:20px;
+* margin-bottom:0;
+padding-left:139px;
+padding-top:15px;
+width:542px;
+}
+.sign-up-info-heading{font-family:arial; font-size:18px; color:#666666; width:350px; height:18px;}
+.email-id{ width:392px; height:24px; float:left; margin:14px 0 0 20px;}
+.mand-heads{font-family:arial; font-size:12px; color:#2f3333; padding-top:5px; float:left; font-weight:bold;}
+.passwordbox{width:392px; height:24px; float:left; margin:18px 0 0 20px; }
+.sign-up-check{width:200px; height:auto; float:left; margin:18px 0 0 133px; * margin:18px 0 0 74px; font-family:arial; font-size:12px; color:#333333;}
+.sign-up-bottom-bg {
+background:#EFF7FE none repeat scroll 0 0;
+border-bottom:1px solid #E0F0FF;
+float:left;
+height:45px;
+margin-top:11px;
+* margin-top:9px;
+margin-bottom: 10px;
+padding-left:139px;
+padding-top:12px;
+width:514px;
+}
+.sign-up-right-bg{ width:14px; height:252px; background:url(http://images.futurebazaar.com/catalog/fb_new/sign-up-right-bg.gif) no-repeat; float:right; margin-top: -187px; * margin-top: -262px;}
+.sign-up-big-left-con {
+float:left;
+height:auto;
+width:695px;
+}
+
+
+.already-reg{width:254px; height:94px; float:left; margin:10px 10px 0 0;}
+.already-reg-left{ width:6px; height:94px; background:url(http://images.futurebazaar.com/catalog/fb_new/left-curve-reg.gif) no-repeat; float:left}
+.already-reg-center{width:242px; height:92px; background:#fffae3; border-top:1px solid #ffde93; border-bottom:1px solid #ffde93; float:left}
+.already-reg-right{width:6px; height:94px; background:url(http://images.futurebazaar.com/catalog/fb_new/right-curve-reg.gif) no-repeat;float:left}
+
+
+.buy-on-phone{width:254px; height:94px; float:left; margin-top:10px;}
+.bop-reg-left{ width:6px; height:94px; background:url(http://images.futurebazaar.com/catalog/fb_new/left-curve-reg.gif) no-repeat center; float:left}
+.bop-reg-center{width:242px; height:92px; background:#fffae3; border-top:1px solid #ffde93; border-bottom:1px solid #ffde93; float:left}
+.bop-reg-right{width:6px; height:94px; background:url(http://images.futurebazaar.com/catalog/fb_new/right-curve-reg.gif) no-repeat center;float:left}
+.sign-up-big-left-con .already-reg-txt{ float:left;font-family:arial; font-size:18px; color:#00529c; margin:16px 0 0 42px; * margin:15px 0 0 5px}
+.bop-txt{float:left;font-family:arial; font-size:18px; color:#00529c; margin:16px 0 0 59px; * margin:15px 0 0 30px}
+.bop-no{float:left;font-family:arial; font-size:25px; color:#fb6c1d; margin:10px 0 0 32px; * margin:0 0 0 15px; width:174px; height:22px;}
+
+
+
+
+/* element Styles*/
+
+.inputbox{ width:278px!important; height:19px!important; border:1px solid #7fc2ff!important; float:right!important; margin-left:40px!important; background:#f8fcff!important; color:#545454!important;font-family:arial!important; font-size:12px!important; padding: 3px 0 0!important; }
+.passbox{width:278px; height:22px; border:1px solid #7fc2ff; float:right;  background:#f8fcff; color:#545454;font-family:arial; font-size:12px; padding: 3px 0 0 !important;}
+.checkboxterms{float:left; color:#0F0;}
+
+
+/* Images*/
+/*.sign-up-login-img{ width:107px; height:37px; background:url(http://images.futurebazaar.com/catalog/fb_new/sign-up-login-img.gif) no-repeat; margin:11px 0 0 133px; * margin:11px 0 0 152px;}*/
+
+.sign-up-login-img {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/b-login-btn.gif) no-repeat scroll 0 0;
+float:left;
+height:35px;
+margin-right:10px;
+width:90px;
+}
+.bop-txtnoadd{background:url(http://images.futurebazaar.com/catalog/fb_new/toll-free.gif) no-repeat;float:left; width:220px; height:13px; margin:0 0 0 6px; * margin:0 0 0 6px}
+.sign-up-img{ background:url(http://images.futurebazaar.com/catalog/fb_new/sign-up-ver.jpg) no-repeat;  width: 95px; height: 30px; float:left; margin:10px 0 0 70px;  * margin:10px 0 0 35px;}
+.why-join-fb-img{ background:url(http://images.futurebazaar.com/catalog/fb_new/acc-reg-sprite.gif) no-repeat; background-position: 0 -111px; width: 254px; height: 46px; float:left }
+.tickmark-img{ background:url(http://images.futurebazaar.com/catalog/fb_new/acc-reg-sprite.gif) no-repeat; background-position: 0 -87px; width: 17px; height: 14px; float:left; margin:10px 0 0 5px; }
+
+
+
+
+/*-------Stand alone */
+.sup-red{color:red;}
+.terms-conditions-con{font-family:arial; font-size:12px; color:#2f3333; margin-left:2px; float:left; padding-top:2px;}
+.mandatory-heading{font-family:arial; font-size:12px; color:#2f3333; width:123px; height:14px; margin:5px 0 0 525px; * margin-left:510px}
+
+
+
+.why-join-fb-div-con{ width:254px;height:auto; float:left;  background:#fffae3;}
+.reasons{height:37px; width:244px; float:left; border-bottom:1px solid #ffde93; margin-left:5px; * margin-left:3px;}
+.reasons-woborder{ height:37px; width:244px; float:left;  margin-left:5px; * margin-left:3px;}
+.reasons-txt{float:left; width:200px; margin-left:12px;font-family:arial; font-weight:bold; font-size:12px; color:#333; padding-top:10px;}
+.reasons-txt-double{float:left; width:200px;  height:35px; margin-left:12px;font-family:arial; font-weight:bold; font-size:12px; color:#333; padding-top:5px;}
+.forgt-pass {
+color:#00529C;
+cursor:pointer;
+float:left;
+font-size:12px;
+margin-top:10px;
+}
+.checkout-guest-heading {
+line-height: 20px;	
+color:#00529C;
+font-size:22px;
+padding-left:14px;
+}
+.chk-top-bg {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/chk-top-bg.jpg) no-repeat scroll 0 0;
+height:14px;
+overflow:hidden;
+width:681px;
+margin-top: 20px;
+}
+.chk-center-bg {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/sign-up-centerbg.jpg) repeat-y scroll 0 0;
+height:93px;
+padding:10px 0 0 30px;
+width:651px;
+}
+.guest-chkout {
+color:#666666;
+font-family:arial;
+font-size:18px;
+height:18px;
+margin:0;
+width:350px;
+}
+.chk-bottom-bg {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/chk-bottom-bg.jpg) no-repeat scroll 0 0;
+height:47px;
+padding:15px 0 0 139px;
+width:542px;
+}
+.guest-btn {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/guest-check-out-btn.jpg) no-repeat scroll 0 0;
+height:35px;
+width:161px;
+}
+.chk-content {
+color:#333333 !important;
+font-size:12px;
+padding-left:20px;
+}
+.sign-up-top {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/sign-up-topbg.jpg) no-repeat scroll 0 0;
+float:left;
+height:35px;
+width:681px;
+}
+
+.sign-up-info .errordesc label.error {
+	width: 560px!important;
+}	
+/*************sign-up page***********/
+@charset "utf-8";
+/*Account Registration CSS*/
+
+
+.acc-reg-wrap{ width:986px; height:897px;background:#ffffff}
+
+
+/* maine headings*/
+.acc-reg-heading{ font-family:arial; font-size:22px; color:#00529c; width:234px; height:30px;  overflow:hidden; margin:30px 0 16px 4px;}
+.mandatory-heading{font-family:arial; font-size:12px; color:#2f3333; width:123px; height:14px; margin:5px 0 0 525px; * margin-left:510px}
+.personal-info-heading{ font-family:arial; font-size:18px; color:#666666; width:165px; height:18px; margin:20px 0 0 15px;}
+.login-info-heading{font-family:arial; font-size:18px; color:#666666; width:165px; height:18px; margin:20px 0 0 15px;}
+/* maine headings end----------------*/
+
+
+
+/* ----------------big containers------------------------*/
+.acc-reg-info-left{ width:667px; height:794px; float:left}
+.acc-left-bg{ width:14px; height:794px; background:url(http://images.futurebazaar.com/catalog/fb_new/left-con-bg.gif) no-repeat; float:left}
+.acc-top-bg{width:653px; * width:635px; height:28px; background:#eff7fe; border-top:1px solid #e0f0ff; float:left }
+.acc-personal-info{width:653px; * width:635px; height:471px;background:#fff; border-bottom:3px solid #eff7fe; float:left }
+.login-information{width:653px; * width:635px; height:234px;float:left; }
+.bottom-bg{width:653px; * width:635px; height:56px; background:#eff7fe; border-bottom:1px solid #e0f0ff; float:left;}
+.acc-right-bg{ width:14px; *height:800px; * margin-left:-18px; height:794px; background:url(http://images.futurebazaar.com/catalog/fb_new/right-con-bg.gif) no-repeat; float:left}
+
+.right-content{ width:258px; height:611px; float:left; margin-left:10px; * margin-left:5px;}
+/* ----------------big containers---------ENDS---------------*/
+
+
+
+
+/*-----------standalone-------styles--------------*/
+.sup-red{color:red;}
+.OR{float:right; width:18px; font-family:arial; font-size:10px; height:19px; padding-top:5px; }
+.sms-alerts{clear:both; width:250px; height:14px; font-family:arial; font-size:11px; color:#000; margin-left:114px;}
+.terms-conditions-con{font-family:arial; font-size:12px; color:#2f3333;  float:left; padding-top:2px;}
+.news-letter-con{font-family:arial; font-size:12px; color:#2f3333; float:left; padding-top:2px;}
+/*-----------standalone-------styles----END----------*/
+
+
+
+
+
+/* element Styles*/
+
+/*.inputbox{ width:278px; height:22px; border:1px solid #7fc2ff; float:right; margin-left:54px; background:#f8fcff; color:#545454;font-family:arial; font-size:12px;}*/
+.selectstyle{ width:65px; height:26px !important; background:#f8fcff;border:1px solid #7fc2ff; float:right; margin-right:5px; color:#545454;font-family:arial; font-size:12px;}
+.nameinputbox{width:206px; height:22px; border:1px solid #7fc2ff; float:right; background:#f8fcff; color:#545454;font-family:arial; font-size:12px; padding: 3px 0 0 !important;}
+.textareastyle{width:276px; height:103px; border:1px solid #7fc2ff; float:right; background:#f8fcff;  color:#545454;font-family:arial; font-size:12px;}
+.selectstyle2{width:278px; height:22px; border:1px solid #7fc2ff; float:right; margin-left:54px; background:#f8fcff; ccolor:#545454; font-family:arial; font-size:12px;}
+.acc-personal-info .s4,.acc-personal-info .s3{width:278px; height:22px!important; border:1px solid #7fc2ff; float:right; margin-left:54px; background:#f8fcff; ccolor:#545454; font-family:arial; font-size:12px;}
+.landline-no{ width:207px; height:22px; border:1px solid #7fc2ff; float:right; background:#f8fcff; color:#545454; font-family:arial; font-size:12px; padding: 3px 0 0 !important;}
+.mobile-no{width:128px; height:22px; border:1px solid #7fc2ff; float:right; background:#f8fcff; color:#545454; font-family:arial; font-size:12px; padding: 3px 0 0 !important;}
+.checkboxterms{float:left; color:#0F0;}
+.checkboxnews{float:left; color:#0F0;}
+
+/*----element Style Ends-----------*/
+
+
+
+
+/* element containers and Names */
+
+.email-id-reg{ width:392px; height:24px; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.namediv{width:392px; height:24px; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.addressdiv{width:392px; height:auto; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px; padding: 3px 0 0 !important;}
+.acc-reg-wrap .countrydiv{width:392px; height:auto; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.citydiv{width:392px; height:auto; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.statediv{width:392px; height:auto; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.phonediv{width:392px; height:auto; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.passwordbox-reg{width:392px; height:auto; float:left; margin:18px 0 0 15px; * margin:8px 0 0 8px;}
+.verifypasswordbox{width:392px; height:24px; float:left; margin:4px 0 0 15px; * margin:4px 0 0 8px;}
+.promocodebox{width:392px; height:24px; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.terms-conditions-check{width:392px; height:24px; float:left; margin:18px 0 0 15px; * margin:18px 0 0 8px;}
+.news-letter-check{width:392px; height:24px; float:left; margin:5px 0 0 15px; * margin:5px 0 0 8px;}
+.why-join-fb-div-con{ width:254px;height:354px;  * height:360px;  float:left;  background:#fffae3;}
+.reasons{height:37px; width:244px; float:left; border-bottom:1px solid #ffde93; margin-left:5px; * margin-left:3px;}
+.reasons-woborder{ height:37px; width:244px; float:left;  margin-left:5px; * margin-left:3px;}
+.reasons-txt{float:left; width:200px; margin-left:12px;font-family:arial; font-weight:bold; font-size:12px; color:#333; padding-top:10px;}
+.reasons-txt-double{float:left; width:200px;  height:35px; margin-left:12px;font-family:arial; font-weight:bold; font-size:12px; color:#333; padding-top:5px;}
+.already-reg-reg{width:254px; height:94px; float:left; margin-top:10px;}
+.already-reg-left{ width:6px; height:94px; background:url(http://images.futurebazaar.com/catalog/fb_new/left-curve-reg.gif) no-repeat; float:left}
+.already-reg-center{width:242px; height:92px; background:#fffae3; border-top:1px solid #ffde93; border-bottom:1px solid #ffde93; float:left}
+.already-reg-right{width:6px; height:94px; background:url(http://images.futurebazaar.com/catalog/fb_new/right-curve-reg.gif) no-repeat;float:left}
+
+.buy-on-phone{width:254px; height:91px; float:left; margin-top:10px;}
+.bop-reg-left{ width:6px; height:91px; background:url(http://images.futurebazaar.com/catalog/fb_new/left-curve-reg.gif) no-repeat center; float:left}
+.bop-reg-center{width:242px; height:91px; background:#fffae3; border-top:1px solid #ffde93; border-bottom:1px solid #ffde93; float:left}
+.bop-reg-right{width:6px; height:91px; background:url(http://images.futurebazaar.com/catalog/fb_new/right-curve-reg.gif) no-repeat center;float:left}
+.already-reg-txt{ float:left;font-family:arial; font-size:18px; color:#00529c; margin:16px 0 0 28px; * margin:15px 0 0 15px}
+.bop-txt{float:left;font-family:arial; font-size:18px; color:#00529c; margin:16px 0 0 59px; * margin:15px 0 0 30px}
+
+/*----element containers and Names Ends-----------*/
+
+/*---------images----------*/
+
+.why-join-fb-img{ background:url(http://images.futurebazaar.com/catalog/fb_new/acc-reg-sprite.gif) no-repeat; background-position: 0 -111px; width: 254px; height: 46px; float:left } 
+.tickmark-img{ background:url(http://images.futurebazaar.com/catalog/fb_new/acc-reg-sprite.gif) no-repeat; background-position: 0 -87px; width: 17px; height: 14px; float:left; margin:10px 0 0 5px; } 
+.login-img {  background:url(http://images.futurebazaar.com/catalog/fb_new/acc-reg-sprite.gif) no-repeat; background-position: 0 0; width: 87px; height: 30px; float:left; margin:10px 0 0 70px;  * margin:10px 0 0 35px;}
+.reg-me-btn { background:transparent url(http://images.futurebazaar.com/catalog/fb_new/reset-submit.jpg) no-repeat scroll 0 0; width: 171px; height: 37px; margin:0 0 0 80px; }  
+.bop-txtnoadd{background:url(http://images.futurebazaar.com/catalog/fb_new/toll-free.gif) no-repeat;float:left; width:220px; height:13px; margin:6px 0 0 6px; * margin:0 0 0 6px}
+.tooltip-box{
+	 height:auto; * height:30px; padding: 2px 0 0 5px;  min-height:30px; width:222px; -moz-border-radius:10px; border-radius:10px; background:#fffae3; border:1px solid #ffde93; font-size: 11px;
+}
+.tooltip-box-arr{
+	position:absolute;margin:3px 0 0 -14px;
+	* margin:2px 0 0 -14px;
+}
+.error-box{
+	color: #ff0000;
+	font-size: 11px;
+}
+
+.tt-email{
+	float: left;
+	margin: 12px 0 0 418px;
+	* margin: -420px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-claim-account{
+	float: left;
+	margin: 0 0 0 418px;
+	* margin: -362px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-customerName{
+	float: left;
+	margin: 55px 0 0 418px;
+	* margin: -377px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+
+.tt-address{
+	float: left;
+	margin: 103px 0 0 418px;
+	* margin: -327px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.ie7 .tt-address{
+	height:50px!important;
+}
+.tt-city{
+	float: left;
+	margin: -5px 0 0 403px;
+	* margin: -4px 0 0 374px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-country{
+	float: left;
+	margin: 240px 0 0 418px;
+	* margin: -208px 0 0 8px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-state{
+	float: left;
+	margin: -5px 0 0 403px;
+	* margin: -5px 0 0 364px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-postalCode{
+	float: left;
+	margin: 360px 0 0 418px;
+	* margin: -86px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-phNo{
+	float: left;
+	margin: 400px 0 0 418px;
+	* margin: -43px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-cnNo, .tt-stdCode{
+	float: left;
+	margin: 458px 0 0 418px;
+	* margin: 13px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.tt-password{
+	float: left;
+	margin: 13px 0 0 418px;
+	* margin: -165px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.ie7 .tt-password{
+	margin-top: -155px;
+}
+.tt-confirmPassword{
+	float: left;
+	margin: 58px 0 0 418px;
+	* margin: -116px 0 0 10px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-email{
+	float: left;
+	margin: 20px 0 0 428px;
+	* margin: -412px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-customerName{
+	float: left;
+	margin: 63px 0 0 428px;
+	* margin: -369px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+
+.err-address{
+	float: left;
+	margin: 104px 0 0 428px;
+	* margin: -324px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.ie7 .err-address{
+	height:50px!important;
+}
+.err-city{
+	float: left;
+	margin: 3px 0 0 413px;
+	* margin: 4px 0 0 384px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-country{
+	float: left;
+	margin: 245px 0 0 428px;
+	* margin: -200px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-state{
+	float: left;
+	margin: 1px 0 0 413px;
+	* margin: 3px 0 0 374px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-postalCode{
+	float: left;
+	margin: 368px 0 0 428px;
+	* margin: -79px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-phNo{
+	float: left;
+	margin: 409px 0 0 428px;
+	* margin: 20px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-cnNo, .err-stdCode{
+	float: left;
+	margin: 445px 0 0 428px;
+	* margin: 18px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-password{
+	float: left;
+	margin: 21px 0 0 428px;
+	* margin: -157px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.err-confirmPassword{
+	float: left;
+	margin: 67px 0 0 428px;
+	* margin: -110px 0 0 20px;
+	position: absolute;
+	z-index: 999;
+	width: 227px;
+}
+.ie7 .err-password{
+	margin-top: -155px;
+}
+.err-agree {
+	margin:145px 0 0 427px;
+	* margin: -26px 0 0 20px;
+	position:absolute;
+	z-index: 999;
+	width:227px;
+}	
+.bo-red{
+	border:1px solid red!important;
+}
+
+.view-battletv {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/COD.gif) no-repeat scroll 0 0;
+float:left;
+height:55px;
+left:50px;
+overflow:hidden;
+position:relative;
+width:212px;
+}
+
+/***********post-registration**********/
+.greybox{width:950px; height:64px; float:left;  overflow:hidden; margin-top: 20px;}
+.left-img{width:13px; height:64px; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/blueBoxLeft.gif) no-repeat; overflow:hidden;}
+.center-img{width:906px; height:64px; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/center-stip-img.jpg) repeat-x; overflow:hidden; margin-top: 1px;}
+.congrates-txt{float:left; padding:10px;}
+.right-img{width:22px; height:64px; float:left; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/common/blueBoxRight.gif) no-repeat;  overflow:hidden;}
+.congrats {
+font-family:Arial,Helvetica,sans-serif;
+font-size:15px;
+line-height:20px;
+}
+.underline{text-decoration:underline; color:#000000;}
+.customercare{color:#00529c; font-size:12px; font-family:Arial, Helvetica, sans-serif;}
+.hr{border:1px dotted #F3F3F3;}
+.footerx{ float:left;margin-top: 20px;}
+.footer1{width:950px; float:left}
+.footer-linker{font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+.footer-linker.b{color:#FB4E09;}
+.footer2{width:950px; float:left; padding-top:4px;}
+
+/********* deals page style********/
+.curr-deals-details span {
+color:#FD790D;
+font-family:arial;
+font-size:14px;
+font-weight:bold;
+}
+.mrp-platinum span {
+color: #000000;
+font-weight: normal;
+}
+.strike-tr {
+	text-decoration: line-through;
+}	
+.currdeals-right .sold-span{
+	float: none;
+}
+.currdeals-right .sold-out{
+	background:url("http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/sold-out-img.gif") no-repeat 0 0;
+	width: 126px;
+	height: 37px;
+}
+	.currdeals-wrap{width:978px; border-top:1px solid #dbdada; margin:0 auto;}
+	.currdeals-header-tabs1{float: left; width: 487px; height: 37px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/deals-header-sprite.gif) no-repeat; background-position: 0 0; margin:0 0 -1px 19px;}
+	.currdeals-header-tabs2{float: left; width: 487px; height: 37px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/deals-header-sprite.gif) no-repeat; background-position: 0 -67px; margin:0 0 -1px 19px;}
+	.currdeals-header-tabs3{float: left; width: 487px; height: 37px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/deals-header-sprite.gif) no-repeat; background-position: 0 -134px; margin:0 0 -1px 19px;}
+	
+	.currdeals-item-container{width:973px; height:165px; border-bottom:1px dotted #cdcccc; float:left; padding:15px 0 5px 5px; }
+	.currdeals-left{width:794px; height:160px; border-right:1px solid #e5e5e5; float:left;  }
+	.curr-deals-img{height:160px; width:165px; background:#fff; float:left; text-align:center;}
+	.curr-deals-details{width:600px; float:left; height:160px; background:#fff;}
+	.currdeals-right{width:150px; height:150px; float:left; margin-left:10px}
+	.timer-left-bg{width:138px; height:87px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/time-left-bg.gif) no-repeat; margin:15px 0 0 5px; text-align:center; padding-top:45px;}
+	.deals-item-name{font-family:arial; font-size:14px; font-weight:bold; color:#00529c;}
+	.mrp-deals{font-family:arial; font-size:12px; color:#010101;}
+	.price-deals{font-family:arial; font-size:14px; color:#fd790d; font-weight:bold;}
+	.yousave-deals{font-family:arial; font-size:12px; color:#010101;}
+	.deals-time-txt{font-family:arial; font-size:14px; font-weight:bold; color:#000;}
+	.deals-time-red{color:#bf1000; font-family:arial; font-size:14px; font-weight:bold;}
+	.deals-closed-bg{ text-align: center!important; width:138px; height:127px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/deals-closed-bg.gif) no-repeat; overflow:hidden; }
+	.add-to-cart-inner .deals-closed-bg {margin: 10px auto;}
+	.add-to-cart-inner .timer-left-bg {margin: 15px auto -25px;}
+	.curr-deals-details .price-cut{font-size:11px;color:#000000 !important;font-style:normal;padding:0 5px 0 0;text-decoration:none;}
+	.xprice-deals{clear:both;color:#FD790D;display:block;font-size:12px;font-weight:bold;padding-left:0;width:130px;}
+	.current-deals{
+		width:115px; height:24px; float:left; color:#666666; font-family:arial; font-size:14px; font-weight:bold;text-align:center; vertical-align:middle; padding-top:10px;
+	}
+	.future-deals{
+		width:133px; height:24px;float:left; color:#666666;margin-left:2px;font-family:arial; font-size:14px; font-weight:bold;text-align:center; vertical-align:middle; padding-top:10px;	
+	}
+	.missed-deals{
+		width:112px;  height:24px;float:left; color:#666666; margin-left:2px;font-family:arial; font-size:14px; font-weight:bold;text-align:center; vertical-align:middle; padding-top:10px;
+	}
+	.currdeals-header-tabs1 .current-deals{
+		color: #00529C;
+	}
+	.currdeals-header-tabs2 .future-deals{
+		color: #00529C;
+	}
+	.currdeals-header-tabs3 .missed-deals{
+		color: #00529C;
+	}
+	
+/************** shipping details for guest checkout style *************/
+.guest-chkout-center {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/sign-up-centerbg.jpg) repeat-y scroll 0 0;
+float:left;
+padding-left:15px;
+width:666px;
+padding-bottom:10px;  
+}	
+.guest-check-info {
+color:#333333;
+font-size:11px;
+margin-top:10px;
+padding-left:3px;
+}
+.email-id-confirm {
+float:left;
+height:24px;
+margin:20px 0 0 0;
+width:436px;
+}
+.guest-chkout-center .email-id {
+float:left;
+height:24px;
+margin:20px 0 0 0;
+width:436px;
+}
+.guest-check-info-two {
+color:#333333;
+float:right;
+font-size:11px;
+height:30px;
+margin-top:0;
+padding-left:3px;
+padding-right:144px;
+width:330px;
+}
+.simple-input {
+float:left;
+height:24px;
+margin-top:20px;
+width:436px;
+}
+.center-seperator {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/center-line-bg.jpg) no-repeat scroll 0 0;
+float:left;
+height:13px;
+overflow:hidden;
+width:681px;
+}
+.guest-chkout-center-two {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/sign-up-centerbg.jpg) repeat-y scroll 0 0;
+float:left;
+padding:10px 0 0 40px;
+width:666px;
+}
+.countrydiv {
+float:left;
+height:auto;
+margin:20px 0 0;
+width:436px;
+}
+.guest-chkout-center-two .s4, .guest-chkout-center-two .s3, .guest-chkout-center .s3, .guest-chkout-center .s4 {
+background:#F8FCFF none repeat scroll 0 0;
+border:1px solid #7FC2FF;
+float:right;
+font-family:arial;
+font-size:12px;
+height:22px!important;
+margin-left:54px;
+width:278px;
+}
+.guest-chkout-center .errordesc
+{
+	width: 580px;
+	margin-top: 5px;
+}
+
+/***********payment options style*************/
+.border-shopping
+{
+	float:left;
+	width:936px;
+}
+.pay-opt-wrap{
+	font-family:Arial, Helvetica, sans-serif;
+	height:auto;
+	width: 985px;
+	font-size:12px;
+	overflow:hidden;
+
+}
+.pay-opt-h{
+	float: left;
+	width: 983px;
+	height:93px;
+	overflow:hidden;
+	text-align:left;
+	margin-bottom:3px;
+	
+}
+.pay-opt-h-lft {
+	height:71px;
+	width:auto;
+	float: left;
+	padding-top:15px;
+	margin-top:2px;
+	
+}
+.pay-opt-h-rt{
+	height:auto;
+	float: right;
+	margin:6px 5px 0 0;
+}
+
+.pay-opt-h-rt img{ float:left; padding-right:10px;}
+.pay-opt-lbl{
+	color:#00529c;
+	font-size:22px;
+	padding-bottom:10px;
+	}
+	
+.pay-opt-order-lbl{
+	color:#040404;
+	font-size:12px;
+	font-weight:bold;
+}
+.live-help {
+	float: left;
+	height: 88px;
+	width: 170px;
+}
+
+.live-help img{padding:0px;}
+.pay-opt-tip {
+	float: left;
+	padding:12px 0 0 10px;
+	height: 29px;
+	width: 973px;
+	border: 1px solid #0cb000;
+	background:#cff5cc;
+	margin-bottom:10px;
+}
+
+.pay-opt-cont{
+	float:left;
+	color:#040404;
+	font-size:12px;
+	height:15px;
+	padding-left:20px;
+	background:url(http://www.futurebazaar.com/images/icon-common.gif) no-repeat left top;
+	background-position:0px -156px;
+}
+
+
+.instant-pay-opt{width:985px; height:auto;;float:left}
+.instant-pay-opt img{ float:left}
+.pay-opt-content{float:left}
+.instant-pay-opt-txt{width:723px; border-left:1px solid #b9dcfa;  background:#eff7fe; float:left; height:21px; font-size:12px; color:#000; font-weight:bold;padding-left:20px; padding-top:7px; }
+.net-banking-head{border-bottom:1px solid #E0F0FF;
+height:45px;
+margin-left:13px;
+padding-top:8px;
+width:702px;}
+.net-banking-head img, .net-banking-head input {
+	margin-right: 5px;
+}	
+.lbl-pay-opt{color:#333; font-weight:bold; font-size:13px;padding:0 5px;}
+.list-of-banks{
+padding-top:30px;
+width:740px;}
+.list-of-banks input{ float:left}
+.netbanking-container{float:left;
+height:536px;
+width:744px;
+padding: 12px 0 0 8px;
+}
+
+.pay-opt-cc-container{float:left;
+height:524px;
+width:736px;
+padding:12px 0 0 8px;}
+
+.pay-opt-db-container{float:left;
+height:524px;
+width:762px;
+padding:12px 0 0 8px;}
+
+.pay-opt-mobile-container{float:left;
+height:524px;
+width:736px;
+padding:12px 0 0 8px;}
+
+.pay-by-femi-container{float:left;
+height:524px;
+width:736px;
+padding:12px 0 0 8px;}
+
+
+.pay-by-futuremoney-container{float:left;
+height:524px;
+width:736px;
+padding:12px 0 0 8px;}
+
+
+.pay-by-cash-container{float:left;
+height:524px;
+width:762px;
+padding:12px 0 0 8px;}
+
+
+.pay-by-cheq-container{float:left;
+height:524px;
+width:736px;
+padding:12px 0 0 8px;}
+
+.list-of-banks ul{font-size:11px; color:#444444; padding-left: 12px;}
+.bank-cont1{float:left; padding-left: 2px;}
+.bank-cont2{ float:left;}
+.bank-cont3{float:left;}
+.bank-cont4{ float:left;}
+.l-o-b-head{width:649px; margin-bottom:10px; margin-left:13px;}
+
+.yellow-note{width:690px; height:auto; background:#fefec9; float:left; color:#666666; font-size:11px; font-family:arial; padding-top:10px; padding-left:10px; padding-bottom:10px; margin:15px 0 10px 13px; * margin-left: 10px;}
+.note-span-pay{margin-left:20px;}
+
+.make-payment{border-top:1px solid #E0F0FF;
+border-top:1px solid #E0F0FF;
+float:left;
+height:auto;
+margin-left:13px;
+* margin-left:20px;
+padding-left:175px;
+padding-top:22px;
+width:525px;
+}
+
+.ie6 .make-payment{
+	float: none;	
+}
+.move-payment{width:226px; height:70px; float:left;}
+.pay-price{font-size:16px; font-family:arial; color:#333333; margin-bottom:10px;}
+.credit-card-pg {
+	height: auto;
+	width: 710px;
+}
+
+.futuremoneyimg{ padding-left:20px;}
+.code, .codeHead {
+	background-color: #dddddd;
+	color: #000000;
+	font: 12px helvetica, verdana, georgia, times, arial, sans-serif;
+	line-height: 18px;
+	padding: 3px;
+	margin: 0px;
+}
+.codeHead {
+	background-color: #bbbbbb;
+}
+textarea.code {
+	width: 100%; height: 300px; padding:0px; margin:0px;
+	font: 12px helvetica, verdana, georgia, times, arial, sans-serif;
+	font-family:monospace;
+	background-color: #efefef; color: #222222;
+}
+
+.pay-opt-container {
+float:left;
+height:24px;
+margin:19px 0 0;
+padding-left:98px;
+width:450px;
+}
+
+.inputbx {
+background:none repeat scroll 0 0 #F8FCFF!important;
+border:1px solid #7FC2FF!important;
+color:#545454!important;
+float:left;
+font-family:arial;
+font-size:12px;
+height:22px!important;
+margin-left:9px;
+padding:3px 0 0;
+width:241px;
+}
+
+.countrydiv select{background:none repeat scroll 0 0 #F8FCFF;
+border:1px solid #7FC2FF;
+float:left;
+font-family:arial;
+font-size:12px;
+height:22px;
+margin-left:12px;
+width:278px;
+}
+
+.pay-opt-cc{border:1px solid;
+float:left;
+height:535px;
+width:766px; }
+
+.cc-row1{float:left; padding-left:100px; width:600px;}
+
+
+
+.pay-opt-container select{background:none repeat scroll 0 0 #F8FCFF;
+border:1px solid #7FC2FF;
+color:#545454;
+float:none;
+font-family:arial;
+font-size:12px;
+height:24px;
+width:118px;
+margin-left:9px;
+}
+
+.pay-opt-whatsthis{color:#004f96; font-family:arial; font-size:11px; float:left; text-decoration:underline; padding-left:10px;}
+.pay-opt-note{font-weight:bold; float:left; font-family:arial; font-size:12px; color:#000; padding:10px 0 0 13px;}
+.emiradio .radio{float:left; padding-left:5px; margin-top:9px; * margin-top:6px}
+.emiradio label{float:left;font-weight:normal; margin-top:6px; * margin-top:6px}
+
+.cash-pay-option{float:left; padding-left:16px;
+padding-top:21px}
+
+.pay-by-futuremoney-container ul{ list-style:none;}
+.pay-by-futuremoney-container ul li{ padding:2px 2px 5px 5px;}
+.make-payment-btn{
+	background: url("http://images.futurebazaar.com/catalog/fb_new/make-payment-btn.gif") no-repeat;
+	width: 152px!important;
+	height: 35px!important;
+	border: none;
+}
+.place-order-btn{
+	background: url("http://images.futurebazaar.com/catalog/fb_new/place-order.gif") no-repeat;
+	width: 132px!important;
+	height: 35px!important;
+	border: none;
+}
+.apply-for-futureemi-btn{
+	background: url("http://images.futurebazaar.com/catalog/fb_new/apply-for-futureemi.gif") no-repeat;
+	width: 235px!important;
+	height: 35px!important;
+	border: none;
+}
+.amexForm td .mand-heads{
+	padding-left: 8px;
+}
+
+/*********** deals style **********/
+/*
+.btn-add-to-cart {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/buynow-platinum.gif) no-repeat scroll 0 0;
+float:left;
+height:37px;
+width:81px;
+}
+*/
+.deals-platinum {
+color:#161616;
+float:left;
+font-family:arial;
+font-size:20px;
+margin-top:10px;
+width:200px;
+}
+.slider-right span {
+color:#FF4E00;
+float:left;
+font-family:arial;
+font-size:25px;
+font-weight:bold;
+width:260px;
+line-height: 20px;
+}
+.slider-right p {
+color:#3F3F3F;
+float:left;
+font-family:arial;
+font-size:15px;
+font-weight:bold;
+width:260px;
+margin: 10px 0;
+}
+.slider-content{float:left}
+.slider-left{width:400px; height:245px; float:left; }
+.slider-image-holder{width:320px; height:216px; text-align: center;}
+.slider-right{width:264px; height:245px; float:left;}
+.platinum-deal-end {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/deals-clock.gif) no-repeat scroll 0 0;
+float:left;
+font-family:arial;
+font-size:12px;
+font-weight:bold;
+height:22px;
+margin:8px 0 0 60px;
+* margin:8px 0 0 30px;
+padding:4px 0 0 24px;
+}
+.platinum-item-header a{font-family:arial; font-size:20px; color:#1869b1; line-height: 25px;}
+.platinum-item-ul{ list-style:none; font-family:arial; font-size:12px; color:#131313; padding:0; width:260px; margin:3px 0 0 0}
+.mrp-platinum{float:left; width:200px; color:#161616; font-family:arial; font-size:20px; margin:22px 0 10px;}
+.deals-platinum{float:left; width:200px; color:#ff4e00; font-family:arial; font-size:25px; font-weight:bold; width:260px;}
+.yousave-platinum{float:left; width:200px; color:#3f3f3f; font-family:arial; font-size:15px; font-weight:bold; width:260px;}
+.buynow-platinum{float:left; width:81px; height:37px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/buynow-platinum.gif) no-repeat; margin-top:10px;}
+
+/******** gold deals style *********/
+
+.gold-deals-container{ width:983px; height:auto; border:1px solid #999a9a; background: #FFF; margin: 20px auto; float: left; }
+.gold-deals-container .big-row-headings{line-height: 25px;}
+.gold-container{float: left; }
+.row-headings-gold{font-family:arial; font-size:22px; font-weight: bold; color:#252525; float:left;  padding-right:4px; margin-right:4px; width:150px; }
+.viewall-deals{color:#004F96;float:left;font-family:arial;font-size:12px;padding-left:8px;padding-right:10px;width:190px;}
+.gold-deals-container .platinum-deal-end {
+	margin: 8px 0 0 5px;
+	* margin: 8px 0 0 2px;
+	* padding:4px 0 0 24px;
+}
+.gold-deals-container .gold-item-price-container .mrp-platinum {
+border:1px solid #CBCBCB;
+color:#252525;
+float:left;
+font-family:arial;
+font-size:16px;
+font-weight:bold;
+height:24px;
+margin:8px 0 0 5px;
+* margin:8px 0 0 3px;
+padding-top:7px;
+text-align:center;
+text-decoration:line-through;
+width:101px;
+}
+.gold-deals-container .gold-item-price-container span {
+background:#FF4E00 none repeat scroll 0 0;
+border:1px solid #CBCBCB;
+color:#FFFFFF;
+float:left;
+font-family:arial;
+font-size:16px;
+font-weight:bold;
+height:24px;
+margin:8px 0 0 5px;
+padding-top:7px;
+text-align:center;
+width:101px;
+}
+.gold-item-price-container #cart .sold-span {
+background:transparent none repeat scroll 0 0;
+border:medium none;
+color:#FFFFFF;
+float:left;
+font-family:arial;
+font-size:16px;
+font-weight:bold;
+height:24px;
+margin: 5px 0 0 35px;
+padding-top:0;
+text-align:center;
+width:101px;
+}
+
+.gold-item-container{ height:422px; width:225px;  float:left; margin:7px 0 0 16px;}
+* html .gold-item-container{ margin-left:8px;}
+* html .gold-item-buy-now{ margin-left:15px;}
+.sold-out{
+	background:url("http://images.futurebazaar.com/catalog/fb_new/sold-out.gif") no-repeat 0 0;
+	width: 144px;
+	height: 43px;
+}
+
+.gold-item-head-bg{width:225px; height:54px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/deals-header.gif) no-repeat; float:left;  overflow:hidden;}
+.gold-item-name-style{color:#393a3a;float:left;font-family:arial;font-size:13px;height:29px;width:219px;text-align:center; padding-top:10px; font-weight:bold;}
+.gold-item-name-style a:link, a:visited, a:active{color:#004F96; text-decoration:none;}
+.gold-item-name-style a:hover{color:#3772a8; text-decoration:underline;}
+.gold-item-image-container{width:223px; height:222px;border-bottom:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; float:left; background:#f6f6f6;}
+.gold-item-price-container{width:223px; height:94px;border-top:1px solid #e6e6e6; border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; float:left; margin-top:4px; background:#f6f6f6;}
+.gold-item-foot-bg{width:225px; height:3px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/items-foot-bg.gif) no-repeat; float:left;  overflow:hidden;font-family:arial;}
+.gold-item-MRP{width:101px;padding-top:7px; height:24px; border:1px solid  #cbcbcb; text-align:center; float:left; margin:8px 0 0 5px; font-family:arial; font-weight:bold; font-size:16px; color:#252525; text-decoration:line-through;  *margin-left:3px;}
+.gold-item-offer-price{width:101px;padding-top:7px; height:24px; border:1px solid  #cbcbcb; text-align:center;float:left; margin:8px 0 0 5px; font-family:arial; font-weight:bold; font-size:16px; background:#ff4e00; color:#fff;}
+.gold-item-buy-now{width:170px; height:35px; background:url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/item-buy-now-btn.gif) no-repeat; overflow:hidden; float:left; margin:11px 0 0 30px}
+.gold-item-price-container .btn-add-to-cart {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/item-buy-now-btn.gif) no-repeat scroll 0 0;
+float:left;
+height:35px;
+margin:11px 0 0 30px;
+overflow:hidden;
+width:170px;
+}
+.gold-deal-end {
+background:transparent url(http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/deals/deals-clock.gif) no-repeat scroll 0 0;
+float:left;
+font-family:arial;
+font-size:12px;
+font-weight:bold;
+height:22px;
+margin:8px 0 0 10px;
+padding:4px 0 0 24px;
+}
+

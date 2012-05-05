@@ -1,0 +1,127 @@
+{% extends 'support/base.html' %}
+{% block content %}
+    {% load pagination_tags %}
+    {% autopaginate orders items_per_page %}
+    {% load support_tags %}
+    {% load cc_tags %}
+<style type='text/css'>
+.action_input select{width:120px;height:21px;font-size:11px;}
+.action_input input{height:21px;margin-left:5px;font-size:11px;padding:0 3px;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Orders</div>
+  <div class="content_head" style="margin:0px !important;">
+    <div class="header rc5 left">
+      <h1>Orders</h1>
+    </div>
+    <div id="filter_link_wrapper" class="header right">
+		<a class="toggle-up-arrow" id="filter_link" title="Click here to filter your search" href="#">Filter your search</a>
+	</div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main clear"> 
+    <div id="filter_form" class='clear'>
+	{% if filter_form %}
+    {% if filter_form.errors %}
+    <div class='error'>{{filter_form.errors}}</div>
+    {% endif %}
+        <form name='filter_form' method='get'>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.name.label}}</div>
+			    <div class='col2 left'>{{filter_form.name}}</div>
+                <div class='col1 f11 flgray left marl38'>{{filter_form.phone.label}}</div>
+			    <div class='col2 left'>{{filter_form.phone}}</div>
+                <div class='col1 f11 flgray left marl38'>{{filter_form.email.label}}</div>
+                <div class='col2 left'>{{filter_form.email}}</div>
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.order_id.label}}</div>
+			    <div class='col2 left'>{{filter_form.order_id}}</div>
+                <div class='col1 f11 flgray left marl38'>{{filter_form.state.label}}</div>
+                <div class='col2 left'>{{filter_form.state}}</div>
+                <div class='col1 f11 flgray left marl38'>Date Range</div>
+                <div class='col2 left'>{% support_daterange request 0 1%}</div><!--Dont limit FROM date; limit TO date -->
+            </div>
+            <div class='right'>
+                <input type="submit" value="Search" class="btn_c btn_c_s fb" title="Search Orders">
+            </div>
+			<div class='clear'></div>
+        </form>
+		
+    </div>
+    {% endif %}
+    
+    {% if errors %}
+    <div class="notice"> 
+        <ul>
+        {% for error in errors %}
+            <li>{{error}}</li>
+        {% endfor %}
+        </ul>
+    <div class="marb10">&nbsp;</div>
+    </div>
+    {% endif %}
+
+    {% if orders %}
+    <table class="tbl_response tablesorter f11 mart5" id='order_list'>
+		<thead>
+		<tr>
+            {% comment %}<th class="w20"><input type='checkbox' name='orders_select_all'/></th>{% endcomment %}
+			<th class="w110 header">Order ID</th>
+            <th class="w150 header">Name</td>
+            <th class="w120 header">Booked On</th>
+            <th class="w120 header">Confirmed On</th>
+            <th class="w75 header">Amount</th>
+            <!--<th class="w110 header">Email</th>
+            <th class="w75 header">Phone</th>-->
+            <th class="w100 header">State</th>
+		</tr>
+		</thead>
+		<tbody>
+        {% for order in orders %}
+        <tr>
+            {% comment %}<td class="txtalgnc"><input type='checkbox' name='orders' value='{{order.id}}'/></td>{% endcomment %}
+            <td class="txtalgnc"><a href="{% cc_url request 'order/' %}{{order.id}}">{{order.reference_order_id|default:order.id}}</a></td>
+            <td>{{order.user.full_name|title}}</td>
+            <td class="txtalgnc">{{order.timestamp|date:'d-m-Y H:i'}}</td>
+            <td class="txtalgnc">{{order.confirming_timestamp|date:'d-m-Y H:i'}}</td>
+            <td class="txtalgnc"><span class="WebRupee">Rs. </span>{{order.payable_amount|floatformat:0}}</td>
+            {% comment %}<!--<td>{{order.user.email_set.all.0}}</td>
+            <td class="txtalgnc">{{order.user.phone_set.all.0}}</td>-->{% endcomment %}
+            <td class="txtalgnc">{{order.support_state|upper}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table><br />
+    {% paginate %}
+    {% else %}
+        <div class="mart10">No orders present</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+$(document).ready(function() { 
+    $("#order_list").tablesorter({
+        headers:{
+            0:{sorter:false}
+        }
+    }); 
+    CheckboxMultipleSelect('orders');
+});
+
+$('#filter_link').toggle(
+    function(){
+        $('#filter_form').hide();
+		$(this).removeClass('toggle-up-arrow');
+		$(this).addClass('toggle-down-arrow');
+    },
+    function(){
+        $('#filter_form').show();
+		$(this).removeClass('toggle-down-arrow');
+		$(this).addClass('toggle-up-arrow');
+    }
+);
+{% endblock %}

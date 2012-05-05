@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load order_tags %}
+{% block content %}
+<br/>
+
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+{% daterange "Weekly Complaint Analysis" search_trend from_date to_date request%}
+
+<br>
+<div class="fb f14">No. of Complaints Resolved on:-</div>
+<br>
+<br>
+<img src="http://chart.googleapis.com/chart?chs=800x340&cht=lxy&chco=EFD279,F5F1DE,95CBE9,AFD775&chd=t:-1|{{weekly_complaint_analysis_dict.lt_seven}}|-1|{{weekly_complaint_analysis_dict.eq_seven}}|-1|{{weekly_complaint_analysis_dict.gt_seven}}|-1|{{weekly_complaint_analysis_dict.data}}&chls=1&chtt=Complains+Resolution+Within+the+Period+{{from_date}}+to+{{to_date}}&chxt=x,x,y,y&chxl=0:{{weekly_complaint_analysis_dict.label}}|1:|Date|3:|Complains+Resolved&chxp=1,50|3,50&chxr=2,0,{{weekly_complaint_analysis_dict.data_max}},{{weekly_complaint_analysis_dict.data_max}}&chds=0,0,0,{{weekly_complaint_analysis_dict.data_max}}&chdl=Within+seven+days|On+seventh+day|After+seven+days|Unresolved+Complains&chdlp=b|l&chxs=1,000000|3,000000&chm=B,EFD279,0,1,0|b,F5F1DE,0,1,0|b,95CBE9,1,2,0|b,AFD775,2,3,0" />
+<br>
+<br>
+
+<div style="overflow:scroll">
+{%show_excel_link request "excel"%}
+<table class="tbl_report" style="width:200% !important">
+{%for data in weekly_complaint_analysis_dict.list%}
+{%if forloop.first%}
+    <tr>
+    {%for m in data%}
+        <th><b>{{m}}</b></th>
+    {%endfor%}
+    </tr>
+{%else%}
+    <tr>
+    {%for m in data%}
+        {%if forloop.first%}
+           <td>{{m}}</td> 
+        {%else%}
+            <td style="background-color:{{m.0}}">{{m.1}}</td>
+        {%endif%}
+    {%endfor%}
+    </tr>
+{%endif%}
+{%endfor%}
+
+</table>
+{%show_excel_link request "excel"%}
+</div>
+
+<div>
+    <div><b>Legend for table:-</b></div>
+    <div>
+        <div style="background-color:#57E964; width:40px; float:left;">&nbsp;</div>
+        <div style="float:left; margin-left:10px; margin-right:30px;"> - Complains Resolved within seven days </div>
+    </div>
+
+    <div>
+        <div style="background-color:#FFFF7F; width:40px; float:left;">&nbsp;</div>
+        <div style="float:left; margin-left:10px; margin-right:30px;">  - Complains Resolved on seventh day</div>
+    </div>
+    <div>
+        <div style="background-color:#FF6633; width:40px; float:left;">&nbsp;</div>
+        <div style="float:left; margin-left:10px; margin-right:30px;">  - Complains Resolved after seven days</div>
+    </div>
+</div>
+
+<br>
+<br>
+
+{%endblock%}

@@ -1,0 +1,14 @@
+{%ifequal request.path url%}
+<a href="{{url}}?excel=True&sortby={{sortby}}">
+<div class="excel_main">
+    <div id="id_excel"><img title="Excel" alt="Excel" src="http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/excel-16.gif"></div>
+</div></a>
+{%else%}
+    <a href="{{url}}&excel=True&sortby={{sortby}}">
+	<div class="excel_main">
+		<div id="id_excel"><img title="Excel" alt="Excel" src="http://images.futurebazaar.com/catalog/fb_new/futurebazaar-new/images/home/excel-16.gif"></div>
+	</div></a>
+{%endifequal%}
+
+
+

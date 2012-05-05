@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="breadcrumb"><a href="/" title="Home">Home</a>&nbsp;&raquo;&nbsp;Pending Orders Dashboard</div>
+
+<div class="content_head">
+  <div class="header rc5">   
+    <h3 class="left">Pending Orders Dashboard</h3>
+    <div class="download_excel"> <a href="?mode=xls">Download as excel</a> </div>
+    <div class="clear"></div>
+  </div>
+  
+<!--  <div class="bgcolor1 bottomrc5">   
+    <div class="right"> {% paginate request paginator %}</div>
+    <div class="clear"></div>
+  </div>-->
+</div>
+
+{% if order_items.object_list %}
+<div class="span-24 last">
+    <div class="p5 ra">
+        <div class="pagination p5">
+            <span class="step-links">
+                {% if order_items.has_previous %}
+                <a href="?page={{ order_items.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ order_items.number }} of {{ paginator.num_pages }}.
+                </span>
+
+                {% if order_items.has_next %}
+                <a href="?page={{ order_items.next_page_number }}">Next >></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+<div class="span-24 last">
+    <div class="p5">
+    <table cellpadding="2" cellspacing="2" style="border-collapse: collapse">
+        <tr class="header">
+            <td width="10px"></td>
+            <td width="80px">Submitted Date</td>
+            <td width="80px">Confirmed Date</td>
+            <td width="70px">Order ID</td>
+            <td>Article ID</td>
+            <td width="70px">Delivery No</td>
+            <td>Product</td>
+            <td>Qty</td>
+            <td>Status</td>
+        </tr>
+        {% for order_item in order_items.object_list %}
+        <tr class="{% cycle "row1" "row2"%}">
+            <td><input type="checkbox"/></td>
+            <td>{{order_item.order.atg_submitted_date}}</td>
+            <td>{{order_item.order.sap_created_date}}</td>
+            <td>{{order_item.order.order_id}}</td>
+            <td>{{order_item.article_id}}</td>
+            <td></td>
+            <td><a href="/orderitems/{{order_item.commerce_item_id}}/">{{order_item.product_name}}</a></td>
+            <td>{{order_item.quantity}}</td>
+            <td>{{order_item.item_state}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+</div>
+<div class="span-24 last">
+    <div class="p5 ra">
+        <div class="pagination p5">
+            <span class="step-links">
+                {% if order_items.has_previous %}
+                <a href="?page={{ order_items.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ order_items.number }} of {{ paginator.num_pages }}.
+                </span>
+
+                {% if order_items.has_next %}
+                <a href="?page={{ order_items.next_page_number }}">Next >></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="orders_msg rc5">
+<div class="rc5">
+    <h3>Nice!</h3>
+    <p>There are no orders assigned to you.</p>
+</div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+/*delivery.css */.input_l{width:322px}
+#delivery_table input[type="text"]{padding:3px;margin:0}
+#delivery_table textarea{padding:3px;margin:0;width:322px;height:60px}
+#delivery_table textarea.texta_m{width:300px;height:50px}
+.input_m{width:154px}
+.address{margin:0px 0px;background-color:#f4f4f4;border:1px solid #ccc}
+.gift_msg{background-color:#f4f4f4;border:1px solid #ccc}
+#delivery_table div.first{margin-top:0}
+.dname{font-weight:bold}
+#delivery_table div.selected_address{background-color:#fcfccb;border:1px solid #FFCE00}
+#delivery_table div.address input[type="text"]{margin-top:0px ;font-size:13px}
+#delivery_table div.address textarea{margin:0px;font-size:13px}
+div.address address{font-style:normal;padding-left:16px;margin:0}
+#delivery_table div.short_notes textarea.texta_m{width:258px;height:80px;margin:0;font-size:13px}
+/*delivery.css end*/

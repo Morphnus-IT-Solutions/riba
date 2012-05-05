@@ -1,0 +1,60 @@
+/*reports*/
+/*dashboard home*/
+.dashboard{text-align:left; color:#333; margin:20px 0px;}
+/*.dashboard_row1{height:275px;}
+.dashboard_row2{height:200px;}*/
+.dashboard_block{/*border:1px solid #ccc;*/ margin-bottom:10px; float:left; width:32%;  /*width:465px;*/ margin-right:10px}
+.dashboard_block h3{/*border-bottom:1px solid #ccc; background-color:#f4f4f4;*/ padding:3px 10px; font-weight:bold;}
+.dashboard_block ul{padding:3px 10px; list-style:inside; color:#666;}
+
+
+.select_range {
+    border: 1px solid #eee;
+    padding: 5px 10px;
+}
+.tbl_select_range td{font-weight:normal;  border: 0px solid #CCCCCC; padding:0px; color:#666; vertical-align:middle;
+
+}
+.tbl_select_range td > input{background:url('/media/images/calendar.jpg') 99% no-repeat; border:1px solid #bbb; padding:3px;}
+
+.tbl_select_range td > select {border:1px solid #bbb; padding:2px;}
+
+.report_heading{margin:20px 0px 10px;}
+.report_heading td .title {font-size:18px; font-weight:bold; padding-bottom:0px;}
+.report_heading td .date_range {color:#555; font-size:12px; font-weight:bold; text-align:left; }
+.tbl_graph{margin-bottom:20px; border-collapse:collapse;}
+.tbl_graph td{width:300px;}
+/*.tbl_select_range td > input{background:url('/media/images/arr_down.gif') 99% no-repeat; border:1px solid #bbb; padding:2px;}
+.tbl_select_range td > select {background:url('/media/images/arr_down.gif') 99% no-repeat; border:1px solid #bbb; padding:2px;}
+*/
+.tbl_report {border-collapse:collapse;}
+.tbl_report th{background-color:#eee; padding-top:10px; padding-bottom:10px;border:1px solid #ccc; text-align:center; vertical-align:top;}
+.tbl_report td{border:1px solid #ccc; text-align:right;}
+
+/*.tbl_report{border:1px solid #ccc; border-collapse:collapse; width:100%;  font-size:11px;}
+.tbl_report th{background-color:#dcdcdc; border:1px solid #ccc; padding:3px 3px; vertical-align:top; text-align:center; font-weight:bold; font-size:11px;}
+.tbl_report td{border:1px solid #ccc; padding:3px 3px; vertical-align:top; text-align:center; color:#333; font-size:100%;}*/
+
+
+/* Date Range */
+#dr_container{position:relative;}
+.date_range{padding:0px; margin:5px 1px;  float:right; border-left: solid 1px #b7b7b7; border-top: solid 1px #b7b7b7; border-bottom:solid 1px #b7b7b7;}
+.date_range li{ list-style:none;margin:0px; padding:2px 3px;float:left;border-left:none; border-bottom:none; border-top:none; border-right: solid 1px #b7b7b7; font-size:11px}
+.date_range a{color:#333; text-decoration:none;}
+.date_range li#li_dr{padding:0px;}
+#dr{margin:2px; width:180px;border:1px solid #fff; height: 15px; background: url("/media/images/arr_down.gif") no-repeat scroll 99% 50% transparent; color:#555; font-size:10px; padding-left:0px; font-family:Arial}
+#sr{border:1px solid #ccc;  padding:5px 5px;background-color:#fff; z-index:1000;  width:400px;  position:absolute; right:195px; top:151px; }
+ .tbl_sr{ width:100%; font-size:11px;}
+.tbl_sr td{padding:4px; vertical-align:middle; text-align:left;}
+.tbl_sr input{font-size:11px; width:120px; padding:2px}
+.sel_dr{background:#fff;border-radius: 5px 5px 0 0; color: #000 !important;height:30px;line-height: 27px;text-align: center ; font-weight:bold}
+.sel_dr_date{background:#ccc; color:#000 !important;text-align: center}
+.select_width{width:145px}
+.select_height{height: 165px;}
+.menu{float:left;}
+.client_seller{float:right; overflow:hidden}
+.grayButton { -moz-border-bottom-colors: none; -moz-border-image: none;-moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none;  background-color: #EEEEEE;
+background-image: url("http://static.ak.fbcdn.net/rsrc.php/v1/y_/r/9YK1jWBK-cC.png");background-position: 0 -245px;background-repeat: no-repeat; border-color: #999999 #999999 #888888;border-style: solid;border-width: 1px;box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);cursor: pointer;
+display: inline-block;font-size: 11px;line-height:20px;padding: 1px 6px;text-align: center;text-decoration: none;vertical-align: top;white-space: nowrap; font-weight:bold; color:#444}
+.grayButton .img {margin-top: 2px;vertical-align: top}
+.grayButton:hover {background-image: url("http://static.ak.fbcdn.net/rsrc.php/v1/y_/r/9YK1jWBK-cC.png");background-position: 0 -248px;background-repeat: no-repeat}

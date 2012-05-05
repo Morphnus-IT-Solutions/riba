@@ -1,0 +1,14 @@
+<html>
+<body OnLoad="OnLoadEvent();">
+    <form name="form1" action="{{ACSURL}}" method="post">
+        <input type="hidden" name="PaReq" value="{{PAReq}}">
+        <input type="hidden" name="MD" value="{{PaymentId}}">
+        <input type="hidden" name="TermUrl" value="{{termURL}}">
+    </form>
+    <script language="JavaScript">
+        function OnLoadEvent(){
+            document.form1.submit();
+        }
+    </script>
+</body>
+</html>

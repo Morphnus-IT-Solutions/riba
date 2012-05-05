@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{%load  web_tags%}
+{% load ppd_tags %}
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+<title>{% block page_title %}Sellers{% endblock %}</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="google-site-verification" content="qEeX_hSW6GR8wGwaKqj5QUzWV2i-rscwefvklX59oQc" />
+<meta name="description" content="{%block page_desc%}India's phone bazaar. Find best deals on books, magazines, computers, mobiles, home electronics, home appliances. Call 922 222 1947 to buy directly from brands.{%endblock%}"/>
+<meta name="keywords" content="{%block page_tags%}Chaupaati Bazaar, Online Shopping, Store Online, Buy Books, Subscribe Magazines, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Purchase On Web, Cheap product, india{%endblock%}"/>
+{% block extra_header %}
+        {% endblock %}
+        {% block canonical %}
+        {% endblock %}
+		{% block blueprint_css %}
+<!--<link rel="stylesheet" href="{{MEDIA_URL}}css/bp/screen.css" type="text/css" media="screen, projection" />-->
+<link rel="stylesheet" href="{{MEDIA_URL}}css/bp/print.css" type="text/css" media="print" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/pop_up.css" type="text/css" />
+<link rel="stylesheet" href="{{MEDIA_URL}}js/jquery-suggestion/css/styles.css" type="text/css" />
+<!--<link rel="stylesheet" href="/media/css/bp/screen.css" type="text/css" media="screen, projection" />-->
+<!--
+<link rel="stylesheet" href="/media/css/bp/print.css" type="text/css" media="print" />
+        <link rel="stylesheet" href="/media/css/pop_up.css" type="text/css" />       
+        <link rel="stylesheet" href="/media/js/jquery-suggestion/css/styles.css" type="text/css" /> 
+-->
+<link href="{{MEDIA_URL}}css/ppd_css/blueprint/screen.css" rel="stylesheet" type="text/css" media="screen, projection"/>
+<link href="{{MEDIA_URL}}css/ppd_css/blueprint/print.css" rel="stylesheet" type="text/css" media="print"/>
+<link href="{{MEDIA_URL}}css/ppd_css/blueprint/styles.css" rel="stylesheet" type="text/css" media="screen, projection"/>
+<link href="{{MEDIA_URL}}css/ppd_css/content.css" rel="stylesheet" type="text/css" media="screen, projection"/>
+{% endblock %}
+		{% block core_css %}
+        {% if settings.DEBUG %}
+        {% else %}
+<!--<link rel="stylesheet" href="{{MEDIA_URL}}css/ch.v19.css" type="text/css" />-->
+<link rel="stylesheet" href="{{MEDIA_URL}}js/jsonSuggest/jsonSuggest.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/rupee/font.css">
+<!--[if IE 6]><link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/ppd_css/ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/ppd_css/ie7.css" /><![endif]-->
+<!--[if IE 8]><link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/ppd_css/ie8.css" /><![endif]-->
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/base.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/common.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/menu.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/buttons.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/header.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/footer.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/cart.css" type="text/css" media="screen, projection" />
+<!--<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/search.css" type="text/css" media="screen, projection" />
+-->
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/page.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/home.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/category.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/stores.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/product.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/order.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/my_account.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/cc_panel.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/delivery.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/reports.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/pop_up.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/forgot_password.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ppd_css/jq/jquery-ui-1.8.2.custom.css" type="text/css" media="screen, projection" />
+{% endif %}
+{%comment%}<!--<link rel="shortcut icon" href="{%render_favicon request%}"/>-->{%endcomment%}
+{% endblock %}
+		{% block extra_css %}{% endblock %}
+		{% block jquery %}
+        {% if settings.DEBUG %}
+{% else %}
+<script type="text/javascript" src="{{MEDIA_URL}}js/ch.v3.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jsonSuggest/jquery.jsonSuggest-dev.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jsonSuggest/json2.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.ui.datepicker-en-GB.js"></script>
+{% endif %}
+		{% endblock %}
+</head>
+<body>
+<div id="fb-root"></div>
+{%load cc_tags%}
+{%if request|is_platform%}
+<div id="wrapper"> {%endif%}
+  <div class="container shadow_one bottomrc5"> {%block header%}
+      {% render_ppd_header request%}
+    {%endblock%}
+    <div id="main">
+      <div id="ppd_content"> {% block ppd_content %}
+        {% endblock %}
+	  </div>
+      <div id="content"> {%if view_not_allowed %}
+        Sorry, you are not authorized to view this page.
+        {%endif%}        
+        
+        {% block line_content %}       
+        {% endblock %}   
+        {% block content %}      
+        {% endblock %} 
+	   </div>
+    </div>
+    {%block footer%}
+    {% render_ppd_footer request %}
+    {%endblock%}
+    <div id="dialog" title="Sign in" class="bottomrc5"></div>
+    <div id="shipping_dialog" title="Shipping info"></div>
+    <div id="response_dialog"></div>
+    <div class="hidden"> {% block hidden_stuff %}
+      {% endblock %} </div>
+  </div>
+{% if not conf.DONT_SHOW_GOOGLE_ANALYTICS %}
+<script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-4726951-1']);
+        _gaq.push(['_trackPageview']);
+        {% block ga_extensions %}
+        {% endblock %}
+
+        (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
+     </script>
+{% endif %}
+    {% block script_footer %}
+<script type="text/javascript" charset="utf-8"> 		
+	
+        $('a.help_popup').click(function() {
+            Ch.Utils.helpPopup(this.href);
+            return false;
+            });		
+     
+    </script>
+<script type="text/javascript">
+        
+        $("#id_q").keyup(function(){
+            var url = "/suggest";
+            var data = 'chars=' + $('#id_q').val();
+            var onSuccess = function(response) {
+                $('#id_q').jsonSuggest(response,{onSelect:callback,minCharacters:2});
+            };
+            var onError = function() {
+            };
+    
+            $.ajax({ url:url,
+                   data : data,
+                   success : onSuccess,
+                   error : onError,
+                   type : 'POST'
+                   });
+            return false;
+
+        });
+        function callback(item) {
+            setTimeout(function(){$('#search_form').submit();},100);
+        };
+    
+        $('signin').click(function() {
+            var title_string = this.title;
+            var width = 300;
+            var url = this.href;
+            $.get(this.href, function(data) {
+                $('dialog').width(width);
+                $('#dialog').html(data);
+				
+                var dialog = $('#dialog').dialog({modal:true,
+                    title:title_string, 
+                    width:width,
+                    open:function(){
+                        $('#username').focus();
+                        }
+                    });
+                    var onSubmitAlias = null;
+                    var onSuccess = function(responseTxt) {
+                        var response = $.parseJSON(responseTxt);
+                        if (response.status == 'ok'){
+                            $('#tr_error').addClass('hide_div');
+                            $('#tr_error').removeClass('show_div');
+                            if(response.msg == 'loggedin'){
+                                if(response.canvas_page){
+                                    var canvas_page = response.canvas_page;
+                                    location.href = "/a/user/" + canvas_page;
+                                    }
+                                else{
+                                    $('#dialog').dialog('close');
+                                    location.reload();
+                                    }
+                            }
+                        }
+                        else{
+                            $('#tr_error').addClass('show_div');
+                            $('#tr_error').removeClass('hide_div');
+                            $('#errors').html(response.error);
+                        }
+                    };
+                    var onError = function() {
+                        $('#form_signin').submit(onSubmitAlias);
+                    };
+                    var onSubmit = function() {
+                        var form = this;
+                        var action = form.action;
+                        var data = $('#form_signin').serialize();
+                        $.ajax({ url:action,
+                            data : data,
+                            success : onSuccess,
+                            error : onError,
+                            type : 'POST'
+                            });
+                        return false;
+                    };
+                    onSubmitAlias = onSubmit;
+                    $('#form_signin').submit(onSubmit);
+            });
+			
+            return false;
+        });
+
+     </script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      
+      function addMega(){
+        $(this).addClass("hovering");
+        }
+
+      function removeMega(){
+        $(this).removeClass("hovering");
+        }
+
+    var megaConfig = {
+         interval: 200,
+         sensitivity: 4,
+         over: addMega,
+         timeout: 200,
+         out: removeMega
+    };
+
+    $("li.item").hoverIntent(megaConfig)      
+    });
+
+$(function() {									
+		$("#showFollow").toggle(function()
+		{ 			
+			//alert('1');
+			$( ".follow_us_mn" ).show("fast");						
+			return false;	 		
+		},
+		
+		function()
+		{ 					
+				//alert('2');
+				$( ".follow_us_mn" ).hide("fast");											
+				return false;
+		});		
+		
+		$('body').click(function() 
+		{
+			//alert('3');
+			$( ".follow_us_mn" ).hide("fast");	
+		});		
+	
+	});
+    </script>
+
+{% endblock %}
+</body>
+</html>

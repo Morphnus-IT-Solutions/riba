@@ -1,0 +1,13 @@
+{% if pagination.enable_prev or pagination.enable_next %}
+<div class="pagination">
+       {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}" class="prev">Prev</a> {% else %} <span class="disabled prev">Prev</span> {% endif %}
+        {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}" class="page">{{page}}</a> {% endfor %}
+        {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+        {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}" class="page">{{page}}</a> {% endfor %}
+        <span class="current page">{{pagination.cur_page}}</span>
+        {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}" class="page">{{page}}</a> {% endfor %}
+        {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+        {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}" class="page">{{page}}</a> {% endfor %}
+        {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}" class="next">Next</a> {% else %} <span class="disabled next">Next</span> {% endif %} 
+</div>
+{% endif %}

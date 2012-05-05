@@ -1,0 +1,41 @@
+#left_nav {
+    float: left;
+    width: 232px;
+    padding: 0px;
+    border: 1px solid #eee;
+    margin-right: 10px;
+}
+
+#crm_snippet {
+    padding: 5px 10px;
+}
+
+#left_nav div.p10 {
+    padding: 0 10px;
+}
+
+#crm_snippet input{
+    margin: 0;
+    padding: 3px;
+    font-size: 16px;
+    width: 202px;
+}
+
+#left_nav div.close_call {
+    padding: 5px 10px;
+    text-align: right;
+}
+
+#left_nav div.phone_no {
+    background-color: #F4F4F4;
+}
+
+#left_nav div.block {
+    margin: 10px 0;
+}
+#logoutUser, #closeAttempt, #changeBtn {
+    cursor: pointer;
+}
+
+a.link { text-decoration: none; color: blue;}
+a.link:hover { text-decoration: underline; }

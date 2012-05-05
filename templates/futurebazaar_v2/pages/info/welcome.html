@@ -1,0 +1,91 @@
+{% extends "web/base.html" %}
+{% block content %}
+<style>
+.win_top{width:988px; height:430px; background:url("/media/images/ccd-top-bg.gif") no-repeat 0px 0px; zoom:1;}
+.win_bottom{width:988px; height:260px;  background:url("/media/images/ccd-bottom-bg.gif") no-repeat 1px 0px}
+.win_submit {background:#fff url('/media/images/win_submit.gif') no-repeat 0 0; width:93px; height:31px; border:none; cursor:pointer;}
+.win_input input[type="text"]{font-size:11px; width:167px;}
+label{font-weight:bold;}
+</style>
+<div class="mart10">
+ <div class="win_top" style="border-top:1px solid #fff;">
+
+<div class="f20" style="margin-left:150px; margin-top:78px; position1:absolute; color:#c51430;">Enter your details below and Submit to get your Rs.100 gift coupon and <br />
+Enroll for the Lucky Draw contest.
+</div> 
+
+<form action="" method="POST">
+    <table  style="margin-left:370px; margin-top:111px; width:344px;">
+
+        <tr>
+            <td width="162"><label>Name</label></td>
+            <td width="18">:</td>
+            <td class="win_input">{{form.name}}</td>
+        </tr>
+        <tr>
+            <td><label>Mobile</label><span class="fred">*</span></td>
+            <td>:</td>
+            <td class="win_input">{{form.mobile}}</td>
+        </tr>
+        <tr>
+            <td><label>Email ID</label><span class="fred">*</span></td>
+            <td>:</td>
+            <td class="win_input">{{form.email}}</td>
+        </tr>
+        <tr>
+            <td><label>Unique 10 Digit Key</label><span class="fred">*</span></td>
+            <td>:</td>
+            <td class="win_input">{{form.scratch_code}}</td>
+        </tr>
+        <tr>
+        <td></td> <td></td>
+        <td> 
+            <input type="hidden" name="action" value="register"/>
+            <input type="submit" value="" class="win_submit"/> 
+        </td>
+        </tr>
+    </table>
+</form>
+ </div>
+ <div class="win_bottom">
+ </div>
+</div>
+
+{%endblock%}
+{%block script_footer%}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    if("{{errors.email}}"){
+        $('#id_email').val("{{errors.email}}");
+        $('#id_email').addClass('input_error');
+    };
+    if("{{errors.mobile}}"){
+        $('#id_mobile').val("{{errors.mobile}}");
+        $('#id_mobile').addClass('input_error');
+    };
+    if("{{errors.scratch_code}}"){
+        $('#id_scratch_code').val("{{errors.scratch_code}}");
+        $('#id_scratch_code').addClass('input_error');
+    };
+    $('#id_mobile').focus(function(){
+        if($('#id_mobile').val() == "{{errors.mobile}}"){
+            $('#id_mobile').removeClass('input_error');
+            $('#id_mobile').val('');
+        }
+    });
+    $('#id_email').focus(function(){
+        if($('#id_email').val() == "{{errors.email}}"){
+            $('#id_email').removeClass('input_error');
+            $('#id_email').val('');
+        }
+    });
+    $('#id_scratch_code').focus(function(){
+        if($('#id_scratch_code').val() == "{{errors.scratch_code}}"){
+            $('#id_scratch_code').removeClass('input_error');
+            $('#id_scratch_code').val('');
+        }
+    });
+});
+</script>
+{%endblock%}

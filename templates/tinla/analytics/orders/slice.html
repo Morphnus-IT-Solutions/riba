@@ -1,0 +1,70 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="span-24 last">
+<div class="p5">
+    <h3 style="margin:0; padding: 0;">
+        {{set|title}} orders for {{date}}
+    </h3>
+</div>
+{% if paginator.object_list %}
+<div class="span-24 last">
+    <div class="span-4">
+        <div class="p5">
+            <a href="?mode=xls">Download as excel</a>&nbsp;
+        </div>
+    </div>
+    <div class="span-20 last">
+        <div class="p5 ra">
+            {% paginate request paginator %}
+        </div>
+    </div>
+</div>
+<div class="span-24 last">
+    <div class="p5">
+    <table cellpadding="2" cellspacing="2" style="border-collapse: collapse">
+        <tr class="header">
+            <td width="80px"><a href="{% sort_href request "order__atg_submitted_date" %}" class="{% sort_class request "order__atg_submitted_date" %}">Submitted Date</a></td>
+            <td width="80px"><a href="{% sort_href request "order__sap_created_date" %}" class="{% sort_class request "order__sap_created_date" %}">SAP Date</a></td>
+            <td width="70px"><a href="{% sort_href request "order__order_id" %}" class="{% sort_class request "order__order_id" %}">Order ID</a></td>
+            <td><a href="{% sort_href request "article_id" %}" class="{% sort_class request "article_id" %}">Article ID</a></td>
+            <td>Product</td>
+            <td>Line Total</td>
+            <td>Order Total</td>
+            <td>Delivery No</td>
+            <td>City/Pin</td>
+            <td>Qty</td>
+            <td><a href="{% sort_href request "mc_code__mc_discription" %}" class="{% sort_class request "mc_code__mc_discription" %}">LOB</a></td>
+            <td>Status</td>
+        </tr>
+        {% for delivery_item in paginator.object_list %}
+        <tr class="{% cycle "row1" "row2"%}">
+            <td>{{delivery_item.order.atg_submitted_date}}</td>
+            <td>{{delivery_item.order.sap_created_date}}</td>
+            <td>{{delivery_item.order.order_id}}</td>
+            <td>{{delivery_item.article_id}}</td>
+            <td><a href="/orderitems/{{delivery_item.commerce_item_id}}/">{{delivery_item.product_name}}</a></td>
+            <td>{{delivery_item.get_line_item_price}}</td>
+            <td>{{delivery_item.order.total}}</td>
+            <td>{{delivery_item.get_delivery_number}}</td>
+            <td>{{delivery_item.order.get_city_and_pincode}}</td>
+            <td>{{delivery_item.quantity}}</td>
+            <td>{{delivery_item.mc_code.mc_discription}}</td>
+            <td>{{delivery_item.get_current_status}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+</div>
+<div class="span-24 last">
+    <div class="p5 ra">
+        <div class="pagination p5">
+            {% paginate request paginator %}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="span-24 last">
+</div>
+{% endif %}
+{% endblock %}

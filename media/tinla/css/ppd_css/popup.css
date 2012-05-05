@@ -1,0 +1,49 @@
+@charset "utf-8";
+.popup {
+	width:690px;
+	height:364px;
+	color:#363636;
+}
+.popup .inner {
+	border:10px solid #d7ebf8; position:relative;
+	
+}
+
+.popup .btn_close{position:absolute; top:-20px; right:-20px;}
+.popup .fields{width:370px; border-right:1px dotted #4c82b7; padding:16px 20px; margin-bottom:20px; float:left;}
+
+h1 {
+	font-size:22px;
+	padding-bottom:20px;
+	margin:20px;
+	margin-bottom:20PX;
+	border-bottom:1px dotted #4c82b7;
+	
+}
+.dl_sub { float:left; width:370px;
+}
+dt {
+	width:150px;
+	float:left;
+	margin:5px 0px;
+	font-weight:bold;
+	font-size:15px;
+}
+.dl_sub dd {
+	width:220px;
+	float:left;
+	margin:5px 0px;
+}
+.dl_sub dd input {
+	width:200px;
+}
+.popup_bottom{/* background-image:url("../images/popupbg.gif"); background-repeat:repeat; background-position:left center; */height:76px; background-color:#eaf7ff;
+
+}
+.popup .block_connect{width:210px; padding-top:50px; padding-left:20px;}
+.popup .popup_bottom_left{width:536px; border-right:1px dotted #4c82b7; margin:16px 0 16px 24px; float:left;}
+.popup_bottom_right{height:58px; margin:16px 24px 16px 0px; padding-top:10px; padding-left:32px; float:left;}
+.ra {
+	text-align:right;
+}
+

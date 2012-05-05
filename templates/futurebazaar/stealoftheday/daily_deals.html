@@ -1,0 +1,354 @@
+{%extends "web/base.html"%}
+{%load cc_tags%}
+{%load web_tags%}
+{% block page_title %}{% render_product_page_title product request%}{% endblock %}
+{% block page_desc %}{% render_product_page_desc product request%}{% endblock %}
+{% block page_tags %}{% render_product_page_tags product request%}{% endblock %}
+{% block extra_header %}
+{% if product.meta_description %}
+<meta content="{{product.meta_description}}" name="Description"/>
+{% endif %}
+<link rel="canonical" href="http://{{request.client.domain}}{{request.path}}"/>
+{% endblock %}
+{% block content %}
+<div id="breadcrumb" class="fdgray"><a href="/">Home</a> &raquo; <a href="{%cc_url request product.category.url%}">{{product.category.name}}</a> &raquo;&nbsp;{{product.title}}
+</div>
+<div id="product">
+  <div class="product_details">  
+    <div class="product_desc">    
+      <h1>{{product.title}}</h1>
+	  <div class="f12">
+		<span class="fblack">By</span> 
+		<a href="{%cc_url request product.brand.url%}" title="{{product.brand}}">{{product.brand}}</a>
+	</div>
+    <div class="prod_ratings"><ul class="rating left"><li class="sel"></li><li class="sel"></li><li></li><li></li><li></li></ul>   
+    <div class="clear"></div>
+     <div class="mart10"><a href="#">Read 3 reviews</a> |  <a href="#">Write a review</a>  |  <a href="#">Rate this product</a></div>
+    </div>
+      <table class="like_buttons">
+      <tr>
+      <td class="like_tw">  
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://{{request.client.domain}}{% cc_url request product.url %}" data-text="Would love to buy this!" data-count="horizontal" data-via="futurebazaar">Tweet</a>
+		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      </td>
+      <td class="like_fb">
+        <fb:like show_faces="no" href="http://{{request.client.domain}}/{{product.url}}"></fb:like>    
+      </td>
+      </tr>      
+      </table>   
+       {% product_tags product %}
+      <!-- product variants
+        <table  class="product_size">
+        
+        <tr><td class="title">Color: </td><td><div></div></td><td><div></div></td><td><div></div></td><td><div></div></td><td><div></div></td> <td></td></tr>
+    
+        <tr><td class="title">Size: </td><td><div>XS</div></td><td><div>S</div></td><td><div>M</div></td><td><div>L</div></td><td><div>XL</div></td><td class="sizechart"> <a class="pop_up" href="http://images.futurebazaar.com/catalog/fb_new/pantaloons/Bare%20Denim_sizechart.htm">Size Chart</a></td></tr>
+        </table>
+        -->
+      <dl class="product_price">
+        <dt>Market Price: </dt>
+        <dd class="fs"><span class="WebRupee">Rs.</span> {{product.primary_rate_chart.list_price|money}}</dd>
+        <dt>Steal Price: </dt>
+        <dd class="f16"><strong class="forange"><span class="WebRupee">Rs.</span> {{product.primary_rate_chart.offer_price|money}}</strong></dd>
+        <dt>You Steal: </dt>
+        <dd><span class="WebRupee">Rs.</span> {{product.primary_rate_chart.getSavings|money}} ({{product.primary_rate_chart.getDiscount}}%) </dd>
+      </dl>
+      
+      <dl class="product_price bbnone">
+        <dt>Availability: </dt>
+        <dd class="fgreen">{{product.primary_rate_chart.stock_status}}</dd>
+        </dl>
+        {% ifequal product.primary_rate_chart.stock_status "instock"%}
+        {%add_to_cart request product product.primary_rate_chart%}
+        {% else %}
+        <span class="fb f20">Unavailable</span>
+        {% endifequal %}
+        {% product_variants product request%} 
+     
+      </div>
+    <div class="product_img">
+         <img src="{{product_images.0.get_display_url}}"  id="display_img" width="270" height="340" alt="{{product_images.0.product.title}}" title="{{product_images.0.product.title}}"/>
+    
+	{% if product_images.0.type == 'scene7' %} 
+	      <div class="zoom_in" title="Zoom in"></div>
+	{% endif %}
+      
+    </div>
+    <div class="clear"></div>
+    <div class="product_img_thumb filmstrip">
+     {%for image in product_images%}
+      {% if product_images|length > 1 %}
+       <img src="{{image.get_filmstrip_url}}" class="steal_thumb_img" width="36" height="36" alt="" title="{{product_images.0.product.title}}" display="{{image.get_display_url}}">
+       {% endif %}
+      {%endfor%}
+       </div>
+    <div class="clear"></div>
+    <div class="product_desc_details">    
+    
+     <div>
+       <h2>Product Details</h2>
+        <div class="pad10 marb10">{{product.description|safe}}</div>
+        </div>
+        
+        <div> 
+	  {% if product.primary_rate_chart.key_feature %}
+          <h3>Key Features</h3>
+          <div class="pad10">{{product.primary_rate_chart.key_feature|safe }}</div>
+          {% endif %} 
+	   </div>
+       
+	   
+        {% if product.video_embed %}
+        <div>
+         <h2>Product Video</h2>
+         <div class="pad10">
+        <object width="500" height="250">
+          <param name="movie" value="{{product.video_embed}}">
+          <param name="allowFullScreen" value="true">
+          <param name="allowscriptaccess" value="always">
+          <embed src="{{product.video_embed}}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="500" height="250">
+          </embed>
+        </object>
+        </div>
+        {% endif %}  
+       
+      <h2>Specifications</h2>    
+      <div>
+          {%feature_tag product%} 
+	</div>
+     <div class="pad5"><b>FBID: </b>{{product.primary_rate_chart.sku}} </div>
+  
+   <div class="tabs_wrapper">
+        <ul class="tabs">
+          <li class="tab_overview sel_tab">Read review</li>
+          <li class="tab_spec">Write a review</li>      
+        </ul>
+        <div class="right all_reviews"><a href="#">View all 12 reviews</a></div>
+        <div class="clear"></div>
+      </div>    
+  <div class="tab tab1">
+  <div class="review">
+  <p>March 7, 2011</p>
+  <div class="marb10">
+<div><strong>"best mobile phone ive bought"</strong></div>
+By <a href="#">cheyanne</a> from mumbai</div>
+<div><div class="left">Rating:</div> <ul class="rating left"><li class="sel"></li><li class="sel"></li><li></li><li></li><li></li></ul>
+<div class="clear"></div>
+</div>
+<p class="mart10">
+The Nokia 2700 is the easiest phone to use and as ive had quite a few i should know.The ease and great access to the internet is a pleasure and the keyboard is easy to use as well.Even my son has bought one and quite a lot of my friends ,I recommend this phone to all people of all ages,it is the best.I can use it anywhere anytime with no problems at all.</p>
+<div>Was this review helpful to you? <span class="fb"><a href="#">Yes</a> | <a href="#">No</a></span> </div>
+<div class="f11"><a href="#">Report as inappropriate</a></div>
+
+<p class="mart10">10 of 12 found this review helpful.</p>
+</div>
+  </div>
+   <div class="tab tab2">
+   <table class="write_review marb10">
+   <tr><td>Subject</td><td><input type="text" /></td></tr>
+     <tr><td>Review</td><td><textarea></textarea></td></tr>
+       <tr><td>Rate this product</td><td><ul class="rating left"><li class="sel"></li><li class="sel"></li><li></li><li></li><li></li></ul></td></tr>
+         <tr><td></td><td><button type="submit" class="btn_post"></button></td></tr>
+        
+   </table>
+    </div>
+    </div>
+   </div>
+   </div>
+  <div class="product_rightbar">
+   <div class="top_border"></div>
+    <div class="delivery_guarantee rc5">
+      <div class="ra">
+        <a href="javascript: void(0)" 
+            onclick="window.open('/product/check_availability/?rc={{product.primary_rate_chart.id}}', 
+                'windowname2', 
+                'width=800, \
+                height=400, \
+                location=no, \
+                menubar=no, \
+                resizable=yes, \
+                scrollbars=1, \
+                status=no, \
+                toolbar=no'); 
+                return false;" class="right_arrow" title="Check Delivery Tim" id="check_availy">Check Delivery Time </a></div>
+    </div>
+    <div class="pay_with_cod mar10 rc5">
+      <div class="marb2 ra"> <span class="f11 fb caps">This item available for</span><br />
+        <span class="f15 fb forange2 caps">Cash on Delivery</span> </div>
+      <div class="ra"><a target="_blank" href="/info/cod.html" class="mart10 right_arrow pop_up" title="Learn More">Learn More</a></div>
+    </div>
+    {%if product.primary_rate_chart.offer_price >= 3000 %} 
+    <div class="emi mar10 rc5">
+      <div class="marb5"><span class="forange2 fb caps f14">Credit Card EMI</span> Available</div>
+      <table style="width:200px !important; height:45px;">
+        <tr>
+          <th>3 EMI</th>
+          <th>6 EMI</th>
+          <th>9 EMI</th>
+        </tr>
+        <tr>
+          <td><span class="WebRupee">Rs. </span> {{emi.3monthsi|money}}</td>
+          <td><span class="WebRupee">Rs. </span> {{emi.6months|money}}</td>
+          <td><span class="WebRupee">Rs. </span> {{emi.9months|money}}</td>
+        </tr>
+      </table>
+      <div class="ra mart5"><a class="right_arrow pop_up"  target="_blank"  href="/info/emi.html" title="Learn More">Learn More</a> </div>
+    </div>
+    {%endif%}
+    <div class="future_money mar10 rc5"> <span class="fb">Easy EMI/Finance available </span>
+      <div class="ra f11"><a href="/info/future_money_finance.html"  target="_blank"  class="mart10 right_arrow pop_up" title="Learn More">Learn More</a></div>
+    </div>
+   
+    <div class="need_assistance f15"><span class="fb">Need Assistance?</span>
+      <div class="f11 marl5 mart10"> Chat live with an</div>
+       <div class="f11 marl5">online representative</div>
+       <div class="f11 marl5 mart10"> <a onclick="window.open('http://chatserver.comm100.com/ChatWindow.aspx?siteId=24850&amp;planId=597&amp;partnerId=-1&amp;visitType=1&amp;byHref=1', 'popupwindow', 'width=500,height=500,left=200,top=5,scrollbars,resizable');" style="cursor: pointer;" title="Need Assistance?">
+       <strong>Chat with us &raquo;</strong></a></div>
+    </div>
+    
+    {%if similarProducts%}
+    <div class="similar_prod">
+    <div class="similar_prod_title">You may also like</div>
+        {%for sp in similarProducts%}
+        <div class="similar_prod_item">          
+           <a href="{%cc_url request sp.product.url%}"><img src="{{sp.image.get_thumbnail_url}}" width="76" height="76" alt="" title="{{sp.product.title}}"/></a>
+            <ul>
+                <li class="fb f12"><a href="{%cc_url request sp.product.url%}" title="{{sp.product.title}}">{{sp.product.title}}</a></li>
+                <li>Market Price <span class="WebRupee">Rs.</span> {{sp.product.primary_rate_chart.list_price|money}}</li>
+                <li>Steal Price <span class="WebRupee">Rs.</span> {{sp.product.primary_rate_chart.offer_price|money}}</li>   
+                <li>You Steal <span class="WebRupee">Rs.</span> {{sp.product.primary_rate_chart.getSavings|money}}</li>           
+                <li class="mart20"><a href="{%cc_url request sp.product.url%}" title="Buy Now">Buy Now &rsaquo;</a></li>
+            </ul> 
+          <!--  <div class="you_save">
+            You Steal<br />
+            <span class="fb"><span class="WebRupee">Rs.</span> {{sp.product.primary_rate_chart.getSavings|money}}</span>
+            </div>-->
+        </div>
+       
+        {%endfor%}      
+        </div>
+     
+     </div>
+  {%endif%}
+   <div class="top_border"></div>
+</div>  
+
+<div id="fb-root"></div>
+<div id="learn_more_popup"></div>
+<div id="pop" style="display:none">
+  <div>
+    <h1>
+      <center>
+        Connect Using Facebook
+      </center>
+    </h1>
+  </div>
+  <div>
+    <fb:login-button perms="email,user_likes,friends_likes,publish_stream">Connect with Facebook</fb:login-button>
+  </div>
+</div>
+<script>
+    function ajaxws(aType, srcId) {
+        if (srcId == "") {srcId = 0}
+        var url = "/as/write-stream/"+aType+"/"+srcId+"/";        
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: "",
+            success: function(msg){              
+            }
+        });
+    };
+</script>
+<script>
+    FB.Event.subscribe('edge.create', function(href) {      
+        var ufid = "{{facebookid}}";
+        var attch_fb = '';
+        FB.api('/me', function(response) {
+            if (ufid != response.id){             
+                $("#pop").dialog();
+                auth_check();
+            };     
+        ajaxws("Like", "{{product.primary_rate_chart.id}}");
+        });
+    });
+    function auth_check() {
+        FB.Event.subscribe('auth.login', function(response) {
+            FB.getLoginStatus(function(res) {
+                if(res.session.uid) {
+                    alert("here is the issue");
+                    FB.api('/me', function(response1) {                      
+                    }); 
+                };
+            });
+        });
+    };
+</script>
+<script language="javascript" type="text/javascript">
+
+    	$('.tab_overview').click(function(){		
+		
+		$(this).addClass('sel_tab');
+		$('.tab_spec').removeClass('sel_tab');
+		$('.tab_acc').removeClass('sel_tab');
+				
+			$('.tab1').removeClass('hide');
+			$('.tab1').addClass('show');
+			$('.tab2').addClass('hide');
+			$('.tab3').addClass('hide');			
+			$('.tab2').removeClass('show');
+			$('.tab3').removeClass('show');		
+		
+	});
+	
+	$('.tab_spec').click(function(){		
+		$(this).addClass('sel_tab');
+		$('.tab_overview').removeClass('sel_tab');
+		$('.tab_acc').removeClass('sel_tab');		
+			$('.tab2').removeClass('hide');
+			$('.tab1').addClass('hide');
+			$('.tab2').addClass('show');
+			$('.tab3').addClass('hide');	
+			
+			$('.tab1').removeClass('show');
+			$('.tab3').removeClass('show');		
+		
+	});
+	
+	$('.tab_acc').click(function(){		
+		$(this).addClass('sel_tab');
+		$('.tab_overview').removeClass('sel_tab');
+		$('.tab_spec').removeClass('sel_tab');		
+			$('.tab3').removeClass('hide');
+			$('.tab1').addClass('hide');
+			$('.tab2').addClass('hide');
+			$('.tab3').addClass('show');			
+			$('.tab2').removeClass('show');
+			$('.tab2').removeClass('show');			
+		
+	});
+	
+    
+$(document).ready(function(){
+    $('div.filmstrip img').bind('mouseover', function() {
+            var display_url = $(this).attr('display');
+            var current_url = $('#display_img')[0].src;
+            if(display_url) {
+                if (display_url != current_url) {
+                    $('#display_img')[0].src = display_url;
+                    }
+            }
+        });
+
+    $('div.zoom_in').bind('click', function() {
+            var url = $('#display_img')[0].src;
+            var re = new RegExp(".*scene7.*Futurebazaar/([^?]+)")
+            var m = url.match(re);
+            if(m) {
+                 var zoom_url = "http://futurebazaar.scene7.com/s7ondemand/zoom/flasht_zoom.jsp?company=Futurebazaar&sku=noimage&config=ImageSetConfigDefaults&zoomwidth=650&zoomheight=500&vc=image%3dFuturebazaar/" + m[1];
+                 window.open(zoom_url, 'zoom_window', 'location=no, height=550, width=650, toolbar=no, menubar=no, top=100, left=200' );
+            }
+        });
+    });		
+</script>
+{%endblock%} 

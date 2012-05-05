@@ -1,0 +1,45 @@
+{%load web_tags%}
+
+<div class="left pad520 footer_bl h90">
+<!--<div class="footer_title" style="color:#363636;">CUSTOMER TESTIMONIALS</div>-->
+<div class="cust_speak">
+<ul class="testimonial_slider left"> 
+   {%for testimonial in testimonials%} 
+   <li class="left" style="overflow:hidden !important;">
+   <div class="spone testimonial_quo">
+        <div class="padb5">        
+        <p class="f12" >
+        {{testimonial.feedback|truncate:150}}
+        </p>
+         {% if testimonial.name %}
+        </div>
+        <div class="padb5"> 
+           <div class="f11 fdgray"><span class="fb">{{testimonial.name}}</span>{%if testimonial.city%}<span>- {{testimonial.city}}</span>{%endif%}</div>
+           
+        </div>
+        {% endif %}      
+    </div>    
+    
+    </li>
+    {%endfor%}
+</ul>
+</div></div>
+<div class="clear"></div>
+<!-- Customer Testimonial START -->
+<script type="text/javascript" >
+function slide_customer_testimonials(){
+    var current_testimonial = 0;
+    var speed_testimonial=0;
+    var total_testimonials = {{testimonials|length}};
+    function testimonial_animate() {
+        var margin = current_testimonial * -335;
+        var marginpx = margin + 'px';
+        $(".testimonial_slider").animate({marginLeft:margin}, speed_testimonial,'linear' , function(){});            
+        current_testimonial += 1;
+        if(current_testimonial == total_testimonials){current_testimonial = 0};
+    };
+    setInterval(testimonial_animate, 8000);
+};
+</script>
+<!-- Customer Testimonial END -->
+

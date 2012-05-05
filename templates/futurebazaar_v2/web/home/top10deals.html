@@ -1,0 +1,80 @@
+{%load cc_tags%}
+{% laod web_tags %}
+<div class="top10deals_container">
+<div class="top10deals_header">
+<div class="top10deals_header_inner"> 
+<h1>{{featured_list.title}} by {{featured_list.curator.full_name}} </h1>
+<div class="f11 fwhite prof">{{featured_list.curator.profession}}</div>
+</div>
+<div class="top10_share">
+<div class="share_text">Tell your friends</div>
+<a title="Share this deal with friends" href="http://www.facebook.com/sharer.php?u=http://{{request.client.domain}}{% cc_url request featured_list.url%}&t=Daily Deal" target="_blank" class="facebook" onclick="return fbs_click('http://{{request.client.domain}}{% cc_url request featured_list.url %}', 'Top 10 Deal')" rel="nofollow"/></a>
+<a title="Tweet this deal" href="http://twitter.com/share" target="_blank" class="twitter" onclick="return twit_click('http://{{request.client.domain}}{% cc_url request featured_list.url%}','','')" rel="nofollow"/></a>
+<a title="Email this deal to friends" href="mailto:?subject=Share%20Deal&body=http://{{request.client.domain}}{% cc_url request featured_list.url%}"class="mail"></a>
+</div>
+<div class="clear"></div>
+</div>
+  <div class="top10deals_banner">
+  <a href="{% cc_url request featured_list.url%}">{%if featured_list.banner_main%}<img src="{% media_url request featured_list.banner_main %}" width="998" alt="Top 10 Deals" title="Top 10 Deals"/>{%endif%}</a>
+  </div>
+  <div class="top10deals_items">
+    <div class="top10deals_prev" id="top10leftarr">
+    <div class="prev_arrow"></div>
+    </div>
+    <div class="top10deals_gallery">
+      <div class="top_deals_title f15">
+     {{featured_list.profession}} {{featured_list.curator.full_name}}'s Favourite {{featured_list.title}} <a href="{% cc_url request featured_list.url%}" class="f12">(View all products)</a>
+      </div>
+      <ul class="top_deals_thumbs" style="float:left; margin-bottom:10px;">
+      {%for deal in top10deals%}
+        <li><a href="{%cc_url request deal.sku.product.url%}"><img src="{% media_url request deal.get_filmstrip_image %}" width="104" height="104" alt="{{deal.sku.product.title}}" title="{{deal.sku.product.title}}"/></a></li>
+       {%endfor%}
+      </ul>
+    </div>
+    <div class="top10deals_next top10dealsitem right" id="top10rightarr">
+    <div class="next_arrow"></div>
+    </div>
+</div>
+<div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+var speed = 200;
+var current = 1;
+$('#top10rightarr').click(function(){
+    if(current <4){
+    if (current==0)
+        current = 1;
+	var margin = current * -132;
+	var marginpx = margin + 'px';
+/*	$("#navPrev").removeClass("left-finish"); 
+	$("#navPrev").addClass("prev-ok");*/
+	$('.top_deals_thumbs').animate({marginLeft:marginpx}, speed,'linear' , function(){ 
+	/*$("#navNext").removeClass("next-ok"); 
+	$("#navNext").addClass("right-finish");*/
+	current += 1;
+	});
+    }
+});
+
+$('#top10leftarr').click(function(){
+    if(current>=1){
+        if(current==4)
+            current=3;
+	current -= 1;
+	var margin = current * -132;
+	var marginpx = margin + 'px';
+/*	$("#navNext").removeClass("right-finish"); 
+	$("#navNext").addClass("next-ok");*/
+//And now lets move back to the start of the Carousel
+$('.top_deals_thumbs').animate({marginLeft:marginpx}, speed,'linear' , function(){ 
+/*	$("#navPrev").removeClass("prev-ok"); 
+	$("#navPrev").addClass("left-finish");*/
+	});
+    }
+});});
+</script>
+<style type="text/css">
+.top10deals_gallery{overflow:hidden; width:942px;}
+.top_deals_thumbs{width:3000px;}
+</style>

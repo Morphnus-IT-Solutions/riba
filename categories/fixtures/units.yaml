@@ -1,0 +1,60 @@
+- fields: {base: null, code: cm, inverse_multipler: false, multiplier: null, name: Centimeter}
+  model: categories.unit
+  pk: 1
+- fields: {base: 1, code: m, inverse_multipler: false, multiplier: '100.00', name: Meter}
+  model: categories.unit
+  pk: 2
+- fields: {base: null, code: in, inverse_multipler: false, multiplier: null, name: Inch}
+  model: categories.unit
+  pk: 3
+- fields: {base: 3, code: ft, inverse_multipler: false, multiplier: '12.00', name: Feet}
+  model: categories.unit
+  pk: 4
+- fields: {base: null, code: g, inverse_multipler: false, multiplier: null, name: Gram}
+  model: categories.unit
+  pk: 5
+- fields: {base: 5, code: Kg, inverse_multipler: false, multiplier: '1000.00', name: Kilogram}
+  model: categories.unit
+  pk: 6
+- fields: {base: null, code: l, inverse_multipler: false, multiplier: null, name: Litre}
+  model: categories.unit
+  pk: 7
+- fields: {base: null, code: ton, inverse_multipler: false, multiplier: null, name: Tonnage}
+  model: categories.unit
+  pk: 8
+- fields: {base: null, code: KB, inverse_multipler: false, multiplier: null, name: Kilobyte}
+  model: categories.unit
+  pk: 9
+- fields: {base: 9, code: MB, inverse_multipler: false, multiplier: '1024.00', name: Megabyte}
+  model: categories.unit
+  pk: 10
+- fields: {base: 9, code: GB, inverse_multipler: false, multiplier: '1048576.00',
+    name: Gigabyte}
+  model: categories.unit
+  pk: 11
+- fields: {base: null, code: MHz, inverse_multipler: false, multiplier: null, name: MegaHertz}
+  model: categories.unit
+  pk: 12
+- fields: {base: 12, code: GHz, inverse_multipler: false, multiplier: '1000.00', name: GigaHertz}
+  model: categories.unit
+  pk: 13
+- fields: {base: 9, code: TB, inverse_multipler: false, multiplier: '1073741824.00',
+    name: Terabyte}
+  model: categories.unit
+  pk: 14
+- fields: {base: null, code: VA, inverse_multipler: false, multiplier: null, name: VA
+      Rating}
+  model: categories.unit
+  pk: 15
+- fields: {base: 15, code: KVA, inverse_multipler: false, multiplier: '1000.00', name: KVA
+      Rating}
+  model: categories.unit
+  pk: 16
+- fields: {base: null, code: months, inverse_multipler: false, multiplier: null, name: Age}
+  model: categories.unit
+  pk: 17
+- fields: {base: 17, code: years, inverse_multipler: false, multiplier: '12.00', name: Age
+      (Years)}
+  model: categories.unit
+  pk: 18
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<link rel="stylesheet" lang="stylesheet" href="{{MEDIA_URL}}css/popup.css" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/jq/jquery-ui-1.8.2.custom.css" type="text/css" media="screen, projection" />
+<script type="text/javascript" src="{{MEDIA_URL}}jq/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}jq/js/jquery-ui-1.8.10.custom.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}jq/js/jquery.hoverIntent.minified.js"></script>
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/cookie.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    var is_hide_cookie_set = ($.cookie('subpopdd') == "yes");
+    if (is_hide_cookie_set == false)
+    {
+        $.cookie("subpopdd","yes")
+        var set_hide_cookie = $.cookie('subpopdd');
+    };
+    if (is_hide_cookie_set == false)
+    {
+        $('#form1').trigger('click');
+        $("#form1").fancybox();
+    };
+        $('#form1').trigger('click');
+    
+    });
+
+    function doUnload()
+    {
+     if (window.event.clientX < 0 && window.event.clientY < 0)
+      {
+        $.cookie("subpopdd",null);
+          }
+          }
+</script>
+
+
+
+
+
+</head>
+<body>
+<a style="display: none;"  id = "form1" href = "#form"></a>
+<div id =" form"class="popup">
+  <div class="inner">  
+    <h1>Subscribe with futurebazaar.com for Deals to 1up your life.</h1>
+        <img src="{{MEDIA_URL}}images/btn_close.gif" class="btn_close" />
+            <div  class="fields">
+            {% for field in form.fields %}
+                {%for error in field.errors%}
+                <div class="error">{{error}}</div>
+                {%endfor%}
+            {% endfor %}
+                <dl class="dl_sub">
+                <form method="post" action="">
+            {% for field in form %}
+                <dt>{{field.label_tag}}<span class="red">*</span></dt>
+                <dd>:
+                    {{field}}
+                </dd>
+
+            {% endfor %}
+            <dt></dt>
+              <dd class="ra">  <input type="image" name="Send" alt="Send" value="Send" src="{{MEDIA_URL}}images/btn_subscribenow.gif"></dd>
+<!--                <dd class="ra"><img src="{{MEDIA_URL}}images/btn_subscribenow.gif"  style="margin-right:10px;" /></dd>-->
+              </dl>
+                </form>
+    </div>
+    <div class="block_connect left">
+
+
+
+
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+
+    <script>
+         FB.init({ 
+            appId:{{app_settings.facebook_app_id}}, cookie:true, 
+            status:true, xfbml:true 
+         });
+      </script>
+
+    <script>
+   var  div    = document.getElementById('fb-root'),
+  showMe = function(response) {
+    if (!response.session) {
+    } else {
+      FB.api('/me', function(response) {
+                var onSuccess = function(response) {
+            };
+            var onError = function() {
+            };
+        $.ajax({ url:action,
+                   data : data,
+                   success :onSuccess ,
+                   error : onError,
+                   type : 'POST'
+                   });
+
+
+      });
+    }
+  };
+FB.getLoginStatus(function(response) {
+  showMe(response);
+  FB.Event.subscribe('auth.sessionChange', showMe);
+});    
+    </script>
+
+      <p><strong>Or</strong> use facebook connect to Subscribe</p>
+<a href="#" onclick="FB.login();return false;"><img src="{{MEDIA_URL}}images/btn_connect.gif"></a>
+    </div>
+    <div class="clear"></div>
+    <div class="popup_bottom">
+    <div class="popup_bottom_left">Every day we bring you top deals to 1up your life. Our merchandizing team works hard to get products across the length and breadth of Future Group and make them available to you at a fabulous discount. <strong>Come join us!</strong></div>
+    <div class="popup_bottom_right f15 fb"><a href="#">Skip</a> </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

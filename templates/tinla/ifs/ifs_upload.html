@@ -1,0 +1,61 @@
+{% extends 'web/ppd_base.html' %}
+{% load ppd_tags %}
+
+{% block content %}
+
+{% if loggedin %}
+     <div class="user_account_tabs" id="user_account_tabs">
+          <div class="left menu">
+             {%include "ppd/acc_section_display.html"%}
+          </div>
+     </div>
+{% endif %}
+
+{% if errors %}
+    <div class="orders_msg rc5">
+        <div class="rc5 error">       
+        {% for error in errors %}
+            {%for err in error%}
+                {{err}}</br>
+            {%endfor%}
+        {% endfor %}   
+        </div>
+    </div>   
+{% endif %}
+
+    <div class="f18 fb">
+        <h1>{{title_table}} - {{selected_action}} interface</h1>
+    </div>
+<style>
+.tbl_price{border-collapse:collapse;}
+.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+.tbl_price th{background-color:#f3f3f3; text-align:center;}
+.tbl_price td{text-align:center;}
+</style>
+
+  <div style="padding:0px; margin-top:10px">
+   <form method="post" enctype="multipart/form-data">
+    {% if flag == 'upload_errors'%} 
+        <h2 class="f18">{{title_table}} could not be uploaded succcessfully. Refer the errors as mentioned above.</h2>
+    {% else %}
+        {% if flag == 'updated' %}
+            <h2 class="f18">{{title_table}} has been updated successfully!!!</h2>
+        {% else %}
+            {% if flag == 'new' %}
+            Choose the appropriate file for upload.
+            {{forms}}
+            <input type="submit" value="Upload" name="upload" id="upload" class="grayButton" style="padding: 2px 6px;"/>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+  </form>
+{% endblock %}
+{% block script_footer %}
+    <script type="text/javascript">
+        $("#back_button").click(function(){
+            history.go(-1);
+            return true;
+        })
+    </script>
+{% endblock %}
+

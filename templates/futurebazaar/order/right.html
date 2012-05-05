@@ -1,0 +1,74 @@
+{% load cc_tags %}
+{% load web_tags %}
+<div {%if not confirmed%}style="padding-top:32px;"{%else%}style="padding-top:20px"{%endif%}>
+	{% if order %}
+		{% if not order.state|order_state_conf_or_mod_or_canc %}
+		<div class="cart_summary marb10">
+			<div class="cart_summary_title">Order Summary</div>
+				<div class="pad10">
+				<table>
+					{% if '/payment_mode' in request.path%}
+					<tr>
+						<td>Order ID</td>
+						<td class="fblack">{{order.reference_order_id}}</td>
+					</tr>
+					{% endif %}
+					
+					<tr>
+						<td>No. of Items</td>
+						<td class="fblack"><span>{{order.get_item_count}} items</span></td>
+					</tr>
+					
+					<tr>
+						<td>Sub-total</td>
+						<td class="fblack"><span><span class="WebRupee">Rs.</span> {{order.get_offerprice_total|money}}</span></td>
+					</tr>
+					<tr>
+						<td>Shipping</td>
+						<td class="fblack"><span><span id="orderShippingCharges">{%if order.shipping_charges > 0 %}<span class="WebRupee">Rs.</span> {{order.shipping_charges|money}}{%else%}FREE{%endif%}</span></span></td>
+					</tr>
+					
+					{%if order.auto_promotions_discount%}
+					<tr>
+						<td>Spl Discount</td>
+						<td class="fblack"><span><span class="WebRupee">Rs.</span> {{order.auto_promotions_discount|money}}
+					</tr>
+					{%endif%}
+					{%if order.coupon_discount%}
+					<tr>
+						<td>Spl Discount</td>
+						<td class="fblack">
+							<span>
+								<span class="WebRupee">Rs.</span> {{order.coupon_discount|money}}{%if order.coupon.promo_name%} ({{order.coupon.promo_name}}) {%endif%}
+								{%if not confirmed %}
+									{%if order.coupon%}
+									<form method="post" action={% cc_url request "orders/mycart/" %}>
+										<input type="hidden" id="redirect_to" name="redirect_to" value="{{request.path}}"/>
+										<input type="hidden" name="action" value="remove_fb_coupon"/>
+										<button class="linkButton" type="submit" title="Remove this coupon">Remove coupon x</button>
+									</form>
+									{%endif%}
+								{%endif%}
+							</span>
+						</td>
+					</tr>
+					{%endif%}
+					<tr>
+						<td class="fb f13 btg" style="width:110px;">Total</td>
+						<td class="fb f13 btg"><span class="fb"><span id="orderPayableAmount"><span class="WebRupee">Rs.</span> {{order.payable_amount|money}}</span></span></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		{% endif %}
+		<!-- Chat Link -->
+		<!--<div class="marb10 c666">
+			<p class="marb10 fb">Have a Question? Chat for live assistance.</p><a class="chat_now_btn"  onclick="window.open('http://chatserver.comm100.com/ChatWindow.aspx?siteId=24850&amp;planId=597&amp;partnerId=-1&amp;visitType=1&amp;byHref=1', 'popupwindow', 'width=540,height=400,left=200,top=5,scrollbars,resizable');">Chat Now</a>
+		</div>-->
+		<!-- /Chat Link -->
+
+	{% endif %}
+	{% if request.wstore and request.wstore.order_on_phone == "none" %}
+	{% else %}
+</div>
+{% endif %} 

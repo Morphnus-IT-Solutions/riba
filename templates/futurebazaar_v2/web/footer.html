@@ -1,0 +1,135 @@
+ {%load menu_tags%}
+  {%load cc_tags%}
+  {%load web_tags%}
+  {% load cache %}
+<div class="footer">
+  <div class="footer_inner">
+  <div class="col1">
+      
+      <div class="footer_title">DEAL CATEGORIES</div>
+      <ul class="footer_list">
+        <li><a href="/auto-accessories/ch/1097/">Auto Accessories</a></li>
+        <li><a href="/clothing-accessories/ch/920/">Clothing & Accessories</a></li>
+        <li><a href="/footwear/ch/1090/">Footwear</a></li>
+        <li><a href="/mobiles-phones/ch/1174/">Mobiles & Phones</a></li>
+        <li><a href="/computers/ch/1053/">Computers</a></li>
+        <li><a href="/memory-storage/ch/1169/">Memory & Storage</a></li>
+        <li><a href="/electronics/ch/1073/">Electronics</a></li>
+        <li><a href="/home-kitchen-utilities/ch/1104/">Home & Kitchen Utilities</a></li>
+        <li><a href="/cameras/ch/1038/">Cameras</a></li>
+        <li><a href="/bags-luggage/ch/979/">Bags & Luggage</a></li>
+        <li><a href="/toys-games/ch/1187/">Toys & Games</a></li>
+        <li><a href="/beauty-wellness-products/ch/986/">Beauty & Wellness</a></li>
+      </ul>
+    </div>
+    <div class="col2">
+       <div class="footer_title">PAYMENT OPTIONS</div>
+      <ul class="footer_list_two marb20">
+        <li>Credit Card/ Debit Cards</li>
+        <li>Net Banking</li>
+        <li>Credit Card EMI</li>
+        <li>Future Money Finance</li>
+        <li>Cash on Delivery</li>
+        <li>Pay Back</li>
+      </ul>
+      
+      <div class="footer_title">SECURE SHOPPING</div>
+      <p>Our checkout is secured by<br />
+        Thawte latest SSL Technology </p>
+      <div class="thawte_icon"></div>     
+     
+    </div>
+    
+    <div class="col3">
+      <div class="footer_title">FUTUREBAZAAR TRUST</div>
+      <ul class="footer_list marb20">      
+        <li><a href="/trust/shipping_details.html" class="popup">Free Shipping*</a></li>      
+        <li><a href="/trust/cod.html" class="popup">Cash on Delivery*</a></li>
+        <li><a href="/trust/delivery-guarantee.html" class="popup">7 Days Delivery Guarantee*</a></li>
+        <li><a href="/trust/return_policy.html" class="popup">Easy Returns</a></li>
+        <li><a href="/trust/future_money_finance.html" class="popup">Finance Available</a></li>
+        <li><a href="/trust/manufacturer-warranty.html" class="popup">Manufacturer's Warranty</a></li>
+        <li><a href="#">Authorized Resellers</a></li>
+      </ul>
+      
+       <div class="footer_title">CONNECT WITH US</div>
+      <div class="connect marb30">
+      <a href="http://www.facebook.com/FutureBazaar" target="_blank" class="connect_fb" title="Join us on Facebook"></a>
+      <a href="http://twitter.com/futurebazaar" class="connect_tw" target="_blank" title="Follow us on Twitter"></a>
+      <a href="http://blog.futurebazaar.com/" class="connect_bl" target="_blank" title="View our Blog"></a>
+      </div>
+     
+    </div>
+    <div class="col4">
+      <!--<div class="footer_title">MY ACCOUNT</div>
+      <ul class="footer_list marb30">
+        {% if request|is_user_authenticated %}
+            <li><a href={% cc_url request "order/track_order/"%}>Track Order</a></li>
+            <li><a href={% cc_url request "auth/signout/"%}>Sign Out</a></li>
+        {% else %}
+            <li><a href={% cc_url request "order/track_order/"%}>Track Order</a></li>
+            <li><a href={% cc_url request "auth/signin/"%}>Sign in</a></li>
+            <li><a href={% cc_url request "auth/signup/"%}>Sign up</a></li>
+        {% endif %}
+      </ul>-->
+     
+     
+        
+      <div id="footer_subscribe" class="hide">
+      <div class="footer_title" id="subscription_title">SUBSCRIBE TO DEALS</div>
+      <div class="subscribe_box marb20">
+        <div id="deal_registration">
+          
+          <input type="text" class="pad3 w210" id="deal_name" value="Enter your Name" onfocus="if(this.value=='Enter your Name') { this.value='';}"  onblur="if(this.value=='') {this.value='Enter your Name'; }" />
+         
+          <input type="text" id="deal_email" value="Enter your Email" maxlength="200" name="email" onfocus="$('#deal_email').removeClass('error'); if(this.value == 'Enter your Email'){value=''};" onblur="if(this.value=='') {this.value='Enter your Email'; }"/>
+          
+          <input type="text" id="deal_mobile" value="Enter your Mobile No." name="mobile" maxlength="10"  onfocus="$('#deal_mobile').removeClass('error'); if(value == 'Enter your Mobile No.'){value=''};" onblur="if(this.value=='') {this.value='Enter your Mobile No.'; }"/>
+          <div class="ra"><button title="SUBMIT" id="deal_subscription">SUBSCRIBE NOW</button></div>
+        </div>
+          <div id="subscription_error" class="hide mart5 fred"></div>
+          <div id="home_subscribe" class="hide ca"> Every day, find your inbox loaded with the most irresistible deals.<br/>
+            <br/>
+            Discover fabulous discounts on all your favourite items. <br/>
+            <br/>
+            Happy Shopping!<br/>
+            <br/>
+            Thank you for subscribing with <strong>FutureBazaar.com!</strong>
+          </div>
+          </div>
+      </div>
+      
+   <div class="footer_title">CUSTOMER CARE</div>
+      <div class="footer_phone">+91 922-222-1947</div>
+      <div class="footer_mail">support@futurebazaar.com</div>
+      <div class="footer_address">FutureBazaar.com 10th Floor, Tower C, 247 Park,
+        LBS Marg, Vikhroli (West),<br />Mumbai - 400 083. </div>
+   
+    </div>
+    <div class="clear"></div>
+    <p class="marb10 mart20 tj">Futurebazaar.com is a part of the FutureGroup family. Futurebazaar.com is a place to get great deals on your shopping needs. Try the Daily steals for an exciting new deal every day or Battle it out for great prices in one category every week. If that's not enough how about browsing the Top 10 to look at our handpicked essentials for themes like travel, vacation, festivals etc. Shop from the comfort your home and get products at great prices at your doorstep. With easy payment options such as cash on delivery, Future money EMI, Net Banking and Cheque shopping is more secure and easier than ever. </p>
+    
+    <div class="our_stores marb10"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="footer_bottom">
+  <div class="footer_bottom_inner">
+    <div class="footer_fb_logo"></div>
+    <div class="footer_links">
+      <ul>
+        <li><a href="/about/index.html">About Us</a></li>
+        <li><a href="/about/contact_us/">Contact Us</a></li>
+        <li><a href="http://blog.futurebazaar.com" target="_blank">Blog</a></li>
+        <li><a href="/info/sitemap/">Sitemap</a></li>
+        <li><a href="/info/return_policy.html">Return Policy</a></li>
+       <!-- <li><a href="/trust/shipping_details.html">Shipping Details</a></li>-->
+        <li><a href="/info/cancellation_policy.html">Cancellation Policy</a></li>
+        <li><a href="/info/terms_and_conditions.html">Terms & Conditions</a></li>
+      </ul>
+     
+    </div>
+    <div class="copyright">&copy; 2011 Future Bazaar India Ltd.</div>
+    <div class="clear"></div>
+  </div>
+</div>

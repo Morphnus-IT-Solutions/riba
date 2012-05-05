@@ -1,0 +1,142 @@
+{% extends 'ppd/user_home.html' %}
+{% load web_tags%}
+{% load ppd_tags %}
+{% load pagination_tags%}
+{% block user_content %}
+<div class="padding_top10"> 
+	{%comment%}
+  		<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+  	{%endcomment%}
+  	<div class="content_head">
+    	<div class="header rc5">
+      		<h1>{{client_display_name|title}}</h1>
+    	</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+	
+  	<div class="inner-content">
+		<div class="left w940"> 
+			{% daterange "Product Reviews" search_trend from_date to_date request "" client_display_name %} 
+		</div>
+		<div class="clear">&nbsp;</div>
+		<div class="left bgedgray" style="width:100%;">
+			<div class="left w747">
+				<ul id="tabs_review">
+					<li class="marl20 review_tab {% if "new" in url%} review_sel_menu{% else %} {%endif%}"> <a href="/category/product_reviews/new/{%if sku%}?sku={{sku}}{%else%}?from={{from_date|date:"d M Y"}}&to={{to_date|date:"d M Y"}}{%endif%}">New {%if not new%}(0) {%else%}({{new|length}}){%endif%}</a> </li>
+					<li class="review_tab {% if "approved" in url%} review_sel_menu{% else %} {%endif%}"> <a href="/category/product_reviews/approved/{%if sku%}?sku={{sku}}{%else%}?page=1&from={{from_date|date:"d M Y"}}&to={{to_date|date:"d M Y"}}{%endif%}">Approved {%if not approved%}(0){%else%}({{approved|length}}){%endif%}</a> </li>
+					<li class="review_tab {% if "removed" in url%} review_sel_menu{% else %} {%endif%}"> <a href="/category/product_reviews/removed/{%if sku%}?sku={{sku}}{%else%}?page=1&from={{from_date|date:"d M Y"}}&to={{to_date|date:"d M Y"}}{%endif%}">Removed {%if not rejected%} (0){%else%}({{rejected|length}}){%endif%}</a> </li>
+					<li class="review_tab {% if "flagged" in url%} review_sel_menu{% else %} {%endif%}"> <a href="/category/product_reviews/flagged/{%if sku%}?sku={{sku}}{%else%}?page=1&from={{from_date|date:"d M Y"}}&to={{to_date|date:"d M Y"}}{%endif%}">Flagged {%if not flagged%} (0){%else%}({{flagged|length}}){%endif%}</a> </li>
+		
+				</ul>
+			
+			</div>
+			<div class="left search_new">
+				<form id="search_form" method="get" action="">
+				  <input type="text" id="search_id" placeholder="{%if sku%}{{sku}}{%else%}SKU ID{%endif%}" maxlength="300" name="sku" autocomplete="off">
+				  <button id="go" type="submit"></button>
+				  <div class="clear"></div>				  
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	<div class="clear"></div>
+	
+	<div><!-- div for display product review list -->
+		<div class="tbl_review mart20">
+			{%if product_reviews%}
+				<ul class="left">
+					<li class="w50">Sr. No</li>
+					<li class="w255">Product/Rating/Username/Date</li>
+					<li class="w500">Customer Review</li>
+					<li class="w130" style="border:0px none;">Action</li>
+				</ul>
+			{%else%}
+				<span class="left w100 f14 vatop pad5">No Reviews</span>
+			{%endif%}
+			<div class="clear"></div>
+		</div>
+		{% autopaginate product_reviews 25 %}
+			{%for review in product_reviews %}
+		<div class="divider-bottom">
+				<div class="left w40 f11 ca vatop pad-review">{{25|multiply:page|add:forloop.counter}}</div>
+				<div class="left w245 f11 vatop pad-review word-wrap">
+					<div class="flgray la f11"><a href = "http://www.{{review.rate_chart.seller.client.clientdomain_name}}/{{review.product.slug}}/pd/{{review.product.id}}" target="_blank">{{review.rate_chart.product.title}}, sku - {{review.rate_chart.sku}}</a></div>
+					<div class="flgray la f11 padb5">
+						{%for i in review.rating|get_range%}
+							<img src="/media/rms/images/star_on.png" alt=""  align="top"/>
+						{%endfor%}
+						{%for i in 5|diff:review.rating|get_range%}
+							<img src="/media/rms/images/star_off.png" alt=""  align="top"/>
+						{%endfor%}
+					</div>
+					<div class="flgray la f12 fb fblack">{{review.display_name}}</div>
+					<div class="flgray">{{review.reviewed_on|date:'f A'}}, {{review.reviewed_on|date:'d M Y'}}</div>
+
+                    {%ifnotequal review.status 'new'%}
+					    <div class="flgray">{{review.status|title}} by {{review.reviewed_by}}</div>
+                    {%endifnotequal%}
+				</div>
+				<div class="left w495 f11 pad-review txtaj word-wrap">
+					<div class="fb f12">{{review|title}}</div>
+					<div class="mart5 marb5" style="line-height:14px;">{{review.review}}</div>
+				</div>
+				<div class="left w120 f11 vatop pad-review ca">
+                <form name="product_review" id="product_review_{{review.id}}" action="/reviews/approve_or_disapprove_review/" method="POST">
+                    {%ifnotequal status 'approved'%}
+					    <input style="width:60px;" id="on" name="{{review.id}}" class="uiButton review_on" type="submit"  value="Publish" />
+                    {%endifnotequal%}
+                    {%ifnotequal status 'removed'%}
+                        <input id="off" name="{{review.id}}" src="/media/rms/images/dustbin_icon.png" class="uibutton review_off marl10" type="image" value="Remove" align="middle" title="Remove">
+                    {%endifnotequal%}
+                    {%ifnotequal status 'flagged'%}
+                        <input id="flag" name="{{review.id}}" src="/media/rms/images/flag_icon.png" class="uibutton review_flag marl10" type="image" value="Flag" align="middle" title="Flag it">
+                    {%endifnotequal%}
+                        <input type="hidden" name="url" value="{{url}}">
+                        <input type="hidden" name="on_or_off"  id="check_{{review.id}}">
+                        <input type="hidden" name="on_id" value="{{review.id}}">
+                </form>
+				</div>
+				<div class="clear"></div>
+			</div>
+        {%endfor%}
+        {%paginate%}
+	</div><!-- /div for product review list -->
+	
+</div>	
+
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    $('#sku_submit').click(function(){
+        url_path = '{{url|safe}}';
+        var sku = document.getElementById('sku').value;
+        url_path += "&sku=" + sku + "&";
+        location.href = url_path;
+    });
+
+	$("#tabs_review li.item").hover(function(){
+		if ($(this).hasClass("hovering")){
+			$(this).removeClass("hovering");
+		}
+		else{
+			$(this).addClass("hovering");
+		}
+	});
+    
+   $(".review_on").click(function(){
+            var prod_id = $(this).attr("name");
+            $("#check_"+prod_id).val("on")
+    });
+    $(".review_off").click(function(){
+            var prod_id = $(this).attr("name");
+            $("#check_"+prod_id).val("off")
+    });
+     $(".review_flag").click(function(){
+            var prod_id = $(this).attr("name");
+            $("#check_"+prod_id).val("flag")
+    });
+
+</script>
+{% endblock %} 

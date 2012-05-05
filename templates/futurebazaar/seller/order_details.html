@@ -1,0 +1,191 @@
+{% extends 'ppd/user_home.html' %}
+{%load cc_tags%}
+{% block user_content %}
+{% load web_tags %}
+
+<div class="clear order-details mart30">
+  <div class="order_no">
+    <div class="left"><b>Order id:</b> {%if client_type%}
+      {{order_items.0.order.reference_order_id}}
+      {%else%}
+      {{order.id}}
+      {%endif%} </div>
+    <div class="left" style="margin-left:150px;float:right"><b>Order Date:</b> {% if order.payment_realized_on %}{{order.payment_realized_on|date:"d M Y"}}{%else%}{{order.timestamp|date:"d M Y"}}{% endif %}</div>
+    <div class="clear"></div>
+  </div>
+  <div class="order_detail_cont">
+    <table cellspacing="0" cellpadding="0" class="orderDetail" >
+      <tr> {%ifnotequal order_items.0.order.state 'pending_order'%}
+
+        <th><input type="checkbox" id="select_all"/></th>
+        {%endifnotequal%}
+        <th width="300">Item</th>
+        <th width="100" class="ra">Price</th>
+        <th width="80"></th>
+        {%comment%}
+        <th width="80">Shipping</th>
+        {%endcomment%}
+        <th width="80" class="ca">Qty</th>
+        <th width="80" class="ra">Amount</th>
+      </tr>
+      {%for item in order.orderitem_set.all%}
+      <tr> {%ifnotequal order.state 'pending_order'%}
+        <td class="bbnone padl5"><input type="checkbox" class="select_for_cancel" id="{{item.id}}" name="order_items"/></td>
+        {%endifnotequal%}
+        <td class="bbnone">{{item.item_title}}</td>
+        <!-- <td class="bbnone">{{item.dispatched_due_on|date:"d/m/Y"}}</td>
+        <td class="bbnone"><span class="WebRupee"> Rs. </span>{{item.dispatched_on}}</td>-->
+        <td class="bbnone ra"><span class="WebRupee"> Rs. </span>{{ item.sale_price|division:item.qty|money}}</td>
+        <td class="bbnone"></td>
+        {%comment%}
+        <td class="bbnone ra"><span class="WebRupee"> Rs. </span>{{ item.shipping_charges|division:item.qty|money}}</td>
+        {%endcomment%}
+
+        <td class="bbnone ca">{{item.qty}}</td>
+        <td class="bbnone ra padr5"><span class="WebRupee"> Rs. </span>{% get_amount_with_cashback request item %}</td>
+      </tr>
+      <tr> {%if not item.delivered_on%}
+        <td colspan="6"><span class="left f11 marl24" style="color:#808080;">{%if item.dispatched_on%}Shipped on {{item.dispatched_on|date:"d M, Y"}} by <a href="http://{{item.shipping_details.0.tracking_url}}" target="_blank">{{item.shipping_details.0.courier}}</a> (AWB: {{item.shipping_details.0.tracking_no}}){%endif%} </span> {%endif%}
+        <td colspan="6"><span class="left f11 marl24" style="color:#808080;">{%if item.delivered_on%}Delivered on {{item.delivered_on|date:"d M, Y"}} to <b>{{item.received_by|title}}</b></a> (Receiver's Contact: <b>{{item.receivers_contact}}</b>){%endif%} </span> 
+      </tr>
+      {%endfor%}
+    </table>
+    {%if client_type%}
+		&nbsp;<span class="left fb12">
+			<a id="update_shipping_link"  href="{%cc_url request 'seller/update_shipping_info/' %}{{order_items.0.order.reference_order_id}}/{{client_name}}" title="Update Shipping Info" class="update_shipping" style='display:none'>Update Shipping/Delivery Info</a>
+		</span>
+    </td>
+    {%else%}
+		&nbsp;<span  class="left fb12">
+			 <a id="update_shipping_link" href="{%cc_url request 'seller/update_shipping_info/' %}{{order.id}}/{{client_name}}" title="Update Shipping Info" class="update_shipping" style='display:none'>Update Shipping/Delivery Info</a>
+		</span>
+    </td>
+    {%endif%}
+    {%ifnotequal order_items.0.order.state 'pending_order'%}
+    </br>
+    <div class="left f11 clear">Select the item(s) for updating shipping information</div>
+    {%endifnotequal%}
+    <div  class="right padr5">Total amount paid: <span id="orderPayableAmount" class="fmaroon fb f14"><span class="WebRupee"> Rs. </span>{{order.payable_amount|money}} </span></div>
+    <div class="clear"></div>
+  </div>
+  <div class="order_left_cont">
+    <div class="cart_summary roundcorner5">
+      <div class="ca bglgray padding10 bb toproundcorner5"><b>Order Summary</b></div>
+      <div class="padding10">
+        <table cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+
+            <tr>
+              <td class="f11 fdgray">MRP:</td>
+              <td><span class="WebRupee"> Rs. </span>{{order.list_price_total|money}}</td>
+            </tr>
+          <tr>
+            <td class="f11 fdgray">Discount:</td>
+            <td><span class="WebRupee"> Rs. </span>{{order.get_discount|money}}</td>
+          </tr>
+          <tr>
+            <td class="f11 fdgray bbs">Shipping:</td>
+            <td class="bbs"><span id="orderShippingCharges"><span class="WebRupee"> Rs. </span> {{order.shipping_charges|money}} </span></td>
+          </tr>
+          <tr>
+            <td class="fdgray f11">Total:</td>
+            <td class="fmaroon f14 fb"><span id="orderPayableAmount"><span class="WebRupee"> Rs. </span>{{order.payable_amount|money}} </span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cart_summary roundcorner5">
+      <div class="ca bglgray padding10 bb toproundcorner5"><b>Shipping Address</b></div>
+      <div class="padding10 marginl10">
+          <div class="name">{{order.get_delivery_address}}</div>
+      </div>
+
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+{%endblock%}
+{%block user_script%}
+<script type="text/javascript">
+$('.update_shipping').click(function(){	
+    var title_string = this.title;
+    var width = 450;
+    var url = this.href;
+    $.get(this.href, function(data) {
+        $('dialog').width(width);		
+        $('#shipping_dialog').html(data);
+        var dialog = $('#shipping_dialog').dialog({modal:true,
+            title:title_string, 
+            width:width});
+        
+        var order_item_ids = '';
+        $("[name='order_items']:checked").each(function(index) {
+            order_item_ids += ($(this).attr('id') + ',');
+        });
+        $("#form_shipping_info input[name='order_item_ids']").val(order_item_ids);
+
+        var onSubmitAlias = null;
+        var onSuccess = function(responseTxt) {
+            var response = $.parseJSON(responseTxt);
+            if (response.status == 'updated'){
+                $('#shipping_dialog').dialog('close');
+                location.reload();
+            }
+            else{
+                    $('#errors').html(response.error);
+                }
+        };
+        var onError = function() {
+            $('#form_shipping_info').submit(onSubmitAlias);
+        };
+        var onSubmit = function() {
+            var form = this;
+            var action = form.action;
+            var data = $('#form_shipping_info').serialize();
+            $.ajax({ url:action,
+                data : data,
+                success : onSuccess,
+                error : onError,
+                type : 'POST'
+                });
+            return false;
+        };
+        onSubmitAlias = onSubmit;
+        $('#form_shipping_info').submit(onSubmit);
+    });
+
+    return true;
+
+});
+
+$("[name='order_items']").click(function() {    
+    if ($(this).attr('checked')) {
+        $('#update_shipping_link').css('display','');
+        if ($("[name='order_items']:not(:checked)").length == 0)
+            $('#select_all').attr('checked',true);
+    }
+    else {
+        $('#select_all').attr('checked',false);
+        if ($("[name='order_items']:checked").length == 0)
+            $('#update_shipping_link').css('display','none');
+    }
+});
+
+$('#select_all').click(function(){
+    var val = $(this).attr('checked');    
+    $("[name='order_items']").each(function(){
+        $(this).attr('checked',val); 
+    });
+    if (val)
+        $('#update_shipping_link').css('display','');
+    else
+        $('#update_shipping_link').css('display','none');
+});
+</script>
+
+
+{% endblock %} 

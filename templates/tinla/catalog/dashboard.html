@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{%block content%}
+<form action="/catalog/add" method="post">
+<select id="account" name="account">
+    {%for account in accounts%}
+        <option value="{{account.account.name}}">{{account.account.name}}</option>
+    {%endfor%}
+</select>
+<button type="submit">Add Products</button>
+</form>
+<table>
+    <tr>
+        <td>Account</td>
+        <td>Products</td>
+    </tr>
+    {%for account in accounts%}
+    <tr>
+        <td>{{account.account.name}}</td>
+        <td>{{account.product_count}}</td>
+        <td><a href="">Edit</a></td>
+    </tr>
+    {%endfor%}
+        
+</table>
+{%endblock%}

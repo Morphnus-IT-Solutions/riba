@@ -1,0 +1,108 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block user_content %}
+    {%if list_items%}
+    <div class="left wishlist">
+		<table>
+			<tr>
+				<th class="bbd la padl20" colspan="2">Item</th>
+				<th class="bbd la">Price</th>
+				<th class="bbd"></th>
+			</tr>
+			{%for item in list_items%}
+			<tr>
+			    <td class="padl20 padt10">
+					<a href="{%cc_url request item.sku.product.url%}"><img src="{{item.sku.product.get_default_img}}" width="76" height="76" ></a>
+				</td>
+				<td style="max-width:200px" class="padt10">
+					{{item.sku.product.title}}<br />
+					{% ifequal item.sku.stock_status 'instock' %}
+						<span class="fgreen mart5">In Stock</span>
+					{% else %}
+						<span class="fred mart5">Out of Stock</span>
+					{% endifequal %}
+				</td>
+				<td>
+                <span class="f11 fdgray fs">{% get_price_info request item.sku 'list_price_label' %}<span class="WebRupee">Rs. </span>{% get_price_info request item.sku 'list_price' %}</span><br />
+					<span class="f15 forange mart5 marb5">{% get_price_info request item.sku 'offer_price_label' %}<span class="fb"> <span class="WebRupee">Rs. </span>{% get_price_info request item.sku 'offer_price' %}</span></span><br />
+                    <span class="f12">You Save <span class="WebRupee">Rs. </span>{%getSavings request item.sku%}</span>
+				</td>
+				<td class="padt20">
+					{% ifequal item.sku.stock_status 'instock' %}
+                        <form method="post" action="{%cc_url request "orders/mycart" %}" id="add_product_to_cart_form" >
+                            <input type="hidden" name="rate_chart_id" value="{{item.sku.id}}"/>
+                            <input type="hidden" name="product_id" value="{{item.sku.product.id}}"/>
+                            <input type="hidden" name="action" value="add_to_cart"/>
+                            <button type="submit" class="btn_c btn_c_m btn_orange" value={{item.sku.product.id}} title="Add To Cart">Add to Cart</button>
+                        </form>
+                    {% endifequal %}
+					<form method="post" action="{%cc_url request "user/wishlist/" %}">
+						<input type="hidden" name="action" value="remove_item"/>
+						<input type="hidden" name="itemid" value="{{item.id}}"/>
+                        <span class="padl20"><button class="linkButton" type="submit" title="Remove this item">Remove x</button></span>
+					</form>
+				</td>
+		        </tr>
+			{%endfor%}
+		</table>
+    </div>
+	<div class="right" style="overflow:hidden; width:240px; padding:10px; background-color:#e1f3fe;">
+        <form method="post" action="{%cc_url request "user/wishlist/" %}">
+			<input type="hidden" name="action" value="alter_visibility"/>
+            <div class="fb">Whishlist Settings</div>
+            <label><input type="checkbox" name="visibility" id="visibility" {%ifequal wishlist.visibility 'public'%}checked="checked"{% endifequal %} /> Make this list public</label>
+            {%ifequal wishlist.visibility 'public'%}
+            <table style="width:240px !important;">
+                <tr>
+                    <td colspan="2">                      
+                        <a class="f11"  href="{% cc_url request "user/wishlists/" %}{{wishlist.slug}}/">Click Here</a> to view your public Wishlist
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span class="f11 left">Share it on: </span>
+                    <td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://{{request.client}}/user/wishlists/{{wishlist.slug}}/" data-text="Would love to buy this!" data-count="horizontal" data-via="futurebazaar">Tweet</a>
+                    </td>
+                    <td>
+                        <a name="fb_share" type="button_count" share_url="http://{{request.client}}/user/wishlists/{{wishlist.slug}}/" href="http://www.facebook.com/sharer.php">Share</a> 
+                    </td>
+                </tr>
+            </table>
+            {% endifequal %}
+		</form>
+	</div>
+    <div class="clear"></div>
+	{%else%}
+    <div class="f14 marb10 mart10"><strong>Your Wishlist is empty.</strong></div>
+	<p class="f12 marb10">Browse through our products and add items to your wishlist.</p>
+    <p class="f12"><a href="{% cc_url request "" %}" title="Start building your wishlist">Click here</a> to start building your wishlist .</p>
+    {%endif%}
+
+{%endblock%}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#visibility").click(function() {
+        var data = {"action":"alter_visibility"};
+        $.ajax({
+            type: "POST",
+            url: "/user/wishlist/",
+            data: data,
+            success: function(msg){
+                if (msg=="OK"){
+                    window.location.reload();
+                };
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

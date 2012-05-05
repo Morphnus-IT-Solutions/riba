@@ -1,0 +1,120 @@
+/*sign in*/
+.dialog{background-color:#fff;border-left:4px solid #4E9FD3;border-right:4px solid #4E9FD3;border-bottom:4px solid #4E9FD3;padding:20px 25px 25px;font-size:12px}
+.dialog input[type=text], .dialog input[type=password]{padding:2px;}
+/*end*/
+
+#bg {
+	width:1263px;
+	opacity:0.8 !important;
+	background-color:#ccc !important;
+	position:fixed;
+    top:0px;
+    left:0px;
+	height: 3617px !important;
+	z-index:1101;
+}
+.popup {
+color:#242424;
+font-size:12px;
+position:fixed;
+background-color:#fff;
+filter: progid:DXImageTransform.Microsoft.dropShadow(color=#888, offX=0, offY=0, positive=true);
+z-index:1300;
+font-family:Arial;
+}
+.inner {	
+	background-repeat:no-repeat;
+	background-position:0px 54px;
+	width:580px;
+}
+.popup_header {
+}
+.popup_header h1 {
+	font-size:22px;
+	color:#054989;	
+	
+	padding:10px 25px 0px;
+
+}
+
+.popup_header .close {
+	
+	padding:5px 10px;
+
+	float:right;
+	color:#ffffff;
+
+	cursor:pointer;
+	font-weight:bold;
+	margin-left:10px;
+	margin-top:5px;
+}
+
+.thankyou_header {
+}
+.thankyou_header h1 {
+font-size: 32px;
+color: #054989;
+padding-top: 153px;
+padding-left: 84px;
+
+}
+
+
+.error {
+background: #FDD;
+color: #8A1F11;
+border:1px solid #E25F53;
+margin: 0px;
+padding:10px;
+font-size:11px;
+width: 200px;
+}
+
+
+.pupup_middle {
+	background: url("../images/popup-cart.jpg") no-repeat 20px 3px;	
+	padding-top:0px;
+clear:both;
+}
+.clear{clear:both;}
+
+.pupup_text{line-height:1.1;}
+
+.popup .fields {
+	float:right;
+	width:275px;
+}
+.popup .fields label{font-size:11px; color:#555;}
+.popup .fields input {
+	width:220px;
+	color:#333333;
+	padding:4px;
+	font-size:14px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+
+.btn_subscribe{
+background-color:#fff;
+background: url("../images/btn_subscribenow.gif");
+	background-position:0px 0px;
+	 background-repeat:no-repeat;
+	 width:113px;
+	 height:27px;
+	 border:none;
+	 cursor:pointer;
+	 
+	 
+	 }
+
+
+.popup_bottom{border-top:1px dotted #9abad8;}
+.popup_bottom .popup_logo {
+	background: url("../images/fb-small-logo.gif");
+	background-position:20px 10px;
+	 background-repeat:no-repeat;
+	height: 85px;
+	width: 262px;
+	float:left;
+}

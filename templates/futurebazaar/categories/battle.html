@@ -1,0 +1,96 @@
+{%extends "web/base.html"%}
+{%load web_tags%}
+{%load cc_tags%}
+{%block content%}
+<div class="clear"></div>
+  <div id="breadcrumb" class="padt10"><!--<a href="#">Home</a> &raquo;--></div>
+<div id="container-battle">
+    <div class="battle-wrapper">
+    <div class="battle-top-container battle_deals">
+    <div class="">
+      <div class="battle_timer">
+        <div class="day"></div>
+        <div class="hr"></div>
+        <div class="min"></div>
+        <div class="sec"></div>
+      </div>
+      <div class="battle_share">
+        <a href="http://www.facebook.com/sharer.php?u=http://{{request.client.domain}}/search/t/battle/&t=Battleground Deals" target="_blank" class="fb" onclick="return fbs_click('http://{{request.client.domain}}/search/t/battle/', 'Battleground Deals')" rel="nofollow"/></a>
+        <a href="http://twitter.com/share" target="_blank" class="tw" onclick="return twit_click('http://{{request.client.domain}}/search/t/battle/','','')" rel="nofollow"/></a>
+        <a href="mailto:?subject=Share%20Deal&body=http://{{request.client.domain}}/search/t/battle/"class="mail"></a>
+      </div>
+    </div>
+                <div class="battle-head-links"> <a href=""></a></div>
+                <div class="battle-top-navigation"> 
+                    <div style="float:left">
+                    <ul id="navbar" style="width:550px;">
+                        {%for tab in tabs%}
+                            <li onmouseover="show(this);" onmouseout="hide(this);" class="inactive" style="float:left;">
+                                   <a href="/search/t/battle/"><div>{{tab.name}}</div></a>
+                            <ul class="level-two" style="display: none; width:180px;float:left; background:#f4d599;">
+                                {%for tag in tags%}                        
+                                    {%if tag.tag.tab == tab%}
+                                    <li class="unselected-view">
+                        				<a href="{{search_url}}{{tag.tag.tag.tag}}/" style="">{{tag.tag.tag.display_name}} ({{tag.count}})</a></li> 
+                                    {%endif%}
+                                {%endfor%}
+                                    
+                            </ul>
+                            </li>
+                        {%endfor%}
+                    </ul>
+                    </div>
+                    <div style="float:right; color:#fff; font-weight:bold; font-size:12px; padding-right:50px; padding-top:10px">
+                        {%if pagination.enable_prev%}
+                        <div class="prev_page" style=" float:left;padding-left:10px;background:url(http://images.futurebazaar.com/catalog/fb_new/battle-2/images/lft-arrow.gif) no-repeat center left; cursor:pointer; color:#fff; margin-right:6px;"><a href="{{base_url}}page={{pagination.prev_page}}">Previous</a></div> 
+                        {%endif%}
+                        {%for page_no in total_pages%}
+                        <div class="{%if pagination.cur_page == page_no%} curr-page{%else%} other-page{%endif%}">{%if pagination.cur_page != page_no%}<a href="{{base_url}}page={{page_no}}">{{page_no}}</a>{%else%}{{page_no}}{%endif%}</div>
+                        {%endfor%}
+                        {%if pagination.enable_next%}
+                        <div style="float:left;padding-right:10px;background:url(http://images.futurebazaar.com/catalog/fb_new/battle-2/images/rt-arrow.gif) no-repeat center right; cursor:pointer;"><a href="{{base_url}}page={{pagination.next_page}}">Next</a></div>
+                        {%endif%}
+                    </div>                     
+                </div>
+            <div class="battle_greed_view">
+              <ul class="greed">
+                 {%battle_section_tag request prods1%}
+              </ul>
+            </div>
+            <div class="clear"></div>
+                
+                {%if is_middle_image%}
+<!--                <div class="batte-item-img">
+                    <a href="{{container.url}}"><img src="http://images.futurebazaar.com/catalog/fb_new/battle4/images/{{container.img_name}}?v={{version}}" height="214" width="226" border="0" alt="{{container.product_title}}"/></a>
+               </div> -->
+                {%endif%}
+
+            <div class="battle_greed_view">
+              <ul class="greed">
+                  {%battle_section_tag request prods2%}
+              </ul>
+            </div>
+            <div class="clear"></div>
+
+</div>
+</div>
+</div>
+{%endblock%}
+{%block script_footer%}
+{{block.super}}
+    <script type="text/javascript">
+    function show(elem)
+    {
+        elem.getElementsByTagName("ul")[0].style.display = "block";
+    }
+    function hide(elem)
+    {
+        elem.getElementsByTagName("ul")[0].style.display = "none";
+    }
+</script>
+<script type="text/javascript">
+    
+    Timers.initBT({{battle.remaining_time.0}}, {{battle.remaining_time.1}}, {{battle.remaining_time.2}}, {{battle.remaining_time.3}});
+    Timers.start();
+</script>
+{%endblock%}

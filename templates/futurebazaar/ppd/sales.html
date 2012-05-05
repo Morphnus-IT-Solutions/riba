@@ -1,0 +1,9 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<a href="/{{client_name}}/{{seller_name}}/sales/orders/confirmed/">Confirmed Orders</a></br>
+<a href="/{{client_name}}/{{seller_name}}/sales/orders/confirmed/">Pending Orders</a></br>
+<a href="/{{client_name}}/{{seller_name}}/sales/orders/confirmed/">Cancelled Orders</a></br>
+{%endblock%} 

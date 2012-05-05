@@ -1,0 +1,13 @@
+{% extends "web/base.html" %}
+{% load web_tags %}
+{% load cc_tags %}
+{% block extra_header %}
+{% endblock %}
+{% block content %}
+<div class="breadcrumb"> &nbsp;       
+</div>
+<div class="checkout_table">
+    {% render_order_snippet order %}
+    <div class="clear"></div>
+</div>
+{% endblock %}

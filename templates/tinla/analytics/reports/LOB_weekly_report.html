@@ -1,0 +1,127 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.uiButton{padding:0px 6px;}
+	.select_range {padding: 1px 10px}
+	#deal{padding:0px}
+	.excel_main {margin:8px 0 0 5px !important;}
+</style>
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+{%show_excel_link request 'excel'%}
+{% datepicker title search_trend input_date request%}
+
+<div class="report_option_main">
+  <div class="report_option_aa">
+  <form method='GET' action="">
+    <div class="select_range">
+      <input type="radio" name="mode" value="1" id="booked" {%ifequal mode "Booked Orders"%}checked{%endifequal%}>
+      <label for="booked">&nbsp;Booked</label>
+      <input type="radio" name="mode" value="2" id="invoiced" {%ifequal mode "Invoiced Orders"%}checked{%endifequal%}>
+      <label for="invoiced">&nbsp;Invoiced</label>
+    </div>
+    <div class="left"><span>Merchandise Hierarchy:</span>
+      <select name="lob_level" id="lob_level">
+            {%for level in lob_levels%}
+                <option value={{level.0}}>{{level.1}}</option>
+            {%endfor%}
+        </select>
+    </div>
+	</form> 
+  </div>
+  <input type="submit" id="merch_submit" value="Go!" class="uiButton" style="width:50px\9; padding:5px;">
+</div>
+
+<br/>
+{%if lob_level_page%}
+<div>
+<div class="fb">Details for {{lob_level_page}} - {{lob_obj}} at {{lob_level_title}} Level</div>
+</div>
+{%endif%}
+
+<div class="clear">&nbsp;</div>
+<div>
+<table class="tbl_order">
+<tr>
+<th></th>
+<th colspan='3'><b>Sales for this week</b></th>
+<th colspan='3'><b>Month to date Sales</b></th>
+</tr>
+<tr>
+<th><b>{{lob_level_title}}</b></th>
+<th><b>Quantity</b></th>
+<th><b>Value</b></th>
+<th><b>%Mix</b></th>
+<th><b>Quantity</b></th>
+<th><b>Value</b></th>
+<th><b>%Mix</b></th>
+</tr>
+
+{% for key in lob_mtd_sorted_list %}
+<tr>
+{%ifequal lob_level "mc"%}
+    <td class="la">{{key}}</td>
+{%else%}
+    {%ifequal key "No LOB"%}
+        <td class="la">{{key}}</td>
+    {%else%}
+        <td class="la"><a href="{%make_lob_link request lob_level key%}">{{key}}</a></td>
+    {%endifequal%}
+{%endifequal%}
+<td class="ra">{%dict_get_val lob_mtd key 0%}</td>
+<td class="ra">{%dict_get_val lob_mtd key 1%}</td>
+<td class="ra">{%dict_get_val lob_mtd key 2%}%</td>
+<td class="ra">{%dict_get_val lob_mtd key 3%}</td>
+<td class="ra">{%dict_get_val lob_mtd key 4%}</td>
+<td class="ra">{%dict_get_val lob_mtd key 5%}%</td>
+</tr>
+{% endfor %}
+<tr>
+{%for i in total%}
+    <td {%if forloop.first%}class="la"{%else%}class="ra"{%endif%}><b>{{i}}</b></td>
+{%endfor%}
+</tr>
+</table>
+
+</div>
+<br>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#merch_submit').click(function(){
+        url_path = '{{request.path|safe}}';
+        url_path += '?';
+        if(document.getElementById('booked').checked){
+            url_path += "mode=1&";
+        }
+        if(document.getElementById('invoiced').checked){
+            url_path += "mode=2&";
+        }
+        var lob_level = document.getElementById('lob_level').options[document.getElementById('lob_level').selectedIndex].value;
+        url_path += "lob_level=" + lob_level + "&";
+        if ('{{lob_obj_url}}' != ''){
+            url_path += "lob_obj={{lob_obj_url}}&";
+        }
+        if ('{{lob_level_page}}' != 'None'){
+            url_path += "lob_level_page=" + "{{lob_level_page}}" + "&";
+        }
+        if ('{{from_date_url}}' != ''){
+            url_path += "from={{from_date_url}}&";
+        }
+        if ('{{to_date_url}}' != ''){
+            url_path += "to={{to_date_url}}&";
+        }
+        var url = url_path.substring(0, url_path.length-1);
+        location.href = url;
+    });
+});
+</script>
+{% endblock %}

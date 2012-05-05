@@ -1,0 +1,213 @@
+{% extends 'web/base.html' %}
+{%block content%}
+<style>
+    .question_details_container {
+        width: 100%;
+    }
+    .question_details {
+        padding: 10px 15px;
+    }
+	#id_lists-description {width:238px;height:14px; font-size:12px;}
+	#id_lists-type, #id_lists-banner_type, #id_lists-banner_type{width:250px; font-size:12px;}
+	.details{width:460px;}
+	.details input {height:auto;width: 242px; font-size:12px;}
+	.seller-rate-chart input {height:auto;width: 242px; font-size:12px;}
+	.seller-dropdown select {height:auto;width: 250px; font-size:12px;}
+	.details textarea{height:75px;width: 300px; font-size:12px;}
+	.list-item ul li textarea {width:250px; font-size:12px;}
+	.list-item ul li select {width:250px; font-size:12px;}
+	#id_lists-sort_order{width:242px}
+	#id_lists-banner_image{width:250px;}
+	#id_lists-starts_on, #id_lists-ends_on{width:80px; height:17px;}
+	#starts_on_hour, #starts_on_minute, #starts_on_ap, #ends_on_hour, #ends_on_minute, #ends_on_ap {width:49px; font-size:11px;padding: 3px 2px 3px 0;}
+	.list-item-title{padding:3px 5px;}
+    .divider-top {
+        border-top: 1px solid white;
+    }
+    .details {
+        width: 460px;
+    }
+	a:hover {
+		color: #009;
+		text-decoration: underline !important;
+	}
+	.arrow-right {
+		background-position: right center;
+		background-position-x: 100%;
+		background-position-y: 50%;
+		padding: 0px 15px;
+		padding-top: 0px;
+		padding-right: 15px;
+		padding-bottom: 0px;
+		padding-left: 15px;
+	}
+	.toggle-down-arrow {
+		background: url("/media/images/closed.gif") no-repeat scroll left center transparent;
+		padding: 0.5em 0.5em 0.5em 15px;
+	}
+	.toggle-up-arrow {
+		background: url("/media/images/opened.gif") no-repeat scroll left center transparent;
+		padding: 0.5em 0.5em 0.5em 15px;
+	}
+	.border-dotted-gray {
+		border-bottom: 1px dotted #ECECEC;
+		border-bottom-width: 1px;
+		border-bottom-style: dotted;
+		border-bottom-color: #ECECEC;
+	}
+	.btn_c {
+		border-radius: 3px 3px 3px 3px;
+		border-style: solid;
+		border-width: 1px;
+		color: black !important;
+		display: inline-block;
+		outline: 0 none;
+		padding: 5px 10px;
+		text-decoration: none;
+	}
+</style>
+	
+<div class="padding_top10">
+	<div class="breadcrumb"><a href="/question/view/">View All Questions</a>&nbsp;&raquo;&nbsp; Add New Question</div>
+		<div class="content_head mar0">
+			<div class="header rc5">
+				<h1>Add New Question</h1>
+			</div>
+			<div class="clear bordergray"></div>
+		</div>
+	</div>
+	<div class="inner-content">
+		<form action="" id="add_form" name="add_form" method="POST" enctype="multipart/form-data">
+			<div class="question_details_container"><!-- div web module details container -->
+					<div class="question_details"> <!-- div web_module_details -->
+						<div class="separator-bottom f18 fb fdgray">Question Details</div>
+                        {{question_formset.management_form}}
+                        {% for q in question_formset.forms %}
+                        <div>
+						<div class="divider-top"><!-- div divider top -->
+							<div class="mart20"> <!-- div main -->
+								<div class="details left"><!-- div left part -->
+									<div class="left f11 w110 marb5">{{ q.question.label }}<span class="red">*</span></div>
+									<div class="left w350 marb5">{{ q.question }}</div>									
+								</div><!-- /div left part -->
+								<div class="details left"><!-- div right part -->
+									<div class="marl100 left f11 w110 marb5">{{ q.answer_type.label }}<span class="red">*</span></div>
+									<div class="left w250 marb5">{{ q.answer_type }}</div>
+									<div class="marl100 left f11 w110 marb5">{{ q.type.label }}<span class="red">*</span></div>
+									<div class="left w250 marb5">{{ q.type }}</div>
+								</div><!-- /div right part -->
+								<div class="clear"></div>
+							</div><!-- /div main -->
+						</div><!-- /div divider top -->
+						<div class="clear">&nbsp;</div>
+                        <!--************ FIELD FORM **************-->
+                        <div id="item_wrapper f11" class="marl10"><!-- div item wrapper -->
+                            <a class="toggle-down-arrow arrow-right item_link" id="field_options" title="Click here to add fields" href="#">Add Fields</a>
+                        </div><!-- /div item wrapper -->
+                        <div id="field_options_div" class="hide clear"> <!-- div option_details -->
+                            <div class="divider-top"><!-- div divider top -->
+                                <div class="mart5"> <!-- option form div-->
+                                    {{field_formset.management_form}}
+                                    {% for i in field_formset.forms %}
+                                        <div class="formgroup">
+                                            {% if i %}
+                                                <div class="padb5 padt5 marb5 left seller-rate-chart" style="background-color:#fefefe; width:100%"><!-- div list part -->
+                                                    <div class="left flgray f11 w110 marl10 ">{{ i.field_label.label }}</div>
+                                                    <div class="left w250">{{ i.field_label }}</div>
+                                                    <div class="left flgray f11 w110 marl10 ca">{{ i.field_type.label }}</div>
+                                                    <div class="left w250 seller-dropdown">{{ i.field_type }}</div>
+                                                </div><!-- /div list part -->
+                                                <div class="clear"></div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div><!-- /div option form -->
+                                <div class="left">
+                                    <input title='Add new field' type='submit' name='addfield' id='addfield' value='+ Add Field' class="btn_c btn_c_s" />
+                                </div>
+                                <div class="clear or_hr marb10">&nbsp;</div>
+
+                            </div><!-- /div divider top -->
+                        </div><!-- /div option_details -->
+                        </div>
+                        {%endfor%}
+                        <!-- ********** END FIELD OPTIONS FORM **************** -->
+				    </div><!-- /div web_module_details -->
+                <div class="clear">&nbsp;</div>
+				<div class="clear border-dotted-gray"></div>
+				<div id="item_wrapper f11" class="marl10"><!-- div item wrapper -->
+                	<a class="toggle-down-arrow arrow-right item_link" id="add_dependent_question" title="Click here to add options" href="#">Add Options</a>
+                </div><!-- /div item wrapper -->
+
+                <div class="clear">&nbsp;</div>
+                <div class="right">
+                    <INPUT TYPE="submit" id="save" VALUE="Save" class="btn_c btn_c_s btn_orange" name="save" />
+                </div>
+			</div><!-- /div web_container -->
+		</form>
+	</div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+ $('#id_lists-starts_on').datepicker({dateFormat:'yy-mm-dd'});
+ $('#id_lists-ends_on').datepicker({dateFormat:'yy-mm-dd', 
+ 	minDate:$('#id_lists-starts_on').val(),
+	beforeShow: function(){
+		var newDate = $('#id_lists-starts_on').datepicker('getDate');
+		if (newDate){
+			$('#id_lists-ends_on').datepicker('option', 'minDate', newDate);
+		}
+	}
+ });
+ $('#id_lists-type').click(function(){
+	 var e = document.getElementById("id_lists-type");
+	 var str = e.options[e.selectedIndex].value;
+	 if (str=="todays_deals")
+	 {
+		$('.new_arrivals').show();
+		$('.hero_deal').show();
+		$('.todays_deals').hide();
+	}
+	else if (str=="new_arrivals")
+	{
+		$('.hero_deal').show();
+		$('.todays_deals').show();
+		$('.new_arrivals').hide();
+	}
+	else if (str=="hero_deal")
+	{
+		$('.todays_deals').show();
+		$('.new_arrivals').show();
+		$('.hero_deal').hide();
+	}
+	else
+	{
+		$('.todays_deals').show();
+		$('.new_arrivals').show();
+		$('.hero_deal').show();
+	}
+ });
+
+$('.item_link').toggle(
+    function(){	
+		var e = this.id;
+		var k = e+"_div";
+        //$('#item_form').show();
+
+		$('#'+k).slideDown();
+		$(this).removeClass('toggle-down-arrow');
+		$(this).addClass('toggle-up-arrow');
+    },
+    function(){
+		var e = this.id;
+		$('#'+e+'_div').slideUp();
+//		$('#'+e+'_item').removeClass('hide');
+        //$('#item_form').hide();
+		$(this).removeClass('toggle-up-arrow');
+		$(this).addClass('toggle-down-arrow');
+    }
+);
+</script>
+{% endblock %}

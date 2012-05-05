@@ -1,0 +1,41 @@
+{% extends 'web/base.html' %}
+{% block content %}
+<!--<div class="breadcrumb">&nbsp; </div>-->
+{% load cc_tags %}
+{% load web_tags %}
+<header class="header">
+		<h1 class="header-title">Order Status</h1>
+</header> <!-- /header -->
+<section class="content">
+		<p>You can track your individual order with your Order number and email/phone number used while booking.</p>
+		<div>
+			{%if errors%}
+				<div class="error">
+				{%for error in errors%}
+				{{error}}<br/>
+				{%endfor%}
+				</div>
+			{%endif%}
+			<form action="/order/track_order" method='POST'>
+				<div class="fb-form mtb15">
+						<ul>
+							<li>
+								<div class="dlabel"><span>Order ID</span></div>
+								<div class="fbf-dcant"><input type="number" name="order_id" /></div>
+							</li>
+							{%if not request.user.is_authenticated%}
+							<li>
+								 <div class="dlabel"><span>Email or<br /> Mobile number</span></div>
+								 <div class="fbf-dcant"><input type="email" name="username"  /></div>
+							</li>
+							{%endif%}
+						</ul>
+				</div>
+				<div class="tac"><button type="submit" class="btn">Track Order</button></div>
+			</form>
+		</div>
+		{%if order_status%}
+			<div class="success fs18">Status of your Order is: {{order_status}}</div>
+		{%endif%}
+</section>
+{%endblock%} 

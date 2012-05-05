@@ -1,0 +1,407 @@
+{%load cc_tags%}
+{%load web_tags%}
+
+<div class="nav_t2_outer">
+    <div class="nav_t2">
+    <ul>
+    {% for menu_item in mega_items.menu_items_level2 %}
+        <li class="t2_l1">
+            <a href="{% cc_url request menu_item.menu_category.url %}"><div class="t2_l1_item">{{menu_item.menu_category.name}}</div></a>
+            <div class="t2_l2_wrapper">
+                <div class="t2_l2_inner">
+                    <ul class="t2_l2_inner_ul">
+                        {% for c2_ctxt in menu_item.c2_level_context %}
+                            {% ifequal menu_item.level_2_type 'only_retailers' %}
+                                    {% for retailer_tag in c2_ctxt.retailer_tags %}
+                                    <li>
+                                        <a href="{% cc_url request c2_ctxt.menu_category.url %}?q=&t={{retailer_tag.id}}">
+                                        <img src="{% media_url request "/media/images/"%}{{retailer_tag.tag}}-small-logo.gif" /></a>
+                                    </li>
+                                    {% endfor %}
+                            {% else %}
+                            <li class="t2_l2">
+                                <a class="t2_l2_item" href="{% cc_url request c2_ctxt.menu_category.url%}">{{c2_ctxt.menu_category.name}}</a>
+                                <div class="t2_l3_wrapper">
+                                    <div class="menu_separator"></div>
+                                    <div class="t2_l3_wrapper_inner">
+                                            <ul>
+                                                <li class="menu_cat_title">{{c2_ctxt.menu_category.name}}</li>
+                                                {% ifequal menu_item.level_2_type 'grouped_category' %}
+                                                    {% for child_cats in c2_ctxt.children_cats %}
+                                                        {% if not child_cats.grand_children %}
+                                                			<li><a href="{% cc_url request child_cats.child.url %}">{{child_cats.child.name}}</a></li>
+                                                		{% else %}
+                                                			<li class="caps mart5">{{child_cats.child.name}}</li>
+                                                		{% endif %}
+                                                        {% for cat in child_cats.grand_children %}
+                                                            <li><a href="{% cc_url request cat.url %}">{{cat.name}}</a></li>
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    {% for cat in c2_ctxt.children_cats %}
+                                                        <li><a href="{% cc_url request cat.url %}">{{cat.name}}</a></li>
+                                                    {% endfor %}
+                                                {% endifequal %}
+                                                {% if c2_ctxt.retailer_tags %}
+                                                <li class="menu_retailers_title">Shop by Retailers</li>
+                                                    {% for retailer_tag in c2_ctxt.retailer_tags %}
+                                                        <li><a href="{% cc_url request c2_ctxt.menu_category.url %}?q=&t={{retailer_tag.id}}">{{retailer_tag.display_name}}</a></li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </ul>
+                                            <ul>
+                                                {% if c2_ctxt.brands %}
+                                                    <li class="menu_brands_title">Shop by Brands</li>
+                                                    {% for brand in c2_ctxt.brands %}
+                                                       <li><a href="{% cc_url request c2_ctxt.menu_category.url %}?q=&b={{brand.id}}">{{brand.name}}</a></li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </ul>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endifequal %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </li>
+    {% endfor %}   
+    </ul>    
+    {% if 'orders/payment' not in request.path %}
+    <div id="header_cart" class="right cart_outer"> 
+        {% render_header_cart request %} 
+    </div>
+    {% endif %}
+    <div class="clear"></div>
+  </div>
+</div>
+
+<nav class="nav nav_t1_outer">
+    <div id="menu" class="menu nav_t1">
+        <ul class="menu_ul">
+            {% if daily_deal and 'deal' in daily_deal %}
+            <li class="t1_l1">
+                <a href="{% cc_url request daily_deal.deal.get_url %}"><div class="item t1_l1_item dod">Today's Deals<span class="nav_da"></span></div></a>
+                <div class="t1_l2_wrapper menu_dod_wrapper">
+                    <div class="menu_dod">
+                        <div class="menu_dod_left left pad20">
+                            <div class="left menu_dod_inner_left"> 
+                                <a href="{% cc_url request daily_deal.deal.get_url %}">
+                                    <img src="{% media_url request daily_deal.deal_product.productimage_set.all.0.get_large_thumb_url %}" width="150" height="150" title="{{daily_deal.deal.title}}" />
+                                    <!--<img src="{{daily_deal.deal_product.productimage_set.all.0.get_large_thumb_url}}" width="160" height="201" />-->
+                                    
+                                </a>
+                            </div>
+                            <div class="left menu_dod_inner_right">
+                                <div class="f15 fb marb10">
+                                    <a href="{% cc_url request daily_deal.deal.get_url %}">{{daily_deal.deal.title|truncate:40}}</a>
+                                    </div>
+                                <ul class="marb10" style="height:64px; overflow:hidden;">
+                                    {% for feature in daily_deal.key_features %}
+                                        <li>{{feature}}</li>
+                                    {% endfor %}
+                                </ul>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="f22 fb forange"><span class="WebRupee">Rs.</span> {% get_price_info request daily_deal.rate_chart 'offer_price' %}</div>
+                                            {%if request|isAnySaving:daily_deal.rate_chart %}
+                                                <div class="f15 fdgray"><span class="WebRupee">Rs.</span> <span class="fs">{% get_price_info request daily_deal.rate_chart 'list_price' %}</span></div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="padl20"  style="border-left:1px solid #ccc;">
+                                            <div class="time_left_to_buy">Offers closes in </div>
+                                            <div class="fdgray steal_timer steal_timer_dod">
+                                                <span class="fb hr" ></span> hrs : 
+                                                <span class="fb min" ></span> mins : 
+                                                <span class="fb sec" ></span> secs
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            {%ifequal daily_deal.deal_product.primary_rate_chart.stock_status "instock"%} 
+                                            <form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form_{{daily_deal.deal_product.id}}" method="post">
+                                                <input type="hidden" name="rate_chart_id" value="{{daily_deal.rate_chart.id}}"/>
+                                                <input type="hidden" name="product_id" value="{{daily_deal.deal_product.id}}"/>
+                                                <input type="hidden" name="action" value="add_to_cart"/>
+                                                <button type="submit" class="btn_c btn_orange btn_c_s marb5 f11 fn dod_addtocart" id="quick_add_to_cart" value="{{daily_deal.deal_product.id}}" title="Buy this product now" type="submit"><span class="left">ADD TO CART</span>
+                                                </button>
+                                            </form>
+                                            {% endifequal %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                       
+                        <div class="clear"></div>
+                    </div>
+                </div>       
+            </li>
+            {% endif %}
+            <li class="t1_l1">
+                <a href={% cc_url request "deals/popular/" %}><div class="t1_l1_item popular"> POPULAR<span class="nav_da"></span></div></a>
+                <div class="t1_l2_wrapper min_width">
+                    <div class="t1_l2_inner">
+                        <ul>
+                        {% for menu_item in mega_items.menu_items_level1 %}
+                            <li class="t1_l2">
+                                <a href="{% cc_url request "deals/popular/" %}?q=&c={{menu_item.menu_category.id}}"  class="t1_l2_item">{{menu_item.menu_category.name}}</a>
+                                <div class="t1_l3_wrapper">
+                                    <div class="t1_menu_sep"></div>
+                                    <div class="t1_l3_wrapper_inner">
+                                    
+                                        <ul>
+                                            <li class="menu_cat_title">{{menu_item.menu_category.name}}</li>
+                                            {% for cat in menu_item.children_cats %}
+                                                <li><a href="{% cc_url request "deals/popular/" %}?q=&c={{cat.id}}">{{cat.name}}</a></li>
+                                            {% endfor %}
+                                            {% if menu_item.retailer_tags %}
+                                                <li class="menu_retailers_title">Shop by Retailers</li>
+                                                {% for retailer_tag in menu_item.retailer_tags %}
+                                                   <li>
+                                                    <a href="{% cc_url request "deals/popular/" %}?q=&c={{menu_item.menu_category.id}}&t={{retailer_tag.id}}">{{retailer_tag.display_name}}</a>
+                                                   </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </ul>
+				                        <ul>
+                                            <li class="menu_brands_title">Shop by Brands</li>
+                                            {% for brand in menu_item.brands %}
+                                                <li><a href="{% cc_url request "deals/popular/" %}?q=&c={{menu_item.menu_category.id}}&b={{brand.id}}">{{brand.name}}</a></li>
+                                            {% endfor %}
+                                        </ul>
+				                        <div class="clear"></div>
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </li>
+            <li class="t1_l1">
+        <a href={% cc_url request "deals/new_arrivals/" %}><div class="t1_l1_item arrivals"> ARRIVALS<span class="nav_da"></span></div></a>
+        <div class="t1_l2_wrapper min_width">
+          <div class="t1_l2_inner">
+            <ul>
+              {% for new_arrival in new_arrivals %}
+              <li class="t1_l2"><a href="{% cc_url request "deals/new_arrivals/?q=&c="%}{{new_arrival.menu_category.id}}" class="t1_l2_item">{{new_arrival.menu_category.name}}</a>
+                <div class="t1_l3_wrapper">
+                  <div class="t1_menu_sep"></div>
+                 <div class="t1_l3_wrapper_inner">
+                  <ul>
+                    <li class="menu_cat_title">{{new_arrival.menu_category.name}}</li>
+                    {% for category in new_arrival.children_cats %}
+                        <li><a href="{% cc_url request "deals/new_arrivals/?q=&c="%}{{category.id}}">{{category.name}}</a></li>
+                    {% endfor %}                  
+                    {% if new_arrival.retailer_tags %}
+                    <li class="menu_retailers_title">Shop by Retailers</li>
+                        {% for retailer_tag in new_arrival.retailer_tags %}
+                            <li><a href="{% cc_url request "deals/new_arrivals/" %}?q=&t={{retailer_tag.id}}">{{retailer_tag.display_name}}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                  </ul>
+				 <ul>
+                    {% if new_arrival.brands %}
+                        <li class="menu_brands_title">Shop by Brands</li>
+                        {% for brand in new_arrival.brands %}
+                            <li><a href="{% cc_url request "deals/new_arrivals/?q=&b="%}{{brand.id}}">{{brand.name}}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                  </ul>
+				  <div class="clear"></div>
+                </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </li>
+         
+        <!-- /gift-->   
+        {% for menu_item in mega_items.menu_level1 %}
+        <li class="t1_l1">
+            <a href="{% cc_url request menu_item.menu_category.url %}" class="tdnone"><div class="t1_l1_item gifts">Gifts<span class="nav_da"></span></div></a>
+            <div class="t1_l2_wrapper min_width">
+                <div class="t1_l2_inner">
+                    <ul>
+                        {% for c2_ctxt in menu_item.c2_level_context %}
+                            {% ifequal menu_item.level_2_type 'only_retailers' %}
+                                    {% for retailer_tag in c2_ctxt.retailer_tags %}
+                                    <li>
+                                        <a href="{% cc_url request c2_ctxt.menu_category.url %}?q=&t={{retailer_tag.id}}">
+                                        <img src="{% media_url request "/media/images/"%}{{retailer_tag.tag}}-small-logo.gif" /></a>
+                                    </li>
+                                    {% endfor %}
+                            {% else %}
+                            <li class="t1_l2">
+                                <a class="t1_l2_item" href="{% cc_url request c2_ctxt.menu_category.url%}" class="t1_l2_item">{{c2_ctxt.menu_category.name}}</a>
+                                <div class="t1_l3_wrapper">
+                                    <div class="t1_menu_sep"></div>
+                                    <div class="t1_l3_wrapper_inner">
+                                            <ul>
+                                                <li class="menu_cat_title">{{c2_ctxt.menu_category.name}}</li>
+                                                {% ifequal menu_item.level_2_type 'grouped_category' %}
+                                                    {% for child_cats in c2_ctxt.children_cats %}
+                                                        {% if not child_cats.grand_children %}
+                                                			<li><a href="{% cc_url request child_cats.child.url %}">{{child_cats.child.name}}</a></li>
+                                                		{% else %}
+                                                			<li class="caps mart5">{{child_cats.child.name}}</li>
+                                                		{% endif %}
+                                                        {% for cat in child_cats.grand_children %}
+                                                            <li><a href="{% cc_url request cat.url %}">{{cat.name}}</a></li>
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    {% for cat in c2_ctxt.children_cats %}
+                                                        <li><a href="{% cc_url request cat.url %}">{{cat.name}}</a></li>
+                                                    {% endfor %}
+                                                {% endifequal %}
+                                                {% if c2_ctxt.retailer_tags %}
+                                                <li class="menu_retailers_title">Shop by Retailers</li>
+                                                    {% for retailer_tag in c2_ctxt.retailer_tags %}
+                                                        <li><a href="{% cc_url request c2_ctxt.menu_category.url %}?q=&t={{retailer_tag.id}}">{{retailer_tag.display_name}}</a></li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </ul>
+                                            <ul>
+                                                {% if c2_ctxt.brands %}
+                                                    <li class="menu_brands_title">Shop by Brands</li>
+                                                    {% for brand in c2_ctxt.brands %}
+                                                       <li><a href="{% cc_url request c2_ctxt.menu_category.url %}?q=&b={{brand.id}}">{{brand.name}}</a></li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </ul>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endifequal %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </li>
+    {% endfor %} 
+    
+    {% comment%}
+      <li class="t1_l1">
+        <a href={% cc_url request "deals/eureka/"%} class="tdnone">
+		<div class="t1_l1_item concepts"> Eureka</div>
+		</a>
+      </li>
+      {% endcomment %}
+      <li class="t1_l1">
+        <a href={% cc_url request "orders/bulk_order/"%} class="tdnone">
+		<div class="t1_l1_item bulk_order"> Bulk Orders</div>
+		</a>
+      </li>
+      
+      {% if clearance_sale %}
+      <li class="t1_l1">
+        <a href={% cc_url request "clearance/" %} class="tdnone"><div class="t1_l1_item clearance"> Clearance<span class="nav_da"></span></div></a>
+        <div class="t1_l2_wrapper clearance_cnt">
+          <div class="t1_l2_inner_clearance">
+                <div class="clearance_list">
+                    <h5>Shop by Category</h5>
+                    <ul>
+                        {% for cat_graph in clearance_sale.category_items %}
+                            <li><a href="{% cc_url request "clearance/" %}?c={{cat_graph.category.id}}">{{cat_graph.category.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="clearance_list">
+                    <h5>Shop by Brands</h5>
+                    <ul>
+                        {% for brand in clearance_sale.brands %}
+                            <li><a href="{% cc_url request "clearance/" %}?b={{brand.id}}">{{brand.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="clearance_list">
+                    <h5>Shop by Discounts</h5>
+                    <ul>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min_d=50&max_d=*">Above 50%</a></li>
+                         <li><a href="{% cc_url request "clearance/"%}?q=&min_d=40&max_d=50">40% to 50%</a></li>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min_d=30&max_d=40">30% to 40%</a></li>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min_d=20&max_d=30">20% to 30%</a></li>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min_d=10&max_d=20">10% to 20%</a></li>
+                     <!--   <li><a href="{% cc_url request "clearance/"%}?q=&min_d=5&max_d=10">10% to 5%</a></li>-->
+
+                    </ul>
+                </div>
+                <div class="clearance_list">
+                    <h5>Shop by Price</h5>
+                    <ul>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min=0&max=1000">
+                            Upto <span class="WebRupee">Rs.</span> 1000</a>
+                        </li>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min=1001&max=2000">
+                            <span class="WebRupee">Rs.</span> 1001 - <span class="WebRupee">Rs.</span> 2000</a>
+                        </li>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min=2001&max=3000">
+                            <span class="WebRupee">Rs.</span> 2001 - <span class="WebRupee">Rs.</span> 3000</a>
+                        </li>
+                        <li><a href="{% cc_url request "clearance/"%}?q=&min=3001&max=*">
+                         Above <span class="WebRupee">Rs.</span> 3001</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="left">
+                    <ul>
+                        {% for item in clearance_sale.format_tags %}
+                            <li style="border-bottom:1px solid #e2dfdf; padding-top:5px; padding-bottom:5px;{%if forloop.last%}border-bottom:none;{%endif%}">
+                                <a href="{%cc_url request item.url %}?q=&t={{item.tag.id}}"><img src="{% media_url request "/media/images/"%}{{item.tag.tag}}-small-logo.gif" /></a> 
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </li>
+  {% endif %}
+  
+  {% comment %}
+     <li class="t1_l1" style="margin-right:0px !important;">
+        <a href="{% cc_url request "homemela/"%}" class="tdnone">
+		<div class="t1_l1_item home_mela"> Home Mela</div>
+		</a>
+      </li>
+   {% endcomment %}
+    </ul>
+        
+    <ul class="right">
+        <li class="t1_l1 like_us_fb_outer" style="width:30px; margin-right:0px;">
+            {% if request|is_cc or 'orders/payment' in request.path %}
+            {% else %}
+                 <a class="t1_l1_item like_us_fb"></a>
+                 <div class="t1_l2_wrapper" style="width:310px !important; left:-279px;">
+                    <iframe src="http://www.facebook.com/plugins/likebox.php?name=futurebazaar&amp;width=300&amp;height=420&amp;connections=0&amp;stream=true&amp;header=false&amp;border_color=%23ffffff" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:420px;" allowtransparency="true">					            </iframe>
+                 </div>
+            {% endif %}
+        </li>
+    </ul>
+
+    <div class="clear"></div>
+  </div>
+</nav>
+<script type="text/javascript">
+    function menu_ready(){
+        {% if daily_deal %}
+            Timers.initST({{daily_deal.deal.remaining_time.0}}, {{daily_deal.deal.remaining_time.1}}, {{daily_deal.deal.remaining_time.2}}, {{daily_deal.deal.remaining_time.3}});
+            Timers.start();
+        {% endif %}
+    }  
+</script>

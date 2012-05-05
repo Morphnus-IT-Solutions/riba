@@ -1,0 +1,24 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10">
+  <div class="breadcrumb"><!--<a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb--></div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name}}</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  {% daterange "Subscribers"  search_trend from_date to_date request '' client_display_name%}
+  <div class="clear left" style="width:100%">
+	<div class="left f14 padding_top10 padding_top10"> Total No. of Subscribers  =  {{total_subscribers}} </div>
+	<div class="right padding_top10 padding_top10 ">
+		<!--<a href="{{request.get_full_path}}&excel=True">Download as Excel</a>-->
+		{%include "ppd/show_excel_link.html" %}
+	</div>
+  </div>
+  <div class="clear"></div>
+</div>
+{%endblock%} 

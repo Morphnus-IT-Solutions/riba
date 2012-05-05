@@ -1,0 +1,236 @@
+{% extends "web/base.html" %}
+{%load cc_tags%}
+{%load web_tags%}
+{% block content%}
+<title>{% block page_title %}Write Review of {{product.title}}{% endblock %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="google-site-verification" content="JdO76y1DrPn_Y-F91jjyewqXakhINXXXW3EevIcFHoE" />
+<meta name="description" content="{%block page_desc%}FutureBazaar.com - Online shopping deals in India to buy Laptops, Mobile Phones, Accessories, Computers, Cameras, Electronics, Toys and Gifts. Pay Cash on Delivery. Write a review for {{product.title}}.{%endblock%}"/>
+<meta name="keywords" content="{%block page_tags%}Future Bazaar, Online Shopping, Store Online, Buy Books, Subscribe Magazines, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Purchase On Web, Cheap product, India, Unbiased Reviews of {{product.title}}, Genuine Reviews of {{product.title}}, Reviews of {{product.title}}, {%endblock%}"/>
+
+
+<div>
+	<div class="f15 fb mart10" style="color:#343434;">Write A Review</div>
+
+	<div class="left" style="width:689px;">
+		<div class="mart10 marb10">
+			<div class="left marr10" style=" border:1px solid #d9d9d9; padding:5px;">
+				<img src="{{product_images.0.get_display_url}}"  id="display_img" width="46" height="46" alt="{{product.id}}" title="{{product.id}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_p.jpg" %}';}return false;" onerror_cnt="0" />      
+			</div> 
+			<div class="left" style="padding-left:10px;">
+				<div class="f15" style="color:#00529C;"><a href="/{{slug}}/pd/{{product.id}}/">{{product.title}}</a></div>
+
+				<div class="price_value forange fb f15">Offer Price &nbsp;<span class="WebRupee">Rs.</span>  {% get_price_info request product.primary_rate_chart 'offer_price' %} </div>
+				<div class="price_value" style="width:150px;height:20px;">MRP &nbsp; <span class="WebRupee">Rs.</span>  <span class="fs">{% get_price_info request product.primary_rate_chart 'list_price' %}</span></div>
+
+		    </div>
+			<div class="clear"></div>
+		</div>
+	     {% comment %}	<div class="f11 right" style="color:#2f2f2f;margin-top:100px;">
+	All fields are mandatory 
+		</div>{% endcomment %}
+	</div>
+	<form method="POST" class="left" style="width:689px;"action="" id="seller_profile_form" name="seller_profile_form">
+		{% if form.errors or name_error%}
+   	        <div class="clear"></div>
+    		<div class="error marb10">
+				{% if form.errors and not name_error%}
+                <p class="fb"> Please correct the error{{form.errors|pluralize}} below: </p>
+                {%endif%}
+                {% if name_error and not form.errors %}
+                <p class="fb"> Please correct the error below:</p>
+                {%endif%}
+                {% if form.errors and name_error %}
+                <p class="fb"> Please correct the errors below:<p>          
+                {% endif %}
+                {% for key, value in form.errors.iteritems %}
+                    {%ifequal key "__all__"%}
+                    <div>{{value|linebreaks}}</div>
+                    {%endifequal%}
+                {% endfor %}
+               {% if name_error %}
+                   {{name_error}}
+               {% endif%}
+  	       </div>
+		{% endif %}
+		<div class="clear"></div>
+		<table class="tbl_write_review">
+			<tr><td width="150"><div class="img_tag left">1</div>
+			
+   		  	<div class="left review_label">Review Title <span class="fred">*</span></div><div class="clear"></div> </td><td width="400"><div class="title_text" id="enter_title">{{form.title}}</div></td><td><div class="f11 review_text_note padl5">Eg. Excellent Product</div></td></tr>
+			
+			<tr>
+				<td valign="top"><div class="img_tag left">2</div>
+	    		    <div class="f12 left review_label">Your Review <span class="fred">*</span></div><div class="clear"></div></td>
+				<td valign="top">
+					<div class="left review_text" id="enter_review">{{form.review}}</div>
+					<div class="f11" id="review_count_cnt">Please write at least <span id="review_count">140</span> more characters</div>
+				</td>
+        	
+
+				<td valign="top"><div class="f11 review_text_note padl5 ja pad5">Eg. I bought this mobile a month ago. Handles duo sim wonderfully. Sleek, slim and light. Its best feature is the 5MP camera which doubles as a digicam. It has never let me down. Highly recommended for people who are always on the move. </div></td></tr>
+		
+		<tr><td valign="top"><div class="img_tag left">3</div>
+			<div class="left f12 review_label">Your Rating <span class="fred">*</span></div><div class="clear"></div></td>
+			<td valign="top">
+				<div class="left review_srars">
+				<div id="write_review_stars" >
+					<input type="radio" class="prating" id="id_rating_0" value="1" alt="Poor" name="rating" {% ifequal rating '1' %} checked="checked" {% endifequal%}>
+					<input type="radio" class="prating" id="id_rating_1" value="2" alt="Average" name="rating" {% ifequal rating '2' %} checked="checked" {% endifequal%}>
+					<input type="radio" class="prating" id="id_rating_2" value="3" alt="Good" name="rating"{% ifequal rating '3' %} checked="checked" {% endifequal%}>
+					<input type="radio" class="prating" id="id_rating_3" value="4" alt="Great" name="rating"{% ifequal rating '4' %} checked="checked" {% endifequal%}>
+					<input type="radio" class="prating" id="id_rating_4" value="5" alt="Excellent" name="rating"{% ifequal rating '5' %} checked="checked" {% endifequal%}>
+  				<span id="rating_title" class="hide f12" style="margin-left:100px;">Rating</span>
+                </div>
+			</div></td>
+			<td></td></tr>
+            
+            {% if  display_name %}
+            <div id="displ_name" class="displ_name"> </div>
+            {% endif %}
+		<tr class="your_name">
+		<td valign="top"> <div class="img_tag left">4</div>
+
+			<div class="left f12 review_label">Your Name <span class="fred">*</span></div></td>
+		 <td valign="top"><div class="left">
+        {%if display_name %}
+{% comment %}						<br/><input class="mart10 checkbox" type="checkbox" name="checkbox" value="Anonymous">&nbsp; Post this review as Anonymous {% endcomment %}
+                    <input  name="name" value="display_name" class="hidden"></div>
+	            	<div class="display_name"><span class="strike_name">{{display_name}}</span>
+{% comment %}		<br/><input type="checkbox" class="checkbox" value="Anonymous" name="checkbox" />&nbsp; Post this review as Anonymous {% endcomment%} </div>
+				{%else%}
+                <input type="text" class="name_text"  name="name" id="enter_name" value="{{name}}" maxlength="20">				
+{% comment %}						<br/><input type="checkbox" class="mart10 checkbox" name="checkbox" value="Anonymous">&nbsp;  Post this review as Anonymous{% endcomment %}
+				{% endif %} 
+ 
+ {% comment %}
+				{%if display_name %}
+      				{%ifequal display_name " " %}
+						<input type="radio"  name="radioval" id="enter_name" value="new_name" checked="checked"><strong>Enter</strong><input type="text" class="name_text" name="new_name">
+						<input type="radio" name="radioval" value="Anonymous">Anonymous
+ 	     			{% else %}
+ 						<input type="radio"  value="display_name" name="radioval" checked="checked"/>{{display_name}}
+			    		<input type="radio" value="Anonymous" name="radioval" /> Anonymous   
+ 		    		{% endifequal %}
+				{%else%}
+					<input type="radio" name="radioval" id="enter_name" value="new_name" checked="checked"><strong>Enter:</strong><input type="text" class="name_text" name="new_name">
+					<input type="radio" name="radioval" value="Anonymous">Anonymous
+				{% endif %} 
+{% endcomment %}
+			</div></td><td></td></tr>
+		
+		<tr><td></td><td><div class="left">
+					<button id="Review" type="submit" class="btn_c btn_c_s btn_orange  f15" style="padding:2px;">Submit Review</button>
+				</div>
+				<div class="left f11 padt5" style="padding-left:15px;color:#00529C;"><a href="/{{slug}}/pd/{{product.id}}/">Cancel</a></div></td><td></td></tr>
+		</table>		
+		
+		
+		
+		
+	</form>
+	<div class="left how_to_write_review marb20 ja">
+		<div class="f15 fb fblack marb5">How to write that awesome review!</div>
+		
+		<div class="f11">
+			<div class="f11"><strong>The basics</strong></div>
+	<p>Keep it simple, clean, concise and as far as possible, unbiased. Your focus on product features will help customers make an informed decision.<br/>Mention what you liked/disliked and more importantly, why. "Would I like it too?" is a question on top of every customers’ mind and this would help immensely .</p>
+		</div>
+		<div class="f11 mart10 ">
+			<strong>Now make it great</strong>
+			<p>A good title catches the eye. Shorter paras makes it more readable. Quick spell check will go a long way (we all hate typos, don't we?).	</p>
+		</div>
+		<div class="f11 mart10">
+			<strong>What we will publish</strong>
+			<p>We'll publish product-specific reviews, both positive and critical, after moderation. In case your writeup contains product review as well as feedback for our service, we will use our discretion. We are committed to providing our customers with most relevant product information.</p>
+		</div>
+		<div class="f11 mart10">
+			<strong>What we won't</strong>
+			<p>Inflammatory, profane or lewd language is a strict no. Please don't use copyrighted material in your review. Feedbacks/comments for our service, both positive or negative, but unrelated to the product can be sent to us using the “Feedback” tab on the right. We love to hear from our customers!
+			</p>
+		</div>
+
+
+	</div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+   if($("#displ_name").hasClass("displ_name"))
+      { $(".your_name").addClass("hide");}
+
+</script>   
+
+<script type="text/javascript">
+
+ $(document).ready(function(){	  
+   var a = $('#id_review').val();
+   var b = $.trim(a);
+   a = b.length;
+   if (a < 140)
+   {
+   $('#review_count').html(140 - a);
+   }
+   else 
+   {
+   $('#review_count_cnt').hide(); 
+   }
+   $('#enter_review').keyup(function(){
+   var a = $('#id_review').val();
+   var b = $.trim(a);
+   a = b.length;
+   if (a < 140) 
+   {
+   $('#review_count').html(140-a);
+   $('#review_count_cnt').show(); 
+   } 
+   else
+   {
+   $('#review_count_cnt').hide(); 
+   }
+   });
+});
+
+</script>
+
+<script type="text/javascript">
+    function rating_mouse_entered(rating_obj){
+        $('#rating_title').html(rating_obj.children('a').attr("alt"));
+        $('#rating_title').removeClass("hide");
+        $('#rating_title').addClass("show");
+    }
+    function rating_mouse_left(){
+        $('#rating_title').removeClass("show");
+        $('#rating_title').addClass("hide");
+    }
+
+$(document).ready(function(){
+    $('.prating').rating({
+        callback: function(value, link) {
+           $('.star-rating-applied').each(function(){
+               $(this).removeAttr('checked');    
+           });
+           $('input#id_rating_' + (value-1)).attr('checked', "checked");
+        }
+    });
+    $("#write_review_stars").removeClass("hide");
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.checkbox').click(function(){
+		 if($(this).attr("checked"))
+		{	 
+		 $(".strike_name").addClass("fs");
+		}
+		else
+		$(".strike_name").removeClass("fs");
+   	
+});
+});
+</script>
+
+
+{% endblock %}
+

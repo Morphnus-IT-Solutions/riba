@@ -1,0 +1,130 @@
+{%load menu_tags%}
+{%load cc_tags%}
+{%load web_tags%}
+{%load cache %}
+
+{%if not request|is_cc%}
+<div class="subscribe_wrapper">
+  <div class="subscribe_top {% if 'user_subscribed' in request.session or 'nevermissadeal' in request.COOKIES %}hide{% endif %}">
+   <div id="subscription_form">
+     <div class="left">
+          <label id="deal_email_label">Enter Email<span class="fred">*</span></label>
+          <br />
+          <input type="text" id="deal_email" maxlength="200" onfocus="$('#deal_email').removeClass('error');$('#deal_email').removeClass('bor_red'); if(this.value == 'Enter a valid email'){value=''};"/>
+        </div>
+        <div class="left">
+          <label>Enter Mobile</label>
+          <br />
+          <input type="text" id="deal_mobile" maxlength="10" onfocus="$('#deal_mobile').removeClass('error'); if(this.value == 'Enter a valid mobile no.'){value=''};"/>
+        </div>
+        
+        <div class="left">
+          <label>Enter Name</label>
+          <br />
+          <input type="text" id="deal_name" maxlength="100"/>
+        </div>
+         <div class="left"> <br />
+          <button id="deal_subscription" >SUBSCRIBE NOW</button>
+          <img id="subscribe_loader" class="padl5 hide" src={% media_url request "images/subscribe-ajax-loader.gif" %}>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+    
+    <span class="sub_close">CLOSE X</span>  
+    <div id="subscription_error" class="hide padt5"></div>
+  </div>
+</div>
+{%endif%}
+ 
+{%if request|is_cc%}
+    <div id="top-stuff">
+        <div id="top-bar-outer">
+            <div class="top-bar-inside" style="left: 0px;">
+                <div class="static-links"> <span>Hi {{cc_agent}}!</span> <span>&nbsp;|&nbsp;</span> <span>Your today's sale: <span class="WebRupee">Rs.</span> {{cc_agent.get_daily_sales}}</span> 
+                </div>
+                <div class="active-links"><a href="/auth/signout/" id="asout" title="Agent sign out">Agent sign out </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<div class="header {% if request|is_cc %} mart20 {% endif %}">
+  <div class="header_main">
+   <a href="{%cc_url request "" %}"> <img id="logo" src="{%media_url request "images/logo.jpg"%}" width="222" height="64" title="FutureBazaar.com – Online Shopping India" alt="FutureBazaar.com – Online Shopping India"/> </a>    
+    <div class="header_right">
+      <div class="top_nav">     
+        <ul class="signin_nav right">
+            {% include "web/header_signin_labels.html"%}
+        </ul>
+        <div class="clear"></div>
+      </div>
+      <div class="shipping_icon">          
+      	{% comment %}
+        <!--<div id="header_cart" class="right"> {% render_header_cart request %} </div>-->
+        {% endcomment %}
+                <div class="search_new">
+            <form action="{%cc_url request "search"%}" method="get" id="search_form">
+              {% render_search_form_fb request %}
+            <div class="clear"></div>
+            </form>
+            {% render_header_dod request %}
+          </div>
+  
+         <div class="clear"></div>
+      </div>
+       
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- Menu for orders pages-->   
+{% if 'orders/mycart' in request.path or 'orders/signin' in request.path or 'orders/shipping' in request.path or 'orders/payment_mode' in request.path %}
+    <div style="border-bottom: 1px solid #bbb; background-color: #000; height: 2px; overflow: hidden; clear: both;">&nbsp;</div>
+<!-- Menu for orders pages-->
+
+{% else %}
+    <!-- Menu for all pages-->
+    {%block header%}
+        {% render_menu request %}
+    {%endblock%}
+    <!-- Menu for all pages--> 
+{% endif %}
+
+
+<!--browser msg -->
+<!--[if lte IE 6]>
+<style>
+  .browser_icons{background:url('/media/images/browser-logos.gif') 0 0 no-repeat; width:35px; height:15px; margin-left:30px; float:left; padding-top:30px; font-size:11px;  text-align:center;}
+  .browser_icons.firefox{ background-position:-32px 0px;}
+  .browser_icons.crome{background-position:-0px 0px;}
+  .browser_icons.safari{background-position:-93px 0px;}
+  .browser_icons.ie{background-position:-127px 0px;}  
+  .browser_msg {
+    width:920px; margin:10px auto 10px;
+    background-color: #FFF6BF;    
+    border:1px solid  #FFD324;     
+    color: #514721; 
+    padding:1px 30px;
+    
+}
+</style>
+ <div>
+      <div class="browser_msg">	
+	    <div class="left marr30 padt5">
+	      <div class="fb f14">You are using an outdated browser</div>
+	      <div>For a better experience using this site, please upgrade to a modern web browser.</div>
+	    </div>
+	  <div class="right">
+	    <a href="http://www.google.com/chrome/" target="_blank"><div class="browser_icons crome">Crome</div></a>
+	      <a href="http://www.mozilla.com/firefox/" target="_blank"><div class="browser_icons firefox">Firefox</div></a>	      
+	      <a href="http://www.apple.com/safari/download/" target="_blank"><div class="browser_icons safari">Safari</div></a>
+	      <a href="http://windows.microsoft.com/ie9/" target="_blank"><div class="browser_icons ie">IE</div></a>
+	       <div class="clear"></div>
+	  </div>
+	  <div class="clear"></div>	
+      </div>      
+    </div>
+ <![endif]-->
+ <!-- / browser_msg --> 

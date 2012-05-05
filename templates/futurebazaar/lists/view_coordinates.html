@@ -1,0 +1,44 @@
+{% extends 'ppd/user_home.html' %}
+{% load web_tags %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="inner_content">
+	<div class="content_head" style="padding-top:26px; height:34px;">
+		<div class="header rc5" style="width: 960px;">
+			<div class="left">
+				<h1>{{request.client.client.name|title}} - {{ listobj.title }} Details</h1>
+    		</div>
+			<div class="right" style="width: 460px; padding-top: 6px;">
+				<a href="/user_experience/site_properties/lists/view_all_lists/" class="uiButton fblack">Back to all List</a>
+				<a href="/user_experience/site_properties/lists/display_list/{{ID}}" class="uiButton fblack">Back to {{ listobj.title }}</a>
+			</div>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+  	<div class="clear"></div>
+	<form action="" id="seller_profile_form" name="seller_profile_form">
+		<table class="listitems mart5 marb10" style=" border-collapse:collapse; border:1px;">
+			<tr>
+				<th><strong>Sequence</strong></th>
+				<th><strong>Coordinates</strong></th>
+				<th><strong>Link</strong></th>
+			</tr>
+		{% for i in coordobj %}
+			<tr>
+				<td class="ca">{{i.sequence}}</td>
+				<td class="ca">{{i.co_ordinates}}</td>
+				<td class="ca">{{i.link}}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</form>
+	</div>
+{% endblock %}

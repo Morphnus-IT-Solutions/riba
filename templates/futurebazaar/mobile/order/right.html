@@ -1,0 +1,100 @@
+{% load cc_tags %}
+{% load web_tags %}
+<div {%if not confirmed%}style="padding-top:44px;"{%else%}style=""{%endif%}>
+  {% if order %}
+  {% if not order.state|order_state_conf_or_mod_or_canc %}
+  <div class="cart_summary">
+	  <h3 class="fb-form-hd">Order Summary</h3>
+	  <div class="fb-form fb-form-ro fb-form-s">
+		  <ul>
+			  <li>
+				  <div class="dlabel"><span>No. of Items</span></div>
+				  <div class="fbf-dcant"><span>{{order.get_item_count}} items</span></div>
+			  </li>
+			  <li>
+				  <div class="dlabel"><span>Market Price</span></div>
+				  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{order.list_price_total|money}}</span></div>
+			  </li>
+			  <li>
+				  <div class="dlabel"><span>Shipping Charges</span></div>
+				  <div class="fbf-dcant"><span id="orderShippingCharges">{%if order.shipping_charges > 0 %}<span class="WebRupee">Rs.</span> {{order.shipping_charges|money}}{%else%}FREE{%endif%}</span></div>
+			  </li>
+			  <li>
+				  <div class="dlabel"><span>Discount</span></div>
+				  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{order.get_discount|money}}</span></div>
+			  </li>
+			  {%if order.auto_promotions_discount%}
+			  <li>
+				  <div class="dlabel"><span>Special Discount</span></div>
+				  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{order.auto_promotions_discount|money}}</span></div>
+			  </li>
+			  {%endif%}
+			  {%if order.coupon_discount%}
+			  <li>
+				  <div class="dlabel"><span>Special Discount</span></div>
+				  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{order.coupon_discount|money}}{%if order.coupon.promo_name%} ({{order.coupon.promo_name}})
+			  {%endif%}
+			  {%if not confirmed %}
+				{%if order.coupon%}
+				<form method="post" action={% cc_url request "orders/mycart/" %}>
+				  <input type="hidden" id="redirect_to" name="redirect_to" value="{{request.path}}"/>
+				  <input type="hidden" name="action" value="remove_fb_coupon"/>
+				  <button class="linkButton" type="submit" title="Remove this coupon">Remove coupon x</button>
+				</form>
+				{%endif%}
+			   {%endif%}
+				</span></div>
+			  </li>
+			  {%endif%}            
+			  {%if order.top10_discount%}
+			  <li>
+				  <div class="dlabel"><span>Top10 Special Discount</span></div>
+				  <div class="fbf-dcant"><span><span class="WebRupee">Rs.</span> {{order.top10_discount|money}}</span></div>
+			  </li>
+			  {%endif%}
+			  <li>
+				  <div class="dlabel"><span>Total Payable</span></div>
+				  <div class="fbf-dcant"><span id="orderPayableAmount"><span class="WebRupee">Rs.</span> {{order.payable_amount|money}}</span></div>
+			  </li>
+		  </ul>
+	  </div>
+  </div>
+  {% endif %}
+  
+  
+  {%if request|get_fbapiobj and not confirmed %}
+  <div class="f11 marb5">Use a coupon code to redeem deals &amp; discounts</div>
+  <div class="couponcode  pad10 bgc1">
+    <form method="post" action={% cc_url request "orders/mycart/" %}>
+      <div> {%if request.session.applied_coupon_msg %}
+        <div id="coupon_apply_msg" class="error pad5 marb10">{% applied_coupon_code_message request%}</div>
+        {%endif%}
+        <input type="text" id="coupon_code" maxlength=50 name="coupon_code" size="10" onblur="if (value== '') {value='Enter coupon code'}" onfocus="if (value == 'Enter coupon code') {value=''}" value="Enter coupon code"/>
+        <input type="hidden" id="redirect_to" name="redirect_to" value="{{request.path}}"/>
+        <input type="hidden" name="action" value="apply_coupon"/>
+        <button type="submit" title="Apply Discount Coupon" class="btn btn_apply vt" id="apply_fb_coupon"></button>
+      </div>
+    </form>
+  </div>
+  <div class="f11 marb5 mart10 payback">Use i-mint/Payback ID to earn points<br />(<a href={% cc_url request "payback/" %}>What is this?</a>)</div>
+      <div class="couponcode  pad10 bgc1">
+        <form method="post" action={% cc_url request "orders/mycart/" %}>
+          <div>
+            {%if request.session.payback_msg %}
+            <div id="coupon_apply_msg" class="error pad5 marb10">{% applied_payback_message request%}</div>
+            {%endif%}
+            <input type="text" id="payback_id" maxlength=50 name="payback_id" size="10" onblur="if (value== '') {value='Enter i-mint/Payback ID'}" onfocus="if (value == 'Enter i-mint/Payback ID') {value=''}" value={% if order.payback_id %}"{{order.payback_id}}"{% else %}"Enter i-mint/Payback ID"{% endif %}/>
+            <input type="hidden" id="redirect_to" name="redirect_to" value="{{request.path}}"/>
+            <input type="hidden" name="action" value="apply_payback"/>
+            <button type="submit" title="Apply and Earn Points" class="btn btn_apply vt" id="apply_payback"></button>
+          </div>
+        </form>
+      </div>
+  {%endif%}
+  
+  {% endif %}
+  {% if request.wstore and request.wstore.order_on_phone == "none" %}
+  {% else %}
+
+</div>
+{% endif %} 

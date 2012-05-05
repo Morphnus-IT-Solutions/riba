@@ -1,0 +1,44 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{%load cc_tags%}
+{% block user_content %}
+<div class="padding_top10">
+    {%comment%}<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>{%endcomment%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Payouts</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+<form method="post" action="">
+{% if payout_home_form.errors %}
+       <div class="row">       
+          <div>
+                <div class="error">
+                    <ol>
+                    {% for field in payout_home_form %}
+                    {% for error in field.errors %}
+                        <li>{{error}}</li>
+                    {% endfor %}
+                    {% endfor %}
+                    </ol>
+                </div>
+        </div>            
+     </div>  
+{% endif %}
+<div class="inner-content">   <!--<span style="margin-right:10px;"><label for="id_month">Seller:</label> {{payout_home_form.seller}} </span>-->
+
+                        
+     <span style="margin-right:10px;"><label class="f11 flgray fn" for="id_year">Year:</label> {{payout_home_form.year}} </span>
+      <span style="margin-right:10px;"><label class="f11 flgray fn" for="id_month">Month:</label> {{payout_home_form.month}} </span>
+                         
+	 <input type="Submit" id="sku_submit" value="Calculate" class="uiButton" style="margin-top: 2px;"/> 
+</div>
+</form>   
+{%if seller_payout%}
+    {%include "ppd/payouts_details.html"%}
+{%else%}
+    <p class="padding_top10 left">Payout details cannot be calculated for this seller. Please contact us to get this page working.</p>
+{%endif%}
+</div>
+{%endblock%}

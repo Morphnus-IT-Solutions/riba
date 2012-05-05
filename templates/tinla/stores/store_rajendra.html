@@ -1,0 +1,399 @@
+{% extends "web/base.html" %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load menu_tags %}
+{% if not request.wstore%}
+{%block page_title%}{% render_store_page_title store%}{%endblock%}
+{%block page_desc%}{% render_store_page_desc store %}{%endblock%}
+{%block page_tags%}{% render_store_page_tags store %}{%endblock%}
+{%endif%}
+{% block content %}
+<div class="breadcrumb"> <a href="{% cc_url request "" %}" title="Go to Chaupaati Home">Home</a>&nbsp;&raquo;&nbsp;Mobiles
+  <!--{%if filter_form.category%}&nbsp;&raquo;&nbsp;<a href="{% cc_url request filter_form.category.store.url %}">{{filter_form.category.store.name}}</a>{%endif%}-->
+</div>
+<div>
+  <div id="store_nav">
+    <div class="store_nav_heading toproundcorner5">Browse Books</div>
+    <div id="cat" class="store_nav_title" onclick="showHideCat()"> <span>
+      <!--Browse -->
+      By Category</span> </div>
+    <div id="by_category" class="store_nav_items">
+      <ul>
+        <li><a href="#">Mobile Handsets</a></li>
+        <li><a href="#">Mobile Chargers</a></li>
+        <li><a href="#">Memory Cards</a></li>
+        <li><a href="#">Mobile Batteries</a></li>
+        <li><a href="#">Bluetooth Accessories</a></li>
+        <li><a href="#">Mobile Handsets</a></li>
+        <li><a href="#">Mobile Chargers</a></li>
+        <li><a href="#">Memory Cards</a></li>
+        <li><a href="#">Mobile Batteries</a></li>
+        <li><a href="#">Bluetooth Accessories</a></li>
+      </ul>
+    </div>
+    <div id="brands" class="store_nav_title" onclick="showHideBrands()"> <span>
+      <!--Browse -->
+      By Brands</span> </div>
+    <div id="by_brands" class="store_nav_items">
+      <ul>
+        <li><a href="#">Blackberry</a></li>
+        <li><a href="#">Samsung</a></li>
+        <li><a href="#">Sony Ericsson</a></li>
+        <li><a href="#">Nokia</a></li>
+        <li><a href="#">HTC</a></li>
+        <li><a href="#">Blackberry</a></li>
+        <li><a href="#">Samsung</a></li>
+        <li><a href="#">Sony Ericsson</a></li>
+        <li><a href="#">Nokia</a></li>
+        <li><a href="#">HTC</a></li>
+      </ul>
+    </div>
+ 
+  </div>
+  <div class="results">
+    <div>
+      <div class="store_header roundcorner5">
+        <h1>Popular Products</h1>
+      </div>
+      <div class="store_grid">
+        <div class="store_grid_left"><img src="{{MEDIA_URL}}images/arr_left.jpg" /></div>
+        <div id="popular1" class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img id="popular1_img" height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div id="popular2" class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school1.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div id="popular3" class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div id="popular4" class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school1.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_right"><img src="{{MEDIA_URL}}images/arr_right.jpg" onclick="moveNext()"/></div>
+      </div>
+      <div class="clear"></div>
+      <div class="store_see_all"><a href="#">See all popular <span class="fblue fn">&raquo;</span></a></div>
+    </div>
+    <div>
+      <div class="store_header roundcorner5">
+        <h1>Latest Products</h1>
+      </div>
+      <div class="store_grid">
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item norb">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div class="store_see_all"><a href="#">See all latest <span class="fblue fn">&raquo;</span></a></div>
+    </div>
+    <div>
+      <div class="store_header roundcorner5">
+        <h1>Top Deals</h1>
+      </div>
+      <div class="store_grid">
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item norb">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div class="store_see_all"><a href="#">See all deals <span class="fblue fn">&raquo;</span></a></div>
+    </div>
+  <!--  <div>
+      <div class="store_header roundcorner5">
+        <h1>Top Categories</h1>
+      </div>
+      <div class="store_grid">
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item norb">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div class="store_see_all"><a href="#">See all products</a> <span class="fblue fn">&raquo;</span></div>
+    </div>
+    <div>
+      <div class="store_header roundcorner5">
+        <h1>Top Brands</h1>
+      </div>
+      <div class="store_grid">
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="store_grid_item norb">
+          <div class="thumb"> <a href="/samsung-e2370/pd/1"> <img height="75" width="75" onerror_cnt="1" title="Samsung E2370" src="{{MEDIA_URL}}images/school.jpeg"></a> </div>
+          <div class="summary">
+            <h3><a title="Samsung E2370" href="/samsung-e2370/pd/1">Samsung E2370</a></h3>
+            <div class="pricing">
+              <div class="f11 fs fdgray">Rs. 7,000</div>
+              <div class="fmaroon f14"><strong>Rs. 5,500</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div class="store_see_all"><a href="#">See all products</a> <span class="fblue fn">&raquo;</span></div>
+    </div>-->
+  </div>
+  <div class="clear"></div>
+</div>
+<script language="javascript" type="text/javascript">
+    function showHideCat()
+    {
+        var divcat = new String();
+        divcat = document.getElementById("by_category").style.display;
+        if(divcat.toLowerCase()=="block" || divcat == "")
+        {
+            document.getElementById("by_category").style.display = "none";
+			document.getElementById("cat").style.margin = "0px 0px 1px";			
+			document.getElementById("cat").style.borderBottom="1px solid #cdcdcd";			
+			document.getElementById("cat").style.background = "#dedede url('{{MEDIA_URL}}images/arr_right.gif') no-repeat 5px";		
+		
+        }
+        else
+        {
+            document.getElementById("by_category").style.display = "block";
+			document.getElementById("cat").style.margin = "0px";		
+			document.getElementById("cat").style.background = "#dedede url('{{MEDIA_URL}}images/arr_down.gif') no-repeat 5px";
+        }
+    }
+	
+	
+	 function showHideBrands()
+    {
+        var divbrands = new String();
+        divbrands = document.getElementById("by_brands").style.display;
+        if(divbrands.toLowerCase()=="block" || divbrands == "")
+        {
+            document.getElementById("by_brands").style.display = "none";
+			document.getElementById("brands").style.margin = "0px 0px 1px";
+			document.getElementById("brands").style.borderBottom="1px solid #cdcdcd";	
+			document.getElementById("brands").style.background = "#dedede url('{{MEDIA_URL}}images/arr_right.gif') no-repeat 5px";
+			
+		
+        }
+        else
+        {
+            document.getElementById("by_brands").style.display = "block";
+			document.getElementById("brands").style.margin = "0px";
+			document.getElementById("brands").style.background = "#dedede url('{{MEDIA_URL}}images/arr_down.gif') no-repeat 5px";
+        }
+    }
+	
+	function movePrevious()
+	{
+	document.getElementById("popular1_img").src = "{{MEDIA_URL}}images/school.jpeg";
+	document.getElementById("popular1_img").src = "{{MEDIA_URL}}images/school.jpeg";
+	}
+	
+	function moveNext()
+	{
+	document.getElementById("popular1_img").src = "{{MEDIA_URL}}images/school1.jpeg";
+	
+	}
+    </script>
+{% endblock %} 

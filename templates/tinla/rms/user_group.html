@@ -1,0 +1,30 @@
+{% extends 'rms/base.html' %}
+{% load web_tags %}
+{% load rms_tags %}
+{% block content %}
+<style>
+ul{padding:0px}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/user/">Users</a>&nbsp;&raquo;&nbsp; {{group.name}}</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+          <h1>{{group.name}}</h1>
+    </div>
+	<div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+		<div class="clear"></div>
+        {% if users %}
+        <ul>
+            {% for user in users %}
+            <li class='left agentlist'><a href='/user/{{user.id}}'>{% firstof user.first_name|title user.username|title %}</a>
+            {% endfor %}
+            <li style='width:1px;line-height:0px;'>&nbsp;</li>
+        </ul>
+        {% else %}
+        <p>No users present with this role</p>
+        {% endif %}
+  </div>
+</div>
+{%endblock %}

@@ -1,0 +1,95 @@
+{% extends "web/base.html" %}
+{%load compressed %}
+{% block page_title %}Discover great deals{% endblock %}
+
+{% block header%}
+{% endblock %}
+{% block footer%}
+{% endblock %}
+
+{%block css%}
+{% compressed_css 'offer' request %}
+<!--[if IE 6]>{% compressed_css 'ie6' request %}<![endif]-->
+<!--[if IE 7]>{% compressed_css 'ie7' request %}<![endif]-->
+<!--[if IE 8]>{% compressed_css 'ie8' request %}<![endif]-->
+{%endblock%}
+{%block js%}
+{%endblock%}
+
+{% block content %}
+<div class="outer rc5">
+<div class="outer_inner rc5">
+<div class="header">
+<img src="/media/images/logo-offer.gif" class="left">
+<div class="right header_right">
+<div class="right tagline">Deals from India's Foremost retailers</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="content">
+<div class="content_inner">
+  <div class="subscribe_heading">Subscribe</div>
+   <div class="subscribe_sub_heading">to get more deals like these</div>
+  <div>
+  <table class="data_fields">
+{%if form.errors%}
+    <tr>
+        <td></td>
+        <td>
+            <ul class="error" style="margin-left:0px; " >
+               {% for field in form %}
+                    {% for error in field.errors %}
+                            <li width="150">{{error}}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+{%endif%}
+{%if errors%}
+    <tr>
+        <td></td>
+        <td>
+            <ul class="error" style="margin-left:0px; " >
+               {% for error in errors %}
+                    <li width="150">{{error}}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+{%endif%}
+
+<form action="" method="POST">
+    {% for field in form %}
+        <tr>
+            <td>
+                {{field.label}}{% if field.field.required %}<span class="fred">*</span>{% endif %}                
+            </td>
+            <td>
+               {{field}}
+            </td>
+        </tr>
+    {% endfor %}
+    <input type="hidden" name="source" value="{{source}}" />
+    <tr>
+        <td></td>
+        <td class="ca">  <input type="submit" class="btn_submit" value=""/></td>
+    </tr>
+</form>
+  </table>
+  </div>
+</div>
+</div>
+<div class="footer_img">
+<img src="/media/images/offers-products.jpg" />
+</div>
+</div>
+</div>
+
+</div>
+{%endblock%}
+{%block script_footer%}
+<!-- Advertiser 'Komli Inc.',  Include user in segment 'E-Commerce - Future Bazaar' - DO NOT MODIFY THIS PIXEL IN ANY WAY -->
+<script src="http://ads.komli.com/pixel?id=1391616&t=1" type="text/javascript"></script>
+<!-- End of segment tag -->
+{%endblock%}

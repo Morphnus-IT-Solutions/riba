@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Discount-{{affiliate.name}}</title>
+<link rel="stylesheet" href="/media/css/alliances.css"/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js" charset="utf-8"></script>
+<script type ="text/javascript" src='/media/js/cookie.js'></script>
+</head>
+<body>
+<div class="wrapper">
+		<div class="banner">
+		<img src="/media/images/banner1.gif" border="0" align="left"/>
+		<img src="{{affiliate.logo.url}}" border="0" align="left"/>
+		</div>
+        
+		<div class="banner-content">
+        As an exclusive member of {{affiliate.name}} family, you can now avail an additional discount on your purchase at Futurebazaar, BigBazaar & Pantaloons!  
+		</div>
+        {%for coupon in coupon_codes.futurebazaar%}
+        <div class="fb-content">
+        <div class="fb-logo"></div>
+        <div class="fb-coupon">
+        		<div class="fb-coupon-a">
+            		<div class="fb-coupon-b">
+			{%if coupon.type.discount_type == 'fixed_value_off'%}
+                    	<div class="fb-coupon-c" >Rs. {{coupon.type.discount_value|floatformat:"-2"}} Off*</div>
+			{%else%}
+			<div class="pan-coupon-c" >{{coupon.type.percentage_off}}% Off*</div>
+			{%endif%}
+                        <div class="fb-coupon-code">Coupon Code</div>
+                        <div class="fb-coupon-code-m">{{coupon.code}}</div>
+                    </div>
+                    
+                    <div style=" width:155px; height:90px; background-color:#FFFFFF;float:left">
+                    	<img src="/media/images/FB_discount.gif" width="162" height="90" align="left" border="0" />
+                    </div>
+                
+                </div>
+        </div>
+        	<div class="pan-terms">
+    
+                <span class="t-c">Terms & Conditions:<br /></span>
+
+				{{coupon.type.terms_and_conditions|safe}}
+		
+
+               <a href="{{coupon.type.shopping_page}}" target="_blank" style="text-decoration:none;"><div class="subscribe-button">Start Shopping</div></a>
+        
+        	</div>
+        
+		</div>
+        
+        
+        <div class="lineFB">&nbsp;</div>{%endfor%}
+		{%for coupon in coupon_codes.pantaloon%}
+		<div class="pantaloon-content">
+        <div class="pan-logo"></div>
+        <div class="pan-coupon">
+        		<div class="pan-coupon-a">
+            		<div class="pan-coupon-b">
+                    	{%if coupon.type.discount_type == 'fixed_value_off'%}
+                    	<div class="fb-coupon-c" >Rs. {{coupon.type.discount_value|floatformat:"-2"}} Off*</div>
+			{%else%}
+			<div class="pan-coupon-c" >{{coupon.type.percentage_off}}% Off*</div>
+			{%endif%}
+                        <div class="coupon-code">Coupon Code</div>
+                        <div class="coupon-code-m">{{coupon.code}}</div>
+                    </div>
+                    
+                    <div style=" width:155px; height:90px; background-color:#FFFFFF;float:left">
+                    	<img src="/media/images/pantaloon-apparels.gif" width="162" height="90" align="left" border="0" />
+                    </div>
+                
+                </div>
+        </div>
+        	<div class="pan-terms">
+    
+                <span class="t-c">Terms & Conditions:<br /></span>
+					{{coupon.type.terms_and_conditions|safe}}
+		<a href="{{coupon.type.shopping_page}}" target="_blank" style="text-decoration:none"><div class="subscribe-button">Start Shopping</div></a>
+        
+        	</div>
+        
+		</div>
+		
+        
+		<div class="line">&nbsp;</div>{%endfor%}
+{%for coupon in coupon_codes.bigbazaar%}
+		<div class="bb-content">
+        <div class="bb-logo"></div>
+        <div class="bb-coupon">
+        		<div class="bb-coupon-a">
+            		<div class="bb-coupon-b">
+                    	{%if coupon.type.discount_type == 'fixed_value_off'%}
+                    	<div class="fb-coupon-c" >Rs. {{coupon.type.discount_value|floatformat:"-2"}} Off*</div>
+			{%else%}
+			<div class="pan-coupon-c" >{{coupon.type.percentage_off}}% Off*</div>
+			{%endif%}
+                        <div class="bb-coupon-code">Coupon Code</div>
+                        <div class="bb-coupon-code-m">{{coupon.code}}</div>
+                    </div>
+                    
+                    <div style=" width:155px; height:90px; background-color:#FFFFFF;float:left">
+                    	<img src="/media/images/bigbazaar-apparels.gif" width="162" height="90" align="left" border="0" />
+                    </div>
+                
+                </div>
+        </div>
+        	<div class="pan-terms">
+    
+                <span class="t-c">Terms & Conditions:<br /></span>
+				{{coupon.type.terms_and_conditions|safe}}
+				    
+               <a href="{{coupon.type.shopping_page}}" target="_blank" style="text-decoration:none;"><div class="subscribe-button">Start Shopping</div></a>
+        
+        	</div>
+        
+		</div>
+		<div class="line">&nbsp;</div>{%endfor%}
+        
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $.cookie("Previouslyvisited","Previouslyvisited",{"domain":".futurebazaar.com","expires":365});
+    $.cookie("Previouslyvisited","Previouslyvisited",{"domain":"www.futurebazaar.com","expires":365});
+    })
+</script>
+</body>
+</html>

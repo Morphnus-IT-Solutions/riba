@@ -1,0 +1,109 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+
+{% if errors %}
+  <div class="error">
+    <ul style="list-style-type:disc; padding-left:10px;">
+      <li>{{errors}}</li>
+    </ul>
+  </div>
+{% endif %}
+
+{% daterange title search_trend from_date to_date request%}
+
+{%if to_show%}
+<div class="clear">&nbsp;</div>
+<div>
+  <table class="tbl_order floating_container">
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Phone</th>
+      <th>Web</th>
+      <th>Total</th>
+    </tr>
+    {%if total_visits%}
+    <tr>
+      <td>Visitors/Call</td>
+      <td></td>
+      <td class="ra">-</td>
+      <td class="ra">{{total_visits}}</td>
+      <td class="ra">-</td>
+    </tr>
+    {%endif%}
+    <tr class="{%cycle "row1" "row2" %}">
+      <td rowspan="3">
+        <br/>
+        Orders Booked <br />
+        <i>(based on order submitted date)</i>
+      </td>
+      <td>Value</td>
+      <td class="ra bcolor_one">{{order_booking.2.0}}</td>
+      <td class="ra bcolor_one">{{order_booking.2.1}}</td>
+      <td class="ra bcolor_one">{{order_booking.2.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td>Quantity</td>
+      <td class="ra">{{order_booking.1.0}}</td>
+      <td class="ra">{{order_booking.1.1}}</td>
+      <td class="ra">{{order_booking.1.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td>Order</td>
+      <td class="ra">{{order_booking.0.0}}</td>
+      <td class="ra">{{order_booking.0.1}}</td>
+      <td class="ra">{{order_booking.0.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td rowspan="3">
+        <br />
+        Payment Realisation
+        <br /> <i> (based on SAP order creation date)</i>
+    </td>
+      <td>Value</td>
+      <td class="ra bcolor_one">{{payment_realisation.2.0}}</td>
+      <td class="ra bcolor_one">{{payment_realisation.2.1}}</td>
+      <td class="ra bcolor_one">{{payment_realisation.2.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td>Quantity</td>
+      <td class="ra">{{payment_realisation.1.0}}</td>
+      <td class="ra">{{payment_realisation.1.1}}</td>
+      <td class="ra">{{payment_realisation.1.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td>Order</td>
+      <td class="ra">{{payment_realisation.0.0}}</td>
+      <td class="ra">{{payment_realisation.0.1}}</td>
+      <td class="ra">{{payment_realisation.0.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td rowspan="3">
+        <br />Invoiced
+        <br /> <i>(based on order invoiced date)</i>
+        </td>
+      <td>Value</td>
+      <td class="ra bcolor_one">{{invoiced.2.0}}</td>
+      <td class="ra bcolor_one">{{invoiced.2.1}}</td>
+      <td class="ra bcolor_one">{{invoiced.2.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td>Quantity</td>
+      <td class="ra">{{invoiced.1.0}}</td>
+      <td class="ra">{{invoiced.1.1}}</td>
+      <td class="ra">{{invoiced.1.2}}</td>
+    </tr>
+    <tr class="{%cycle "row1" "row2" %}">
+      <td>Order</td>
+      <td class="ra">{{invoiced.0.0}}</td>
+      <td class="ra">{{invoiced.0.1}}</td>
+      <td class="ra">{{invoiced.0.2}}</td>
+    </tr>
+  </table>
+</div>
+{%endif%}
+{%endblock%}
+{% block script_footer %}
+{{block.super}}
+{% endblock %} 

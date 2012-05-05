@@ -1,0 +1,31 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block user_content %}
+<table cellpadding="0" cellspacing="0" id="cart" class="checkout_table">
+    {%if wishlist%}
+    {%for item in list_items%}
+    <tr> 
+        <td class="bb">{{item.sku.product.title}}<br />
+            <form method="post" action="{%cc_url request "orders/mycart" %}" id="add_to_cart_{{item.sku.id}}">
+                <input type="hidden" name="rate_chart_id" value="{{item.sku.id}}"/>
+                <input type="hidden" name="product_id" value="{{item.sku.product.id}}"/>
+                <input type="hidden" name="action" value="add_to_cart"/>
+                <button type="submit" class="linkButton" title="Add this item to my cart">Add to Cart</button>
+            </form>
+        {%if request|is_future_ecom %}
+        <b>FBID:</b>{{item.sku.sku}}
+        {%endif%}
+        </td>
+        <td class="bb">
+            <form method="post" action="{%cc_url request "user/wishlist/" %}">
+                <input type="hidden" name="action" value="remove_item"/>
+                <input type="hidden" name="itemid" value="{{item.id}}"/>
+                <button type="submit" class="linkButton" title="Remove this item">Remove item</button>
+            </form>
+        </td>
+    </tr>
+    {%endfor%}
+    {%endif%}
+</table>
+{%endblock%}

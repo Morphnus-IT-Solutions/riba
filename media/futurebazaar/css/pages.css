@@ -1,0 +1,125 @@
+
+.page {
+   
+    padding: 30px 15px 15px 0;
+	
+}
+
+.pagetitle{
+	padding: 8px 0px 0px;
+}
+.h1 {
+    background-color: #E6F3FE;
+    border-bottom: 3px solid #ccc;
+    color: #000000;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 14px;
+    padding-left: 15px;
+    padding-top: 8px;
+}
+
+.page h1, .page h2, .page h3, .page h4, .page h5, .page h6 {  
+    margin: 0px ;  
+    margin-bottom: 5px;
+    padding: 0px;
+   
+
+}
+.page h1 {
+    font-size: 20px;
+}
+
+.page h2 {
+    font-size: 18px;   
+	color:#457ab0;
+}
+
+
+.page h3 {
+    font-size: 15px;    
+	color:#457ab0;
+	
+	margin-top:20px;
+}
+
+
+.page p {
+   padding:0px;
+    padding-bottom: 10px;
+    text-align:justify;
+}
+.page ul{list-style-type:disc; margin:0 20px 20px; line-height:1.6;}
+.page ol{ margin:0 20px 20px; line-height:1.6;}
+	
+.page a.top {  
+    background-image: url("../images/icon-top.gif");
+    background-position: 0 4px;
+    background-repeat: no-repeat;
+    font-size: 11px;  
+    padding-left: 15px;
+	float:right;
+	margin-bottom:20px;
+  
+}
+	
+.bank-list {    
+    background-color: #FFFFFF;  
+    border: 1px solid #DADADA; 
+    float: left;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 8px;
+    padding-bottom: 7px;
+    padding-left: 19px;
+    padding-right: 19px;
+    padding-top: 7px;
+    width: 710px;
+}
+.bank-list img {
+    margin-bottom: 13px;
+    margin-left: 0;
+    margin-right: 10px;
+    margin-top: 0;
+}
+
+.sitemap{ margin-top:20px;}
+.sitemap h1{font-size:18px; margin-bottom:10px; }
+.sitemap h3{font-size:14px; margin-bottom:5px; }
+.sitemap_column{width:300px; margin-left:20px; float:left;}
+.sitemap ul{margin-bottom:20px;}
+.sitemap ul li{
+     background-position: 0 -200px;
+    background-repeat: no-repeat;
+	padding:2px 10px 2px 10px;
+	}
+
+/*Testimonials*/
+.testi_header{background-color: #F1F9FE; border-bottom: 5px solid #bed0e3; color: #333333; font-size: 12px; margin-bottom: 10px; padding: 8px 10px;}
+.testi_block{float:left; border-bottom:1px solid #c7d7e8;  padding:10px;}
+.testi_block .cust_img{width:75px;}
+.testi_block .cust_info{width:530px;}
+.testi_block img{border:1px solid #D5D8DA; padding:1px; width:60px;}
+.testi_text{float:left; padding-top:10px; padding-left:50px; background:url('../images/quote-s.gif') no-repeat 10px 10px}
+.testi_rightbar{width:310px;}
+
+/*jet airways*/
+.jet_wrapper{}
+.jet_wrapper h1{color:#064b8b; font-size:25px; padding:0px 0px 10px;}
+.jet_wrapper .bb{border-bottom:5px solid #cbe2f1;}
+.jet_banner{ height:230px; width:988px; background:#FFF url('../images/jet-page.gif') no-repeat 0 0 ;}
+.jet_promo_txt{ font-size:39px; color:#064a8b;display:block;width:475px;border-bottom:4px solid #064b8b}
+.jet_promo_txt_orange{color:#f68b1e; padding-left:210px}
+.jet_boxes_container{width:988px; overflow:hidden; background:#fff; color:#064b8b; }
+.jet_boxes_container .box{height:130px; width:222px; border:1px solid #d6e8f3; background:#eef7fd; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; float:left; overflow:hidden; margin-right:3px; padding:13px 0 0 20px; font-size:17px; font-weight:bold;}
+.jet_boxes_container .blast{margin-right:0px}
+.jet_boxes_container .box h1{ font-size:25px; margin-bottom:17px; padding: 0; letter-spacing: normal;}
+.jet_boxes_container .box input[type="text"]{ border:inset thin;float:left; margin-bottom:7px;}
+.jet_steps{margin: 0 0 10px 0!important;}
+.jet_steps li{list-style:none; background:#FFF url('../images/jet-page.gif') no-repeat 0 -240px ;
+height:33px; margin-bottom:10px; padding:6px 0 0 30px}
+.jet_steps li .step{ color:#064b8b; font-size:20px; padding-right:49px}
+.jet_priv_mem{font-size:31px;color:#000;letter-spacing:2.4px}
+.jet_banner_txt{margin-left:460px; background:#FFF url('../images/jet.jpg') no-repeat right 16px; padding-top:70px;}
+.jet_wrapper .note{list-style:disc;}

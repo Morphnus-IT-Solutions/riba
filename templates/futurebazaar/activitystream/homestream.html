@@ -1,0 +1,19 @@
+{% load web_tags %}
+{% load cc_tags %}
+<ul class="buzzez">
+{% for obj in act_objs %}
+	<li>
+    <img height="50" width="50"  alt="" title=""
+    {%if obj.user.facebook%} 
+        src="http://graph.facebook.com/{{obj.user.facebook}}/picture" 
+    {%else%}
+        {%if obj.asrc.product.get_default_img%}
+            src="{{obj.asrc.product.get_default_img}}"
+        {%else%}
+            src="{{MEDIA_URL}}images/user.jpeg"
+        {%endif%}
+    {%endif%} />
+    <p>{{obj|get_astream|safe}}</p>
+	<span>{{obj.atime|time_ago}}</span>	</li>
+{% endfor %}
+</ul>

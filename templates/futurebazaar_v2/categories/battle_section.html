@@ -1,0 +1,22 @@
+{%load web_tags%}
+{%load cc_tags%}
+{%for product in products%}
+    <li>
+    <div class="greed_prod">                  
+     <a href="{%cc_url request product.product.url%}">
+      <img width="208" height="208" src="{{product.product.productimage_set.all.0.get_display_url}}" title="{{product.product.title}}" alt="{{product.product.title}}">
+       </a>
+          <h3><a href="{%cc_url request product.product.url%}" title="{{product.product.title}}">{{product.product.title|truncate:45}}</a></h3>
+          <div class="ca f11 padb10">Intel i5, 3GB RAM, 500 GB, Windows 7 Home Basic edition </div>
+    <div class="you_earn ca fdgray">You Steal: <span class="value"><span class="WebRupee">Rs.</span> {%getSavings request product.rateChart%}</span></div>
+    <div class="price ca">
+    <div class="marb5">{% get_price_info request product.rateChart 'list_price_label' %} <span class="WebRupee">Rs.</span> {% get_price_info request product.rateChart 'list_price' %}</div>
+    <div class="fb forange2 marb5 f18">{% get_price_info request product.rateChart 'offer_price_label' %} <span class="WebRupee">Rs.</span> {% get_price_info request product.rateChart 'offer_price' %}</div>
+    <div class="ca">
+    <a href="{%cc_url request product.product.url%}">
+    <button class="btn_buynow"></button></a>
+    </div>
+    
+    </div>
+    </li>
+{%endfor%}

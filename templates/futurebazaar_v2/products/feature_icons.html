@@ -1,0 +1,7 @@
+{% if choices %}
+<div class="feature_icons">
+    {% for choice in choices %}
+    {% if choice.icon %}<img src="{{choice.icon.url}}" title="{{choice.icon}}" width="24px" height="24px"/>{% endif %}
+    {% endfor %}
+</div>
+{% endif %}

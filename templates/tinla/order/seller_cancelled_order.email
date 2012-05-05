@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Order-Cancellation</title>
+	</head>
+	<body style="font-family:Arial, Helvetica, sans-serif; size:12px;">
+		<table cellpadding="0" cellspacing="14px" border="0" >
+			<tr>
+    			<td>Dear {{shop_name}},</td>
+			</tr>
+			
+			<tr>
+				<td>The following items from order {{order_id}} have been cancelled. Please DO NOT ship the following items:</td>
+			</tr>
+			
+			{%for item in seller_items%}
+			<tr>
+				<td>{% if seller_multiple_items%}{{forloop.counter}}. {%endif%}{{item.title}} [{{item.sku}}]{%if item.gift%} + {{item.gift}}{%endif%}, MRP {{item.price}}, Quantity: {{item.qty}}</td>
+			</tr>
+			{%endfor%}
+
+			<tr>
+				<td>
+					Total MRP: {{seller_mrp_total}}<br/>
+					Customer Paid: {{seller_total}}<br/>
+					Eligible Refund: {{seller_refund}}<br/>
+				</td>
+			</tr>
+
+			<tr>
+				<td>The customer will be refunded the money for these cancelled items within 7 working days.</td>
+			</tr>
+
+			<tr>
+				<td><br/>{{signature|linebreaks}}</td>
+			</tr>
+		</table>
+	</body>
+</html>

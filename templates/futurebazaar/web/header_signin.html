@@ -1,0 +1,62 @@
+{% load web_tags%}
+<form method="GET" action="/auth/signin/" id="form_signin" name="form_signin">
+    {%if request.GET.msg %}
+        <div class="notice marb10 mart10"><h3>Your Session has expired. Please login again.</h3></div>
+    {%endif%}
+    {%if request.GET.cuf %}
+        <div class="error marb10 mart10"><h3>User already exists!</h3></div>
+    {%endif%}
+    {% if signin_error %}
+        <div id="trsignin_error" class="error marb10 mart10"> <span id="errors">{{signin_error}}</span> </div>
+    {% endif %}
+    <div class="error marb10 mart10 hide" id="signin_ajax_error"><h3>Sorry we not able to Sign in now. Please try later. </h3></div>
+
+    <input type="text" class="txt" value="{% if username %}{{username}}{% else %}Email or Mobile{% endif %}" id='signin_username' name="username" onfocus="if(this.value=='Email or Mobile') { this.value='';}"  onblur="if(this.value=='') {this.value='Email or Mobile'; }" />
+    <input type="password"  class="txt marb5" id='signin_password' title="Password" name="password" value="Password" onfocus="if(this.value=='Password') { this.value='';}"  onblur="if(this.value=='') {this.value='Password'; }"/>
+    <input type="hidden" name="action" value="signin" />
+        
+        <div>
+    <div class="signin_submit cp mart5 left">        
+        <a href="#" value="SIGN IN NOW" id="signin_submit" name="signin" title="Sign in Now">SIGN IN</a>
+        <img id="signin_ajax_loader" class="hide" src={% media_url request "images/signin-ajax-loader.gif" %}>
+    </div>
+    <div class="ra right f11">
+        <a id="signin_forgotpassword" title="Forgot Your Password" href="/forgotpassword/">Forgot Password?</a>
+        <div><a href="/auth/signin/" id="header_signin_signup">Sign up</a></div>
+    </div>
+    <div class="clear"></div>
+    </div>
+   <input type="submit" class="hide" value="SUBMIT" id="signin_submit_btn" /> 
+</form>
+<script type="text/javascript">
+function refresh_signin_form(){
+    $("#signin_submit_btn").click(function(){
+        $("#signin_submit").trigger("click");
+    })
+    $("#signin_submit").click(function(e){
+        e.preventDefault();
+        $("#signin_submit").addClass("hide")
+        $("#signin_ajax_loader").removeClass("hide")
+        var user_action = $(this).attr("name");
+        if($("#signin_username").attr("value") == "Email or Mobile"){
+            $("#signin_username").val("");
+        }
+        if($("#signin_password").attr("value") == "Password"){
+            $("#signin_password").val("");
+        }
+        signin_user_actions(user_action)
+        $("#signin_password").addClass("hide")
+        $("#signin_submit").removeClass("hide")
+    });
+   /* $('body').click(function(){ 
+        $(".signin_form").addClass('hide');
+        $(".signin").removeClass("active");
+    }); 
+    $('.signin_form').click(function(){ 
+        return false;
+    });*/
+    $("#signin_forgotpassword, #header_signin_signup").click(function(){
+        location.href = $(this).attr("href");
+    });
+}
+</script>

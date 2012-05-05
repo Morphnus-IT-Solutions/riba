@@ -1,0 +1,20 @@
+{% extends 'order/blank.html' %}
+{% block content %}
+<div style="display:none">
+<form method="post" action="{{payment_form.action}}" name="payment_form">
+    {%for f, v in payment_form.fields.items%}
+        <input type="hidden" name="{{f}}" value="{{v}}"/>
+    {%endfor%}
+    <input type="submit" value="submit"/>
+</form>
+</div>
+{% endblock %}
+{% block script_include %}
+{{block.super}}
+<script type="text/javascript">
+    function submitForm() {
+        document.forms['payment_form'].submit();
+    }
+    submitForm();
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% load cc_tags %}
+<tr class="{%if is_last %}last_row {%else%} list_row{%endif%}">
+        <td class="first_col"><a href="{% cc_url request 'users/' %}{{user.id}}/">{{user.name}}</a></td>
+        <td><a href="{% cc_url request 'users/' %}{{user.id}}/">{{user.phone}}</a></td>
+        <td>{{user.email}}</td>
+        <td>{{user.address}}</td>
+        <td>{{user.city}}</td>
+        <td>{{user.state}}</td>
+        <td>{{user.country}}</td>
+        <td class="last_col">{{user.pin}}</td>
+    </tr>

@@ -1,0 +1,55 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{% block user_content %}
+      
+ <div class="padl20 padb10">
+ Track your packages and see the history of your orders placed with us. Click on the order numbers to view details of your order.  
+ </div>
+<table cellspacing="0" cellpadding="0" class="orderTable">
+<tr>
+    <th width="90" class="padl20">Order No</th>
+    <th width="120">Order Date</th>
+    <th width="200">Payable Amount</th>
+    <th>Address</th>
+    <th width="150">Status</th>
+    <!--<th>MRP Total</th>
+    <th>Discount</th>
+    <th>Shipping Charges</th>-->    
+
+</tr>
+{%if orders%}
+{%for order in orders%}
+    <tr valign="top"> 
+        <td class="padl20 ca"><a href="{%cc_url request ''%}{%ifequal logged_user.buyer_or_seller "Seller"%}seller{%else%}user{%endifequal%}/orders/{{order.order_id}}/">{{order.order_id}}</a></td>
+        <td>{{order.order_date|date:"M d, Y"}}</td> 
+         <td><span class="WebRupee">Rs.</span> {{order.amount|money}}</td>
+         <td>{{order.shippingaddress}}</td>
+         <td>{{order.paymentstatus}}</td>
+      <!--  <td><span class="WebRupee">Rs.</span> {{order.list_price|money}}</td>
+        <td><span class="WebRupee">Rs.</span> {{order.item_discount|money}}</td>
+        <td><span class="WebRupee">Rs.</span> {{order.shipping_charges|money}}</td>-->
+    </tr>
+{%endfor%}
+</table>
+  <div class="clear"></div>
+  {%if pagination.enable_prev or pagination.enable_next%}
+    <div class="pagination mart20"> {% if pagination.enable_prev %} <a href="{{pagination.base_url}}?page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+      {% for page in pagination.first_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+      {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+      <div>{{pagination.cur_page}}</div>
+      {% for page in pagination.next_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+      {% for page in pagination.last_set %} <a href="{{pagination.base_url}}?page={{page}}">{{page}}</a> {% endfor %}
+      {% if pagination.enable_next %} <a href="{{pagination.base_url}}?page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+      </div>
+    {%endif%}
+{%else%}
+<tr>
+	<td colspan="5" class="padl20 fred">No order found.</td>
+</tr>
+</table>
+{%endif%}
+
+<div class="clear"></div>
+{%endblock%}

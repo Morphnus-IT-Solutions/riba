@@ -1,0 +1,63 @@
+{% load ppd_tags %}
+<form name="deposit_payment_form" id="deposit_payment_form">
+<table class="payment_options_style" width="700">
+  <input type="hidden" id="form_id" name="dpo_id" value="{{po_form.id}}">
+        {%if po_form.form.bank_name%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_name.label}}</td>
+          <td>{{po_form.form.bank_name}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_branch%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_branch.label}}</td>
+          <td>{{po_form.form.bank_branch}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ac_name%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ac_name.label}}</td>
+          <td>{{po_form.form.bank_ac_name}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ac_type%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ac_type.label}}</td>
+          <td>{{po_form.form.bank_ac_type}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ac_no%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ac_no.label}}</td>
+          <td >{{po_form.form.bank_ac_no}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ifsc%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ifsc.label}}</td>
+          <td >{{po_form.form.bank_ifsc}}</td>
+        </tr>
+          {%endif%}              
+      </table>
+      <input type="button" id="{{po_form.payment_mode.code}}_{{po_form.client.id}}" class="edit_save_bank" value="Save Bank"/>
+</form>
+<script type="text/javascript">
+  $(".edit_save_bank").click(function(){
+   var onSuccess=function(responseText){
+      if(responseText){
+        $(".payment_form").html(responseText);
+      }
+    };
+  var onError=function(){
+  };
+  $.ajax({
+    url : '/seller/edit_deposit_option/',
+            success : onSuccess,
+            error : onError,
+            data : $("#deposit_payment_form").serialize(),
+            type : "POST",
+            async: false
+    });
+  });
+</script>
+

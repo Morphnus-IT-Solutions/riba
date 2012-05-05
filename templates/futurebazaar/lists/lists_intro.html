@@ -1,0 +1,120 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 10px 4px 5px;
+	}
+</style>
+<div class="padding_top10">
+	<div class="content_head" style="padding-top:15px; height:34px;">
+		<div class="header rc5" style="width: 960px;">
+			<div class="left">
+				<h1>{{request.client.client.name|title}} - Seller Lists</h1>
+    		</div>
+			<div class="right" style="height: 37px; padding-top: 7px; padding-right: 20px; width: 115px;">
+				<a href="/user_experience/site_properties/lists/add_new_list/" class="uiButton fblack">+ Add a new list</a>
+			</div>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+  	<div class="clear">&nbsp;</div>
+	<form action="" id="seller_profile_form" name="seller_profile_form">
+	{% if list_objects %}
+		<div class="mart5">
+			<div class="" style="padding:0px 15px;">
+				<table class="tbl_response mart5 marb10 f12">
+					<tbody>
+						<tr>
+							<th width="20" class="ca"><input type="checkbox" name="select_all" id="select_all" class="select_all" /></th>
+							<th width="140" class="ca"><strong>List Name</strong></th>
+							<th width="140" class="ca"><strong>Starts On</strong></th>
+							<th width="140" class="ca"><strong>Ends On</strong></th>
+							<th width="140" class="ca"><strong>Type</strong></th>
+						</tr>
+						{% comment %}
+					{% for i in lenlist %}
+						{{typelist.0}}					{% endfor %}	{% endcomment %}
+					{% for i in list_objects %}
+						<tr>
+
+							<td width="20" style="padding-right: 5px;" class="ca"><input type="checkbox" class= "listdel" name="listdel" id="{{i.id}}" value="{{i.id}}" /></td>
+							<td class="ca f11" width="140"><a href="/user_experience/site_properties/lists/display_list/{{i.id}}" class="ca f11">{{i.title}}</a></td>
+
+							<td class="ca f11 fdblack" width="140">{{i.starts_on}}</td>
+							<td class="ca f11 fdblack" width="140">{{i.ends_on}}</td>
+							<td class="ca f11 fdblack" width="140">{{i.type}}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="clear"></div>
+	<!--<a href="/delconfirm/">Delete</a>-->
+		<input type="button" name="delete" id="delete" style="margin-left: 15px;" value="Delete" class="uiButton fblack delete"  />
+
+	{% else %}
+		<div class="f15">
+			<h2><strong> No lists to display</strong> </h2>
+		</div>
+	{% endif %}
+	</form>
+	</div>
+	<script type="text/javascript">
+
+		$("[name='listdel']").click(function() {    
+			if ($(this).attr('checked')) {
+				if ($("[name='listdel']:not(:checked)").length == 0)
+					$('#select_all').attr('checked',true);
+				}
+				else {
+					$('#select_all').attr('checked',false);
+				}
+		})
+
+		$('#select_all').click(function(){
+			var val = $(this).attr('checked');    
+			$('.listdel').each(function(){
+				$(this).attr('checked',val); 
+			});
+		});
+
+		$('.delete').click(function(){
+			var d =new Array();
+			var count=0;
+			$('.listdel').each(function(){
+				var v = $(this).attr('checked');
+				if (v==true)
+				{
+					var idv = $(this).attr('id');
+					d[count]=idv;
+					count=count+1;
+				}
+			});
+			if (count==0)
+			{
+				alert("Select a List");
+			}
+			var data="id="+d;
+				var onsuccess = function(response){
+					window.location.reload();
+				};
+				var onerror=function(){};
+				var method="{{request.method}}";
+				var url="/mdel/";
+
+			$.ajax({
+			type: method,
+			url:url,
+			data: data,
+			success:onsuccess,
+			error: onerror, });
+
+		});
+	</script>
+{% endblock %}
+

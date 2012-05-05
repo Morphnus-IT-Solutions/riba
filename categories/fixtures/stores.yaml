@@ -1,0 +1,31 @@
+- fields: {name: Personal, slug: personal-store}
+  model: categories.store
+  pk: 3
+- fields: {name: Home, slug: home-store}
+  model: categories.store
+  pk: 2
+- fields: {name: Children, slug: children-store}
+  model: categories.store
+  pk: 1
+- fields: {name: Books, slug: books}
+  model: categories.store
+  pk: 4
+- fields: {name: Magazines, slug: magazines}
+  model: categories.store
+  pk: 5
+- fields: {name: Mobiles, slug: mobiles}
+  model: categories.store
+  pk: 6
+- fields: {name: Computers, slug: computers}
+  model: categories.store
+  pk: 7
+- fields: {name: Electronics, slug: electronics}
+  model: categories.store
+  pk: 8
+- fields: {name: Toys, slug: toys}
+  model: categories.store
+  pk: 9
+- fields: {name: Gifts, slug: gifts}
+  model: categories.store
+  pk: 10
+

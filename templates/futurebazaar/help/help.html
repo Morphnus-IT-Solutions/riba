@@ -1,0 +1,8 @@
+{% if help %}
+<div>
+    <h2>{{help.heading}}</h2>
+    <div class="help_text">
+        {{help.help|safe}}
+    </div>
+</div>
+{% endif %}

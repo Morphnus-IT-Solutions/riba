@@ -1,0 +1,325 @@
+- fields: {name: Avent, slug: avent}
+  model: catalog.brand
+  pk: 1
+- fields: {name: Avon, slug: avon}
+  model: catalog.brand
+  pk: 2
+- fields: {name: Baby Einstein, slug: baby-einstein}
+  model: catalog.brand
+  pk: 3
+- fields: {name: Biotique, slug: biotique}
+  model: catalog.brand
+  pk: 4
+- fields: {name: Boots, slug: boots}
+  model: catalog.brand
+  pk: 5
+- fields: {name: Core, slug: core}
+  model: catalog.brand
+  pk: 6
+- fields: {name: Dr. Morton, slug: dr-morton}
+  model: catalog.brand
+  pk: 7
+- fields: {name: Dr. Woods, slug: dr-woods}
+  model: catalog.brand
+  pk: 8
+- fields: {name: Himalaya Health Care, slug: himalaya-health-care}
+  model: catalog.brand
+  pk: 9
+- fields: {name: Huggies, slug: huggies}
+  model: catalog.brand
+  pk: 10
+- fields: {name: Johnson & Johnson, slug: johnson-and-johnson}
+  model: catalog.brand
+  pk: 11
+- fields: {name: Kangaroo, slug: kangaroo}
+  model: catalog.brand
+  pk: 12
+- fields: {name: Madella, slug: madella}
+  model: catalog.brand
+  pk: 13
+- fields: {name: Mammy Paco, slug: mammy-paco}
+  model: catalog.brand
+  pk: 14
+- fields: {name: Meccano, slug: meccano}
+  model: catalog.brand
+  pk: 15
+- fields: {name: Pampers, slug: pampers}
+  model: catalog.brand
+  pk: 16
+- fields: {name: Philips, slug: philips}
+  model: catalog.brand
+  pk: 17
+- fields: {name: Pigeon, slug: pigeon}
+  model: catalog.brand
+  pk: 18
+- fields: {name: Amar Chitra Katha, slug: amar-chitra-katha}
+  model: catalog.brand
+  pk: 19
+- fields: {name: Chandamama, slug: chandamama}
+  model: catalog.brand
+  pk: 20
+- fields: {name: Disney, slug: disney}
+  model: catalog.brand
+  pk: 21
+- fields: {name: Harper Collins, slug: harper-collins}
+  model: catalog.brand
+  pk: 22
+- fields: {name: Hatchette, slug: hatchette}
+  model: catalog.brand
+  pk: 23
+- fields: {name: Macmillan, slug: macmillan}
+  model: catalog.brand
+  pk: 24
+- fields: {name: Penguin, slug: penguin}
+  model: catalog.brand
+  pk: 25
+- fields: {name: Robinage, slug: robinage}
+  model: catalog.brand
+  pk: 26
+- fields: {name: Scholastic, slug: scholastic}
+  model: catalog.brand
+  pk: 27
+- fields: {name: Tinkle, slug: tinkle}
+  model: catalog.brand
+  pk: 28
+- fields: {name: Karadi Tales, slug: karadi-tales}
+  model: catalog.brand
+  pk: 29
+- fields: {name: Barbie, slug: barbie}
+  model: catalog.brand
+  pk: 30
+- fields: {name: Dora, slug: dora}
+  model: catalog.brand
+  pk: 31
+- fields: {name: Fisher Price, slug: fisher-price}
+  model: catalog.brand
+  pk: 32
+- fields: {name: Funskool, slug: funskool}
+  model: catalog.brand
+  pk: 33
+- fields: {name: Hot Wheels, slug: hot-wheels}
+  model: catalog.brand
+  pk: 34
+- fields: {name: Leapfrog, slug: leapfrog}
+  model: catalog.brand
+  pk: 35
+- fields: {name: Mattel, slug: mattel}
+  model: catalog.brand
+  pk: 36
+- fields: {name: Play Mobil, slug: play-mobil}
+  model: catalog.brand
+  pk: 37
+- fields: {name: Pur, slug: pur}
+  model: catalog.brand
+  pk: 38
+- fields: {name: Thomas, slug: thomas}
+  model: catalog.brand
+  pk: 39
+- fields: {name: Tomy, slug: tomy}
+  model: catalog.brand
+  pk: 40
+- fields: {name: Toy Story, slug: toy-story}
+  model: catalog.brand
+  pk: 41
+- fields: {name: Trudeau, slug: Trudeau}
+  model: catalog.brand
+  pk: 42
+- fields: {name: Tumblin Monkeys, slug: tumblin-monkeys}
+  model: catalog.brand
+  pk: 43
+- fields: {name: Wowwee, slug: wowwee}
+  model: catalog.brand
+  pk: 44
+- fields: {name: WWE, slug: wwe}
+  model: catalog.brand
+  pk: 45
+- fields: {name: Uno, slug: uno}
+  model: catalog.brand
+  pk: 46
+- fields: {name: Godrej, slug: godrej}
+  model: catalog.brand
+  pk: 47
+- fields: {name: Lloyd, slug: lloyd}
+  model: catalog.brand
+  pk: 48
+- fields: {name: Kelvinator, slug: kelvinator}
+  model: catalog.brand
+  pk: 49
+- fields: {name: Kenstar, slug: kenstar}
+  model: catalog.brand
+  pk: 50
+- fields: {name: LG, slug: lg}
+  model: catalog.brand
+  pk: 51
+- fields: {name: Samsung, slug: samsung}
+  model: catalog.brand
+  pk: 52
+- fields: {name: Videocon, slug: videocon}
+  model: catalog.brand
+  pk: 53
+- fields: {name: Whirlpool, slug: Whirlpool}
+  model: catalog.brand
+  pk: 54
+- fields: {name: Jaipan, slug: jaipan}
+  model: catalog.brand
+  pk: 55
+- fields: {name: Maharaja, slug: maharaja}
+  model: catalog.brand
+  pk: 56
+- fields: {name: IFB, slug: ifb}
+  model: catalog.brand
+  pk: 57
+- fields: {name: JVC, slug: jvc}
+  model: catalog.brand
+  pk: 58
+- fields: {name: Pioneer, slug: pioneer}
+  model: catalog.brand
+  pk: 59
+- fields: {name: Inalsa, slug: inalsa}
+  model: catalog.brand
+  pk: 60
+- fields: {name: Sansui, slug: sansui}
+  model: catalog.brand
+  pk: 61
+- fields: {name: Electrolux, slug: electrolux}
+  model: catalog.brand
+  pk: 62
+- fields: {name: Panasonic, slug: panasonic}
+  model: catalog.brand
+  pk: 63
+- fields: {name: Sony, slug: sony}
+  model: catalog.brand
+  pk: 64
+- fields: {name: Vu, slug: vu}
+  model: catalog.brand
+  pk: 65
+- fields: {name: Kent, slug: kent}
+  model: catalog.brand
+  pk: 66
+- fields: {name: Diamond, slug: diamond}
+  model: catalog.brand
+  pk: 67
+- fields: {name: Adya International, slug: adya-international}
+  model: catalog.brand
+  pk: 68
+- fields: {name: Bikanervala, slug: bikanervala}
+  model: catalog.brand
+  pk: 69
+- fields: {name: Ferns N Petals, slug: ferns-n-petals}
+  model: catalog.brand
+  pk: 70
+- fields: {name: Canon, slug: canon}
+  model: catalog.brand
+  pk: 71
+- fields: {name: Hipstreet, slug: hipstreet}
+  model: catalog.brand
+  pk: 72
+- fields: {name: Nikon, slug: nikon}
+  model: catalog.brand
+  pk: 73
+- fields: {name: Wespro, slug: wespro}
+  model: catalog.brand
+  pk: 74
+- fields: {name: Acer, slug: acer}
+  model: catalog.brand
+  pk: 75
+- fields: {name: Apple, slug: apple}
+  model: catalog.brand
+  pk: 76
+- fields: {name: HP, slug: hp}
+  model: catalog.brand
+  pk: 77
+- fields: {name: Toshiba, slug: toshiba}
+  model: catalog.brand
+  pk: 78
+- fields: {name: Hytech, slug: hytech}
+  model: catalog.brand
+  pk: 79
+- fields: {name: Logitech, slug: logitech}
+  model: catalog.brand
+  pk: 80
+- fields: {name: Kingston, slug: kingston}
+  model: catalog.brand
+  pk: 81
+- fields: {name: Microsoft, slug: microsoft}
+  model: catalog.brand
+  pk: 82
+- fields: {name: Sandisk, slug: sandisk}
+  model: catalog.brand
+  pk: 83
+- fields: {name: Thecus, slug: thecus}
+  model: catalog.brand
+  pk: 84
+- fields: {name: Transcend, slug: transcend}
+  model: catalog.brand
+  pk: 85
+- fields: {name: Western Digital, slug: western-digital}
+  model: catalog.brand
+  pk: 86
+- fields: {name: 'Yes', slug: 'yes'}
+  model: catalog.brand
+  pk: 87
+- fields: {name: Myntra, slug: myntra}
+  model: catalog.brand
+  pk: 88
+- fields: {name: Toube Bas, slug: toube-bas}
+  model: catalog.brand
+  pk: 89
+- fields: {name: Casio, slug: casio}
+  model: catalog.brand
+  pk: 90
+- fields: {name: Fastrack, slug: fastrack}
+  model: catalog.brand
+  pk: 91
+- fields: {name: Bluetrek, slug: bluetrek}
+  model: catalog.brand
+  pk: 92
+- fields: {name: Blackberry, slug: blackberry}
+  model: catalog.brand
+  pk: 93
+- fields: {name: Karbonn, slug: karbonn}
+  model: catalog.brand
+  pk: 94
+- fields: {name: Lava, slug: lava}
+  model: catalog.brand
+  pk: 95
+- fields: {name: Micromax, slug: micromax}
+  model: catalog.brand
+  pk: 96
+- fields: {name: Orion, slug: orion}
+  model: catalog.brand
+  pk: 97
+- fields: {name: Sony Ericsson, slug: sony-ericsson}
+  model: catalog.brand
+  pk: 98
+- fields: {name: Vox, slug: vox}
+  model: catalog.brand
+  pk: 99
+- fields: {name: Nokia, slug: nokia}
+  model: catalog.brand
+  pk: 100
+- fields: {name: Next Gen, slug: next-gen}
+  model: catalog.brand
+  pk: 101
+- fields: {name: Times, slug: times}
+  model: catalog.brand
+  pk: 102
+- fields: {name: India Today, slug: india-today}
+  model: catalog.brand
+  pk: 103
+- fields: {name: National Geographic, slug: national-geographic}
+  model: catalog.brand
+  pk: 104
+- fields: {name: Infomedia18, slug: infomedia18}
+  model: catalog.brand
+  pk: 105
+- fields: {name: 9dot9, slug: 9dot9}
+  model: catalog.brand
+  pk: 106
+- fields: {name: FT-UK, slug: ft-uk}
+  model: catalog.brand
+  pk: 107
+- fields: {name: American, slug: american}
+  model: catalog.brand
+  pk: 108
+

@@ -1,0 +1,75 @@
+{% extends "web/base.html" %}
+{%load compressed %}
+{% block page_title %}Discover great deals{% endblock %}
+{% block header%}
+{% endblock %}
+{% block footer%}
+{% endblock %}
+
+{%block css%}
+{% compressed_css 'offer' request %}
+<!--[if IE 6]>{% compressed_css 'ie6' request %}<![endif]-->
+<!--[if IE 7]>{% compressed_css 'ie7' request %}<![endif]-->
+<!--[if IE 8]>{% compressed_css 'ie8' request %}<![endif]-->
+{%endblock%}
+{% block content %}
+<div class="outer rc5">
+<div class="outer_inner rc5">
+<div class="header">
+<img src="/media/images/logo-offer.gif" class="left">
+<div class="right header_right">
+<div class="right tagline">Deals from India's Foremost retailers</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="thank_you rc5 ">
+Thank You for Subscribing to FutureBazaar!!<br/>
+Redirecting you to FutureBazaar.com . . .
+</div>
+{%endblock%}
+{%block script_footer%}
+<script type="text/javascript">
+$(document).ready(function(){
+    setTimeout(render_home_page,1000);
+
+    function render_home_page(){
+        location.href="http://www.futurebazaar.com/special-offer/crazy-deals/";
+    }
+})
+</script>
+<!-- Advertiser 'Future Bazaar - IN',  Conversion tracking 'June 11 Future bazaar Conversion Pixel' - DO NOT MODIFY THIS PIXEL IN ANY WAY -->
+<script src="http://ads.komli.com/pixel?id=1356855&t=1" type="text/javascript"></script>
+<!-- End of conversion tag -->
+<!-- Google Code for Leads Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 959831824;
+var google_conversion_language = "ar";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "RM_wCKj5gwMQkL7XyQM";
+var google_conversion_value = 0;
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/959831824/?label=RM_wCKj5gwMQkL7XyQM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<script language="javascript" src="http://www.everestjs.net/static/st.js"></script>
+<script language="javascript">
+var ef_event_type="transaction";
+var ef_transaction_properties = "ev_Lead=<Lead>&ev_transid=<transid>";
+/*
+* Do not modify below this line
+*/
+var ef_segment = "";
+var ef_search_segment = "";
+var ef_userid="2834";
+var ef_pixel_host="pixel.everesttech.net";
+effp();
+</script>
+<noscript><img src='http://pixel.everesttech.net/2834/t?ev_Lead=<Lead>&ev_transid=<transid>' width='1' height='1'/></noscript>
+{%endblock%}

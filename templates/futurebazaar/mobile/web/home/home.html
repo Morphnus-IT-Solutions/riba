@@ -1,0 +1,35 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load cc_tags web_tags menu_tags %}
+	<section class="content btb">
+		<h1 class="tac mt0"><img src="{% media_url request "mobile/images/Futurebazaar-logo-250.png" %}" width="250" height="34" alt="Future Bazaar" /></h1>
+		<div class="search-box mtb25">
+            <form action="{%cc_url request "search"%}" method="get" id="search_form">
+            {% render_search_form_fb request %}
+            </form>
+			<span class="clear-search-btn" style="display: none;"></span>
+        </div>
+        <nav>
+            <ul class="list-inset">
+                {% render_daily_deal request %}
+				<li><a href="/deals/popular/"><img src="/media/mobile/images/icons/populardeals.png" width="24" height="24" alt="" style="margin-bottom:-5px;" /> Popular Deals<span class="icon icon-bg arrow-right"></span></a></li>
+				<li><a href="/deals/new_arrivals/"><img src="/media/mobile/images/icons/new-arrivals.png" width="34" height="24" alt="" style="margin-bottom:-5px;" /> Arrivals<span class="icon icon-bg arrow-right"></span></a></li>
+				<li><a href="/deals/eureka/"><img src="/media/mobile/images/icons/concept.png" width="24" height="24" alt="" style="margin-bottom:-5px;" /> Eureka<span class="icon icon-bg arrow-right"></span></a></li>
+				<li><a href="clearance.html"><img src="/media/mobile/images/icons/clearance.png" width="24" height="24" alt="" style="margin-bottom:-5px;" /> Clearance<span class="icon icon-bg arrow-right"></span></a></li>
+			</ul>
+        </nav>
+		  <nav class="mt15">
+            <ul class="list-inset">
+				<li><a href="/category-menu/">Shop by Category<span class="icon icon-bg arrow-right"></span></a></li>
+                <li><a href="{% cc_url request "order/track_order" %}">Track Order<span class="icon icon-bg arrow-right"></span></a></li>
+                <li>{%if request|is_user_authenticated%}<a href="{% cc_url request "user/orders" %}">{%else%}<a href="/auth/signin/?next={{request.get_full_path|urlencode}}">{%endif%}My Account<span class="icon icon-bg arrow-right"></span></a></li>
+				<li><a href="/orders/mycart/">My Cart<span class="icon icon-bg arrow-right"></span></a></li>
+            </ul>
+        </nav>
+	</section><!-- /content -->
+{%endblock%}
+{% block script_footer %}
+<script type="text/javascript">
+	 $(document).ready(function() { $('.top-header').hide(); });
+</script>
+{% endblock %}

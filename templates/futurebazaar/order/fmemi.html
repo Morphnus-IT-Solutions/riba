@@ -1,0 +1,65 @@
+<div><img src="/media/images/fm.png"/></div>
+<div class="pad10 fmoney">
+  <ol>
+    <li>Future Money Finance is available for Credit card holders only. The credit card used should be owned by the customer and should be more than 6 months old </li>
+    <li>Future Money Finance is available only on select products and cities. To know more(<a href="/info/future_money_finance.html" class="fancybox">click here</a>) </li>
+    <li>Please place a separate order for products not covered under Future Money Finance </li>
+    <li>Once you place the request, FutureBazaar team will call you back within 1 working day to collect the downpayment and for the subsequent steps </li>
+    <li>For more details on this option & faster & immediate processing of your order call our Customer Care No: 0922 222 1947 </li>
+  </ol>
+</div>
+ <div class="pad10 marb10">
+              <div> <strong>Please provide the details of your credit card</strong></div>
+              <div class="f11 fdgray">This information is required to verify your validity for availing Future Money Finance. Please note that your credit card will not be
+                charged at this stage.</div>
+ </div>
+  
+{% if card_form.errors %}
+<div>
+  <div class="error">
+    <ol>
+      {% for field in card_form %}
+      {% for error in field.errors %}
+      <li>{{error}}</li>
+      {% endfor %}
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+{% endif %}
+<table class="pad10">
+  <tr>
+    <td class="ra fb"><span class="label">Card Type</span></td>
+    <td><label>
+      <input type="radio" name="cardtype" checked="checked" value="visa-card" style="vertical-align:top;">
+      <img src="{{MEDIA_URL}}images/visa.gif" height="16"/> </label>
+      &nbsp;&nbsp;
+      <label>
+      <input type="radio" name="cardtype" value="master-card" style="vertical-align:top;">
+      <img src="{{MEDIA_URL}}images/master_card25.gif" height="16"/></label>
+    </td>
+  </tr>
+  {% include "order/fmemi_card_form.html"%}
+</table>
+<div class="notice"> <strong> Note:</strong>
+  <ul>
+    <li>* This information is required to verify your validity for availing Future Money Finance. Please note that your credit card will not be charged at this stage. </li>
+    <li>A FutureMoney executive will get in touch with you to process your Finance application </li>
+    <li>Your order will get processed after approval. </li>
+    <li>Alternately, you may opt for Credit Card or Netbanking as payment modes which are instant payments. </li>
+  </ul>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$(".fancybox").fancybox({
+			'width'				: '80%',
+			'height'			: '100%',
+			'autoScale'			: 'false',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe'
+		});		
+	
+	});
+	</script>

@@ -1,0 +1,272 @@
+{% extends "web/base.html" %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block content%}	
+<title>{% block page_title %}{{product.title}} Reviews in India - FutureBazaar.com{% endblock %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="google-site-verification" content="JdO76y1DrPn_Y-F91jjyewqXakhINXXXW3EevIcFHoE" />
+<meta name="description" content="{%block page_desc%}Read & Write reviews on {{product.title}}, Get consumer feedback and ratings on {{product.title}} only on FutureBazaar.com - India's Best Online Shopping Site. {%endblock%}"/>
+<meta name="keywords" content="{%block page_tags%}Future Bazaar, Online Shopping, Store Online, Buy Books, Subscribe Magazines, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Purchase On Web, Cheap product, India, Unbiased Reviews of {{product.title}}, Genuine Reviews of {{product.title}}, Reviews of {{product.title}}, {%endblock%}"/>
+
+<div class="all_reviews">
+	<div>
+		<div class="left">
+		<div class="left all_reviews_img">
+			<img src="{{product_images.0.get_display_url}}"  id="display_img" width="90" height="125" alt="{{product.id}}" title="{{product.id}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{% media_url request "images/noimage_p.jpg" %}';}return false;" onerror_cnt="0" />      
+		</div>
+		<div class="left all_reviews_prod">
+			<div class="f15 mart10"><a href="/{{slug}}/pd/{{product.id}}/">{{product.title}}</a></div>
+			<div class="price_value forange fb f16 left mart5"><span class="WebRupee">Rs.</span>  {% get_price_info request product.primary_rate_chart 'offer_price' %} </div>
+			<div class="price_value left padl10 padt10" style="width:50px;height:20px;"><span class="WebRupee">Rs.</span>  <span class="fs">{% get_price_info request product.primary_rate_chart 'list_price' %}</span></div>
+			 <div class="clear mart5">
+			     {%ifequal product.primary_rate_chart.stock_status "instock"%}
+	
+					<form action="{% cc_url request "orders/mycart" %}" id="add_product_to_cart_form_{{product.product.id}}" method="post">
+						<input type="hidden" name="rate_chart_id" value="{{product.primary_rate_chart.id}}"/>
+						<input type="hidden" name="qty" value="{{product.primary_rate_chart.min_qty}}"/>
+						<input type="hidden" name="product_id" value="{{product.id}}"/>
+						<input type="hidden" name="action" value="add_to_cart"/>
+						<button type="submit" class="btn_c btn_c_s btn_orange f11" value={{product.product.id}} title="Add To Cart">Add to Cart</button>
+					</form>
+			     {% else %}
+					 <span class="fb fred">OUT OF STOCK</span>	
+		     {% endifequal %}  
+			</div>	
+			<div class="clear"></div> 
+		{%if not request.user.is_authenticated %}
+				 <div class="left f11 mart10">
+				<a href="/auth/signin/?next={{request.path}}">Write a Review</a>
+			</div>
+		{% else %}
+			<div class="left f11 mart10">
+				<a href="/review/write/{{product.id}}">Write a Review</a>
+			</div>
+		{% endif%}
+
+		</div>
+		<div class="left all_reviews_user_ratings">
+		<div class="f12 fb mart10 padl10 fb">Average User Rating ({{avg_rating}})</div>  
+			<div class="mart5 padl10">
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 0.25 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 0.50 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 0.75 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.00 %} checked="checked" {% endifequal %} disabled title="Poor"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.25 %} checked="checked" {% endifequal %} disabled title="Average"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.50 %} checked="checked" {% endifequal %} disabled title="Average"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 1.75 %} checked="checked" {% endifequal %} disabled title="Average"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.00 %} checked="checked" {% endifequal %} disabled title="Average"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.25 %} checked="checked" {% endifequal %} disabled title="Good"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.50 %} checked="checked" {% endifequal %} disabled title="Good"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 2.75 %} checked="checked" {% endifequal %} disabled title="Good"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.00 %} checked="checked" {% endifequal %} disabled title="Good"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.25 %} checked="checked" {% endifequal %} disabled title="Great"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.50 %} checked="checked" {% endifequal %} disabled title="Great"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 3.75 %} checked="checked" {% endifequal %} disabled title="Great"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.00 %} checked="checked" {% endifequal %} disabled title="Great"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.25 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.50 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 4.75 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+		    <input type="radio" class="star {split:4}" {% ifequal avg_rating 5.00 %} checked="checked" {% endifequal %} disabled title="Excellent"/>
+			</div>
+		<div class="clear"></div>
+		<div class="left f11 mart10 padl10" style="color:#666666;">
+			Based on {{total_reviews}} Review{{total_reviews|pluralize}}
+		</div>
+		</div> 
+		<div class="left all_review_stars">
+			<div class="left all_review_stars_inner">
+				{% for a, b in rating_dict.items %}       
+					<div class="left marb5">
+						<div class="left w100">   
+							<div class="right">
+								{% if forloop.revcounter >= 1%}
+									<input type="radio" class="star" value="Poor" name="{{forloop.counter}}-star" {%ifequal forloop.revcounter 1 %} checked {% endifequal%} disabled="disabled"/>{%endif%}
+							    {% if forloop.revcounter >= 2%}
+									<input type="radio" class="star" value="Average" name="{{forloop.counter}}-star" {%ifequal forloop.revcounter 2 %} checked {% endifequal%} disabled="disabled"/>{%endif%}
+							{% if forloop.revcounter >= 3%}
+									<input type="radio" class="star" value="Good" name="{{forloop.counter}}-star"  {%ifequal forloop.revcounter 3 %} checked {% endifequal%}   disabled="disabled"/>{%endif%}
+						    {% if forloop.revcounter >= 4%}
+									<input type="radio" class="star" value="Great" name="{{forloop.counter}}-star"  {%ifequal forloop.revcounter 4 %} checked {% endifequal%} disabled="disabled"/> {%endif%}
+							    {% if forloop.revcounter >= 5%}
+								    <input type="radio" class="star" value="Excellent" name="{{forloop.counter}}-star"  {%ifequal forloop.revcounter 5 %} checked {% endifequal%} disabled="disabled"/>{%endif%}
+							</div>
+						</div>
+						<div class="left f11" style="margin-top:3px;">&nbsp; &nbsp;{{forloop.revcounter}} Star &nbsp;&nbsp;</div> 
+						<div class="left all_review_bar_outer">
+							<div class="all_review_bar">
+								<div class="all_review_bar_inner" style="width:{{b.1}}px;">
+								</div>
+							</div>       
+						</div>
+						<div class="left f12 fb" style="margin-top:3px;">&nbsp;&nbsp;&nbsp;&nbsp;{{b.0}}</div>
+					</div>
+				{% endfor %}
+			</div> 
+		</div> 
+	
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+	{%if total_reviews%}
+		<div class="right">
+			<div class="f12 fb" style="height:30px;line-height:30px; background-color:#f6f6f6;width:330px; text-align:right;">Sort by&nbsp;&nbsp;
+			<select id="sort_by" class="f12" style="height:20px;margin-top:-2px;">
+			 <option id="most_helpful" value="{%filter_href request "sort" "MostHelpful"%}" {% if sort == 'MostHelpful'%} selected="selected" {% endif %} >Most Helpful</option>
+			 <option id="most_recent" value="{%filter_href request "sort" "MostRecent"%}" {% if sort == 'MostRecent'%} selected ="selected" {% endif %} > Most Recent</option>
+			 <option id="most_rated" value="{%filter_href request "sort" "MostRated" %}" {% if sort == 'MostRated'%} selected="selected" {% endif %}>Rating:High To Low</option>
+			 <option id="least_rated" value="{%filter_href request "sort" "LeastRated" %}" {% if sort == 'LeastRated'%} selected="selected" {% endif %}>Rating: Low to High</option>
+			</select>
+			</div>
+		</div>
+	{% endif %}
+	{% if total_reviews %}
+		<div>
+			<a id="read_reviews"></a>
+			<div id="product_reviews" class="ja"></div>
+		</div>
+	{%else%}
+		{%if not request.user.is_authenticated%}
+			<div class="clear"><p>Be the first to write a review. To login <a href="/auth/signin/?next={{request.path}}">click here.</a></p></div>
+    	{%else%}
+           	<div class="clear"><a href="/review/write/{{product.id}}">Be the first to write a review</a></div>
+   	  
+		{% endif %}	
+	{%endif%}
+</div>
+</div>
+
+{% endblock%}
+
+{% block script_footer %}
+{{block.super}}
+<script language="javascript" type="text/javascript">
+$(".id_help_yes").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+    var rev = $.parseJSON(ajax_response);
+        $('#rate_like_'+review_id).html(rev.no_helpful);
+        $('#rate_dislike_'+review_id).html(rev.no_not_helpful);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.You have rated this review helpful")
+        $('.id_help_cancel#'+review_id).removeClass('hide');
+        $('.id_help_cancel#'+review_id).addClass('show');
+      }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-yes/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+$(".id_help_no").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+        var rev = $.parseJSON(ajax_response); 
+        $('#rate_like_'+review_id).html(rev.no_helpful);
+        $('#rate_dislike_'+review_id).html(rev.no_not_helpful);
+        $('#helpful_data'+review_id).html("Thank you for your feedback.You have rated this review unhelpful")
+        $('.id_help_cancel#'+review_id).removeClass('hide');
+        $('.id_help_cancel#'+review_id).addClass('show');
+   
+}
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-no/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+$(".id_help_cancel").click(function(){
+    var review_id = $(this).attr('id');
+    var onsuccess = function(ajax_response){
+			var rev = $.parseJSON(ajax_response);
+	     	$("#rate_like_"+review_id).html(rev.no_helpful);
+			$("#rate_dislike_"+review_id).html(rev.no_not_helpful);
+            $('#helpful_data'+review_id).html("You have trashed your feedback.You can rate it again");
+            $('.id_help_cancel#'+review_id).removeClass('show');
+            $('.id_help_cancel#'+review_id).addClass('hide');
+    
+    
+    }
+    var onerror = function(response){
+    }
+    var data = "id="+review_id;
+    $.ajax({
+        type: "POST",
+        url: "/product/helpful-cancel/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+    })
+});
+</script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+    $("#sort_by").change(function(){
+        var url = $("#sort_by").val();
+        var path = "{{request.path}}";
+        var option_id = $(this).find("option:selected").attr("id");
+        $("#form_sort").val(option_id);
+        if(path != url ){
+            location.href = url;
+        }
+    });
+    $("#perpage").change(function(){
+        var url = $("#perpage").val();
+        var path = "{{request.path}}";
+        if(path != url ){
+            location.href = url;
+        }
+    });
+});
+$(document).ready(function(){
+    $('.sort').change(function(){
+        var url = $(this).val();
+        var p = $('#' + url).val();
+        location.href=p;
+    });
+    $('.per_page').change(function(){
+        var items = $(this).val();
+        var url = $('#perpage').val();
+        var re = new RegExp('perpage=[0-9]+');
+        url = url.replace(re,'perpage=' + items);
+        location.href = url;
+    });
+});
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+{%if total_reviews%}
+    var onsuccess = function(response){
+	$("#product_reviews").html(response);
+    }
+
+    var onerror = function(){
+	
+   }
+    var data = "page=1&product_id=" + "{{product.id}}&sort={{sort}}";
+
+    $.ajax({
+        type: "GET",
+        url: "/product/read-reviews/",
+        data: data,
+        success:onsuccess,
+        error:onerror
+         })
+{% endif %}
+});
+</script>
+
+
+{% endblock%}
+
+

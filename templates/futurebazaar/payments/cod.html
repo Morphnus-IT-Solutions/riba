@@ -1,0 +1,156 @@
+{% load web_tags %}
+{% ifequal cod_status 'neutral' %}
+
+<div class="clear"></div>
+<!-- Verify your mobile number -->
+<div id="phone_verification" class="">
+    {% if phone %}
+    <p class="f16 fblack marb10">Verify your mobile number.</P>
+    {%else%}
+    <p class="f16 fblack marb10">We need your mobile number to verify your COD order.</p>
+    {%endif%}
+    <div id="error_msg" class="error marb10" style="display:none"></div>
+    <div>
+        <form>
+            <p><span class="f11">Mobile Number <span class="fred">*</span></span><br />
+            <input id="phone" type="text" style="width:150px" maxlength="10" value="{% if phone %}{{phone}}{% endif %}" /></p>
+            <p class="mart10"><input id="verify" type="button" class="btn_c btn_c_m btn_orange" Value="Verify" /></p>
+        </form>
+    </div>
+</div><!-- /Verify your mobile number -->
+
+<div id="zip_dial_verification" class="hide">
+    <p class="marb10"><span class="f16 fblack">You are almost there! </span><br />We have sent you a verification code by SMS. Once you enter the code, we will ship your order</p>
+    <div id="error_msg1" class="error marb10" style="display:none"></div>
+    <p><span class="f11">Verification Code <span class="fred">*</span></span> <br /><input id="verify_code" type="text" style="width:100px" value="" /></p>
+    <p class="mart10"><input id="proceed" class="btn_c btn_c_m btn_orange" type="button" Value="Proceed" /></p>
+    <p class="mart5"><a onclick="javascript:$('.verify_msg').slideDown();">Click here</a> if you did not recieve the Verification Code</p>
+    <p class="verify_msg" style="display: none; font-size: 11px; border: 1px dashed #ddd; padding: 5px; background-color:#fafafa;">Did not recieve the SMS? No Worries! If you haven't recieve the verification code, we will call you within 24hrs. Alternately , call us at 922-222-1947 with your order no {{order.reference_order_id}})</p>
+</div>
+{% endifequal %}
+{% ifequal cod_status 'whitelisted' %}
+    <div class="notice">
+        <strong>Note:</strong>
+        <p>Please make ONLY Cash Payment at the time of delivery. Cheques, Demand Drafts or any other payment mode will not be entertained. <a href="/info/cod.html" class="fancybox" style="color:#004F96;">Click here</a> to learn about the Terms & Conditions.</p>
+    </div>
+{% endifequal %}
+{% ifequal cod_status 'blacklisted' %}
+<p>Sorry! You are not eligible for the ‘Cash on Delivery’ payment option as the last 4 ‘Cash on Delivery’ orders were returned from your end. Kindly contact the Customer Care for more details.</p>
+{% endifequal %}
+
+ <script type="text/javascript">
+    $('#proceed').click(function(){
+        var url = "/orders/cod-verification";
+        var verify_code = $('#verify_code').val()
+        if(verify_code > 0){
+            var data = {'order':{{order}}, 'reference_order_id':{{order.reference_order_id}}, 'verify_code':verify_code};
+            var Onerror = function(){
+               $("#error_msg").html("Sorry we are unable to process your request now. Please try later");
+               $("#error_msg").show();
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                error: Onerror,
+                success: function(msg){
+                    var response_text = JSON.parse(msg);
+                    if(response_text.status == 'ok'){
+                        $("#error_msg1").html('');
+                        $("#error_msg1").hide();
+                        $("#proceed_to_pay").click();
+                    };
+                    if(response_text.status == 'invalid_code'){
+                        $("#error_msg1").show();
+                        $("#error_msg1").html("You have entered wrong verification code"); 
+                    };
+                    if(response_text.status == 'error'){
+                        $("#error_msg1").show();
+                        $("#error_msg1").html("Sorry we are unable to process your request now. Please try later");
+                    };
+                    return false;
+                }
+            });
+        }
+        else{
+            $("#error_msg1").html("Please enter correct verification code"); 
+            $("#error_msg1").show();
+            
+        }
+    });
+    $('#verify').click(function(){
+        var mobile = $('#phone').val();
+        var mobilePattern = /^\d{10}$/;
+        if(!mobilePattern.test(mobile)){
+            $("#error_msg").html("Please enter valid mobile number"); 
+            $("#error_msg").show();
+            
+        }
+        else {
+            var update = 0;
+            if(mobile != "{{phone}}"){
+                update = 1;
+                }
+            var url = "/orders/cod-verification";
+            var data = {'mobile':mobile, 'order':{{order}}, 'update':update,
+                'reference_order_id':{{order.reference_order_id}}};
+            var Onerror = function(){
+                $("#error_msg").html("Sorry we are unable to process your request now. Please try later"); 
+                $("#error_msg").show();
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                error: Onerror,
+                success: function(msg){
+                    var response_text = JSON.parse(msg);
+                    if(response_text.status == 'ok'){
+                        $("#error_msg").html('');
+                        $("#error_msg").hide();
+                        $("#zip_dial_verification").removeClass("hide"); 
+                        $("#phone_verification").addClass("hide"); 
+                    };
+                    if(response_text.status == 'error'){
+                        $("#error_msg").html("Sorry we are unable to process your request now. Please try later"); 
+                        $("#error_msg").show();
+                    };
+                    return false;
+                }
+            });
+        }
+    });
+        if("{{cod_status}}" != 'whitelisted'){
+            $('#proceed_to_pay').hide();
+        }
+        else{
+            $('#proceed_to_pay').show();
+        }
+    
+    $("#phone").keypress(function (e){
+        var charCode = e.charChode || e.keyCode;
+        if (charCode == 13){
+            return false;
+        }
+    });
+    $("#verify_code").keypress(function (e){
+        var charCode = e.charChode || e.keyCode;
+        if (charCode == 13){
+            return false;
+        }
+    });
+	
+    $(document).ready(function() {
+        
+
+		$(".fancybox").fancybox({
+			'width'				: '80%',
+			'height'			: '100%',
+			'autoScale'			: 'false',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none',
+			'type'				: 'iframe'
+		});		
+	
+	});
+	</script>

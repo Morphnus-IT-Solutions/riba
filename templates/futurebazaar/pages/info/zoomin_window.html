@@ -1,0 +1,28 @@
+{% extends "web/base.html" %}
+{% block content %}
+<script type="text/javascript" src="/media/js/jq/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("h2").append('<em></em>')
+	$(".thumbs a").click(function(){	
+		var largePath = $(this).attr("href");
+		var largeAlt = $(this).attr("title");		
+		$("#largeImg").attr({ src: largePath, alt: largeAlt });		
+		$("h2 em").html(" (" + largeAlt + ")"); return false;
+	});
+	
+});
+</script>
+<div>
+<p><img id="largeImg" src="img%20gallery_files/img3-lg.jpg" alt="Image 3"></p>
+
+<p class="thumbs">
+	<a href="http://www.webdesignerwall.com/demo/jquery/images/img2-lg.jpg" title="Image 2"><img src="img%20gallery_files/img2-thumb.jpg"></a>
+	<a href="http://www.webdesignerwall.com/demo/jquery/images/img3-lg.jpg" title="Image 3"><img src="img%20gallery_files/img3-thumb.jpg"></a>
+	<a href="http://www.webdesignerwall.com/demo/jquery/images/img4-lg.jpg" title="Image 4"><img src="img%20gallery_files/img4-thumb.jpg"></a>
+	<a href="http://www.webdesignerwall.com/demo/jquery/images/img5-lg.jpg" title="Image 5"><img src="img%20gallery_files/img5-thumb.jpg"></a>
+	<a href="http://www.webdesignerwall.com/demo/jquery/images/img6-lg.jpg" title="Image 6"><img src="img%20gallery_files/img6-thumb.jpg"></a>
+</p>
+  </div>
+  {%endif%} </div>
+{%endblock%} 

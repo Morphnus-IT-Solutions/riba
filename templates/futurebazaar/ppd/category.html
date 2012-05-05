@@ -1,0 +1,14 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<a href="/{{client_name}}/{{seller_name}}/category/deals/">Deals</a></br>
+<a href="/{{client_name}}/{{seller_name}}/category/product_planner/">Product Planner</a></br>
+<a href="/{{client_name}}/{{seller_name}}/category/products/">Products</a></br>
+<a href="/{{client_name}}/{{seller_name}}/category/product_reviews">Product Reviews </a></br>
+<a href="">Category Managment</a></br>
+<a href="/{{client_name}}/{{seller_name}}/category/inventory">Inventory</a></br>
+<a href="/{{client_name}}/{{seller_name}}/category/pricing/">Pricing</a></br>
+<a href="/{{client_name}}/{{seller_name}}/category/velocity/">velocity</a></br>
+{%endblock%} 

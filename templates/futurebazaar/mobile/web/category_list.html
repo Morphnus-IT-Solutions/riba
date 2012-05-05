@@ -1,0 +1,15 @@
+{% load cc_tags web_tags %}
+<section class="content">
+    <nav>
+        <ul class="list-inset">
+        {%for items in category_items%}
+            {%for item in items%}
+                <li id="item{{forloop.counter}}">
+                    <a href="{%cc_url request item.item.category.url%}" title="{{item.item.category.name}} Deals">{{item.item.category.name|truncate_category:28}}</a><span class="icon icon-bg arrow-right"></span>
+                </li>
+            {%endfor%}             
+        {%endfor%}       
+        </ul>
+    </nav>
+</section><!-- /content -->
+

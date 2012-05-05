@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+{% load cc_tags %}
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>{% block page_title %}FutureBazaar Callcenter{% endblock %}</title>
+		<link rel="shortcut icon" href="{{MEDIA_URL}}images/favicon.ico"/>
+        {% block extra_header %}
+        {% endblock %}
+		{% block blueprint_css %}
+		<link rel="stylesheet" href="{{MEDIA_URL}}css/bp/screen.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="{{MEDIA_URL}}css/bp/print.css" type="text/css" media="print">
+        <!--[if lt IE 8]><link rel="stylesheet" href="{{MEDIA_URL}}css/bp/ie.css" type="text/css" media="screen, projection"><![endif]-->
+		{% endblock %}
+		{% block core_css %}
+		<link rel="stylesheet" href="{{MEDIA_URL}}css/base.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="{{MEDIA_URL}}css/jq/jquery-ui-1.8.2.custom.css" type="text/css" media="screen, projection">
+		{% endblock %}
+		{% block extra_css %}{% endblock %}
+		<script src="{{MEDIA_URL}}js/base.js" type="text/javascript"></script>
+		{% block jquery %}
+		<script src="{{MEDIA_URL}}js/jq/jquery-1.4.2.min.js" type="text/javascript"></script>
+        <script src="{{MEDIA_URL}}js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+		{% endblock %}
+	</head>
+    <body>
+        <div id="header">
+            <div class="menu">
+                <ul>
+                    <li class="first"><a href="{% cc_url request "search" %}" title="Search">Search</a></li>
+                    <li class="first"><a href="{% cc_url request "/cc/search" %}" title="Search">Search</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+        <div id="footer">
+        </div>
+    </body>
+    {% block script_after_body %}
+    {% endblock %}
+</html>

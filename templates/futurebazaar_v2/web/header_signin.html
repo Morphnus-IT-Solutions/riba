@@ -1,0 +1,43 @@
+<a class="signin" >Sign in</a>
+<div class="signin_form hide">
+    <label>SIGN IN</label>
+        <form method="POST" action="/auth/signin/" id="form_signin" name="form_signin">
+         {%if request.GET.msg %}
+                <div class="notice marb10"><h3>Your Session has expired. Please login again.</h3></div>
+            {%endif%}
+            {%if request.GET.cuf %}
+                <div class="error marb10"><h3>User already exists!</h3></div>
+            {%endif%}
+            {% if signin_error %}
+                <div id="trsignin_error" class="error marb10"> <span id="errors">{{signin_error}}</span> </div>
+            {% endif %}
+            
+            <input type="text" class="txt" value="{% if username %}{{username}}{% else %}Email or Mobile{% endif %}" id='signin_username' name="username" onfocus="if(this.value=='Email or Mobile') { this.value='';}"  onblur="if(this.value=='') {this.value='Email or Mobile'; }" />
+            <input type="password"  class="txt" id='password' title="Password" name="password" value="Password" onfocus="if(this.value=='Password') { this.value='';}"  onblur="if(this.value=='') {this.value='Password'; }"/>
+            <input type="hidden" name="action" value="signin" />
+            <input type="hidden" name="next" value="{{request.get_full_path|urlencode}}" />
+           
+            <div class="ra signin_submit">
+                <a value="SIGN IN NOW" id="signin_submit" name="signin" title="Sign in now">SIGN IN</a>
+            </div>
+        </form>
+        <div class="la mart5 fwhite f11" style="margin-top:-15px;"> <a href="/forgotpassword/" title="Forgot Password">Forgot Password? </a> </div>
+        <div class="mart10 ca fwhite fb"><span class="or">OR</span></div>
+        <div class="ca or_hr"> </div>
+        <div class="mart10 ra fwhite hidden" id="fbsignin_header">
+        Sign in using facebook
+
+       <fb:login-button registration-url="https://developers.facebook.com/docs/plugins/registration" /> 
+        </div>
+</div>
+<script type="text/javascript">
+function refresh_signin_submit(){
+    $("#signin_submit").click(function(){
+        var user_action = $(this).attr("name");
+        if($("#signin_username").attr("value") == "Email or Mobile"){
+            $("#signin_username").val("");
+        }
+        header_user_actions(user_action)
+    });
+}
+</script>

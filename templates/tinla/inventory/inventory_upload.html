@@ -1,0 +1,146 @@
+{% extends 'ppd/user_home.html' %}
+{% load ppd_tags %}
+{% block user_content %}
+        <div class="f18 fb">
+            <h1>{{client_display_name}} - Inventory Upload</h1>
+        </div>
+
+<div>
+    {% if errors %}
+        <div class="orders_msg rc5">
+	        <div class="rc5 error">       
+                {% for error in errors %}
+                    {{error}}<br/>
+                {% endfor %}   
+	        </div>
+        </div>   
+    {% endif %}
+<style>
+.tbl_price{border-collapse:collapse;}
+.tbl_price th,.tbl_price td{border:1px solid #ccc; verticle-align:top;}
+.tbl_price th{background-color:#f3f3f3; text-align:center;}
+.tbl_price td{text-align:center;}
+</style>
+
+  <div style="padding:0px; margin:0px; text-align:center; width:960px; overflow:scroll;">
+    <form method="post" enctype="multipart/form-data">
+        {% if flag == 'show_details' %}
+            {% if consolidated_updates %}
+                <table class="tbl_price">
+                <tr>
+                    <th rowspan="2"> Product Name </th>
+                    <th rowspan="2"> Article Id </th>
+                    <th colspan="2"> Stock </th>
+                    {% if is_global_dc_supported %}
+                        <th colspan="2"> Delivery Time </th>
+                    {% else %}  
+                        <th colspan="2"> Virtual Stock </th>
+                        <th colspan="2"> Expires On </th>
+                        <th colspan="2"> Expected On </th>
+                        <th colspan="2"> Threshold Stock </th>
+                    {% endif %}
+                    <th colspan="2"> OTC </th>
+                    <th colspan="2"> COD </th>
+                    <th colspan="2"> SO </th>
+                    {% if is_global_dc_supported %}
+                        <th colspan="2"> Clearance </th>
+                    {%endif%}
+                </tr>
+                <tr>
+                    <th>Was</th>
+                    <th>New</th>
+                    {% if is_global_dc_supported %}
+                        <th>Was</th>
+                        <th>New</th>
+                    {% else %}
+                        <th>Was</th>
+                        <th>New</th>
+                        <th>Was</th>
+                        <th>New</th>
+                        <th>Was</th>
+                        <th>New</th>
+                        <th>Was</th>
+                        <th>New</th>
+                    {% endif %}
+                    <th>Was</th>
+                    <th>New</th>
+                    <th>Was</th>
+                    <th>New</th>
+                    <th>Was</th>
+                    <th>New</th>
+                    {% if is_global_dc_supported %}
+                        <th>Was</th>
+                        <th>New</th>
+                    {% endif %}
+
+                </tr>
+                {% for inventory in consolidated_updates %}
+                    <tr>
+                        <td class="la"> {{inventory.product_name}} </td> 
+                        <td> {{inventory.article_id}} </td>
+                        <td {%if inventory.current_stock != inventory.updated_stock %}style="background-color:orange;"{%endif%}> {{inventory.current_stock|floatformat}} </td>
+                        <td {%if inventory.current_stock != inventory.updated_stock %}style="background-color:orange;"{%endif%}> {{inventory.updated_stock|floatformat}} </td>
+                        {% if not is_global_dc_supported %}
+                            <td {%if inventory.current_virtual_stock != inventory.updated_virtual_stock %}style="background-color:orange;"{%endif%}>{%if inventory.current_virtual_stock%} {{inventory.current_virtual_stock|floatformat}} {%else%} -- {%endif%} </td>
+                            <td {%if inventory.current_virtual_stock != inventory.updated_virtual_stock %}style="background-color:orange;"{%endif%}>{%if inventory.updated_virtual_stock%} {{inventory.updated_virtual_stock|floatformat}} {%else%} -- {%endif%}</td>
+                            <td {%if inventory.current_expected_on != inventory.updated_expected_on %}style="background-color:orange;"{%endif%}>{%if inventory.current_expected_on%} {{inventory.current_expected_on}} {%else%} -- {%endif%}</td>
+                            <td {%if inventory.current_expected_on != inventory.updated_expected_on %}style="background-color:orange;"{%endif%}>{%if inventory.updated_expected_on%} {{inventory.updated_expected_on}} {%else%} -- {%endif%}</td>
+                            <td {%if inventory.current_expires_on != inventory.updated_expires_on %}style="background-color:orange;"{%endif%}>{%if inventory.current_expires_on%} {{inventory.current_expires_on}} {%else%} -- {%endif%}</td>
+                            <td {%if inventory.current_expires_on != inventory.updated_expires_on %}style="background-color:orange;"{%endif%}>{%if inventory.updated_expires_on%} {{inventory.updated_expires_on}} {%else%} -- {%endif%} </td>
+                            <td {%if inventory.current_threshold_stock != inventory.updated_threshold_stock %}style="background-color:orange;"{%endif%}>{%if inventory.current_threshold_stock%} {{inventory.current_threshold_stock|floatformat}} {%else%} -- {%endif%}</td>
+                            <td {%if inventory.current_threshold_stock != inventory.updated_threshold_stock %}style="background-color:orange;"{%endif%}>{%if inventory.updated_threshold_stock%} {{inventory.updated_threshold_stock|floatformat}} {%else%} -- {%endif%}</td>
+                        {% endif %}
+                        <td {%if inventory.current_otc != inventory.updated_otc %}style="background-color:orange;"{%endif%}> {{inventory.current_otc}} </td>
+                        <td {%if inventory.current_otc != inventory.updated_otc %}style="background-color:orange;"{%endif%}> {{inventory.updated_otc}} </td>
+                        <td {%if inventory.current_cod != inventory.updated_cod %}style="background-color:orange;"{%endif%}> {{inventory.current_cod}} </td>
+                        <td {%if inventory.current_cod != inventory.updated_cod %}style="background-color:orange;"{%endif%}> {{inventory.updated_cod}} </td>
+                        <td {%if inventory.current_so != inventory.updated_so %}style="background-color:orange;"{%endif%}> {{inventory.current_so}} </td>
+                        <td {%if inventory.current_so != inventory.updated_so %}style="background-color:orange;"{%endif%}> {{inventory.updated_so}} </td>
+                        {% if is_global_dc_supported %}
+                            <td {%if inventory.current_deliverytime != inventory.updated_deliverytime %}style="background-color:orange;"{%endif%}>{%if inventory.current_deliverytime %} {{inventory.current_deliverytime}} {% else %} -- {% endif %}</td>
+                            <td {%if inventory.current_deliverytime != inventory.updated_deliverytime %}style="background-color:orange;"{%endif%}> {{inventory.updated_deliverytime}} </td>
+                        <td {%if inventory.current_clearance != inventory.updated_clearance %}style="background-color:orange;"{%endif%}> {{inventory.current_clearance}} </td>
+                        <td {%if inventory.current_clearance != inventory.updated_clearance %}style="background-color:orange;"{%endif%}> {{inventory.updated_clearance}} </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+               </table>
+            {% endif %}
+<br/>
+            {% if consolidated_updates %}
+            <input type="hidden" name="path_to_save" value="{{path_to_save}}" id="path_to_save" />
+            <input type="hidden" name="parsed_excel_json" value="{{parsed_excel_json}}" />
+            <input type="submit" value="Update" name="update" id="update" class="button orange"/>
+            <!-- <INPUT TYPE="button" VALUE="Back" id="back_button" class="button orange" /> -->
+            <INPUT class="button orange" TYPE="button" VALUE="Back" onClick="history.go(-1);return true;">
+            <div class="clear"> </div>
+            {% else %}
+            <h2 class="f18">Excel sheet does not contain appropriate data!!!</h2>
+            {% endif %}
+        {% else %} 
+            {% if flag == 'updated' %}
+                <h2 class="f18">Inventory is updated successfully!!!</h2>
+                {{forms}}
+                <input type="submit" value="Upload" name="upload" id="uplaod" class="grayButton" style="padding: 2px 6px;"/>
+                <div class="clear"/>
+            {% else %}
+                {% if flag == 'new' %}
+                {{forms}}
+                <input type="submit" value="Upload" name="upload" id="uplaod" class="grayButton" style="padding: 2px 6px;"/>
+                <div class="clear"/>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </form>
+    </div>
+</div>
+
+{% endblock %}
+{% block script_footer %}
+    <script type="text/javascript">
+        $("#back_button").click(function(){
+            history.go(-1);
+            return true;
+        })
+    </script>
+{% endblock %}

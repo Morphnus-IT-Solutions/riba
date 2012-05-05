@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{% block page_title %} Analytics - Future Bazaar{% endblock %}</title>
+{% block blueprint_css %}
+<!--<link rel="stylesheet" href="/media/systems/css/blueprint/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/systems/css/blueprint/print.css" type="text/css" media="print">
+<link rel="stylesheet" href="/media/systems/css/analytics.css" type="text/css" media="screen">-->
+<!--[if lt IE 8]><link rel="stylesheet" href="/media/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<!--<link rel="stylesheet" href="/media/systems/css/jquery-ui.css" type="text/css" media="screen">-->
+<link rel="stylesheet" href="/media/rms/css/blueprint/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/blueprint/print.css" type="text/css" media="print">
+<!--[if lt IE 8]><link rel="stylesheet" href="/media/rms/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link rel="stylesheet" href="/media/rms/css/jquery-ui_two.css" type="text/css" media="screen">
+{% endblock %}
+    {% block core_css %}
+<!--<link rel="shortcut icon" href="/media/systems/images/favicon.ico"/>-->
+{% endblock %}
+    {% block extra_css %}{% endblock %}
+    {% block jquery %}
+<script src="/media/systems/js/jq/jquery.min.js" type="text/javascript"></script>
+<script src="/media/systems/js/jq/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/media/systems/js/jquery.hoverIntent.minified.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {      
+      function showDown(){     
+	 	  $(this).find('.menu_account_sub').slideDown("fast");  
+        }
+      function showUp(){       
+		  $(this).find('.menu_account_sub').slideUp("fast");  
+        }
+    var megaConfig = {
+         interval:80,
+         sensitivity: 4,
+         over: showDown,
+         timeout: 100,
+         out: showUp
+    };
+    $(".order_tab").hoverIntent(megaConfig);  
+});
+</script>
+<!--[if IE]><link rel="stylesheet" type="text/css" href="/media/css/ie.css" /><![endif]-->
+<link rel="stylesheet" href="/media/rms/css/base.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/common.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/buttons.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/header.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/content.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/pop_up.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/footer.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/media/rms/css/page.css" type="text/css" media="screen, projection">
+<link rel="shortcut icon" href="/media/rms/images/favicon.ico"/>
+{% endblock %}
+</head>
+{% load order_tags %}
+<body>
+<div class="container shadow_one bottomroundcorner5">
+  <div>
+    <div class="logo"> <a href="/" title="Analytics"> <img src="{{MEDIA_URL}}rms/images/fblogo.png" style='padding:5px 0px;height:24px;' alt="Analytics"></a> </div>
+    <div class="header_right">
+      <div id="userinfo" class="f11 fn ra"> {% if user.is_authenticated %}
+        Hi {% filter force_escape %}{% firstof user.first_name|title user.username|title %}{% endfilter %} | <a href="/accounts/logout/">Sign out</a> {% endif %} </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  {%if user.is_authenticated%}
+  <div class="bbg"> </div>
+  {%endif%}
+  <div id="wrapper">
+    <div class="user_account_tabs" id="user_account_tabs">
+      <div class="left">{%include "analytics/base_menu.html"%}</div>
+    </div>
+    <div class="bbg"></div>
+    <div id="content">
+      <div class="padding_top10"> {% block breadcrumb %}
+        <div class="breadcrumb"><a href="/">Home</a> {%if dashboard%}&nbsp;&raquo;&nbsp; <a href="/dashboards_tab/{{dashboard}}">{%capitalize_dashboard dashboard%} Dashboard</a>{%endif%}
+          {%if title%}&raquo;&nbsp; {{title}}{%endif%} </div>
+        {% endblock %}
+        {% block content %} {% endblock %}
+        <div class="clear"></div>
+      </div>
+    </div>
+	<div style="padding: 0 20px;">  
+      {%if title%}
+            {%if request.user.is_superuser%}
+                {%show_report_users request title%} 
+            {%endif%}
+            <div class="clear"></div>
+       {%endif%}
+    </div>
+    <div class="poweredby" id="footer"> <a style="color:#009 !important;" target="_blank" href="http://response.futurebazaar.com">Response</a> &middot; <a style="color:#009 !important;" target="_blank" href="http://sellers.futurebazaar.com">Sellers Hub</a> &middot; <a style="color:#009 !important;" target="_blank" href="http://support.futurebazaar.com">Support</a> &middot; <a style="color:#009 !important;" target="_blank" href="http://analytics.futurebazaar.com">Analytics</a>
+      <div class="padt5">&copy; 2012 Analytics &middot; <a href="http://www.futurebazaar.com" target="_blank">Future Bazaar</a></div>
+    </div>
+  </div>
+</div>
+</body>
+{% block script_footer %}
+
+{% endblock %}
+</html>

@@ -1,0 +1,24 @@
+/*home.css*/#category_menu{float:left;width:198px;border:1px solid #E47911}
+#category_menu div.store div{background-color:#E47911;padding:5px;color:#fff}
+#category_menu ul{margin:0;padding:0}
+#category_menu ul li{list-style:none;margin:0;padding:2px 3px 2px 15px}
+.home_store{float:left;padding:5px 5px 5px 5px;width:550px}
+/*.homeBanner{background-image:url('/media/images/home_banner.gif');font-family:Verdana,Arial,Helvetica,sans-serif;text-align:center;font-size:18px;width:550px;border:solid #fff}*/
+.homeAd{margin:2px;border:outset 1px #ccc;float:left;width:165px;padding:5px;text-align:center;background:}
+.homeAd img{width:100px;margin:auto}
+.hotDeals{padding-bottom:10px}
+.phone{border:solid 1px #ccc;-moz-box-shadow:3px 3px 5px black;-webkit-box-shadow:3px 3px 5px black;box-shadow:3px 3px 5px black;padding:10px;margin:5px;text-align:center;float:left}
+.phone img{width:150px}
+.home_left{float:left;width:700px;margin-right:10px}
+.home_right{float:left; /*float:right;*/width:250px}
+.home_right_title{font-weight:bold; font-size:12px; text-align:center; padding:8px 8px 0px}
+.home_right_text{border-bottom:1px dotted #ccc; padding-top:0px; color:#333; padding:8px}
+div.section{border-bottom:1px dotted #999;margin-bottom:10px}
+div.section_heading h2{font-size:14px;font-weight:bold;margin-bottom:5px}
+div.section_heading h1{margin-bottom:5px}
+.home_phone_no{height:32px;padding-left:40px;margin-top:5px;background:url(../images/sprite-img.gif) 35px -32px no-repeat; display:block;}
+.pay_opt{width:205px;height:28px;background:url(/media/images/sprite-img.gif) 0px -106px no-repeat;margin-left:15px; margin-top:5px}
+.dialog input[type="text"],.dialog input[type="password"]{margin:0px 0px 10px !important;font-size:14px;padding:2px;width:235px;background-color:#FFFFFF;border:1px solid #BBBBBB}
+.dialog input[type="submit"]{}
+div.hide_div{margin:0px 0px 10px !important 0px}
+/*home.css end*/

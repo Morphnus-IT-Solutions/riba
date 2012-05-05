@@ -1,0 +1,92 @@
+<div id="user_content">
+{% extends 'ppd/user_home.html' %}
+{%load cc_tags%}
+{%load web_tags%}
+{%block user_content%}
+<div class="padding_top10"> {%comment%}
+  <div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+  {%endcomment%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>{{client_display_name|title}} - Reports</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  {% daterange "Sales Summary by Geography" search_trend from_date to_date request '' client_display_name %}<br />
+  <div class="order_search clear">
+    <form method="get" action="">
+      <span class="f11 flgray">Pincode</span>
+      <input type="text" id="pincode" name="pincode"/>
+      <input type="submit" id="pincode_submit" value="Search" class="uiButton mart6" />
+    </form>
+  </div>
+  {% if final_dict %}
+  <!--<a href="{{url}}&excel=True">Export as excel</a>-->
+  <div class="left">{%include "ppd/show_excel_link.html" %}</div>
+  <div class="clear">&nbsp;</div>
+  <div class="clear padding_top10">
+  <table class="tbl_response mart5 marb10">
+    <tr>
+      <th class="f11 flgray">Region</th>
+      <th class="f11 flgray">Bookings ( <span class="WebRupee">Rs.</span> )</th>
+      <th class="f11 flgray">Sales ( <span class="WebRupee">Rs.</span> )</th>
+      <th class="f11 flgray">Orders ( # )</th>
+      <th class="f11 flgray">Avg Order ( <span class="WebRupee">Rs.</span> )</th>
+    </tr>
+    {% for a,b in final_dict.items %}
+    <tr>
+      <td><div class="flgray ">{{a|title}}</div></td>
+      <td><div class="ra">{{b.0|floatformat:0|money}}</div></td>
+      <td><div class="ra">{{b.1|floatformat:0|money}}</div></td>
+      <td><div class="ra">{{b.2}}</div></td>
+      <td><div class="ra">{{b.3|floatformat:0|money}}</div></td>
+    </tr>
+    {%endfor %}
+  </table>
+  </div>
+  {% endif %}
+  
+  {% if pincode != 0 and bookings.0 != None %}
+  <div class="clear padding_top10">
+  <table class="tbl_response mart5 marb10">
+    <tr>
+      <th>Pin Codes</th>
+      <th>Bookings ( <span class="WebRupee">Rs.</span> )</th>
+      <th>Sales ( <span class="WebRupee">Rs.</span> )</th>
+      <th>Orders ( # )</th>
+      <th>Avg Order ( <span class="WebRupee">Rs.</span> )</th>
+    </tr>
+    <tr>
+      <td>{% for pincode in pincodes %}
+        <div class="ra">{{pincode}}</div>
+        {% endfor %} </td>
+      <td>{% for ele in bookings %}
+        <div class="ra"> {{ele|floatformat:0|money}} </div>
+        {% endfor %} </td>
+      <td>{% for ele in sales %}
+        <div class="ra"> {{ele|floatformat:0|money}} </div>
+        {% endfor %} </td>
+      <td>{% for ele in orders_count %}
+        <div class="ra"> {{ele}} </div>
+        {% endfor %} </td>
+      <td>{% for ele in avg_order %}
+        <div class="ra"> {{ele|floatformat:0|money}} </div>
+        {% endfor %} </td>
+    </tr>
+  </table>
+  </div>
+  {% else %}
+  {% if not final_dict %}
+  <div class="clear padding_top10">No sales for this date range</div>
+  
+  {% endif %}
+  {%endif%} </div>
+<script type="text/javascript">
+    $('#pincode_submit').click(function(){
+        url_path = '{{url}}';
+        var pincode = document.getElementById('pincode').value;
+        url_path += "&pincode=" + pincode ;
+        location.href = url_path;
+    });
+</script>
+{% endblock %} 

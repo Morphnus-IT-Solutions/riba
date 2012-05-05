@@ -1,0 +1,186 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+<div class="padding_top10"> 
+	{%comment%}
+  		<div class="breadcrumb"><a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; <a href="#">Breadcrumb</a>&nbsp;&raquo;&nbsp; Breadcrumb</div>
+  	{%endcomment%}
+  	<div class="content_head">
+    	<div class="header rc5">
+      		<h1>{{request.client.client.name|title}} - Provide Access to New User</h1>
+    	</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+  	<div class="inner-content">
+		<form method="post" action = "">
+			{%if errors%}
+				<span class="f14 flgray">{{errors}}</span></br></br>
+				<a class = "uiButton" href="/management/user_rights/">Back</a>
+			{%else%}
+				{%if not user%}
+				<table class="tbl_profile">
+					<tr>
+						<td class="f11 flgray" width="160">User Name *</td>
+						<td width="300">
+							<input type="text" name="username_to_search">
+                            <input type="hidden" name="check" value="change">
+							<input type="submit" name="submit" class="btn_c btn_c_s btn_orange" value="search">
+						</td>
+					</tr>
+				</table>
+				{%else%}
+				<table class="tbl_profile">
+					<tr>
+						<td class="f11 flgray" width="160">User Name *</td>
+						<td width="300"><input type="text" readonly="readonly" value="{{user|title}}"></td>
+					</tr>
+				</table>
+				{%endif%}
+			{%endif%}
+		</form>
+		{%if user and not errors%}
+			<div class="main">
+				<form method="post">
+				  <input type="hidden" name="username_to_search" value={{user.username}}></br>
+				  <div class="clear"><span class="f14 fb fdgray">Tab Access *</span><br />
+				  	<div class="mart10">
+						{%for tab in tabs%}
+				  		<div class="left w235">
+							<ul class="f12 fdgray">
+								<li>
+									<label>
+										<input class="inbound_lead" type="checkbox" name="{{forloop.counter0}}" value="{{tab.tab_name}}">
+										{{tab.tab_name}}
+									</label>
+								</li>
+							</ul>
+						</div>
+						{%endfor%}
+				  	</div>
+				  
+				  	<div class="clear border-dotted-gray">&nbsp;</div>
+				  </div>
+				  <div class="clear mart10"><span class="f14 fb fdgray">Account Access *</span><br />
+					<div class="mart10">
+						{%for account in request.session.all_sellers%}
+				  		<div class="left w235">
+							<ul class="f12 fdgray">
+								<li>
+									<label>
+										<input class="inbound_lead" type="checkbox" name="account{{forloop.counter0}}" value="{{account.name}}">
+										{{account.name}}
+									</label>
+								</li>
+							</ul>
+						</div>
+						{%endfor%}
+				  	</div>
+					<div class="clear border-dotted-gray">&nbsp;</div>
+				  </div>
+				  
+				  <div class="clear mart10"><span class="f14 fb fdgray">User Group *</span><br />
+					<div class="mart10">
+						{%for group in groups%}
+				  		<div class="left w235">
+							<ul class="f12 fdgray">
+								<li>
+									<label>
+										<input class="inbound_lead" type="radio" name="selected_group" value="{{group.name}}">
+										{{group.name}}
+									</label>
+								</li>
+							</ul>
+						</div>
+						{%endfor%}
+				  	</div>
+					<div class="clear">&nbsp;</div>
+				  </div>
+				  <div>
+                  <span class="fdgray f10"> Fields marked with (*) are required.</span></br></br>
+					  <input type="submit" name"submit" value="{{action|title}}" class="btn_c btn_c_s btn_orange"/>
+				  </div>
+				</form>
+				
+			</div>
+			
+			
+		{%endif%}
+	</div>
+	
+</div>
+{%endblock%}
+ 
+<!--{%comment%}
+<style type="text/css">
+#user_add_form input[type="text"] {
+    margin-bottom: 10px;
+    width: 315px;
+}
+.ui-widget select {width:312px\9}
+.ui-dialog {z-index:999999 !important}
+.ui-widget-overlay {z-index:9999 !important}
+</style>
+<form method='post' id='user_add_form' action=''>
+<div class="fieldWrapper marb10 clear la">
+	<span class="f11 fdgray">{{form.username.label}}</span><br/>
+	{{ form.username }}
+</div>
+{% if form.username.errors %}
+<div class='error clear'>{{form.username.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear la">
+	<span class="f11 fdgray">{{ form.role.label }}</span><br/>
+    {{form.role}}
+</div>
+{% if form.role.errors %}
+<div class='error clear'>{{form.role.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear la">
+	<span class="f11 fdgray">{{ form.tabs.label }}</span><br/>
+    {{form.tabs}}
+</div>
+{% if form.tabs.errors %}
+<div class='error clear'>{{form.tabs.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear la">
+	<span class="f11 fdgray">{{ form.accounts.label }}</span><br/>
+    {{form.accounts}}
+</div>
+{% if form.accounts.errors %}
+<div class='error clear'>{{form.accounts.errors}}</div>
+{% endif %}
+</form>
+<div class='clear'>
+    <input type="button" name="submit" value={%ifequal action 'edit'%}"Edit"{%else%}"Add"{%endifequal%} class="uiButton" id='adduser' />
+</div>
+<script type='text/javascript'>
+    $("#adduser").click(function(){
+        var form = $("#user_add_form");
+        var data = form.serialize();
+        var action = '/user/create/{{client_name}}/{{seller_name}}/'{% ifequal action 'edit' %}+"?action=edit"{% endifequal %};
+        var onSuccess = function(response){            
+            console.log("RESPONSE::: "+response);
+            {% ifequal action 'edit' %} 
+                $("#edit_user").html(response);
+            {% else %}
+                $("#add_user").html(response);
+            {% endifequal %}
+            //$('#add_user').dialog('close');
+            //location.reload();
+        }
+        var onError = function(response){
+           console.log("ERROR OCCURED");
+        }
+        $.ajax({ 
+                url: action,
+                data : data,
+                success : onSuccess,
+                error : onError,
+                type : 'POST'
+        });        
+        return false;
+    });
+</script>
+{%endcomment%}-->

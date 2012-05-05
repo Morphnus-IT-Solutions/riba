@@ -1,0 +1,17 @@
+{%load cc_tags%}
+{%load web_tags%}
+  {%for most_view in most_viewed%}
+  <li style="overflow:hidden;">
+   <h3><a href="{% cc_url request most_view.product.url %}">{{most_view.product.title|truncate:30}}</a> </h3>
+   <div><a href="{%cc_url request most_view.product.url%}"><img src="{{most_view.product.productimage_set.all.0.get_thumbnail_url}}" width="102" height="102" title="{{most_view.product.title}}" alt="{{most_view.product.title}}" /></a></div>    
+    <p class="mrp">{% get_price_info request most_view 'list_price_label' %} <span class="fs"><span class="WebRupee">Rs.</span>  {% get_price_info request most_view 'list_price' %}</span></p>
+    <p class="op"><strong>{% get_price_info request most_view 'offer_price_label' %} <span class="WebRupee">Rs.</span> {% get_price_info request most_view 'offer_price' %}</strong></p>
+      <a href="{% cc_url request most_view.product.url %}" class="tdnone">
+      {%if request|isAnySaving:most_view %}
+          <div class="sptwo save fblack">Save<br />
+            <span class="WebRupee">Rs.</span> {%getSavings request most_view%}
+          </div>
+      {%endif%}
+      </a>
+  </li>
+  {%endfor%}

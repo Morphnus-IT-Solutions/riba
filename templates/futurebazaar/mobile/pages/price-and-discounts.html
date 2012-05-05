@@ -1,0 +1,26 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load cc_tags %}
+<header class="header">
+		<h1 class="header-title">Price and Discounts</h1>
+</header> <!-- /header -->
+
+<section class="content">
+    <nav>
+		<ul class="list-inset">
+				<li class="heading">Discounts</li>
+				<li><a href={% cc_url request "shop-by-discount/?min_d=50" %}>Above 50%</a><span class="icon icon-bg arrow-right"></span></li>
+				<li><a href={% cc_url request "shop-by-discount/?min_d=25&max_d=50" %}>25% - 50%</a><span class="icon icon-bg arrow-right"></span></li>
+				<li><a href={% cc_url request "shop-by-discount/?min_d=10&max_d=25" %}>10% - 25%</a><span class="icon icon-bg arrow-right"></span></li>
+				<li><a href={% cc_url request "shop-by-discount/?min_d=0&max_d=10" %}>Less Then 10%</a><span class="icon icon-bg arrow-right"></span></li>
+		</ul>
+		<ul class="list-inset mt15">
+				<li class="heading">Price</li>
+				<li><a href={% cc_url request "shop-by-price/?min_p=0&max_p=1000" %}>Less Then <span class="WebRupee">Rs.</span> 1,000</a><span class="icon icon-bg arrow-right"></span></li>                
+				<li><a href={% cc_url request "shop-by-price/?min_p=1000&max_p=5000" %}><span class="WebRupee">Rs.</span> 1,000 - <span class="WebRupee">Rs.</span> 5,000</a><span class="icon icon-bg arrow-right"></span></li>
+				<li><a href={% cc_url request "shop-by-price/?min_p=5000&max_p=25000" %}><span class="WebRupee">Rs.</span> 5,000 - <span class="WebRupee">Rs.</span> 25,000</a><span class="icon icon-bg arrow-right"></span></li>
+				<li><a href={% cc_url request "shop-by-price/?min_p=25000" %}>Above <span class="WebRupee">Rs.</span> 25,000</a><span class="icon icon-bg arrow-right"></span></li>
+		</ul>
+    </nav>
+</section><!-- /content -->
+{% endblock %}

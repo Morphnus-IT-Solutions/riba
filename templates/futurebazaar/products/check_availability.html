@@ -1,0 +1,75 @@
+<html>
+<body>
+<div class="popup_con">
+    <div class="popup_inner">
+        <h1>Check delivery date for your pincode</h1>
+        <div class="popup_inner_con">
+	        <div class="marb10 pad10">
+                <p id="response_message" class="hidden pad10"></p>
+			    <form id="pincodeForm" method="post" action="/product/check_availability/">
+			       <!-- <p>Quantity:&nbsp;-->
+			        <input type="hidden" id="qty" name="qty" style="width: 20px;" maxlength="3" value="1">
+                    <input type="hidden" id="rc" name="rc" value="{{rc.id}}"/>
+                    <!--<span  id="errmsg"></span> </p>-->
+                    
+			        <p>Please enter pincode of shipping location:</p>
+                    <div class="marb10">
+			            <input type="text" id="pincode" name="pincode" class="left" maxlength="6" value="">
+                        <img id="check_loader" src="/media/images/ajaxwheel.gif" class="marl10 left hide"/><div class="clear"></div>
+			            <button type="submit" id="check" class="btn_c btn_orange btn_c_s vt mart5">Submit</button>
+			        </div>
+                </form>
+			
+			    <div class="f11" id="ccInfo">
+			        Please call us on <strong>0922-222-1947</strong> or mail us at <strong>customerservice@futurebazaar.com</strong> if you have any questions.
+			    </div>
+	        </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#check').click(function(){
+        var loader = $("#check_loader");
+        var onSuccess = function(responseTxt){
+            var response = $.parseJSON(responseTxt);
+            if(response.status == 'available'){
+                $('#response_message').removeClass('hidden');
+                $('#response_message').removeClass('error');
+                $('#response_message').removeClass('w190');
+                $('#response_message').addClass('notice');
+                $('#response_message').addClass('w560');
+                $('#response_message').html("<span>" + response.msg + "</span>");
+            }
+            else{
+                $('#response_message').removeClass('hidden');
+                $('#response_message').removeClass('notice');
+                $('#response_message').removeClass('w560');
+                $('#response_message').addClass('error');
+                $('#response_message').addClass('w190');
+                $('#response_message').html("<span>" + response.msg + "</span>");
+            }
+            loader.removeClass("show");
+            loader.addClass("hide");
+        };
+        var onError = function() {
+            loader.removeClass("show");
+            loader.addClass("hide");
+            $('#pincodeForm').submit(onSubmitAlias);
+        };
+        loader.removeClass("hide");
+        loader.addClass("show");
+        var form = $("#pincodeForm");
+        var action = form.attr("action");
+        var data = $("#pincodeForm").serialize();
+        $.ajax({ url:action,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+        });
+        return false;
+    });
+</script>
+</body>
+</html>

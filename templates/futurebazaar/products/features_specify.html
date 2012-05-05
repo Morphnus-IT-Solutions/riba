@@ -1,0 +1,29 @@
+{% if datas %}
+    <h2 class="header_title">Specifications</h2>
+<div class="pdp_tab3_desc">
+<div class="product_features">
+{% for data in datas %}
+{% if data.features %}
+    <div class="featuregroup">
+       <h3>{{data.name}}</h3>  
+       <table class="feature {%if not forloop.last%}collapse{%endif%}">       
+        {% for feature in data.features %}      
+	    <tr>
+        	    <td width="200" class="featurelabel fdgray">{{feature.name}}</td>
+        	    <td class="featurevalue">{{feature.value|safe}}</td>	            
+	    </tr>        
+        {% endfor %}
+        </table>
+    </div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+{% else %}
+    <script type="text/javascript">
+        function validate_specifications(){
+            var elem = $(".specification_tab");
+            elem.remove();
+        }
+    </script>
+{% endif %}

@@ -1,0 +1,381 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+<div class="inner-content" %>
+	<style type="text/css">
+		table{
+			margin-bottom:1.4em;
+			width:100%;
+		}
+		th, td, caption{
+			padding: 4px 10px 4px 5px;
+		}
+	</style>
+	<form action="" id="edit_form" name="edit_form" method="POST" enctype="multipart/form-data">
+	<div id="post_errors"></div>
+	
+	{% if form.errors %}
+		{% for error in form.errors %}
+			{{error}}
+		{% endfor %}
+		{{form.non_field_errors}}
+  		<p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+  	{% endif %}
+	{% ifequal flag 2 %}
+		<div class="content_head" style="width: 948px; height: 36px; padding-top: 26px;">
+			<div class="header rc5" style="width: 960px;">
+				<div class="left">
+					<h1 class="head1">{{request.client.client.name|title}} - Edit List</h1>
+				</div>
+				<div class="clear"></div>
+				<div class="left">
+					<h4 class="f13 fdblack">List deleted succesfully</h4>
+				</div>
+				<div class="right" style="padding-right: 44px; padding-top: 5px; width: 104px; height: 28px; border-bottom-width: 22px; margin-bottom: 0px; padding-left: 8px; border-top-width: 0px; margin-top: 0px;i">
+					<a href="/user_experience/site_properties/lists/view_all_lists/" class="uiButton fblack">Back</a>
+				</div>
+			</div>
+		</div>
+	{% else %}
+		{% ifequal flag 1 %}
+            {% ifequal errorflag 0 %}
+                <div class="content_head" style="width: 948px; height: 36px; padding-top: 26px;">
+                    <div class="header rc5" style="width: 960px;">
+                        <div class="left">
+                            <h1 class="head1">{{request.client.client.name|title}} - Edit List</h1>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="left">
+                            <h4 class="f13 fdblack">List {{ obj.title }} edited succesfully</h4>
+                        </div>
+                        <div class="right" style="padding: 1px 7px 0px 8px; width: 622px; height: 24px; border-bottom-width: 22px; margin-bottom: 1px; border-top-width: 0px; margin-top: 0px;">
+                        <a href="/user_experience/site_properties/lists/display_list/{{ID}}/" class="uiButton fblack">Back to {{ obj.title }}</a>
+                            <a href="/user_experience/site_properties/lists/edit/{{ID}}/" class="uiButton fblack">Edit {{ obj.title }}</a>
+                        </div>
+                    </div>
+                </div>
+		    {% else %}
+                <div class="content_head" style="width: 948px; height: 36px; padding-top: 26px;">
+                    <div class="header rc5" style="width: 960px;">
+                        <div class="left">
+                            <h1 class="head1">{{request.client.client.name|title}} - Edit {{obj.title}} List</h1>
+                        </div>
+                        <div class="right" style="padding-right: 7px; padding-top: 5px; width: 430px; height: 28px; border-bottom-width: 22px; margin-bottom: 0px; padding-left: 8px; border-top-width: 0px; margin-top: 0px;">
+                        <a href="/user_experience/site_properties/lists/display_list/{{ID}}" class="uiButton fblack">Back to {{ obj.title }}</a>
+                        </div>
+                    </div>
+                </div>
+            <style>
+                .tbl_list td, .tbl_list_item td{width:140px !important;}
+                .tbl_list input, .tbl_list textarea, .tbl_list select, .tbl_list_item input, .tbl_list_item select, #id_lists-banner_image{width:140px !important;}
+                .tbl_list textarea{width:135px; height=40px; !important}
+                #id_description{width:140px; height:50px; !important; }
+                .item_desc textarea{width:135px; height:50px; !important; }
+            
+                .input_banner input#id_lists-banner_image[type="file"]{width:80px; !important;}
+            </style>
+
+            <div class="clear"></div>
+            <table class="tbl_list">
+                <tr>
+                    <td class="f11 fdgray" width="140">{{ form.title.label }}</td>
+                    <td>{{ form.title }}</td>
+                    {% if form.title.errors %}
+                        <td class="error">{{ form.title.errors }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td class="f11 fdgray" width="140">{{ form.banner_image.label }}</td>
+                    <td>{{ form.banner_image }}</td>
+                    {% if form.banner_image.errors %}
+                        <td class="error">{{ form.banner_image }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                <div style="display:none;visibility:hidden;">
+                    {{ form.client.label }}
+                    {{ form.client }}
+                    {{ form.slug.label }}
+                    {{ form.slug }}
+                </div>
+                <tr>
+                    <td class="f11 fdgray" width="140">{{ form.description.label }}</td>
+                    <td>{{ form.description }}</td>
+                    {% if form.description.errors %}
+                        <td class="error">{{ form.description.errors }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td class="f11 fdgray" width="140">{{ form.banner_type.label }}</td>
+                    <td>{{ form.banner_type }}</td>
+                    {% if form.banner_type.errors %}
+                        <td class="error">{{ form.banner_type }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td class="f11 fdgray" width="140">{{ form.redirect_to.label }}</td>
+                    <td>{{ form.redirect_to }}</td>
+                    {% if form.redirect_to.errors %}
+                        <td class="error">{{ form.redirect_to }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td class="f11 fdgray" width="140">{{ form.type.label }}</td>
+                    <td>{{ form.type }}</td>
+                    {% if form.type.errors %}
+                        <td class="error">{{ form.type.errors }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td class="f11 fdgray" width="140">{{ form.starts_on.label }}</td>
+                    <td>{{ form.starts_on }}
+                    {% if form.starts_on.errors %}
+                        <td class="error">{{ form.starts_on.errors }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+
+                </tr>
+                <tr>
+                    <td class="f11 fdgray" width="140">{{ form.template_type.label }}</td>
+                    <td>{{ form.template_type }}</td>
+                    {% if form.template_type.errors %}
+                        <td class="error">{{ form.template_type.errors }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td class="f11 fdgray" width="140">{{ form.ends_on.label }}</td>
+                    <td>{{ form.ends_on }}
+
+                    {% if form.ends_on.errors %}
+                        <td class="error">{{ form.ends_on.errors }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                {% comment %}
+                <tr>
+                    <td class="f11 fdgray" width="140">{{ form.is_featured.label }}</td>
+                    <td>{{ form.is_featured }}</td>
+                    {% if form.is_featured.errors %}
+                        <td class="error">{{ form.is_featured.errors }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td class="f11 fdgray" width="140">{{ form.visibility.label }}</td>
+                    <td>{{ form.visibility }}</td>
+                    {% if form.visibility.errors %}
+                        <td class="error">{{ form.visibility }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                {% endcomment %}
+                
+            </table>
+
+            <form method='post' action=''>
+                <fieldset>
+                <legend class="f15">List Items</legend>
+                <div class="clear"></div>
+                <table class="tbl_list">
+                <tr>
+                    <td width="140"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    {% if formset %}
+                    <td width="10"><input type="checkbox" name="select_all" id="select_all" class="select_all ca" />Select all Items</td>
+                    {% endif %}
+
+                {{ formset.management_form }}
+                {% for i in formset.forms %}
+                    <div class = "formgroup">
+                        {% if i %}
+                            <div style="display:none;visibility:hidden;">
+                                {{ i.id.label }}
+                                {{ i.id }}
+                            </div>
+                            <tr>
+                                <td class="f11 fdgray" width="140">{{ i.sku.label }}</td>
+                                <td style="width: 208px;">{{ i.sku }}</td>
+                                <td><a href="/user_experience/site_properties/lists/searchitem/{{pg}}/" onClick="popup = window.open("/user_experience/site_properties/lists/searchitem/{{pg}}/"', 'PopupPage','height=300,widht=350,scrollbars=yes,resizable=yes'); return false" target="_blank" class="uiButton fblack">See Products</a></td>
+
+                                {% if i.sku.errors %}
+                                        <td colspan="2" class="error">{{ i.sku.errors }}</td>
+                                {% else %}
+                                    <td colspan="2"></td>
+                                {% endif %}
+                                <td width="10"><input type="checkbox" name="itemdel" class="ca itemdel" id="{{i.instance.sku_id}}" value="{{i.instance.sku_id}}" /></td>
+                            </tr>
+                            <tr>
+                                <td class="f11 fdgray" width="140">{{ i.sequence.label }}</td>
+                                <td>{{ i.sequence }}</td>
+                                {% if i.sequence.errors %}
+                                        <td class="error">{{ i.sequence.errors }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                <td class="f11 fdgray" width="140">{{ i.user_title.label }}</td>
+                                <td>{{ i.user_title }}</td>
+                                {% if i.user_title.errors %}
+                                        <td class="error">{{ i.user_title.errors }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                            </tr>
+                            <tr>
+                                <td class="f11 fdgray" width="140">{{ i.user_description.label }}</td>
+                                <td class="item_desc">{{ i.user_description }}</td>
+                                {% if i.user_description.errors %}
+                                        <td class="error">{{ i.user_description.errors }}</td>
+                                {% else %}
+                                    <td></td>							
+                                {% endif %}
+                                <td class="f11 fdgray" width="140">{{ i.user_features.label }}</td>
+                                <td class="item_desc">{{ i.user_features }}</td>
+                                {% if i.user_features.errors %}
+                                        <td class="error">{{ i.user_features.errors }}</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+                            </tr>
+                                <td class="f11 fdgray" width="140">{{ i.user_image.label }}</td>
+                                <td class="item_desc">{{ i.user_image }}</td>
+                                {% if i.user_image.errors %}
+                                        <td class="error">{{ i.user_image.errors }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}		
+                                <td class="f11 fdgray" width="140">{{ i.redirect_to.label }}</td>
+                                <td class="item_desc">{{ i.redirect_to }}</td>
+                                {% if i.redirect_to.errors %}
+                                    <td class="error">{{ i.redirect_to.errors }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+
+                            <tr>
+                                <td class="f11 fdgray" width="140">{{ i.status.label }}</td>
+                                <td>{{ i.status }}</td>
+                                {% if i.status.errors %}
+                                        <td class="error">{{ i.status.errors }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom: 2px solid #cccccc;"></td>
+                                <td style="border-bottom: 2px solid #cccccc;"></td>
+                                <td style="border-bottom: 2px solid #cccccc;"></td>
+                                <td style="border-bottom: 2px solid #cccccc;"></td>
+                                <td style="border-bottom: 2px solid #cccccc;"></td>
+                                <td style="border-bottom: 2px solid #cccccc;"></td>
+                                </tr>
+                            <tr><td></td></tr>
+
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </table>
+            <div class="abc">
+                <div class="left">
+                    <input title='Add new item' type='submit' name='additem' id='additem' value='Add Item' class="uiButton fblack" />
+                </div>
+                {% if formset %}
+                <div class="right">
+                    <input type='button' name='Delete Item' id='delete' value='Delete Item' class="delete uiButton fblack" method=""/>
+                </div>
+                {% endif %}
+            </div>
+
+              </fieldset>
+        <div class="clear"></div>
+        <div class="left">
+        <table class="buttons">
+            <tr>
+                <td><INPUT TYPE="submit" id="save" VALUE="Save" class="uiButton fblack" name="save" /></td>
+                     &nbsp;&nbsp;&nbsp;
+                <td><INPUT TYPE="submit" id="dellist" name="dellist" value="Delete List" class="uiButton fblack"></td>
+            </tr>
+        </table>
+        </div>
+    {% endifequal %}
+	{% endifequal %}
+{% endifequal %}
+<script type="text/javascript">
+$("[name='itemdel']").click(function() {    
+	if ($(this).attr('checked')) {
+		if ($("[name='itemdel']:not(:checked)").length == 0)
+			$('#select_all').attr('checked',true);
+		}
+		else {
+			$('#select_all').attr('checked',false);
+		}
+})
+    $('#id_starts_on').datetimepicker({dateFormat: 'yy-mm-dd', timeFormat:'hh:mm:00', stepMinute:15,
+        onSelect: function(){
+            $('#id_to').datepicker('enable');
+        },
+    });
+ 
+    $('#id_ends_on').datetimepicker({dateFormat: 'yy-mm-dd', timeFormat:'hh:mm:00', stepMinute:15, minDate:$('#id_starts_on').val(),
+        beforeShow: function(){
+            var newDate = $('#id_starts_on').datepicker('getDate');
+            if(newDate){
+                $('#id_ends_on').datepicker('option','minDate', newDate);                   
+            }
+            else{
+                $('#id_ends_on').datepicker('disable'),True;
+            }
+        }
+    });
+$('#edit_form').get(0).reset();
+$('#select_all').click(function(){
+	var val = $(this).attr('checked');    
+	$('.itemdel').each(function(){
+		$(this).attr('checked',val); 
+	});
+});
+
+$('.delete').click(function(){
+	var d =new Array();
+	var count=0;
+	var fid=  "{{ID}}";
+	$('.itemdel').each(function(){
+		var v = $(this).attr('checked');
+		if (v==true)
+		{
+			var idv = $(this).attr('id');
+			d[count]=idv;
+			count=count+1;
+		}
+	});
+	var data="sku="+d+"&id="+fid;
+		var onsuccess = function(response){
+			window.location.reload();
+		};
+			var onerror=function(){};
+		var method="{{request.method}}";
+		var url="/user_experience/site_properties/lists/delete_item/";
+	$.ajax({
+	type: method,
+	url:url,
+	data: data,
+	success:onsuccess,
+	error: onerror, });
+});
+
+</script>
+</form>
+</div>
+{% endblock %}
+

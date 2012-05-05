@@ -1,0 +1,64 @@
+<html>
+  <body>
+    <table widtd="100%" border="1">
+      <tr>
+        <th></th>
+        <th></th>
+        <th>HDFC</th>
+        <th>ICICI</th>
+        <th>CITI</th>
+        <th>KOTAK</th>
+        <th>SBI GE</th>
+        <th>HSBC</th>
+        <th>Standart Chartered</th>
+      </tr>
+      <tr>
+        <th>EMI Period</th>
+        <th>EMI</th>
+        <th colspan="7">Processing Fees</th>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>{% widthratio request.GET.amount 3 1 %}</td>
+        <td>{% widthratio request.GET.amount 10000 125 %}</td>
+        <td>{% widthratio request.GET.amount 10000 225 %}</td>
+        <td>{% widthratio request.GET.amount 10000 145%}</td>
+        <td>{% widthratio request.GET.amount 10000 180%}</td>
+        <td>{% widthratio request.GET.amount 10000 175%}</td>
+        <td>{% widthratio request.GET.amount 10000 200%}</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>{% widthratio request.GET.amount 6 1 %}</td>
+        <td>{% widthratio request.GET.amount 10000 325 %}</td>
+        <td>{% widthratio request.GET.amount 10000 375 %}</td>
+        <td>{% widthratio request.GET.amount 10000 345 %}</td>
+        <td>{% widthratio request.GET.amount 10000 350 %}</td>
+        <td>{% widthratio request.GET.amount 10000 355 %}</td>
+        <td>{% widthratio request.GET.amount 10000 400 %}</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>{% widthratio request.GET.amount 9 1 %}</td>
+        <td>{% widthratio request.GET.amount 10000 585 %}</td>
+        <td>{% widthratio request.GET.amount 10000 610 %}</td>
+        <td></td>
+        <td>{% widthratio request.GET.amount 10000 625 %}</td>
+        <td>{% widthratio request.GET.amount 10000 625 %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>{% widthratio request.GET.amount 12 1 %}</td>
+        <td>{% widthratio request.GET.amount 10000 765 %}</td>
+        <td>{% widthratio request.GET.amount 10000 850 %}</td>
+        <td></td>
+        <td>{% widthratio request.GET.amount 10000 875 %}</td>
+        <td>{% widthratio request.GET.amount 10000 850 %}</td>
+        <td></td>
+      </tr>
+    </table>
+    <div class="clear"></div>
+      * The processing fees(INR) will be charged by the respective issuing bank along with the first EMI.
+  </body>
+</html>
