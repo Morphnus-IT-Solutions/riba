@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Question(models.Model):
-    parent = models.ForeignKey("self", null=True, blank=True, db_index=True, related_name="parent_question")
-    parent_value = models.CharField(max_length=100, null=True, blank=True, db_index=True)
+    #parent = models.ForeignKey("self", null=True, blank=True, db_index=True, related_name="parent_question")
+    #parent_value = models.CharField(max_length=100, null=True, blank=True, db_index=True)
     question = models.TextField()
     answer_type = models.CharField(max_length=15, db_index=True,
             		default='char', choices=(
@@ -27,15 +27,15 @@ class Question(models.Model):
     def __unicode__(self):
         return self.question
 
-
 class Option(models.Model):
     question = models.ForeignKey(Question)
-    value = models.CharField(max_length=100, blank=True, null=True)
+    option_value = models.CharField(max_length=100, blank=True, null=True)
+    dependent_question = models.ForeignKey(Question, blank=True, null=True, related_name="dependent_question")
 
     def __unicode__(self):
-        return "%s - %s" % (question.question, value)
+        return "%s - %s" % (self.question, self.option_value)
 
-    #dependent_question = models.ForeignKey(Question, blank=True, null=True, related_name="dependent_question")
+    
 
 class Field(models.Model):
     question = models.ForeignKey(Question)
@@ -52,7 +52,7 @@ class Field(models.Model):
 					    ))
 
     def __unicode__(self):
-        return "%s - %s" % (question.question, fieldname)
+        return "%s - %s" % (self.question, self.field_label)
 
 
 #class QuestionTree(models.Model):

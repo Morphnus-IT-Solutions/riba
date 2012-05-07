@@ -1,4 +1,5 @@
 from django import forms
+from question.widgets import SelectWithPop
 from question.models import *
 
 class QuestionForm(forms.ModelForm):
@@ -9,7 +10,7 @@ class QuestionForm(forms.ModelForm):
 class OptionForm(forms.ModelForm):
     class Meta:
         model = Option
-        fields = ('value',)
+        fields = ('option_value', 'dependent_question',)
 
 class FieldForm(forms.ModelForm):
     class Meta:
