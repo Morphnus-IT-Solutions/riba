@@ -152,14 +152,6 @@
 <!--end cc box-->
 
     {% block script_footer %}
-<script type="text/javascript" charset="utf-8"> 		
-	
-        $('a.help_popup').click(function() {
-            Ch.Utils.helpPopup(this.href);
-            return false;
-            });		
-     
-    </script>
 <script type="text/javascript">
         
         $("#id_q").keyup(function(){
@@ -184,91 +176,8 @@
             setTimeout(function(){$('#search_form').submit();},100);
         };
     
-        $('signin').click(function() {
-            var title_string = this.title;
-            var width = 300;
-            var url = this.href;
-            $.get(this.href, function(data) {
-                $('dialog').width(width);
-                $('#dialog').html(data);
-				
-                var dialog = $('#dialog').dialog({modal:true,
-                    title:title_string, 
-                    width:width,
-                    open:function(){
-                        $('#username').focus();
-                        }
-                    });
-                    var onSubmitAlias = null;
-                    var onSuccess = function(responseTxt) {
-                        var response = $.parseJSON(responseTxt);
-                        if (response.status == 'ok'){
-                            $('#tr_error').addClass('hide_div');
-                            $('#tr_error').removeClass('show_div');
-                            if(response.msg == 'loggedin'){
-                                if(response.canvas_page){
-                                    var canvas_page = response.canvas_page;
-                                    location.href = "/a/user/" + canvas_page;
-                                    }
-                                else{
-                                    $('#dialog').dialog('close');
-                                    location.reload();
-                                    }
-                            }
-                        }
-                        else{
-                            $('#tr_error').addClass('show_div');
-                            $('#tr_error').removeClass('hide_div');
-                            $('#errors').html(response.error);
-                        }
-                    };
-                    var onError = function() {
-                        $('#form_signin').submit(onSubmitAlias);
-                    };
-                    var onSubmit = function() {
-                        var form = this;
-                        var action = form.action;
-                        var data = $('#form_signin').serialize();
-                        $.ajax({ url:action,
-                            data : data,
-                            success : onSuccess,
-                            error : onError,
-                            type : 'POST'
-                            });
-                        return false;
-                    };
-                    onSubmitAlias = onSubmit;
-                    $('#form_signin').submit(onSubmit);
-            });
-			
-            return false;
-        });
-
-     </script>
-     <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-      
-      function addMega(){
-        $(this).addClass("hovering");
-        }
-
-      function removeMega(){
-        $(this).removeClass("hovering");
-        }
-
-    var megaConfig = {
-         interval: 200,
-         sensitivity: 4,
-         over: addMega,
-         timeout: 200,
-         out: removeMega
-    };
-
-    $("li.item").hoverIntent(megaConfig)      
     
-    });
-
-    </script>
+     </script>
      
 {% endblock %}
 </body>
