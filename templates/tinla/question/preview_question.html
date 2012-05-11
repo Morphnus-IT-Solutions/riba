@@ -1,0 +1,120 @@
+{% extends 'web/base.html' %}
+{% load web_tags %}
+{% block content %}
+<style>
+.uiButton {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #F5B74E #E5A73E #D6982F !important;
+    color: #333 !important;
+    text-shadow: 0 1px 0 #FEDD9B;
+    box-shadow: 0 1px 1px #eee,inset 0 1px 0 #fee395;
+    background: #FECC5F;
+    cursor: pointer;
+    background-image: -webkit-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    background-image: linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    border-radius: 3px 3px 3px 3px;
+}
+    .question_details_container {
+        width: 100%;
+    }
+    .question_details {
+        padding: 10px 15px;
+    }
+    .h20 {height:20px;}
+	#id_lists-description {width:238px;height:14px; font-size:12px;}
+	#id_lists-type, #id_lists-banner_type, #id_lists-banner_type{width:250px; font-size:12px;}
+	.details{width:460px;}
+	.details input {height:auto;width: 242px; font-size:12px;}
+	.seller-rate-chart input {height:auto;width: 242px; font-size:12px;}
+	.seller-dropdown select {height:auto;width: 250px; font-size:12px;}
+	.details textarea{height:75px;width: 300px; font-size:12px;}
+	.list-item ul li textarea {width:250px; font-size:12px;}
+	.list-item ul li select {width:250px; font-size:12px;}
+	#id_lists-sort_order{width:242px}
+	#id_lists-banner_image{width:250px;}
+	#id_lists-starts_on, #id_lists-ends_on{width:80px; height:17px;}
+	#starts_on_hour, #starts_on_minute, #starts_on_ap, #ends_on_hour, #ends_on_minute, #ends_on_ap {width:49px; font-size:11px;padding: 3px 2px 3px 0;}
+	.list-item-title{padding:3px 5px;}
+    .divider-top {
+        border-top: 1px solid white;
+    }
+    .details {
+        width: 460px;
+    }
+	a:hover {
+		color: #009;
+		text-decoration: underline !important;
+	}
+	.arrow-right {
+		background-position: right center;
+		background-position-x: 100%;
+		background-position-y: 50%;
+		padding: 0px 15px;
+		padding-top: 0px;
+		padding-right: 15px;
+		padding-bottom: 0px;
+		padding-left: 15px;
+	}
+	.toggle-down-arrow {
+		background: url("/media/images/closed.gif") no-repeat scroll left center transparent;
+		padding: 0.5em 0.5em 0.5em 15px;
+	}
+	.toggle-up-arrow {
+		background: url("/media/images/opened.gif") no-repeat scroll left center transparent;
+		padding: 0.5em 0.5em 0.5em 15px;
+	}
+	.border-dotted-gray {
+		border-bottom: 1px dotted #ECECEC;
+		border-bottom-width: 1px;
+		border-bottom-style: dotted;
+		border-bottom-color: #ECECEC;
+	}
+	.btn_c {
+		border-radius: 3px 3px 3px 3px;
+		border-style: solid;
+		border-width: 1px;
+		color: black !important;
+		display: inline-block;
+		outline: 0 none;
+		padding: 5px 10px;
+		text-decoration: none;
+	}
+</style>
+<div class="padding_top10">
+    <div class="breadcrumb"><a href="/question/view/">View All Questions</a>&nbsp;&raquo;&nbsp; {{q.question}}</div>
+	<div class="content_head">
+		<div class="header rc5">
+			<div class="left">
+				<h1>Preview Question</h1>
+    		</div>
+		</div>
+    	<div class="clear bordergray"></div>
+        {% for qh in hierarchy %}
+            <div>{{qh.0}} : {{qh.1}}</div>
+        {% endfor %}
+        <form id="preview_question_form" method="POST" action="">
+            <div class="left flgray f11 w110 marl10 ">{{q.question}}</div>
+            {% if fields %}
+            {% else %}
+                {% ifequal q.answer_type "text" %}
+                    <div class="left w250"><input id="{{q.id}}" type="text" name="current_question_val"></div>
+                {% endifequal %}
+                {% ifequal q.answer_type "dropdown" %}
+                   <select id="{{q.id}}" name="current_question_val"> 
+                        {% for option in options %}
+                            <option value="{{option.option_value}}">{{option.option_value}}</option>
+                        {% endfor %}
+                   </select>
+                   
+                {% endifequal %}
+            {% endif %}
+            </div>
+            <div>
+                <input type="hidden" id="id_{{q.id}}" value="{{q.id}}" name="current_question_id"></input>
+                <input type="submit" id="continue" value="Continue" class="uiButton fblack" name="continue"></input>
+            </div>
+        </form>
+	</div>
+</div>
+{% endblock %}

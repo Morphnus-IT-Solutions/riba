@@ -237,7 +237,7 @@ $(document).ready(function(){
         return false;
     }
 
-/*    function addForm(btn, prefix, formclass) {
+    function addForm(btn, prefix, formclass) {
         var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
         // Clone a form (without event handlers) from the first form
         var row = $("." + formclass +":first").clone(true).get(0);
@@ -259,13 +259,14 @@ $(document).ready(function(){
         $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
         return false;
     }
-*/
 
 function cloneMore(selector, type) {
     var newElement = $(selector).clone();
     var total = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
+    alert(total);
     newElement.find(':input').each(function() {
         var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        alert(name);
         var id = 'id_' + name;
         $(this).attr({'name': name, 'id': id}).val('');
     });

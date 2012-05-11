@@ -37,52 +37,40 @@ def delete_question(request, question_id):
 
 def add_question(request, id=None):
     form = QuestionForm()
-    field_inline_formset = inlineformset_factory(Question, Field, form = FieldForm, extra=1)
+    field_inline_formset = inlineformset_factory(Question, Field, form = FieldForm, extra=1, can_delete=True)
     field_formset = field_inline_formset(instance=None)
-    option_inline_formset = inlineformset_factory(Question, Option, form = OptionForm, extra=1, fk_name="question")
+    option_inline_formset = inlineformset_factory(Question, Option, form = OptionForm, extra=1, fk_name="question", can_delete=True)
     option_formset = option_inline_formset(instance=None)
     is_popup = 0
     if request.method == "POST":
-        if 'addfield' in request.POST:
-            cp = request.POST.copy()
-            cp['field_set-TOTAL_FORMS'] = int(cp['field_set-TOTAL_FORMS'])+1
-            field_formset = field_inline_formset(cp,  instance=None)
-            cp['option_set-TOTAL_FORMS'] = int(cp['option_set-TOTAL_FORMS'])
-            option_formset = option_inline_formset(cp,  instance=None)
-        if 'addoption' in request.POST:
-            cp = request.POST.copy()
-            cp['option_set-TOTAL_FORMS'] = int(cp['option_set-TOTAL_FORMS'])+1
-            option_formset = option_inline_formset(cp,  instance=None)
-            cp['field_set-TOTAL_FORMS'] = int(cp['field_set-TOTAL_FORMS'])
-            field_formset = field_inline_formset(cp,  instance=None)
         if 'save' in request.POST:
             is_popup = request.POST.get('is_popup', 0)
             form = QuestionForm(request.POST, request.FILES)
             field_formset = field_inline_formset(request.POST, request.FILES, instance=None)
             option_formset = option_inline_formset(request.POST, request.FILES, instance=None)
             if form.is_valid():
-                q = Question()
-                q.question = form.cleaned_data['question']
-                q.answer_type = form.cleaned_data['answer_type']
-                q.type = form.cleaned_data['type']
-                q.save()
+                q = form.save()
             for fld in field_formset:
-                if fld.is_valid():
+                if fld.is_valid() and fld.cleaned_data.get('field_label'):
                     f = Field()
                     f.question = q
                     f.field_label = fld.cleaned_data.get('field_label')
                     f.field_type = fld.cleaned_data.get('field_type')
                     f.save()
             for op in option_formset:
-                if op.is_valid():
+                if op.is_valid() and op.cleaned_data.get('option_value'):
                     o = Option()
                     o.question = q
                     o.option_value = op.cleaned_data.get('option_value')
                     o.dependent_question = op.cleaned_data.get('dependent_question')
                     o.save()
+                    try:
+                        qt = QuestionTree.objects.get(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                    except QuestionTree.DoesNotExist:
+                        qt = QuestionTree(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                        qt.save()
             if is_popup == '1':
-                print "%s -> %s" % (q, q.id)
-                return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q.id), escape(q)))
+                return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
             else:
                 return HttpResponseRedirect('/question/%s' %q.id)
     else:
@@ -98,4 +86,32 @@ def add_question(request, id=None):
 
 
 def view_question(request, id):
-    return render_to_response('question/question.html', '', context_instance=RequestContext(request))
+    q = Question.objects.get(pk=id)
+    q_fields = q.field_set.all()
+    q_options = q.option_set.all()
+    ctxt = {
+        'q': q,
+        'fields': q_fields,
+        'options': q_options,
+    }
+    return render_to_response('question/question.html', ctxt, context_instance=RequestContext(request))
+
+
+def preview_question(request, id):
+    if request.method == "POST":
+        qid = request.POST.get('current_question_id', id)
+        qval = request.POST.get('current_question_val')
+        q_tree = QuestionTree.objects.select_related('question').get(parent_question__id=qid, parent_value=qval)
+        q = q_tree.question or q_tree.parent_question 
+    else:
+        q = Question.objects.get(pk=id)
+    q_fields = q.field_set.all()
+    q_options = q.option_set.all()
+    q_hierarchy = q.get_question_hierarchy()
+    ctxt = {
+        'q': q,
+        'fields': q_fields,
+        'options': q_options,
+        'hierarchy': q_hierarchy,
+    }
+    return render_to_response('question/preview_question.html', ctxt, context_instance=RequestContext(request))    

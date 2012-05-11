@@ -35,18 +35,16 @@
 						<tr>
 							<th class="w400"><strong>Question</strong></th>
 							<th class="w100"><strong>Answer Type</strong></th>
-							<th class="w400"><strong>Parent</strong></th>
-							<th class="w100"><strong>Parent Value</strong></th>
+							<th class="w400"><strong>Question Type</strong></th>
 							<th class="w30"></th>
 						</tr>
 					</thead>
 					<tbody>
 					{% for q in ques %}
 						<tr>
-							<td class="f11 flgray w375 word-wrap vatop padl10"><a href="/question/view/{{q.id}}" class="ca f11">{{q.question}}</a></td>
+							<td class="f11 flgray w375 word-wrap vatop padl10"><a href="/question/{{q.id}}" class="ca f11">{{q.question}}</a></td>
 							<td class="f11 flgray w75 word-wrap vatop padl10">{{q.answer_type}}</td>
-							<td class="f11 flgray w375 word-wrap vatop padl10">{{q.parent.question}}</td>
-							<td class="f11 flgray w75 word-wrap vatop padl10">{{q.value}}</td>
+							<td class="f11 flgray w375 word-wrap vatop padl10">{{q.type}}</td>
 							<td class="ca w30"><input type='submit' class='deletebin hide' id='{{q.id}}' value='del' /><input type='image' class='deletebin' id='{{i.id}}' src="/media/images/dustbin_icon.png" /></td>
 						</tr>
 					{% endfor %}

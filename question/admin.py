@@ -18,4 +18,7 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [FieldInline, OptionInline]
 admin.site.register(Question, QuestionAdmin)
 
-
+class QuestionTreeAdmin(admin.ModelAdmin):
+    search_fields = ['question']
+    list_display = ('parent_question', 'parent_value','question', )
+admin.site.register(QuestionTree, QuestionTreeAdmin)

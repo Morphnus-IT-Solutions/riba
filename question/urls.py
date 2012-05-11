@@ -13,4 +13,5 @@ urlpatterns = patterns('question.views',
     (r'^view/$', 'view_all_questions'),
     (r'^add/', 'add_question'),
     (r'^delete/(?P<question_id>[0-9]+)/$', 'delete_question'),
+    (r'^preview/(?P<id>[0-9]+)/$', 'preview_question'),
 )

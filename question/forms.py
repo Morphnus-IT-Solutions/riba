@@ -8,6 +8,7 @@ class QuestionForm(forms.ModelForm):
         fields = ('question', 'type', 'answer_type',)
 
 class OptionForm(forms.ModelForm):
+    #dependent_question = forms.ModelChoiceField(Department.objects, required=False, widget=SelectWithPop)
     class Meta:
         model = Option
         fields = ('option_value', 'dependent_question',)
@@ -15,4 +16,4 @@ class OptionForm(forms.ModelForm):
 class FieldForm(forms.ModelForm):
     class Meta:
         model = Field
-        fields = ('field_label', 'field_type',)
+        fields = ('field_label', 'field_type', 'field_option')
