@@ -1,12 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{%load  web_tags%}
+{%load web_tags%}
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
 	<title>{% block page_title %}{% page_title request %}{% endblock %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="google-site-verification" content="qEeX_hSW6GR8wGwaKqj5QUzWV2i-rscwefvklX59oQc" />
+<!--
 <meta name="description" content="{%block page_desc%}India's phone bazaar. Find best deals on books, magazines, computers, mobiles, home electronics, home appliances. Call 922 222 1947 to buy directly from brands.{%endblock%}"/>
 <meta name="keywords" content="{%block page_tags%}Chaupaati Bazaar, Online Shopping, Store Online, Buy Books, Subscribe Magazines, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Purchase On Web, Cheap product, india{%endblock%}"/>
+-->
 {% block extra_header %}
 {% endblock %}
 {% block canonical %}
@@ -16,8 +17,7 @@
 <link rel="stylesheet" href="{{MEDIA_URL}}css/bp/screen.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/bp/print.css" type="text/css" media="print" />
         <link rel="stylesheet" href="{{MEDIA_URL}}css/pop_up.css" type="text/css" />
-        <!--<link rel="stylesheet" href="{{MEDIA_URL}}css/ch.v16.css" type="text/css" />
-         <link rel="stylesheet" href="{{MEDIA_URL}}css/ch.v16.css" type="text/css" />-->
+        <link rel="stylesheet" href="{{MEDIA_URL}}css/ch.v16.css" type="text/css" />
         <link rel="stylesheet" href="{{MEDIA_URL}}js/jquery-suggestion/css/styles.css" type="text/css" /> 
 {% endblock %}
 		
@@ -34,6 +34,7 @@
 
 <link rel="stylesheet" href="{{MEDIA_URL}}css/base.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/common.css" type="text/css" media="screen, projection" />
+<!--
 <link rel="stylesheet" href="{{MEDIA_URL}}css/menu.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/buttons.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/header.css" type="text/css" media="screen, projection" />
@@ -55,6 +56,7 @@
 
 <link rel="stylesheet" href="{{MEDIA_URL}}css/forgot_password.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/jq/jquery-ui-1.8.2.custom.css" type="text/css" media="screen, projection" />
+-->
 
 <link rel="shortcut icon" href="{%render_favicon request%}"/>
 {% endblock %}
@@ -69,116 +71,56 @@
 <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.metadata.js"></script>
 <script type="text/javascript" src="{{MEDIA_URL}}js/jquery-ui-timepicker-addon.js"></script>
 {% endblock %}
+
 </head>
 <body>
-<div id="fb-root"></div>
-
-<div class="container shadow_one bottomrc5"> 
-            {%block header%}
-            {#% render_header request %#}
-            {%endblock%}
-  <div id="main">
-    <div id="ppd_content">
-    {% block ppd_content %}
-    {% endblock %}
-    </div>
-    <div id="content">    
-      {% block content %}
-      {% endblock %}    
-    </div>
-</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td colspan=2 align="center" valign="middle" class="top_banner"><div align="center"> <img src="{{MEDIA_URL}}images/logo.gif" width="140" height="100" /></div></td>
+    </tr>
+    <tr>
+        <td style="width:20%; vertical-align:top;">
+            <div class="menu">
+            <table style="width:100%">
+                <tr>
+                    <td>
+                        <a class="hupt" href="/categories/view/">Categories</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="hupt" href="YOUR-URL">Upload Document</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="hupt" href="YOUR-URL">Build Document</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="hupt" href="YOUR-URL">Newsletter</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="hupt" href="YOUR-URL">Blog</a>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </td>
+        <td style="width:80%; vertical-align:top;">
+            {% block content %}
+            {% endblock %}     
+        </td>
+    </tr>
+</table>
 {%block footer%}
 {% render_footer request %}
 {%endblock%}
-<div id="dialog" title="Sign in" class="bottomrc5"></div>
-<div id="shipping_dialog" title="Shipping info"></div>
-<div id="response_dialog"></div>
-<div class="hidden"> 
-{% block hidden_stuff %}
-{% endblock %}
-   </div>
-</div>
 
-<div id='greeting_popup' style="background-color:#fff !important;"></div>
-<div id="call_popup" style="background-color:#fff !important;"></div>
-
-<!--cc box -->
-<script type="text/javascript" language="javascript">
-//					$(function() {
-//					
-//				
-//				$("#cc_show_hide").toggle(function()
-//				{ 			
-//					$( ".user_box" ).hide( "slide", 500 );			
-//					$("#cc_show_hide").html("Show &raquo;");	
-//					return false;	 		
-//				},
-//				
-//				function()
-//				{ 					
-//						$( ".user_box" ).show( "slide", 500 );				
-//						$("#cc_show_hide").html("Hide &laquo;");						
-//						return false;
-//				});
-//				
-//			
-//				});
-//	
-</script>
-
-<script type="text/javascript" language="javascript">
-
-				$(function() {					
-				
-				$("#showFollow").toggle(function()
-				{ 			
-					$( ".follow_us_mn" ).show("fast");						
-					return false;	 		
-				},
-				
-				function()
-				{ 					
-						$( ".follow_us_mn" ).hide("fast");											
-						return false;
-				});		
-				
-				$('body').click(function() {
-				$( ".follow_us_mn" ).hide("fast");	
-				});		
-			
-				});	
-
-</script>
-<!--end cc box-->
-
-    {% block script_footer %}
-<script type="text/javascript">
-        
-        $("#id_q").keyup(function(){
-            var url = "/suggest";
-            var data = 'chars=' + $('#id_q').val();
-            var onSuccess = function(response) {
-                $('#id_q').jsonSuggest(response,{onSelect:callback,minCharacters:2});
-            };
-            var onError = function() {
-            };
-    
-            $.ajax({ url:url,
-                   data : data,
-                   success : onSuccess,
-                   error : onError,
-                   type : 'POST'
-                   });
-            return false;
-
-        });
-        function callback(item) {
-            setTimeout(function(){$('#search_form').submit();},100);
-        };
-    
-    
-     </script>
-     
+{% block script_footer %}
 {% endblock %}
 </body>
 </html>

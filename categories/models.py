@@ -64,14 +64,14 @@ class Category(models.Model):
         ordering = ('name',)
 
     name = models.CharField(max_length=50)
-    client = models.ForeignKey('accounts.Client')
-    tagline = models.CharField(max_length=500, blank = True, null = True)
+    #client = models.ForeignKey('accounts.Client')
+    #tagline = models.CharField(max_length=500, blank = True, null = True)
     description = models.TextField(blank = True, null = True)
     slug = models.SlugField(max_length=100)
 
     image = models.ImageField(upload_to = 'category/%Y/%m', storage = upload_storage, blank = True, null = True)
-
-    objects = CategoryCacheManager()
+    sort_order = models.PositiveIntegerField(default=1)
+    #objects = CategoryCacheManager()
 
     def save(self, *args, **kwargs):
         if self.id:

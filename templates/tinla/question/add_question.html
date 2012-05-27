@@ -67,6 +67,12 @@
 		padding: 5px 10px;
 		text-decoration: none;
 	}
+    .dynamic-option-form select {
+        width: 200px;
+    }
+    #id_answer_type, #id_type, #id_rows, #id_columns {
+        width: 150px;
+    }
 </style>
 	
 <div class="padding_top10">
@@ -78,6 +84,13 @@
 			<div class="clear bordergray"></div>
 		</div>
 	</div>
+    {% if errors %}
+    <div class="error">
+        {% for error in errors %}
+            {{error}}
+        {% endfor %}
+    </div>
+    {% endif %}
 	<div class="inner-content">
 		<form action="" id="add_form" name="add_form" method="POST" enctype="multipart/form-data">
 			<div class="question_details_container"><!-- div web module details container -->
@@ -88,13 +101,17 @@
 							<div class="mart20"> <!-- div main -->
 								<div class="details left"><!-- div left part -->
 									<div class="left f11 w110 marb5">{{ form.question.label }}<span class="red">*</span></div>
-									<div class="left w350 marb5">{{ form.question }}</div>									
+									<div class="left w350 marb5">{{ form.question }}</div>
 								</div><!-- /div left part -->
 								<div class="details left"><!-- div right part -->
 									<div class="marl100 left f11 w110 marb5">{{ form.answer_type.label }}<span class="red">*</span></div>
 									<div class="left w250 marb5">{{ form.answer_type }}</div>
-									<div class="marl100 left f11 w110 marb5">{{ form.type.label }}<span class="red">*</span></div>
+									<div class="marl100 left f11 w110 marb5">{{ form.type.label }}</div>
 									<div class="left w250 marb5">{{ form.type }}</div>
+                                    <div class="marl100 left f11 w110 marb5 text-area">{{ form.rows.label }}</div>
+									<div class="left w250 marb5 text-area">{{ form.rows }}</div>
+                                    <div class="marl100 left f11 w110 marb5 text-area">{{ form.columns.label }}</div>
+									<div class="left w250 marb5 text-area">{{ form.columns }}</div>
 								</div><!-- /div right part -->
 								<div class="clear"></div>
 							</div><!-- /div main -->
@@ -106,7 +123,7 @@
 
 				<!--************ FIELD FORM **************-->
 				<div id="item_wrapper f11" class="marl10"><!-- div item wrapper -->
-                	<a class="toggle-down-arrow arrow-right item_link" id="field_options" title="Click here to add fields" href="#">Add Fields</a>
+                	<a class="toggle-down-arrow arrow-right item_link" id="field_options" title="Click here to add fields" href="#">Fields</a>
                 </div><!-- /div item wrapper -->
 				<div id="field_options_div" class="hide clear"> <!-- div option_details -->
 					<div class="divider-top"><!-- div divider top -->
@@ -115,12 +132,14 @@
 							{% for i in field_formset.forms %}
 								<div class="dynamic-field-form">
 									{% if i %}
-										<div class="padb5 padt5 marb5 left seller-rate-chart" style="background-color:#fefefe; width:100%"><!-- div list part -->
-											<div class="left flgray f11 w110 marl10 ">{{ i.field_label.label }}</div>
-											<div class="left w250">{{ i.field_label }}</div>
-											<div class="left flgray f11 w110 marl10 ca">{{ i.field_type.label }}</div>
-                                            <div class="left w250 seller-dropdown">{{ i.field_type }}</div>
-                                            <div class="left marl10">{{i.DELETE}} Delete<!--<a class="delete-field-form" href="#">Delete</a>--> </div>
+										<div class="padb5 padt5 marb5 left" style="background-color:#fefefe; width:100%"><!-- div list part -->
+											<div class="left flgray f11 w75 marl10 ">{{ i.field_label.label }}</div>
+											<div class="left w200">{{ i.field_label }}</div>
+											<div class="left flgray f11 w75 marl10 ra">{{ i.field_type.label }}</div>
+                                            <div class="left w100 ra">{{ i.field_type }}</div>
+                                            <div class="left flgray f11 w100 marl10 ca">{{ i.field_option.label }}</div>
+                                            <div class="left w150 ra">{{ i.field_option }}</div>
+                                            <div class="left marl10 ra w100">{{i.DELETE}} Delete<!--<a class="delete-field-form" href="#">Delete</a>--> </div>
 										</div><!-- /div list part -->
 										<div class="clear"></div>
 									{% endif %}
@@ -138,7 +157,7 @@
 				<div class="clear border-dotted-gray"></div>
 				<!--************ OPTIONS FORM **************-->
 				<div id="item_wrapper f11" class="marl10"><!-- div item wrapper -->
-                	<a class="toggle-down-arrow arrow-right item_link" id="add_options" title="Click here to add options" href="#">Add Options</a>
+                	<a class="toggle-down-arrow arrow-right item_link" id="add_options" title="Click here to add options" href="#">Options</a>
                 </div><!-- /div item wrapper -->
 				<div id="add_options_div" class="hide clear"> <!-- div option_details -->
 					<div class="divider-top"><!-- div divider top -->
@@ -147,16 +166,17 @@
 							{% for i in option_formset.forms %}
 								<div class="dynamic-option-form">
 									{% if i %}
-										<div class="padb5 padt5 marb5 left seller-rate-chart" style="background-color:#fefefe; width:100%"><!-- div list part -->
+										<div class="padb5 padt5 marb5 left" style="background-color:#fefefe; width:100%"><!-- div list part -->
 											<div class="left flgray f11 w110 marl10 ">{{ i.option_value.label }}</div>
 											<div class="left w250">{{ i.option_value }}</div>
                                             <div class="left flgray f11 w110 marl10 ca">{{ i.dependent_question.label }}</div>
-                                            <div class="left w250 seller-dropdown">{{ i.dependent_question }}
+                                            <div class="left w250">{{ i.dependent_question }}
                                             <a href="/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{i.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{i.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
                                                 <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
                                             </a>
                                             </div>
-                                            <div class="add_dependent_question"></div>
+                                            <div class="left marl10 ra w100">{{i.DELETE}} Delete<!--<a class="delete-field-form" href="#">Delete</a>--> </div>
+                                            <!--<div class="add_dependent_question"></div>-->
 										</div><!-- /div list part -->
 										<div class="clear"></div>
 									{% endif %}
@@ -186,12 +206,22 @@
 {{block.super}}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function PreselectMyItem(){
+    var e = document.getElementById("id_answer_type");
+    var str = e.options[e.selectedIndex].value;
+    if (str=="textarea"){
+        $('.text-area').show();
+    }
+    else{
+        $('.text-area').hide();
+    }
+});
+
 $(document).ready(function(){
     $('.item_link').toggle(
         function(){	
             var e = this.id;
             var k = e+"_div";
-            //$('#item_form').show();
             $('#'+k).slideDown();
             $(this).removeClass('toggle-down-arrow');
             $(this).addClass('toggle-up-arrow');
@@ -199,17 +229,23 @@ $(document).ready(function(){
         function(){
             var e = this.id;
             $('#'+e+'_div').slideUp();
-    //		$('#'+e+'_item').removeclass('hide');
-            //$('#item_form').hide();
             $(this).removeClass('toggle-up-arrow');
             $(this).addClass('toggle-down-arrow');
         }
     );
-
-
-
-
+    $('#id_answer_type').change(function(){
+        var e = this.value;
+        if (e=="textarea"){
+            $('.text-area').show();
+        }
+        else{
+            $('.text-area').hide();
+        }
+    });
 });
+
+
+
 </script>
 <script type="text/javascript">
     function updateElementIndex(el, prefix, ndx) {
@@ -220,86 +256,38 @@ $(document).ready(function(){
         if (el.name) el.name = el.name.replace(id_regex, replacement);
     }
 
-    function deleteForm(btn, prefix) {
-        //var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-        // Delete the item/form
-        $(btn).parents('.dynamic-field-form').remove();
-        var forms = $('.dynamic-field-form'); // Get all the forms 
-        // Update the total number of forms (1 less than before)
-        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
-        var i = 0;
-        // Go through the forms and set their indices, names and IDs
-        for (var i=0, formCount=forms.length; i<formCount; i++) {
-            $(forms.get(i)).children().not(':last').children().each(function() {
-                updateElementIndex(this, prefix, i);
-            });
-        }
-        return false;
-    }
-
-/*    function addForm(btn, prefix, formclass) {
-        var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-        // Clone a form (without event handlers) from the first form
-        var row = $("." + formclass +":first").clone(true).get(0);
-        // Insert it after the last form
-        $(row).removeAttr('id').hide().insertAfter("." + formclass +":last").slideDown(300);
-
-        // Remove the bits we don't want in the new row/form
-        // e.g. error messages
-        $(".errorlist", row).remove();
-        $(row).children().removeClass("error");
-
-        // Relabel or rename all the relevant bits
-        $(row).children().children().each(function() {
-            updateElementIndex(this, prefix, formCount);
-            $(this).val("");
+    function cloneMore(selector, type) {
+        var newElement = $(selector).clone();
+        var total = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
+        newElement.find(':input').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
         });
-
-        // Update the total form count
-        $("#id_" + prefix + "-TOTAL_FORMS").val(formCount + 1);
-        return false;
+        newElement.find('a').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        newElement.find('label').each(function() {
+            var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+            $(this).attr('for', newFor);
+        });
+        total++;
+        $('#id_' + type + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
     }
-*/
-
-function cloneMore(selector, type) {
-    var newElement = $(selector).clone();
-    var total = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
-    newElement.find(':input').each(function() {
-        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
-        var id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('');
-    });
-    newElement.find('a').each(function() {
-        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
-        var id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('');
-    });
-    newElement.find('label').each(function() {
-        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
-        $(this).attr('for', newFor);
-    });
-    total++;
-    $('#id_' + type + '-TOTAL_FORMS').val(total);
-    $(selector).after(newElement);
-}
 
     // Event handlers for Field
     $("#add_another_field").click(function() {
-        //return addForm(this, "field_set", "dynamic-field-form");
-        cloneMore('div.dynamic-field-form:last', 'dynamic-field-form');
+        cloneMore('div.dynamic-field-form:last', 'field_set');
     });
 
-    $(".delete-field-form").click(function() {
-        return deleteForm(this, "field_set");
-    });
 
     // Register the click event handlers
     $("#add_another_option").click(function() {
-        //return addForm(this, "option_set", "dynamic-option-form");
         cloneMore('div.dynamic-option-form:last', 'option_set');
     });
-
-
 </script>
 <script type="text/javascript" src="/adminmedia/js/admin/RelatedObjectLookups.js"></script>
 <script type="text/javascript" src="/admin/jsi18n/"></script>

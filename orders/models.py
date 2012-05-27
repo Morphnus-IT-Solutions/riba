@@ -2,7 +2,6 @@ from django.db import models
 from decimal import Decimal, getcontext, ROUND_HALF_UP, ROUND_UP
 import math
 from datetime import datetime, timedelta
-import xml.etree.ElementTree as xml
 from django.db.models import Q, Sum
 from utils import utils
 from catalog.models import SellerRateChart, BundleProducts
@@ -28,7 +27,6 @@ def encoder(s, encoding):
         return s.encode(encoding, 'ignore')
     except AttributeError:
         return s
-xml._encode = encoder
 
 
 class Order(models.Model):
@@ -663,7 +661,7 @@ class Order(models.Model):
         oi.list_price = list_price * oi.qty
         oi.sale_price = offer_price * oi.qty
         #oi.shipping_charges = rate_chart.shipping_charges * oi.qty
-        oi.cashback_amount = cashback_amount * oi.qty if cashback_amount else Decimal('0')
+        oi.cashback_amount = 0#cashback_amount * oi.qty if cashback_amount else Decimal('0')
         oi.total_amount = oi.sale_price - oi.cashback_amount  #added by prady
 
         if oi.seller_rate_chart.is_bundle:
@@ -969,7 +967,7 @@ class Order(models.Model):
         elif total['amount'] > self.payable_amount:
             return True, (total['amount'] - self.payable_amount)
         else:
-            return False, ((self.payable_amount - total['amount']) if total['amount'] else self.payable_amount)
+            return False, 0#((self.payable_amount - total['amount']) if total['amount'] else self.payable_amount)
 
 
     #required - prady
@@ -985,7 +983,7 @@ class Order(models.Model):
         elif total['amount'] > self.payable_amount:
             return True, (total['amount'] - self.payable_amount)
         else:
-            return False, ((self.payable_amount - total['amount']) if total['amount'] else self.payable_amount)
+            return False, 0#((self.payable_amount - total['amount']) if total['amount'] else self.payable_amount)
 
 
     def confirm(self, request, *args, **kwargs):
@@ -1346,14 +1344,7 @@ class Order(models.Model):
         #TODO add code to free up promotions used on this order - prady
         
         self.save()
-        #Create cancel order xml for confirmed orders
-        if utils.is_future_ecom(self.client):
-            if self.is_xml_created(request):
-                self.create_xml(request, type='cancel', reason=reason)
-            if self.coupon:
-                with transaction.commit_on_success():
-                    self.update_promotion_params(request, type='cancel')
-        
+                
         CancelledOrder.objects.create(order=self, user=profile, refund_amount=refund_amount,
             notes=reason)
 
@@ -1366,8 +1357,8 @@ class Order(models.Model):
         o_log.save()
 
         cancelled_items = self.get_order_items(request, select_related=('seller_rate_chart',))
-        self.notify_cancelled_order(request, cancelled_items,
-            refund_amount=(refund_amount if payment_done else 0))
+        #self.notify_cancelled_order(request, cancelled_items,
+        #    refund_amount=(refund_amount if payment_done else 0))
         return
     
     #not required - prady
@@ -1444,10 +1435,6 @@ class Order(models.Model):
         return pending_order
 
     def notify_pending_order(self, request, groups = ['seller','buyer','admin']):
-        if self.coupon:
-            # Coupon has been applied on this order
-            with transaction.commit_on_success():
-                self.update_promotion_params(request, type='order_placed')
         if self.payment_mode != 'cash-at-store':
             from notifications.pendingordernotification import PendingOrderNotification
             notification_obj = PendingOrderNotification(self, request, **dict(groups=groups))
@@ -1459,10 +1446,6 @@ class Order(models.Model):
         notification_obj.sendSMS()
 
     def notify_confirmed_order(self, request, groups = ['seller','buyer','admin']):
-        if self.payment_mode not in utils.DEFERRED_PAYMENT_MODES and self.coupon:
-            # Coupon has been applied on this order
-            with transaction.commit_on_success():
-                self.update_promotion_params(request, type='order_placed')
         from notifications.confirmedordernotification import ConfirmedOrderNotification
         notification_obj = ConfirmedOrderNotification(self, request, **dict(groups=groups))
         notification_obj.send()
@@ -1852,10 +1835,10 @@ class OrderItem(models.Model):
     #delivered_on = models.DateTimeField(blank=True,null=True)
     
     #additional OrderItem Exceptions
-    QuantityIncrease = type('QuantityIncrease', (Exception,), {})
-    InvalidOperation = type('InvalidOperation', (Exception,), {})
-    InsufficientData = type('InsufficientData', (Exception,), {})
-    NoCancellationReason = type('InsufficientData', (Exception,), {})
+    #QuantityIncrease = type('QuantityIncrease', (Exception,), {})
+    #InvalidOperation = type('InvalidOperation', (Exception,), {})
+    #InsufficientData = type('InsufficientData', (Exception,), {})
+    #NoCancellationReason = type('InsufficientData', (Exception,), {})
 
     def item_info(self):
         info = ''
@@ -2583,7 +2566,7 @@ class DeliveryInfo(models.Model):
     gift_notes = models.TextField(blank=True, null=True, verbose_name='Gift Notes')
     
     #Exception
-    InvalidAddress = type('InvalidAddress', (Exception, ), {}) 
+    #InvalidAddress = type('InvalidAddress', (Exception, ), {}) 
 
     def clone(self):
         cloned = DeliveryInfo()
@@ -2616,7 +2599,7 @@ class BillingInfo(models.Model):
     modified_on = models.DateTimeField(blank=True, null=True, auto_now=True)
 
     #Exception
-    InvalidAddress = type('InvalidAddress', (Exception, ), {}) 
+    #InvalidAddress = type('InvalidAddress', (Exception, ), {}) 
     
     def clone(self):
         cloned = BillingInfo()

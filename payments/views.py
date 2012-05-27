@@ -452,9 +452,9 @@ def process_payment_suvidha(request):
         amount = delta
         data = dict(amount=amount, notes='Payment confirmation from suvidha',
             payment_realized_on=datetime.now())
-        with transaction.commit_on_success():
+        #with transaction.commit_on_success():
             #start transaction
-            payment.move_payment_state(request, data=data, suvidha=True, new_state=new_state)
+        #    payment.move_payment_state(request, data=data, suvidha=True, new_state=new_state)
     except PaymentAttempt.InvalidOperation:
         payment_log.exception('Support: order_confirm %s - Invalid payment operation' % order.id)
     except PaymentAttempt.InsufficientData:
@@ -702,7 +702,7 @@ def confirmation(request, order_id):
     
     earn_map = PointsHeader.EARN_POINTS_MAP
     points_ratio = earn_map.get(order.client.name)
-    payback_points_earned = (order.payable_amount*Decimal(points_ratio)).quantize(Decimal('1')) if order.payback_id else 0
+    payback_points_earned = 0#(order.payable_amount*Decimal(points_ratio)).quantize(Decimal('1')) if order.payback_id else 0
     
     total_order_qty = order.get_item_count()
     

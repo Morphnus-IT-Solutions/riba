@@ -477,7 +477,7 @@ def update_price(xml_string):
             return True
         else:
             return False
-    except Exception as e:
+    except Exception, e:
         return False
 
 def update_atg_price(update_dict, delete_slot_price=False):

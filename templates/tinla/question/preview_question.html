@@ -1,5 +1,5 @@
 {% extends 'web/base.html' %}
-{% load web_tags %}
+{% load question_tags %}
 {% block content %}
 <style>
 .uiButton {
@@ -91,14 +91,55 @@
 		</div>
     	<div class="clear bordergray"></div>
         {% for qh in hierarchy %}
-            <div>{{qh.0}} : {{qh.1}}</div>
+            <div class="left flgray f11 w250 marl10">{{qh.0}}</div><div class="left w200">{{qh.1}}</div><br/><br/>
         {% endfor %}
         <form id="preview_question_form" method="POST" action="">
-            <div class="left flgray f11 w110 marl10 ">{{q.question}}</div>
+            <div class="left marl10 f12 w250">{{q.question}}</div>
             {% if fields %}
+                {% for f in fields %}
+                    <div class="flgray f11 w250 marl10 ">{{f.field_label}}</div>
+                    {%ifequal f.field_type "text"%}
+                         <div class="left w200"><input id="{{f.id}}" type="text" name="current_question_val"></div>   
+                    {% endifequal %}
+                    {% ifequal f.field_type "textarea" %}
+                        <textarea class="w250 h50" style="height:50px !important;" name="current_question_val"></textarea>
+                    {% endifequal %}
+                    {% ifequal f.field_type "dropdown" %}
+                        <select id="{{f.id}}" name="current_question_val">
+                        {% with f.field_option|split_newline as opts %}
+                            {% for o in opts %}
+                                <option value="{{o}}">{{o}}</option>
+                            {% endfor %}
+                        {% endwith %}
+                        </select>
+                    {% endifequal %}
+                    {% ifequal f.field_type "radio" %}
+                        {% with f.field_option|split_newline as opts %}
+                            {% for o in opts %}
+                                <div><input type="radio" name="current_question_val" value="{{o|slugify}}" />{{o}}</div>
+                            {% endfor %}
+                        {% endwith %}
+                    {% endifequal %}
+                    {% ifequal f.field_type "checkbox" %}
+                        {% with f.field_option|split_newline as opts %}
+                            {% for o in opts %}
+                                <div><input type="checkbox" name="current_question_val" value="{{o|slugify}}" />{{o}}</div>
+                            {% endfor %}
+                        {% endwith %}
+                    {% endifequal %}
+                    {% ifequal f.field_type "date" %}
+                        <input readonly="true" type="text" placeholder="Select a Date" name="current_question_val" class="hasdatepicker" />
+                    {% endifequal%}
+                    {% ifequal f.field_type "attachment"%}
+                        <input type="file" name="current_question_val" size="40" />
+                    {% endifequal %}
+                {% endfor %}
             {% else %}
                 {% ifequal q.answer_type "text" %}
                     <div class="left w250"><input id="{{q.id}}" type="text" name="current_question_val"></div>
+                {% endifequal %}
+                {% ifequal q.answer_type "textarea" %}
+                    <textarea class="w250 h50" style="height:50px !important;" name="current_question_val"></textarea>
                 {% endifequal %}
                 {% ifequal q.answer_type "dropdown" %}
                    <select id="{{q.id}}" name="current_question_val"> 
@@ -106,15 +147,56 @@
                             <option value="{{option.option_value}}">{{option.option_value}}</option>
                         {% endfor %}
                    </select>
-                   
+                {% endifequal %}
+                {% ifequal q.answer_type "radio" %}
+                    {% for option in options %}
+                        <div><input type="radio" name="current_question_val" value="{{option|slugify}}" />{{option}}</div>
+                    {% endfor %}
+                {% endifequal %}
+                {% ifequal q.answer_type "checkbox" %}
+                    {% for option in options %}
+                        <div><input type="checkbox" name="current_question_val" value="{{option|slugify}}" />{{option}}</div>
+                    {% endfor %}
+                {% endifequal %}
+                {% ifequal q.answer_type "date" %}
+                    <input readonly="true" type="text" placeholder="Select a Date" name="current_question_val" class="hasdatepicker" />
+                {% endifequal%}
+                {% ifequal q.answer_type "attachment"%}
+                    <input type="file" name="current_question_val" size="40" />
                 {% endifequal %}
             {% endif %}
             </div>
             <div>
-                <input type="hidden" id="id_{{q.id}}" value="{{q.id}}" name="current_question_id"></input>
-                <input type="submit" id="continue" value="Continue" class="uiButton fblack" name="continue"></input>
+                {% if preview_complete %}
+		    <br/><br/>
+                    <div>
+                        <span>Your preview is complete !</span>
+                    </div>
+                    <br/><br/>
+                    <div class="content_head"> 
+                        <div class="left"><a href="/question/view/" class="uiButton fblack" style="padding: 3px 8px !important;">View All Questions</a></div>
+                    </div>
+                {% else %}
+		    <br/><br/>
+	            <div class="content_head">
+                    <input type="hidden" id="id_{{q.id}}" value="{{q.id}}" name="current_question_id"></input>
+                    <input type="submit" id="continue" value="Continue" class="uiButton fblack" name="continue"></input>
+                    </div>
+                {% endif %}
             </div>
         </form>
 	</div>
 </div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+     $('.hasdatepicker').datepicker({dateFormat: 'dd-mm-yy',
+          onSelect: function(){
+             $('.hasdatepicker').datepicker('enable');
+         },
+     });
+});
+</script>
 {% endblock %}

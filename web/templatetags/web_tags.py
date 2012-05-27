@@ -55,16 +55,8 @@ def cart_display(path):
 @register.simple_tag
 def get_username(request):
     if request.user.is_authenticated():
-        is_cc = True if utils.is_cc(request) else False
-        is_franchise = True if utils.is_franchise(request) else False
         user = request.user
-        if is_cc or is_franchise:
-            id = request.call['id']
-            cs = request.session[id]
-            user = cs['user']
-            profile = cs['profile']
-        else:
-            profile = utils.get_user_profile(request.user)
+        profile = utils.get_user_profile(request.user)
         if str(profile.full_name).strip():
             return profile.full_name
         else:
@@ -181,7 +173,7 @@ def category_href(request, filter_key, filter_value):
         if path:
             request_path += "/%s" % (path)
     matches = q.findall(full_path)
-    match = matches[0] if matches else None
+    match = None#matches[0] if matches else None
     request_path += '/'
     arg_path = ''
     filter = "%s=%s" % (filter_key, filter_value)
@@ -211,7 +203,7 @@ def category_href_seo(request, filter_key, filter_value):
         if path:
             request_path += "/%s" % (path)
     matches = q.findall(full_path)
-    match = matches[0] if matches else None
+    match = None#matches[0] if matches else None
     request_path += '/'
     arg_path = ''
     filter = "%s=%s" % (filter_key, filter_value)
@@ -863,7 +855,7 @@ def render_product_page_title(product, request=None):
         store = product.category.store.name
     except:
         store = ''
-    currency = "Rs. " if product.currency == 'inr' else "$"
+    currency = "Rs. "# if product.currency == 'inr' else "$"
     if store == 'Mobiles':
         page_title = "%s %s: Buy %s at Lowest Price %s%s in India | Chaupaati.in" % (brand, category, product.title, currency, utils.formatMoney(product.primary_rate_chart().offer_price))
     if store == 'Books':
@@ -894,11 +886,11 @@ def render_product_page_desc(product, request=None):
         store = product.category.store.name
     except:
         store = ''
-    currency = "Rs. " if product.currency == 'inr' else "$"
+    currency = "Rs. "# if product.currency == 'inr' else "$"
     discount = product.primary_rate_chart().getDiscount()
-    discount_text = " & get %s%% discount" % (discount) if discount > 0 else ""
+    discount_text = " & get %s%% discount" % (discount)# if discount > 0 else ""
     savings = product.primary_rate_chart().getSavings()
-    savings_text = " Save %s%s." % (currency, utils.formatMoney(savings)) if discount > 0 else ""
+    savings_text = " Save %s%s." % (currency, utils.formatMoney(savings))# if discount > 0 else ""
     if store == 'Mobiles':
         page_desc = "Online %s shopping in India, Buy %s cell phones%s. Best deal in India. Our offer price %s%s.%s Compare prices, features. Purchase cheapest %s on website." % (category, product.title,discount_text, currency, utils.formatMoney(product.primary_rate_chart().offer_price), savings_text, category)
     if store == 'Books':
@@ -930,11 +922,11 @@ def render_product_page_tags(product, request=None):
         store = product.category.store.name
     except:
         store = ''
-    currency = "Rs. " if product.currency == 'inr' else "$"
+    currency = "Rs. "# if product.currency == 'inr' else "$"
     discount = product.primary_rate_chart().getDiscount()
-    discount_text = " & get %s%% discount" % (discount) if discount > 0 else ""
+    discount_text = " & get %s%% discount" % (discount)# if discount > 0 else ""
     savings = product.primary_rate_chart().getSavings()
-    savings_text = " Save %s%s." % (currency, utils.formatMoney(savings)) if discount > 0 else ""
+    savings_text = " Save %s%s." % (currency, utils.formatMoney(savings))# if discount > 0 else ""
     if store == 'Mobiles':
         page_tags = "Online %s shopping in India, Buy %s cell phones%s. Best deal in India. Our offer price %s%s.%s Compare prices, features. Purchase cheapest %s on website." % (category, product.title,discount_text, currency, utils.formatMoney(product.primary_rate_chart().offer_price), savings_text, category)
     if store == 'Books':

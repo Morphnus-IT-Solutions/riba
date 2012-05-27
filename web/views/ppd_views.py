@@ -6267,7 +6267,7 @@ def activate_payment_option(request):
     option_id = request.POST['option']
     #client_id = request.POST['cid']
     is_active = request.POST['activate']
-    is_active = True if is_active == 'True' else False
+    is_active = True# if is_active == 'True' else False
     #pm = PaymentMode.objects.get(id=option_id)
     po = PaymentOption.objects.get(id=option_id)
     po.is_active = is_active

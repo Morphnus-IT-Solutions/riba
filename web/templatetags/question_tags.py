@@ -16,3 +16,7 @@ def add_nested_question(request):
                 option_formset = option_formset,\
                 field_formset = field_formset, request=request)
 register.inclusion_tag('question/nested_question.html')(add_nested_question)
+
+@register.filter
+def split_newline(value):
+    return value.split('\n')

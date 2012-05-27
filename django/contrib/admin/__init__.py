@@ -22,7 +22,6 @@ def autodiscover():
         mod = import_module(app)
         # Attempt to import the app's admin module.
         try:
-            print app
             before_import_registry = copy.copy(site._registry)
             import_module('%s.admin' % app)
         except:

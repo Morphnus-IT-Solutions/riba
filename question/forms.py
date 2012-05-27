@@ -5,7 +5,12 @@ from question.models import *
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('question', 'type', 'answer_type',)
+        fields = ('question', 'type', 'answer_type', 'rows', 'columns', )
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        self.fields['question'].error_messages['required'] = 'Please enter question'
+
 
 class OptionForm(forms.ModelForm):
     #dependent_question = forms.ModelChoiceField(Department.objects, required=False, widget=SelectWithPop)
@@ -13,7 +18,13 @@ class OptionForm(forms.ModelForm):
         model = Option
         fields = ('option_value', 'dependent_question',)
 
+
 class FieldForm(forms.ModelForm):
     class Meta:
         model = Field
         fields = ('field_label', 'field_type', 'field_option')
+
+    def __init__(self, *args, **kwargs):
+        super(FieldForm, self).__init__(*args, **kwargs)
+        self.fields['field_option'].widget.attrs['cols'] = 15
+        self.fields['field_option'].widget.attrs['rows'] = 5

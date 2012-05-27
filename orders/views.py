@@ -283,10 +283,10 @@ def add_to_cart(request, **kwargs):
             id=rate_chart_id)
         if qty < rate_chart.min_qty:
             qty = rate_chart.min_qty
-        with transaction.commit_on_success():
-            error = cart.add_item(request, rate_chart=rate_chart, qty=qty)
-            if error:
-                errors.append(error)
+        #with transaction.commit_on_success():
+        #    error = cart.add_item(request, rate_chart=rate_chart, qty=qty)
+        #    if error:
+        #        errors.append(error)
     except Order.BundleArticle, e:
         # Bundle with same src is already present in the cart
         # Adding src which is already a part of one of the bundles in cart
@@ -337,18 +337,7 @@ def update_item_quantity(request, **kwargs):
         qty = '12' # to ensure the next function calls dont break.
     response = {}
     errors = []
-    try:
-        with transaction.commit_on_success():
-            cart.update_item_quantity(request, item_id=item_id, qty=qty)
-            response['status'] = 'Quanity updated'
-    except Order.BundleArticle, e:
-        order_log.warning("BUNDLE: %s is bundle article." % e.child)
-        errors.append('Sorry, cannot change the qty for %s' % e.child)
-    except Exception, e:
-        # XXX Check stock status for the asked quantity
-        order_log.exception("Error updating item qty %s" % item_id)
-        errors.append('Unable to update quantity. Please try again')
-
+   
     response.update(errors=errors)
     return response
 
@@ -450,23 +439,23 @@ def view_cart(request, **kwargs):
     messages = []
 
     try:
-        with transaction.commit_on_success():
-            order_log.info('Before Updating cart %s with the \
-                latest seller rate chart, Cart total %s' % (
-                cart.id,cart.payable_amount))
+        #with transaction.commit_on_success():
+    	order_log.info('Before Updating cart %s with the \
+		latest seller rate chart, Cart total %s' % (
+		cart.id,cart.payable_amount))
 
-            # XXX Cannot call update billing from here. We can call
-            # XXX update billing from src
-            previous_total = cart.payable_amount
-            cart.update_billing_from_src(request, sender='view_cart')
-            new_total = cart.payable_amount
-            order_log.info('After updating cart %s, Total is %s' % (
-                cart.id, cart.payable_amount))
+    	# XXX Cannot call update billing from here. We can call
+    	# XXX update billing from src
+    	previous_total = cart.payable_amount
+    	cart.update_billing_from_src(request, sender='view_cart')
+    	new_total = cart.payable_amount
+    	order_log.info('After updating cart %s, Total is %s' % (
+		cart.id, cart.payable_amount))
 
-            if new_total != previous_total:
-                messages.append('Your cart total has changed from %s to %s' % (
-                utils.formatMoney(previous_total), 
-                utils.formatMoney(new_total)))
+    	if new_total != previous_total:
+		messages.append('Your cart total has changed from %s to %s' % (
+		utils.formatMoney(previous_total), 
+		utils.formatMoney(new_total)))
     except Exception, e:
         order_log.exception("Error showing cart %s" % cart.id)
 
@@ -594,13 +583,6 @@ def shipping_detail_wo_cache(request, **kwargs):
     if request.POST and 'del_address' in request.POST:
         try:
             is_valid_shipping_address = False
-            with transaction.commit_on_success():
-                # XXX Can this be better? It does validations and saving
-                # XXX both. We should let one function do just one thing
-                is_valid_shipping_address, shipping_form_errors, \
-                        shipping_info_form = validate_and_save_delivery_info(
-                        request, order=cart)
-                #end transaction here. IFS check should not be inside transaction - prady
                 
             if is_valid_shipping_address:
                 pincode  = cart.get_address(request, type='delivery').address.pincode
@@ -776,7 +758,7 @@ def get_gateway_request(request, **kwargs):
             request, payment_attempt=payment_attempt)
         if not is_valid:
             # XXX Whats the case for is_valid False and no validation_errors
-            validation_errors = validation_errors if validation_errors else utils.DEFAULT_PAYMENT_PAGE_ERROR
+            validation_errors = validation_errors #if validation_errors else utils.DEFAULT_PAYMENT_PAGE_ERROR
     	    errors = validation_errors
 
     if is_valid:
@@ -935,15 +917,15 @@ def payment_mode(request, **kwargs):
     if request.method == 'POST':
         payment_mode_code = request.POST['payment_mode']
         try:
-            with transaction.commit_on_success():
-                pending_order.payment_mode = payment_mode_code
-                pending_order.save()
+            #with transaction.commit_on_success():
+            #    pending_order.payment_mode = payment_mode_code
+            #    pending_order.save()
                 # XXX Saving in session will cause CC orders to fail.
                 # XXX Imagine what happens when agent is playing around with
                 # XXX two calls
-                request.session['payment_mode_code'] = payment_mode_code
-                order_log.info(
-                    "Before checking availabilty payment_mode is %s" % payment_mode_code)
+            #    request.session['payment_mode_code'] = payment_mode_code
+            #    order_log.info(
+            #        "Before checking availabilty payment_mode is %s" % payment_mode_code)
 
                 # XXX I think this should not be commented or is it obsolete?
                 #inventory_errors = deplete_inventory(request, pending_order)
@@ -1547,28 +1529,4 @@ def next_page_after_shipping(request, cart):
 
 @never_cache
 def initialize_ivr(request):
-    try:
-        with transaction.commit_on_success():
-            order_id = request.POST['order_id']
-            payment_mode_code = request.POST['payment_mode_code']
-            pending_order = Order.objects.get(id=order_id)
-            payment_attempt = pending_order.create_payment_attempt(
-                request,
-                domain=request.client, 
-                payment_mode_code=payment_mode_code,
-                emi_plan=request.POST.get('emi_plan', ''))
-            
-            bank, gateway = get_bank_and_gateway(
-                request,
-                payment_mode_code,
-                pending_order.client)
-            payment_request = get_gateway_request(
-                request, 
-                gateway=gateway,
-                payment_attempt=payment_attempt,
-                bank=bank)
-            return HttpResponse('ok')
-    except Exception, e:
-        order_log.exception("Error initilizing ivr payment for %s" % order_id)
-        # XXX What should we do? raise? transaction should be rolled back
-        raise
+	pass

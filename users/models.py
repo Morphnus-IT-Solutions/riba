@@ -90,7 +90,6 @@ class Profile(models.Model):
         ('blacklisted','Blacklisted')))
     
     #Exceptions
-    InvalidEmail = type('InvalidEmail', (Exception, ), {})
     
     def __unicode__(self):
         return self.full_name or self.primary_phone

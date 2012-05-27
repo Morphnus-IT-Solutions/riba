@@ -16,12 +16,12 @@ from django.core.mail import EmailMessage, send_mail
 from payments.models import PaymentAttempt
 from promotions.models import Coupon, ScratchCard
 from django.contrib.auth.decorators import login_required
-from payments import hdfcpg
+#from payments import hdfcpg
 from django.template.loader import get_template
 from django.template import Context, Template
 import re
 import pyExcelerator
-from payments import ccAvenue
+#from payments import ccAvenue
 import logging
 from django.utils import simplejson
 from datetime import datetime,timedelta
@@ -411,7 +411,7 @@ def fetch_state_country_city_by_pincode(request,params, cart):
         address.country = country
         address.type = 'delivery'
         address.name = name
-        address.phone = params['mobile'] if 'mobile' in params  else request.user.username
+        address.phone = params['mobile']# if 'mobile' in params  else request.user.username
         address.created_on = datetime.now()
         address.save()
         delivery_info.address = address
@@ -2036,7 +2036,7 @@ def payment_mode(request):
                     if utils.is_future_ecom(request.client.client):
                         status = ebs_check(request, card_details['card_no'], pending_order, request.POST['cardtype'])
                         if status in ['Rejected']:
-                            gateway = 'hdfc-emi' if payment_mode == 'credit-card-emi-web' else 'hdfc-card'
+                            gateway = 'hdfc-emi'# if payment_mode == 'credit-card-emi-web' else 'hdfc-card'
                             cart.create_payment_attempt_for_ebs(request,gateway,**dict(fraud_status='Rejected'))
 
                             return render_to_response('order/online_payment_modes.html',
@@ -2046,7 +2046,7 @@ def payment_mode(request):
                                     payment_mode = payment_mode_org),
                                 context_instance = RequestContext(request))
 
-                gateway = 'hdfc-emi' if payment_mode == 'credit-card-emi-web' else 'hdfc-card'
+                gateway = 'hdfc-emi'# if payment_mode == 'credit-card-emi-web' else 'hdfc-card'
                 
                 errors = []
                 if utils.is_tinla_only_client(request.client.client):
@@ -2314,7 +2314,7 @@ def add_items_to_fb_cart(request,user_agent,pending_order):
         },
         {
             'first_name': billing_info['firstName'],
-            'last_name': billing_info['lastName'] if  'lastName' in billing_info  else '',
+            'last_name': billing_info['lastName'],# if  'lastName' in billing_info  else '',
             'address': billing_info['address1'],
             'city': billing_info['city'],
             'state': billing_info['state'],
@@ -2652,7 +2652,7 @@ def confirmation(request, order_id):
         'country':mark_safe(deliveryinfo.address.country),
         'phone':mark_safe(deliveryinfo.address.phone),
         }
-    payback_points_earned = (order.payable_amount*Decimal('0.03')).quantize(Decimal('1')) if order.payback_id else 0
+    payback_points_earned = 0#(order.payable_amount*Decimal('0.03')).quantize(Decimal('1')) if order.payback_id else 0
     total_order_qty = 0
     for item in order.get_items_for_billing(request):
         total_order_qty += item.qty

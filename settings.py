@@ -17,8 +17,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '127.0.0.1',
         'NAME': 'riba',
-        'USER': 'root',
-        'PASSWORD': 'allagr2nd',
+        'USER': 'riba',
+        'PASSWORD': 'chintan1',
     },
 }
 FB_API_URL = ""
@@ -76,11 +76,11 @@ AUTH_PROFILE_MODULE = 'users.Profile'
 
 AUTHENTICATION_BACKENDS = (
         #'users.backends.ChaupaatiBackend',
-        'users.backends.PhoneEmailBackend',
+        #'users.backends.PhoneEmailBackend',
         'users.order_backends.OrderBackend',
         'users.facebook_backends.FacebookBackend',
         'django.contrib.auth.backends.ModelBackend',
-        'users.backends.PhoneEmailBackend',
+        #'users.backends.PhoneEmailBackend',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

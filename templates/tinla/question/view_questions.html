@@ -1,7 +1,19 @@
 {% extends "web/base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/tree.css">
+<style type="text/css">
+body {font: normal 11px verdana, sans-serif; color: #333; line-height: 19px;}
+table {width:100%; margin-bottom:0px !important;}
+a { text-decoration: underline; color: #46546C; }
+a:hover { text-decoration: underline; color: #4d77c3; }
+#tree {width:250px;padding: 10px;float:left;}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <div class="padding_top10">
+<div id="tree"></div>
 	<div class="content_head" style="height:34px;">
 		<div class="header rc5" style="width: 960px;">
             <div class="left w760">
@@ -42,10 +54,10 @@
 					<tbody>
 					{% for q in ques %}
 						<tr>
-							<td class="f11 flgray w375 word-wrap vatop padl10"><a href="/question/{{q.id}}" class="ca f11">{{q.question}}</a></td>
-							<td class="f11 flgray w75 word-wrap vatop padl10">{{q.answer_type}}</td>
-							<td class="f11 flgray w375 word-wrap vatop padl10">{{q.type}}</td>
-							<td class="ca w30"><input type='submit' class='deletebin hide' id='{{q.id}}' value='del' /><input type='image' class='deletebin' id='{{i.id}}' src="/media/images/dustbin_icon.png" /></td>
+							<td class="f11 flgray w375 word-wrap vatop padl10"><a href="/question/{{q.question.id}}" class="ca f11">{{q.question.question}}</a></td>
+							<td class="f11 flgray w75 word-wrap vatop padl10">{{q.question.answer_type|title}}</td>
+							<td class="f11 flgray w375 word-wrap vatop padl10">{{q.question.type|title}}</td>
+							<td class="ca w30"><input type='submit' class='deletebin hide' id='{{q.question.id}}' value='del' /><input type='image' class='deletebin' id='{{q.question.id}}' src="/media/images/dustbin_icon.png" /></td>
 						</tr>
 					{% endfor %}
 					</tbody>
@@ -67,22 +79,35 @@
 
 {% block script_footer %}
 {{block.super}}
+
+<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/yahoo.js" ></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/event.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/treeview.js" ></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/jktreeview.js" ></script>
+
+<script type="text/javascript">
+var oaktree=new jktreeview("tree");
+{% for q, value in ques.items %}
+    var q_{{q.question.id}} = oaktree.addItem("{{q.question.question}}", "", "{{q.question.get_url}}");
+    {% for qt in value %}
+        {% if not qt.parent_question %}
+            var q_{{qt.question.id}} = oaktree.addItem("{{qt.parent_value}} - {{qt.question.question}}", "", "{{qt.question.get_url}}");
+        {% else %}
+            var q_{{qt.question.id}} = oaktree.addItem("{{qt.parent_value}} - {{qt.question.question}}", q_{{qt.parent_question.id}}, "{{qt.question.get_url}}");
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+oaktree.treetop.draw(); //REQUIRED LINE: Initalize tree
+
+</script>
+
+
+
 <script type="text/javascript">
 
-$(document).ready(function() { 
-	$("#user_table").tablesorter({
-		headers:{
-			4:{sorter:false}
-			}
-	}); 
-	CheckboxMultipleSelect('list_objects');
-});
-
-
 $('.deletebin').click(function(){
-    var idbin=$(this).attr('id');
-    var data = 'idbin='+idbin;
-    var width=800;
+    var k = this.id
+    var width=650;
     var height=400;
     var onsuccess = function(data, textStatus, xhr){
         $('#deletebin').html(data);
@@ -92,11 +117,11 @@ $('.deletebin').click(function(){
         $('#deletebin').html(xhr.responseText);
         var dialog = $('#deletebin').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
     };
-    var url= "/question/delete/"+idbin;
+    var url= "/question/delete/"+k;
     $.ajax({
         type: 'GET',
         url:url,
-        data: data,
+        data: '',
         success:onsuccess,
         error: onerror
     });

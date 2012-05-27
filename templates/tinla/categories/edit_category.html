@@ -1,0 +1,74 @@
+{% extends 'web/base.html' %}
+{% load web_tags %}
+{% block content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 5px;
+	}
+	.checkout_table img {
+	  border: 1px solid #D5D8DA;
+	  padding: 1px;
+	}
+.uiButton {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #F5B74E #E5A73E #D6982F !important;
+    color: #333 !important;
+    text-shadow: 0 1px 0 #FEDD9B;
+    box-shadow: 0 1px 1px #eee,inset 0 1px 0 #fee395;
+    background: #FECC5F;
+    cursor: pointer;
+    background-image: -webkit-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    background-image: linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    border-radius: 3px 3px 3px 3px;
+}
+</style>
+<div class="padding_top10">
+<div class="breadcrumb"><a href="/categories/view/">View All Categories</a>&nbsp;&raquo;&nbsp; <a href="/categories/{{category.id}}/">{{category.name}}</a>&nbsp;&raquo;&nbsp; Edit </div>
+	<div class="content_head">
+		<div class="header rc5">
+			<div class="left">
+				<h1>{{ category.name }}</h1>
+    		</div>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+</div>
+{% if errors %}
+    <div class="error">
+        {% for error in errors %}
+            {{error}}
+        {% endfor %}
+    </div>
+{% endif %}
+<div class="inner-content">
+    <form action="" id="seller_profile_form" name="seller_profile_form" method="POST">
+
+        <table class="tbl_display" style="border:1px;">
+        <tr>
+            <td class="f11 flgray w110">{{form.name.label}}</td>
+            <td class="f11 w145">{{form.name}}</td>
+            <td class="f11 flgray w110">{{form.description.label}}</td>
+            <td class="f11 w145">{{form.description}}</td>
+        </tr>
+        <tr>
+            <td class="f11 flgray w110">{{form.image.label}}</td>
+            <td class="f11 w145">{{form.image}}</td>
+            <td class="f11 flgray w110">{{form.sort_order.label}}</td>
+            <td class="f11 w145">{{form.sort_order}}</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="border-dotted-gray"></td>
+        </tr>
+        </table>
+        <div class="right">
+		    <INPUT TYPE="submit" id="save" VALUE="Save" class="btn_c btn_c_s btn_orange" name="save" />
+		</div>
+		<div class="clear">&nbsp;</div>
+	</form>
+</div>
+{% endblock %}

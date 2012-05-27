@@ -1,0 +1,36 @@
+import os, sys
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'tinla.fbsettings'
+
+ROOT_FOLDER = os.path.realpath(os.path.dirname(__file__))
+ROOT_FOLDER = ROOT_FOLDER[:ROOT_FOLDER.rindex('/')]
+
+if ROOT_FOLDER not in sys.path:
+    sys.path.insert(1, ROOT_FOLDER + '/')
+
+# also add the parent folder
+PARENT_FOLDER = ROOT_FOLDER[:ROOT_FOLDER.rindex('/')+1]
+if PARENT_FOLDER not in sys.path:
+    sys.path.insert(1, PARENT_FOLDER)
+
+from analytics_orders.reports import *
+from_date = date(2011, 12, 1)
+to_date = date(2011, 12, 31)
+print "from date =", from_date
+print "to date =", to_date
+qs = invoiced_range_qs(from_date, to_date)
+qs = qs.exclude(order__location__location = 'CSC').exclude(order__location__location = 'MISCELANEOUS').exclude(order__payment_method__payment_method= 'storeCredit')
+orders = qs.values_list('order_id', flat=True).distinct()
+custs = qs.values_list('order__login', flat=True).distinct()
+print "Unique orders", orders.count()
+print "Unique customers", custs.count()
+
+total_orderitems = invoiced_qs().filter(order__atg_submitted_date__lt = from_date).select_related('order')
+total_custs = total_orderitems.values_list('order__login', flat=True).distinct()
+total_custs = list(total_custs)
+repeat_cust_orders = qs.filter(order__login__in = total_custs)
+repeat_custs = repeat_cust_orders.values_list('order__login')
+repeat_custs_count = repeat_custs.count()
+print "Repeat customers", repeat_custs_count
+
+

@@ -927,9 +927,6 @@ class SellerRateChart(models.Model):
 
     objects = SellerRateChartManager()
     
-    #Exceptions
-    ProductInactive = type('ProductInactive', (Exception,), {})
-    MinimumQuantity = type('MinimumQuantity', (Exception,), {})
 
     def save(self, *args, **kwargs):
         if self.id:
@@ -1231,7 +1228,7 @@ class SellerRateChart(models.Model):
                 'offer_price_label':offer_price_label,'list_price_label':list_price_label,
                 'price_list':price_list, 'discount':discount,'applicable_price':applicable_price,
                 'savings':savings, 'payback_points':payback_points,
-                'cashback_amount':cashback_amount if cashback_amount else Decimal('0')}
+                'cashback_amount':0}#cashback_amount if cashback_amount else Decimal('0')}
         if not dont_cache:
             # Dont cache for more than 10 mins
             expires = 10*60

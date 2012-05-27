@@ -24,6 +24,7 @@ function id_to_windowname(text) {
 function windowname_to_id(text) {
     text = text.replace(/__dot__/g, '.');
     text = text.replace(/__dash__/g, '-');
+    text = text.split('~')[0];
     return text;
 }
 
@@ -67,6 +68,7 @@ function showAddAnotherPopup(triggeringLink) {
 }
 
 function dismissAddAnotherPopup(win, newId, newRepr) {
+    
     // newId and newRepr are expected to have previously been escaped by
     // django.utils.html.escape.
     newId = html_unescape(newId);
@@ -88,9 +90,9 @@ function dismissAddAnotherPopup(win, newId, newRepr) {
     } else {
         var toId = name + "_to";
         elem = document.getElementById(toId);
-        //var o = new Option(newRepr, newId);
-        //SelectBox.add_to_cache(toId, o);
-        //SelectBox.redisplay(toId);
+        var o = new Option(newRepr, newId);
+        SelectBox.add_to_cache(toId, o);
+        SelectBox.redisplay(toId);
     }
     win.close();
 }

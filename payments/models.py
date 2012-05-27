@@ -184,9 +184,9 @@ class PaymentAttempt(models.Model):
     notes = models.TextField(null=True, blank=True)
     
     #Additional Exceptions
-    InvalidOperation = type('InvalidOperation', (Exception,), {})
-    InsufficientData = type('InsufficientData', (Exception,), {})
-    NoResponseFromPG = type('NoResponseFromPG', (Exception, ), {})
+    #InvalidOperation = type('InvalidOperation', (Exception,), {})
+    #InsufficientData = type('InsufficientData', (Exception,), {})
+    #NoResponseFromPG = type('NoResponseFromPG', (Exception, ), {})
 
     def index(self, **kw):
         ''' Indexes the payment object in solr '''
@@ -621,8 +621,8 @@ class PaymentAttempt(models.Model):
 
         self.save()
 
-        with transaction.commit_on_success():
-            self.move_payment_state(request, payment_mode_code=payment_mode_code, action=action, pg_response=pg_response)
+        #with transaction.commit_on_success():
+        #    self.move_payment_state(request, payment_mode_code=payment_mode_code, action=action, pg_response=pg_response)
 
 
     def move_payment_state(self, request, **kwargs):
@@ -1336,8 +1336,8 @@ class Refund(models.Model):
     opened_by = models.ForeignKey('users.Profile', related_name='+')
     closed_by = models.ForeignKey('users.Profile', null=True, blank=True, related_name='+')
 
-    InvalidOperation = type('InvalidOperation', (Exception,), {})
-    InsufficientData = type('InsufficientData', (Exception,), {})
+    #InvalidOperation = type('InvalidOperation', (Exception,), {})
+    #InsufficientData = type('InsufficientData', (Exception,), {})
 
     def index(self, **kw):
         ''' Indexes the refund object in solr '''

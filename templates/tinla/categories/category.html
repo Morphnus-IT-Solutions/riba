@@ -1,172 +1,65 @@
-{% extends request.ws_base|default:"web/base.html" %}
-{% load cc_tags%}
-{% load web_tags%}
-{% if not request.wstore %}
-{%block page_title%}{% render_page_title filter_form %}{%endblock%}
-{%block page_desc%}{% render_page_desc filter_form %}{%endblock%}
-{%block page_tags%}{% render_page_tags filter_form %}{%endblock%}
-{%endif%}
+{% extends 'web/base.html' %}
+{% load web_tags %}
 {% block content %}
-<div class="breadcrumb"> <a href="{% cc_url request "" %}" title={%if request.wstore%}"Go to {{request.wstore.name}} Home"{%else%}"Go to Chaupaati Home"{%endif%}>Home</a>{%if filter_form.category%}&nbsp;&raquo;&nbsp;<a href="{% cc_url request filter_form.category.url %}">{{filter_form.category.name}}</a>
-  {%endif%}{%if filter_form.brand%}&nbsp;&raquo;&nbsp;<a href="{% cc_url request filter_form.brand.url %}">{{filter_form.brand.name}}</a>{%endif%}{%if request.GET.q %}&nbsp;&raquo;&nbsp;Search results for <strong>{{request.GET.q}}</strong>{%endif%} </div>
-{%if products%}
-{% if not request|is_cc %}
-    {% include "categories/filters.html" %}
-{% endif %}
-{%endif%}
-{%if products%}
-{% if request|is_cc %}
-    {% include "categories/filters.html" %}
-{% endif %}
-{%endif%}
-    <div class= "results {%if request|is_cc%}cc_results{%endif%}"> {%if products%}
-  <div class="sort_bar f11 roundcorner5">
-        <div class="fll"> <a title="Display products in a grid" class="fll {%filter_class "d" request "m" "grid"%} {%filter_class "d" request "m" "grid"%}grid grid" href="{%filter_href request "m" "grid"%}"></a> <a title="Display products as a list" class="fll {%filter_class "" request "m" "list"%} {%filter_class "" request "m" "list"%}list list" href="{%filter_href request "m" "list"%}"></a> &nbsp;&nbsp;&middot;&nbsp;&nbsp;Sort by&nbsp;{%for k,v in filters.items%}
-      {%if k == "popular"%} <a title="Sort product by {{k}}" href="{%filter_href request "sort" v.original%}" class="{%if request|has_param:"sort"%}{%filter_class "" request "sort"  v.original%} {%else%} selected_link {%endif%}">{{k|title}}</a> {%else%} <a title="Sort products by {{k}}" href="{%filter_href request "sort" v.opposite%}" class=" {%filter_class "" request  "sort" v.original%}{{v.original}} {%filter_class "" request  "sort" v.original%}">{{k|title}}</a>&nbsp;&nbsp;{%endif%}{%endfor%} </div>
-      
-        <div class="flr">
-        <!--<strong>{{total_results}}</strong> products&nbsp;&nbsp;&middot;&nbsp;&nbsp;-->
-        {% if pagination.enable_prev %}<a title="Go to previous page" href="{{pagination.base_url}}page={{pagination.prev_page}}">&laquo; prev</a>{%else%}
-        <span class="fdgray">&laquo; prev</span>
-        {% endif %}&nbsp;&nbsp;<strong>{{pagination.result_from}}-{{pagination.result_to}}</strong> of <strong>{{total_results}}</strong>&nbsp;{% if pagination.enable_next %}
-        <a title="Go next page" href="{{pagination.base_url}}page={{pagination.next_page}}">next &raquo;</a>{%else%}
-        <span class="fdgray">next &raquo;</span>{% endif %}</div>
-        <div class="clear"></div>
-        
-      </div>
-  {%else%} 
-  <div class="checkout_table">
-        <div class="f14"><strong>Your search <span style="color:#FF9900">{%if request.GET.q%}"{{request.GET.q}}"{%endif%}</span> did not match any products on Chaupaati.in.</strong></div>
-        <br />
-        <div> <strong>Suggestions :</strong><br />
-      <ul>
-            <li> Make sure all words are spelled correctly.</li>
-            <li>Make sure you have selected correct category.</li>
-          </ul>
-      <div><a href="/">Click here</a> to go to Home</div>
-    </div>
-      </div>
-  {%endif%}
-  <div class="cat_grid"> {%for product in products %}
-        {% ifequal request.GET.m "list" %}
-        {% product_summary_list product request forloop.counter products %}
-        {% else %}
-        {% product_summary_grid product request forloop.counter products %}
-        {% endifequal %}
-        {%endfor%}
-        <div class="clear"></div>
-      </div>
-  {% if total_pages > 1 %}
-  {% if pagination %}
-  <div class="pagination">
-   {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
-        {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
-        {% if pagination.show_sep1 %}
-        ...
-        {% endif %}
-        {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
-        <div>{{pagination.cur_page}}</div>
-        {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
-        {% if pagination.show_sep2 %}
-        ...
-        {% endif %}
-        {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
-        {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} </div>
-  {% endif %}
-  {% endif %}
-  </div>
-    <div class="clear"></div>
-    {% endblock %}
-{% block script_footer %}
-{{block.super}}
-    <script type="text/javascript">
-$(document).ready(function(){
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 5px;
+	}
+	.checkout_table img {
+	  border: 1px solid #D5D8DA;
+	  padding: 1px;
+	}
+.uiButton {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #F5B74E #E5A73E #D6982F !important;
+    color: #333 !important;
+    text-shadow: 0 1px 0 #FEDD9B;
+    box-shadow: 0 1px 1px #eee,inset 0 1px 0 #fee395;
+    background: #FECC5F;
+    cursor: pointer;
+    background-image: -webkit-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    background-image: linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    border-radius: 3px 3px 3px 3px;
+}
+</style>
+<div class="padding_top10">
+<div class="breadcrumb"><a href="/categories/view/">View All Categories</a>&nbsp;&raquo;&nbsp; Category</div>
+	<div class="content_head">
+		<div class="header rc5">
+			<div class="left">
+				<h1>{{ category.name }}</h1>
+    		</div>
+			<div class="right content_head"> 
+				<div class="left"><a href="/categories/edit/{{category.id}}/" class="uiButton fblack" style="padding: 3px 8px !important;">Edit</a>
+				</div>
+			</div>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+</div>
+<div class="inner-content">
+    <form action="" id="seller_profile_form" name="seller_profile_form">
 
-    var slider = $("#slider-range").slider({
-            range: true,
-            min:{{filter_form.gmin}},
-            max:{{filter_form.gmax}},
-            values: [{{filter_form.cmin}},{{filter_form.cmax}} ],
-            slide: function(event, ui) {
-                $("#amount").html('Rs ' + ui.values[0] + ' - Rs ' + ui.values[1]);
-                $("#id_min").val(ui.values[0]);
-                $("#id_max").val(ui.values[1]);
-                var step = 10;
-                if (ui.values[0] >= 0 && ui.values[1] <= 100)
-                    step = 10;
-                if (ui.values[0] >= 100 && ui.values[1] < 1000)
-                    step = 100;
-                if (ui.values[0] >= 1000)
-                    step = 500;
-                slider.slider('option','step',step);
-            },
-            stop : function(event, ui) {
-                $('#filter_form').submit();
-            }
-    });
-    $("#amount").html('Rs. ' + $("#slider-range").slider("values", 0) + ' - Rs. ' + $("#slider-range").slider("values", 1));
-    $("#id_min").val($("#slider-range").slider("values", 0));
-    $("#id_max").val($("#slider-range").slider("values", 1));
-
-    $(".filters a").click(function() {
-        if ($(this).attr("t") == 'hide'){
-            elems = $('input[name=' + $(this).attr("field") + ']');
-            for(var i=0; i<elems.length; i++){
-                elems[i].checked = false;
-            }
-        }
-        if($(this).attr("t") == 'show'){
-            elems = $("input[name="+ $(this).attr("field") + "]");
-            for(var i=0; i<elems.length; i++){
-                elems[i].checked = true;
-            }
-            $('#filter_form').submit();
-        }
-    });
-
-    $(".filters input[type=checkbox]").click(function() {
-        $('#filter_form').submit();
-    });
-});
-$('.share_product').click(function(){
-    var title_string = this.title;
-    var width = 350;
-    var url = this.href;
-    $.get(this.href, function(data) {
-        $('dialog').width(width);
-        $('#dialog').html(data);
-        var dialog = $('#dialog').dialog({modal:true,
-            title:title_string, 
-            width:width});
-            var onSubmitAlias = null;
-            var onSuccess = function(responseTxt) {
-                var response = $.parseJSON(responseTxt);
-                if (response.status == 'sent'){
-                    $('#dialog').dialog('close');
-                }
-                else{
-                    $('#errors').html(response.error);
-                }
-            };
-            var onError = function() {
-                $('#form_share').submit(onSubmitAlias);
-            };
-            var onSubmit = function() {
-                var form = this;
-                var action = form.action;
-                var data = null;
-                $.ajax({ url:action,
-                    data : data,
-                    success : onSuccess,
-                    error : onError,
-                    type : 'POST'
-                    });
-                return false;
-            };
-            onSubmitAlias = onSubmit;
-            $('#form_share').submit(onSubmit);
-    });
-    return false;
-});
-</script>
-{% endblock %} 
+        <table class="tbl_display" style="border:1px;">
+        <tr>
+            <td class="f11 flgray w110">Description:</td>
+            <td class="f11 w145">{{category.description|linebreaks}}</td>
+            <td class="f11 flgray w110">Sort Order:</td>
+            <td class="f11 w145">{{category.sort_order}}</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="border-dotted-gray"></td>
+        </tr>
+        </table>
+        {%if category.image%}
+        <div><img src="{{category.image.url}}" />
+        </div>
+        {%endif%}
+	</form>
+</div>
+{% endblock %}
