@@ -1,7 +1,0 @@
-{% extends 'rms/base.html' %}
-{% load rms_tags %}
-{% block content %}
-{% for attempt in attempts %}
-{% attempt_summary attempt %}
-{% endfor %}
-{% endblock %}

@@ -1,1 +1,0 @@
-{%ifequal payment_mode 'cod'%}Your order has been confirmed. Please pay cash on delivery for order id: {{order_id}}.{%else%}Your order has been confirmed. Received {{order_payable_total}} on {{order_payment_date}} for order id: {{order_id}}.{%endifequal%} For queries, call 09222221947. Thanks for shopping with us.
