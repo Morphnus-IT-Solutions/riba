@@ -14,7 +14,6 @@ a:hover { text-decoration: underline; color: #4d77c3; }
 {% block content %}
 
 <div class="padding_top10">
-<div id="tree"></div>
 	<div class="content_head" style="height:34px;">
 		<div class="header rc5" style="width: 960px;">
             <div class="left w760">
@@ -117,29 +116,6 @@ a:hover { text-decoration: underline; color: #4d77c3; }
 
 {% block script_footer %}
 {{block.super}}
-
-<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/yahoo.js" ></script>
-<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/event.js"></script>
-<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/treeview.js" ></script>
-<script type="text/javascript" src="{{MEDIA_URL}}js/tree-builder/jktreeview.js" ></script>
-
-<script type="text/javascript">
-var oaktree=new jktreeview("tree");
-{% for q, value in ques.items %}
-    var q_{{q.question.id}} = oaktree.addItem("{{q.question.question}}", "", "{{q.question.get_url}}");
-    {% for qt in value %}
-        {% if not qt.parent_question %}
-            var q_{{qt.question.id}} = oaktree.addItem("{{qt.parent_value}} - {{qt.question.question}}", "", "{{qt.question.get_url}}");
-        {% else %}
-            var q_{{qt.question.id}} = oaktree.addItem("{{qt.parent_value}} - {{qt.question.question}}", q_{{qt.parent_question.id}}, "{{qt.question.get_url}}");
-        {% endif %}
-    {% endfor %}
-{% endfor %}
-oaktree.treetop.draw(); //REQUIRED LINE: Initalize tree
-
-</script>
-
-
 
 <script type="text/javascript">
 $(document).ready(function(){
