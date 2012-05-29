@@ -1,4 +1,5 @@
 {% extends "web/base.html" %}
+{% load question_tags %}
 {% block extra_css %}
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/tree.css">
 <style type="text/css">
@@ -38,6 +39,42 @@ a:hover { text-decoration: underline; color: #4d77c3; }
 		<div class="right marb10">
 			<a href="/question/add/">+ Add a new Question</a>
 		</div>
+        <div class="clear mart10 question-list">
+            {% if ques %}
+                {% for key, value in ques.items %}
+                    <div id="{{key.id}}v{{key.level}}">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td id="{{key.question.id}}" class="parent_question {%if value %}{%if forloop.last%}lastpq{%else%}pq{%endif%}{% else %}{%if forloop.last%}lastlq{%else%}lq{%endif%}{%endif%}"></td>
+                                    <td>{{key.question}} &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/{{key.question.id}}/">Edit</a> &nbsp; <a id="{{key.id}}_delete" class="delete_bin">Delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% for chq in value %}
+                            <div id="{{chq.id}}" class="{{chq.parent_question.id}} hide">
+                                <table border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            {% for i in chq.level|get_range %}
+                                                <td class="vline"></td>
+                                            {% endfor %}
+                                            <td id="{{chq.question.id}}" class="{%if chq.question %} {%if chq.question.is_leaf_question %}lq{%else%}pq parent_question{%endif%}{%else%}lq{%endif%}"></td>
+                                            <td>{{chq.parent_value}} - {{chq.question}} &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/{{chq.question.id}}/">Edit</a> &nbsp; <a id="{{chq.question.id}}_delete" class="deletebin">Delete</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>       
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+			<div class="f15">
+				<h2><strong> No questions to display</strong> </h2>
+			</div>
+            {% endif %}
+        </div>
+        {%comment%}
 		<div class="clear mart10">
 		<form action="" id="question_list_form" name="question_list_form">
 			{% if ques %}
@@ -70,6 +107,7 @@ a:hover { text-decoration: underline; color: #4d77c3; }
 		{% endif %}
 		</form>
 		</div>
+        {%endcomment%}
 	</div>
 	<div id='deletebin' style='display:none;'></div>
     <div class="clear"></div>
@@ -104,9 +142,36 @@ oaktree.treetop.draw(); //REQUIRED LINE: Initalize tree
 
 
 <script type="text/javascript">
-
+$(document).ready(function(){
+    $('.parent_question').toggle(
+        function(){	
+            var e = this.id;
+            $('.'+e).show();
+            if($(this).hasClass('pq')){
+                $(this).removeClass('pq');
+                $(this).addClass('pq-collapse');
+            }
+            if($(this).hasClass('lastpq')){
+                $(this).removeClass('lastpq');
+                $(this).addClass('lastpq-collapse');
+            }
+        },
+        function(){
+            var e = this.id;
+            $('.'+e).hide();
+            if($(this).hasClass('pq-collapse')){
+                $(this).removeClass('pq-collapse');
+                $(this).addClass('pq');
+            }
+            if($(this).hasClass('lastpq-collapse')){
+                $(this).removeClass('lastpq-collapse');
+                $(this).addClass('lastpq');
+            }
+        }
+    );
+});
 $('.deletebin').click(function(){
-    var k = this.id
+    var k = this.id.split('_delete')[0];
     var width=650;
     var height=400;
     var onsuccess = function(data, textStatus, xhr){

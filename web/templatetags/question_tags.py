@@ -20,3 +20,7 @@ register.inclusion_tag('question/nested_question.html')(add_nested_question)
 @register.filter
 def split_newline(value):
     return value.split('\n')
+
+@register.filter
+def get_range(value):
+    return range(1, value)
