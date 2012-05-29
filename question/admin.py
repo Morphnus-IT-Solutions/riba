@@ -20,5 +20,5 @@ admin.site.register(Question, QuestionAdmin)
 
 class QuestionTreeAdmin(admin.ModelAdmin):
     search_fields = ['question']
-    list_display = ('parent_question', 'parent_value','question', 'lft', 'rgt')
+    list_display = ('parent_question', 'parent_value','question', 'lft', 'rgt', 'level')
 admin.site.register(QuestionTree, QuestionTreeAdmin)

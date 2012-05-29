@@ -22,7 +22,7 @@ def view_all_questions(request):
     ques_dict = {    
         'ques':ques,
         'q':q,
-        }    
+        }
     return render_to_response('question/view_questions.html', ques_dict, context_instance=RequestContext(request))
 
 
@@ -71,7 +71,7 @@ def add_question(request, id=None):
                     except QuestionTree.DoesNotExist:
                         qt = QuestionTree(question=q)
                         qt.save()
-                        qt.rebuild_tree()
+                    
             else:
                 for er in form.errors:
                     errors.append(form.errors[er])
@@ -99,6 +99,7 @@ def add_question(request, id=None):
                 if is_popup == 1:
                     return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
                 else:
+                    q.rebuild_nsm()
                     return HttpResponseRedirect('/question/%s' %q.id)
     else:
         is_popup = int(request.GET.get('_popup', 0))

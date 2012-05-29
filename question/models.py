@@ -107,6 +107,7 @@ class Question(models.Model):
             qt = QuestionTree.objects.get(question = self)
         except:
             raise Http404
+        print "qt ::::: %s" % qt
         qt.rebuild_tree()
 
 
@@ -145,6 +146,7 @@ class QuestionTree(models.Model):
     question = models.ForeignKey(Question, null=True, blank=True)
     lft = models.IntegerField(null=True, blank=True)
     rgt = models.IntegerField(null=True, blank=True)
+    level = models.IntegerField(default=1)
 
     class Meta:
         unique_together = (("question", "parent_question", "parent_value"),)
@@ -158,28 +160,26 @@ class QuestionTree(models.Model):
     # a small hack, with an assumption that there wont be more than 5000 sub-question
     def rebuild_tree(self):
         right = self.id * 10000
-        self.rebuild_node(self, right)
+        self.rebuild_node(self, right, 0)
         
 
-    def rebuild_node(self, parent, left):
+    def rebuild_node(self, parent, left, level):
         # the right value of this node is left + 1
         right = left + 1
-        
+        level += 1 
         # get all children of this node
         #if parent.question:
-        #print parent
         if parent.question:
             qt = QuestionTree.objects.filter(parent_question = parent.question)
-            #print "tree :::: %s" % qt
             for q in qt:
-                #if q.question:
-                right = self.rebuild_node(q, right)
+                right = self.rebuild_node(q, right, level)
 
         # we have got the left value and since we have processed all children nodes, 
         # we also know the right value
         #print "parent :::: %s left :::: %s right ::: %s" % (parent, left, right)
         parent.rgt = right
         parent.lft = left
+        parent.level = level
         parent.save()
         
         return right + 1
