@@ -1,13 +1,10 @@
 {% extends "web/base.html" %}
 {% load question_tags %}
 {% block extra_css %}
-<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/tree.css">
 <style type="text/css">
-body {font: normal 11px verdana, sans-serif; color: #333; line-height: 19px;}
 table {width:100%; margin-bottom:0px !important;}
 a { text-decoration: underline; color: #46546C; }
 a:hover { text-decoration: underline; color: #4d77c3; }
-#tree {width:250px;padding: 10px;float:left;}
 </style>
 {% endblock %}
 
@@ -46,7 +43,7 @@ a:hover { text-decoration: underline; color: #4d77c3; }
                             <tbody>
                                 <tr>
                                     <td id="{{key.question.id}}" class="parent_question {%if value %}{%if forloop.last%}lastpq{%else%}pq{%endif%}{% else %}{%if forloop.last%}lastlq{%else%}lq{%endif%}{%endif%}"></td>
-                                    <td>{{key.question}} &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/{{key.question.id}}/">Edit</a> &nbsp; <a id="{{key.id}}_delete" class="delete_bin">Delete</a></td>
+                                    <td><a href="/question/{{key.question.id}}/">{{key.question}}</a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/edit/{{key.question.id}}/">Edit</a> &nbsp; <a id="{{key.question.id}}_delete" class="deletebin">Delete</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -59,7 +56,7 @@ a:hover { text-decoration: underline; color: #4d77c3; }
                                                 <td class="vline"></td>
                                             {% endfor %}
                                             <td id="{{chq.question.id}}" class="{%if chq.question %} {%if chq.question.is_leaf_question %}lq{%else%}pq parent_question{%endif%}{%else%}lq{%endif%}"></td>
-                                            <td>{{chq.parent_value}} - {{chq.question}} &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/{{chq.question.id}}/">Edit</a> &nbsp; <a id="{{chq.question.id}}_delete" class="deletebin">Delete</a></td>
+                                            <td><a href="/question/{{chq.question.id}}/">{{chq.parent_value}} - {{chq.question}}</a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/edit/{{chq.question.id}}/">Edit</a> &nbsp; <a id="{{chq.question.id}}_delete" class="deletebin">Delete</a></td>
                                         </tr>
                                     </tbody>
                                 </table>       
