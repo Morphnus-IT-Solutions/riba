@@ -18,10 +18,12 @@
 				<td>{{question.question}}</td>
             </tr>
             {% for d in dependent_questions %}
+            {% if d.question %}
             <tr>
                 <td>Question:</td>
                 <td>{{d.question}}</td>
             </tr>
+            {% endif %}
 			{% endfor %}
 		</table>
         </div>
