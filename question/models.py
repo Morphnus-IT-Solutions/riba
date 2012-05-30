@@ -27,26 +27,14 @@ class Question(models.Model):
     def get_url(self):
         return '/question/%s' % self.id
 
-    def get_children(self,question,children):
-        graph = QuestionTree.objects.filter(parent_question=question)
-        if not graph:
-            return children
-        for node in graph:
-            if node.question and not node.question in children:
-                children.append(node.question)
-            #if not children.get(node.parent_question):
-            #    children[node.parent_question] = {node.parent_value: node.question}
-            #else:
-            #    if not children[node.parent_question].get(node.parent_value):
-            #        children[node.parent_question][node.parent_value] = node.question
-            if node.question:
-                self.get_children(node.question,children)
-        return children
-
     def get_all_children(self):
         ques = self
+        par_q = QuestionTree.objects.filter(parent_question=ques)
         children = []
-        children = self.get_children(ques,children)
+        for q in par_q:
+            qt = QuestionTree.objects.filter(lft__gte=q.lft, rgt__lte=q.rgt).order_by('lft')
+            for chq in qt:
+                children.append(chq)
         return children
 
     def get_parents(self, question, parents):
@@ -70,8 +58,23 @@ class Question(models.Model):
         parents = self.get_parents(ques, parents)
         return parents
 
+    def is_root_question(self):
+        return not(QuestionTree.objects.filter(question=self).exists())
+    
     def is_leaf_question(self):
         return not(QuestionTree.objects.filter(parent_question=self).exists())
+
+    def get_root_question(self):
+        try:
+            qt = QuestionTree.objects.get(question=self)
+        except QuestionTree.DoesNotExist:
+            return ''
+        except QuestionTree.MultipleObjectsReturned:
+            qt = QuestionTree.objects.filter(question=self)
+            qt = qt[0]
+            root_lft = qt.lft - (qt.lft % 1000)
+            qt = QuestionTree.objects.get(lft=root_lft)
+            return qt.question
 
     def get_question_hierarchy(self):
         question_hierarchy = []
