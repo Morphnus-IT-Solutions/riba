@@ -53,7 +53,6 @@ def edit_category(request, id):
     form = CategoryForm(instance=cat)
     if request.method == "POST":
         form = CategoryForm(request.POST, request.FILES, instance=cat)
-        print request.POST
         if form.is_valid():
             cat = form.save()
             return HttpResponseRedirect('/categories/%s' %cat.id)
