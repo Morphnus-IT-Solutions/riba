@@ -1,0 +1,295 @@
+{% extends 'web/base.html' %}
+{% load question_tags %}
+{%block content%}
+<style>
+    .question_details_container {
+        width: 100%;
+    }
+    .question_details {
+        padding: 10px 15px;
+    }
+    .h20 {height:20px;}
+	#id_lists-description {width:238px;height:14px; font-size:12px;}
+	#id_lists-type, #id_lists-banner_type, #id_lists-banner_type{width:250px; font-size:12px;}
+	.details{width:460px;}
+	.details input {height:auto;width: 242px; font-size:12px;}
+	.seller-rate-chart input {height:auto;width: 242px; font-size:12px;}
+	.seller-dropdown select {height:auto;width: 250px; font-size:12px;}
+	.details textarea{height:75px;width: 300px; font-size:12px;}
+	.list-item ul li textarea {width:250px; font-size:12px;}
+	.list-item ul li select {width:250px; font-size:12px;}
+	#id_lists-sort_order{width:242px}
+	#id_lists-banner_image{width:250px;}
+	#id_lists-starts_on, #id_lists-ends_on{width:80px; height:17px;}
+	#starts_on_hour, #starts_on_minute, #starts_on_ap, #ends_on_hour, #ends_on_minute, #ends_on_ap {width:49px; font-size:11px;padding: 3px 2px 3px 0;}
+	.list-item-title{padding:3px 5px;}
+    .divider-top {
+        border-top: 1px solid white;
+    }
+    .details {
+        width: 460px;
+    }
+	a:hover {
+		color: #009;
+		text-decoration: underline !important;
+	}
+	.arrow-right {
+		background-position: right center;
+		background-position-x: 100%;
+		background-position-y: 50%;
+		padding: 0px 15px;
+		padding-top: 0px;
+		padding-right: 15px;
+		padding-bottom: 0px;
+		padding-left: 15px;
+	}
+	.toggle-down-arrow {
+		background: url("/media/images/closed.gif") no-repeat scroll left center transparent;
+		padding: 0.5em 0.5em 0.5em 15px;
+	}
+	.toggle-up-arrow {
+		background: url("/media/images/opened.gif") no-repeat scroll left center transparent;
+		padding: 0.5em 0.5em 0.5em 15px;
+	}
+	.border-dotted-gray {
+		border-bottom: 1px dotted #ECECEC;
+		border-bottom-width: 1px;
+		border-bottom-style: dotted;
+		border-bottom-color: #ECECEC;
+	}
+	.btn_c {
+		border-radius: 3px 3px 3px 3px;
+		border-style: solid;
+		border-width: 1px;
+		color: black !important;
+		display: inline-block;
+		outline: 0 none;
+		padding: 5px 10px;
+		text-decoration: none;
+	}
+    .dynamic-option-form select {
+        width: 200px;
+    }
+    #id_answer_type, #id_type, #id_rows, #id_columns {
+        width: 150px;
+    }
+</style>
+	
+<div class="padding_top10">
+	<div class="breadcrumb"><a href="/question/view/">View All Questions</a>&nbsp;&raquo;&nbsp; <a href="/question/{{question.id}}/">{{question.question}}</a>&nbsp;&raquo;&nbsp; Edit</div>
+		<div class="content_head mar0">
+            <h1>Edit - {{question.question}}</h1>
+			<div class="clear bordergray"></div>
+		</div>
+	</div>
+    {% if errors %}
+    <div class="error">
+        {% for error in errors %}
+            {{error}}
+        {% endfor %}
+    </div>
+    {% endif %}
+	<div class="inner-content">
+		<form action="" id="add_form" name="add_form" method="POST" enctype="multipart/form-data">
+			<div class="question_details_container"><!-- div web module details container -->
+				<div style="background-color:#f9f9f9"><!-- div gray background -->
+					<div class="question_details"> <!-- div web_module_details -->
+						<div class="separator-bottom f18 fb fdgray">Question Details</div>
+						<div class="divider-top"><!-- div divider top -->
+							<div class="mart20"> <!-- div main -->
+								<div class="details left"><!-- div left part -->
+									<div class="left f11 w110 marb5">{{ form.question.label }}<span class="red">*</span></div>
+									<div class="left w350 marb5">{{ form.question }}</div>
+								</div><!-- /div left part -->
+								<div class="details left"><!-- div right part -->
+									<div class="marl100 left f11 w110 marb5">{{ form.answer_type.label }}<span class="red">*</span></div>
+									<div class="left w250 marb5">{{ form.answer_type }}</div>
+									<div class="marl100 left f11 w110 marb5">{{ form.type.label }}</div>
+									<div class="left w250 marb5">{{ form.type }}</div>
+                                    <div class="marl100 left f11 w110 marb5 text-area hide">{{ form.rows.label }}</div>
+									<div class="left w250 marb5 text-area hide">{{ form.rows }}</div>
+                                    <div class="marl100 left f11 w110 marb5 text-area hide">{{ form.columns.label }}</div>
+									<div class="left w250 marb5 text-area hide">{{ form.columns }}</div>
+								</div><!-- /div right part -->
+								<div class="clear"></div>
+							</div><!-- /div main -->
+						</div><!-- /div divider top -->
+						<div class="clear">&nbsp;</div>
+					</div><!-- /div web_module_details -->
+				</div><!-- /div gray background -->
+                <div class="clear">&nbsp;</div>
+
+				<!--************ FIELD FORM **************-->
+				<div id="item_wrapper f11" class="marl10"><!-- div item wrapper -->
+                	<a class="toggle-up-arrow arrow-right item_link" id="field_options" title="Click here to add fields" href="#">Fields</a>
+                </div><!-- /div item wrapper -->
+				<div id="field_options_div" class="clear"> <!-- div option_details -->
+					<div class="divider-top"><!-- div divider top -->
+						<div class="mart5"> <!-- option form div-->
+							{{field_formset.management_form}}
+							{% for i in field_formset.forms %}
+								<div class="dynamic-field-form">
+									{% if i %}
+										<div class="padb5 padt5 marb5 left" style="background-color:#fefefe; width:100%"><!-- div list part -->
+											<div class="left flgray f11 w75 marl10 ">{{ i.field_label.label }}</div>
+											<div class="left w200">{{ i.field_label }}</div>
+											<div class="left flgray f11 w75 marl10 ra">{{ i.field_type.label }}</div>
+                                            <div class="left w100 ra">{{ i.field_type }}</div>
+                                            <div class="left flgray f11 w100 marl10 ca">{{ i.field_option.label }}</div>
+                                            <div class="left w150 ra">{{ i.field_option }}</div>
+                                            <div class="left marl10 ra w100">{{i.DELETE}} Delete<!--<a class="delete-field-form" href="#">Delete</a>--> </div>
+										</div><!-- /div list part -->
+										<div class="clear"></div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div><!-- /div option form -->
+						<div class="left">
+							<input title='Add new field' type='button' name='addfield' id='add_another_field' value='+ Add Field' class="btn_c btn_c_s" />
+						</div>
+						<div class="clear or_hr marb10">&nbsp;</div>
+
+					</div><!-- /div divider top -->
+				</div><!-- /div option_details -->
+				<!-- ********** FIELD OPTIONS FORM **************** -->
+				<div class="clear border-dotted-gray"></div>
+				<!--************ OPTIONS FORM **************-->
+				<div id="item_wrapper f11" class="marl10"><!-- div item wrapper -->
+                	<a class="toggle-up-arrow arrow-right item_link" id="add_options" title="Click here to add options" href="#">Options</a>
+                </div><!-- /div item wrapper -->
+				<div id="add_options_div" class="clear"> <!-- div option_details -->
+					<div class="divider-top"><!-- div divider top -->
+						<div> <!-- option form div-->
+							{{option_formset.management_form}}
+							{% for i in option_formset.forms %}
+								<div class="dynamic-option-form">
+									{% if i %}
+										<div class="padb5 padt5 marb5 left" style="background-color:#fefefe; width:100%"><!-- div list part -->
+											<div class="left flgray f11 w110 marl10 ">{{ i.option_value.label }}</div>
+											<div class="left w250">{{ i.option_value }}</div>
+                                            <div class="left flgray f11 w110 marl10 ca">{{ i.dependent_question.label }}</div>
+                                            <div class="left w250">{{ i.dependent_question }}
+                                            <a href="/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{i.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{i.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
+                                                <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
+                                            </a>
+                                            </div>
+                                            <div class="left marl10 ra w100">{{i.DELETE}} Delete<!--<a class="delete-field-form" href="#">Delete</a>--> </div>
+                                            <!--<div class="add_dependent_question"></div>-->
+										</div><!-- /div list part -->
+										<div class="clear"></div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div><!-- /div option form -->
+						<div class="left">
+                            
+							<input title='Add new option' type='button' name='addoption' id='add_another_option' value='+ Add Option' class="btn_c btn_c_s" />
+						</div>
+						<div class="clear or_hr marb10">&nbsp;</div>
+					</div><!-- /div divider top -->
+				</div><!-- /div option_details -->
+				<!-- ********** END OPTIONS FORM **************** -->
+
+			<div class="clear">&nbsp;</div>
+			<div class="right">
+                <input type="hidden" id="is_popup" name="is_popup" value={{is_popup}} />
+				<INPUT TYPE="submit" id="save" VALUE="Save" class="btn_c btn_c_s btn_orange" name="save" />
+			</div>
+			</div><!-- /div web_container -->
+		</form>
+	</div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function PreselectMyItem(){
+    var e = document.getElementById("id_answer_type");
+    var str = e.options[e.selectedIndex].value;
+    if (str=="textarea"){
+        $('.text-area').show();
+    }
+    else{
+        $('.text-area').hide();
+    }
+});
+
+$(document).ready(function(){
+    $('.item_link').toggle(
+        function(){	
+            var e = this.id;
+            var k = e+"_div";
+            $('#'+k).slideDown();
+            $(this).removeClass('toggle-down-arrow');
+            $(this).addClass('toggle-up-arrow');
+        },
+        function(){
+            var e = this.id;
+            $('#'+e+'_div').slideUp();
+            $(this).removeClass('toggle-up-arrow');
+            $(this).addClass('toggle-down-arrow');
+        }
+    );
+    $('#id_answer_type').change(function(){
+        var e = this.value;
+        if (e=="textarea"){
+            $('.text-area').show();
+        }
+        else{
+            $('.text-area').hide();
+        }
+    });
+});
+
+
+
+</script>
+<script type="text/javascript">
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+-)');
+        var replacement = prefix + '-' + ndx + '-';
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+
+    function cloneMore(selector, type) {
+        var newElement = $(selector).clone();
+        var total = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
+        newElement.find(':input').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        newElement.find('a').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        newElement.find('label').each(function() {
+            var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+            $(this).attr('for', newFor);
+        });
+        total++;
+        $('#id_' + type + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+    }
+
+    // Event handlers for Field
+    $("#add_another_field").click(function() {
+        cloneMore('div.dynamic-field-form:last', 'field_set');
+    });
+
+
+    // Register the click event handlers
+    $("#add_another_option").click(function() {
+        cloneMore('div.dynamic-option-form:last', 'option_set');
+    });
+</script>
+<script type="text/javascript" src="/adminmedia/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/adminmedia/js/core.js"></script>
+<script type="text/javascript" src="/adminmedia/js/SelectBox.js"></script>
+<script type="text/javascript" src="/adminmedia/js/SelectFilter2.js"></script>
+{% endblock %}
