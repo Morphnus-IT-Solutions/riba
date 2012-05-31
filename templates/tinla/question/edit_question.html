@@ -130,6 +130,10 @@
 							{% for i in field_formset.forms %}
 								<div class="dynamic-field-form">
 									{% if i %}
+                                        <div style="display:none;visibility:hidden;">
+                                            {{ i.id.label }}
+                                            {{ i.id }}
+                                        </div>
 										<div class="padb5 padt5 marb5 left" style="background-color:#fefefe; width:100%"><!-- div list part -->
 											<div class="left flgray f11 w75 marl10 ">{{ i.field_label.label }}</div>
 											<div class="left w200">{{ i.field_label }}</div>
@@ -164,6 +168,10 @@
 							{% for i in option_formset.forms %}
 								<div class="dynamic-option-form">
 									{% if i %}
+                                        <div style="display:none;visibility:hidden;">
+                                            {{ i.id.label }}
+                                            {{ i.id }}
+                                        </div>
 										<div class="padb5 padt5 marb5 left" style="background-color:#fefefe; width:100%"><!-- div list part -->
 											<div class="left flgray f11 w110 marl10 ">{{ i.option_value.label }}</div>
 											<div class="left w250">{{ i.option_value }}</div>

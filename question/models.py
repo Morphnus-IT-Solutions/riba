@@ -32,6 +32,7 @@ class Question(models.Model):
         par_q = QuestionTree.objects.filter(parent_question=ques)
         children = []
         for q in par_q:
+            print q, q.lft, q.rgt
             qt = QuestionTree.objects.filter(lft__gte=q.lft, rgt__lte=q.rgt).order_by('lft')
             for chq in qt:
                 children.append(chq)
@@ -59,7 +60,7 @@ class Question(models.Model):
         return parents
 
     def is_root_question(self):
-        return not(QuestionTree.objects.filter(question=self).exists())
+        return QuestionTree.objects.filter(question=self, parent_question=None, parent_value=None).exists()
     
     def is_leaf_question(self):
         return not(QuestionTree.objects.filter(parent_question=self).exists())
@@ -68,13 +69,13 @@ class Question(models.Model):
         try:
             qt = QuestionTree.objects.get(question=self)
         except QuestionTree.DoesNotExist:
-            return ''
+            raise Http404
         except QuestionTree.MultipleObjectsReturned:
             qt = QuestionTree.objects.filter(question=self)
             qt = qt[0]
-            root_lft = qt.lft - (qt.lft % 1000)
-            qt = QuestionTree.objects.get(lft=root_lft)
-            return qt.question
+        root_lft = qt.lft - (qt.lft % 1000)
+        qt = QuestionTree.objects.get(lft=root_lft)
+        return qt.question
 
     def get_question_hierarchy(self):
         question_hierarchy = []

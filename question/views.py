@@ -12,7 +12,7 @@ from django.utils.html import escape
 def view_all_questions(request):
     q = request.GET.get('q')
     if q:
-        questions = QuestionTree.objects.select_related('question', 'parent_question').filter(question__icontains=q).order_by('-id')
+        questions = QuestionTree.objects.select_related('question', 'parent_question').filter(question__question__icontains=q).order_by('-id')
     else:
         questions = QuestionTree.objects.select_related('question', 'parent_question').filter(parent_question=None, parent_value=None).order_by('-id')
     ques = {}
@@ -163,17 +163,17 @@ def edit_question(request, id):
     fieldinlineformset = inlineformset_factory(Question, Field, form = FieldForm, extra=1, can_delete=True)
     optioninlineformset = inlineformset_factory(Question, Option, form = OptionForm, extra=1, fk_name="question", can_delete=True)
 
-    fieldformset = fieldinlineformset(instance = question)
-    optionformset = optioninlineformset(instance = question)
+    field_formset = fieldinlineformset(instance = question)
+    option_formset = optioninlineformset(instance = question)
 
+    is_popup, errors = 0, []
     if request.method == "POST":
+        is_popup = int(request.POST.get('is_popup', 0))
         form = QuestionForm(request.POST, request.FILES, instance = question)
-        fieldformset = fieldinlineformset(request.POST, request.FILES, instance = question)
-        optionformset = optioninlineformset(request.POST, request.FILES, instance = question)
+        field_formset = fieldinlineformset(request.POST, request.FILES, instance = question)
+        option_formset = optioninlineformset(request.POST, request.FILES, instance = question)
 
         if form.is_valid():
-            Option.objects.filter(question=question).delete()
-            Field.objects.filter(question=question).delete()
             qch = question.get_all_children()
             for qs in qch:
                 qs.delete()
@@ -181,46 +181,47 @@ def edit_question(request, id):
         else:
             for er in form.errors:
                 errors.append(form.errors[er])
-            if not errors:
-                for fld in field_formset:
-                    if fld.is_valid() and fld.cleaned_data.get('field_label'):
-                        f = Field()
-                        f.question = q
-                        f.field_label = fld.cleaned_data.get('field_label')
-                        f.field_type = fld.cleaned_data.get('field_type')
-                        f.field_option = fld.cleaned_data.get('field_option')
-                        f.save()
-                for op in option_formset:
-                    if op.is_valid() and op.cleaned_data.get('option_value'):
-                        o = Option()
-                        o.question = q
-                        o.option_value = op.cleaned_data.get('option_value')
-                        o.dependent_question = op.cleaned_data.get('dependent_question')
-                        o.save()
-                        try:
-                            qt = QuestionTree.objects.get(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
-                        except QuestionTree.DoesNotExist:
-                            qt = QuestionTree(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
-                            qt.save()
-                if is_popup == 1:
-                    return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
+        if not errors:
+            Option.objects.filter(question=question).delete()
+            Field.objects.filter(question=question).delete()
+            for fld in field_formset:
+                if fld.is_valid() and fld.cleaned_data.get('field_label'):
+                    f = Field()
+                    f.question = q
+                    f.field_label = fld.cleaned_data.get('field_label')
+                    f.field_type = fld.cleaned_data.get('field_type')
+                    f.field_option = fld.cleaned_data.get('field_option')
+                    f.save()
+            for op in option_formset:
+                if op.is_valid() and op.cleaned_data.get('option_value'):
+                    o = Option()
+                    o.question = q
+                    o.option_value = op.cleaned_data.get('option_value')
+                    o.dependent_question = op.cleaned_data.get('dependent_question')
+                    o.save()
+                    try:
+                        qt = QuestionTree.objects.get(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                    except QuestionTree.DoesNotExist:
+                        qt = QuestionTree(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                        qt.save()
+            if is_popup == 1:
+                return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
+            else:
+                if question.is_root_question():
+                    root_question = question
                 else:
-                    if question.is_root_question():
-                        try:
-                            qt = QuestionTree.objects.get(question=q, parent_question=None, parent_value=None)
-                        except QuestionTree.DoesNotExist:
-                            qt = QuestionTree(question=q)
-                            qt.save()
-                        root_question = question
-                    else:
-                        root_question = question.get_root_question()
-                    root_question.rebuild_nsm()
-                    return HttpResponseRedirect('/question/%s' %q.id)
+                    root_question = question.get_root_question()
+                root_question.rebuild_nsm()
+                return HttpResponseRedirect('/question/%s' %q.id)
 
+    is_popup = int(request.GET.get('_popup', 0))
     ctxt = {
         'question': question,
         'form': form,
-        'field_formset': fieldformset,
-        'option_formset': optionformset
+        'field_formset': field_formset,
+        'option_formset': option_formset,
+        'random_count': randint(1,999), # included for multiple popups of dependent question 
+        'is_popup': is_popup,
+        'errors': errors
     }
     return render_to_response('question/edit_question.html', ctxt, context_instance=RequestContext(request))

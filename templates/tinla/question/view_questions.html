@@ -56,7 +56,7 @@ a:hover { text-decoration: underline; color: #4d77c3; }
                                                 <td class="vline"></td>
                                             {% endfor %}
                                             <td id="{{chq.question.id}}" class="{%if chq.question %} {%if chq.question.is_leaf_question %}lq{%else%}pq parent_question{%endif%}{%else%}lq{%endif%}"></td>
-                                            <td><a href="/question/{{chq.question.id}}/">{{chq.parent_value}} - {{chq.question}}</a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/edit/{{chq.question.id}}/">Edit</a> &nbsp; <a id="{{chq.question.id}}_delete" class="deletebin">Delete</a></td>
+                                            <td>{% if chq.question %} <a href="/question/{{chq.question.id}}/">{{chq.parent_value}} - {{chq.question}}</a> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="/question/edit/{{chq.question.id}}/">Edit</a> &nbsp; <a id="{{chq.question.id}}_delete" class="deletebin">Delete</a>{% else %}{{chq.parent_value}} - {{chq.question}}{% endif %}</td>
                                         </tr>
                                     </tbody>
                                 </table>       
