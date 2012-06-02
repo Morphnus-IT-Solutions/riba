@@ -1,0 +1,55 @@
+{% extends "web/base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/build_document.css" type="text/css" media="screen, projection" />
+{% endblock %}
+
+{%block jquery%}
+{{block.super}}
+<script type="text/javascript" src="/adminmedia/js/tiny_mce/tiny_mce.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div align="center">
+<table width="650px" style="background:no-repeat url(bg.jpg); border-radius: 7px; -webkit-border-radius:7px; -moz-border-radius: 7px; -o-border-radius: 7px; border:2px #999 solid">
+    <tr>
+        <td align="center">
+            {% include "build_document/base.html" %}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <form method="POST" action="">
+            <table class="table-form" width="600px">
+                <tr class="head">
+                    <th colspan="2">Upload Template</th>
+                </tr>
+                <tr>
+                    <td>{{form.category.label}}</td>
+                    <td>{{form.category}}</td>
+                </tr>
+                <tr>
+                    <td>{{form.upload_document.label}}</td>
+                    <td>{{form.upload_document}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="tdaligncenter">OR
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{form.upload_text.label}}</td>
+                    <td>{{form.upload_text}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="tdaligncenter">
+                        <input type="submit" id="proceed" name="proceed" value="Proceed"/>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </td>
+    </tr>
+</table>
+</div>
+{% endblock %}
