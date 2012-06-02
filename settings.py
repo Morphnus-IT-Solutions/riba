@@ -132,6 +132,7 @@ TEMPLATE_DIRS = (
 TINYMCE_JS_URL = ADMIN_MEDIA_PREFIX + 'js/tiny_mce/tiny_mce2.js'
 TINYMCE_JS_ROOT = ADMIN_MEDIA_PREFIX + 'js/tiny_mce/'
 TINYMCE_DEFAULT_CONFIG = {
+    'theme_advanced_toolbar_location' : "top",
     'plugins': "table,paste,searchreplace",
     'theme': "advanced",
 }
@@ -150,6 +151,7 @@ INSTALLED_APPS = (
     'tinymce',
     'south',
 	'question',
+    'build_document',
     'locations',
     'accounts',
     'catalog',

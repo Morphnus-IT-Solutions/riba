@@ -111,7 +111,6 @@ class Question(models.Model):
             qt = QuestionTree.objects.get(question = self)
         except:
             raise Http404
-        print "qt ::::: %s" % qt
         qt.rebuild_tree()
 
 

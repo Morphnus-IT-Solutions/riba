@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     (r'^catalog/', include('catalog.urls')),
     (r'^categories/', include('categories.urls')),
     (r'^question/', include('question.urls')),
+    (r'^build-document/', include('build_document.urls')),
     (r'^facebookconnect/', include('facebookconnect.urls')),
     (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'popups/signin.html'}),
 
