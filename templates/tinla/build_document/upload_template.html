@@ -18,9 +18,21 @@
             {% include "build_document/base.html" %}
         </td>
     </tr>
+    {% if errors %}
     <tr>
         <td align="center">
-            <form method="POST" action="">
+        <div class="error">
+            {% for error in errors %}
+                {{error}}
+            {% endfor %}
+        </div>
+        </td>
+        <td></td>
+    </tr>
+    {% endif %}
+    <tr>
+        <td align="center">
+            <form action="" method="POST" id="upload_template" name="upload_template" enctype="multipart/form-data">
             <table class="table-form" width="600px">
                 <tr class="head">
                     <th colspan="2">Upload Template</th>

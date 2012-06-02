@@ -11,15 +11,16 @@ class UploadTemplateForm(forms.Form):
     def __init__(self, *args, **kwargs):
         template = kwargs.pop('template', None)
         super(UploadTemplateForm, self).__init__(*args, **kwargs)
+        self.fields['category'].error_messages['required'] = 'Please enter category'
         if template:
             self.fields['category'].initial = template.category
             self.fields['upload_document'].initial = template.upload_document
             self.fields['upload_text'].initial = template.upload_text
-        return
 
     def clean(self):
-        if not ('upload_document' in self.cleaned_data and 'upload_text' in self.cleaned_data):
-            raise forms.ValidationError(u"Please upload a document or paste the document")
+        if not ('upload_document' in self.cleaned_data and 'upload_text' in self.cleaned_data) or \
+                (self.cleaned_data['upload_document'] == "" or self.cleaned_data['upload_text'] == ""):
+            raise forms.ValidationError(u"Please upload or paste the document")
         return self.cleaned_data
 
 

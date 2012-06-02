@@ -23,21 +23,28 @@ def get_template_from_session(request):
 def upload_template(request):
     template = get_template_from_session(request)
     form = UploadTemplateForm(template=template)
+    errors = []
     if request.method == "POST":
         category_id = request.POST.get('category')
-        upload_document = request.POST.get('upload_document')
+        upload_document = request.FILES.get('upload_document')
         upload_text = request.POST.get('upload_text')
-        if template:
-            template.category_id = category_id
-            template.upload_document = upload_document
-            template.upload_text = upload_text
-            template.save()
+        form = UploadTemplateForm(request.POST, request.FILES)
+        if form.is_valid():
+            if template:
+                template.category_id = category_id
+                template.upload_document = upload_document
+                template.upload_text = upload_text
+                template.save()
+            else:
+                template = Template.objects.create(category_id = category_id, upload_document = upload_document, upload_text = upload_text)
+                session['template_id'] = template.id
+            return HttpResponseRedirect('/build-document/template-details/')
         else:
-            template = Template.objects.create(category_id = category_id, upload_document = upload_document, upload_text = upload_text)
-            session['template_id'] = template.id
-        return HttpResponseRedirect('/build-document/template-details/')
+            for er in form.errors:
+                errors.append(form.errors[er])
     ctxt = {
         'form': form,
+        'errors': errors
     }
     return render_to_response('build_document/upload_template.html', ctxt, context_instance=RequestContext(request))
 
