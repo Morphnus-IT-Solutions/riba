@@ -19,7 +19,7 @@ class UploadTemplateForm(forms.Form):
 
     def clean(self):
         if not ('upload_document' in self.cleaned_data and 'upload_text' in self.cleaned_data) or \
-                (self.cleaned_data['upload_document'] == "" or self.cleaned_data['upload_text'] == ""):
+                (self.cleaned_data['upload_document'] == "" and self.cleaned_data['upload_text'] == ""):
             raise forms.ValidationError(u"Please upload or paste the document")
         return self.cleaned_data
 

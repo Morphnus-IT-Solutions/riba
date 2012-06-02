@@ -3,8 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanen
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from utils import utils
-from build_document.models import Template
+from build_document.models import *
 from build_document.forms import *
+from django.conf import settings
 
 
 def create_new_template(request):
@@ -19,16 +20,34 @@ def get_template_from_session(request):
         template = Template.objects.get(pk=template_id)
     return template
 
+def add_keywords(request, template):
+    qn = Questionnaire.objects.filter(template=template)
+    qn.delete()
+    total_words, keywords = [], []
+    if template.upload_document:
+        url = template.upload_document.url.replace('/media/', '/media/tinla/')
+        f = open(settings.DOCUMENT_ROOT+url, 'r')
+        fr = f.read()
+        total_words = fr.split('$$$')
+        f.close()
+    elif template.upload_text:
+        total_words = template.upload_text.split('$$$')
+    for k in range(len(total_words)):
+        if k % 2 == 1:
+            keywords.append(total_words[k])
+    for k in keywords:
+        q = Questionnaire.objects.create(keyword=k, template=template)
+
 
 def upload_template(request):
     template = get_template_from_session(request)
     form = UploadTemplateForm(template=template)
     errors = []
     if request.method == "POST":
+        form = UploadTemplateForm(request.POST, request.FILES)
         category_id = request.POST.get('category')
         upload_document = request.FILES.get('upload_document')
         upload_text = request.POST.get('upload_text')
-        form = UploadTemplateForm(request.POST, request.FILES)
         if form.is_valid():
             if template:
                 template.category_id = category_id
@@ -38,6 +57,8 @@ def upload_template(request):
             else:
                 template = Template.objects.create(category_id = category_id, upload_document = upload_document, upload_text = upload_text)
                 session['template_id'] = template.id
+            # add keywords
+            add_keywords(request, template)
             return HttpResponseRedirect('/build-document/template-details/')
         else:
             for er in form.errors:
