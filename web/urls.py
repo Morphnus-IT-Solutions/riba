@@ -15,62 +15,11 @@ urlpatterns = patterns('web.views',
     url(r'^suggest','home.suggest'),
     url(r'^info/sitemap/','home.sitemap'),
     
-    # help system
-    url(r'^help/(?P<slug>[a-zA-Z0-9-]+)/', 'help_views.show_help'),
-    
-    # Menu Offer urls
-    #url(r'^popularity/most-viewed/', 'sbf_views.most_viewed_products', name="most-viewed-detail-page"),    
-    #url(r'^popularity/most-bought/', 'sbf_views.most_bought_products', name="most-bought-detail-page"),    
-    #url(r'^popularity/recently-bought/', 'sbf_views.recently_bought_products', name="recenlty-bought-detail-page"),    
-    
-
     # static pages
     url(r'^(?P<section1>[a-zA-Z]+)/(?P<section2>[a-zA-Z]+)/(?P<page>[a-zA-Z0-9-_]+).html', 'static.double_section_page'),
     url(r'^(?P<section>[a-zA-Z]+)/(?P<page>[a-zA-Z0-9-_]+).html', 'static.section_page'),
     url(r'^(?P<page>[a-zA-Z0-9-]+).html', 'static.page'),
     url(r'^about/contact_us/', 'static.contact_us'),
-
-
-    # category page. allows url params
-    #url(r'^(?P<slug>[a-zA-Z0-9-]+)/ch/(?P<id>\d+)/compare/(?P<id1>\d+)/(?P<id2>\d+)/(?P<id3>\d+)/(?P<id4>\d+)/', 'sbf_views.category_compare'),
-    #url(r'^(?P<slug>[a-zA-Z0-9-]+)/ch/(?P<id>\d+)/compare/(?P<id1>\d+)/(?P<id2>\d+)/(?P<id3>\d+)/', 'sbf_views.category_compare'),
-    #url(r'^(?P<slug>[a-zA-Z0-9-]+)/ch/(?P<id>\d+)/compare/(?P<id1>\d+)/(?P<id2>\d+)/', 'sbf_views.category_compare'),
-    #url(r'^(?P<slug>[a-zA-Z0-9-]+)/ch/(?P<id>\d+)/', 'sbf_views.category_home',name='category-home-url'),
-    #url(r'^shop-by-price/', 'sbf_views.shop_by_price',name='category-shop_by_price-url'),
-    #url(r'^shop-by-discount/', 'sbf_views.shop_by_discount',name='category-shop_by_discount-url'),
-    url(r'^collections','product_views.get_parent_products'),
-    
-
-    # category page for whitelabel store
-    #url(r'^w/([a-zA-Z0-9]+)/(?P<slug>[a-zA-Z0-9-]+)/ch/(?P<id>\d+)/', 'sbf_views.category_home'),
-
-    # category page for mobile
-    url(r'^category-menu/', 'home.category_menu'),
-
-    # search views
-    #url(r'^search/t/(?P<tag>[a-zA-Z0-9-]+)/(?P<tag_filter>[a-zA-Z0-9-_()]+)/','sbf_views.search_tag'),
-    #url(r'^search/t/(?P<tag>[a-zA-Z0-9-]+)/','sbf_views.search_tag'),
-    #url(r'^search/', 'sbf_views.search'),
-
-    #urls for brand pages
-    #url(r'^(?P<slug>[a-zA-Z0-9-]+)/bd/(?P<id>\d+)/','sbf_views.brand_home',name='brand-home-url'),
-    
-    #url(r'^promotion_offer/(?P<slug>[a-zA-Z0-9-]+)/(?P<id>\d+)/', 'list_views.promotion_offer_detail', name='promotion-offer-detail-url'),
-    #url(r'^promotion/offers/', 'list_views.promotions_detail', name='promotions-detail-url'),
-
-    # product page. allows url params
-    url(r'^(?P<slug>[a-zA-Z0-9-]+)/pd/(?P<id>\d+)/all-reviews/$','product_views.all_reviews_page',name='read_reviews_page'), 
-    url(r'^(?P<slug>[a-zA-Z0-9-]+)/pd/(?P<id>\d+)/', 'product_views.product_detail',name='product-detail-url'),
-    url(r'^(?P<slug>[a-zA-Z0-9-]+)/pd/(?P<id>\d+)', 'product_views.product_detail',name='product-detail-alt-url'),
-    url(r'^(?P<slug>[a-zA-Z0-9-]+)/quick-look/(?P<id>\d+)/', 'product_views.product_quick_look',name='product-quick-look-url'),
-    # Review Model
-    url(r'^product/helpful-yes/','product_views.update_helpful_yes'),
-    url(r'^product/helpful-no/','product_views.update_helpful_no'),
-    url(r'^product/helpful-cancel/','product_views.update_helpful_cancel'),
-    url(r'^product/read-reviews/','product_views.paginate_read_reviews'),
-    url(r'^review/write/(?P<review_id>\d+)/thanks/$','product_views.thanks_page',name='thanks_page'), 
-    url(r'^review/write/(?P<id>\d+)/$','product_views.review_page',name='enter_review_page'), 
-    url(r'^(?P<slug>[a-zA-Z0-9-]+)/review/(?P<review_id>\d+)$','product_views.review_display',name='permalink'),
 
     # url for users
     url(r'^auth/fbsignin/','user_views.facebook_authenticate'),
