@@ -1,6 +1,6 @@
 from django import forms
 from categories.models import Category
-from build_document.models import Template
+from build_document.models import *
 from tinymce.widgets import TinyMCE
 
 class UploadTemplateForm(forms.ModelForm):
@@ -31,3 +31,14 @@ class TemplateForm(forms.ModelForm):
         self.fields['about'].widget = TinyMCE(attrs={'cols': 40, 'rows': 10})
         self.fields['title'].error_messages['required'] = 'Please enter title'
         self.fields['offer_price'].error_messages['required'] = 'Please enter price'
+
+
+class QuestionnaireForm(forms.ModelForm):
+    class Meta:
+        model = Questionnaire
+        fields = ('question', 'keyword', 'sort_order',)
+
+    def __init__(self, *args, **kwargs):
+        template = kwargs.pop('template', None)
+        super(QuestionnaireForm, self).__init__(*args, **kwargs)
+        self.fields["keyword"].queryset = Keyword.objects.filter(template=template)

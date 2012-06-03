@@ -28,15 +28,22 @@ class Template(models.Model):
     def __unicode__(self):
         return self.title
 
+class Keyword(models.Model):
+    template = models.ForeignKey(Template, db_index=True)
+    keyword = models.CharField(max_length=100, db_index=True)
+
+    class Meta:
+        unique_together = ('template', 'keyword', )
+
+    def __unicode__(self):
+        return self.keyword
+
 
 class Questionnaire(models.Model):
     template = models.ForeignKey(Template, db_index=True)
-    question = models.ForeignKey(Question, db_index=True, blank=True, null=True)
-    keyword = models.CharField(max_length=100, db_index=True)
+    question = models.ForeignKey(Question, db_index=True, blank=True, null=True,limit_choices_to=dict(level=1))
+    keyword = models.ForeignKey(Keyword, blank=True, null=True)
     sort_order = models.IntegerField(default=1)
-
-    class Meta:
-        unique_together = ('question', 'keyword', )
 
     def __unicode__(self):
         return "%s - %s" % (self.question, self.keyword)

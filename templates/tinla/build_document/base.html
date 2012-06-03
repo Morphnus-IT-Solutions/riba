@@ -7,7 +7,7 @@
             <a class="{% if '/template-details/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/template-details/">Template Details</a>
         </td>
         <td>
-            <a class="build-hupt1" href="YOUR-URL">Create Questionnaire</a>
+            <a class="{% if '/create-questionnaire/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/create-questionnaire/">Create Questionnaire</a>
         </td>
         <td>
             <a class="build-hupt1" href="YOUR-URL">Finalize Template</a>
