@@ -3,19 +3,15 @@ from categories.models import Category
 from build_document.models import Template
 from tinymce.widgets import TinyMCE
 
-class UploadTemplateForm(forms.Form):
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), error_messages={'required':"Please select category"} , required=True)
-    upload_document = forms.FileField(required=False, label="Upload Document")
-    upload_text = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 15}), required=False, label="Paste Document Here")
+class UploadTemplateForm(forms.ModelForm):
+    class Meta:
+        model = Template
+        fields = ('category', 'upload_document', 'upload_text',)
 
     def __init__(self, *args, **kwargs):
-        template = kwargs.pop('template', None)
         super(UploadTemplateForm, self).__init__(*args, **kwargs)
         self.fields['category'].error_messages['required'] = 'Please enter category'
-        if template:
-            self.fields['category'].initial = template.category
-            self.fields['upload_document'].initial = template.upload_document
-            self.fields['upload_text'].initial = template.upload_text
+        self.fields['upload_text'].widget = TinyMCE(attrs={'cols': 50, 'rows': 15})
 
     def clean(self):
         if not ('upload_document' in self.cleaned_data and 'upload_text' in self.cleaned_data) or \

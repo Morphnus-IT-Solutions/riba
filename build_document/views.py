@@ -8,13 +8,9 @@ from build_document.forms import *
 from django.conf import settings
 
 
-def create_new_template(request):
-    #template = Template.objects.create()
-    return ''
-
 def get_template_from_session(request):
     session = utils.get_session_obj(request)
-    template_id = session.get('template_id')
+    template_id = session.get('template_id', None)
     template = ''
     if template_id:
         template = Template.objects.get(pk=template_id)
@@ -41,24 +37,22 @@ def add_keywords(request, template):
 
 def upload_template(request):
     template = get_template_from_session(request)
-    form = UploadTemplateForm(template=template)
+    if template:
+        form = UploadTemplateForm(instance=template)
+    else:
+        form = UploadTemplateForm(instance=None) 
     errors = []
     if request.method == "POST":
-        form = UploadTemplateForm(request.POST, request.FILES)
-        category_id = request.POST.get('category')
-        upload_document = request.FILES.get('upload_document')
-        upload_text = request.POST.get('upload_text')
+        if template:
+            form = UploadTemplateForm(request.POST, request.FILES, instance=template)
+        else:
+            form = UploadTemplateForm(request.POST, request.FILES)
+        session = utils.get_session_obj(request)
         if form.is_valid():
-            if template:
-                template.category_id = category_id
-                template.upload_document = upload_document
-                template.upload_text = upload_text
-                template.save()
-            else:
-                template = Template.objects.create(category_id = category_id, upload_document = upload_document, upload_text = upload_text)
-                session['template_id'] = template.id
+            form.save()
+            session['template_id'] = form.instance.id
             # add keywords
-            add_keywords(request, template)
+            add_keywords(request, form.instance)
             return HttpResponseRedirect('/build-document/template-details/')
         else:
             for er in form.errors:
