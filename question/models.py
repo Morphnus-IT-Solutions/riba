@@ -38,25 +38,16 @@ class Question(models.Model):
                 children.append(chq)
         return children
 
-    def get_parents(self, question, parents):
-        graph = QuestionTree.objects.filter(question=question).exclude(parent_question=None, parent_value=None)
-        if not graph:
-            return parents
-        
-        for node in graph:
-            if not children.get(node.parent_question):
-                children[node.parent_question] = {node.parent_value: node.question}
-            else:
-                if not children[node.parent_question].get(node.parent_value):
-                    children[node.parent_question][node.parent_value] = node.question
-            if node.question:
-                self.get_children(node.question,children)
-        return children
 
     def get_all_parents(self):
-        ques = self
         parents = []
-        parents = self.get_parents(ques, parents)
+        par_question = QuestionTree.objects.get(question=self)
+        while(par_question and par_question.parent_question):
+            par_q = par_question.parent_question
+            par_val = par_question.parent_value
+            parents.append(par_question)
+            par_question = QuestionTree.objects.get(question = par_q)
+        parents.reverse()
         return parents
 
     def is_root_question(self):
@@ -75,7 +66,7 @@ class Question(models.Model):
             qt = qt[0]
         root_lft = qt.lft - (qt.lft % 1000)
         qt = QuestionTree.objects.get(lft=root_lft)
-        return qt.question
+        return qt
 
     def get_question_hierarchy(self):
         question_hierarchy = []
@@ -90,7 +81,7 @@ class Question(models.Model):
             par_q = par_question[0].parent_question
             par_val = par_question[0].parent_value
             question_hierarchy.append(par_question[0])
-            par_question = QuestionTree.objects.filter(question = par_q,)
+            par_question = QuestionTree.objects.filter(question = par_q)
         question_hierarchy.reverse()
         return question_hierarchy
                 

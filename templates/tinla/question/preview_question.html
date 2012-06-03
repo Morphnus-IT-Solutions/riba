@@ -90,8 +90,8 @@
     		</div>
 		</div>
     	<div class="clear bordergray"></div>
-        {% for qh in hierarchy %}
-            <div class="left flgray f11 w250 marl10">{{qh.0}}</div><div class="left w200">{{qh.1}}</div><br/><br/>
+        {% for qh in parents %}
+            <div class="left flgray f11 w250 marl10">{{qh.parent_question}}</div><div class="left w200">{{qh.parent_value}}</div><br/><br/>
         {% endfor %}
         <form id="preview_question_form" method="POST" action="">
             <div class="left marl10 f12 w250">{{q.question}}</div>

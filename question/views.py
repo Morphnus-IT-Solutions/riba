@@ -136,19 +136,22 @@ def preview_question(request, id):
         q = Question.objects.get(pk=qid)
         try:
             q_tree = QuestionTree.objects.select_related('question').get(parent_question__id=qid, parent_value=qval)
-            q = q_tree.question or q_tree.parent_question 
+            if not q_tree.question:
+                preview_complete = True
+            else:
+                q = q_tree.question or q_tree.parent_question 
         except QuestionTree.DoesNotExist:
             preview_complete = True
     else:
         q = Question.objects.get(pk=id)
     q_fields = q.field_set.all().order_by('id')
     q_options = q.option_set.all().order_by('id')
-    q_hierarchy = q.get_question_hierarchy()
+    q_parents = q.get_all_parents()
     ctxt = {
         'q': q,
         'fields': q_fields,
         'options': q_options,
-        'hierarchy': q_hierarchy,
+        'parents': q_parents,
         'preview_complete': preview_complete,
     }
     return render_to_response('question/preview_question.html', ctxt, context_instance=RequestContext(request))
@@ -196,7 +199,7 @@ def edit_question(request, id):
                 if question.is_root_question():
                     root_question = question
                 else:
-                    root_question = question.get_root_question()
+                    root_question = question.get_root_question().question
                 root_question.rebuild_nsm()
                 return HttpResponseRedirect('/question/%s' %q.id)
 
