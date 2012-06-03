@@ -65,3 +65,19 @@ def edit_category(request, id):
         'errors': errors
     }
     return render_to_response('categories/edit_category.html', ctxt, context_instance=RequestContext(request))
+
+def delete_category(request, id):
+    try:
+        category = Category.objects.get(id = id)
+    except Category.DoesNotExist:
+        raise Http404
+    if request.method == "POST":
+        del_confirm = request.POST.get('del_confirm', 'No')
+        if del_confirm == "Yes":
+            category.delete()
+        return HttpResponseRedirect('/categories/view/')
+        
+    ctxt = {
+        'category':category,
+    }    
+    return render_to_response('categories/category_delete_confirm.html', ctxt, context_instance=RequestContext(request))

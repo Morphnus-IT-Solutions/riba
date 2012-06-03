@@ -13,4 +13,5 @@ urlpatterns = patterns('categories.views',
     (r'^view/$', 'view_all_categories'),
     (r'^add/', 'add_category'),
     (r'^edit/(?P<id>[0-9]+)/$', 'edit_category'),
+    (r'^delete/(?P<id>[0-9]+)/$', 'delete_category'),
 )

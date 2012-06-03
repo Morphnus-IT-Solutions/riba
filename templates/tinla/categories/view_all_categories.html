@@ -26,7 +26,7 @@
 			<a href="/categories/add/">+ Add a new Category</a>
 		</div>
 		<div class="clear mart10">
-		<form action="" id="question_list_form" name="question_list_form">
+		<form action="" id="category_list_form" name="category_list_form">
 			{% if categories %}
 				<div class="mart10">
 				<table class="tablesorter tbl_response" cellspacing="0" cellpadding="0" border="0" id="user_table" width="100%">
@@ -78,7 +78,7 @@ $('.deletebin').click(function(){
         $('#deletebin').html(xhr.responseText);
         var dialog = $('#deletebin').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
     };
-    var url= "/question/delete/"+k;
+    var url= "/categories/delete/"+k;
     $.ajax({
         type: 'GET',
         url:url,
