@@ -174,35 +174,21 @@ def edit_question(request, id):
         option_formset = optioninlineformset(request.POST, request.FILES, instance = question)
 
         if form.is_valid():
-            qch = question.get_all_children()
-            for qs in qch:
-                qs.delete()
             q = form.save()
         else:
             for er in form.errors:
                 errors.append(form.errors[er])
         if not errors:
-            Option.objects.filter(question=question).delete()
-            Field.objects.filter(question=question).delete()
             for fld in field_formset:
                 if fld.is_valid() and fld.cleaned_data.get('field_label'):
-                    f = Field()
-                    f.question = q
-                    f.field_label = fld.cleaned_data.get('field_label')
-                    f.field_type = fld.cleaned_data.get('field_type')
-                    f.field_option = fld.cleaned_data.get('field_option')
-                    f.save()
+                    fld.save()
             for op in option_formset:
                 if op.is_valid() and op.cleaned_data.get('option_value'):
-                    o = Option()
-                    o.question = q
-                    o.option_value = op.cleaned_data.get('option_value')
-                    o.dependent_question = op.cleaned_data.get('dependent_question')
-                    o.save()
+                    op.save()
                     try:
-                        qt = QuestionTree.objects.get(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                        qt = QuestionTree.objects.get(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
                     except QuestionTree.DoesNotExist:
-                        qt = QuestionTree(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                        qt = QuestionTree(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
                         qt.save()
             if is_popup == 1:
                 return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))

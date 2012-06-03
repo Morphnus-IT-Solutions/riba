@@ -20,6 +20,7 @@ class Question(models.Model):
     #max_times = models.IntegerField(null=True, blank=True, default=1)
     rows = models.IntegerField(null=True, blank=True, default=5)
     columns = models.IntegerField(null=True, blank=True, default=40)
+    level = models.IntegerField(default=1)
 
     def __unicode__(self):
         return self.question
@@ -32,7 +33,6 @@ class Question(models.Model):
         par_q = QuestionTree.objects.filter(parent_question=ques)
         children = []
         for q in par_q:
-            print q, q.lft, q.rgt
             qt = QuestionTree.objects.filter(lft__gte=q.lft, rgt__lte=q.rgt).order_by('lft')
             for chq in qt:
                 children.append(chq)
@@ -183,6 +183,9 @@ class QuestionTree(models.Model):
         parent.rgt = right
         parent.lft = left
         parent.level = level
+        if parent.question:
+            parent.question.level = level
+            parent.question.save()
         parent.save()
         
         return right + 1
