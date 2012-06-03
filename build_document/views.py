@@ -14,7 +14,10 @@ def get_template_from_session(request):
     template_id = session.get('template_id', None)
     template = ''
     if template_id:
-        template = Template.objects.get(pk=template_id)
+        try:
+            template = Template.objects.get(pk=template_id)
+        except:
+            pass
     return template
 
 def add_keywords(request, template):
