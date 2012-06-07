@@ -8,6 +8,7 @@ from build_document.forms import *
 from django.conf import settings
 from django.forms.models import formset_factory, inlineformset_factory
 from random import randint
+from django.utils import simplejson
 
 def get_template_from_session(request):
     session = utils.get_session_obj(request)
@@ -106,4 +107,35 @@ def create_questionnaire(request):
         'questionnaire_formset': questionnaire_formset,
         'random_count': randint(1,999), # included for multiple popups of dependent question
     }
-    return  render_to_response('build_document/questionnaire.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('build_document/questionnaire.html', ctxt, context_instance=RequestContext(request))
+
+
+def get_question_details(request, id):
+    try:
+        question = Question.objects.get(pk=id)
+    except Question.DoesNotExist:
+        raise Http404
+
+    template = get_template_from_session(request)
+    if not template:
+        raise Http404
+
+    keyword_queryset = Keyword.objects.filter(template=template)
+
+    child_details = {}
+    fields = ''
+
+    children = question.get_all_children()
+    for ch in children:
+        if ch.question and ch.question not in child_details:
+            child_details[ch.question] = ch.question.field_set.all()
+    fields = question.field_set.all()
+    keywords = Keyword.objects.filter(template=template)
+
+    ctxt = {
+            "question": question,
+            "fields": fields,
+            "child_details": child_details,
+            "keywords": keyword_queryset,
+           }
+    return render_to_response('build_document/question_details.html', ctxt, context_instance=RequestContext(request))

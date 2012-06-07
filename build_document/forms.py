@@ -36,9 +36,9 @@ class TemplateForm(forms.ModelForm):
 class QuestionnaireForm(forms.ModelForm):
     class Meta:
         model = Questionnaire
-        fields = ('question', 'keyword', 'sort_order',)
+        fields = ('question', 'keyword', 'field', 'sort_order', 'mandatory', )
 
     def __init__(self, *args, **kwargs):
         template = kwargs.pop('template', None)
         super(QuestionnaireForm, self).__init__(*args, **kwargs)
-        self.fields["keyword"].queryset = Keyword.objects.filter(template=template)
+        self.fields["question"].widget.attrs['class'] = 'question'

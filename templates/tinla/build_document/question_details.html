@@ -1,0 +1,70 @@
+<div>
+    <table>
+        {% if child_details %}
+            {% for q, fields in child_details.iteritems %}
+                <tr>
+                    <td>Question</td>
+                    <td>{{q.question}}</td>
+                {% if fields %}
+                </tr>
+                    {% for f in fields %}
+                    <tr>
+                        <td>Field</td>
+                        <td>{{f.field_label}}</td>
+                        <td>Keyword</td>
+                        <td>
+                            <select>
+                                <option value selected="selected">--------</option>
+                                {% for k in keywords %}
+                                    <option value={{k.id}}>{{k.keyword}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <td>Keyword</td>
+                        <td>
+                            <select>
+                                <option value selected="selected">--------</option>
+                                {% for k in keywords %}
+                                    <option value={{k.id}}>{{k.keyword}}</option>
+                                {% endfor %}
+                            </select>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% if fields %}
+                {% for f in fields %}
+                    <tr>
+                        <td>Field</td>
+                        <td>{{f.field_label}}</td>
+                        <td>Keyword</td>
+                        <td>
+                            <select>
+                                <option value selected="selected">--------</option>
+                                {% for k in keywords %}
+                                    <option value={{k.id}}>{{k.keyword}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>Keyword</td>
+                    <td>
+                        <select>
+                            <option value selected="selected">--------</option>
+                            {% for k in keywords %}
+                                <option value={{k.id}}>{{k.keyword}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endif %}
+    </table>
+</div>

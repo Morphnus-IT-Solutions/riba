@@ -8,6 +8,12 @@
 .table-form select {
     width: 200px;
 }
+.border-dotted-gray {
+		border-bottom: 1px dotted #ECECEC;
+		border-bottom-width: 1px;
+		border-bottom-style: dotted;
+		border-bottom-color: #ECECEC;
+}
 </style>
 <div align="center">
     <table width="650px" style="background:no-repeat url(bg.jpg); border-radius: 7px; -webkit-border-radius:7px; -moz-border-radius: 7px; -o-border-radius: 7px; border:2px #999 solid">
@@ -44,23 +50,28 @@
                                                 <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
                                             </a>
                                 </td>
-
-                                <td>{{form.keyword.label}}</td>
-                                <td>{{form.keyword}}</td>
-                                
                                 <td>{{form.sort_order.label}}</td>
                                 <td>{{form.sort_order}}</td>
-
+                                <td>{{form.mandatory}}</td>
+                                <td>{{form.mandatory.label}}</td>
                                 <td>{{form.DELETE}}</td>
                                 <td>Delete</td>
                             </tr>
+                            <tr>
+                                <td colspan=4 id="id_question-{{forloop.counter0}}-details" class="question_details"></td>
+                            </tr>
                         {% endif %}
+                        <tr><td colspan=8><div class="clear border-dotted-gray"></div></td></tr>
                     </table>
+                    
                 {% endfor %}
                 </td></tr>
                 <tr>
                     <td colspan="2" class="tdaligncenter">
                         <input title='Add Question' type='button' name='add_question' id='add_another_question' value='+ Add Question' class="btn_c btn_c_s" />
+                    </td>
+                    <td colspan="2" class="tdaligncenter">
+                        <input type="submit" id="proceed" name="proceed" value="Proceed"/>
                     </td>
                 </tr>
             </table>
@@ -100,6 +111,13 @@
             var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
             $(this).attr('for', newFor);
         });
+        newElement.find('td').each(function() {
+            var newid = $(this).attr('id').replace('-' + (total-1) + '-','-' + total + '-');
+            $(this).attr('id', newid);
+            if($(this).attr('class') == 'question_details'){
+                $(this).html('');
+            }
+        });
         total++;
         $('#id_' + type + '-TOTAL_FORMS').val(total);
         $(selector).after(newElement);
@@ -109,6 +127,31 @@
     $("#add_another_question").click(function() {
         cloneMore('table.table-form:last', 'questionnaire_set');
     });
+$(document).ready(function() {
+    /* Question trigger */
+    $(".question").change(function(){
+        var value = this.value;
+        var qid = this.id.split('-')[1];
+        var url = '/build-document/question-details/'+value+'/';
+        
+        var onsuccess = function(res, status){
+
+            //$("#dialog").html(data);
+            //var dialog = $('#shipping_dialog').dialog({modal:true, title:'Update Shipping Info', 
+//                                                    width:width, resizable:false});
+        };
+
+        var onerror = function(res, status) {
+            alert('error');
+            //$('#shipping_dialog').html(xhr.responseText);
+            //var dialog = $('#shipping_dialog').dialog({modal:true, title:'Action', 
+              //                              width:width, resizable:false});
+        };
+        $.get(url, function(data){
+            $("#id_question-"+qid+"-details").html(data);
+        });
+    });
+});
 </script>
 <script type="text/javascript" src="/adminmedia/js/admin/RelatedObjectLookups.js"></script>
 <script type="text/javascript" src="/admin/jsi18n/"></script>

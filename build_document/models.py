@@ -1,6 +1,6 @@
 from django.db import models
 from categories.models import Category
-from question.models import Question 
+from question.models import Question, Field
 from tinymce.models import HTMLField
 from south.modelsinspector import add_introspection_rules
 from storage import upload_storage
@@ -43,6 +43,8 @@ class Questionnaire(models.Model):
     template = models.ForeignKey(Template, db_index=True)
     question = models.ForeignKey(Question, db_index=True, blank=True, null=True,limit_choices_to=dict(level=1))
     keyword = models.ForeignKey(Keyword, blank=True, null=True)
+    field = models.ForeignKey(Field, blank=True, null=True)
+    mandatory = models.BooleanField(default=False)
     sort_order = models.IntegerField(default=1)
 
     def __unicode__(self):
