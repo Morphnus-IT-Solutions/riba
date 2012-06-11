@@ -1,36 +1,49 @@
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#id_questionnaire_set-TOTAL_FORMS').val({{form_count}}); 
+});
+</script>
+
 <div>
     <table>
         {% if child_details %}
             {% for q, fields in child_details.iteritems %}
                 <tr>
                     <td>Question</td>
-                    <td>{{q.question}}</td>
+                    <td><input id="id_questionnaire_set-{{forloop.counter0|add:count}}-question" name="questionnaire_set-{{forloop.counter0|add:count}}-question"  value="{{q.id}}" readonly="readonly" type="hidden">{{q.question}}</input></td>
                 {% if fields %}
                 </tr>
                     {% for f in fields %}
                     <tr>
+                        <td>
+                            <input type="hidden" id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-question" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-question" value="{{q.id}}" />
+                        </td>
                         <td>Field</td>
-                        <td>{{f.field_label}}</td>
+                        <td><input type="text" readonly="readonly" id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-field" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-field" value="{{f.field_label}}"></td>
                         <td>Keyword</td>
                         <td>
-                            <select>
+                            <select id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-keyword" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-keyword">
                                 <option value selected="selected">--------</option>
                                 {% for k in keywords %}
                                     <option value={{k.id}}>{{k.keyword}}</option>
                                 {% endfor %}
                             </select>
                         </td>
+                        <td>Mandatory</td>
+                        <td>
+                            <input type="checkbox" id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-mandatory" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-mandatory"></input>
+                        </td>
                     </tr>
                     {% endfor %}
                 {% else %}
                     <td>Keyword</td>
-                        <td>
-                            <select>
-                                <option value selected="selected">--------</option>
-                                {% for k in keywords %}
-                                    <option value={{k.id}}>{{k.keyword}}</option>
-                                {% endfor %}
-                            </select>
+                    <td>
+                        <select id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-keyword" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-keyword">
+                            <option value selected="selected">--------</option>
+                            {% for k in keywords %}
+                                <option value={{k.id}}>{{k.keyword}}</option>
+                            {% endfor %}
+                        </select>
                     </td>
                 </tr>
                 {% endif %}
@@ -39,16 +52,23 @@
             {% if fields %}
                 {% for f in fields %}
                     <tr>
+                        <td>
+                            <input type="hidden" id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-question" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-question" value="{{question.id}}" />
+                        </td>
                         <td>Field</td>
-                        <td>{{f.field_label}}</td>
+                        <td><input type="text" readonly="readonly" id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-field" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-field" value="{{f.field_label}}"></td>
                         <td>Keyword</td>
                         <td>
-                            <select>
+                            <select id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-keyword" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-keyword">
                                 <option value selected="selected">--------</option>
                                 {% for k in keywords %}
                                     <option value={{k.id}}>{{k.keyword}}</option>
                                 {% endfor %}
                             </select>
+                        </td>
+                        <td>Mandatory</td>
+                        <td>
+                            <input type="checkbox" id="id_questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-mandatory" name="questionnaire_set-{{forloop.counter0|add:count|add:"1"}}-mandatory"></input>
                         </td>
                     </tr>
                 {% endfor %}
@@ -56,7 +76,7 @@
                 <tr>
                     <td>Keyword</td>
                     <td>
-                        <select>
+                        <select id="id_questionnaire_set-{{count}}-keyword" name="questionnaire_set-{{count}}-keyword">
                             <option value selected="selected">--------</option>
                             {% for k in keywords %}
                                 <option value={{k.id}}>{{k.keyword}}</option>
