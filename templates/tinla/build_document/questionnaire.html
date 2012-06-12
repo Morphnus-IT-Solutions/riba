@@ -52,10 +52,8 @@
                                 </td>
                                 <td>{{form.sort_order.label}}</td>
                                 <td>{{form.sort_order}}</td>
-                                <td>{{form.mandatory}}</td>
-                                <td>{{form.mandatory.label}}</td>
-                                <td>{{form.DELETE}}</td>
                                 <td>Delete</td>
+                                <td>{{form.DELETE}}</td>
                             </tr>
                             <tr>
                                 <td colspan=4 id="id_question-{{forloop.counter0}}-details" class="question_details"></td>
@@ -131,24 +129,25 @@ $(document).ready(function() {
     /* Question trigger */
     $(".question").change(function(){
         var value = this.value;
+        var form_count = $('#id_questionnaire_set-TOTAL_FORMS').val(); 
         var qid = this.id.split('-')[1];
         var url = '/build-document/question-details/'+value+'/';
-        
-        var onsuccess = function(res, status){
+        var data = 'count='+qid+'&form_count='+form_count;
 
-            //$("#dialog").html(data);
-            //var dialog = $('#shipping_dialog').dialog({modal:true, title:'Update Shipping Info', 
-//                                                    width:width, resizable:false});
-        };
-
-        var onerror = function(res, status) {
-            alert('error');
-            //$('#shipping_dialog').html(xhr.responseText);
-            //var dialog = $('#shipping_dialog').dialog({modal:true, title:'Action', 
-              //                              width:width, resizable:false});
-        };
-        $.get(url, function(data){
+        var onsuccess = function(data, textStatus, xhr){
             $("#id_question-"+qid+"-details").html(data);
+        }
+
+        var onerror = function(data, textStatus, xhr){
+            alert(error);
+        }
+       
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: data,
+            success: onsuccess,
+            error: onerror
         });
     });
 });
