@@ -36,9 +36,24 @@ class TemplateForm(forms.ModelForm):
 class QuestionnaireForm(forms.ModelForm):
     class Meta:
         model = Questionnaire
-        fields = ('question', 'keyword', 'field', 'sort_order', 'mandatory', )
+        fields = ('question', 'sort_order',)
 
     def __init__(self, *args, **kwargs):
         template = kwargs.pop('template', None)
         super(QuestionnaireForm, self).__init__(*args, **kwargs)
         self.fields["question"].widget.attrs['class'] = 'question'
+        self.fields["question"].queryset = Question.objects.filter(level=1).order_by("question")
+        self.fields['question'].error_messages['required'] = 'Please enter question'
+        self.fields['sort_order'].error_messages['required'] = 'Please enter sort order for all questions'
+
+
+class FinalTemplateForm(forms.ModelForm):
+    class Meta:
+        model = Template
+        fields = ('title', 'category', 'upload_document', 'upload_text', 'offer_price', 'time_to_build', 'information', 'about')
+
+
+class FinalQuestionnaireForm(forms.ModelForm):
+    class Meta:
+        model = Questionnaire
+        fields = ('question', 'field', 'keyword', 'sort_order', 'mandatory',)

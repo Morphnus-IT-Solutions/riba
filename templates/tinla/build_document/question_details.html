@@ -21,16 +21,16 @@
             {% for q, fields in child_details.iteritems %}
                 <tr>
                     <td>Question</td>
-                    <td><input id="id_questionnaire-{{q.id}}-child_question" name="questionnaire-{{question.id}}-child_question"  value="{{q.id}}" readonly="readonly" type="hidden">{{q.question}}</input></td>
+                    <td><input id="id_questionnaire-{{q.id}}-child_question" name="questionnaire-{{q.id}}-child_question"  value="{{q.id}}" readonly="readonly" type="hidden">{{q.question}}</input></td>
                 {% if fields %}
                 </tr>
                     {% for f in fields %}
                     <tr>
                         <td>Field</td>
-                        <td><input type="hidden" id="id_questionnaire-{{f.id}}-field" name="questionnaire-{{q.id}}-field" value="{{f.id}}">{{f.field_label}}</td>
+                        <td><input type="hidden" id="id_questionnaire-{{f.id}}-field" name="questionnaire-{{f.id}}-field" value="{{f.id}}">{{f.field_label}}</td>
                         <td>Keyword</td>
                         <td>
-                            <select id="id_questionnaire-{{f.id}}-keyword" name="questionnaire-{{q.id}}-keyword">
+                            <select id="id_questionnaire-{{f.id}}-keyword" name="questionnaire-{{f.id}}-keyword">
                                 <option value selected="selected">--------</option>
                                 {% for k in keywords %}
                                     <option value={{k.id}}>{{k.keyword}}</option>
@@ -46,7 +46,7 @@
                 {% else %}
                     <td>Keyword</td>
                     <td>
-                        <select id="id_questionnaire_set-{{forloop.counter0}}-keyword" name="questionnaire-{{q.id}}-keyword">
+                        <select id="id_questionnaire_set-{{q.id}}-keyword" name="questionnaire-{{q.id}}-keyword">
                             <option value selected="selected">--------</option>
                             {% for k in keywords %}
                                 <option value={{k.id}}>{{k.keyword}}</option>
@@ -65,10 +65,10 @@
                 {% for f in fields %}
                     <tr>
                         <td>Field</td>
-                        <td><input type="hidden" id="id_questionnaire-{{f.id}}-field" name="questionnaire-{{question.id}}-field" value="{{f.id}}">{{f.field_label}}</td>
+                        <td><input type="hidden" id="id_questionnaire-{{f.id}}-field" name="questionnaire-{{f.id}}-field" value="{{f.id}}">{{f.field_label}}</td>
                         <td>Keyword</td>
                         <td>
-                            <select id="id_questionnaire-{{f.id}}-keyword" name="questionnaire-{{question.id}}-keyword">
+                            <select id="id_questionnaire-{{f.id}}-keyword" name="questionnaire-{{f.id}}-keyword">
                                 <option value selected="selected">--------</option>
                                 {% for k in keywords %}
                                     <option value={{k.id}}>{{k.keyword}}</option>

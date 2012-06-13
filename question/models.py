@@ -131,7 +131,7 @@ class Field(models.Model):
     field_option = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return "%s - %s" % (self.question, self.field_label)
+        return self.field_label
 
 
 class QuestionTree(models.Model):

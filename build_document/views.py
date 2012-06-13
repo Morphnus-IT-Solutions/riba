@@ -99,15 +99,79 @@ def create_questionnaire(request):
 
     questionnaire_inline_formset =  inlineformset_factory(Template, Questionnaire, form = QuestionnaireForm, extra=1, can_delete=True)
     questionnaire_formset = questionnaire_inline_formset(instance=template)
+    errors = []
+    if request.method == "POST":
+        questionnaire_formset = questionnaire_inline_formset(request.POST, request.FILES, instance=None)
+        if questionnaire_formset.is_valid():
+            # Delete old questionnaire
+            old_questionnaire = Questionnaire.objects.filter(template = template)
+            old_questionnaire.delete()
+            for q in questionnaire_formset.forms:
+                # validate mandatory fields
+                question = q.cleaned_data.get("question")
+                sort_order = q.cleaned_data.get("sort_order")
 
-    for form in questionnaire_formset.forms:
-        form.fields['keyword'].queryset = keyword_queryset
+                if not question:
+                    errors.append("Please select question")
+                if not sort_order:
+                    errors.append("Please add sort order for all questions")
+
+                if errors:
+                    continue
+                else:
+                    print "POST::: %s" % request.POST
+                    children = question.get_all_children()
+                    fields = question.field_set.all()
+                    if fields:
+                        for f in fields:
+                            keyword = request.POST.get("questionnaire-%s-keyword" % f.id)
+                            mandatory = request.POST.get("questionnaire-%s-mandatory" % f.id, False)
+                            add_question(template, question, sort_order, field=f, keyword=keyword, mandatory=mandatory)
+                    elif children:
+                        keyword = request.POST.get("questionnaire-%s-keyword" % question.id)
+                        mandatory = request.POST.get("questionnaire-%s-mandatory" % question.id, False)
+                        add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
+                        for ch in children:
+                            if ch.question:
+                                fields = ch.question.field_set.all()
+                                if fields:
+                                    for f in fields:
+                                        keyword = request.POST.get("questionnaire-%s-keyword" % f.id)
+                                        mandatory = request.POST.get("questionnaire-%s-mandatory" % f.id, False)
+                                        add_question(template, ch.question, sort_order, field=f, keyword=keyword, mandatory=mandatory)
+                                else:
+                                    keyword = request.POST.get("questionnaire-%s-keyword" % ch.question.id)
+                                    mandatory = request.POST.get("questionnaire-%s-mandatory" % ch.question.id, False)
+                                    add_question(template, ch.question, sort_order, keyword=keyword, mandatory=mandatory)
+                    else:
+                        keyword = request.POST.get("questionnaire-%s-keyword" % question.id)
+                        mandatory = request.POST.get("questionnaire-%s-mandatory" % question.id, False)
+                        add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
+
+                    return HttpResponseRedirect('/build-document/finalize-template/')
+        else:
+            errors.append(questionnaire_formset.errors)
 
     ctxt = {
+        'errors': errors,
         'questionnaire_formset': questionnaire_formset,
         'random_count': randint(1,999), # included for multiple popups of dependent question
     }
     return render_to_response('build_document/questionnaire.html', ctxt, context_instance=RequestContext(request))
+
+
+def add_question(template, question, sort_order, field=None, keyword=None, mandatory=None):
+    if mandatory and mandatory == "on":
+        mandatory = True
+    qn = Questionnaire()
+    qn.template = template
+    qn.question = question
+    qn.field = field
+    qn.sort_order = sort_order
+    qn.keyword_id = keyword
+    qn.mandatory = mandatory
+    qn.save()
+    print "saved qn ::: %s" % qn.template
 
 
 def get_question_details(request, id):
@@ -121,6 +185,9 @@ def get_question_details(request, id):
         raise Http404
 
     keyword_queryset = Keyword.objects.filter(template=template)
+    count = request.GET.get('count')
+    if count:
+        count = int(count)
 
     child_details = {}
     fields = ''
@@ -128,14 +195,37 @@ def get_question_details(request, id):
     children = question.get_all_children()
     for ch in children:
         if ch.question and ch.question not in child_details:
-            child_details[ch.question] = ch.question.field_set.all()
+            fields = ch.question.field_set.all()
+            child_details[ch.question] = fields
+
     fields = question.field_set.all()
+
+
     keywords = Keyword.objects.filter(template=template)
 
     ctxt = {
+            "count": count,
             "question": question,
             "fields": fields,
             "child_details": child_details,
             "keywords": keyword_queryset,
            }
     return render_to_response('build_document/question_details.html', ctxt, context_instance=RequestContext(request))
+
+
+def finalize_template(request):
+    template = get_template_from_session(request)
+    if not template:
+        raise Http404
+
+    form = FinalTemplateForm(instance=template)
+    inline_formset = inlineformset_factory(Template, Questionnaire, form = FinalQuestionnaireForm)
+
+    formset = inline_formset(instance = template)
+
+    ctxt = {
+        'template': template,
+        'form': form,
+        'formset': formset,
+    }
+    return render_to_response('build_document/finalize_template.html', ctxt, context_instance=RequestContext(request))

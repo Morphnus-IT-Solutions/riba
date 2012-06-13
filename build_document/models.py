@@ -40,8 +40,8 @@ class Keyword(models.Model):
 
 
 class Questionnaire(models.Model):
-    template = models.ForeignKey(Template, db_index=True)
-    question = models.ForeignKey(Question, db_index=True, blank=True, null=True,limit_choices_to=dict(level=1))
+    template = models.ForeignKey(Template)
+    question = models.ForeignKey(Question, db_index=True)
     keyword = models.ForeignKey(Keyword, blank=True, null=True)
     field = models.ForeignKey(Field, blank=True, null=True)
     mandatory = models.BooleanField(default=False)
