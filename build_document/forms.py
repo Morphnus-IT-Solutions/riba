@@ -53,6 +53,8 @@ class FinalTemplateForm(forms.ModelForm):
         fields = ('title', 'category', 'upload_document', 'upload_text', 'offer_price', 'time_to_build', 'information', 'about')
 
 
+
+
 class FinalQuestionnaireForm(forms.ModelForm):
     class Meta:
         model = Questionnaire

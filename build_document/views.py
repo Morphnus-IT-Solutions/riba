@@ -10,6 +10,13 @@ from django.forms.models import formset_factory, inlineformset_factory
 from random import randint
 from django.utils import simplejson
 
+def view_documents(request):
+    templates = Template.objects.select_related("category").filter(state="submitted")
+    ctxt = {
+        'templates': templates,
+    }
+    return render_to_response('build_document/view_documents.html', ctxt, context_instance=RequestContext(request))
+
 def get_template_from_session(request):
     session = utils.get_session_obj(request)
     template_id = session.get('template_id', None)
@@ -171,7 +178,6 @@ def add_question(template, question, sort_order, field=None, keyword=None, manda
     qn.keyword_id = keyword
     qn.mandatory = mandatory
     qn.save()
-    print "saved qn ::: %s" % qn.template
 
 
 def get_question_details(request, id):
@@ -223,6 +229,21 @@ def finalize_template(request):
 
     formset = inline_formset(instance = template)
 
+    if request.method == "POST":
+        form = FinalTemplateForm(request.POST, request.FILES, instance = template)
+        formset = inline_formset(request.POST, request.FILES, instance = template)
+        if form.is_valid():
+            qn = form.save()
+            for f in formset:
+                if f.is_valid() and f.cleaned_data.get('question'):
+                    f.save()
+        template.state = 'submitted'
+        template.save()
+        session = utils.get_session_obj(request)
+        template_id = session.get('template_id', None)
+        if template_id:
+            session['template_id'] = None
+        return HttpResponseRedirect('/build-document/')
     ctxt = {
         'template': template,
         'form': form,
