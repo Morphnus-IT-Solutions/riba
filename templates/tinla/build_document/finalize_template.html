@@ -45,13 +45,18 @@
             <tbody>
             {{formset.management_form}}
             {% for f in formset.forms %}
+            {% if f %}
             <tr>
+                <td style="display:none;visibility:hidden;">
+                    {{ f.id }}
+                </td>
                 <td>{{f.question}}</td>
                 <td>{{f.field}}</td>
                 <td>{{f.keyword}}</td>
                 <td>{{f.sort_order}}</td>
                 <td>{{f.mandatory}}</td>
             </tr>
+            {% endif %}
             {% endfor %}
             </tbody>
         </table>

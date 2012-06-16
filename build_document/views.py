@@ -225,7 +225,7 @@ def finalize_template(request):
         raise Http404
 
     form = FinalTemplateForm(instance=template)
-    inline_formset = inlineformset_factory(Template, Questionnaire, form = FinalQuestionnaireForm)
+    inline_formset = inlineformset_factory(Template, Questionnaire, form = FinalQuestionnaireForm, extra=0)
 
     formset = inline_formset(instance = template)
 
