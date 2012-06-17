@@ -1,16 +1,16 @@
 <table align="center">
     <tr>
         <td>
-            <a class="{% if '/upload-template/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/upload-template/">Upload Template</a>
+            <a class="{% if '/upload-template/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/upload-template/{%if id%}{{id}}/{%endif%}">Upload Template</a>
         </td>
         <td>
-            <a class="{% if '/template-details/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/template-details/">Template Details</a>
+            <a class="{% if '/template-details/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/template-details/{%if id%}{{id}}/{%endif%}">Template Details</a>
         </td>
         <td>
-            <a class="{% if '/create-questionnaire/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/create-questionnaire/">Create Questionnaire</a>
+            <a class="{% if '/create-questionnaire/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/create-questionnaire/{%if id%}{{id}}/{%endif%}">Create Questionnaire</a>
         </td>
         <td>
-            <a class="{% if '/finalize-template/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/finalize-template/">Finalize Template</a>
+            <a class="{% if '/finalize-template/' in request.path %}build-hupt{% else %}build-hupt1{% endif %}" href="/build-document/finalize-template/{%if id%}{{id}}/{%endif%}">Finalize Template</a>
         </td>
     </tr>
 </table>

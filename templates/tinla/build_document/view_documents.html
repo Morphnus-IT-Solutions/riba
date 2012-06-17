@@ -48,7 +48,7 @@ a:hover { text-decoration: underline; color: #4d77c3; }
                     <tbody>
                         {% for t in templates %}
                         <tr>
-                            <td>{{t.title}}</td>
+                            <td><a href="/build-document/upload-template/{{t.id}}/">{{t.title}}</a></td>
                             <td>{{t.category.name}}</td>
                             <td>{{t.offer_price|floatformat:0}}</td>
                             <td>{{t.time_to_build}}</td>

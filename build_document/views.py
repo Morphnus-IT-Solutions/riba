@@ -17,9 +17,14 @@ def view_documents(request):
     }
     return render_to_response('build_document/view_documents.html', ctxt, context_instance=RequestContext(request))
 
-def get_template_from_session(request):
+def get_template_from_session(request, id=None):
     session = utils.get_session_obj(request)
     template_id = session.get('template_id', None)
+
+    if id:
+        session['template_id'] = id
+        template_id = id
+
     template = ''
     if template_id:
         try:
@@ -27,6 +32,8 @@ def get_template_from_session(request):
         except:
             pass
     return template
+
+
 
 def add_keywords(request, template):
     kt = Keyword.objects.filter(template=template)
@@ -47,8 +54,8 @@ def add_keywords(request, template):
         Keyword.objects.create(keyword=k, template=template)
 
 
-def upload_template(request):
-    template = get_template_from_session(request)
+def upload_template(request, id=None):
+    template = get_template_from_session(request, id)
     if template:
         form = UploadTemplateForm(instance=template)
     else:
@@ -65,19 +72,23 @@ def upload_template(request):
             session['template_id'] = form.instance.id
             # add keywords
             add_keywords(request, form.instance)
-            return HttpResponseRedirect('/build-document/template-details/')
+            if id:
+                return HttpResponseRedirect('/build-document/template-details/%s/' % id)
+            else:
+                return HttpResponseRedirect('/build-document/template-details/')
         else:
             for er in form.errors:
                 errors.append(form.errors[er])
     ctxt = {
         'form': form,
-        'errors': errors
+        'errors': errors,
+        'id': id,
     }
     return render_to_response('build_document/upload_template.html', ctxt, context_instance=RequestContext(request))
 
 
-def template_details(request):
-    template = get_template_from_session(request)
+def template_details(request, id=None):
+    template = get_template_from_session(request, id)
     if not template:
         return HttpResponseRedirect(request.path.replace('template-details', 'upload-template'))
     form = TemplateForm(instance=template)
@@ -86,18 +97,23 @@ def template_details(request):
         form = TemplateForm(request.POST, request.FILES, instance=template)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/build-document/create-questionnaire/')
+            if id:
+                return HttpResponseRedirect('/build-document/create-questionnaire/%s/' % id)
+            else:
+                return HttpResponseRedirect('/build-document/create-questionnaire/%s/' % id)
+
         else:
             for er in form.errors:
                 errors.append(form.errors[er])
     ctxt = {
         'form': form,
         'errors': errors,
+        'id': id,
     }
     return  render_to_response('build_document/template_details.html', ctxt, context_instance=RequestContext(request))
 
 
-def create_questionnaire(request):
+def create_questionnaire(request, id=None):
     template = get_template_from_session(request)
     if not template:
         return HttpResponseRedirect(request.path.replace('template-details', 'upload-template'))
@@ -105,7 +121,7 @@ def create_questionnaire(request):
     keyword_queryset = Keyword.objects.filter(template=template)
 
     questionnaire_inline_formset =  inlineformset_factory(Template, Questionnaire, form = QuestionnaireForm, extra=1, can_delete=True)
-    questionnaire_formset = questionnaire_inline_formset(instance=template)
+    questionnaire_formset = questionnaire_inline_formset(instance=template, queryset=Questionnaire.objects.filter(question__level=1, field=None))
     errors = []
     if request.method == "POST":
         questionnaire_formset = questionnaire_inline_formset(request.POST, request.FILES, instance=None)
@@ -126,7 +142,6 @@ def create_questionnaire(request):
                 if errors:
                     continue
                 else:
-                    print "POST::: %s" % request.POST
                     children = question.get_all_children()
                     fields = question.field_set.all()
                     if fields:
@@ -158,11 +173,11 @@ def create_questionnaire(request):
                     return HttpResponseRedirect('/build-document/finalize-template/')
         else:
             errors.append(questionnaire_formset.errors)
-
     ctxt = {
         'errors': errors,
         'questionnaire_formset': questionnaire_formset,
         'random_count': randint(1,999), # included for multiple popups of dependent question
+        'id': id,
     }
     return render_to_response('build_document/questionnaire.html', ctxt, context_instance=RequestContext(request))
 
