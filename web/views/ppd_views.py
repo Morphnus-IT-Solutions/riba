@@ -42,7 +42,6 @@ import operator
 import gviz_api
 import calendar
 import re
-import ast
 import operator
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
