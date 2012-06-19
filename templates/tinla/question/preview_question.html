@@ -99,7 +99,7 @@
                 {% for f in fields %}
                     <div class="flgray f11 w250 marl10 ">{{f.field_label}}</div>
                     {%ifequal f.field_type "text"%}
-                         <div class="left w200"><input id="{{f.id}}" type="text" name="current_question_val"></div>   
+                         <div class="w200"><input id="{{f.id}}" type="text" name="current_question_val"></div>   
                     {% endifequal %}
                     {% ifequal f.field_type "textarea" %}
                         <textarea class="w250 h50" style="height:50px !important;" name="current_question_val"></textarea>
