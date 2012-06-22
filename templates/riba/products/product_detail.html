@@ -1,0 +1,23 @@
+<div class="product_detail">
+    <div class="breadcrumb">
+        <a href="/" title="Go to Chaupaati Home">Home</a>
+        &nbsp;&raquo;&nbsp;
+        <a href="{%cc_url request product.product.category.url%}" title="Browse all {{product.product.category.name}}">{{product.product.category.name}}</a>
+        &nbsp;&raquo;&nbsp;{{product.product.title}}
+    </div>
+    <div class="summary">
+        <div class="left">
+            <div class="images">
+                {% product_images product.product %}
+            </div>
+        </div>
+        <div class="right">
+            <h1>{{product.product.title}}</h1>
+            <div class="f12">By <a href="/{{product.product.brand.url}}">{{product.product.brand}}</a></div>
+            {% feature_icons product.product %}
+            <div class="fb_like">
+                <iframe src="http://www.facebook.com/plugins/like.php?&amp;layout=button_count&amp;show_faces=false&amp;width=300&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:21px;" allowTransparency="true"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

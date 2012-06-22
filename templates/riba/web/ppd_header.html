@@ -1,0 +1,34 @@
+ {%load web_tags%}
+ {%load cc_tags%}
+ {%load ppd_tags%}
+<div class="header">
+    <div id="logo">
+       	{%if request.user.is_authenticated%}
+        <a href="/home/{{client_name}}/all-sellers/?search_trend=day&source=url" title="Home"><img src="/media/images/ppd_images/fblogo.png" alt="Logo" width="300" height="59" style="border: 0"/></a>
+        {% else %}
+        <a href="{% ppd_url request request.user %}" title="Home"><img src="/media/images/ppd_images/fblogo.png" alt="Logo" width="300" height="59" style="border: 0"/></a>
+        {% endif %}
+	</div>
+    <div id="header_right"> {%if show_signin%}
+		<div id="user_links" class="f11">
+		  <ul>
+			{%if request.user.is_authenticated%}
+				<li class="first">Hi<span>{{request.user.get_profile.full_name|title}}</span></li>
+				<li><a href="/auth/signout/phonepedeal" style="border-right:none;">Sign Out</a></li>
+			{%else%}
+				<li><a href="/auth/signin/phonepedeal" class="signin" title="Sign in" style="border-right:none;">Sign in</a></li>
+                <!-- 
+				<li><a href="/a/auth/signup/phonepedeal" class="signin" title="Sign up" style="border-right:none;">Sign up</a></li>
+                -->
+			{%endif%}
+		  </ul>
+		</div>
+		{%endif%}
+		{%if show_menu%}
+		<div id="stores"> {% load menu_tags %}
+		  {% render_menu request %}
+		  </div>
+		{%endif%} 
+	  </div>
+	  <div class="clear"></div>
+  </div>

@@ -1,0 +1,22 @@
+{% load cc_tags %}
+{% load web_tags %}
+<div class="product_grid_item{% if counter|divisibleby:5 %} norb{% endif %}{%if last_row%} nobb{%endif%}">
+    <div class="thumb">
+        <a href="{%cc_url request product.product.url%}">
+            {% if product.image %}<img src="{{product.product_images.0.get_display_url}}" height="75" title="{{product.product.title}}" alt="{{product.product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{{MEDIA_URL}}images/noimage.png';this.alt='no image';}return false;" onerror_cnt="0" />{%else%}<img src="{{MEDIA_URL}}images/noimage.png" width="75" height="75" title="No image available for {{product.product.title}}" alt="No image available"/>{% endif %}</a>
+    </div>
+    <div class="summary">
+        <h3><a href="{%cc_url request product.product.url%}" title="{{product.product.title}}">{{product.product.title|truncate:40}}</a></h3>
+        <div class="pricing">
+            {% if product.rateChart.list_price > product.rateChart.offer_price %}
+            <div class="f11 fs fdgray"><span class="WebRupee">Rs.</span> {{product.rateChart.list_price|money}}</div>
+            {% endif %}
+            <div class="fmaroon f14"><strong><span class="WebRupee">Rs.</span> {{product.rateChart.offer_price|money}}</strong></div>            
+        </div>
+    </div>
+ <!--   <div class="buy">
+            <div class="btn_buynow">            
+            </div>
+            </div>-->
+</div>
+{% if counter|divisibleby:5 %}<div class="clear"></div>{% endif %}

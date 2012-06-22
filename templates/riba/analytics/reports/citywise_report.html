@@ -1,0 +1,132 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.uiButton{padding:0px 6px;}
+	label {font-weight: normal;}
+	.sku_id {width:270px; float:left;}
+	.excel_main {margin:8px 0 0 5px !important;}
+</style>
+<form method="POST" id="report_form" name="report_form" action="">
+{% show_export_link request form 'excel' %}
+{% form_daterange request form title%}
+
+<div class="report_option_main">
+    <div class="report_option_aa">	
+        <span>Order State:</span>{{form.order_state}}&nbsp; &nbsp;
+    </div>
+    <input type="submit" value="Go!" class="uiButton" style="width:80px\9;">
+</div>
+
+</form>
+<div class="clear">&nbsp;</div>
+<table class="tbl_graph floating_container">
+<tr>
+    <td>
+      <div id="city_value" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div id="city_volume" style="border:1px solid #ccc;width: 300px; height: 300px;float:left; margin-left:15px; margin-right:15px;"></div>
+      <div id="city_orders" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div class="clear"></div>
+      <br/>
+    </td>
+</tr>
+<tr><td><br/></td></tr>
+</table>
+
+<div class="left_table">
+<table class="tbl_report">
+<tr>
+    <td colspan="3" class="ca fb top_bar">Top Cities by Value</td>
+</tr>
+{%for item in value_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        <td class="la fb">{{item.0}}</td>
+        <td class="ra {%if forloop.last%}fb{%endif%}">{%int_to_comma item.1%}</td>
+        <td class="ra {%if forloop.last%}fb{%endif%}">{%int_to_comma item.2%}</td>
+    {%endif%}
+</tr>
+{%endfor%}                    
+</table>  
+</div>
+
+<div class="right_table">
+<table class="tbl_report">
+<tr>
+    <td colspan="3" class="ca fb top_bar">Top Cities by Volume (# Quantity)</td>
+</tr>
+{%for item in volume_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        <td class="la fb">{{item.0}}</td>
+        <td class="ra {%if forloop.last%}fb{%endif%}">{%int_to_comma item.1%}</td>
+        <td class="ra {%if forloop.last%}fb{%endif%}">{%int_to_comma item.2%}</td>
+    {%endif%}
+</tr>
+{%endfor%}                    
+</table>  
+</div>
+
+<div class="clear">&nbsp;</div>
+<div class="left_table">
+<table class="tbl_report">
+<tr>
+    <td colspan="3" class="ca fb top_bar">Top Cities by Volume (# Orders)</td>
+</tr>
+{%for item in orders_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        <td class="la fb">{{item.0}}</td>
+        <td class="ra {%if forloop.last%}fb{%endif%}">{%int_to_comma item.1%}</td>
+        <td class="ra {%if forloop.last%}fb{%endif%}">{%int_to_comma item.2%}</td>
+    {%endif%}
+</tr>
+{%endfor%}                    
+</table>  
+</div>
+<div class="clear">&nbsp;</div>
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_city_value|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('city_value'));
+         chart.draw(jscode_data_city_value, {width: 300, height: 300, title: 'Top Cities by Value (Rs. Lakhs)',lineWidth: 3,pointSize: 5,hAxis:{title:'Rs.'},legend: {'position': 'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_city_volume|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('city_volume'));
+         chart.draw(jscode_data_city_volume, {width: 300, height: 300, title: 'Top Cities by Volume (# quantity)',lineWidth: 3,pointSize: 5,hAxis:{title:'#'},legend: {'position': 'bottom'}});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode_city_orders|safe}}
+         var chart = new google.visualization.BarChart(document.getElementById('city_orders'));
+         chart.draw(jscode_data_city_orders, {width: 300, height: 300, title: 'Top Cities by Volume (# orders)',lineWidth: 3,pointSize: 5,hAxis:{title:'#'},legend: {'position': 'bottom'}});
+    }
+</script>
+{% endblock %}

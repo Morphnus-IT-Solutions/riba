@@ -1,0 +1,59 @@
+/*cc_panel.css*/
+/*27-10-10*/
+/*
+#left_nav{float:left;width:232px;padding:0; border:1px solid #ccc; margin-right:10px;margin-top:25px;text-align:left}
+*/
+#left_nav{float:left;width:232px;padding:0; margin-right:10px;margin-top:10px;text-align:left;}
+.user_box{border:1px solid #ccc; border-left:none; display:block; background-color:#fff; margin-left:1px; 
+border-top-right-radius:5px;border-bottom-right-radius:5px;-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;-moz-border-radius-topright:5px;-moz-border-radius-bottomright:5px;
+ }
+
+#crm_snippet{padding:5px 10px}
+#left_nav div.p10{padding:0 10px}
+#crm_snippet input{margin:0;padding:3px;font-size:16px;width:202px}
+#left_nav div.close_call{padding:5px 10px;text-align:center;font-size:11px;}
+#left_nav div.phone_no{background-color:#F4F4F4}
+#left_nav div.block{margin:10px 0}
+#logoutUser,#closeAttempt,#changeBtn{cursor:pointer}
+a.link{text-decoration:none;color:blue}
+a.link:hover{text-decoration:underline}
+.mart5{margin-top:5px}
+.marb5{margin-bottom:5px}
+.couponcode{border:1px solid #cccccc;margin-bottom:20px}
+.couponcode input[type="submit"]{width:auto; font-size:12px; margin:0px; padding:1px}
+.left_nave_btn{width:auto; font-size:12px; margin:0px; padding:1px}
+.cc_login{width:300px; border-collapse:collapse; margin:25px 25px 25px 25px; font-size:12px}
+.cc_login th{padding:0px 0px 10px; font-weight:bold}
+.cc_login td{padding:0px}
+.cc_login label{font-weight:normal}
+.cc_login input[type="Submit"]{font-family:Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;font-size:12px; line-height:12px}
+
+.white_button {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+	background: #fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+	background: -moz-linear-gradient(top,  #fff,  #ededed);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+.white_button:hover {
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+	background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+/*cc_panel.css end*/
+/* user box*/
+.cc_caller_id_wrapper{background:#f9f9f9; box-shadow:0px 0px 2px #999; padding:10px 20px;}
+.cc_signup{padding:5px 5px;}
+.cc_new_user{padding:5px 5px;}
+   .cc_change_tabs li{ padding:2px 4px; margin-right:0px; line-height:18px; width:96px; text-align:center; font-size:11px; color:#333; }
+   .pad2{padding:2px;}
+   .width90{width:90px;}
+   .li_change_user_bor{ border:1px solid #ccc; border-bottom:none; background:#ccc; box-shadow:0 0px 2px #ccc inset;cursor:pointer;}
+   .li_signup_bor{border:1px solid #ccc; border-bottom:none; background:#ccc; box-shadow:0 0px 2px #ccc inset;cursor:pointer;}
+   .li_user_info_bor{border:1px solid #ccc; border-bottom:none; background:#ccc; box-shadow:0 0px 2px #ccc inset;cursor:pointer;}
+   .crm_snippet .panel3{}
+   .crm_snippet .panel2{padding:5px 5px; display:none;}
+    
+/*cc_panel.css end*/

@@ -1,0 +1,154 @@
+{% extends request.ws_base|default:'web/base.html'%}
+{%block content%}
+<div class="breadcrumb">&nbsp;        
+</div>
+{% load cc_tags %}
+{% load web_tags %}
+<div>
+    <div class="cart_left">        
+        
+      <div class="msg success" style=" padding:10px; ">
+      <h1>Great, your order went through successfully. Your order id is 123456</h1>
+      <p>Use this order id in all communication with chaupaati.in</p>
+      </div>
+    </div>
+    <div class="cart_right">
+  <!--  <div class="cart_summary roundcorner5">
+    <div class="ca bglyellow padding10 bb toproundcorner5"><b>ORDER SUMMARY</b></div>
+    <div class="padding10">
+        <table cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td class="f11 fdgray">MRP:</td>
+                <td>Rs. 62,221.50</td>
+            </tr>
+            <tr>
+                <td class="f11 fdgray">Discount:</td>
+                <td>Rs. 16,222</td>
+            </tr>
+            
+            <tr>
+                <td class="f11 fdgray bbs">Shipping:</td>
+                <td class="bbs"><span id="orderShippingCharges">Rs. 0</span></td>
+            </tr>
+            <tr>
+                <td class="fdgray f11">Total:</td>
+                <td class="fmaroon f14 fb"><span id="orderPayableAmount">Rs. 45,999.50</span></td>
+            </tr>
+        </tbody></table>
+    </div>
+</div>
+    <div class="cart_summary roundcorner5">
+    <div class="ca bglyellow padding10 bb toproundcorner5"><b>Payment</b></div>
+    <div class="padding10">
+        <table cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td class="f11 fdgray">Net Charge:</td>
+                <td>Rs. 62,221.50</td>
+            </tr>
+            <tr>
+                <td class="f11 fdgray">Charged to:</td>
+                <td>Master card /Credit card</td>
+            </tr>
+            
+            <tr>
+                <td class="f11 fdgray bbs">Shipping:</td>
+                <td class="bbs"><span id="orderShippingCharges">Rs. 0</span></td>
+            </tr>
+            <tr>
+                <td class="fdgray f11">Total:</td>
+                <td class="fmaroon f14 fb"><span id="orderPayableAmount">Rs. 45,999.50</span></td>
+            </tr>
+        </tbody></table>
+    </div>
+</div>
+<div class="cart_summary roundcorner5">
+    <div class="ca bglyellow padding10 bb toproundcorner5"><b>Shipping Details</b></div>
+    <div class="padding10">
+       <div>
+                            <div class="dname">Rajendra</div>
+                            <div class="daddress">411 dhiraj heritage</div>
+                            <div class="dcity">Mumbai <span class="dpincode">400054</span></div>
+                            <div class="dstate">Maharashtra, <span class="dcountry">India</span></div>
+                            <div class="dphone">Tel: 9870696051</div>
+                        </div>
+    </div>
+</div>-->
+<div  style="border:1px solid #ccc; padding:5px;" class="roundcorner5">
+
+  <div class="cart_summaryy roundcorner5">
+    <div class="ca bglyellow padding5 bb toproundcorner55"><b>ORDER SUMMARY</b></div>
+    <div class="padding10">
+        <table cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td class="f11 fdgray">MRP:</td>
+                <td>Rs. 62,221.50</td>
+            </tr>
+            <tr>
+                <td class="f11 fdgray">Discount:</td>
+                <td>Rs. 16,222</td>
+            </tr>
+            
+            <tr>
+                <td class="f11 fdgray bbs">Shipping:</td>
+                <td class="bbs"><span id="orderShippingCharges">Rs. 0</span></td>
+            </tr>
+            <tr>
+                <td class="fdgray f11">Total:</td>
+                <td class="fmaroon f14 fb"><span id="orderPayableAmount">Rs. 45,999.50</span></td>
+            </tr>
+        </tbody></table>
+    </div>
+</div>
+    <div class="cart_summaryy roundcorner55">
+    <div class="ca bglyellow padding5 bb toproundcorner55" style="text-transform:uppercase"><b>Payment</b></div>
+    <div class="padding10">
+        <table cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td class="f11 fdgray">Net Charge:</td>
+                <td>Rs. 62,221.50</td>
+            </tr>
+            <tr>
+                <td class="f11 fdgray">Charged to:</td>
+                <td>Master card /Credit card</td>
+            </tr>
+            
+            <tr>
+                <td class="f11 fdgray bbs">Shipping:</td>
+                <td class="bbs"><span id="orderShippingCharges">Rs. 0</span></td>
+            </tr>
+            
+        </tbody></table>
+    </div>
+</div>
+<div class="cart_summaryy roundcorner5">
+    <div class="ca bglyellow padding5 bb toproundcorner5" style="text-transform:uppercase"><b>Shipping Details</b></div>
+    <div class="padding10">
+       <div>
+                            <div class="dname">Rajendra</div>
+                            <div class="daddress">411 dhiraj heritage</div>
+                            <div class="dcity">Mumbai <span class="dpincode">400054</span></div>
+                            <div class="dstate">Maharashtra, <span class="dcountry">India</span></div>
+                            <div class="dphone">Tel: 9870696051</div>
+                        </div>
+    </div>
+</div>
+
+</div>
+
+      <!--  {% include "order/right.html" %}-->
+    </div>
+<div class="clear"></div>
+<script type="text/javascript">
+document.myform.mobile.focus();
+    $('#continue').click(function(){
+        $('#radioNewCustomer').removeAttr('checked');
+    });
+    $('#radioNewCustomer').click(function() {
+        if($(this).attr('checked')) {
+            $('#password_row').removeClass('hidden');
+        } else {
+            $('#password_row').addClass('hidden');
+        }
+    });	
+</script>
+{%endblock%}

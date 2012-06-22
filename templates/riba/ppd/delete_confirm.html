@@ -1,0 +1,24 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+
+
+<div class="inner-content" %>
+
+	<form action="" id="delete_confirm_form" name="delete_confirm_form">
+	<div id="post_errors"></div>
+
+
+	<h1 class="head1">{{client_display_name}} - Confirm Delete</h1>
+	{% for i in arrlist %}
+	<p>Delete {{ i.title }}</p><br />
+		{% for j in arritem %}
+		<p>With item {{ j.sku }}</p><br />
+		{% endfor %}
+	{% endfor %}
+	<INPUT TYPE="submit" id="yes" VALUE="Yes" class="grayButton" name="save" > 				 &nbsp;&nbsp;&nbsp;
+	<INPUT type="submit" class="grayButton" value="No" id="no" name="no">
+
+
+<br />
+<br />
+{% endblock %}

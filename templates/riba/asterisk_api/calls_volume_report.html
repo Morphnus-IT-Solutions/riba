@@ -1,0 +1,94 @@
+{%extends 'web/base.html' %}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+            <div id="header" style="border-bottom: 1px solid #FCED67">
+                <div id="logo">
+                    <div><a href="{% cc_url request "" %}" title="Home"><img src="{{MEDIA_URL}}images/ppd-logo.gif" alt="Logo" width="300" height="58" /></a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+{%endblock%}
+{%block content %}
+
+{% daterange "Calls Volume Report" search_trend from_date to_date request "call_data"%}
+
+{% if errors %}
+<div>
+  <div class="error">
+<ul style="list-style-type:disc; padding-left:10px;">
+   <li>{{errors}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+<form method='GET' action=''>
+  <div  class="select_range">
+    <table class="tbl_select_range">
+      <tr>
+<!--        <td  width="50" style="text-align:right" class="f11">&nbsp;DID Number&nbsp; </td> -->
+<!--        <td width="180"><input type="textbox" Name= "did_no" value="{{did_no}}"class=''/></td> -->
+        <td  width="50" style="text-align:right" class="f11">&nbsp;Agent&nbsp;  </td>
+        <td width="180">
+            <select id="id_agent" name="agent">
+            <option {%if selected_agent == 'All'%} selected = "selected" {%endif%} value = 'All'> All</option>
+            {%for agent in agents %}
+                <option {% if selected_agent == agent.name%}selected="selected"{%endif%} value="{{agent.name}}">{{agent.name}}</option>
+            {%endfor%}
+            </select>
+        </td>
+        <td  width="50" style="text-align:right" class="f11">&nbsp;Call&nbsp;Type&nbsp; </td>
+        <td width="180">
+            <select id="id_call_type" name="call_type">
+            <option {%if selected_call_type == 'All'%} selected = "selected" {%endif%} value = 'All'> All</option>
+            <option {% if selected_call_type == 'inbound'%}selected="selected"{%endif%} value = 'inbound'>Inbound</option>
+            <option {% if selected_call_type == 'outbound'%}selected="selected"{%endif%} value = 'outbound'>Outbound</option>
+            </select>
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
+
+<br/>
+
+<table class="tbl_report">
+{%if from_date and to_date %}
+<tr>
+<th>Date</th>
+<th>Calls</th>
+<th>Answered</th>
+<th>Abandoned</th>
+<th>Abandoned <span class="fn">(%)</span></th>
+<th>Average Waiting Time - Answered Calls(Sec)</th>
+<th>Average Waiting Time - Abandoned Calls(Sec)</th>
+<th>Total Talk Time <span class="fn"><b>(Hrs)</b></span></th>
+<th>Average Talk Time(Sec)</th>
+</tr>
+
+<!--{%if sort == '1' or sort not in "-11" %}<a href="{{base_url}}&sort=-1">Date</a>{%endif%}{%if sort == '1'%}&#9650{%endif%}{%if sort == '-1'%}<a id="sortasc" href="{{base_url}}&sort=1">Date</a>{%endif%}{%if sort == '-1'%}&#9660{%endif%}
+</th>
+<th colspan='2'>
+{%if sort == '2' or sort not in "-22" %}<a href="{{base_url}}&sort=-2">Incoming</a>{%endif%}{%if sort == '2'%}&#9650{%endif%}{%if sort == '-2'%}<a href="{{base_url}}&sort=2">Incoming</a>{%endif%}{%if sort == '-2'%}&#9660{%endif%}
+</th>
+<th colspan='2'>
+{%if sort == '3' or sort not in "-33" %}<a href="{{base_url}}&sort=-3">Outgoing</a>{%endif%}{% if sort == '3' %}&#9650{%endif%}{%if sort == '-3'%}<a href="{{base_url}}&sort=3">Outgoing</a>{%endif%}{%if sort == '-3' %}&#9660{%endif%}
+</th>-->
+
+{% for calls in call_data %}
+<tr>
+<td width="80">{{calls.0|date:'d M, Y'}}</td>
+<td>{{calls.1}}</td>
+<td>{{calls.2}}</td>
+<td>{{calls.3}}</td>
+<td>{{calls.4}}%</td>
+<td>{{calls.5}}</td>
+<td>{{calls.6}}</td>
+<td>{{calls.7}}</td>
+<td>{{calls.8}}</td>
+</tr>
+{% endfor %}
+{%endif%}
+</table>
+{%endblock%}

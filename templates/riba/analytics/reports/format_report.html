@@ -1,0 +1,136 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+    <ul style="list-style-type:disc; padding-left:10px;">
+      <li>{{error}}</li>
+    </ul>
+  </div>
+</div>
+{% endif %}
+
+{% daterange "Sales by Format" search_trend dur.0 dur.1 request%}
+
+{% if not hide_it%} <br/>
+<div class="clear">&nbsp;</div>
+<div>
+  <table class="tbl_response">
+    <tr>
+      <th>Format</th>
+      <th>Payment Mode</th>
+      <th></th>
+      <th>Web</th>
+      <th>Phone</th>
+      <th>Total</th>
+      <th>Contribution</th>
+    </tr>
+    {% for data in datas %}
+    <tr >
+      <td rowspan="6"><br/>
+        <br/>
+        <br/>
+        {{data.catalog.name}}</td>
+      <td rowspan="3" class="row1"><br/>
+        Booked</td>
+      <td class="row1">Order</td>
+      <td class="row1 ra">{{data.catalog.wbookedcount}}</td>
+      <td class="row1 ra">{{data.catalog.pbookedcount}}</td>
+      <td class="row1 ra">{{data.catalog.bookedcounttotal}}</td>
+      <td class="row1 ra">{{data.catalog.bookedcountcontrib}}%</td>
+    </tr>
+    <tr class="row1">
+      <td>Quantity</td>
+      <td class="ra">{{data.catalog.wbookedquantity}}</td>
+      <td class="ra">{{data.catalog.pbookedquantity}}</td>
+      <td class="ra">{{data.catalog.bookedquantitytotal}}</td>
+      <td class="ra">{{data.catalog.bookedquantitycontrib}}%</td>
+    </tr>
+    <tr class="row1">
+      <td>Value</td>
+      <td class="ra">{{data.catalog.wbookedvalue}}</td>
+      <td class="ra">{{data.catalog.pbookedvalue}}</td>
+      <td class="ra">{{data.catalog.bookedvaluetotal}}</td>
+      <td class="ra">{{data.catalog.bookedvaluecontrib}}%</td>
+    </tr>
+    <tr class="row2">
+      <td rowspan="3"><br/>
+        Invoiced</td>
+      <td>Order</td>
+      <td class="ra">{{data.catalog.winvoicedcount}}</td>
+      <td class="ra">{{data.catalog.pinvoicedcount}}</td>
+      <td class="ra">{{data.catalog.invoicedcounttotal}}</td>
+      <td class="ra">{{data.catalog.invoicedcountcontrib}}%</td>
+    </tr>
+    <tr class="row2">
+      <td>Quantity</td>
+      <td class="ra">{{data.catalog.winvoicedquantity}}</td>
+      <td class="ra">{{data.catalog.pinvoicedquantity}}</td>
+      <td class="ra">{{data.catalog.invoicedquantitytotal}}</td>
+      <td class="ra">{{data.catalog.invoicedquantitycontrib}}%</td>
+    </tr>
+    <tr class="row2">
+      <td>Value</td>
+      <td class="ra">{{data.catalog.winvoicedvalue}}</td>
+      <td class="ra">{{data.catalog.pinvoicedvalue}}</td>
+      <td class="ra">{{data.catalog.invoicedvaluetotal}}</td>
+      <td class="ra">{{data.catalog.invoicedvaluecontrib}}%</td>
+    </tr>
+    {% endfor %}
+    <tr class="{%cycle "row1" "row2" %}">
+      <td rowspan="6"><b><br/>
+        <br/>
+        <br/>
+        Total</b></td>
+      <td rowspan="3"><br/>
+        <b>Booked</b></td>
+      <td>Order</td>
+      <td class="ra"><b>{{sum.booked.wcount}}</b></td>
+      <td class="ra"><b>{{sum.booked.pcount}}</b></td>
+      <td class="ra"><b>{{sum.booked.counttotal}}</b></td>
+      <td class="ra"><b>100%</b></td>
+    </tr>
+    <tr class="row1">
+      <td>Quantity</td>
+      <td class="ra"><b>{{sum.booked.wquantity}}</b></td>
+      <td class="ra"><b>{{sum.booked.pquantity}}</b></td>
+      <td class="ra"><b>{{sum.booked.quantitytotal}}</b></td>
+      <td class="ra"><b>100%</b></td>
+    </tr>
+    <tr class= "row1">
+      <td>Value</td>
+      <td class="ra"><b>{{sum.booked.wvalue}}</b></td>
+      <td class="ra"><b>{{sum.booked.pvalue}}</b></td>
+      <td class="ra"><b>{{sum.booked.valuetotal}}</b></td>
+      <td class="ra"><b>100%</b></td>
+    </tr>
+    <tr class="row2">
+      <td rowspan="3"><br/>
+        <b>Invoiced</b></td>
+      <td>Order</td>
+      <td class="ra"><b>{{sum.invoiced.wcount}}</b></td>
+      <td class="ra"><b>{{sum.invoiced.pcount}}</b></td>
+      <td class="ra"><b>{{sum.invoiced.counttotal}}</b></td>
+      <td class="ra"><b>100%</b></td>
+    </tr>
+    <tr class="row2">
+      <td>Quantity</td>
+      <td class="ra"><b>{{sum.invoiced.wquantity}}</b></td>
+      <td class="ra"><b>{{sum.invoiced.pquantity}}</b></td>
+      <td class="ra"><b>{{sum.invoiced.quantitytotal}}</b></td>
+      <td class="ra"><b>100%</b></td>
+    </tr>
+    <tr class="row2">
+      <td>Value</td>
+      <td class="ra"><b>{{sum.invoiced.wvalue}}</b></td>
+      <td class="ra"><b>{{sum.invoiced.pvalue}}</b></td>
+      <td class="ra"><b>{{sum.invoiced.valuetotal}}</b></td>
+      <td class="ra"><b>100%</b></td>
+    </tr>
+  </table>
+</div>
+<br/>
+{% endif %}
+{% endblock %} 

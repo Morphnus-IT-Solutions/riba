@@ -1,0 +1,80 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<br/>
+	
+{%daterange "Sales by City - " search_trend dur.0 dur.1 request "" mode%}
+
+<form method='GET' action="/reports/citywise_report/search/">
+<div class="select_range">
+	<table>
+		<tr>
+            <td>
+			<input type="radio" name="mode" value="1" checked> Booked Orders &nbsp;
+			<input type="radio" name="mode" value="2"> Invoiced Orders<br>	
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+
+{% if not hide_it%}
+<br/>
+<br/>
+<div>
+	<table width="100%">
+	<tr>
+	    <td width="500">
+            <table class="tbl_order">
+                <tr>
+                    <th>Shipto City</th>
+                    <th>Sum Of Quantities</th>
+                    <th>Sum Of Values</th>
+                    <th>% Contribution-by value</a></th>
+		</tr>
+                {% for ff in fields %}
+                <tr class="{%cycle "row1" "row2" %}">
+                    <td style="text-align:left;">{{ff.0}}</td>
+                    <td style="text-align:center;">{{ff.1}}</td>
+                    <td style="text-align:right;">{{ff.2}}</td>
+                    <td style="text-align:right;">{{ff.3}}%</td>
+                </tr>
+                {% endfor %}
+                <tr class="{%cycle "row1" "row2" %}">
+                    <td><b>TOTAL</td>
+                    <td><b>{{total.0}}</b></td>
+                    <td><b>{{total.1}}</b></td>
+                    <td><b>{{total.2}}%</b></td>
+                </tr>
+            </table>
+	    </td>
+	    <td width="50"></td>
+	    <td width="*" valign="top">
+	    <table>
+	    {% ifequal show_chart "Contribution" %}
+  	    <tr>
+<td>
+
+            <img style="border:1px solid grey;" src="http://chart.apis.google.com/chart?chxl=0:|City|2:|Contribution&chxp=0,50|2,50&chco=FF9900,76A4FB,636C7E,80C65A,3072F3,FF0000,00A789,FF6342,000000,AA0033&chxt=x,y,y&chs=550x325&cht=bvg&chd=t:{{data|join:'|'}}&chdl={{city}}&chtt=Contribution+by+Top-10 Cities&chts=923800,18&chm=N*p0*,000000,0,-1,11|N*p0*,000000,1,-1,11|N*p0*,000000,2,-1,11|N*p0*,000000,3,-1,11|N*p0*,000000,4,-1,11|N*p0*,000000,5,-1,11|N*p0*,000000,6,-1,11|N*p0*,000000,7,-1,11|N*p0*,000000,8,-1,11|N*p0*,000000,9,-1,11|h,000000,0,0:0,1&chds=0,{{chart_range.0}}&chxr=1,0,{{chart_range.1}}&chxs=0,000000,11.5,0,lt,000000|1,000000,11.5,0,lt,000000|2,000000,11.5,0,l,000000" width="550" height="325"/>
+	  </td></tr>
+            
+	    {% else%} {%if show_chart == "Quantity" or  "Volume" in show_chart%}
+            <tr><td>	    
+	    <img style="border:1px solid grey;" src="http://chart.apis.google.com/chart?chxl=0:|City|2:|{{show_chart}}&chxp=0,50|2,50&chco=FF9900,76A4FB,636C7E,80C65A,3072F3,FF0000,00A789,FF6342,000000,AA0033&chxt=x,y,y&chs=550x325&cht=bvg&chd=t:{{data|join:'|'}}&chdl={{city}}&chtt={{show_chart}}+by+Top-10 Cities&chds=0,{%if chart_range.0 %}{{chart_range.0}}{%else%}{{chart_range}}{%endif%}&chxr=1,0,{%if chart_range.1 %}{{chart_range.1}}{%else%}{{chart_range}}{%endif%}&chts=923800,18&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|N,000000,5,-1,11|N,000000,6,-1,11|N,000000,7,-1,11|N,000000,8,-1,11|N,000000,9,-1,11|h,000000,0,0:0,1&chxs=0,000000,11.5,0,lt,000000|1,000000,11.5,0,lt,000000|2,000000,11.5,0,l,000000" width="550" height="325"/>
+	    </td></tr>
+        {%endif%}{% endifequal %}
+	    </table>
+	    </td>
+    </tr>
+</table>	
+</div>
+<br/><br/>
+{% endif %}
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    $('#id_from').datepicker({maxDate:'0'});
+    $('#id_to').datepicker({maxDate:'0'});
+</script>
+{% endblock %}

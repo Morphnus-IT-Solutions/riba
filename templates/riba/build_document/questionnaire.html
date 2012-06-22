@@ -1,0 +1,160 @@
+{% extends "web/base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{MEDIA_URL}}css/build_document.css" type="text/css" media="screen, projection" />
+{% endblock %}
+
+{% block content %}
+<style>
+.table-form select {
+    width: 200px;
+}
+.border-dotted-gray {
+		border-bottom: 1px dotted #ECECEC;
+		border-bottom-width: 1px;
+		border-bottom-style: dotted;
+		border-bottom-color: #ECECEC;
+}
+</style>
+<div align="center">
+    <table width="650px" style="background:no-repeat url(bg.jpg); border-radius: 7px; -webkit-border-radius:7px; -moz-border-radius: 7px; -o-border-radius: 7px; border:2px #999 solid">
+    <tr>
+        <td align="center">
+            {% include "build_document/base.html" %} 
+        </td>
+    </tr>
+    {% if errors %}
+    <tr>
+        <td align="center">
+        <div class="error">
+            {% for error in errors %}
+                {{error}}
+            {% endfor %}
+        </div>
+        </td>
+        <td></td>
+    </tr>
+    {% endif %}
+    <tr>
+        <td align="center">
+        <form action="" method="POST" id="questionnaire" name="questionnaire" enctype="multipart/form-data">
+            <table>
+                <tr><td>
+                {{questionnaire_formset.management_form}}
+                {% for form in questionnaire_formset.forms %}
+                    <table class="table-form">
+                        {% if form %}
+                            <tr>
+                                <td>{{form.question.label}}</td>
+                                <td>{{form.question}}
+                                <a href="/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
+                                                <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
+                                            </a>
+                                </td>
+                                <td>{{form.sort_order.label}}</td>
+                                <td>{{form.sort_order}}</td>
+                                <td>Delete</td>
+                                <td>{{form.DELETE}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan=4 id="id_question-{{forloop.counter0}}-details" class="question_details"></td>
+                            </tr>
+                        {% endif %}
+                        <tr><td colspan=8><div class="clear border-dotted-gray"></div></td></tr>
+                    </table>
+                    
+                {% endfor %}
+                </td></tr>
+                <tr>
+                    <td colspan="2" class="tdaligncenter">
+                        <input title='Add Question' type='button' name='add_question' id='add_another_question' value='+ Add Question' class="btn_c btn_c_s" />
+                    </td>
+                    <td colspan="2" class="tdaligncenter">
+                        <input type="submit" id="proceed" name="proceed" value="Proceed"/>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </td>
+    </tr>
+    </table>
+ </div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript">
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+-)');
+        var replacement = prefix + '-' + ndx + '-';
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+
+    function cloneMore(selector, type) {
+        var newElement = $(selector).clone();
+        var total = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
+        newElement.find(':input').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        newElement.find('a').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        newElement.find('label').each(function() {
+            var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+            $(this).attr('for', newFor);
+        });
+        newElement.find('td').each(function() {
+            var newid = $(this).attr('id').replace('-' + (total-1) + '-','-' + total + '-');
+            $(this).attr('id', newid);
+            if($(this).attr('class') == 'question_details'){
+                $(this).html('');
+            }
+        });
+        total++;
+        $('#id_' + type + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+    }
+
+    // Event handlers for Field
+    $("#add_another_question").click(function() {
+        cloneMore('table.table-form:last', 'questionnaire_set');
+    });
+$(document).ready(function() {
+    /* Question trigger */
+    $(".question").change(function(){
+        var value = this.value;
+        var form_count = $('#id_questionnaire_set-TOTAL_FORMS').val(); 
+        var qid = this.id.split('-')[1];
+        var url = '/build-document/question-details/'+value+'/';
+        var data = 'count='+qid+'&form_count='+form_count;
+
+        var onsuccess = function(data, textStatus, xhr){
+            $("#id_question-"+qid+"-details").html(data);
+        }
+
+        var onerror = function(data, textStatus, xhr){
+            alert(error);
+        }
+       
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: data,
+            success: onsuccess,
+            error: onerror
+        });
+    });
+});
+</script>
+<script type="text/javascript" src="/adminmedia/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/adminmedia/js/core.js"></script>
+<script type="text/javascript" src="/adminmedia/js/SelectBox.js"></script>
+<script type="text/javascript" src="/adminmedia/js/SelectFilter2.js"></script>
+{% endblock %}

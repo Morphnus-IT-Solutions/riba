@@ -1,0 +1,7 @@
+<div id="nav" class="ra header-top-navigation">
+    <ul>
+        {% for menu_item in menu_items %}
+        <li>&nbsp;<a class="yellowlinks selected" href="{{menu_item.url}}" {% if menu_item.selected %}class="selected_menu"{% endif %}>{{menu_item.name}}</a>&nbsp;{%if menu_item.pos%} &nbsp;{%endif%}</li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,43 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{% block user_content %}
+<div style="padding:10px; margin-top:1px; margin-bottom:15px;">
+  <div class="fb fdgray prof_sub_head">Email Notification</div>
+  <table class="tbl_profile"  style="width:380px;">    
+    <tr align="center">
+      <td class="bbdr bbdb">Emails</td>
+      {%for en in email_newsletters%}
+      <td align="center" class="fdgray fb bbdr bbdb">{{en.newsletter}}</td>
+      {%endfor%}
+    </tr>
+  {%for es in email_subscriptions%}
+    <tr>
+      <td width="120" class="bbdr bbdb">{{es.email_alert_on}}</td>
+      {%for en in email_newsletters%}
+      <td width="80" align="center" class="bbdr bbdb"  style="background-color:#eee;"><input type="checkbox" /></td>
+      {%endfor%}
+    </tr>
+    {%endfor%}
+  </table>
+  <br />
+  <div class="fb fdgray prof_sub_head">SMS Notification</div>
+  <table class="tbl_profile"  style="width:380px;">    
+    <tr align="center">
+      <td class="bbdr bbdb">Phone Numbers</td>
+      {%for sn in sms_newsletters%}
+      <td align="center" class="fdgray fb bbdr bbdb">{{sn.newsletter}}</td>
+      {%endfor%}
+    </tr>
+  {%for ss in sms_subscriptions%}
+    <tr>
+      <td width="120" class="bbdr bbdb">{{ss.sms_alert_on}}</td>
+      {%for sn in sms_newsletters%}
+      <td width="80" align="center" class="bbdr bbdb"  style="background-color:#eee;"><input type="checkbox" /></td>
+      {%endfor%}
+    </tr>
+    {%endfor%}
+  </table>
+<div><input type="submit" value="Save"/> <input type="reset" value="Cancel"/></div>
+<div class="clear"></div>
+</div>
+{%endblock%}

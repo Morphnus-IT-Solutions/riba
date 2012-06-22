@@ -1,0 +1,8 @@
+Hi,
+
+Feedback: 
+{{user_feedback}}
+
+Name: {{user_name}}
+Mobile: {{user_mobile}}
+Email: {{user_email}}

@@ -1,0 +1,210 @@
+{% extends 'user/home.html' %}
+{%load cc_tags%}
+{% block user_content %}
+    <div style="clear:both;"></div>
+<div>
+  <!-- <hr class="space"/>-->
+        <form method="post" action="/payouts/calculate">
+        {% if payout_home_form.errors %}
+               <div class="row">       
+ 				  <div>
+                        <div class="error">
+                            <ol>
+                            {% for field in payout_home_form %}
+                            {% for error in field.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                            {% endfor %}
+                            </ol>
+                        </div>
+                    </div>            
+       		 </div>  
+                {% endif %}
+       <div>   <!--<span style="margin-right:10px;"><label for="id_month">Seller:</label> {{payout_home_form.seller}} </span>-->
+  
+                            
+         <span style="margin-right:10px;"><label for="id_year">Year:</label> {{payout_home_form.year}} </span>
+          <span style="margin-right:10px;"><label for="id_month">Month:</label> {{payout_home_form.month}} </span>
+                             
+         <input type="Submit"  title="Calculate" value="Calculate"/>  
+        </div>
+        <div style="margin-top:10px;"> 
+        <table cellpadding="0" cellspacing="0" class="tbl_payouts">
+        <tr class="f24">
+            <td class="fb grayborder" colspan="2">Payout for August, 2010</td>
+            
+        </tr>
+        <tr class="f16">
+            <td class="fb" width="132">Gross Sales</td>
+            <td width="100" class="td_value fb">{{seller_payout.sale_price}}1234567</td>
+        </tr>
+         <tr class="f14">
+            <td>Shipping Charges</td>
+            <td class="td_value">{{seller_payout.shipping_charges}}1234</td>
+        </tr>
+         <tr class="f14">
+            <td class="grayborder">Promotional Discounts</td>
+            <td class="grayborder td_value">- 3456</td>
+        </tr>
+         <tr class="f16">
+            <td class="fb">Net Sales</td>
+            <td class="td_value fb">{{seller_payout.collected_amount}}34567</td>
+        </tr>
+         <tr class="f14">
+            <td>Chaupaati Commission</td>
+            <td class="td_value">{{seller_payout.commission_amount}}- 6546546</td>
+        </tr>
+         <tr class="f14">
+            <td class="yellowborder">Sales Tax</td>
+            <td class="yellowborder td_value">- 6456</td>
+        </tr>
+        <tr class="f16">
+            <td class="fb">Payout</td>
+            <td class="td_value fb roundcorner5" style="background-color:#fcfccb; ">{{seller_payout.net_payout}}Rs. 23456787</td>
+        </tr>
+        
+        <!--<tr>
+            <td><b>Month, Year</b></td>
+            <td>{{month}}, {{year}}</td>
+        </tr>
+        <tr class="row1">
+            <td><b>Seller: </b></td>
+            <td>{{seller}}</td>
+        </tr>
+        <tr class="row1">
+            <td><b>Total Orders:</b></td>
+            <td>{{total_orders}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Offer Price</b><td>
+            <td>{{seller_payout.sale_price}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Shipping Charges</b><td>
+            <td>{{seller_payout.shipping_charges}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Gateway Charges</b><td>
+            <td>{{seller_payout.gateway_charges}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Chaupaati Discount</b><td>
+            <td>{{seller_payout.chaupaati_discount}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Seller Discount</b><td>
+            <td>{{seller_payout.seller_discount}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Collected Amount</b><td>
+            <td>{{seller_payout.collected_amount}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Applicable Amount</b><td>
+            <td>{{seller_payout.applicable_amount}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Commission Amount</b><td>
+            <td>{{seller_payout.commission_amount}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Gross Payout</b><td>
+            <td>{{seller_payout.gross_payout}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Commission Invoice Amount</b><td>
+            <td>{{seller_payout.commission_invoice_amount}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Net Payout</b><td>
+            <td><b>{{seller_payout.net_payout}}</b></td>
+        </tr>-->
+    </table>
+     <div class="f11"><a href="#">Download report to excel</a></div>       
+        </div>
+          <!-- <fieldset class="module payouts">  -->         
+           <!-- {% if payout_home_form.errors %}
+               <div class="row">       
+ 				  <div>
+                        <div class="error">
+                            <ol>
+                            {% for field in payout_home_form %}
+                            {% for error in field.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                            {% endfor %}
+                            </ol>
+                        </div>
+                    </div>            
+       		 </div>  
+                {% endif %}
+           
+             <div class="row">       
+ 				  <div>                   
+                        <label for="id_seller">{{payout_home_form.seller.label}}:</label>                        
+                            {{payout_home_form.seller}}                                                                      
+                  </div>            
+       		 </div>  
+              <div class="row">       
+ 				  <div>                   
+                        <label for="id_month">{{payout_home_form.month.label}}:</label>                        
+                            {{payout_home_form.month}}                                                                     
+                  </div>            
+       		 </div>    
+              <div class="row">       
+ 				  <div>                   
+                        <label for="id_year">{{payout_home_form.year.label}}:</label>                        
+                             {{payout_home_form.year}}                                                                    
+                  </div>            
+       		 </div>                 
+			 <div class="row">       
+ 				  <div>                 
+                       <input type="Submit"  title="Calculate" value="Calculate"/>                                                                      
+                  </div>           -->
+           
+            <!--<table cellpadding="0" cellspacing="0" class="checkout_table" id="tbl_book_order">
+                {% if payout_home_form.errors %}
+                <tr>
+                    <td colspan="2">
+                        <div class="error">
+                            <ol>
+                            {% for field in payout_home_form %}
+                            {% for error in field.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                            {% endfor %}
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td class="label" width="200px">{{payout_home_form.seller.label}}</td>
+                    <td >
+                        {{payout_home_form.seller}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label" width="200px">{{payout_home_form.month.label}}</td>
+                    <td >
+                        {{payout_home_form.month}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label" width="200px">{{payout_home_form.year.label}}</td>
+                    <td >
+                        {{payout_home_form.year}}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="">
+                        <input type="Submit"  title="Calculate" value="Calculate"/>
+                    </td>
+                </tr>
+            </table>-->
+      <!-- </fieldset>-->
+        </form>   
+</div>
+<div class="clear"></div>
+{% endblock %}

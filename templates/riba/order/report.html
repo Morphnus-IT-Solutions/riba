@@ -1,0 +1,157 @@
+{% extends "web/base.html"%}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+<div id="header" style="border-bottom: 1px solid #FCED67">
+  <div id="logo">
+    <div><a href="{% cc_url request "" %}" title="Home"><img src="{{MEDIA_URL}}images/ppd-logo.gif" alt="Logo" width="300" height="58" /></a> </div>
+  </div>
+  <div class="clear"></div>
+</div>
+{%endblock%}
+{% block content %} <br/>
+
+<form method='GET' action="/reports/">
+  <div  class="select_range">
+    <table class="tbl_select_range">
+      <tr>
+        <td width="50" style="text-align:right" class="fgray f11">&nbsp;From&nbsp;</td>
+        <td width="160"><input type="textbox" Name="from" id="id_from" value="{{html_data.dur.0|date:'m/d/Y'}}" Autocomplete="OFF" /></td>
+        <td width="50" style="text-align:right" class="fgray f11">&nbsp;To&nbsp; </td>
+        <td width="160"><input type="textbox" Name="to" id="id_to" class="bg_down_arr" Autocomplete="OFF" value="{{html_data.dur.1|date:'m/d/Y'}}" /></td>
+        <td  width="50" style="text-align:right" class="f11">&nbsp;Source&nbsp; </td>
+        <td width="180">
+        	<select name="source">
+            <option {%if html_data.source == -1 %}selected="selected"{%endif%} value="0">All</option>                      
+                    {%for s in stores%}                
+          
+            <option {%if html_data.source.id == s.id%}selected="selected"{%endif%} value={{s.id}}>{{s.name}}</option>                      
+                    {%endfor%}                
+             </select>
+        </td>
+        <td width="70" style="text-align:right"><button id="btn" type="submit" class="button white fn">Go</button></td>
+        <td width="*"></td>
+      </tr>
+    </table>
+  </div>
+</form>
+{% if error %}
+<br />
+<div class="error">
+  <ul>
+    <li>{{error}}</li>
+  </ul>
+</div>
+{% endif %}
+
+{% if not hide_it%}
+<table class="report_heading">
+  <tr>
+    <!--<td class="title">-->
+ <td>   <div class="title">{%if html_data.source == -1%}all accounts{%else%}{{html_data.source.name}}{%endif%}</div><!--</td></tr>
+    <tr>
+    <td class="date_range">-->
+    <div class="date_range">{{html_data.dur.0|date:"d M, Y"}} - {{html_data.dur.1|date:"d M, Y"}}</div></td>
+  </tr>
+</table>
+
+<div>
+<table class="tbl_graph">
+<tr>
+        <td>  
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?&chco=FF1B11E2,224499&chxt=y,y,x&chxl=1:|Volume|2:|Booked|Confirmed&chxp=1,50|2,20,82&chs=450x325&cht=bvg&chd=t:{{data.0|join:'|'}}&chtt=Total+Orders+by+Volume&chts=000000,16&chm=N,000000,0,-1,11|N,000000,1,-1,11|h,000000,0,0:0,1&chds=0,{{max_data.0}}&chxr=0,0,{{max_data.0}}&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,0,lt,000000|1,000000,11.5,0,l,000000&chbh=30,50,23" width="450" height="325"/>
+        </td>
+        <td> 
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?&chco=FF1B11E2,224499&chxt=y,y,x&chxl=1:|{{label}}|2:|Booked|Confirmed&chxp=1,50|2,20,82&chs=450x325&cht=bvg&chd=t:{{data.1|join:'|'}}&chtt=Total+Orders+by+Value&chts=000000,16&chm=N,000000,0,-1,11|N,000000,1,-1,11|h,000000,0,0:0,1&chds=0,{{max_data.1}}&chxr=0,0,{{max_data.1}}&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,0,lt,000000|1,000000,11.5,0,l,000000&chbh=30,50,23" width="450" height="325"/>
+        </td>
+</tr>
+</table>
+<table class="tbl_graph">
+<tr>
+	<td colspan="2">
+        <div id="daily_volume" style="border:1px solid #ccc;"></div>
+    </td>
+</tr>
+</table>
+<table class="tbl_graph">
+<tr>
+	<td colspan="2">
+        <div id="daily_value" style="border:1px solid #ccc;"></div>
+    </td>
+</tr>
+</table>
+<table class="tbl_graph">
+<tr>
+        <td> 
+        <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{vol_data.book_vol_count|join:'|'}}&chtt=Top+5+Sellers+by+Volume|(Booked)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Volume|2:|{{vol_data.book_vol_name}}&chxp=1,50|2,{{tick.4|join:','}}&chds=0,{{vol_data.book_max_seller_vol}}&chxr=0,0,{{vol_data.book_max_seller_vol}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+        <td>  
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{vol_data.confirm_vol_count|join:'|'}}&chtt=Top+5+Sellers+by+Volume|(Confirmed)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Volume|2:|{{vol_data.confirm_vol_name}}&chxp=1,50|2,{{tick.5|join:','}}&chds=0,{{vol_data.confirm_max_seller_vol}}&chxr=0,0,{{vol_data.confirm_max_seller_vol}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+</tr>
+</table>
+<table class="tbl_graph">
+<tr>
+        <td>  
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{data.4.1|join:'|'}}&chtt=Top+5+Sellers+by+Value|(Booked)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Rs ('000)|2:|{{data.4.0}}&chxp=1,50|2,{{tick.2|join:','}}&chds=0,{{max_data.4}}&chxr=0,0,{{max_data.4}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+        <td>  
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{data.2.1|join:'|'}}&chtt=Top+5+Sellers+by+Value|(Confirmed)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Rs ('000)|2:|{{data.2.0}}&chxp=1,50|2,{{tick.0|join:','}}&chds=0,{{max_data.2}}&chxr=0,0,{{max_data.2}}&chts=000000,16&chbh=25,15&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+</tr>
+</table>
+<table class="tbl_graph">
+<tr>
+        <td>
+        <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{vol_data.book_a_vol_count|join:'|'}}&chtt=Best+Potential+Agents+by+Volume|(Booked)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Volume|2:|{{vol_data.book_a_vol_name}}&chds=0,{{vol_data.book_max_agent_vol}}&chxr=0,0,{{vol_data.book_max_agent_vol}}&chts=000000,16&chbh=25,15&chxp=1,50|2,{{tick.6|join:','}}&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+        <td> 
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{vol_data.confirm_a_vol_count|join:'|'}}&chtt=Best+Performing+Agents+by+Volume|(Confirmed)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Volume|2:|{{vol_data.confirm_a_vol_name}}&chds=0,{{vol_data.confirm_max_agent_vol}}&chxr=0,0,{{vol_data.confirm_max_agent_vol}}&chts=000000,16&chbh=25,15&chxp=1,50|2,{{tick.7|join:','}}&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+</tr>
+</table>
+<table class="tbl_graph">
+<tr>
+        <td> 
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{data.5.1|join:'|'}}&chtt=Best+Potential+Agents+by+Value|(Booked)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Rs ('000)|2:|{{data.5.0}}&chds=0,{{max_data.5}}&chxr=0,0,{{max_data.5}}&chts=000000,16&chbh=25,15&chxp=1,50|2,{{tick.3|join:','}}&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+        <td> 
+            <img style="border:1px solid #ccc;" src="http://chart.apis.google.com/chart?chbh=r&chs=450x325&cht=bhg&chco=711896,FF1B11E2,FF9900,81738A,224499&chd=t:{{data.3.1|join:'|'}}&chtt=Best+Performing+Agents+by+Value|(Confirmed)&chm=N,000000,0,-1,11|N,000000,1,-1,11|N,000000,2,-1,11|N,000000,3,-1,11|N,000000,4,-1,11|h,000000,0,0:0,1&chxt=x,x,y&chxl=1:|Rs ('000)|2:|{{data.3.0}}&chds=0,{{max_data.3}}&chxr=0,0,{{max_data.3}}&chts=000000,16&chbh=25,15&chxp=1,50|2,{{tick.1|join:','}}&chxs=0,000000,11.5,0,lt,000000|2,000000,11.5,1,lt,000000|1,000000,11.5,0,l,000000" width="450" height="325"/>
+        </td>
+</tr>
+</table>
+<!--<div style="font-size:18px; font-weight:bold;">Showing results from {{dur.0|date:"d M, y"}} to {{dur.1|date:"d M, y"}} for {%if source == -1%}all accounts{%else%}{{source.name}}{%endif%}
+
+</div>-->
+</div>
+
+<br/>
+<br/>
+{% endif %}
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    $('#id_from').datepicker({maxDate:'0'});
+    $('#id_to').datepicker({maxDate:'0'});
+</script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode|safe}}
+         var chart = new google.visualization.AreaChart(document.getElementById('daily_volume'));
+         chart.draw(jscode_data, {width: 900, height: 325, title: 'Daily Orders by Volume',lineWidth: 3,pointSize: 5,colors:['#670767','#004411']});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode1|safe}}
+         var chart = new google.visualization.AreaChart(document.getElementById('daily_value'));
+         chart.draw(jscode_data1, {width: 900, height: 325, title: 'Daily Orders by Value',lineWidth: 3,pointSize: 5,colors:['#670767','#004411']});
+    }
+</script>
+{%endblock %}

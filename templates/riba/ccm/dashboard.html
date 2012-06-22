@@ -1,0 +1,23 @@
+{% extends "ccm/base.html" %}
+{%block page_title%}Chaupaati -- Callcenter management{%endblock%}
+{%block page_desc%}Manage callcenter agents, queues etc.{%endblock%}
+{% load cc_tags %}
+{% load web_tags %}
+{% block content %}
+<div>
+    <script type="text/javascript">
+        var socket = new WebSocket('ws://192.168.0.144:1947/');
+        console.log(socket.readyState);
+        socket.onopen = function() {
+            console.log('Opened socket');
+        }
+        socket.omessage = function() {
+            console.log(msg);
+        }
+        socket.onclose = function() {
+            console.log('Closed socket');
+        }
+        //socket.send('Action: Login\nUsername:watchmen\nSecret:sauron\n\n');
+    </script>
+</div>
+{% endblock %}

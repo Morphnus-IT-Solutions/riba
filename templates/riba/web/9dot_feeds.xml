@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+{% for data in datas %}
+<product>
+    <sku>{{data.skuid}}</sku>    
+    {%if data.category%}
+        <category>{{data.category.0.category}}</category>
+    {%else%}
+        <category></category>
+    {%endif%}
+    <price>{{data.saleprice|floatformat:2 }}</price>
+    <imageurl>{{data.imagelink}}</imageurl>
+    <smallimageurl>{{data.imagelink}}</smallimageurl>
+    <name>{{data.productname}}</name>
+    <description>{{data.description|striptags}}</description>
+    <ctpage>{{data.productlink}}</ctpage>
+    <Merchant_Name>FutureBazaar.com</Merchant_Name>
+</product>
+{% endfor %}
+</products>
+

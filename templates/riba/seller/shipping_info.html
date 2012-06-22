@@ -1,0 +1,129 @@
+{%load cc_tags%}
+<style>
+.dialog input[type="text"], .dialog input[type="password"] {
+	width:290px;margin: 0 0 5px !important;}
+#state{width:290px;margin: 0 0 5px !important;}
+</style>
+<div class="dialog" style="padding:20px; font-size:12px; ">
+    <form method="post" action="{%cc_url request 'seller/update_shipping_info/'%}{{order_id}}/" id="form_shipping_info"  name="shipping_form">
+		<div>
+                    <div id="shipping_result" class="dialog_error" style="display:none"></div>
+                            <span class="shipping_info fdgray">Order State:</span>
+                            <select width="40" id="order_state" name="order_state" value="{{shipping_details.state}}" onchange=f()>
+                                {%if order_item.delivered_on%}
+                                    <option value="delivered">Delivered</option>
+                                    <option value="shipped">Shipped</option>
+                                {%else%}
+                                    <option value="shipped">Shipped</option>
+                                    <option value="delivered">Delivered</option>
+                                {%endif%}
+                            </select>
+                            </br>
+                                <span class="shipping_info fdgray">Courier*:</span>
+                                <input type="text" id="courier" size="40" name="courier" class="input_text_box_m" value="{{shipping_details.courier}}" /><br />
+
+                                <span class="shipping_info fdgray">AWB Number*:</span>
+                                <input type="text" id="tracking_no" size="40" name="tracking_no" class="input_text_box_m" value="{{shipping_details.tracking_no}}" /><br />
+                                <input type='hidden' name='order_item_ids' value=''/>
+                            <div id="ship">
+                                
+                                <span class="shipping_info fdgray">URL*:</span>
+                                <input type="text" id="tracking_url" size="40" name="tracking_url" class="input_text_box_m" value="{{shipping_details.tracking_url}}" /><br />
+                                <span class="shipping_info fdgray">Disptached On*:</span>
+                                <input type="text" id="dispatched_on" size="40" name="dispatched_on" class="input_text_box_m" value="{{order_item.dispatched_on|date:"d/m/Y"}}" /><br />
+                                <span></span>
+                                <input type='hidden' name='order_item_ids' value=''/>
+                            </div>
+                            <div id="deliv">
+                                <span class="shipping_info fdgray">Delivered On*:</span>
+                                <input type="text" id="delivered_on" size="40" name="delivered_on" class="input_text_box_m" value="{{order_item.delivered_on|date:"d/m/Y"}}" /><br />
+                                <span class="shipping_info fdgray">Received by*:</span>
+                                <input type="text" id="received_by" size="40" name="received_by" class="input_text_box_m" {%if order_item.received_by%}value="{{order_item.received_by}}"{%else%}value=''{%endif%} /><br />
+                                <span class="shipping_info fdgray">Receiver's Contact*:</span>
+                                <input type="text" id="receiver's_contact" size="40" name="receivers_contact" class="input_text_box_m" {%if order_item.receivers_contact%}value="{{order_item.receivers_contact}}"{%else%}value-''{%endif%} /><br />
+                            </div>
+                                <span class="shipping_info fdgray" style="vertical-align:top; margin-top:5px;">Notes:</span>
+                                <textarea id="notes" name="notes" style="width:290px;" cols="40" rows="5">{{shipping_details.notes}}</textarea>
+			<div style="margin-top:5px;">
+           <span class="shipping_info fdgray"></span><span> <button type="submit" onclick="return validateForm()">Update</button>&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+    $('#cancel').click(function(){
+        $('#shipping_dialog').dialog('close');
+        return false;
+    });
+$('#dispatched_on').datepicker();
+$('#delivered_on').datepicker();
+
+$(document).ready(function(){
+        f()
+        });
+function f(){
+    if ($('#order_state').val() == 'shipped')
+    {
+        $('#deliv')[0].style.display = 'none';
+        $('#ship')[0].style.display = '';
+    }
+    if ($('#order_state').val() == 'delivered')
+    {
+        $('#ship')[0].style.display = 'none';
+        $('#deliv')[0].style.display = '';
+    }
+}
+
+function validateForm()
+{
+    var order_state = document.forms["shipping_form"]["order_state"].value;
+    var courier = document.forms["shipping_form"]["courier"].value;
+    var tracking_no = document.forms["shipping_form"]["tracking_no"].value;
+    var tracking_url = document.forms["shipping_form"]["tracking_url"].value;
+    var dispatched_on = document.forms["shipping_form"]["dispatched_on"].value;
+    var delivered_on = document.forms["shipping_form"]["delivered_on"].value;
+    var received_by = document.forms["shipping_form"]["received_by"].value;
+    var receivers_contact = document.forms["shipping_form"]["receivers_contact"].value;
+    if (courier==null || courier=="")
+    {
+        alert("Required Field - Courier");
+        return false;
+    }
+    if (tracking_no==null || tracking_no=="")
+    {
+        alert("Required Field - AWB No.");
+        return false;
+    }
+    if(order_state=='shipped')
+    {
+    if (tracking_url==null || tracking_url=="")
+    {
+        alert("Required Field - URL");
+        return false;
+    }
+    if (dispatched_on==null || dispatched_on=="")
+    {
+        alert("Required Field - Dispatched on");
+        return false;
+    }
+    }
+    if(order_state=='delivered')
+    {
+    if (delivered_on==null || delivered_on=="")
+    {
+        alert("Required Field - Delivered on");
+        return false;
+    }
+    if (received_by==null || received_by=="")
+    {
+        alert("Required Field - Received by");
+        return false;
+    }
+    if (receivers_contact==null || receivers_contact=="")
+    {
+        alert("Required Field - Receiver's Contact");
+        return false;
+    }
+    }
+}
+</script>
+

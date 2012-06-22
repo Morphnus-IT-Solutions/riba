@@ -1,0 +1,229 @@
+{% extends 'support/base.html' %}
+{% block content %}
+{% load web_tags %}
+{% load cc_tags %}
+<style>
+.address_form{width:310px; margin-right:40px; padding:10px 0px 10px 10px; border:1px solid #ccc;}
+.address_form textarea{width:290px; height:50px;}
+.address_form select{width:147px; height:22px;}
+.address_form input{width:145px; height:18px;}
+ul, ol{padding:0px;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href='{% cc_url request "order/" %}'>Orders</a>&nbsp;&raquo;&nbsp; <a href='{% cc_url request "order/" %}{{order.id}}/'>
+  {{order.reference_order_id|default:order.id}}</a>&nbsp;&raquo;&nbsp; Modify</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Modify Order: {{order.reference_order_id|default:order.id}}</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+    {% if messages %}
+    <div class='mart10 error'>
+        <ul>{% for msg in messages %}<li>{{msg}}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+    <div class='mart10'>
+        <div class='w110 f11 flgray left'>User</div>
+        <div>{{c_name|title}}</div>
+        <div class='w110 f11 flgray left'>Status</div>
+        <div>{{order.support_state|upper}}</div>
+    </div>
+    <form method='post' id='order_modify_form' action='/order/{{order.id}}/modify/'>
+    <div class="mart10">
+        <div class='clear list_header fb txtalgnc'>
+            <div class='w75 left'>S No</div>
+            <div class='w440 left'>Item</div>
+            <div class='w75 left'>Price</div>
+            <div class='w75 left'>Qty</div>
+            <div class='w220 left'>Cancellation Reason</div>
+            <div class='clear'></div>
+        </div>
+        {% for orderitem in order_items %}
+        {%if orderitem.id in modify_allowed_on%}
+        <div class='list_item f11 border{%if not forloop.last%}-dotted-{%endif%}gray'>
+            <div class='w75 left txtalgnc'>
+                {{forloop.counter}}
+            </div>
+            <div class='w440 left'>
+                <img src="{{orderitem.seller_rate_chart.product.get_default_img}}" width="48px" height="48px"
+                class='left marr10' style='border:1px solid #ccc'/>
+                {{orderitem.item_title}}<br/>
+                {% if orderitem.seller_rate_chart.sku %}{{orderitem.seller_rate_chart.sku}}<br />{% endif %}
+            </div>
+            <div class='w75 left txtalgnc'>
+                {% if orderitem.list_price != orderitem.sale_price%}<strike>{{orderitem.get_unit_list_price|floatformat:-2}}</strike><br/>{% endif %}
+                {{orderitem.get_unit_price|floatformat:-2}}
+            </div>
+            <div class='w75 left txtalgnc'>
+                <select name='{{orderitem.id}}_qty' style='padding:4px;width:50px' id='{{orderitem.id}}_qty' class='qty'>
+                    <option value='{{orderitem.qty}}'>{{orderitem.qty}}</option>
+                {% for i in orderitem.qty|get_reverse_range_from_zero %}
+                    <option value='{%if i%}{{i}}{%else%}-1{%endif%}'>{%if i%}{{i}}{%else%}Cancel{%endif%}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class='w220 left txtalgnc'>
+                <select name='{{orderitem.id}}_reason' style='width:185px;height:25px;'>
+                    <option value=''>Select Reason</option>
+                    {%for choice in cancellation_choices%}
+                    <option value='{{choice}}'>{{choice}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class='clear'></div>
+        </div>
+        {%endif%}
+        {% endfor %}
+    </div>
+    {% if shipping_form %}
+    <div class='mart15'>
+        <div>
+            <p class='fb fdgray f18'>Shipping Address</p>
+        </div>
+        <div class='address_form'>
+            <input type='hidden' name='shipping_form' value='1' />
+            <input type='hidden' name='shipping_address_change' value='0' />
+            {% if shipping_form.errors %}
+            <div class='mart5 error marr5'>
+                <ul>{% for key,val in shipping_form.errors.iteritems %}<li>{{val}}</li>{% endfor %}</ul>
+            </div>
+            {% endif %}
+            <div class='mart5'>
+                <div class='left w150 marr5'>First Name</div>
+                <div class='left w150 marr5'>Last Name</div>
+                <div class='clear'></div>
+            </div>
+            <div class='marb10'>
+                <div class='left w150 marr5'>{{shipping_form.delivery_first_name}}</div>
+                <div class='left w150 marr5'>{{shipping_form.delivery_last_name}}</div>
+                <div class='clear'></div>
+            </div>
+            <div>Address</div>
+            <div class='marb10'>{{shipping_form.delivery_address}}</div>
+            <div>
+                <div class='left w150 marr5'>City</div>
+                <div class='left w150 marr5'>Pincode</div>
+                <div class='clear'></div>
+            </div>
+            <div class='marb10'>
+                <div class='left w150 marr5'>{{shipping_form.delivery_city}}</div>
+                <div class='left w150 marr5'>{{shipping_form.delivery_pincode}}</div>
+                <div class='clear'></div>
+            </div>
+            <div>
+                <div class='left w150 marr5'>State</div>
+                <div class='left w150 marr5'>Country</div>
+                <div class='clear'></div>
+            </div>
+            <div class='marb10'>
+                <div class='left w150 marr5'>{{shipping_form.delivery_state}}</div>
+                <div class='left w150 marr5'>{{shipping_form.delivery_country}}</div>
+                <div class='clear'></div>
+            </div>
+            <div>
+                <div class='left w150 marr5'>Phone</div>
+                <div class='left w150 marr5'>Email</div>
+                <div class='clear'></div>
+            </div>
+            <div>
+                <div class='left w150 marr5'>{{shipping_form.delivery_phone}}</div>
+                <div class='left w150 marr5'>{{shipping_form.delivery_email}}</div>
+                <div class='clear'></div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class='mart10'>
+        <input type='submit' value='Confirm' name='confirm' id='order_modify_confirm' style='display:none;'/>
+        <input type='submit' value='Modify' name='modify' id='order_modify_submit' />
+    </div>
+    </form>
+  </div>
+</div>
+{% if confirmation_alert %}
+<div id='confirm' style='display:none;'>
+    <div>
+    Please verify the order details and confirm your action
+    </div>
+    <div class='mart10'>
+        <div class='clear list_header fb txtalgnc'>
+            <div class='w75 left'>S No</div>
+            <div class='w350 left'>Item</div>
+            <div class='w75 left'>Qty</div>
+            <div class='w100 left'>Status</div>
+            <div class='clear'></div>
+        </div>
+        {% for item,qty,status,reason in updated_items %}
+        <div class='list_item f11 border{%if not forloop.last%}-dotted-{%endif%}gray'>
+            <div class='w75 left txtalgnc'>
+                {{forloop.counter}}
+            </div>
+            <div class='w350 left'>
+                {{item.item_title}}<br/>
+                {% if item.seller_rate_chart.sku %}{{item.seller_rate_chart.sku}}<br />{% endif %}
+            </div>
+            <div class='w75 left txtalgnc'>
+                {% if status == 'CANCELLED' %}{{item.qty}}{%else%}{{qty}}{%endif%}
+            </div>
+            <div class='w100 left txtalgnc'>
+                {{status}}
+            </div>
+            <div class='clear'></div>
+        </div>
+        {% endfor %}
+        <div class='clear'></div>
+    </div>
+    {%if delivery_address%}
+    <div class='mart10'>
+        <p><span class='fb fdgray'>Delivery Address</span><br />
+        {{delivery_address.delivery_first_name|title}} {{delivery_address.delivery_last_name|title}}<br />
+        {{delivery_address.delivery_address}}<br />
+        {{delivery_address.delivery_city|title}},
+        {{delivery_address.delivery_state|title}} - {{delivery_address.delivery_pincode}}<br />
+        {{delivery_address.delivery_phone}}<br />
+        {{delivery_address.delivery_email}}</p>
+    </div>
+    {%endif%}
+    <div class='mart10'>
+        NOTE: Cancelling all order items will cancel the order<br />
+        Are you sure you want to proceed?
+    </div>
+    <div class='mart10'>
+        <button class='uiButton left marr25' id='confirm_action'>Yes</button>
+        <button class='uiButton' onClick='dialogClose(this);'>No</button>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+$('.address_form input,.address_form select,.address_form textarea').change(function(){
+    $("input[name='shipping_address_change']").val('1');
+});
+
+{% if confirmation_alert %}
+var width = 630;
+var confirm = $('#confirm');
+confirm.dialog({modal:true, title:'Order Modification',
+    width:width, resizable:false});
+{% for item,qty,status,reason in updated_items %}
+$("select[name='{{item.id}}_qty']").val({{qty}});
+$("select[name='{{item.id}}_reason']").val('{{reason}}');
+{% endfor %}
+{% if shipping_address_change %}
+$("input[name='shipping_address_change']").val('1');
+{% endif %}
+$('#confirm_action').click(function(e) {
+    confirm.dialog('close');
+    $('#order_modify_confirm').trigger('click');
+});
+
+function dialogClose(e) {
+    confirm.dialog('close');
+    return false;
+}
+{% endif %}
+{% endblock %}

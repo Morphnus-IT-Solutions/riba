@@ -1,0 +1,57 @@
+/* question.css */
+.parent_question {
+    padding: 6px 6px 6px 16px;
+}
+
+.question-list ul{
+    list-style: none;
+}
+
+.vline{
+    background: url(/media/images/tree/folders/vline.gif) 0 0 no-repeat;
+    width: 17px;
+    height: 22px;
+}
+
+.lastpq {
+   background: url(/media/images/tree/folders/lp.gif) 0 0 no-repeat;
+   width: 26px;
+   height: 22px;
+   cursor: pointer;
+}
+
+.pq {
+   background: url(/media/images/tree/folders/tp.gif) 0 0 no-repeat;
+   width: 26px;
+   height: 22px;
+   cursor: pointer;
+}
+
+.lastpq-collapse {
+   background: url(/media/images/tree/folders/lm.gif) 0 0 no-repeat;
+   width: 26px;
+   height: 22px;
+   cursor: pointer;
+}
+
+.pq-collapse {
+   background: url(/media/images/tree/folders/tm.gif) 0 0 no-repeat;
+   width: 26px;
+   height: 22px;
+   cursor: pointer;
+}
+
+.lastlq {
+   background: url(/media/images/tree/folders/ln.gif) 0 0 no-repeat;
+   width: 34px;
+   height: 22px;
+   cursor: pointer;
+}
+
+.lq {
+   background: url(/media/images/tree/folders/tn.gif) 0 0 no-repeat;
+   width: 34px;
+   height: 22px;
+   cursor: pointer;
+}
+/* end question.css */

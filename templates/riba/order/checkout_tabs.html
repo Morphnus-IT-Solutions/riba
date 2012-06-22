@@ -1,0 +1,10 @@
+{% load web_tags %}
+{% load cc_tags %}
+<div id="checkout_tabs">
+    <ul>
+        {% for t in tabs %}
+        <li {% ifequal tab t.name %}class="selected"{% endifequal %}><div class="step_no">{{forloop.counter}}</div><div class="step{{forloop.counter}}">{{t.text}}</div></li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="clear"></div>

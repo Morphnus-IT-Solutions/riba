@@ -1,0 +1,91 @@
+{% extends 'web/ppd_base.html' %}
+{% load ppd_tags %}
+
+{% block content %}
+
+{% if loggedin %}
+{% if title_table == "Pincode Zipgroup Map"%}
+    <div class="order_search">
+          <form method="POST" action="">
+             <span class="f11 fgray">Pincode</span>
+              <input type="text" id="pincode" name="pincode" value= "{{pincode}}" />
+             <span class="f11 fgray">Zipgroup Code</span>
+              <input type="text" id="zipgroup_code" name="zipgroup_code" value="{{zipgroup_code}}" />
+             <span class="f11 fgray">Lsp code</span>
+              <input type="text" id="lsp_code" name="lsp_code" value="{{lsp_code}}" />
+              <input type="submit" id="pin_zip_submit" value="Search" class="grayButton mart6" />
+        </form>
+    </div>
+{% endif %}
+{% if title_table == "Article ProductGroup Map"%}
+<div class="order_search">
+          <form method="POST" action="">
+         <span class="f11 fgray">SAP Article ID</span>
+          <input type="text" id="article_id" name="article_id" value="{{article_id}}" />
+         <span class="f11 fgray">Product Group</span>
+          <input type="text" id="prod_grp" name="prod_grp" value="{{prod_grp}}" />
+          <input type="submit" id="art_prod_submit" value="Search" class="grayButton mart6" />
+        </form>
+        </div>
+{% endif %}
+{% if title_table == "DC Zipgroup LSP Map"%}
+<div class="order_search">
+          <form method="POST" action="">
+         <span class="f11 fgray">Dc Code</span>
+          <input type="text" id="dc_code" name="dc_code" value="{{dc_code}}" />
+         <span class="f11 fgray">Zipgroup Code</span>
+          <input type="text" id="zipgroup_code" name="zipgroup_code" value="{{zipgroup_code}}" />
+         <span class="f11 fgray">Lsp code</span>
+          <input type="text" id="lsp_code" name="lsp_code" value="{{lsp_code}}" />
+          <input type="submit" id="delv_chart_submit" value="Search" class="grayButton mart6" />
+        </form>
+        </div>
+{% endif %}
+     <div class="user_account_tabs" id="user_account_tabs">
+          <div class="left menu">
+             {%include "ppd/acc_section_display.html"%}
+          </div>
+     </div>
+{% endif %}
+    <div class="f18 fb">
+        <h1>{{title_table}} - {{selected_action}} interface</h1>
+    </div>
+
+     <table class="tbl" border="1" cellpadding="0" cellspacing="0">
+         <tr> 
+         {% for item in header_list %}
+             <th>{{item}}</th>
+         {% endfor %}
+         </tr>   
+         {% for item in content_list %}
+            <tr> 
+            {% for item_no in item %}
+                 <td class="la">{{ item_no }}</td>
+             {% endfor %}
+            </tr>
+         {% endfor %}
+    </table>
+  {% if display_list.paginator.num_pages > 1 %}
+  <div class="clear">
+  <div class="pagination">
+ {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+   {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+   {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   <div>{{pagination.cur_page}}</div>
+   {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+   {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+   {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a>{% else %}<a class="gray_link">Next</a> {% endif %}</div>
+ {% endif %}
+
+{% endblock %}
+{% block script_footer %}
+    <script type="text/javascript">
+        $("#back_button").click(function(){
+            history.go(-1);
+            return true;
+        })
+    </script>
+{% endblock %}
+

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content_head">
+  <div class="header rc5">  
+  <h3>Order Details</h3>
+  </div>
+  </div>
+
+    <table class="tbl_item_details">
+        <tr class="row1">
+            <td class="title">Product</td>
+            <td class="value">{{order_item.product_name}}</td>
+            <td class="title">Line Total</td>
+            <td class="value">{{order_item.get_line_item_price}}</td>
+            <td class="title">Order Total</td>
+            <td class="value">{{order_item.order.total}}</td>
+        </tr>
+        <tr class="row1">
+            <td class="title">Order ID</td>
+            <td class="value">{{order_item.order.order_id}}</td>
+            <td class="title">Article ID</td>
+            <td class="value">{{order_item.article_id}}</td>
+            <td class="title">SKU ID</td>
+            <td class="value">{{order_item.sku_id}}</td>
+        </tr>
+        <tr class="row1">
+            <td class="title">Submitted Date</td>
+            <td class="value">{{order_item.order.atg_submitted_date}}</td>
+            <td class="title">SAP Date</td>
+            <td class="value">{{order_item.order.sap_created_date}}</td>
+            <td class="title">7-Day Due Date</td>
+            <td class="value">{{order_item.order.get_delivery_due_date}}</td>
+        </tr>
+        <tr class="row1">
+            <td class="title">Delivery No</td>
+            {% if delivery %}
+            <td class="value">{{delivery.delivery_id}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_delivery_number}}</td>
+            {% endif %}
+            <td class="title">Delivery No Date</td>
+            {% if delivery %}
+            <td class="value">{{delivery.creation_date}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_delivery_created_date}}</td>
+            {% endif %}
+            <td class="title">ATG Order Status</td>
+            <td class="value">{{order_item.order.order_state.order_state}}</td>
+        </tr>
+        <tr class="row1">
+            <td class="title">Invoice No</td>
+            {% if delivery %}
+            <td class="value">{{delivery.invoice_number}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_invoice_number}}</td>
+            {% endif %}
+            <td class="title">Invoice Date</td>
+            {% if delivery %}
+            <td class="value">{{delivery.invoice_date}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_invoice_date}}</td>
+            {% endif %}
+            <td class="title">Qty</td>
+            {% if delivery %}
+            <td class="value">{{delivery.quantity}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_delivery_qty}}</td>
+            {% endif %}
+        </tr>
+        <tr class="row1">
+            <td class="title">Customer</td>
+            <td class="value">{{order_item.order.profile.get_name}}</td>
+            <td class="title">Phone</td>
+            <td class="value">{{order_item.order.profile.get_phones}}</td>
+            <td class="title">Email</td>
+            <td class="value">{{order_item.order.profile.login}}</td>
+        </tr>
+        <tr class="row1">
+            <td class="title">LSP Name</td>
+            {% if delivery %}
+            <td class="value">{{delivery.lsp_name}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_lsp_name}}</td>
+            {% endif %}
+            <td class="title">AWB No</td>
+            {% if delivery %}
+            <td class="value">{{delivery.tracking_number}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_awb_no}}</td>
+            {% endif %}
+            <td class="title">LSP Status</td>
+            {% if delivery %}
+            <td class="value">{{delivery.state}}</td>
+            {% else %}
+            <td class="value">{{order_item.get_lsp_status}}</td>
+            {% endif %}
+        </tr>
+        <tr class="row1">
+            <td class="title">
+                SAP Notes
+            </td>
+            <td colspan="3">
+                {{order_item.order.sap_error_notes|default:""}}
+            </td>
+	    <td class="title">City And Pincode</td>
+            <td class="value">{{order_item.order.get_city_and_pincode}}</td>
+        </tr>
+    </table>
+
+<br />
+<br />
+        <div><h4>Update History</h4></div>
+         
+        <table class="tbl_update_history" class="row1">       
+       <tr>
+       <th>Assigned By</th>
+       <th>Status</th>
+       <th>Assigned To</th>
+       <th>Due By</th>
+        </tr>
+         
+        <tr>
+            <td width="150">
+               <!-- <div class="f11 gray">Assigned By</div>-->
+                <div class="fb"> {{oms.modified_by.omsuser_set.all.0.team}} </div>
+                <div  class="f11">{{oms.get_created_on|date:"h:i A, d N Y"}}</div>
+                <div>{{oms.modified_by}}</div>
+            </td>
+            
+            <td>
+              <!--  <div class="f11 gray">Status</div>-->
+                <div class="fb">{{oms.status}}</div>
+                <div>{{oms.notes|default:""}}</div>
+                <div>{{oms.expected_by|default:""}}</div>
+            </td>
+            <td width="100">
+                <!--<div class="f11 gray">Assigned To</div>-->
+                <div class="fb">{{oms.status.responsible_team}}</div>
+            </td>
+            <td width="100" class="{{oms.rag}}">
+               <!-- <div class="f11 gray">Due By</div>-->
+                <b>{{oms.get_tat_by|date:"h:i A, d N Y"}}</b>
+            </td>
+        </tr>
+        
+        </table>
+   
+<br/>
+<br/>
+<form method='POST'style=padding-left:10px;>
+<tr>
+    <td><b>Click if Customer is Informed:  &nbsp;&nbsp;</b><button type="submit">Informed Customer</button></td>    
+</tr>
+</form>
+{% endblock %}

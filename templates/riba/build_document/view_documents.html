@@ -1,0 +1,70 @@
+{% extends "web/base.html" %}
+{% load question_tags %}
+{% block extra_css %}
+<style type="text/css">
+table {width:100%; margin-bottom:0px !important;}
+a { text-decoration: underline; color: #46546C; }
+a:hover { text-decoration: underline; color: #4d77c3; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="padding_top10">
+	<div class="content_head" style="height:34px;">
+		<div class="header rc5" style="width: 960px;">
+            <div class="left w760">
+                <h1>Templates</h1>
+            </div>
+			<div class="left search_element">
+				<form action="" method="get" id="search_form">
+				  	{% if q %}
+						<input type="text" id="q" name="q" value="{{q}}" autocomplete="off" maxlength="300"/>
+					{% else %}
+						<input type="text" id="q" name="q" autocomplete="off" maxlength="300" placeholder="Search Question" />
+					{% endif %}
+				  	<button type="submit" id="go" id="ques_str_submit"></button>
+				  <div class="clear"></div>				  
+				</form>
+			</div>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+
+	<div class="inner-content">
+		<div class="right marb10">
+			<a href="/build-document/upload-template/">+ Add a new Template</a>
+		</div>
+        <div class="clear mart10 document-list">
+            <div>
+            {% if templates %}
+                <table class="tbl_response tablesorter f11" id='questions_list'>
+                    <thead>
+                        <th class="w250">Title</th>
+                        <th class="w100">Category</th>
+                        <th class="w100">Price</th>
+                        <th class="w100">Time to Build <br/> (In minutes)</th>
+                    </thead>
+                    <tbody>
+                        {% for t in templates %}
+                        <tr>
+                            <td><a href="/build-document/upload-template/{{t.id}}/">{{t.title}}</a></td>
+                            <td>{{t.category.name}}</td>
+                            <td>{{t.offer_price|floatformat:0}}</td>
+                            <td>{{t.time_to_build}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {%else%}
+                <div class="f15">
+				    <h2><strong> No documents to display</strong> </h2>
+			    </div>
+            {%endif%}
+
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

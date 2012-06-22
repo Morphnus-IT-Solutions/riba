@@ -1,0 +1,37 @@
+<html>
+<head></head>
+<body>
+Hi,<br/><br/>
+Thank you for your interest.<br/><br/>
+As you must have realized shopping at futurebazaar.com has its own share of perks. <br/>
+
+And since you are an exclusive part of {{affiliate.name}} family, the benefits multiply. <br/><br/>
+Rest assured, be prepared to be floored with bountiful of goodies! <br/>
+Kindly make a note of the coupon codes mentioned below to avail the offer.<br/><br/>
+
+{%for coupon in coupon_codes.futurebazaar%}
+Offer: {{coupon.type.offer}}<br/><br/>
+<b>Coupon Code:</b>{{coupon.code}}<br/><br/>
+<b>T&C:</b><br/><br/>
+<div style="padding-left:30px">{{coupon.type.terms_and_conditions}}</div><br/><br/>
+{%endfor%}
+
+{%for coupon in coupon_codes.pantaloon%}
+Offer: {{coupon.type.offer}}<br/><br/>
+<b>Coupon Code:</b>{{coupon.code}}<br/><br/>
+<b>T&C:</b><br/><br/>
+<div style="padding-left:30px">{{coupon.type.terms_and_conditions}}</div><br/><br/>
+{%endfor%}
+
+{%for coupon in coupon_codes.bigbazaar%}
+Offer: {{coupon.type.offer}}<br/><br/>
+<b>Coupon Code:</b>{{coupon.code}}<br/><br/>
+<b>T&C:</b><br/><br/>
+<div style="padding-left:30px">{{coupon.type.terms_and_conditions}}</div><br/><br/>
+{%endfor%}
+
+Happy Shopping,<br/><br/>
+
+Team futurebazaar.com<br/><br/>
+</body>
+</html>

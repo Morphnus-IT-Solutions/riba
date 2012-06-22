@@ -1,0 +1,58 @@
+<table width="900px" align="center" cellspacing="0" class="campaign_summary">
+    <tr>
+        <td colspan="8"><h2><a href="/campaigns/{{campaign.id}}">{{campaign.name}}</a></h2></td>
+    </tr>
+    <tr>
+        <td class="heading brt"><h4>Pipeline Summary</h4></td>
+        <td class="spacer">&nbsp;</td>
+        <td class="heading c_attempted"><h4>Attempted</h4></td>
+        <td class="heading c_connected"><h4>Connected</h4></td>
+        <td class="heading c_pending_order"><h4>Pending Order</h4></td>
+        <td class="heading c_order"><h4>Order</h4></td>
+    </tr>
+    <tr>
+        <td valign="top" class="pipeline_summary">
+            <table width="100%" cellspacing="0">
+                <tr><td>Total</td><td>{{total_responses}}</td></tr>
+                <tr><td>New</td><td>{{new}}</td></tr>
+                <tr><td>Attempted</td><td>{{attempted}}</td></tr>
+                <tr><td>Connected</td><td>{{connected}}</td></tr>
+                <tr><td>Pending Order</td><td>{{pending_order}}</td></tr>
+                <tr><td>Order</td><td>{{order}}</td></tr>
+                <tr><td>Conversion</td><td>{{conv}}</td></tr>
+            </table>
+        </td>
+        <td class="spacer">&nbsp;</td>
+        <td valign="top" class="bb bl c_attempted">
+            <table width="100%" cellspacing="0">
+                {% for status in status_groups.attempted.statuses %}
+                <tr><td>{{status.status.name}}</td><td>{{status.count}}</td></tr>
+                {% endfor %}
+                <tr class="c_connected"><td>Connected</td><td>{{connected}}</td></tr>
+            </table>
+        </td>
+        <td valign="top" class="bb c_connected">
+            <table width="100%" cellspacing="0">
+                {% for status in status_groups.connected.statuses %}
+                <tr><td>{{status.status.name}}</td><td>{{status.count}}</td></tr>
+                {% endfor %}
+                <tr class="c_pending_order"><td>Pending Order</td><td>{{pending_order}}</td></tr>
+            </table>
+        </td>
+        <td valign="top" class="bb c_pending_order">
+            <table width="100%" cellspacing="0">
+                {% for status in status_groups.pending_order.statuses %}
+                <tr><td>{{status.status.name}}</td><td>{{status.count}}</td></tr>
+                {% endfor %}
+                <tr class="c_order"><td>Order</td><td>{{order}}</td></tr>
+            </table>
+        </td>
+        <td valign="top" class="br bb c_order">
+            <table width="100%" cellspacing="0">
+                {% for status in status_groups.order.statuses %}
+                <tr><td>{{status.status.name}}</td><td>{{status.count}}</td></tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,91 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.uiButton{padding:0px 6px;}
+	label {font-weight: normal;}
+	.excel_main {margin:8px 0 0 5px !important;}
+</style>
+
+<form method="POST" id="report_form" name="report_form" action="">
+{% show_export_link request form 'excel' %}
+{% form_daterange request form title%}
+
+
+<div class="report_option_main">
+  <div class="report_option_aa">
+    <span>Deal:</span>{{form.deal}}&nbsp;&nbsp;
+    <span>Order State:</span>{{form.order_state}}&nbsp;&nbsp;
+  </div>
+  <input type="submit" id="deal_submit" value="Go!" class="uiButton" style="width:50px\9; padding:5px;">
+</div>
+<div class="clear">&nbsp;</div>
+<div>
+<table class="tbl_report">
+{%ifequal selected_deal "daily_deal"%}
+    <tr>
+    {%for i in headings%}
+        <th>{{i}}</th>
+    {%endfor%}
+    </tr>
+    {%for item in data%}
+        {%for prod_list in item.entries%}
+    <tr>
+            {% if forloop.counter == 1 %}
+            <td rowspan="{{item.entries|length}}" style="vertical-align:middle">{{item.day}}</td>
+            <td rowspan="{{item.entries|length}}" style="vertical-align:middle">{{item.date|date:"d N"}}</td>
+            {% endif %}
+            <td class="la"><a href={%deal_extract_url prod_list.1 item.date order_state%}>{{prod_list.0}}</a></td>
+            <td class="la">{{prod_list.1}}</td>
+            <td>{%int_to_comma prod_list.2%}</td>
+            <td>{%int_to_comma prod_list.3%}</td>
+            <td>{%int_to_comma prod_list.4%}</td>
+            <td>{%int_to_comma prod_list.5%}</td>
+            <td>{%int_to_comma prod_list.6%}</td>
+            {% if forloop.counter == 1 %}
+            <td rowspan="{{item.entries|length}}" style="vertical-align:middle">{%int_to_comma item.total_sales.count%}</td>
+            <td rowspan="{{item.entries|length}}" style="vertical-align:middle">{%int_to_comma item.total_sales.value%}</td>
+            {% endif %}
+    </tr>
+        {%endfor%}
+    {%endfor%}
+{%else%}
+    <tr>
+    {%for i in headings%}
+        <th>{{i}}</th>
+    {%endfor%}
+    </tr>
+    {%for item in data%}
+        {%for prod_list in item.entries%}
+    <tr>
+            {% if forloop.counter == 1 %}
+            <td rowspan="{{item.entries|length}}" class="la fb" style="vertical-align:middle">{{item.list.title}}</td>
+            <td rowspan="{{item.entries|length}}" style="vertical-align:middle">{{item.list.starts_on|date:"d N Y"}}</td>
+            <td rowspan="{{item.entries|length}}" style="vertical-align:middle">{{item.list.ends_on|date:"d N Y"}}</td>
+            {% endif %}
+            {%if forloop.last%}
+                <th class="la fb">{{prod_list.0}}</td>
+                <th class="fb">{{prod_list.1}}</td>
+                <th class="fb">{%int_to_comma prod_list.2%}</td>
+                <th class="fb">{%int_to_comma prod_list.3%}</td>
+                <th class="fb">{%int_to_comma prod_list.4%}</td>
+                <th class="fb">{%int_to_comma prod_list.5%}</td>
+                <th class="fb">{%int_to_comma prod_list.6%}</td>
+            {%else%}
+                <td class="la">{{prod_list.0}}</td>
+                <td class="la">{{prod_list.1}}</td>
+                <td>{%int_to_comma prod_list.2%}</td>
+                <td>{%int_to_comma prod_list.3%}</td>
+                <td>{%int_to_comma prod_list.4%}</td>
+                <td>{%int_to_comma prod_list.5%}</td>
+                <td>{%int_to_comma prod_list.6%}</td>
+            {%endif%}
+    </tr>
+        {%endfor%}
+    {%endfor%}
+{%endifequal%}
+
+</table>        
+</div>
+<br>
+{% endblock %}

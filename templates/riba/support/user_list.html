@@ -1,0 +1,93 @@
+{% extends 'support/base.html' %}
+{% block content %}
+{% load pagination_tags %}
+{% autopaginate user_list 20 %}
+
+<style>
+dl {
+    margin: 0 0 1em !important;
+}
+dl dt {
+    font-weight: normal !important;
+}
+ul, ol {
+    padding-left: 0px !important;
+}
+label {
+    font-weight:normal !important;
+}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Users</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Users</h1>
+    </div>
+        <div class="right content_head">
+			<a id='add' role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Add User</span></a>
+		</div>
+	{% if not user_list %}
+    <div class="clear bordergray"></div>
+    {% endif %}
+  </div>
+  <div class="main clear">
+    {% if user_list %}
+	<table class="tbl_response">
+		<thead>
+		<tr>
+			<th class="w200">User</th>
+			<th>Team</th>
+            <th>Role</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for user in user_list %}
+		<tr>
+			<td><a href='{{user.id}}'>{% firstof user.user.first_name|title user.user.username %}</a></td>
+			<td>{{user.team.name|title}}</td>
+			<td>{{user.role|title}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table><br />
+    {% paginate %}
+    {% else %}
+    <p>No users are present in the system</p>
+    {% endif %}
+  </div>
+</div>
+<div id='add_user'></div>
+{% endblock %}
+
+{% block script_footer %}
+$('#add').click(function() {
+    var width = 270;
+    $.get('/user/add/', function(data) {
+        $('#add_user').html(data);
+        var dialog = $('#add_user').dialog({modal:true, title:'Add User', 
+            width:width, resizable:false});
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#add_user').html(data);
+        $('#adduser').click(onSubmit);
+        if (xhr.status == 200)
+            setInterval('location.reload();', 2000);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#add_user').html(xhr.responseText);
+        $('#adduser').click(onSubmit);
+	};
+	var onSubmit = function() {
+        var data = $('#user_add_form').serialize();
+        $.ajax({ url:'/user/add/',
+			data : data,
+			success : onSuccess,
+			error : onError,
+			type : 'POST'
+			});
+        return false; 
+	};
+    $('#adduser').click(onSubmit);
+    });
+});
+{% endblock %}

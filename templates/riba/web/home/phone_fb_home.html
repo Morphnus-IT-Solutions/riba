@@ -1,0 +1,58 @@
+{% extends "web/base.html" %}
+{%block page_title%}Online Shopping Store, Buy Cheapest Books, Magazines, Mobiles in India{%endblock%}
+{%block page_desc%}chaupaati.in: Online Shopping Website. Shop Online for Books, Magazines, Computers, Mobiles, Electronics, Toys, Gifts. Compare Prices, features on our online store &amp; purchase cheapest product in India{%endblock%}
+{%block page_tags%}Chaupaati Bazaar, Online Shopping, Shop Online, Buy Books, Subscribes Magazines, Buy Computer, Mobile, Electronics, Toys, Gifts, Low Price, Features, Purchase On Web, cheap product, Free Shipping, India{%endblock%}
+
+{% block content %}
+{% load cc_tags %}
+{% load web_tags %}
+    <style type="text/css">
+    .box {
+    border:1px solid #ccc;
+    background-color:#f4f4f4;
+    width:500px;
+    margin:10px 20px;
+    font-size:14px;
+    padding: 10px 20px 20px 20px;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    }
+    .box1 {
+    margin:10px 20px;
+    font-size:14px;
+    padding:0px;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    }
+    h1{padding:2px 0px; margin:0px;font-size:22px;font-weight:bold}
+    h2{padding:2px 0px; margin:0px;font-size:18px;font-weight:bold}
+    h3{padding:2px 0px; margin:0px;font-size:16px;font-weight:bold}
+    table td{padding:0px;}
+    </style>
+  <div class="box1">
+    <br /><h1>Buy on phone from Futurebazaar.com</h1>
+    <h3>Call us on <span style="color:#004F96">0922-222-1947</span> between 8am-10pm 365 days to shop on phone</h3>
+    <br />
+  </div>
+  <div class="box">
+    <h3>Have you already booked your order?</h3>
+    If you have booked your order on phone, proceed to complete your order with your details below: <br />
+    <br />
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="80"><label><strong>Order ID</strong></label></td>
+        <td><input type="text"/></td>
+      </tr>
+      <tr>
+        <td><label><strong>Phone</strong></label></td>
+        <td><input type="text"/></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input type="button" value="Submit" class="white button"/></td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}

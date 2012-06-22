@@ -1,0 +1,139 @@
+{% extends 'support/base.html' %}
+{% block content %}
+    {% load pagination_tags %}
+    {% autopaginate payments items_per_page %}
+    {% load support_tags %}
+    {% load cc_tags %}
+<style type='text/css'>
+.action_input select{width:120px;height:21px;font-size:11px;}
+.action_input input{height:21px;margin-left:5px;font-size:11px;padding:0 3px;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Payments</div>
+  <div class="content_head" style="margin:0px !important;">
+    <div class="header rc5 left">
+      <h1>Payments</h1>
+    </div>
+    <!--<div class="header rc5 right">
+	<form name='payment_bulk_upload_form' method='post' enctype='multipart/form-data'>
+	   <input type='file' name='uploaded_file' />
+	   <input id="uplaod" class="uiButton" type="submit" name="upload" value="Upload">
+	</form>
+    </div>-->
+	<div id="filter_link_wrapper" class="header right">
+		<a class="toggle-up-arrow" id="filter_link" title="Click here to filter your search" href="#">Filter your search</a>
+	</div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+    <div id="filter_form" class='marb10 clear'>
+		{% if filter_form %}
+		{% if filter_form.errors %}
+		<div class='error'>{{filter_form.errors}}</div>
+		{% endif %}
+        <form name='filter_form' method='get'>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.name.label}}</div>
+			    <div class='col2 left'>{{filter_form.name}}</div>
+                <div class='col1 f11 flgray left marl38'>{{filter_form.phone.label}}</div>
+			    <div class='col2 left'>{{filter_form.phone}}</div>
+                <div class='col1 f11 flgray left marl38'>{{filter_form.email.label}}</div>
+                <div class='col2 left'>{{filter_form.email}}</div>
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.order_id.label}}</div>
+			    <div class='col2 left'>{{filter_form.order_id}}</div>
+                <div class='col1 f11 flgray left marl38'>{{filter_form.transaction_id.label}}</div>
+                <div class='col2 left'>{{filter_form.transaction_id}}</div>
+                <div class='col1 f11 flgray left marl38'>{{filter_form.method.label}}</div>
+			    <div class='col2 left'>{{filter_form.method}}</div>
+            </div>
+            <div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.state.label}}</div>
+                <div class='col2 left'>{{filter_form.state}}</div>
+                <div class='col1 f11 flgray left marl38'>Date Range</div>
+                <div class='col2 left'>{% support_daterange request 0 1%}</div>
+            </div>
+            <div class='right'>
+                <input type="submit" value="Search" class="btn_c btn_c_s fb" title="Search Payments">
+            </div>
+			<div class='clear'></div>
+        </form>
+    </div>
+    {% endif %}
+    
+    {% if payments %}
+	<form method='post' name='update_payments'>
+    <table class="clear tbl_response tablesorter f11 mart5" id='payment_list'>
+		<thead>
+		<tr>
+            {% comment %}<th class="w20"><input type='checkbox' name='payments_select_all'/></th>{% endcomment %}
+			<th class="w110 header">Order ID</th>
+            <th class="w110 header">Transaction ID</th>
+            <th class="w120 header">Timestamp</th>
+            <th class="w75 header">Gateway</td>
+            <th class="w75 header">Amount</th>
+            <th class="w125 header">State</th>
+            <th class="w100 header">Order State</th>
+            {% comment %}<th class="w175">Action</th>{% endcomment %}
+		</tr>
+		</thead>
+		<tbody>
+		{% for payment in payments %}
+        <tr>
+            {% comment %}<td class="txtalgnc"><input type='checkbox' name='payments' value='{{payment.id}}'/></td>{% endcomment %}
+            <td class="txtalgnc"><a href="{% cc_url request "order/" %}{{payment.order.id}}">{{payment.order.reference_order_id|default:payment.order.id}}</a></td>
+            <td class="txtalgnc">{{payment.pg_transaction_id|default:payment.transaction_id}}</td>
+            <td class="txtalgnc">{{payment.created_on|date:'d-m-Y H:i'}}</td>
+            <td class="txtalgnc">{{payment.gateway|title}}</td>
+            <td class="txtalgnc"><span class="WebRupee">Rs. </span>{{payment.amount|floatformat:0}}</td>
+            <td class="txtalgnc">{{payment.status|title}}</td>
+            <td class="txtalgnc">{%firstof payment.order.support_state|title payment.order.state|title%}</td>
+            {% comment %}<td class="txtalgnc action_input">{% choicefield 'payment' payment action_flows 'action_id'%}</td>{% endcomment %}
+        </tr>
+		{% endfor %}
+		</tbody>
+	</table><br />
+    </form>
+    {% paginate %}
+    {% else %}
+        {% if errors %}
+            <ul>
+            {% for error in errors %}
+                <li>{{error}} </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <div class="mart10">No payments present</div>
+        {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+$(document).ready(function() { 
+        $("#payment_list").tablesorter({
+            headers:{
+                0:{sorter:false},
+                8:{sorter:false}
+            }
+        }); 
+        CheckboxMultipleSelect('payments');
+    }
+);
+
+$('#filter_link').toggle(
+    function(){
+        $('#filter_form').hide();
+		$(this).removeClass('toggle-up-arrow');
+		$(this).addClass('toggle-down-arrow');
+    },
+    function(){
+        $('#filter_form').show();
+		$(this).removeClass('toggle-down-arrow');
+		$(this).addClass('toggle-up-arrow');
+    }
+);
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Order-Shipping</title>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif; size:12px;">
+<table cellpadding="0" cellspacing="14px" border="0" >
+<tr>
+    <td>
+        Dear {{dinfo.address.first_name|title}} {{dinfo.address.last_name|title}},
+    </td>
+</tr>
+<tr>
+    <td>
+        The following items from your order number {% if check %}{{order.reference_order_id}}{%else%}{{order.id}}{%endif%} have been delivered:
+        <br><br>
+        {%for item in order_items%}
+        {%if item.delivered_on%}
+        {{item.item_title}}, MRP: Rs.{{item.sale_price}}, Quantity:{{item.qty}}, delivered on {{item.delivered_on|date}} by {{courier}} with AWB No: {{tracking_no}}, Received by: {{item.received_by}}, Receiver's Contact No: {{item.receivers_contact}}
+        {%endif%}
+        </br>
+        {%endfor%}
+    </td>
+</tr>
+
+<tr>
+    <td>DELIVERY ADDRESS:<br/>
+        {{dinfo.address.address}}<br/>
+        {{dinfo.address.city}} - {{dinfo.address.pincode}}<br/>
+        {%if dinfo.address.state%}{{dinfo.address.state}}{%endif%}</br>
+        Phone: {{dinfo.address.phone}}
+    </td>
+</tr>
+<tr>
+    <td><br/>{{client.signature|linebreaks}}</td>
+</tr>
+</table>
+</body>
+</html>

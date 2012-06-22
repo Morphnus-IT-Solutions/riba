@@ -1,0 +1,443 @@
+{% extends request.ws_base|default:'web/base.html' %}
+{% load cc_tags%}
+{% load web_tags%}
+{% block page_title %}{% render_product_page_title product %}{% endblock %}
+{% block page_desc %}{% render_product_page_desc product %}{% endblock %}
+{% block page_tags %}{% render_product_page_tags product %}{% endblock %}
+{% block extra_header %}
+{% if product.meta_description %}
+<meta content="{{product.meta_description}}" name="Description"/>
+{% endif %}
+<link rel="canonical" href="http://www.chaupaati.in{{request.path}}"/>
+<link rel="stylesheet" href="{{MEDIA_URL}}css/ezone.css" type="text/css" />
+{% endblock %}
+{% block content %}
+<div class="product_summary">
+    {% if request.wstore and request.wstore.breadcrumb == "hide" %}
+    {% else %}
+    <div class="breadcrumb">
+        <a href="{% cc_url request "" %}" title="Go to Chaupaati Home">Home</a>&nbsp;&raquo;&nbsp;<a href="{%cc_url request product.category.url%}" title="Browse all {{product.category.name}}">{{product.category.name}}</a>&nbsp;&raquo;&nbsp;{{product.title}}
+    </div>
+    {% endif %}    
+    <div class="prodImg">
+        {% product_images product %}
+    </div>
+    <div class="prod">
+        <div class="product_head">
+            <h1>{{product.title}}</h1>
+            {% if request.wstore and request.wstore.brand_link == "hide" %} {% else %}
+            <span class="f12">by <strong><a href="/{{product.brand.url}}">{{product.brand}}</a></strong></span><br/>
+            {% endif %}
+            <div class="prod_ratings" id="avg_stars">
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 0.25 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 0.50 %} checked="checked" {% endifequal %} >
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 0.75 %} checked="checked" {% endifequal %} >
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.00 %} checked="checked" {% endifequal %} >
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.25 %} checked="checked" {% endifequal %} >
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.50 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 1.75 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.00 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.25 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.50 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 2.75 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.00 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.25 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.50 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 3.75 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.00 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.25 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.50 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 4.75 %} checked="checked" {% endifequal %}>
+            <input type="radio" class="prating_avg {split:4}" {% ifequal avg_rating 5.00 %} checked="checked" {% endifequal %}>
+            <script type="text/javascript">
+                $('input.prating_avg').rating({readOnly:true});
+
+            </script>
+			<div class="clear"></div>
+            <div class="mart10"><a href="#tab_read_review" class="top_read">{%if total_reviews%} {{total_reviews}} reviews</a> |  <a href="#tab_write_review" class="top_write">Write a review</a>{%else%}  <a href="#tab_write_review" class="top_write">Be the first to write a review</a>{%endif%}</div>
+            </div>
+            {% feature_icons product %}
+            {% if not request|is_cc %}
+            {% if not request.wstore %}
+            <div class="share">
+          <!--   <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.chaupaati.in/{{product.url}}&amp;layout=button_count&amp;show_faces=false&amp;width=300&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:300px;"></iframe>-->
+                <a href="http://twitter.com/share" class="twitter-share-button" data-text="Would love to buy this!" data-count="horizontal" data-via="chaupaati" data-related="futurebazaar">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.chaupaati.in/{{product.url}}&amp;layout=button_count&amp;show_faces=false&amp;width=110&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:110px;"></iframe>
+             
+            
+             
+              </div>
+            {% endif %}
+            {% endif %}
+        </div>
+        <table class="prod_price_tbl" cellspacing="0" cellpadding="0">
+        {%if product.primary_rate_chart.list_price %}
+        {% if product.primary_rate_chart.offer_price < product.primary_rate_chart.list_price %}
+            <tr>
+                <td class="f11 fdgray la" width="57">List price:</td><td>&nbsp;</td>
+                <td class="f12 fs la">{{product.formatted_currency}} {{product.primary_rate_chart.list_price|money}}</td>
+            </tr>
+        {% endif %}
+        {%endif%}
+        <tr>
+            <td class="f11 fdgray la" width="57" style="vertical-align:middle;">Our price:</td><td>&nbsp;</td>
+            <td class="f18 fmaroon"><strong>{{product.formatted_currency}} {{product.primary_rate_chart.offer_price|money}}</strong>
+                {% if product.primary_rate_chart.offer_price < product.primary_rate_chart.list_price %}
+                    <div class="discount_bg f12"><strong>{{product.primary_rate_chart.getDiscount}}%</strong></div><span class="fblack f12">off</span>
+                {% endif %}
+            </td>
+        </tr>
+        {%if product.primary_rate_chart.list_price%}
+        {% if product.primary_rate_chart.offer_price < product.primary_rate_chart.list_price %}
+        <tr>
+            <td class="f11 fdgray la" width="57">You save:</td><td>&nbsp;</td>
+            <td class="f12">{{product.formatted_currency}} {{product.primary_rate_chart.getSavings|money}}</td>
+        </tr>
+        {%endif%}
+        {%endif%}
+        <tr>
+            <td class="f11 fdgray la" width="57">Shipping:</td><td>&nbsp;</td>
+            <td> {%if not product.primary_rate_chart.shipping_charges%}{%if product.id == 28188%}Courier charges applicable.{%else%}FREE shipping in India{%endif%}{% else %} {{product.formatted_currency}} {{product.primary_rate_chart.shipping_charges|money}}{%endif%}</td>
+        </tr>        
+        {% if request|is_future_ecom %}
+        <tr>
+            <td class="f11 fdgray la" width="57"><b>FBID:</b></td><td>&nbsp;</td>
+            <td class="f12">{{product.primary_rate_chart.sku}}</td>
+        </tr>
+        {%endif%}
+        {% if product.primary_rate_chart.warranty %}
+       <tr>
+            <td colspan="3">
+                <hr class="space"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="f11 fdgray la" width="57">Warranty:</td><td>&nbsp;</td>
+            <td class="f12"><strong>{{product.primary_rate_chart.warranty}}</strong></td>
+        </tr>
+        {% endif %}
+        {% if product.primary_rate_chart.gift_title %}
+        <tr>
+            <td class="f11 fdgray la" width="57">Gift:</td><td>&nbsp;</td>
+            <td class="f12"><strong>{{product.primary_rate_chart.gift_title}}</strong></td>
+        </tr>
+        {% endif %}
+            {% variant_features product %}
+        </table>
+         <hr class="space"/>
+        {% ifequal  product.primary_rate_chart.stock_status "instock" %}
+        {%if not request|is_future_ecom%}
+        <span class="f16 fgreen"><strong>In Stock</strong></span><br/>
+        {%endif%}
+        {% if request.wstore and request.wstore.sold_by == "hide" %}{% else %}Sold by <strong>{{product.primary_rate_chart.seller}}</strong>.{%endif %}
+        {% if product.primary_rate_chart.shipping_duration%}Ships in <strong>{{product.primary_rate_chart.shipping_duration}}</strong>.{%endif %}<br />
+
+        {% endifequal %}
+        {% ifequal  product.primary_rate_chart.stock_status "notavailable" %}
+            <span class="f16 fb fred">Unavailable</span><br/>This item is currently unavailable
+        {% endifequal %}
+        {% ifequal  product.primary_rate_chart.stock_status "outofstock" %}
+            <span class="f16 fb fred">Out of Stock</span><br/>This item is currently Out of Stock
+        {% endifequal %}
+
+        {% product_variants product request%} 
+    </div>
+    <div class="product_left_col">
+        <div class="product_actions roundcorner5 bglyellow">
+            {% ifequal product.primary_rate_chart.stock_status "instock"%}
+            {% add_to_cart request product product.primary_rate_chart "large"%}
+            {%if request|is_future_ecom%}
+            <a href="http://www.futurebazaar.com/common/serviceablepincode.jsp?listPrice={{product.primary_rate_chart.list_price}}&skuId={{product.primary_rate_chart.sku}}&salePrice={{product.primary_rate_chart.offer_price}}&productId={{product.primary_rate_chart.external_product_id}}" onClick="return popup(this,'Check Delivery Time')">Check Delivery Time</a>
+            {%endif%}
+
+            {%endifequal%}
+            {% ifequal product.primary_rate_chart.stock_status "notavailable"%}
+            <span class="fb f20">Unavailable</span>
+            {%endifequal%}
+          
+          <div class="f11 payment_help bgwhite bottomroundcorner5">Pay securely using your Mastercard / Visa credit card or debit card<br />
+               <div class="pay_opt"></div>
+            </div>          
+        </div>
+
+        {% if request.wstore and request.wstore.order_on_phone == "none" %}
+        {% else %}
+        <div class="order_on_phone f11 roundcorner5 ca">
+            <div class="bglgray fb padding5 toproundcorner5 ca">Order on phone</div>
+            <div class="padding8 ca">
+                We also accept payments by Cheque, DD and IVR. To order, call us between 8am to 10pm, 365 days of the year on <br/><a href="http://phonepedeal.com" title="phone pe deal - building a phone commerce channel for brands" target="_blank">
+                <span class="phone_no"></span>             
+                </a> 
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="product_details">
+    <div class="prod_details">
+        {% product_key_features product %}
+        <div class="product_description" id="product_description">
+            <h2>Description of {{product.title}}</h2>
+            {{product.description|safe}}
+            <div id="external_details"></div>
+        </div>
+        <br/>
+        <div>
+            {% product_features product %}
+        </div>
+        {% if similarProducts %}
+        {% if request.wstore and request.wstore.similar_products == "hide" %}
+        {% else %}
+        <div class="related_products">
+            <div>
+                <h2>Products similar to {{product.title}}</h2>
+            </div>
+            {%for sp in similarProducts%}
+            <div class="relprod" align="center">
+            <div class="similar_thumb">
+                <a href="{%cc_url request sp.product.url %}">
+                    <img src="{{sp.image.related.url}}" title="{{sp.product.title}}" onerror="if(this.getAttribute('onerror_cnt')==0) { this.setAttribute('onerror_cnt',1);this.src='{{MEDIA_URL}}images/noimage.png';}return false;" onerror_cnt="0"  alt="{{sp.product.title}}" height="100" />
+                </a>
+           </div>      
+                <h4>
+                    <a href="{%cc_url request sp.product.url %}">{{sp.product.title}}</a>
+                </h4>                
+               <div>
+                {% if sp.product.primary_rate_chart.offer_price < sp.product.primary_rate_chart.list_price %}
+                <div class="f11 fdgray">Rs. <strike>{{sp.product.primary_rate_chart.list_price|default:sp.product.primary_rate_chart.offer_price|money}}</strike></div>
+                {% endif %}
+                <div class="fmaroon f12 fb">Rs. {{sp.product.primary_rate_chart.offer_price|money}}</div>
+                </div>                
+            </div> 
+          
+            {% if forloop.counter|divisibleby:4 %}<div class="clear"></div>{% endif %}
+            {%endfor%}
+            <div class="clear"></div>
+        </div>
+
+	<div class="tabs_wrapper">
+        	<ul class="tabs">
+          		<li class="tab_overview sel_tab">Read reviews</li>
+          		<li class="tab_spec ">Write a review</li>
+        	</ul>
+        	{%if total_reviews and 0%}
+            	<div class="right all_reviews"><a href="#">View all {{total_reviews}} reviews</a></div>
+        	{%endif%}
+        	<div class="clear"></div>
+      	</div>
+
+	<a id="tab_read_review"></a>
+	<div id="read_reviews" class="tab tab1">
+	{%if total_reviews%}
+   		{%read_product_reviews product_reviews%}
+	{%else%}
+    		<a href="#tab_write_review" class="top_write">Be the first to write a review</a>
+	{%endif%}
+	</div>
+
+	<form method="POST" action="">
+		<a id="tab_write_review"></a>
+		<div class="tab tab2 ">
+			<table class="write_review marb10">
+			{%if not request.user.is_authenticated%}
+    				<tr>
+        				<div>Please login to write a reivew. To login <a href="/auth/signin/?next={{request.path}}">click here.</a></div>
+    				</tr>
+			{%else%}
+				<tr>
+    				{%if form.title.errors%}<td><div class="error">Subject: {{form.title.errors}}</div></td>{%endif%}
+    					<td>Subject</td>
+    					<td>{{form.title}}</td>
+				</tr>
+				<tr>
+    				{%if form.review.errors%}<td><div class="error">Review: {{form.review.errors}}</div></td>{%endif%}
+    					<td>Review</td>
+    					<td>{{form.review}}</td>
+				</tr>
+				<tr>
+    				{%if form.rating.errors%}<td><div class="error">Rating: {{form.rating.errors}}</div></td>{%endif%}
+    					<td>Rate this product</td>
+    					<td>
+        					<input type="radio" class="prating" id="id_rating_0" value="1" name="rating" checked="checked">
+        					<input type="radio" class="prating" id="id_rating_1" value="2" name="rating">
+        					<input type="radio" class="prating" id="id_rating_2" value="3" name="rating">
+        					<input type="radio" class="prating" id="id_rating_3" value="4" name="rating">
+        					<input type="radio" class="prating" id="id_rating_4" value="5" name="rating">
+    					</td>
+				</tr>
+				<tr>
+					<td></td>
+    					<td><button type="submit" class="btn_post"></button></td>
+				</tr>
+			{%endif%}
+			</table>
+		</div>
+	</form>
+
+
+        <!--
+        <div id="fb-root">
+            <fb:comments href="http://www.chaupaati.in/{{product.url}}" num_posts="2" width="500"></fb:comments>
+        </div>-->
+
+        {% endif %}
+        {% endif %}
+    </div>
+    <div class="right">
+        {% if not request|is_cc %}
+        {% if not request.wstore %}
+        <div class="fb_like_box">
+         <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FChaupaati&amp;width=250&amp;connections=10&amp;stream=false&amp;header=false&amp;height=256" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:256px;"></iframe> 
+           <!-- <iframe src="http://www.facebook.com/plugins/likebox.php?id=158059245130&amp;width=300&amp;connections=10&amp;stream=false&amp;header=false&amp;height=260" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:260px;" allowTransparency="true"></iframe> -->
+           
+        </div>
+        {% endif %}
+        {% endif %}
+     </div>
+     <div class="clear"></div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<SCRIPT TYPE="text/javascript">
+function popup(mylink, windowname)
+{
+if (! window.focus)return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=600,height=400,scrollbars=yes');
+return false;
+}
+</SCRIPT>
+
+<script type="text/javascript">
+    $('div.filmstrip img').bind('mouseover', function() {
+            var display_url = $(this).attr('display');
+            var current_url = $('#display_img')[0].src;
+            if(display_url) {
+                if (display_url != current_url) {
+                    var img = new Image();
+                    img.onload = function() {
+                        $('#display_img')[0].src = img.src;
+                    }
+                    img.src = display_url;
+                }
+            }
+        });
+		
+		
+		$('div.filmstrip img').bind('onclick', function() {
+            var display_url = $(this).attr('display');
+            var current_url = $('#display_img')[0].src;
+            if(display_url) {
+                if (display_url != current_url) {
+                    var img = new Image();
+                    img.onload = function() {
+                        $('#display_img')[0].src = img.src;
+                    }
+                    img.src = display_url;
+                }
+            }
+        });
+        {%if request|is_future_ecom%}
+            $(document).ready(function(){
+                var rc = "{{product.primary_rate_chart.id}}";
+                $.get('/epd/' + rc, function(html){
+                    if(html){
+                        $('#external_details').html(html);
+                    }
+                });
+            });
+        {%endif%}
+
+</script>
+<script language="javascript" type="text/javascript">
+
+    	$('.tab_overview').click(function(){		
+		
+		$(this).addClass('sel_tab');
+		$('.tab_spec').removeClass('sel_tab');
+		$('.tab_acc').removeClass('sel_tab');
+				
+			$('.tab1').removeClass('hide');
+			$('.tab1').addClass('show');
+			$('.tab2').addClass('hide');
+			$('.tab3').addClass('hide');			
+			$('.tab2').removeClass('show');
+			$('.tab3').removeClass('show');		
+		
+	});
+	
+	$('.tab_spec').click(function(){		
+		$(this).addClass('sel_tab');
+		$('.tab_overview').removeClass('sel_tab');
+		$('.tab_acc').removeClass('sel_tab');		
+			$('.tab2').removeClass('hide');
+			$('.tab1').addClass('hide');
+			$('.tab2').addClass('show');
+			$('.tab3').addClass('hide');	
+			
+			$('.tab1').removeClass('show');
+			$('.tab3').removeClass('show');		
+		
+	});
+	
+	$('.tab_acc').click(function(){		
+		$(this).addClass('sel_tab');
+		$('.tab_overview').removeClass('sel_tab');
+		$('.tab_spec').removeClass('sel_tab');		
+			$('.tab3').removeClass('hide');
+			$('.tab1').addClass('hide');
+			$('.tab2').addClass('hide');
+			$('.tab3').addClass('show');			
+			$('.tab2').removeClass('show');
+			$('.tab2').removeClass('show');			
+		
+	});
+	
+$('.top_write').click(function(){
+    $(this).addClass('sel_tab');
+    $('.tab_overview').removeClass('sel_tab');
+    $('.tab_acc').removeClass('sel_tab');		
+    $('.tab_spec').addClass('sel_tab');		
+    $('.tab2').removeClass('hide');
+    $('.tab1').addClass('hide');
+    $('.tab2').addClass('show');
+    $('.tab3').addClass('hide');	
+    
+    $('.tab1').removeClass('show');
+    $('.tab3').removeClass('show');		
+})
+$('.top_read').click(function(){
+    $(this).addClass('sel_tab');
+    $('.tab_spec').removeClass('sel_tab');
+    $('.tab_acc').removeClass('sel_tab');
+    $('.tab_overview').addClass('sel_tab');
+            
+    $('.tab1').removeClass('hide');
+    $('.tab1').addClass('show');
+    $('.tab2').addClass('hide');
+    $('.tab3').addClass('hide');			
+    $('.tab2').removeClass('show');
+    $('.tab3').removeClass('show');		
+})
+$(document).ready(function() {
+    $('.prating').rating({
+        callback: function(value, link) {
+           $('.star-rating-applied').each(function(){
+               $(this).removeAttr('checked');    
+           });
+	   $('input#id_rating_' + (value-1)).attr('checked', "checked");
+        }
+    });
+});
+$("#avg_stars").prating_avg({
+    split: 2,
+});
+</script>
+
+{% endblock %}

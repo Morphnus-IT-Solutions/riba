@@ -1,0 +1,20 @@
+{% if groups %}
+<div class="product_features">
+<h2>Specifications for {{product.title}}</h2>
+{% for group in groups %}
+<div style="width:70%">
+    <div class="featuregroup">
+        <div class="fb f14 group">{{group.group.name}}</div>
+        {% for feature in group.features %}
+        <div class="feature {%if not forloop.last%}collapse{%endif%}">
+            <div class="featurelabel fdgray">{{feature.feature.name}}</div>
+            <div class="featurevalue">{{feature.humanized_value}}</div>
+            <div class="clear"></div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+<hr class="space"/>
+</div>
+{% endif %}

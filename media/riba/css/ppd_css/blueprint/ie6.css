@@ -1,0 +1,51 @@
+/* ie6 css */
+#content{height:500px;}
+#search_bar{padding:1px !important; }
+
+#search input[type="text"] {
+    padding: 1px;
+    width: 330px !important;
+}
+#search input {
+    margin-left: 3px;
+    margin-right: 3px;
+    padding: 1px;
+    width: 330px !important;
+}
+
+#search{line-height:30px;height:30px;padding-top:3px;}
+#search button{padding:0px;margin:0px;display:inline;font-size:11px;}
+#search { margin-top:-1px;}
+
+/*Small menu -f0llow*/.follow_us_mn li{display:block;clear:both}
+.shadow_one{filter:progid:DXImageTransform.Microsoft.dropShadow(color=#dcdcdc,offX=1,offY=1,positive=true);border:1px solid #ccc;}
+.store_header{
+/*filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ffffff, endColorstr=#dcdcdc);	*/
+/*	border-radius: 5px;
+behavior: url("/media/css/border-radius.htc");*/
+}
+/*menu*/body{/*behavior:url("/media/css/csshover.htc");*/}
+
+#menu ul {display:inline;}
+#menu ul li.item {	
+		margin:0px 0px 0px 6px !important;
+		display:inline;
+	}
+
+
+.item h4{float:left; border-bottom:1px solid #fcce00 !important;}
+
+div#menu ul li.hovering h4 {float:left; border-bottom:1px solid #fff !important;}
+
+ul.wide_block{zoom:1;z-index:500;  border-top:0px solid #fff !important;}
+#Books{position:absolute;left:0px;top:28px}
+#Magazines{position:absolute;left:0px;top:28px}
+#Mobiles{position:absolute;left:0px;top:28px}
+#Computers{position:absolute;right:0px;top:28px}
+#Electronics{position:absolute;right:0px;top:28px}
+#Toys{position:absolute;right:0px;top:28px}
+#Gifts{position:absolute;right:0px;top:28px}
+
+
+
+/*ie6 css end*/

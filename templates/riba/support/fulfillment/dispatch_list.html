@@ -1,0 +1,113 @@
+{% extends 'support/base.html' %}
+{% block content %}
+    {% load pagination_tags %}
+    {% autopaginate shipments items_per_page %}
+    {% load support_tags %}
+    {% load cc_tags %}
+<style type='text/css'>
+.action_input select{width:120px;height:21px;font-size:11px;}
+.action_input input{height:21px;margin-left:5px;font-size:11px;padding:0 3px;}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href={% cc_url request "/fulfillment" %}>Fulfillment</a>&nbsp;&raquo;&nbsp; To be Dispatched</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Fulfillment: To be Dispatched</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+    {% if filter_form %}
+    <div id='filter_form'>
+        {% if filter_form.errors %}
+        <div class='error'>{{filter_form.errors}}</div>
+        {% endif %}
+        <form name='filter_form' method='get'>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.order_id.label}}</div>
+			    <div class='col2 left'>{{filter_form.order_id}}</div>
+                <div class='col1 f11 flgray left marl49'>{{filter_form.delivery_number.label}}</div>
+			    <div class='col2 left'>{{filter_form.delivery_number}}</div>
+                <div class='col1 f11 flgray left marl49'>{{filter_form.invoice_number.label}}</div>
+                <div class='col2 left'>{{filter_form.invoice_number}}</div>
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{filter_form.dc.label}}</div>
+			    <div class='col2 left'>{{filter_form.dc}}</div>
+                <div class='col1 f11 flgray left marl49'>{{filter_form.lsp.label}}</div>
+                <div class='col2 left'>{{filter_form.lsp}}</div>
+                <div class='col1 f11 flgray left marl49'>{{filter_form.state.label}}</div>
+                <div class='col2 left'>{{filter_form.state}}</div>
+            </div>
+            <div class='row clear'>
+                <div class='col1 f11 flgray left'>Date Range</div>
+                <div class='col2 left'>{% support_daterange request 0 1%}</div><!--Dont limit FROM date; limit TO date -->
+            </div>
+            <div class='clear'>
+				<div class="col1 left"></div>
+				<div class="col2 left">
+					<input type="submit" value="Search" class="uiButton" style="width:80px\9; padding:5px;" title="Search Deliveries">
+				</div>
+            </div>
+        </form>
+    </div>
+    <div class="clear border-dotted-gray marb10">&nbsp;</div>
+    {% endif %}
+    
+    {% if errors %}
+    <div class="notice"> 
+        <ul>
+        {% for error in errors %}
+            <li>{{error}}</li>
+        {% endfor %}
+        </ul>
+    <div class="marb10">&nbsp;</div>
+    </div>
+    {% endif %}
+
+    {% if shipments %}
+	<form method='post' name='update_orders'>
+    <table class="tbl_response tablesorter f11" id='order_list'>
+		<thead>
+		<tr>
+			<th class="w110">Delivery Number</th>
+			<th class="w75">Delivery Created On</th>
+			<th class="w110">Invoice Number</th>
+			<th class="w75">Invoiced On</th>
+			<th class="w85">Promised Shipping Date</th>
+            <th class="w45">DC</th>
+			<th class="w85">Order</th>
+            <th class="w110">AWB Number</th>
+            <th class="w75">LSP</td>
+            <th class="w125">State</th>
+		</tr>
+		</thead>
+		<tbody>
+        {% for shipment in shipments %}
+        <tr>
+            <td class="txtalgnc">{{shipment.delivery_number}}</td>
+            <td class="txtalgnc">{{shipment.created_on|date:'d M Y'}}</td>
+            <td class="txtalgnc">{{shipment.invoice_number}}</td>
+            <td class="txtalgnc">{{shipment.invoiced_on|date:'d M Y'}}</td>
+            <td class="txtalgnc {% rag shipment.get_promised_shipment_date %}">{% if shipment.get_promised_shipment_date %}{{shipment.get_promised_shipment_date|date:'d M Y'}} {% endif %}</td>
+            <td class="txtalgnc">{{shipment.dc.code}}</td>
+            <td class="txtalgnc"><a href="{% cc_url request "order/" %}{{shipment.order.id}}">{{shipment.order.reference_order_id}}</a></td>
+            <td class="txtalgnc">{{shipment.tracking_number}}</td>
+            <td class="txtalgnc">{{shipment.lsp.name|title}}</td>
+            <td class="txtalgnc">{{shipment.status|title}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table><br />
+    </form>
+    {% paginate %}
+    {% else %}
+        <p>No deliveries present</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+{% endblock %}

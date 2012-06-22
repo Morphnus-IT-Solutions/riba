@@ -1,0 +1,27 @@
+{% load ppd_tags %}
+<table id="tbl_options" class="tbl_options" width="150" cellpadding="0" cellspacing="0" border="0">
+    {%for option in payment_modes%}
+    <tr>
+      {% if not option|enable_or_disable_option:client_id %}
+                <td width="150" id="mode_list_{{option.code}}" name={{option.id}} class="mode_select hide_this_option"> {{option.name}}
+           	<div class="onoff payment-onoff">
+            	<div id="{{option.id}}on" name="" class="leftrc5 left btn bgraysmall activate_option"><span class="fnormal pad3">ON</span></div>
+                <div  id="{{option.id}}off" name="" class="rightrc5 left btn dbluegradient deactivate_option"><span class="fnormal pad3">OFF</span></div>
+            <div class="clear"></div>
+        </div>
+                <!--<a class="activate_option">Activate</a>
+                <a class="deactivate_option" style="display: none;">Deactivate</a>-->
+            </td>
+        {% else %}
+                <td width="150" id="mode_list_{{option.code}}" name={{option.id}} class="mode_select"> {{option.name}}
+            <div class="onoff payment-onoff">
+            	<div id="{{option.id}}on" name="" class="leftrc5 left btn dbluegradient activate_option"><span class="fnormal pad3">ON</span></div>
+            <div  id="{{option.id}}off" name="" class="rightrc5 left btn bgraysmall deactivate_option"><span class="fnormal pad3">OFF</span></div>
+            <div class="clear"></div>
+        </div>
+                <!-- <a class="deactivate_option">Deactivate</a>
+                 <a class="activate_option" style="display: none;">Activate</a>-->
+        {% endif %}
+    </tr>
+    {%endfor%}
+</table>

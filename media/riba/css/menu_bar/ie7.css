@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+
+.MebuBarHor{}
+.MenuBarItem{float:left; }
+
+.MenuBarHor li{position:relative !important;}
+.MenuBarHor li ul{position:absolute !important; top:31px; right:-2px;}
+
+#Books{right:-405px; }
+#Magazines{right:-381px;}
+.shadow_one {filter: progid:DXImageTransform.Microsoft.dropShadow(color=#dcdcdc, offX=1, offY=1, positive=true); border:1px solid #ccc;}

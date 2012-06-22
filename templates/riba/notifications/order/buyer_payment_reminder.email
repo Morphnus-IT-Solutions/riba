@@ -1,0 +1,162 @@
+{%load web_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Order-Confirmation</title>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif; size:12px;">
+<table cellpadding="0" cellspacing="14px" border="0" >
+<tr>
+    <td>Dear {{customer_name}},</td>
+</tr>
+<tr>
+    <td>You had selected the following for purchase on {{order.timestamp|date:"d M, Y"}}</td>
+</tr>
+
+<tr>
+<td>
+    <table cellpadding="2" cellspacing="0" width="100%">
+        <tr>
+            <td style="background-color:#dddddd">S.No</td>
+            <td style="background-color:#dddddd">Item</td>
+            <td style="background-color:#dddddd">Price</td>
+            <td style="background-color:#dddddd">Qty</td>
+            <td style="background-color:#dddddd">Shipping time</td>
+            <td style="background-color:#dddddd; text-align:right">Amount</td>
+        </tr>
+        {% for item in buyer_items %}
+        <tr>
+            <td valign="top">
+                {{forloop.counter}}</td>
+            <td valign="top">
+                {{item.title}} [{{item.sku}}]
+                {%if item.gift %}
+                 + {{item.gift}}
+                {%endif%}
+            </td>
+            <td valign="top">
+                {{item.offer_price|nbsp|safe}}
+            </td>
+            <td valign="top">
+                {{item.qty}}
+            </td>
+            <td valign="top">
+                 {%if client.id == 1 %}
+                 shipped by {{item.seller}}{%if item.shipping_duration %} in {{item.shipping_duration}}{%endif%}
+                 {%else%}
+                 {%if item.shipping_duration %}
+                 {{item.shipping_duration}} business days.
+                 {%endif%}
+                 {%endif%}
+            </td>
+            <td valign="top" style="text-align:right;">
+                {{item.total_item_offer_price|nbsp|safe}}
+            </td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td colspan="6">
+                <hr/>
+            </td>
+        <tr>
+            <td colspan="4">
+            </td>
+            <td>
+                {% if order_offer_price_total != order_payable_total %}Subtotal<br/>{% endif %}
+                {%if special_discount %}Discount (-)<br/>{%endif%}
+                {%if cashback %}Cashback (-)<br/>{%endif%}
+                {%if order_shipping_charges %}Shipping Charges<br/>{%endif%}
+                Total
+            </td>
+            <td style="text-align:right;">
+                {% if order_offer_price_total != order_payable_total %}{{order_offer_price_total|nbsp|safe}}<br/>{% endif %}
+                {%if special_discount %}{{special_discount|nbsp|safe}}<br/>{%endif%}
+                {%if cashback %}{{cashback|nbsp|safe}}<br/>{%endif%}
+                {%if order_shipping_charges %}{{order_shipping_charges|nbsp|safe}}<br/>{%endif%}
+                {{order_payable_total|nbsp|safe}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <hr/>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+<tr>
+<td>
+
+{%ifequal payment_option.payment_mode.group_code  'web' %}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please go to {{payment_option.complete_order_url}}{{order_id}}
+and pay securely using your Visa or MasterCard credit/debit cards. Your item{%if multiple %}s{%endif%} will be shipped
+after payment is received. <p/>For any queries, please call {{helpline}}.{%endifequal%}
+
+{%ifequal payment_option.payment_mode.group_code 'mail' %}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please make DD/cheque of {{order_payable_total}} in the name of '{{payment_option.in_favor_of}}' and send to
+</td>
+</tr>
+<tr>
+<td>{{payment_option.payment_delivery_address|linebreaksbr}}</td>
+</tr>
+<tr>
+<td>Please write order ID {{order_id}} on the back of the DD/cheque. After payment is received, we will confirm delivery
+address and ship your item{%if multiple %}s{%endif%}.
+<p/>You can track your order in <a href="http://{{clientdomain_name}}/user/orders">My Account</a>. For any queries, please call {{helpline}}. {%endifequal%}
+    
+{%if payment_option.payment_mode.group_code == 'deposit' or payment_option.payment_mode.group_code == 'transfer' %}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please transfer/deposit {{order_payable_total}} in any one of the banks.</td>
+</tr>
+<tr>
+<td>A/C number: {{payment_option.bank_ac_no}} ({{payment_option.bank_ac_type}})<br/>
+A/C name: {{payment_option.bank_ac_name}}<br/>
+Bank: {{payment_option.bank_name}}; IFSC: {{payment_option.bank_ifsc}}<br/>
+Branch: {{payment_option.bank_address}}
+</td>
+</tr>
+<tr>
+<td>Please mention order ID {{order_id}} in the notes or call us on {{helpline}} to inform about transfer/deposit. After
+payment is received, we will confirm delivery address and ship your item{%if multiple %}s{%endif%}.
+<p/>You can track your order in <a href="http://{{clientdomain_name}}/user/orders">My Account</a>. For any queries, please call {{helpline}}. {%endif%}
+
+{%ifequal payment_option.payment_mode.code 'Itz' %}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please visit any of the Itz Cash outlets and make a payment in favour of '{{client.name}}' by
+quoting your order ID {{order_id}}. Locate the nearest Itz Cash outlet here - http://www.itzcash.com/ICWList.html
+<p/>You can track your order in <a href="http://{{clientdomain_name}}/user/orders">My Account</a>. For any queries, please call {{helpline}}.{%endifequal%}
+
+{%ifequal payment_option.payment_mode.code 'easybill' %}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please visit any of the Easybill outlets and make a payment in favour of '{{client.name}}' by quoting your order ID {{order_id}}. Locate the nearest Easybill outlet here - http://www.easybillindia.com/store.aspx
+<p/>You can track your order in <a href="http://{{clientdomain_name}}/user/orders">My Account</a>. For any queries, please call {{helpline}}.{%endifequal%}
+
+{%ifequal payment_option.payment_mode.code 'suvidha' %}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please visit any of the Suvidha outlets and make a payment in favour of '{{client.name}}' by quoting your order ID {{order_id}}. Locate the nearest Suvidha outlet here - http://www.mysuvidhaa.com/SuvidhaaStoreServices/StoreDetails.aspx
+<p/>You can track your order in <a href="http://{{clientdomain_name}}/user/orders">My Account</a>. For any queries, please call {{helpline}}.{%endifequal%}
+
+{%ifequal payment_option.payment_mode.code 'ICICICash' %}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please visit any of the ICICI bank branches and deposit cash in current account no. 039305002261 using a deposit slip. Your order ID {{order_id}} should be clearly mentioned on the face of the deposit slip.
+<p/>You can track your order in <a href="http://{{clientdomain_name}}/user/orders">My Account</a>. For any queries, please call {{helpline}}.{%endifequal%}
+
+{%ifequal payment_option.payment_mode.code  'emi' %}
+To complete your order, please go to {{payment_option.complete_order_url}}{{order_id}} and use the EMI option to pay securely using your Visa or MasterCard credit cards. Your item{%if multiple %}s{%endif%} will be shipped after payment is received. For any queries, please call {{helpline}}.{%endifequal%}
+
+{%ifequal payment_option.payment_mode.group_code 'store'%}
+We have not received your payment yet. Please make the payment within {{time_remaining}}, failing which your order booking will be auto-cancelled. To complete your order, please pay using credit card or cash at any of {{client.name}} stores. Your item{%if multiple %}s{%endif%} will be shipped after payment is received. <p/>You can track your order in <a href="http://{{clientdomain_name}}/user/orders">My Account</a>. For any queries, please call {{helpline}}.{%endifequal%}
+</td>
+<tr>
+    <td>
+        In case you have already made the payment, please ignore this email.
+    </td>
+</tr>
+</tr>
+{%if client.terms_and_conditions%}
+<tr>
+    <td><br/>{{client.terms_and_conditions|safe}}</td>
+</tr>
+{%endif%}
+<tr>
+<td><br/>{{signature|linebreaks}}</td></tr>
+</table>
+</body>
+</html>

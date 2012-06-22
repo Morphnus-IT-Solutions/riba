@@ -1,0 +1,16 @@
+{% load cc_tags %}
+{% load web_tags %}
+<form action="{% cc_url request "orders/mycart" %}" id="add_to_cart_{{rate_chart.id}}" method="post">
+    <input type="hidden" name="rate_chart_id" value="{{rate_chart.id}}"/>
+    <input type="hidden" name="product_id" value="{{product.id}}"/>
+    <input type="hidden" name="action" value="add_to_cart"/>
+    <input type="image" alt="Buy now" title="Buy this product now" src="{{MEDIA_URL}}images/pixel.gif" class="{%ifequal format "large"%}btn_buynow_l{%else%}btn_buynow{%endifequal%}{%if css%} {{css}}{%endif%}" {%if id%}id="{{id}}"{%endif%}/>
+</form>
+{%if request.user.is_authenticated%}
+<form method="post" action="/user/wishlist/">
+    <input type="hidden" name="src_id" value="{{rate_chart.id}}"/>
+    <input type="hidden" name="action" value="add_to_wishlist"/>
+    <input type="hidden" name="next" value="{{request.path}}"/>
+     <button  type="submit" class="linkButton" title="Add this item to your wishlist and buy later">Add to wishlist</button>
+</form>
+{%endif%}

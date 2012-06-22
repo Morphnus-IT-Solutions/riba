@@ -1,0 +1,34 @@
+{% extends request.ws_base|default:'web/base.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% block content %}
+<div>
+	<div class="breadcrumb">
+  	&nbsp;  
+  	</div>    
+	{%if orderItems%}
+    <div class="cart_left">
+        {%include 'order/cart.html'%}
+    </div>
+
+    <div class="cart_right">
+        {% include "order/right.html" %}
+    </div>
+    {%else%}
+    {% if order.state|order_state_conf_or_mod_or_canc %}
+    {% else %}
+    {%load web_tags%}   
+    <div class="cart_left">
+    {% checkout_tabs request "cart" %}
+    <div class="cart_left checkout_table">
+    	<div class="f14"><strong>Your shopping cart is empty.</strong></div>
+<p>Browse through our products and add items to your cart.</p>
+         <p><a href="{% cc_url request "" %}" title="Start shopping">Click here</a> to start shopping.</p>
+    </div>   
+    </div>
+    {%endif%}
+    {%endif%}
+    <div class="clear"></div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,88 @@
+{% extends 'support/base.html' %}
+{% load cc_tags %}
+{% block content %}
+
+<style>
+dl {
+    margin: 0 0 1em !important;
+}
+dl dt {
+    font-weight: normal !important;
+}
+ul, ol {
+    padding-left: 0px !important;
+}
+label {
+    font-weight:normal !important;
+}
+</style>
+{% if form %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="{% cc_url request "team/" %}">Teams</a>&nbsp;&raquo;&nbsp; <a href='{% cc_url request "team/" %}{{team.id}}/'>{{team.name|title}}</a>&nbsp;&raquo;&nbsp; Edit</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Edit</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main">
+  {% if form.non_field_errors %}
+  <div class="error">{{form.non_field_errors}}</div>
+  {%endif%}
+  <form method='post'>
+    <div class='row clear'>
+        <div class='col1 f11 flgray left'>{{form.name.label}}</div>
+        <div class='col2 left'>{{form.name}}</div>
+    </div>
+    <div>
+        {%if form.name.errors %}
+        <div class="error w440 left">
+    		{{form.name.errors}}
+    	</div>
+        {%endif%}
+    </div>
+    <div class='clear mart15'>
+        <input type="submit" name="submit" value="Save" class="uiButton"/>
+    </div>
+  </form><br />
+  </div>
+</div>
+{% else %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="{% cc_url request "team/" %}">Teams</a>&nbsp;&raquo;&nbsp; {{team.name|title}}</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>{{team.name|title}}</h1>
+    </div>
+        <div class="right content_head">
+			<a href="edit" role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Edit Team</span></a>
+		</div>
+	{% if not members %}
+    <div class="clear bordergray"></div>
+    {% endif %}
+  </div>
+  <div class="main">
+  {% if members %}
+	<table class="tbl_response">
+		<thead>
+		<tr>
+			<th>User</th>
+			<th>Role</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for member in members %}
+		<tr>
+			<td class="w200"><a href="{% cc_url request "user/" %}{{member.id}}">{%firstof member.user.first_name|title member.user.username %}</a></td>
+			<td>{{member.role|title}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table><br />
+  {% else %}
+  <p>No members present in this team</p>
+  {% endif %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

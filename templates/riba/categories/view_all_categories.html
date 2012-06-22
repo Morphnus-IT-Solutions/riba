@@ -1,0 +1,93 @@
+{% extends "web/base.html" %}
+{% block content %}
+<div class="padding_top10">
+	<div class="content_head">
+		<div class="header rc5">
+            <div class="left">
+                <h1>Categories</h1>
+            </div>
+			<div class="right search_element">
+				<form action="" method="get" id="search_form">
+				  	{% if q %}
+						<input type="text" id="q" name="q" value="{{q}}" autocomplete="off" maxlength="300"/>
+					{% else %}
+						<input type="text" id="q" name="q" autocomplete="off" maxlength="300" placeholder="Search Categories" />
+					{% endif %}
+				  	<button type="submit" id="go"></button>
+				  <div class="clear"></div>				  
+				</form>
+			</div>
+		</div>
+    	<div class="clear bordergray"></div>
+  	</div>
+
+	<div class="inner-content">
+		<div class="right marb10">
+			<a href="/categories/add/">+ Add a new Category</a>
+		</div>
+		<div class="clear mart10">
+		<form action="" id="category_list_form" name="category_list_form">
+			{% if categories %}
+				<div class="mart10">
+				<table class="tablesorter tbl_response" cellspacing="0" cellpadding="0" border="0" id="user_table" width="100%">
+					<thead>
+						<tr>
+							<th style="width:25%"><strong>Name</strong></th>
+							<th style="width:70%"><strong>Description</strong></th>
+                            <th style="width:5%"></th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for cat in categories %}
+						<tr>
+							<td class="f11 flgray vatop padl10"><a href="/categories/{{cat.id}}/" class="ca f11">{{cat.name}}</a></td>
+							<td class="f11 flgray word-wrap vatop padl10">{{cat.description}}</td>
+							<td class="ca"><input type='submit' class='deletebin hide' id='{{cat.id}}' value='del' /><input type='image' class='deletebin' id='{{cat.id}}' src="/media/images/dustbin_icon.png" /></td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% else %}
+			<div class="f15">
+				<h2><strong> No categories to display</strong> </h2>
+			</div>
+		{% endif %}
+		</form>
+		</div>
+	</div>
+	<div id='deletebin' style='display:none;'></div>
+    <div class="clear"></div>
+</div>
+
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+
+$('.deletebin').click(function(){
+    var k = this.id
+    var width=650;
+    var height=400;
+    var onsuccess = function(data, textStatus, xhr){
+        $('#deletebin').html(data);
+        var dialog=$('#deletebin').dialog({modal:true, title:'Delete Confirmation',width:width, height:height, resizable:true});
+    };
+    var onerror=function(xhr, textStatus, error){
+        $('#deletebin').html(xhr.responseText);
+        var dialog = $('#deletebin').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
+    };
+    var url= "/categories/delete/"+k;
+    $.ajax({
+        type: 'GET',
+        url:url,
+        data: '',
+        success:onsuccess,
+        error: onerror
+    });
+    return false;
+});
+        
+</script>
+{% endblock %}

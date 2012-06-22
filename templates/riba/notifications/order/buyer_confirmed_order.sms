@@ -1,0 +1,1 @@
+{% load web_tags %}{%ifequal payment_option.payment_mode.code 'cod'%}Your order has been confirmed. Please pay cash on delivery for order id: {{order_id}}.{%else%}Your order has been confirmed. Received {{order_payable_total|safe|delete_text:"&nbsp;"}} on {{order_payment_date}} for order id: {{order_id}}.{%endifequal%} For queries, call {{helpline}}. Thanks for shopping with us.

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="span-24 last">
+    <div class="p5">
+        <h3>Are you sure you want to delete the update?</h3>
+        <div>
+            {% if previous %}
+            Deleting this update will assign the line item to <b>{{previous.status.responsible_team}}</b> with status <b>{{previous.status}}</b>
+            {% else %}
+                Deleting this update will leave the line item unassigned.
+            {% endif %}
+        </div>
+        <br/>
+        <table cellpadding="0" cellspacing="0" style="border-collapse:collapse">
+            <tr class="row1">
+                <td width="150px">
+                    <div class="f11 gray">Assigned By</div>
+                    <div class="fb">{{status.modified_by.omsuser_set.all.0.team}}</div>
+                    <div class="f11 gray">{{status.get_created_on|date:"h:i A, d N Y"}}</div>
+                    <div class="f11 gray">{{status.modified_by}}</div>
+                </td>
+                <td>
+                    <div class="f11 gray">Status</div>
+                    <div><b>{{status.status}}</b></div>
+                    <div>{{status.notes|default:""}}</div>
+                    <div>{{status.expected_by|default:""}}</div>
+                </td>
+                <td width="150px">
+                    <div class="f11 gray">Assigned To</div>
+                    <div class="fb">{{status.status.responsible_team}}</div>
+                </td>
+                <td width="150px" class="{{status.rag}}">
+                    <div class="f11 gray">Due By</div>
+                    <b>{{status.get_tat_by|date:"h:i A, d N Y"}}</b>
+                </td>
+            </tr>
+        </table>
+        <div class="f11 gray">
+            Deleting an update will cause unrecoverable data loss. You should only delete an update only if you are sure its completely useless.
+        </div>
+        <div>
+            <form method="post">
+                <input name="update_id" value="{{status.id}}" type="hidden"/>
+                <button type="submit">Yes, I am sure</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

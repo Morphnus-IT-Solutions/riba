@@ -1,0 +1,7 @@
+<b>Select Deposit Bank:</b>
+<br />
+<select id="id_payment_group_member" name="payment_group_member">
+    {%for option in gateway_options%}
+        <option value="{{option.code}}">{{option.name}}</option>
+    {%endfor%}
+</select>

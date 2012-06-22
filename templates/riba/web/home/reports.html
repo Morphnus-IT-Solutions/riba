@@ -1,0 +1,49 @@
+{% extends "web/base.html"%}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+<div id="header" style="border-bottom: 1px solid #FCED67">
+  <div id="logo">
+    <div><a href="{% cc_url request "" %}" title="Home"><img src="{{MEDIA_URL}}images/ppd-logo.gif" alt="Logo" width="300" height="58" /></a> </div>
+  </div>
+  <div class="clear"></div>
+</div>
+{%endblock%}
+{% block content %} <br/>
+<div class="dashboard">
+  <div class="dashboard_block">
+    <h3 class="toprc5">Response</h3>
+    <ul>
+      <li><a href="/asterisk_api/calls_volume_report/">Call Volume</a></li>
+      <li><a href="/asterisk_api/cc_report/">Call Data</a></li>
+      
+    
+    </ul>
+  </div>
+  <div class="dashboard_block">
+    <h3 class="toprc5">Sales</h3>
+    <ul>
+      <li><a href="/reports/order_report/">Booked and Confirmed Orders</a></li>
+      <li><a href="/reports/seller_report/">Best Performing Sellers</a></li>
+      <li><a href="/reports/agent_report/">Best Performing Agents</a></li>
+<!--       <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li> -->
+    </ul>
+  </div>
+   <div class="dashboard_block">
+    <h3 class="toprc5">Activity</h3>
+    <ul>
+      <li><a href="/analytics/search_trend">Search Trend</a></li>
+      <!-- <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li>
+      <li><a href="#"></a></li> -->
+    </ul>
+  </div>
+  <div class="clear"></div>
+</div>
+{% endblock %} 

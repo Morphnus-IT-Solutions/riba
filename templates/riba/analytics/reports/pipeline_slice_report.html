@@ -1,0 +1,43 @@
+{% extends "analytics/pentaho_base.html" %}
+{% load order_tags %}
+{% block content %}
+<br/>
+
+<form method="POST" id="report_form" name="report_form" action="">
+{% show_export_link request form 'excel' %}
+{% form_daterange request form title%}
+
+<div class="report_option_main">
+    <div class="report_option_aa">	
+        <span>Order State:</span>{{form.order_state}}&nbsp; &nbsp;&nbsp;
+        <span>Date type:</span>{{form.date_type}}&nbsp;&nbsp;&nbsp;
+        <span>Channel:</span>{{form.channel}}
+    </div>
+    <input type="submit" value="Go!" class="uiButton" style="width:50px\9; padding:5px;">
+</div>
+
+<div class="hidden">{{form.page_no}}</div>
+<div class="hidden">{{form.format_option}}</div>
+
+<div style="overflow:scroll; padding:0 0 10px 0px; min-height:200px; max-height:500px;float:left; width:920px;" id="order_report_content" class="mart10">
+<table class="tbl_report marb20">
+    {%for item in data%}
+        <tr>
+            {%if forloop.first%}
+                {%for i in item%}
+                    <th>{{i}}</th>
+                {%endfor%}
+            {%else%}
+                {%for i in item%}
+                    <td>{{i}}</td>
+                {%endfor%}
+            {%endif%}
+        </tr>
+    {%endfor%}
+</table>        
+</div>
+
+{%show_pagination paginator page%}
+</form>
+
+{% endblock %}

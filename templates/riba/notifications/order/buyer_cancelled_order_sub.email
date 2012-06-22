@@ -1,0 +1,1 @@
+Your order with {{seller_name}} has been {%if partial_cancellation%}modified{%else%}cancelled{%endif%} [Order ID: {{order_id}}]

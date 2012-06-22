@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>{% block page_title %}Support - Future Bazaar{% endblock %}</title>
+    {% block blueprint_css %}
+    <link rel="stylesheet" href="/media/rms/css/blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/media/rms/css/blueprint/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="/media/rms/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="/media/rms/css/jquery-ui.css" type="text/css" media="screen">
+    {% endblock %}
+        {% block core_css %}
+        <link rel="stylesheet" href="/media/rms/css/base.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="/media/rms/css/common.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="/media/rms/css/buttons.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="/media/rms/css/header.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="/media/rms/css/content.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="/media/rms/css/pop_up.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="/media/rms/css/footer.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="/media/rms/css/page.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="/media/rms/css/rupee/font.css" type="text/css">
+        <link rel="shortcut icon" href="/media/rms/images/favicon.ico"/>
+        {% endblock %}
+        {% block extra_css %}{% endblock %}
+        {% block jquery %}
+    <script src="/media/rms/js/jq/jquery.min.js" type="text/javascript"></script>
+	<script src="/media/rms/js/jq/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script src="/media/rms/js/jq/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="/media/rms/js/jq/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
+    {% endblock %}
+</head>
+
+{% load support_tags %}
+{% load cc_tags %}
+<body>
+<div id="call_popup" style="background-color:#fff !important"></div>
+<div class="container shadow_one bottomroundcorner5">
+ 
+  <div>
+    <div class="logo"> <a href="/" title="Future Bazaar Support"> <img src="{{MEDIA_URL}}rms/images/fblogo.png" style='margin:5px 0px;height:24px;' alt="Support"></a> </div>
+    <div class="header_right">
+      <div id="userinfo" class="f11 fn ra">
+      	{% if user.is_authenticated %}
+        	Hi {% filter force_escape %}{% firstof user.first_name|title user.username|title %}{% endfilter %} | <a href="/auth/signout/">Sign out</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  {%if user.is_authenticated%}
+  <div class="bbg">
+  </div>
+  {%endif%}
+  <div id="wrapper">
+      <div class="user_account_tabs" id="user_account_tabs">
+          <div class="left">{% top_nav request %}</div>
+          <div class="right" style="margin-top:5px; line-height:23px; vertical-align:top">
+                <form method="get" action="/search/">
+                    <select name="t" style="padding:0px; height:23px;vertical-align:top;" class="mart5">
+                        <option value="order" {% if doc_type == 'order' %} selected {%endif %}>Orders</option>
+                        <option value="orderitem" {% if doc_type == 'orderitem' %} selected {%endif %}>Order Items</option>
+                        <option value="payment" {% if doc_type == 'payment' %} selected {%endif %}>Payments</option>
+                        <option value="refund" {% if doc_type == 'refund' %} selected {%endif %}>Refunds</option>
+                        <option value="shipment" {% if doc_type == 'shipment' %} selected {%endif %}>Shipments</option>
+                        <option value="fulfillment" {% if doc_type == 'fulfillment' %} selected {%endif %}>Fulfillment</option>
+                    </select>
+                    <input type="text" name="q" id="q" maxlength="100" style="width: 300px; margin-top: 5px; padding: 3px; height: 15px; font-size: 12px;" value="{{q}}"/>
+                </form>
+          </div>
+          <div class="clear"></div>
+      </div>
+      <div class="bbg"></div>
+      <div id="content">
+        {% block content %} {% endblock %}
+      </div>
+	  <div class="poweredby" id="footer">
+	  	 <a style="color:#009 !important;" target="_blank" href="http://response.futurebazaar.com">Response</a> &middot; <a style="color:#009 !important;" target="_blank" href="http://sellers.futurebazaar.com">Sellers Hub</a> &middot; <a style="color:#009 !important;" target="_blank" href="http://support.futurebazaar.com">Support</a> &middot; <a style="color:#009 !important;" target="_blank" href="http://analytics.futurebazaar.com">Analytics</a>
+		  <div class="padt5">&copy; 2012 Support &middot; <a href="http://www.futurebazaar.com" target="_blank">Future Bazaar</a></div>
+	  </div>
+	</div>
+</div>
+{% if request.call.cli %}
+<div id="userbox_outer">
+    <div id="user_box" class="user_box shadow_five rc5" style="display:none">
+        <div class="userbox_close"></div>
+<a class="linkButtonMaroon cursor closeCall" title="Close this call"> Close this call x</a>
+    </div>
+    <div class="userbox_show" style="display:block">&laquo;</div>
+</div>
+<div class="clear"></div>
+{% endif %}
+
+<script language="javascript">
+{% block script_footer %} 
+var CheckboxMultipleSelect = function(name) {
+    checkboxes = $("input[type=checkbox][name="+name+"]");
+    select_all = $("input[type=checkbox][name="+name+"_select_all]");
+    prev_click = 0;
+    
+    check_select_all = function() {
+        if (!$("input[type=checkbox][name="+name+"]:not(:checked)").length)
+            select_all.attr('checked',true);
+        else
+            select_all.attr('checked',false);
+    };
+
+    update_range = function(start, end, value) {
+        for (var i=start; i<=end; i++)
+            $(checkboxes[i]).attr('checked',value);
+    };
+        
+    select_all.click(function() {
+        var selected = $(this).attr('checked');
+        checkboxes.each(function() {
+            $(this).attr('checked',selected);
+        });
+    });
+
+    checkboxes.click(function(ev) {
+        var selected = $(this).attr('checked');
+        var curr_click = checkboxes.index(this);
+        if (ev.shiftKey) {
+            if (curr_click >= prev_click)
+                update_range(prev_click, curr_click, selected);
+            else
+                update_range(curr_click, prev_click, selected);
+        }
+        if (!selected)
+            select_all.attr('checked',false);
+        else
+            check_select_all();
+        prev_click = curr_click;
+    });
+    
+};
+$(document).ready(function(){
+    $(".userbox_close").click(function(){
+        $("#user_box").hide("slide", { direction: "right" }, 500 );
+        $(".userbox_show").show();
+    });
+    $(".userbox_show").click(function(){
+        $("#user_box").show("slide", { direction: "right" }, 500 );
+        $(".userbox_show").hide();
+    });
+    $('.closeCall').click(function() {
+        var width = 340;
+        $(this).unbind('click');
+        $(this).css('cursor','default')
+        $.get("{% cc_url request 'user/callclose'%}", function(data) {
+            $('#call_popup').html(data);
+            var dialog = $('#call_popup').dialog({modal:true,
+                title:'Close Interaction', 
+                width:width});
+            var onSuccess = function(data, textStatus, xhr) {
+                $('#call_popup').html(data);
+                setTimeout(function(){
+                    $('#call_popup').dialog('close');
+                    var url = "{% cc_url request '' %}";
+                    window.location.href = url;
+                    }, 2000);
+            };
+            var onError = function(xhr, textStatus, error) {
+                $('#call_popup').html(xhr.responseText);
+                setTimeout(function(){$('#call_popup').dialog('close');}, 4000);
+            };
+            var onSubmit = function() {
+                var data = $('#form_add_interaction').serialize()+"&submit="+this.id;
+                $.ajax({ url:"{% cc_url request 'user/callclose'%}",
+                    data : data,
+                    success : onSuccess,
+                    error : onError,
+                    type : 'POST'
+                    });
+                return false; 
+            };
+            $('#closecall').click(onSubmit);
+            $('#hold').click(onSubmit);
+        });
+    });
+});    
+{% endblock %}
+</script>
+</body>
+</html>

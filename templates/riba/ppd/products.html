@@ -1,0 +1,26 @@
+{% extends 'ppd/user_home.html' %}
+{%load web_tags%}
+{% block user_content %}
+        <div class="f18 fb">
+            <h1>{{client_display_name}} - Products</h1>
+        </div>
+        <div class="store_grid"></div>
+    		<div id="popular_products">
+                {% load_ppd_product products request url page seller_name %}
+    		</div>
+        	<div class="clear"></div>
+    <div class="pagination">
+    {% if pagination.enable_prev or pagination.enable_next %}
+  {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+    {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+    {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+    {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+    <div>{{pagination.cur_page}}</div>
+    {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+    {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+    {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+    {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {%endif %}
+     </div>
+        {%endif%}
+
+{%endblock%}

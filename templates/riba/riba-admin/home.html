@@ -1,0 +1,27 @@
+{% extends "riba-admin/base.html" %}
+{% block content %}
+<div id="home-content">
+   <div id="content-main">
+        <div class="module">
+            <table>
+                <caption>
+                    Site administration
+                </caption>
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <a href="question/view/">Questions</a>
+                        </th>
+                        <td>
+                            <a href="question/add/" class="addlink">Add</a>
+                        </td>
+                        <td>
+                            <a href="question/view/" class="changelink">Change</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+   </div>
+</div>
+{% endblock %}

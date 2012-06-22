@@ -1,0 +1,41 @@
+/* Style For Suggestions */
+    
+/*
+ For creating side border like this
+ | item 1   |
+ | item 2   |
+ */
+.suggestions .suggest_item{
+    height:20px;
+    background-color:#EEEEEE;
+    border-left:1px solid #CCCCCC;
+    border-right:1px solid #CCCCCC;
+}
+
+/*
+ For creating top border like this
+ ------------
+   item 1
+   ...
+ */
+.suggestions .suggest_item.first{
+    border-top:1px solid #CCCCCC;
+}
+
+/*
+ For creating bottom border like this
+   ...
+   item 2  ------------
+ */
+.suggestions .suggest_item.last{
+    border-bottom:1px solid #CCCCCC;
+}
+
+/*
+ For coloring the selected item
+ */
+.suggestions .suggest_item.selected{
+    background-color:#999999;
+    color:#FFFFFF;
+    cursor:pointer;
+}

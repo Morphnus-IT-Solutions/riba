@@ -1,0 +1,145 @@
+{% extends 'rms/base.html' %}
+{% block content %}
+{% load rms_tags %}
+
+<style>
+dl {
+    margin: 0 0 1em !important;
+}
+dl dt {
+    font-weight: normal !important;
+}
+ul, ol {
+    padding-left: 0px !important;
+}
+label {
+    font-weight:normal !important;
+}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/campaign">Campaigns</a>&nbsp;&raquo;&nbsp; Create New Campaign</div>
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Create New Campaign</h1>
+    </div>
+	<div class="bordergray"></div>
+  </div>
+  <div class="main">
+		{% if form.non_field_errors %}
+        <div class="error">{{form.non_field_errors}}</div>
+        {%endif%}
+        <form method="post">
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.name.label}}</div>
+			    <div class='col2 left'>{{form.name}}</div>
+                <div class='col1 f11 flgray left'>{{form.type.label}}</div>
+                <div class='col2 left'>{{form.type}}</div>
+            </div>
+            <div>
+                {%if form.name.errors %}
+                <div class="error w440 left">
+					{{form.name.errors}}
+				</div>
+                {%endif%}
+                {%if form.type.errors %}
+                <div class="error w440 left" {%if not form.name.errors %}style="margin-left:460px"{%endif%}>
+					{{form.type.errors}}
+                </div>
+                {%endif%}
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.dni_number.label}}</div>
+			    <div class='col2 left'>{{form.dni_number}}</div>
+                <div class='col1 f11 flgray left'>{{form.hotline.label}}</div>
+                <div class='col2 left'>{{form.hotline}}</div>
+            </div>
+            <div>
+                {%if form.dni_number.errors %}
+                <div class="error w440 left">
+					{{form.dni_number.errors}}
+				</div>
+                {%endif%}
+                {%if form.hotline.errors %}
+                <div class="error w440 left" {%if not form.dni_number.errors %}style="margin-left:460px"{%endif%}>
+					{{form.hotline.errors}}
+                </div>
+                {%endif%}
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.priority.label}}</div>
+			    <div class='col2 left'>{{form.priority}}</div>
+                <div class='col1 f11 flgray left'>{{form.client.label}}</div>
+                <div class='col2 left'>{{form.client}}</div>
+            </div>
+            <div>
+                {%if form.priority.errors %}
+                <div class="error w440 left">
+					{{form.priority.errors}}
+				</div>
+                {%endif%}
+                {%if form.client.errors %}
+                <div class="error w440 left" {%if not form.priority.errors %}style="margin-left:460px"{%endif%}>
+					{{form.client.errors}}
+                </div>
+                {%endif%}
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.starts_on.label}}</div>
+			    <div class='col2 left'>{{form.starts_on}}</div>
+                <div class='col1 f11 flgray left'>{{form.ends_on.label}}</div>
+                <div class='col2 left'>{{form.ends_on}}</div>
+            </div>
+            <div>
+                {%if form.starts_on.errors %}
+                <div class="error w440 left">
+					{{form.starts_on.errors}}
+				</div>
+                {%endif%}
+                {%if form.ends_on.errors %}
+                <div class="error w440 left" {%if not form.starts_on.errors %}style="margin-left:460px"{%endif%}>
+					{{form.ends_on.errors}}
+                </div>
+                {%endif%}
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.campaign_type.label}}</div>
+			    <div class='col2 left'>{{form.campaign_type}}</div>
+            </div>
+            <div>
+                {%if form.campaign_type.errors %}
+                <div class="error w440 left">
+					{{form.campaign_type.errors}}
+				</div>
+                {%endif%}
+            </div>
+            <div class='row clear' style='height:215px !important;'>
+                <div class='col1 f11 flgray left'>{{form.script.label}}</div>
+                <div class='left'>{{form.script}}</div>
+            </div>
+		    <div class='clear mart15'>
+                <input type="submit" name="submit" value="Create" class="uiButton"/>
+			    <span style="margin-left:10px;"><input type="submit" name="submit" value="Save as Draft" class="uiButton"/></span>
+            </div>
+		</form>
+        <br />
+	</div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+$(document).ready(function(){
+    $("#id_starts_on").datetimepicker({dateFormat:'yy-mm-dd', timeFormat:'hh:mm:00', stepMinute:15, onSelect: function(){
+            $('#id_ends_on').datepicker('enable');
+        },
+    });
+    
+    $("#id_ends_on").datetimepicker({dateFormat:'yy-mm-dd', timeFormat:'hh:mm:00', stepMinute:15, beforeShow: function(){
+            var newDate = $('#id_starts_on').datepicker('getDate');
+            if (newDate)
+                $("#id_ends_on").datepicker('option','minDate',newDate);
+            else
+                $("#id_ends_on").datepicker('disable'),True;
+        },
+    });
+});
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="breadcrumb"><a href="/" title="Home">Home</a>&nbsp;&raquo;&nbsp;Invoiced But Not Dispatched</div>
+
+{% if delivery_items.object_list %}
+<div class="content_head">
+  <div class="header rc5">   
+    <h3 class="left">Invoiced But Not Dispatched ({{paginator.count}})</h3>
+    <div class="download_excel"> <a href="?mode=xls">Download as excel</a> </div>
+    <div class="clear"></div>
+  </div>
+  
+<!--  <div class="bgcolor1 bottomrc5">   
+    <div class="right"> {% paginate request paginator %}</div>
+    <div class="clear"></div>
+  </div>-->
+</div>
+   <table class="tbl_order">
+        <tr>
+            <th></th>
+            <th>Status</th>
+            <th><a href="{% sort_href request "order__sap_created_date" %}" class="{% sort_class request "order__sap_created_date" %}">SAP Date</a></th>
+            <th><a href="{% sort_href request "order__order_id" %}" class="{% sort_class request "order__order_id" %}">Order ID</a></th>
+            <th><a href="{% sort_href request "commerce_item__article_id" %}" class="{% sort_class request "commerce_item__article_id" %}">Article ID</a></th>
+            <th><a href="{% sort_href request "commerce_item__sku_id" %}" class="{% sort_class request "commerce_item__sku_id" %}">SKU ID</a></th>
+            <th>Product</th>
+            <th>City/Pin</th>
+            <th><a href="{% sort_href request "delivery_id" %}" class="{% sort_class request "delivery_id" %}">Delivery No</a></th>
+            <th><a href="{% sort_href request "delivery_date" %}" class="{% sort_class request "delivery_date" %}">Delivery No Date</a></th>
+            <th>Invoice No</th>
+            <th>Invoice Date</th>
+            <th>AWB No</th>
+            <th><a href="{% sort_href request "lsp_name" %}" class="{% sort_class request "lsp_name" %}">LSP</a></th>
+            <th><a href="{% sort_href request "state" %}" class="{% sort_class request "state" %}">LSP Status</a></th>
+        </tr>
+        {% for delivery_item in delivery_items.object_list %}
+        <tr class="{% cycle "row1" "row2"%}">
+            <td class="chk"><input type="checkbox"/></td>
+            <td class="status">{{delivery_item.commerce_item.get_current_status}}</td>
+            <td class="date">{{delivery_item.commerce_item.order.sap_created_date}}</td>
+            <td class="id">{{delivery_item.commerce_item.order.order_id}}</td>
+            <td class="date">{{delivery_item.commerce_item.article_id}}</td>
+            <td class="date">{{delivery_item.commerce_item.sku_id}}</td>
+            <td class="prod"><a href="/orderitems/{{delivery_item.commerce_item.commerce_item_id}}/{{delivery_item.del_item_id}}/">{{delivery_item.commerce_item.product_name}}</a></td>
+            <td class="city">{{delivery_item.commerce_item.order.get_city_and_pincode}}</td>
+            <td class="id">{{delivery_item.delivery_id}}</td>
+            <td class="date">{{delivery_item.delivery_date}}</td>
+            <td class="id">{{delivery_item.invoice_number}}</td>
+            <td class="date">{{delivery_item.invoice_date}}</td>
+            <td class="id">{{delivery_item.tracking_number}}</td>
+            <td class="status">{{delivery_item.lsp_name}}</td>
+            <td class="status">{{delivery_item.state}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+     <br />
+<br />
+
+<div class="bgcolor1 rc5">
+            {% paginate request paginator %}       
+</div>
+{% else %}
+<div class="orders_msg rc5">
+<div class="rc5">
+    <h3>Nice!</h3>
+    <p>There are no items in this bucket.</p>
+</div>
+</div>
+
+{% endif %}
+{% endblock %}

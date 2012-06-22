@@ -1,0 +1,22 @@
+{% extends 'support/base.html' %}
+{% block content %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Fulfillment</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Fulfillment</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+  <ul class='marl15 list-disc'>
+    <li><a href='procurement/?view=items'>To be Procured</a></li>
+    <li><a href='dispatch/'>To be Dispatched</a></li>
+  </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+{% endblock %}

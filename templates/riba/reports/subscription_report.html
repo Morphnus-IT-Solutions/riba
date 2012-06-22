@@ -1,0 +1,43 @@
+{%extends 'web/base.html' %}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+            {%include "reports/phone_pe_deal_header.html"%}
+{%endblock%}
+{%block content %}
+
+{% daterange "Subscriptions Report" search_trend from_date to_date request "call_data"%}
+
+{%if staff%}
+<br>
+
+{%show_excel_link request "excel"%}
+<div style="overflow:scroll; width:100%;" >
+<table class="tbl_report">
+{%for data in subscription_report_dict.list%}
+{%if forloop.first%}
+    <tr>
+    {%for m in data%}
+        <th><b>{{m}}</b></th>
+    {%endfor%}
+    </tr>
+{%else%}
+    <tr>
+    {%for m in data%}
+        <td>{{ m }}</td>
+    {%endfor%}
+    </tr>
+{%endif%}
+{%endfor%}
+
+</table>
+</div>
+{%show_excel_link request "excel"%}
+<br>
+{%else%}
+<div> You are not allowed to view this page. If you are a staff member, please sign in <a href="/">here</a> with you staff login and try again. </div>
+{%endif%}
+<br>
+<br>
+
+{%endblock%}

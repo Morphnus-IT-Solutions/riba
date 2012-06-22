@@ -1,0 +1,88 @@
+{% extends 'support/base.html' %}
+{% block content %}
+
+<style>
+dl {
+    margin: 0 0 1em !important;
+}
+dl dt {
+    font-weight: normal !important;
+}
+ul, ol {
+    padding-left: 0px !important;
+}
+label {
+    font-weight:normal !important;
+}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; States</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>States</h1>
+    </div>
+        <div class="right content_head">
+			<a id='add' role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Add State</span></a>
+		</div>
+	{% if not state_list %}
+    <div class="clear bordergray"></div>
+    {% endif %}
+  </div>
+  <div class="main clear">
+    {% if state_list %}
+	<table class="tbl_response">
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th>Responsible Team</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for state in state_list %}
+		<tr>
+			<td class="w200"><a href="{{state.id}}">{{state.name|title}}</a></td>
+			<td>{{state.responsible_team.name|title}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table><br />
+    {% else %}
+    <p>No states are present in the system</p>
+    {% endif %}
+  </div>
+</div>
+<div id='add_state'></div>
+{% endblock %}
+
+{% block script_footer %}
+$('#add').click(function() {
+    var width = 270;
+    $.get('/state/add/', function(data) {
+        $('#add_state').html(data);
+        var dialog = $('#add_state').dialog({modal:true, title:'Add State', 
+            width:width, resizable:false});
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#add_state').html(data);
+        $('#addstate').click(onSubmit);
+        if (xhr.status == 200)
+            setInterval('location.reload();', 2000);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#add_state').html(xhr.responseText);
+        $('#addstate').click(onSubmit);
+	};
+	var onSubmit = function() {
+        var data = $('#form').serialize();
+        $.ajax({ url:'/state/add/',
+			data : data,
+			success : onSuccess,
+			error : onError,
+			type : 'POST'
+			});
+        return false; 
+	};
+    $('#addstate').click(onSubmit);
+    });
+});
+{% endblock %}

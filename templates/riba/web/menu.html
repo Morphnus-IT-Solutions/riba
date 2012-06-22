@@ -1,0 +1,15 @@
+{% load cc_tags %}
+<div id="menu">
+    <ul>
+        {%for item in mega_items%}
+      		<li class="item">            
+            <h4 class="sel_item"><a  href="{% cc_url request item.item.category.url%}">{{item.item.category.name}}</a></h4>
+            <ul id="item{{forloop.counter}}" {% if item.item.position == 'right' %} style="position:absolute;right:0px;"{%endif%} class="wide_block bottomrc5">
+                       {% for category in item.active_cats %}                    
+                       <a href="{%cc_url request category.category.url%}"><li>{{category.category.name}}</li></a>
+                     {% endfor %}
+              	</ul>
+        	</li>
+        {%endfor%}
+ </ul>
+</div>

@@ -1,0 +1,19 @@
+{%if field == 'start_date'%}
+
+{%if form.data%}
+{{form.data.start_date}}
+{%else%}
+{{form.fields.start_date.initial|date:'d M, Y'}}
+{%endif%}
+
+{%else%}
+
+{%if field == 'end_date'%}
+{%if form.data%}
+{{form.data.end_date}}
+{%else%}
+{{form.fields.end_date.initial|date:'d M, Y'}}
+{%endif%}
+{%endif%}
+
+{%endif%}

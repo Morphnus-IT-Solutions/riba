@@ -1,0 +1,43 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+<form method='GET' action="">
+{% datepicker title '' input_date request%}
+
+</form>
+<br/>
+
+<div style="overflow:scroll; padding:0 10px 10px 0px; margin-right:10px" >
+{%show_excel_link request 'excel'%}
+<table class="tbl_report">
+{%for item in data_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%for i in item%}
+            <td>{{i}}</td>
+        {%endfor%}
+    {%endif%}
+</tr>
+{%endfor%}
+                    
+</table>        
+</div>
+<br>
+<br>
+<br>
+{% endblock %}

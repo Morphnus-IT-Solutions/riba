@@ -1,0 +1,46 @@
+ {% load ppd_tags %}
+ {% if show_footer%}
+            {%if future_ecom%}
+<style type="text/css">
+                .footer {border-top: 1px solid #eee; margin-top:100px}
+                .fb-information {border-right: 1px solid #eee;float: left;margin-top: 5px;padding:10px}
+                .fb-info1 {color: #656565;float: left;font-family: arial;font-size: 11px; height: auto; text-align: justify;width: 730px}
+                .customer-care-container {border-left: 1px solid #F6F6F6;float: left; margin-top: 6px;width: 209px}
+                .customer-care-contact-details {color: black;float: left;font-family: arial;font-size: 11px;height: 91px; margin-left: 6px;width: 197px}
+                .clear {clear:both}
+                .footer-links li{float:left !important}
+                </style>
+<div class="footer">
+  <div>
+    <div class="fb-information">
+      <div class="fb-info1">FutureBazaar.com is India's favorite online shopping site. FutureBazaar is the online venture of the Future Group, owner of India's largest retail brands Big Bazaar, Pantaloons, Central and eZone. FutureBazaar sells a wide range of products like Fashion including Men's apparel, Women's apparel, Mobiles, Mobile accessories, Electronics like LCD TVs, Flat TVs, DVD players, Home Theatres, iPods, MP3 players, MP4 players, Digital Cameras, Video Cameras, Music systems, Home appliances, Kitchen Appliances, Dreamline Kitchen ware, Hindi movies, English movies, DVDs, VCD, Gold jewellery, Diamond jewelry, Fiction Books, Non-Fiction Books, Car Acccessories and others. Big Bazaar sales such as Sabse Sasta 3 Din and Mahabachat are also available for shopping online at FutureBazaar. Whether you want to buy mobiles or buy electronics from FutureBazaar, you can do so with complete confidence as FutureBazaar only sells genuine products with manufacturers' warranty.</div>
+    </div>
+    <div class="customer-care-container">
+      <div style="margin:0px 5px;"><strong class="f14">CUSTOMER CARE</strong></div>
+      <div class="customer-care-contact-details"> <b>Phone:</b> +91 22 678-40-400 <br>
+        <b>Email:</b> support@futurebazaar.com<br>
+        <b>Address:</b> Knowledge House, 2nd Floor,
+        Shyam Nagar, Off Jogeshwari Vikhroli 
+        Link Road, Jogeshwari - East,<br>
+        Mumbai - 400060. </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+  <div class="f11" style="padding:10px;">&copy; 2010 Future Bazaar India Ltd.</div>
+</div>
+{%else%}
+<div id="footer" class="bottomrc5">
+  <div >
+    <ul>
+      <!--<li><span class="fb">ABOUT</span></li>-->
+      {% sections_menu request %}
+    </ul>
+  </div> 
+  <div class="clear"></div>
+  </br>
+  <div class="fdgray" id="copy">&copy; 2011 <a href="http://www.futurebazaar.com" target="_blank">Future Bazaar</a> </div>
+  <hr class="space"/>
+</div>
+{%endif%}
+        {%endif%} 

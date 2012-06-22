@@ -1,0 +1,24 @@
+<style type="text/css">
+	#user_clients{width:130px}
+	#user_sellers {width: 130px}
+</style>
+    <div class="seller_div">
+        <form name="seller_account_display" id="seller_form" action="{{url}}" method="POST">
+            <span style="padding-left:10px;" class="f10 fgray">Seller</span>
+                <select name="user_sellers" id="seller_id" class="f10 fgray">
+                    <option class="f11 fdgray option" value="all-sellers">All Sellers</option>
+                        {%for account in accounts%}
+                            <option class="f11 fdgray option" {%ifequal account|slugify seller_name%}selected="selected"{%endifequal%} value="{{account.name|slugify}}">{{account.name}}</option>
+                        {%endfor%}
+                    </select>
+                    <input type="hidden" name="name" value="change">
+        </form>
+    </div>
+        
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#seller_id").change(function(){
+		$("#seller_form").submit();
+	});
+});
+</script>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="breadcrumb"><a href="/" title="Home">Home</a>&nbsp;&raquo;&nbsp;Update Status</div>
+
+<div>
+    <div>
+        <h4>Update Status</h4>
+    </div>
+    <div>
+    <form method="post" action="">
+        <table class="tbl_update_status">
+        <tr>
+        <td colspan="2"> {% if not valid %}
+    <div class="error">
+        <ul>
+            {% for error in form.errors %}
+                <li>{{error}}</li>
+            {% endfor %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{error}}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}</td>
+        </tr>
+        
+        {% for field in form %}
+            <tr>
+                <td valign="top" width="100">
+                    <strong>{{field.label}}{% if field.field.required %}</strong><span class="required">*</span>{% endif %}
+                </td>
+                <td> 
+                    {{field}}
+                    {%ifequal field.label "Next Status" %}
+                        <label id="assign"></label>
+                    {%endifequal%}
+                </td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td></td>
+                <td><button type="submit">Update Status</button></td>
+            </tr>
+        </table>
+    </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+    $('#id_expected_by').datepicker({constrainInput:false, minDate:'0d'})
+    $('#id_status').change(function(){
+            if($('#id_status').val()){
+                var data = 'next_status=' + $('#id_status').val();
+                var action = '/orderitems/get_team_from_next_status/';
+                var onSuccess = function(response) {
+                    $('#assign').html("Assigned to : "+response+" Team");
+                };
+                var onError = function() {
+                    };
+                $.ajax({ url:action,
+                    data : data,
+                    success : onSuccess,
+                    error : onError,
+                    type : 'POST'
+                });
+                return false;
+            }
+            else{
+                $('#assign').html("Please Select Status");
+            }            
+    });
+</script>
+{% endblock %}

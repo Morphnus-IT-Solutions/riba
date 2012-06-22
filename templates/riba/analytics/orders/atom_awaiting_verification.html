@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="breadcrumb"><a href="/" title="Home">Home</a>&nbsp;&raquo;&nbsp;Awaiting Verification Dashboard</div>
+{% if order_items.object_list %}
+<div class="content_head">
+  <div class="header rc5">
+    <h3 class="left">Awaiting Verification Dashboard ({{paginator.count}})</h3>
+    <div class="download_excel"> <a href="?mode=xls">Download as excel</a> </div>
+    <div class="clear"></div>
+  </div>
+ <!-- <div class="bgcolor1 bottomrc5">
+    <div class="right"> {% paginate request paginator %}</div>
+    <div class="clear"></div>
+  </div>-->
+</div>
+<table class="tbl_order">
+  <tr>
+    <th></th>
+    <th><a href="{% sort_href request "order__atg_submitted_date" %}" class="{% sort_class request "order__atg_submitted_date" %}">Submitted Date</a></th>
+    <th>SAP Date</th>
+    <th><a href="{% sort_href request "order__order_id" %}" class="{% sort_class request "order__order_id" %}">Order ID</a></th>
+    <th><a href="{% sort_href request "article_id" %}" class="{% sort_class request "article_id" %}">Article ID</a></th>
+    <th>Product</th>
+    <th>Line Total</th>
+    <th>Order Total</th>
+    <th>City/Pin</th>
+    <th>Qty</th>
+    <th><a href="{% sort_href request "mc_code__mc_discription" %}" class="{% sort_class request "mc_code__mc_discription" %}">LOB</a></th>
+    <th>Status</th>
+  </tr>
+  {% for order_item in order_items.object_list %}
+  <tr class="{% cycle "row1" "row2"%}">
+    <td class="chk"><input type="checkbox"/></td>
+    <td class="date">{{order_item.order.atg_submitted_date}}</td>
+    <td class="date">{{order_item.order.sap_created_date}}</td>
+    <td class="id">{{order_item.order.order_id}}</td>
+    <td class="id">{{order_item.article_id}}</td>
+    <td class="prod"><a href="/orderitems/{{order_item.commerce_item_id}}/">{{order_item.product_name}}</a></td>
+    <td class="total">{{order_item.get_line_item_price}}</td>
+    <td class="total">{{order_item.order.total}}</td>
+    <td class="city">{{order_item.order.get_city_and_pincode}}</td>
+    <td class="qty">{{order_item.quantity}}</td>
+    <td class="lob">{{order_item.mc_code.mc_discription}}</td>
+    <td class="status">{{order_item.get_current_status}}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br />
+<br />
+<div class="bgcolor1 rc5"> {% paginate request paginator %} </div>
+</div>
+</div>
+{% else %}
+<div class="orders_msg rc5">
+  <div class="rc5">
+    <h3>Nice!</h3>
+    <p>There are no orders in this bucket.</p>
+  </div>
+</div>
+{% endif %}
+{% endblock %} 

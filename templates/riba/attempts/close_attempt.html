@@ -1,0 +1,52 @@
+<table width="99%" cellspacing="0" align="center">
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <td>Call Status</td>
+        <td>
+            <select name="call_status">
+                <option value="">----</option>
+                <option value="answered">Answered</option>
+                <option value="busy">Busy</option>
+                <option value="no_reply">Ringing</option>
+                <option value="congestion">Unreachable</option>
+            </select>
+        </td>
+        <tr>
+            <td>Response Status</td>
+            <td>
+                <select name="response_status">
+                    {% for response_status in response_statuses %}
+                    <option value="{{response_status.id}}">{{response_status.name}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Next Call After</td>
+            <td>
+                <input name="next_call" id="next_call"/><br/>
+                <select name="next_call_hr">
+                    <option value="">--</option>
+                    {% for hr in hours %}
+                    <option value="{{hr}}">{{hr}}</option>
+                    {% endfor %}
+                </select>
+                <select name="next_call_am_pm">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">Notes</td>
+            <td><textarea name="notes" rows="4" cols="40"></textarea></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" name="attempt_id" value="{{attempt_id}}">
+                <input type="hidden" name="response_id" value="{{response_id}}">
+            </td>
+            <td><input type="submit" name="close_attempt" value="Submit"></td>
+</table>

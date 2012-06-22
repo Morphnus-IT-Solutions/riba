@@ -1,0 +1,139 @@
+{% load web_tags%}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Order-Confirmation</title>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif; size:12px;">
+    <table cellpadding="0" cellspacing="14px" border="0" >
+        <tr>
+            <td>Dear {{customer_name}},</td>
+        </tr>
+        <tr>
+            <td>
+                {%ifequal payment_option.payment_mode.code 'cod'%}
+                Thank you for your order. The following items will be shipped. Please pay cash on delivery.{%else%}Thank you for your
+                order. Received {{order_payable_total|safe}} on {{order_payment_date|date:"d M, Y"}}. The following items will be shipped:{%endifequal%}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellpadding="2" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color:#dddddd">S.No</td>
+                        <td style="background-color:#dddddd">Item</td>
+                        <td style="background-color:#dddddd">Price</td>
+                        <td style="background-color:#dddddd">Qty</td>
+                        <td style="background-color:#dddddd">Delivery</td>
+                        <td style="background-color:#dddddd; text-align:right;">Amount</td>
+                    </tr>
+                    {% for item in buyer_items %}
+                    <tr>
+                        <td valign="top">{{forloop.counter}}</td>
+                        <td valign="top">
+                            {{item.title}} [{{item.sku}}]
+                            {%if item.gift %}
+                             + {{item.gift}}
+                            {%endif%}
+                        </td>
+                        <td valign="top">{{item.offer_price|safe}}</td>
+                        <td valign="top">{{item.qty}}</td>
+                        <td valign="top">
+                             {%if client.id == 1 %}
+                                shipped by {{item.seller}}{%if item.shipping_duration%} in {{item.shipping_duration}}{%endif%}
+                             {%endif%}
+                             {%if client.id == 5 %}
+                                {%if item.delivery_days > 0%}
+                                    Before {{item.delivery_date|date:"d M, Y"}}
+                                {%endif%}
+                             {%else%}
+                                {%if item.shipping_duration %}
+                                    {% if client.id == 12 %}
+                                        {{item.shipping_duration}} business days.
+                                    {%endif%}
+                                    {%if client.id == 6 or client.id == 11%}
+                                        {{item.shipping_duration|safe}} working days.
+                                    {%else%}
+                                        {{item.shipping_duration}}
+                                    {% endif %}
+                                {%endif%}
+                             {%endif%}
+                        </td>
+                        <td valign="top" style="text-align:right;">
+                            {{item.total_item_offer_price|safe}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="6"><hr/></td>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td>
+                            {% if order_offer_price_total != order_payable_total %}Sub-total<br/>{% endif %}
+                            {%if special_discount %}Discount (-)<br/>{%endif%}
+                            {%if cashback %}Cashback (-)<br/>{%endif%}
+                            {%if order_shipping_charges %}Shipping Charges<br/>{%endif%}
+                            Total
+                        </td>
+                        <td style="text-align:right;">
+                            {% if order_offer_price_total != order_payable_total %}{{order_offer_price_total|safe}}<br/>{% endif %}
+                            {%if special_discount %}{{special_discount|safe}}<br/>{%endif%}
+                            {%if cashback %}{{cashback|safe}}<br/>{%endif%}
+                            {%if order_shipping_charges %}{{order_shipping_charges|safe}}<br/>{%endif%}
+                            {{order_payable_total|safe}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6"><hr/></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>DELIVERY ADDRESS:<br/>
+            {{delivery_name}}<br/>
+            {{delivery_address}}<br/>
+            {{delivery_city}} - {{delivery_pincode}}<br/>
+            {%if delivery_state%}{{delivery_state}}{%endif%}{%if delivery_country%}{%if delivery_state%}, {%else%}{%endif%}{{delivery_country}}<br/>{%endif%}
+            Phone: {{delivery_phone}}
+            </td>
+        </tr>
+        {%if delivery_notes%}
+        <tr>
+            <td>
+                DELIVERY NOTES:<br/>
+                {{delivery_notes}}
+            </td>
+        </tr>
+        {%endif%}
+        {%if delivery_giftmessage%}
+        <tr>
+            <td>GIFT NOTES:<br/>
+                {{delivery_giftmessage}}{%endif%}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br/>
+                Once your package ships, we will email you the link to track your order. If you have any questions about your order, please write to us at order@{{client_domain}} or call us at {{helpline}} 8am-10pm 365 days. 
+                You can find your order details in <a href="http://www.{{client_domain}}/user/orders/">My Account</a>.
+            </td>
+        </tr>
+        {%if client.terms_and_conditions%}
+        <tr>
+            <td><br/>{{client.terms_and_conditions|safe}}</td>
+        </tr>
+        {%endif%}
+        <tr>
+            <td><br/>{{signature|linebreaks}}</td>
+        </tr>
+		{%if client.id == 5%}
+		<tr>
+			<td><a href="http://futurebazaar.go2cloud.org/aff_c?offer_id=1&aff_id=1106&url=http://www.futurebazaar.com/supermarket/ch/2515/"><img src="http://www.futurebazaar.com/media/images/thank-u-mailer.jpg" /></a></td>
+		</tr>
+		{%endif%}
+    </table>
+</body>
+</html>

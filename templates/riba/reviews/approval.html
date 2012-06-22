@@ -1,0 +1,42 @@
+{% extends 'ppd/user_home.html' %}
+{% load web_tags%}
+{% load ppd_tags %}
+{% block user_content %}
+
+<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />
+<div class="inner-content">
+    <form method="POST" action="" id="seller_profile_form" name="seller_profile_form">
+    <div class="ca">
+        {% daterange "Product Reviews" search_trend from_date to_date request "" client_display_name %}
+    </div>
+    <div class="search_sku ra">
+        <span class="f11 fgray">sku id</span>
+        <input type="text" id="sku" name="sku"/>
+        <button type="button" id="sku_submit" class="grayButton mart6" width="20px">Search</button>
+    </div>
+    <div class="product_link clear">
+        <ul>
+            <li><a {% if status  == "new" or status == "pending" %} class="selected-review" {% endif %} href="/reviews/{{client_name}}/{{seller_name}}/?from={{from_date|date:"d M Y"}}&to={{to_date|date:"d M Y"}}"> New </a></li>
+            <li><a {% ifequal status "approved" %} class="selected-review" {% endifequal %}href="/reviews/{{client_name}}/{{seller_name}}/?status=approved&page=1&from={{from_date|date:"d M Y"}}&to={{to_date|date:"d M Y"}}"> Approved </a></li>
+            <li><a {% ifequal status "removed" %} class="selected-review" {% endifequal %} href="/reviews/{{client_name}}/{{seller_name}}/?status=removed&page=1&from={{from_date|date:"d M Y"}}&to={{to_date|date:"d M Y"}}"> Rejected </a></li>
+        </ul>
+        {%if total_reviews%}
+            {%include "reviews/approve_or_disapprove.html"%} 
+        {%else%}
+            <h1>No pending reviews</h1>
+        {%endif%}
+    </div>
+    </form>
+</div>
+
+<div class="clear"></div>
+<script type="text/javascript">
+
+    $('#sku_submit').click(function(){
+        url_path = '{{url|safe}}';
+        var sku = document.getElementById('sku').value;
+        url_path += "&sku=" + sku + "&";
+        location.href = url_path;
+    });
+</script>
+{% endblock %} 

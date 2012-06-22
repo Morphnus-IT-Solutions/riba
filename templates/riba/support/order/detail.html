@@ -1,0 +1,837 @@
+{% extends 'support/base.html' %}
+{% block content %}
+{% load web_tags %}
+{% load cc_tags %}
+{% load support_tags %}
+<div class="padding_top10">
+  <div class="breadcrumb">
+  	<a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href='{% cc_url request "order/" %}'>Orders</a>&nbsp;&raquo;&nbsp; {{order.reference_order_id|default:order.id}}
+  </div>
+  
+  <!-- content header -->
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Order: {{order.reference_order_id|default:order.id}}</h1>
+    </div>
+    <div class="right content_head">
+      <div class='left status rc3'>{{order.support_state|title}}</div>
+      {%if order.state == 'processing xml'%}
+      <div class='left wait-status rc3'>Awaiting SAP Response</div>
+      {%endif%}
+      {%if order.state == 'failed'%}
+      <div class='left alert-status rc3'>SAP Processing Failure</div>
+      {%endif%}
+      {%if not lock_order%}
+      {%if modify_allowed%}
+	  <a href="modify" role="button" class="left btn_c btn_c_s marr10 fb" style="color:#333; text-decoration:none; padding: 2px 5px;"><span class="uiButtonText">Modify</span></a>
+	  {% endif %}
+      {%if cancel_allowed%}
+      <a id='order_cancel' href="cancel" role="button" class="left btn_c btn_c_s fb" style="color:#333; text-decoration:none; padding: 2px 5px;"><span class="uiButtonText">Cancel</span></a>
+	  {% endif %}
+      {%endif%}
+	</div>
+    <div class="clear bordergray"></div>
+  </div><!-- /content header -->
+  
+  <!-- error message -->
+  {% if messages %}
+  <div class='mart10 error'>
+    <ul>
+      {% for msg in messages %}
+      <li>{{msg}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}<!-- /error message -->
+  
+  <div>
+  	
+  	<div class="order_left_cont">
+	  <!-- details part -->
+	  <div class="bglgray divider-bottom">
+		<div class="address">
+			<span class="padt2"><img alt="Support" src="/media/rms/images/order-detail.png"></span>
+			<span class="fb marl5">Order Details</span>
+		</div>
+		<div class="padding10 f11 padt0">
+		  <div>
+            {{c_name|title}}
+		    {%if c_email%}<br />{{c_email}}{%endif%}
+		    {%if c_phone%}<br />{{c_phone}}{%endif%}
+          </div>
+		  <div class="mart5">
+		  	<div class="w85 flgray left clear-left">Booked on</div>
+			<div class="w125 left">{{order.timestamp|date:'f A, d M Y'}}</div>
+            <div class='clear'></div>
+		  </div>
+		  {% if order.agent %}
+		  <div>
+		  	<div class="w85 flgray left clear-left">Booked by</div>
+			<div class="w125 left">{{order.agent.full_name|title}}</div>
+            <div class='clear'></div>
+		  </div>
+		  {% endif %}
+		  <div>
+		  	<div class="w85 flgray left clear-left">Medium</div>
+		  	<div class="w125 left">{{order.client_domain|default:order.medium}}</div>
+            <div class='clear'></div>
+		  </div>
+		  {% ifequal order.support_state 'confirmed' %}
+		  <div>
+		  	<div class="w85 flgray left clear-left">Confirmed on</div>
+		  	<div class="w125 left">{{order.confirming_timestamp|date:'f A, d M Y'}}</div>
+            <div class='clear'></div>
+		  </div>
+		  <div>
+		  	<div class="w85 flgray left clear-left">Confirmed by</div>
+		  	<div class="w125 left">{% if order.confirming_agent %}{{order.confirming_agent.full_name|title}} (Agent){% else %}User{%endif%}</div>
+            <div class='clear'></div>
+		  </div>
+		  {% endifequal %}
+		</div>
+		<div class="clear"></div>
+	  </div><!-- details part -->
+	  
+	  <!-- shipping address part -->
+	  {% if shipping_info %}
+	  <div class="bglgray divider-top divider-bottom">
+		<div class="address">
+			<img alt="Support" src="/media/rms/images/shipping.gif">
+			<span class="fb marl5">Shipping Address</span>
+		</div>
+		<div class="padding10 f11 padt5">
+		  <div class='fb'>{{shipping_info.address.first_name|title}} {{shipping_info.address.last_name|title}}</div>
+		  <div>{{shipping_info.address.address}}</div>
+		  <div>{{shipping_info.address.city.name|title}} - {{shipping_info.address.pincode}}, {{shipping_info.address.state.name|title}}</div>
+		  <div>Ph: {{shipping_info.address.phone}}</div>
+		  <div>{{shipping_info.address.email}}</div>
+		</div>
+	  </div>
+	  {% endif %}
+	  {% if billing_info %}
+	  <div class="bglgray divider-top">
+		<div class="address">
+			<img alt="Support" src="/media/rms/images/billing-address-icon.png">
+            <span class="fb marl5">Billing Address</span>
+        </div>
+		<div class="padding10 f11 padt5">
+		  <div class='fb'>{{billing_info.address.first_name|title}} {{billing_info.address.last_name|title}}</div>
+		  <div>{{billing_info.address.address}}</div>
+		  <div>{{billing_info.address.city.name|title}}, {{billing_info.address.state.name|title}} - {{billing_info.address.pincode}}</div>
+		  <div>Ph: {{billing_info.address.phone}}</div>
+		  <div>{{billing_info.address.email}}</div>
+		</div>
+	  </div>
+  {% endif %}
+  </div><!-- shipping address part -->
+  
+  <div> 
+  	<!-- order cart part -->
+  	{% if order_items %}
+	  <div class="order_detail_cont">
+		<div class="w700">
+		  <div class='clear list_header fb txtalgnc'>
+			{%comment%}
+            <div class='w50 left'>&nbsp;</div>
+            {%endcomment%}
+			<div class='w410 left'>Item</div>
+			<div class='w95 left'>Delivery Date</div>
+			<div class='w65 left'>Price</div>
+			<div class='w55 left'>Qty</div>
+			<div class='w65 left ra padr5'>Amount</div>
+			<div class='clear'></div>
+		  </div>
+		  {% for orderitem in order_items %}
+		  <div class='list_item f11 border{%if not forloop.last%}-dotted-{%endif%}gray' {%if orderitem.state == 'cancelled'%}style='color:#888;'{%endif%}
+		        {%if orderitem.state == 'bundle'%}style='background:#eee;'{%endif%}>
+		    {%comment%}
+            <div class='w50 left txtalgnc'>
+		      <span {%if orderitem.state == 'cancelled' %}class='strike'{%endif%}>{{forloop.counter}}</span>
+              <!--<div id="imageDivLink" class="addImage cursorp">&nbsp;</div>-->
+		    </div>
+            {%endcomment%}
+            <div class='item_img left marr10 w50'>
+		      <img src="{{orderitem.seller_rate_chart.product.get_default_img}}" width="48px" height="48px" style='border:1px solid #ccc'/>
+            </div>
+		    <div class='w350 left'>
+              <span {%if orderitem.state == 'cancelled' %}class='strike'{%endif%}>{{orderitem.item_title}}<br />
+		            {%if orderitem.seller_rate_chart.sku%}{{orderitem.seller_rate_chart.sku}} &middot; {%endif%}{{orderitem.seller_rate_chart.article_id}}
+              </span>
+		    </div>
+		    <div class='w95 left txtalgnc'>
+		      <span {%if orderitem.state == 'cancelled' %}class='strike'{%endif%}>{{orderitem.expected_delivery_date|date:'d M Y'|default:'--'}}</span>
+		    </div>
+		    <div class='w65 left txtalgnc'>
+		      <span class="WebRupee">Rs. </span>{{orderitem.get_unit_price|floatformat:0}}{% if orderitem.list_price != orderitem.sale_price %}<br />
+              <span class="flgray"><span class="WebRupee">Rs. </span><strike>{{orderitem.get_unit_list_price|floatformat:0}}</strike></span>{%endif%}
+		    </div>
+		    <div class='w55 left txtalgnc'>
+		      <span {%if orderitem.state == 'cancelled' %}class='strike'{%endif%}>{{orderitem.qty}}</span>
+		    </div>
+		    <div class='w65 left ra padr5'>
+		      <span {%if orderitem.state == 'cancelled' %}class='strike'{%endif%}><span class="WebRupee">Rs. </span>{{orderitem.sale_price|floatformat:0}}</span>
+		    </div>
+            {%if orderitem.sap_order_item%}
+            <div class='item_info left w410'>
+                <span class='fb'>{{orderitem.sap_order_item.status|title}}</span>
+                {%if orderitem.expected_stock_arrival and orderitem.sap_order_item.status != 'delivery created' and orderitem.sap_order_item.status != 'awaiting delivery creation'%}
+                {%if orderitem.sap_order_item.status != 'stock expected'%}Stock Expected{%endif%}
+                &nbsp;on {%firstof orderitem.sap_order_item.revised_stock_arrival|date:'d M Y' orderitem.expected_stock_arrival|date:'d M Y'%}
+                {%endif%}
+            </div>
+            {%endif%}
+		    <div class='clear'></div>
+		  </div>
+	  {% endfor %}
+		  <div>
+			<div class='w220 right marr5'>
+			  <div class='mart5 ra'>
+				<div class='left w110'>Sub Total</div>
+				<div class='left w110'><span class="WebRupee"> Rs. </span>{{order.total|floatformat:0}}</div>
+				<div class='clear'></div>
+			  </div>
+			  {% if order.taxes %}
+			  <div class='mart5 ra'>
+				<div class='left w110'>Tax</div>
+				<div class='left w110'><span class="WebRupee"> Rs. </span>{{order.taxes|floatformat:0}}</div>
+				<div class='clear'></div>
+			  </div>
+			  {% endif %}
+			  {% if order.shipping_charges %}
+			  <div class='mart5 ra'>
+				<div class='left w110'>Shipping</div>
+				<div class='left w110'><span class="WebRupee"> Rs. </span>{{order.shipping_charges|floatformat:0}}</div>
+				<div class='clear'></div>
+			  </div>
+			  {% endif %}
+			  {% if order.coupon %}
+			  <div class='mart5 ra'>
+				<div class='left w110'>[-] Discount</div>
+				<div class='left w110'><span class="WebRupee"> Rs. </span>{{order.coupon_discount|floatformat:0}}</div>
+				<div class='clear'></div>
+			  </div>
+			  {% endif %}
+			  {% if order.cashback_amount_total %}
+			  <div class='mart5 ra'>
+				<div class='left w110'>[-] Cashback</div>
+				<div class='left w110'><span class="WebRupee"> Rs. </span>{{order.cashback_amount_total|floatformat:0}}</div>
+				<div class='clear'></div>
+			  </div>
+			  {% endif %}
+			  <div class='mart5 ra fb f12'>
+				<div class='left w110'>Total</div>
+				<div class='left w110'><span class="WebRupee"> Rs. </span>{{order.payable_amount|floatformat:0}}</div>
+				<div class='clear'></div>
+			  </div>
+			</div>
+			{%if order.coupon%}
+			<div class='coupon left mart10 f11 marr10'>
+			  <p><span class='fb fdgray'>Coupon ({{order.coupon.code}})</span><br />
+				{%if order.coupon.promo_name%}{{order.coupon.promo_name}}<br />
+				{%endif%}
+				{%if order.coupon.discount_type == 'fixed'%}<span class="WebRupee"> Rs. </span>{%endif%}
+				{{order.coupon.discount_value|floatformat:0}}
+				{%if order.coupon.discount_type == 'percentage'%}% {%endif%}
+				on {{order.coupon.get_discount_on}}<br />
+				{%if order.coupon.expires_on%}till {{order.coupon.expires_on|date:'d M Y'}}{%endif%}</p>
+			</div>
+			{%endif%}
+			{%if order.payback_id%}
+			<div class='left f11 payback mart10'>
+			  <div class='fb fdgray'>PAYBACK</div>
+			  <div>{{order.payback_id}}</div>
+			  <div>{{order.display_payback_points}} points earned</div>
+			</div>
+			{%endif%}
+			<div class='clear'></div>
+		  </div>
+		</div>
+	{% endif %}<!-- /order cart part -->
+	
+	<!-- payment part -->
+    <div class="clear w700 mart20 f11">
+      {%if order.support_state == 'booked'%}
+      <a id='change_payment' href='{% cc_url request "order/" %}{{order.id}}/change_payment/' class='right'>+ Add Payment</a>
+      {%endif%}
+	  {% if payments %}
+      <div class='payment_detail'>
+        <div class='bb marb5'>
+          <p class='f15 fb fdgray'>Payments</p>
+        </div>
+        {% for payment in payments %}
+        <div class='list_item pad0 border-dotted-gray'>
+          <div class='left'>
+            <div class='w255 left padding5 marr5 padl0'>
+              <div class='w110 flgray left clear-left'>Mode</div>
+              <div class='w145 left'>{{payment.printable_payment_mode}}</div>
+              <div class='w110 flgray left clear-left'>Amount</div>
+              <div class='w145 left'><span class="WebRupee"> Rs. </span>{{payment.amount|floatformat:0}}</div>
+              <div class='w110 flgray left clear-left'>Initiated on</div>
+              <div class='w145 left'>{{payment.created_on|date:'f A, d M Y'}}</div>
+              {%if payment.payment_realized_on%}
+              <div class='w110 flgray left clear-left'>Payment on</div>
+              <div class='w145 left'>
+              {%if payment.payment_realized_on.hour == 0 and payment.payment_realized_on.minute == 0%}
+              {{payment.payment_realized_on|date:'d M Y'}}
+              {%else%}
+              {{payment.payment_realized_on|date:'f A, d M Y'}}
+              {%endif%}
+              </div>
+              {%endif%}
+            </div>
+            <div class='w255 padding5 left padl0'>
+              {%if payment.gateway and not payment.payment_mode == 'cod'%}
+              <div class='w110 flgray left clear-left'>Gateway</div>
+              <div class='w145 left'>
+              {%if payment.payment_mode == 'atom' or payment.payment_mode == 'paymate'%}
+              {{payment.printable_payment_bank}}
+              {%else%}
+              {{payment.printable_payment_gateway}}
+              {%endif%}
+              </div>
+              {%endif%}
+              {%if payment.payment_mode == 'payback'%}
+              <div class='w110 flgray left clear-left'>Burn Points</div>
+              <div class='w145 left'>{{payment.get_burn_points}}</div>
+              {%endif%}
+              {%if payment.pg_transaction_id%}
+              <div class='w110 flgray left clear-left'>Transaction ID</div>
+              <div class='w145 left'>{{payment.pg_transaction_id}}</div>
+              {%endif%}
+              {%if payment.payment_mode == 'cheque' and payment.instrument_no%}
+              <div class='w110 flgray left clear-left'>Cheque Number</div>
+              <div class='w145 left'>{{payment.instrument_no}}</div>
+              <div class='w110 flgray left clear-left'>Received on</div>
+              <div class='w145 left'>{{payment.instrument_recv_date|date:'d M Y'}}</div>
+              <div class='w110 flgray left clear-left'>Bank</div>
+              <div class='w145 left'>{{payment.instrument_issue_bank}}</div>
+              {%endif%}
+              {%if payment.notes%}
+              <div class='w110 flgray left clear-left'>Notes</div>
+              <div class='w145 left'>{{payment.notes}}</div>
+              {%endif%}
+            </div>
+          </div>
+          <div class='left w170 txtalgnc'>
+            <div class='fb mart5 marr0'>{{payment.status|title|default:'--'}}</div>
+            {%if not lock_order%}
+            <div class='action_input marb5'>
+              <form id='paymentform_{{payment.id}}' method='get'>
+                {%choicefield 'payment' payment payment_flows 'action_id'%}
+              </form>
+            </div>
+            {%endif%}
+          </div>
+          <div class='clear'></div>
+        </div>
+        {% endfor %}
+	  </div>
+	  {% endif %}
+    </div><!-- /payment part -->
+    
+	<!-- /shipment part -->
+	{% if shipments %}
+	<div class='clear w700 mart20 f11'>
+	  <div class='bb'>
+		<p class='f15 fb fdgray'>Shipments</p>
+	  </div>
+	  {% for shipment in shipments %}
+	  <div class='list_item border-dotted-gray'>
+		<div class='left'>
+		  <div class='w255 left padding5 marr10 padl0'>
+		    {% if shipment.tracking_number%}
+			<div class='w110 flgray left clear-left'>AWB Number</div>
+			<div class='w145 left'>{{shipment.tracking_number}}</div>
+			{%else%}
+			<div class='w110 flgray left clear-left'>Delivery Number</div>
+			<div class='w145 left'>{{shipment.delivery_number}}</div>
+			<div class='w110 flgray left clear-left'>Delivery Created on</div>
+			<div class='w145 left'>{{shipment.created_on|date:'d M Y'}}</div>
+			{%endif%}
+			{%if shipment.lsp%}
+			<div class='w110 flgray left clear-left'>Courier</div>
+			<div class='w145 left'>{{shipment.lsp.name}}</div>
+			{%endif%}
+			{%if shipment.pickedup_on%}
+			<div class='w110 flgray left clear-left'>Shipped on</div>
+			<div class='w145 left'>{{shipment.pickedup_on|date:'d M Y'}}</div>
+			{%endif%}
+			{%if shipment.expected_delivery_date%}
+			<div class='w110 flgray left clear-left'>Exp. Delivery Date</div>
+			<div class='w145 left'>{{shipment.expected_delivery_date|date:'d M Y'}}</div>
+			{%endif%}
+			{%if shipment.delivered_on%}
+			<div class='w110 flgray left clear-left'>Delivered on</div>
+			<div class='w145 left'>{{shipment.delivered_on|date:'d M Y'}}</div>
+			{%endif%}
+		  </div>
+		  <div class='w255 padding5 left padl0'>
+		    {%if shipment.tracking_number%}
+			<div class='w110 flgray left clear-left'>Delivery Number</div>
+			<div class='w145 left'>{{shipment.delivery_number}}</div>
+			<div class='w110 flgray left clear-left'>Delivery Created On</div>
+			<div class='w145 left'>{{shipment.created_on|date:'d M Y'}}</div>
+			{%endif%}
+			{%if shipment.invoice_number%}
+			<div class='w110 flgray left clear-left'>Invoice Number</div>
+			<div class='w145 left'>{{shipment.invoice_number}}</div>
+			<div class='w110 flgray left clear-left'>Invoice Date</div>
+			<div class='w145 left'>{{shipment.invoiced_on|date:'d M Y'}}</div>
+			{%endif%}
+			<div class='w110 flgray left clear-left'>DC</div>
+			<div class='w145 left'>{{shipment.dc.name}} ({{shipment.dc.code}})</div>
+		  </div>
+		  {%for key, s_items in shipment_items_dict.iteritems%}
+			{%if key == shipment.id and s_items%}
+			<div class='clear'>
+			<p class='fb'>Shipment Items</p>
+			<ol class='marl15'>
+				{%for item in s_items%}
+				<li>{{item.order_item.item_title}} [{{item.order_item.qty}}]</li>
+				{%endfor%}
+			</ol>
+			</div>
+			{%endif%}
+		  {%endfor%}
+		</div>
+		<div class='left w170 txtalgnc'>
+		  <div class='fb mart5'>{{shipment.status|title|default:'--'}}</div>
+		  {%if not lock_order%}
+          <div class='action_input marb5'>
+			<form id='shipmentform_{{shipment.id}}' method='get'>
+			  {%choicefield 'shipment' shipment shipment_flows 'action_id'%}
+			</form>
+		  </div>
+          {%endif%}
+		</div>
+		<div class='clear'></div>
+	  </div>
+	  {% endfor %}
+	 </div>
+	{% endif %}<!-- /shipment part -->
+	
+	<!-- refunds part -->
+	{% if refunds %}
+    <div class='clear w700 mart20 f11'>
+        <div class='bb'>
+            <p class='f15 fb fdgray'>Refunds</p>
+        </div>
+        {% for refund in refunds %}
+        <div class='list_item border-dotted-gray'>
+            <div class='left'>
+                <div class='w255 left padding5 marr10 padl0'>
+                    <div class='w110 flgray left clear-left'>Refund Amount</div>
+                    <div class='w145 left'><span class="WebRupee"> Rs. </span>{{refund.amount|floatformat:0}}</div>
+                    <div class='w110 flgray left clear-left'>Created on</div>
+                    <div class='w145 left'>{{refund.created_on|date:'d M Y'}}</div>
+                    <div class='w110 flgray left clear-left'>Opened by</div>
+                    <div class='w145 left'>{{refund.opened_by.full_name|title}}</div>
+                </div>
+                <div class='w255 padding5 left padl0'>
+                    <div class='w110 flgray left clear-left'>Notes</div>
+                    <div class='w145 left'>{{refund.notes}}</div>
+                    {%if refund.status == 'closed'%}
+                    <div class='w110 flgray left clear-left'>Closed by</div>
+                    <div class='w145 left'>{{refund.closed_by.full_name|title}}</div>
+                    <div class='w110 flgray left clear-left'>Closed on</div>
+                    <div class='w145 left'>{{refund.modified_on|date:'d M Y'}}</div>
+                    {%endif%}
+                </div>
+                {%for key, r_items in refund_items_dict.iteritems%}
+                {%if key == refund.id and r_items%}
+                <div class='clear'>
+                <p class='fb'>Refund Items</p>
+                <ol class='marl15'>
+                    {%for item in r_items%}
+                    <li>{{item.order_item.item_title}} [{{item.qty}}]</li>
+                    {%endfor%}
+                </ol>
+                </div>
+                {%endif%}
+                {%endfor%}
+            </div>
+            <div class='left w170 txtalgnc'>
+                <div class='fb mart5'>{{refund.status|title|default:'--'}}</div>
+                {%if refund.status == 'open'%}
+                <div class='action_input marb5'>
+                    <form id='refundform_{{refund.id}}' method='get'>
+                        <select name='state'>
+                            <option value=''>----</option>
+                            <option value='failed'>Failed</option>
+                            <option value='closed'>Closed</option>
+                        </select>
+                        <input type='submit' class='apply_action uiButton' id='refund_{{refund.id}}' value='Apply' />
+                    </form>
+                </div>
+                {%endif%}
+            </div>
+            <div class='clear'></div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}<!-- /refunds part -->
+    
+  <!-- order_log -->
+    {%if order_log%}
+    <div class='clear w700 mart20 f11'>
+        <div class='bb'>
+            <p class='f15 fb fdgray'>Log</p>
+        </div>
+        {% for o_log, log_items in order_log %}
+        <div class='list_item border-dotted-gray'>
+            <div class="left w120">	
+				<div>{%if o_log.profile%}{{o_log.profile.full_name|title|default:o_log.profile.user.username}}{%else%}System{%endif%}</div>
+				<div class="flgray f11">{{o_log.timestamp|date:'f A'}}</div>
+				<div class="flgray f11">{{o_log.timestamp|date:'d M Y'}}</div>
+            </div>
+			<div class="left marl5 w570">
+				<div>
+				{%if o_log.action == 'modify'%}Modification
+            	{%else%}{%if o_log.action == 'cancel'%}Cancellation
+                    	{%else%}{{o_log.action|title}} Update
+                    	{%endif%}
+            	{%endif%}
+				</div>
+                {%if log_items%}
+				<ul class="list-disc">
+                    {%for log_item in log_items%}
+						{%if log_item.get_class_name == 'OrderItemLog'%}
+							<li>
+							{%if log_item.action == 'modify'%}
+								"{{log_item.order_item.item_title}}" quantity modified from {{log_item.qty_old}} to {{log_item.qty_new}} ({{log_item.notes}})
+							{%endif%}
+							{%if log_item.action == 'cancel'%}
+								"{{log_item.order_item.item_title}}" cancelled ({{log_item.notes}})
+							{%endif%}
+							{%if log_item.action == 'status'%}
+								"{{log_item.order_item.item_title}}" state changed to {{log_item.status|title}}
+								{%if log_item.expected_stock_arrival%};&nbsp;Expected Stock Arrival: {{log_item.expected_stock_arrival|date:'d M Y'}}&nbsp;{%endif%}
+								{%if log_item.expected_delivery_date%};&nbsp;Expected Delivery Date: {{log_item.expected_delivery_date|date:'d M Y'}}{%endif%}
+							{%endif%}
+							</li>
+						{%endif%}
+						{%if log_item.get_class_name == 'PaymentLog'%}
+							<li>
+							{%if log_item.status == 'unpaid' or log_item.status == 'in verification'%}
+								Payment Attempt Added; Amount: {{log_item.amount|floatformat:0}} {%if log_item.notes%}({{log_item.notes}}){%endif%}
+							{%else%}
+								Payment state changed to {{log_item.status|title}}; Amount: {{log_item.amount|floatformat:0}}
+								{%if log_item.pg_transaction_id%};&nbsp;Transaction ID: {{log_item.pg_transaction_id}}{%endif%}
+								{%if log_item.instrument_no%};&nbsp;Cheque No: {{log_item.instrument_no}}{%endif%}
+								{%if log_item.instrument_issue_bank%};&nbsp;Bank: {{log_item.instrument_issue_bank}}{%endif%}
+								{%if log_item.instrument_recv_date%};&nbsp;Received On: {{log_item.instrument_recv_date|date:'d M Y'}}{%endif%}
+								{%if log_item.notes%}&nbsp;({{log_item.notes}}){%endif%}
+							{%endif%}
+							</li>
+						{%endif%}
+						{%if log_item.get_class_name == 'ShipmentLog'%}
+							<li>
+							{%if log_item.action == 'status'%}
+								{%if log_item.status == 'delivery created'%}
+									Shipment Created - Delivery Number: {{log_item.delivery_number}}; DC: {{log_item.dc.name}}
+								{%else%}
+									Shipment state changed to {{log_item.status|title}}; Delivery Number: {{log_item.delivery_number}}
+									{%if log_item.invoice_number%};&nbsp;Invoice Number: {{log_item.invoice_number}}{%endif%}
+									{%if log_item.tracking_number%};&nbsp;AWB Number: {{log_item.tracking_number}}{%endif%}
+									{%if log_item.lsp%};&nbsp;Courier: {{log_item.lsp.name|title}}{%endif%}
+								{%endif%}
+							{%else%}
+								Shipment Update - AWB Number: {{log_item.tracking_number}}; Courier: {{log_item.lsp.name|title}}
+                                {%if log_item.notes%}; {{log_item.notes}}{%endif%}
+							{%endif%}
+							</li>
+						{%endif%}
+						{%if log_item.get_class_name == 'RefundLog'%}
+							<li>
+							{%if log_item.status == 'open'%}
+								Refund Opened; Amount: {{log_item.amount|floatformat:0}} ({{log_item.notes}})
+							{%else%}
+								Refund Closed; Amount: {{log_item.amount|floatformat:0}} ({{log_item.notes}})
+							{%endif%}
+							</li>
+						{%endif%}
+					{%endfor%}
+				</ul>
+				{%endif%}
+				<div>
+				{%if o_log.coupon_old%}
+					<div class='w110 flgray left clear-left'>Coupon</div>
+					<div>{{o_log.coupon_old.code}}&rarr;{{o_log.coupon_new.code}}</div>
+				{%endif%}
+				{%if o_log.discount_old%}
+					<div class='w110 flgray left clear-left'>Coupon Discount</div>
+					<div>{{o_log.discount_old|floatformat:0}}&rarr;{{o_log.discount_new|floatformat:0}}</div>
+				{%endif%}
+				{%if o_log.auto_promotions_discount_old%}
+					<div class='w110 flgray left clear-left'>Auto Discount</div>
+					<div>{{o_log.auto_promotions_discount_old|floatformat:0}}&rarr;{{o_log.auto_promotions_discount_new|floatformat:0}}</div>
+				{%endif%}
+				{%if o_log.shipping_charges_old%}
+					<div class='w110 flgray left clear-left'>Shipping</div>
+					<div>{{o_log.shipping_charges_old|floatformat:0}}&rarr;{{o_log.shipping_charges_new|floatformat:0}}</div>
+				{%endif%}
+				{%if o_log.payable_amount%}
+					<div class='w110 flgray left clear-left'>Total</div>
+					<div>{{o_log.payable_amount|floatformat:0}}</div>
+				{%endif%}
+				{%if o_log.earn_points%}
+					<div class='w110 flgray left clear-left'>Earn Points</div>
+					<div>{{o_log.earn_points}}</div>
+				{%endif%}
+				{%if o_log.burn_points%}
+					<div class='w110 flgray left clear-left'>Burn Points</div>
+					<div>{{o_log.burn_points}}</div>
+				{%endif%}
+				{%if o_log.address_old%}
+					<div class='w110 flgray left clear-left'>Old Address</div>
+					<div>{{o_log.address_old}}</div>
+					<div class='w110 flgray left clear-left'>New Address</div>
+					<div>{{o_log.address_new}}</div>
+				{%endif%}
+				{%if o_log.payment_mode_old%}
+					<div class='w110 flgray left clear-left'>Payment Mode</div>
+					<div>{{o_log.payment_mode_old}}&rarr;{{o_log.payment_mode_new}}</div>
+				{%endif%}
+				{%if o_log.status%}
+					<div>Order state changed to {{o_log.status|title}}</div>
+					{%if o_log.status == 'cancelled'%}
+					<div class='w110 flgray left clear-left'>Reason</div>
+					<div>{{o_log.notes}}</div>
+					{%endif%}
+				{%endif%}
+				</div>
+			</div>
+			<div class='clear'></div>
+		</div>
+		{%endfor%}
+	</div>
+	{%endif%}
+	<!-- /order_log -->
+	
+    <!-- complaint part -->
+    <div class="w700">
+		<div class="complaint f11 bb marb5">
+			<div class="left f15 fb fdgray padl2">
+			  Complaints
+			</div>
+			<div class="right">
+				<a id='comp_add' href=""  class="left comp_click btn_c btn_c_s fb marr10" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Add Complaint</span></a>
+			</div>
+		</div>
+		{% if complaint_logs %}
+		<div class="clear w700 mart10">
+			<table class="tbl_complaint f11 w700">
+				<tr>
+					<th colspan="2" class="fn w50">Sr. No</th>
+					<th class="fn w100">Type</th>
+					<th class="fn w75">Created on</th>
+					<th class="fn w300">Products</th>
+					<th class="fn w50">Status</th>
+					<th class="fn w75">TAT</th>
+					<th class="fn w50"></th>
+				</tr>
+				{% for log in complaint_logs %}
+				
+				{%with complaint=log.0 updates=log.1%}
+				<tr name="{{complaint.id}}">
+					<td colspan="8" style="border:0px none; padding-bottom:20px;">
+						<table class="w700" style="border-collapse: collapse;">
+							<tr>
+								<td class="bg{{complaint.level}} w10 pad0"><input type="hidden" id="level_{{complaint.id}}" value="{{complaint.level}}" /></td>
+								<td class="ca w40">{{complaint.id}}</td>
+								<td class="ca w100"><input type="hidden" id="category_{{complaint.id}}" value="{{complaint.category}}" />{{complaint.get_category_display}}</td>
+								<td class="ca w75">{{complaint.created_on|date:'f A'}}<br />{{complaint.created_on|date:'d M Y'}}</td>
+								<td class="la word-wrap w325">
+								{% for prod in complaint.products.all %}
+									<ul class="list-disc padl15">
+										<li>{{prod}}</li>
+									</ul>
+								{% endfor %}
+								</td>
+								<td class="txtalgnc ca w50"><input type="hidden" id="status_{{complaint.id}}" value="{{complaint.status}}" />{{complaint.status|title}}</td>
+								<td class="ca w75">{{complaint.TAT|date:'f A'}}<br />{{complaint.TAT|date:'d M Y'}}</td>
+								<td class="txtalgnc ca w50"><a href="" class='comp_click' id={{complaint.id}}>{% ifequal complaint.status 'closed' %}Reopen{% else %}Update{% endifequal %}</a></td>
+							</tr>
+							<tr>
+								<td style="padding:0 0 0 51px; border:1px solid #fff; padding-bottom:30px;" colspan="8">
+									<div class="complaint-interaction">
+										<span style="margin:-8px 0px 0px 48px; position:absolute;"><img src="/media/rms/images/arrow_up_gray.png" width="12" height="7" alt="" /></span>
+										{% for update in updates %}
+										<div class="divider-top divider-bottom">
+											<div class="la pad10 padb0 fblack">{{update.notes}}</div>
+											<div class="ra pad10 padt0 flgray">
+												<span class="bg{{update.level}}">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&middot&nbsp;<span>{{update.added_by}}</span> &middot; <span>{{update.timestamp|date:'f A'}}</span> &middot; <span>{{update.timestamp|date:'d M Y'}}</span>
+											</div>
+										</div>
+										{% endfor %}
+																					
+									</div>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				{% endwith %}
+		
+				{% endfor %}
+			</table>
+		</div>
+		{% endif %}
+    </div><!-- complaint part -->
+  </div>
+  
+  <div class="clear"></div>
+</div>
+</div>
+{%if not lock_order%}
+<div id='cancel_alert' style='display:none;'>
+  <form method='post' action='/order/{{order.id}}/cancel/' id='cancellation_form'>
+    <div class='mart10 error' style='display:none;' id='cancellation_form_error'>Please give cancellation reason</div>
+    <div class='mart10'>
+      <p class='marb5'>Cancellation Reason:</p>
+      <select name='reason' style='width:225px;height:22px;'>
+        <option value=''>Select Reason</option>
+        {%for choice in cancellation_choices%}
+        <option value='{{choice}}'>{{choice}}</option>
+        {%endfor%}
+      </select>
+    </div>
+    <div class='mart10'>
+      <input type='submit' class="left uiButton marr25" value='Confirm Cancellation' style='width:140px;height:22px;color:#333;'>
+      <a href="#" class="uiButton" style="color:#333; text-decoration:none;" onClick="dialogClose('cancel_alert');"><span class="uiButtonText">Back</span></a> </div>
+  </form>
+  <script type='text/javascript'>
+        $('#cancellation_form').submit(function(){
+            var reason = $('#cancellation_form select[name="reason"]').val();
+            if(reason == null || reason == '') {
+                $('#cancellation_form_error').show();
+                return false;
+            }
+            return true;
+        });
+    </script>
+</div>
+{%endif%}
+<div id='apply_action' style='display:none;'></div>
+</div>
+
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+$('.apply_action').click(function() {
+    var id = $(this).attr('id');
+    var s = id.split('_');
+    var entity = s[0];
+    var pk = s[1];
+    var url = '/'+entity+'/'+pk+'/form';
+    var width = 250;
+
+    var value = $('#'+entity+'form'+'_'+pk+' select').val();
+    if (value == '' || value == null)
+        return false;
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+        if (xhr.status == 200)
+            setInterval('location.reload();', 2000);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+	};
+    var data = $('#'+entity+'form_'+pk).serialize();
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('#order_cancel').click(function() {
+    var width = 300;
+    var dialog = $('#cancel_alert').dialog({modal:true, title:'Order Cancellation', 
+        width:width, resizable:false});
+    $('#cancellation_form_error').hide();
+    return false;
+});
+
+var dialogClose = function(id) {
+    $('#'+id).dialog('close');
+    return false;
+}
+
+$('#change_payment').click(function() {
+    var url = $(this).attr('href');
+    var width = 250;
+    var onSuccess = function(data, textStatus, xhr) {
+        $('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:'Action', 
+            width:width, resizable:false});
+	};
+    $.ajax({ url: url,
+		data : '',
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+$('.comp_click').click(function() {
+    var order="{{order}}";
+    var complaint = $(this).attr('id');
+    var complaintPattern = /^\d+/;
+    if(!complaintPattern.test(complaint)){
+        complaint = ''
+        category = ''
+        status = 'open'
+        title = 'Create a new complaint ticket';
+        level = 'green'
+        var url = '/complaint/add_complaint/';
+    }
+    else{
+        category_id = "#category_" + complaint;
+        category = $(category_id).val();
+        status_id = "#status_" + complaint;
+        status = $(status_id).val();
+        level_id = "#level_" + complaint;
+        level = $(level_id).val();
+        title = 'Update Complaint';
+        var url = '/complaint/update_complaint/';
+    }
+    var width = 343;
+    var onSuccess = function(data, textStatus, xhr) {
+        $('#apply_action').html(data);
+        var dialog = $('#apply_action').dialog({modal:true, title:title, 
+            width:width, resizable:false});
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#apply_action').html(xhr.responseText);
+        var dialog = $('#apply_action').dialog({modal:true, title:title, 
+            width:width, resizable:false});
+	};
+    data = {'order_id': order, 'complaint_id': complaint, 'category': category, 'status': status, 'level': level};
+    $.ajax({ url: url,
+		data : data,
+		success : onSuccess,
+		error : onError,
+		type : 'GET'
+	});
+    
+    return false;
+});
+
+{% endblock %} 

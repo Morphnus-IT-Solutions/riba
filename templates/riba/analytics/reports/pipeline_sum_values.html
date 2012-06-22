@@ -1,0 +1,35 @@
+  {%load order_tags%}  
+  <tr class="{{rowcolors}}">
+    <td rowspan="3"><b><br/>
+      Total</b></td>
+    <td><b>Value</b></td>
+    {%for order_state in all_order_states%}
+    <td><b>{{sum|lookup:order_state|lookup:'value'}}</b></td>
+    {%endfor%}
+  </tr>
+
+  <tr class="{{rowcolors}}">
+    <td><b>Qty</b></td>
+    {%for order_state in all_order_states%}
+
+    <form method="post" action="/reports/pipeline_slices/">
+        <input type="hidden" name="order_state" value="{{order_state}}">
+        <input type="hidden" name="start_date" value="{{from_date|date:"d M, Y"}}">
+        <input type="hidden" name="end_date" value="{{to_date|date:"d M, Y"}}">
+        <input type="hidden" name="format_option" value="{{format_option}}">
+        <input type="hidden" name="date_type" value="{{form.date_type.value}}">
+        <input type="hidden" name="channel" value="{{form.channel.value}}">
+        <input type="hidden" name="report_format" value="web">
+        <td><b><input type="submit" class="submitButtonlinkBlue" value="{{sum|lookup:order_state|lookup:'count'}}"></b></td>
+    </form>
+
+
+    {%endfor%}
+  </tr>
+
+  <tr class="{{rowcolors}}">
+    <td><b>Orders</b></td>
+    {%for order_state in all_order_states%}
+    <td><b>{{sum|lookup:order_state|lookup:'orders'}}</b></td>
+    {%endfor%}
+  </tr>

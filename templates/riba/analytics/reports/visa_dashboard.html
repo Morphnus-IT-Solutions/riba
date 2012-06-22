@@ -1,0 +1,23 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<div class="content_head">
+  <div class="header rc5">   
+    <h3 class="left">Visa Dashboard</h3>    
+    <div class="clear"></div>
+  </div>
+  </div>
+ <div class="dashboard">
+<div class="dashboard_block rc5">
+<h3 class="toprc5">Visa Reports</h3>
+        <ul>          
+           <li><a href="/reports/visa_report/?aggregate=count">Sales (Order Count)</a></li>
+            <li><a href="/reports/visa_report/?aggregate=sum">Sales (Order Value)</a></li>
+
+        </ul>
+        </div>
+     
+   <div class="clear"></div>   
+</div>   
+<div class="clear"></div>
+{% endblock %}

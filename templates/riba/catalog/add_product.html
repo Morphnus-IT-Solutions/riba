@@ -1,0 +1,43 @@
+{% extends 'catalog/base.html' %}
+{% block extra_css %}
+<link rel="stylesheet" href="/adminmedia/css/forms.css" type="text/css" media"screen, projection">
+{% endblock %}
+{%block content%}
+<form method="post" action="/catalog/addproduct" enctype="multipart/form-data">
+<!--<table width="100%" cellspacing="0" cellpadding="0">
+    {{productForm}}
+<tr><td><h2>Product Features</h2></td></tr>
+    {{productFeatures}}
+<tr><td><button type="submit">Add</button></td></tr>
+</table>
+</form>
+<form action="javascript:void();" onsubmit="return false;">
+<input type="button" value="test" id="test" name="test" />-->
+<table>
+{{product.as_table}}
+<tr>
+    <td colspan=2><h2>Product Features</h2></td>
+</tr>
+{{features_formset.as_table}}
+<tr>
+    <td colspan=2><h2>Images</h2></td>
+</tr>
+{{image_formset.as_table}}
+<tr>
+    <td colspan=2><h2>Seller Info</h2></td>
+</tr>
+{{seller_formset.as_table}}
+<tr>
+    <td colspan=2><h2>Shipping Info</h2></td>
+</tr>
+{{shipping_formset.as_table}}
+<tr>
+    <td colspan=2><h2>Product Variants</h2></td>
+</tr>
+{{variant_formset.as_table}}
+<tr>
+<th></th>
+<td><input type="submit" name="submit" value="Submit"></td>
+</tr>
+</form>
+{%endblock%}

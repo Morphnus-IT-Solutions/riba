@@ -1,0 +1,123 @@
+/*my_account.css*/
+* {padding:0px; margin:0px;}
+.user_account{border:4px solid #EEE;padding:10px 10px 10px 10px;width:918px;margin-top:0px}
+.user_account_tabs{display:block;border:4px solid #eee;border-top:none;border-bottom:none;padding:10px; width:918px;background-color:#eee}
+.order_state{display:inline;border-left:1px solid #ccc;padding:1px 3px 1px 5px}
+/*.order_tab{display:inline;padding:4px 10px;margin-right:5px;font-weight:bold;font-size:12px;border-radius:15px;-moz-border-radius:15px;-moz-border-radius:15px;
+border:1px solid red;position:relative;}
+.order_tab:hover{background-color:#fff;color:#000 !important;text-decoration:none}
+.order_tab:hover a{color:#000 !important;text-decoration:none}
+.order_tab a{color:#000 !important}
+.order_tab a:hover{color:#000;text-decoration:none}
+.order_tab_sel{background-color:#ccc;color:#000 !important}
+.order_tab_sel:hover{background-color:#ccc;color:#000 !important;text-decoration:none}
+*/
+.order_tab{display:inline;padding:4px 10px;margin-right:5px;font-weight1:bold;font-size:12px;border:1px solid red;position:relative;}
+.order_tab:hover{background-color:#fff;color:#000 !important;text-decoration:none}
+.order_tab:hover a{color:#000 !important;text-decoration:none}
+.order_tab a{color:#000 !important}
+.order_tab a:hover{color:#000;text-decoration:none}
+.order_tab_sel{background-color:#ccc;color:#000 !important}
+.order_tab_sel:hover{background-color:#ccc;color:#000 !important;text-decoration:none}
+
+
+#menu_account .menu_account_sub{display:block; width:180px; list-style:none; border:1px solid red; position:absolute; left:0px; top:25px;padding:5px; z-index:100;}
+#menu_account .menu_account_sub li{float:left; width:180px; padding:0px;}
+#menu_account li.hovering ul.menu_account_sub{display:block}
+
+.orderTable th,.orderDetail th{background-color:#FCFCCB;padding:5px;text-align:left;vertical-align:top;border-bottom:1px dotted #999}
+.orderTable td{padding:5px;border-bottom:1px dotted #999}
+.orderTable{border-collapse:collapse}
+.orderTable td{}
+.orderTable th{}
+.order_no{border:2px solid #FFCE00;padding:8px;margin-bottom:10px;background-color:#FCFCCB}
+.order_left_cont{width:223px;float:right}
+.order_detail_cont{float:left;width:680px}
+.orderDetail{border-collapse:collapse;float:right}
+.orderDetail td{padding:5px;text-align:left;vertical-align:top;margin:0px;border-bottom:1px dotted #999}
+.orderDetail tr{}
+.orderDetail th{background-color:#FCFCCB}
+.order_address{border:1px solid #dcdcdc;padding:5px;text-align:left;border-top-left-radius:5px;-moz-border-radius-topleft:5px;border-top-right-radius:5px;-moz-border-radius-topright:5px}
+.order_amt{border:1px solid #dcdcdc;margin-top:5px;float:left}
+.order_amt td{padding:2px 5px;margin:0px;border-collapse:collapse}
+.gray_text{color:#666666}
+.order_shipping{border:1px solid #dcdcdc;width:325px;margin-top:5px;float:left}
+.order_shipping td{padding:2px 5px;margin:0px;border-collapse:collapse;text-align:left;vertical-align:top}
+.bbnone{border-bottom:none !important}
+
+.profile{ padding:10px; margin-bottom:15px; }
+.tbl_profile td{padding:10px 0px;}
+.tbl_profile input[type="text"], .tbl_profile input[type="password"], .tbl_profile input.text, .tbl_profile input.title, .tbl_profile textarea, .tbl_profile select {
+    margin:0; width:250px; padding:3px;
+}
+.tbl_profile select {
+    width:84px;
+}
+
+
+.tbl_profile .select_gender ul { margin:0px; padding:0px;}
+.tbl_profile .select_gender ul li{display:inline; list-style:none; padding-right:5px;} 
+.tbl_profile .select_gender ul li label{font-weight:normal;}
+
+/*.spn_left{width:120px;color:#333;display:inline-block;}
+.spn_left1{width:60px;color:#444;display:inline-block}*/
+
+.profile_tab{display:inline;padding:4px 10px;margin-right:5px;font-weight:bold;font-size:12px;border-radius:15px;-moz-border-radius:15px;-moz-border-radius:15px}
+.profile_tab:hover{background-color:#fff;color:#000 !important;text-decoration:none}
+.profile_tab:hover a{color:#000 !important;text-decoration:none}
+.profile_tab a{color:#000 !important}
+.profile_tab a:hover{color:#000;text-decoration:none}
+.profile_tab_sel{background-color:#ccc;color:#000 !important}
+.profile_tab_sel:hover{background-color:#ccc;color:#000 !important;text-decoration:none}
+
+
+.ship_address{color:#666; width:200px; height:130px; margin:0 10px 10px 0;  padding:10px; border: 1px solid #CCCCCC; float:left; }
+
+
+/*.profile{background-color:#FCFCCB;padding:5px;text-align:left;vertical-align:top}
+.spn_left{width:120px;color:#444;display:inline-block}
+.spn_left1{width:60px;color:#444;display:inline-block}
+.profile_tab{display:inline;padding:4px 10px;margin-right:5px;font-weight:bold;font-size:12px;border-radius:15px;-moz-border-radius:15px;-moz-border-radius:15px}
+.profile_tab:hover{background-color:#fff;color:#000 !important;text-decoration:none}
+.profile_tab:hover a{color:#000 !important;text-decoration:none}
+.profile_tab a{color:#000 !important}
+.profile_tab a:hover{color:#000;text-decoration:none}
+.profile_tab_sel{background-color:#ccc;color:#000 !important}
+.profile_tab_sel:hover{background-color:#ccc;color:#000 !important;text-decoration:none}*/
+
+/*shopping_info pop up*/.shipping_info{width:90px;display:inline-block}
+.mand{color:#FF0000}
+/* Mandatory field*/.margintb10{margin:10px 0px}
+.marginl10{margin-left:10px}
+.t{padding:7px;font-weight:bold;color:#0033FF}
+legend{color:#444;font-weight:bold}
+/* payouts*/table.tbl_payouts td{}
+table.tbl_payouts{width:300px}
+table.tbl_payouts td.grayborder{border-bottom:2px solid #ccc}
+table.tbl_payouts td.yellowborder{border-bottom:2px solid #fcce00}
+.td_value{text-align:right}
+.fb{font-weight:bold !important}
+.couponcode{border:1px solid #cccccc;margin-bottom:20px}
+.show_div{display:block}
+.hide_div{display:none}
+.show_tr{display:table-row}
+.hide_tr{display:none}
+/* payouts*/table.tbl_payouts td{}
+table.tbl_payouts{width:300px}
+table.tbl_payouts td.grayborder{border-bottom:2px solid #ccc}
+table.tbl_payouts td.yellowborder{border-bottom:2px solid #fcce00}
+.td_value{text-align:right}
+/*help*/.help_cont{padding:20px; font-size:11px; border:4px solid #eee}
+.help_cont h2{font-size:14px; font-weight:bold}
+.help_cont input[type="text"]{border:1px solid #BBBBBB;margin:0 0;width:350px}
+.help_cont textarea{border:1px solid #BBBBBB;margin:0 0;width:350px;height:100px;padding:0px}
+/* help status*/.comment{margin:0px auto 20px auto; width:500px}
+.comment .photo1{width:60px; float:left; margin:0px 10px 0px 0px}
+.comment .photo2{width:60px; float:left; margin:0 0px 0px 10px}
+.comment .comm{padding:5px; border:1px solid #ccc; width:418px; float:left}
+.photo1 img{border:1px solid #ddd; margin:0 0px; padding:1px; float:right; clear:left}
+.photo2 img{border:1px solid #ddd; margin:0 0px; padding:1px}
+.ticket-info{border:1px solid #ccc}
+.ticket-info table tbody{margin:20px}
+.ticket-info table td{padding:0px; margin:0px; text-align:left}
+/*my_acoounts.css end*/

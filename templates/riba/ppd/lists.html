@@ -1,0 +1,289 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+
+<div class="inner-content">
+	<h1 class="head1">{{client_display_name}} - Fill List</h1>
+	<form method="POST" action=""id="add_list_form" name="add_list_form">
+	<div id="post_errors"></div>
+	{% if form.errors %}
+		{% for error in form.errors %}
+		{{error}}
+		{% endfor %}
+		{{form.non_field_errors}}
+  		<p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+  	{% endif %}
+
+	{% ifequal flag 1 %}
+	<p>List saved succesfully</p>
+	<a href="/lists/{{client_name}}/{{seller_name}}">Back to Lists</a>
+
+	{% else %}
+<a href="/lists/{{client_name}}/{{seller_name}}">Back to Lists</a><br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.title.label }}</td>
+		<td>{{ form.title }}</td>
+			{% if form.title.errors %}
+				<td class="error">{{ form.title.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.slug.label }}</td>
+		<td>{{ form.slug }}</td>
+			{% if form.slug.errors %}
+				<td class="error">{{ form.slug.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+{% comment %}
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.client.label }}</td>
+		<td>{{ form.client }}</td>
+			{% if form.client.errors %}
+				<td class="error">{{ form.client.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+{% endcomment %}
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.Type.label }}</td>
+		<td>{{ form.Type }}</td>
+			{% if form.Type.errors %}
+				<td class="error">{{ form.Type.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+	
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.template_type.label }}</td>
+		<td>{{ form.template_type }}</td>
+			{% if form.template_type.errors %}
+				<td class="error">{{ form.template_type.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.description.label }}</td>
+		<td>{{ form.description }}</td>
+			{% if form.description.errors %}
+				<td class="error">{{ form.description.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.starts_on.label }}</td>
+		<td>{{ form.starts_on }}</td>
+			{% if form.starts_on.errors %}
+				<td class="error">{{ form.starts_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.ends_on.label }}</td>
+		<td>{{ form.ends_on }}</td>
+			{% if form.ends_on.errors %}
+				<td class="error">{{ form.ends_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.is_featured.label }}</td>
+		<td>{{ form.is_featured }}</td>
+			{% if form.is_featured.errors %}
+				<td class="error">{{ form.is_featured.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.percent_on_10.label }}</td>
+		<td>{{ form.percent_on_10 }}</td>
+			{% if form.percent_on_10.errors %}
+				<td class="error">{{ form.percent_on_10.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.percent_on_5.label }}</td>
+		<td>{{ form.percent_on_5 }}</td>
+			{% if form.percent_on_5.errors %}
+				<td class="error">{{ form.percent_on_5.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.visibility.label }}</td>
+		<td>{{ form.visibility}}</td>
+		{% if form.visibility.errors %}
+		<td class="error">{{ form.visibility }}</td>
+		{% endif %}
+<form method='post' action=''>
+<fieldset>
+<legend>List Items</legend>
+		{{ formset.management_form }}
+		{% for i in formset.forms %}
+		<div class = "formgroup">
+<tr>
+		<td class="f11 fdgray" width="140">{{ i.id.label }}</td>
+		<td>{{ i.id }}</td>
+			{% if i.id.errors %}
+				<td class="error">{{ i.id.errors }}</td>
+			{% endif %}
+</tr>
+
+<tr>
+		<td class="f11 fdgray" width="140">{{ i.sku.label }}</td>
+		<td>{{ i.sku }}</td>
+			{% if i.sku.errors %}
+				<td class="error">{{ i.sku.errors }}</td>
+			{% endif %}
+</tr>
+<a href="/itemsku/{{client_name}}/{{seller_name}}/{{pg}}" onClick="popup = window.open('/itemsku/{{client_name}}/{{seller_name}}/{{pg}}', 'PopupPage','height=300,widht=350,scrollbars=yes,resizable=yes'); return false" target="_blank">Click to see products</a>
+<br />
+<br />
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.sequence.label }}</td>
+		<td>{{ i.sequence }}</td>
+			{% if i.sequence.errors %}
+				<td class="error">{{ i.sequence.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.user_description.label }}</td>
+		<td>{{ i.user_description }}</td>
+			{% if i.user_description.errors %}
+				<td class="error">{{ form.client.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+							  
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.user_title.label }}</td>
+		<td>{{ i.user_title }}</td>
+			{% if i.user_title.errors %}
+				<td class="error">{{ i.user_title.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+	
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.user_features.label }}</td>
+		<td>{{ i.user_features }}</td>
+			{% if i.user_features.errors %}
+				<td class="error">{{ i.user_features.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.starts_on.label }}</td>
+		<td>{{ i.starts_on }}</td>
+			{% if i.starts_on.errors %}
+				<td class="error">{{ i.starts_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.ends_on.label }}</td>
+		<td>{{ i.ends_on }}</td>
+			{% if i.ends_on.errors %}
+				<td class="error">{{ i.ends_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.status.label }}</td>
+		<td>{{ i.status }}</td>
+			{% if i.status %}
+				<td class="error">{{ i.status.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+{% comment %}
+		{{ i }}
+		<br />
+		<br />
+	{% endcomment %}
+	<p>---------------------------------------------------------------------------------------------------------------------</p>
+	</div>
+		{% endfor %}
+		<input title='Add new item' type='submit' name='additem' id='additem' value='additem' />
+		</fieldset>
+<br />
+<br />
+{% comment %}
+<table>
+	<tr>
+	<td>
+	<INPUT TYPE="submit" id="submit_button" VALUE="Save" class="grayButton" > 
+				 &nbsp;&nbsp;&nbsp;
+				<input type="reset" class="grayButton" value="Cancel">
+</td>
+</tr>
+</table>
+
+
+	<div class="fb fdgray prof_sub_head">{{form}}</div>
+	<table class="tbl_profile">
+<br />
+	<tr>
+		<td class="f11 fdgray" width="140">{{ form.name.label }}</td>
+		<td>{{ form.name }}</td>
+		{% if form.name.errors %}
+			<td class="error">{{ form.name.errors }}</td>
+		{% endif %}
+	</tr>
+
+	<br />
+<div class="clear"></div>
+	<form action="" method="POST">
+	<p>{{ formset }} </p>
+	{% for i in formset.forms %}
+	<div class="formgroup">
+	{{ i.formset }}
+	{% endfor %}
+	</form>
+
+	{% endcomment %}
+
+	<table>
+	<tr>
+	<td>
+	<INPUT TYPE="submit" id="save" name="save" VALUE="Save" class="grayButton" />
+				 &nbsp;&nbsp;&nbsp;
+				<input type="reset" class="grayButton" value="Cancel" id="cancel" name="cancel" />
+</td>
+</tr>
+</table>
+{% endifequal %}
+</form>
+</div>
+{%endblock%}

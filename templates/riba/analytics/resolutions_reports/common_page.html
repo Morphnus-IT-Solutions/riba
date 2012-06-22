@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load order_tags %}
+{% block content %}
+<br/>
+
+{% if error %}
+<div class="orders_msg rc5">
+  <div class="rc5 error">
+<ul style="list-style-type:disc; padding-left:10px;">		
+   <li>{{error}}</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+{% daterange title search_trend from_date to_date request%}
+
+
+<br>
+<br>
+{%table_display_with_bar request data_dict.list "" "excel" "" "" left_ali_cols%}
+
+<br>
+<br>
+
+{%endblock%}

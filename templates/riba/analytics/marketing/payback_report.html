@@ -1,0 +1,88 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.excel_main {margin:8px 0 0 5px !important;}
+	.select_range{padding:0}
+</style>
+<form method="POST" id="report_form" name="report_form" action="">
+{%show_export_link request form 'excel'%}
+  {% form_daterange request form title%}
+  <div class="report_option_main">
+    <div class="report_option_aa marb10">
+        <span>Format:</span>{{form.client}}&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>Order State:</span>{{form.order_state}}&nbsp; &nbsp;
+    </div>
+    <input type="submit" value="Go!" class="uiButton" style="width:80px\9;">
+  </div>
+</form>
+<div class="clear">&nbsp;</div>
+<div>
+
+<table class="tbl_report marb20" >
+{%for item in data_list%}
+<tr>
+    {%if forloop.first%}
+        {%for i in item%}
+            <th>{{i}}</th>
+        {%endfor%}
+    {%else%}
+        {%if forloop.last%}
+		    <form method="POST" action="/marketing/payback_details/">
+                <input type="hidden" name="start_date" value="{{form.start_date.value|date:"d M, Y"}}">
+                <input type="hidden" name="end_date" value="{{form.end_date.value|date:"d M, Y"}}">
+                <input type="hidden" name="report_format" value="web">
+                <input type="hidden" name="client" value="{{form.client.value}}">
+                <input type="hidden" name="order_state" value="{{form.order_state.value}}">
+                <td class="fb"><input type="submit" class="submitButtonlinkBlue" value="{{item.0}}"></td>
+            </form>
+            <td class="fb">{%int_to_comma item.1%}</td>
+            <td class="fb">{%int_to_comma item.2%}</td>
+            <td class="fb">{%int_to_comma item.3%}</td>
+            <td class="fb">{%int_to_comma item.4%}</td>
+            <td class="fb">{%int_to_comma item.5%}</td>
+            <td class="fb">{%int_to_comma item.6%}</td>
+            <td class="fb">{%int_to_comma item.7%}</td>
+            <td class="fb">{%int_to_comma item.8%}</td>
+            <td class="fb">{%int_to_comma item.9%}</td>
+            <td class="fb">{%int_to_comma item.10%}</td>
+            <td class="fb">{%int_to_comma item.11%}</td>
+            <td class="fb">{%int_to_comma item.12%}</td>
+            <td class="fb">{%int_to_comma item.13%}</td>
+            <td class="fb">{%int_to_comma item.14%}</td>
+            <td class="fb">{%int_to_comma item.15%}</td>
+            <td class="fb">{%int_to_comma item.16%}</td>
+        {%else%}
+		    <form method="POST" action="/marketing/payback_details/">
+                <input type="hidden" name="start_date" value="{{item.0|date:"d M, Y"}}">
+                <input type="hidden" name="end_date" value="{{item.0|date:"d M, Y"}}">
+                <input type="hidden" name="report_format" value="web">
+                <input type="hidden" name="client" value="{{form.client.value}}">
+                <input type="hidden" name="order_state" value="{{form.order_state.value}}">
+                <td class="fb"><input type="submit" class="submitButtonlinkBlue" value="{{item.0|date:"d M"}}"></td>
+            </form>
+            <td>{%int_to_comma item.1%}</td>
+            <td>{%int_to_comma item.2%}</td>
+            <td>{%int_to_comma item.3%}</td>
+            <td>{%int_to_comma item.4%}</td>
+            <td>{%int_to_comma item.5%}</td>
+            <td>{%int_to_comma item.6%}</td>
+            <td>{%int_to_comma item.7%}</td>
+            <td>{%int_to_comma item.8%}</td>
+            <td>{%int_to_comma item.9%}</td>
+            <td>{%int_to_comma item.10%}</td>
+            <td>{%int_to_comma item.11%}</td>
+            <td>{%int_to_comma item.12%}</td>
+            <td>{%int_to_comma item.13%}</td>
+            <td>{%int_to_comma item.14%}</td>
+            <td>{%int_to_comma item.15%}</td>
+            <td>{%int_to_comma item.16%}</td>
+        {%endif%}
+    {%endif%}
+</tr>
+{%endfor%}
+</table>        
+</div>
+
+                    
+{% endblock %}

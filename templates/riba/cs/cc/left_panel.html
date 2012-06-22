@@ -1,0 +1,227 @@
+{%if user %}
+{%load cc_tags%}
+
+<div class="pad10" id="crm_snippet">
+<form onsubmit="return false;" action="javascript:void();" name="frmCC">
+    <input type="hidden" id="callid" name="callid" value="{{callid}}"/>
+    {%if profile%}
+        <div>
+            <div class="fll fdgray marb5">Mobile</div>
+                <input type="text" name="custMobile" id="custMobile" autocomplete="on" readonly="readonly" value="{{profile.get_primary_phones.0.phone}}" class="marb5 width160"/>
+        </div>
+        <div>
+            <div class="f11 fdgray change marb5" style="display:none">Mobile2</div>
+            <input type="text" name="changeMobile" class="change" style="display:none" id="changeMobile" autocomplete="on" class="marb5 width160"/>
+        </div>
+    {%else%}
+        <div>
+            <div class="f11 fdgray marb5">Mobile</div>
+            <input type="text" name="custMobile" id="custMobile" autocomplete="on" value="{{profile.get_primary_phones.0.phone}}" class="marb5 width160"/>
+        </div>
+    {%endif%}
+       
+        <div>
+            <div class="f11 fdgray marb5">Email</div>
+            <input type="text" name="user_email" id="user_email" value="{{profile.get_primary_emails.0.email}}" class="marb5 width160"/>
+        </div>
+        <div>
+            <div class="f11 fdgray marb5">Name</div>
+            <input type="text" name="custName" id="custName" value="{{profile.full_name}}" class="marb5 width160"/>
+        </div>
+    </form>		
+</div>
+    {% if profile %}
+    <div class="bglgray close_call bottomroundcorner5 ca">
+        <button class="linkButtonMaroon cursor closeCall" title="Close this call" type="submit">Close this call x</button>
+    </div>
+    {% endif %}
+ 
+{%endif%}
+<script type="text/javascript">
+/*
+        $('#logoutUser').click(function() {
+            var next_call_calendar = '';
+            var next_call_calendar_is_visible = false;
+            var onSuccess = function(response) {
+                $('response_dialog').width(500);
+                if (response == 'Not attached to a call'){
+                    document.location.href = "{%cc_url request 'user/signout'%}";
+                }
+                $('#response_dialog').html(response);
+                var dialog = $('#response_dialog').dialog({modal:true,title:'Close Call',width:500,resizable:false});
+                var today = new Date();
+                var minDate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+                $('#next_call').datepicker({minDate:minDate,maxDate:'+1M +10D'});
+                next_call_calendar_is_visible = false;
+            };
+            var onError = function() {
+            };
+            var action = "{% cc_url request 'user/close_call'%}";
+            var data = "callId=" + {{request.call.id}}
+            $.ajax({ url :action,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+            });
+            return false;
+    });
+
+    $('#custMobiletemp').blur(function() {
+        onSuccess = function(data){
+            $('#left_nav').html(data);
+        };
+        onError = function(){
+        };
+        var action = "{% cc_url request 'user/get_user_context'%}";
+        var data = "mobile=" + $('#custMobile').val();
+        $.ajax({ url :action,
+        data : data,
+        success : onSuccess,
+        error : onError,
+
+        type : 'POST'
+        });
+        return false;
+    });
+    
+*/
+    $('#custMobile').blur(function() {
+        readOnly = $('#custMobile').attr('readonly');
+        if(! readOnly){
+        if ($('#changeMobile').val())
+            return;
+        var cli = $('#custMobile').val();
+        if (cli.length < 10){
+            return;
+        }
+        var dni = '{% default_dni request%}';
+        var type = '9';
+        var id = $('#callid').val();
+        //var cc_str = cli + '-' + dni + '-' + type + '-' + id + '/';
+        //url = window.location.href.replace("/", "/" + cc_str);
+        //url = url.replace("cc=1", "cc=0");
+        var url = '/' + cli + '-' + dni + '-' + type + '-' + id + '/';
+
+	if(cli){
+            window.location.href = url;
+        }
+        }
+    });
+
+    $('#custName').blur(function() {
+        $('#custName').attr('disabled','disabled');
+        onSuccess = function(data){
+            $('#custName').removeAttr('disabled');
+        };
+        onError = function(){
+        };
+        var action = "{% cc_url request 'user/update_user_profile'%}";
+        var data = "full_name=" + $('#custName').val();
+        $.ajax({ url :action,
+        data : data,
+        success : onSuccess,
+        error : onError,
+        type : 'POST'
+        });
+        return false;
+    });
+    
+    $('#user_email').blur(function() {
+        $('#user_email').attr('disabled','disabled');
+        onSuccess = function(data){
+            $('#user_email').removeAttr('disabled');
+        };
+        onError = function(){
+        };
+        var action = "{% cc_url request 'user/update_user_profile'%}";
+        var data = "email=" + $('#user_email').val();
+        $.ajax({ url :action,
+        data : data,
+        success : onSuccess,
+        error : onError,
+        type : 'POST'
+        });
+        return false;
+    });
+
+    $('.closeCall').click(function() {
+	    var width = 340;
+	    $(this).unbind('click');
+        $(this).css('cursor','default')
+	    $.get("{% cc_url request 'user/callclose'%}", function(data) {
+            $('#call_popup').html(data);
+	    	var dialog = $('#call_popup').dialog({modal:true,
+	    		title:'Close Interaction', 
+	    		width:width});
+			var onSuccess = function(data, textStatus, xhr) {
+                $('#call_popup').html(data);
+                setTimeout(function(){
+                    $('#call_popup').dialog('close');
+                    var url = "{% cc_url request 'user/signout' %}";
+                    window.location.href = url;
+                    }, 2000);
+			};
+			var onError = function(xhr, textStatus, error) {
+                $('#call_popup').html(xhr.responseText);
+                setTimeout(function(){$('#call_popup').dialog('close');}, 4000);
+			};
+			var onSubmit = function() {
+                var data = $('#form_add_interaction').serialize()+"&submit="+this.id;
+                $.ajax({ url:"{% cc_url request 'user/callclose'%}",
+					data : data,
+					success : onSuccess,
+					error : onError,
+					type : 'POST'
+					});
+                return false; 
+			};
+            $('#closecall').click(onSubmit);
+            $('#hold').click(onSubmit);
+	    });
+    });
+/*    
+    $('#changeBtn').click(function(){
+        //$('.change').css('display','block');
+        $('#changeMobile')[0].value = $('#custMobile')[0].value;
+        $('#custMobile')[0].value = '';
+        $('#changeMobile').attr('disabled',true);
+        $('#custName').attr('disabled',true);
+        $('#user_email').attr('disabled',true);
+        $('#custName')[0].value = '';
+        $('#user_email')[0].value = '';
+        $('#custMobile').removeAttr('disabled');
+        $('#custMobile').blur(function() {
+            if ($('#changeMobile').val() == '' || $('#custMobile').val() == '')
+                return;
+            $('#custMobile').attr('disabled',true);
+            onSuccess = function(url){
+                $('#custMobile').removeAttr('disabled');
+                if(url){
+                    window.location.href = url;
+                }
+            };
+            onError = function(){
+                $('#custMobile').removeAttr('disabled');
+            };
+            var action = "{% cc_url request 'user/change_user'%}";
+            var data = "changemobile=" + $('#custMobile').val();
+            $.ajax({ url :action,
+            data : data,
+            success : onSuccess,
+            error : onError,
+            type : 'POST'
+            });
+            return false;
+        });
+    });
+  */  
+</script>
+
+<script type="text/javascript">
+	function setFocus()
+	{
+		 document.getElementById("custMobile").focus();
+	}
+</script>
+

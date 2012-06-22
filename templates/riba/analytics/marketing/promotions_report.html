@@ -1,0 +1,53 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.report_option_aa {width:475px;}
+	label{font-weight:normal;}
+	input[type="radio"]{margin-top:2px;}
+</style>
+<form method="POST" id="report_form" name="report_form" action="">
+  {% show_export_link request form 'excel' %}
+  {% form_daterange request form title null_form_entries%}
+  <div class="report_option_main">
+    <div class="report_option_aa"> <span>Order State:</span>{{form.order_state}}&nbsp; &nbsp; </div>
+    <input type="submit" id="merch_submit" value="Go!" class="uiButton" style="width:50px\9;">
+  </div>
+</form>
+<div class="clear">&nbsp;</div>
+<div>
+  <table class="tbl_report">
+    {%for item in data_list%}
+    <tr> 
+    {%if forloop.first%}
+          {%for i in item%}
+          <th>{{i}}</th>
+          {%endfor%}
+      {%else%}
+          <td class="la{%if forloop.last%} fb{%endif%}">{{item.0}}</td>
+            <form method="POST" action="">
+            <input type="hidden" name="start_date" value="{{form.start_date.value}}">
+            <input type="hidden" name="end_date" value="{{form.end_date.value}}">
+            <input type="hidden" name="order_state" value="{{form.order_state.value}}">
+            <input type="hidden" name="promo" value="{{item.0}}">
+          <td><span><input type="submit" class="submitButtonlinkBlue{%if forloop.last%} fb{%endif%}" value="{%int_to_comma item.1%}"></span></td>
+            </form>
+          <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma item.2%}</td>
+          <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma item.3%}</td>
+      {%endif%} </tr>
+    {%endfor%}
+  </table>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript" language="javascript">
+    $('.order_details').click(function(){
+        var promo = this.id;
+        $('#id_promo').val(promo);
+        var form=$('#report_form');
+        form.submit()
+    });
+</script>
+{% endblock %} 

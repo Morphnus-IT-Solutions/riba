@@ -1,0 +1,107 @@
+{% extends "ppd/user_home.html" %}
+{% block user_content %}
+{% load pagination_tags %}
+{% load ppd_tags %}
+{% load web_tags %}
+        <div class="f18 fb">
+            <h1>{{client_display_name}}-Generate Report</h1>
+        </div>
+
+<link rel="stylesheet" href="{{MEDIA_URL}}css/styles.css" type="text/css" media="screen, projection" />
+<style>
+.tr_hide{display:none}
+</style>
+{%comment%}{% autopaginate response_list 20 %}{%endcomment%}
+  <div style="padding:0px; margin-top:10px;">
+<form method="POST" action="" id="approve_pricing_jobs" name="approve_pricing_jobs" enctype="multipart/form-data">
+  <div class="main">
+    {% if flag == 'new' %}
+        {% if errors %}
+            {% for error in errors %}
+                <div class="orders_msg rc5">
+	                <div class="rc5 error">       
+                        {% for error in errors %}
+                            {{error}}<br/>
+                        {% endfor %}   
+	                </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {{forms}}
+        <input type="submit" value="Generate Report" name="upload" id="uplaod" class="grayButton" style="padding: 2px 6px;"/>
+    {% else %}
+        {% if flag == 'report' %}
+	<table class="tbl_response" id="response_list">
+		<tr>
+			<th>Article Id</th>
+			<th>Product Name</th>
+            <th>Catalog</th>
+		</tr>
+		{% for item in all_prices %}
+		<tr class="cursorp" id="{{item.article_id}}">
+			<td class="rah">{{ item.article_id }}</td>
+			<td class="rah">{{ item.product_name }}</td>
+			<td class="rah">{{ item.catalog }}</td>
+		</tr>
+		<tr class="list_row rah_td" id="{{item.article_id}}_tr">
+			<td colspan="10" style="padding:0px 10px; border-width:0px 0px 1px;">
+				<div id="{{item.article_id}}_details" style="margin:0px;"></div>
+                {%show_pricing_info item.price_versions%}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+        <div class="clear"></div>
+        
+        {%if pagination.enable_prev or pagination.enable_next%}
+            <div class="pagination mart20"> {% if pagination.enable_prev %} <a href="{{pagination.base_url}}page={{pagination.prev_page}}">Prev</a> {% else %} <a class="gray_link">Prev</a> {% endif %}
+            {% for page in pagination.first_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.show_sep1 %} <span> ...</span> {% endif %}
+            {% for page in pagination.prev_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            <div>{{pagination.cur_page}}</div>
+            {% for page in pagination.next_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.show_sep2 %} <span> ...</span> {% endif %}
+            {% for page in pagination.last_set %} <a href="{{pagination.base_url}}page={{page}}">{{page}}</a> {% endfor %}
+            {% if pagination.enable_next %} <a href="{{pagination.base_url}}page={{pagination.next_page}}">Next</a> {% else %} <a class="gray_link">Next</a> {% endif %} 
+        </div>
+        {%endif%}
+        <div class="clear"></div>
+
+
+        {% endif %}
+    {% endif %}
+
+
+    {%comment%}
+	{% endif %}
+    {%endcomment%}
+  </div>
+</form>
+</div>
+<div class="clear"></div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$('display').toggleClass('tr_show', $('body').hasClass('tr_hide') );
+$('.rah').click(function() {
+    var div_id = this.parentNode.id + '_details';
+    var tr_id = this.parentNode.id + '_tr';
+    var rc_id = this.parentNode.id;
+    var that = this.parentNode;
+ 
+    if($(this.parentNode).hasClass('show')) {
+        $('#' + tr_id).removeClass('tr_hide');
+        $(that).removeClass('show');
+        $('#head_1100 td').each(function(){ $(this.parentNode).css('border-bottom','1px dotted #DDDDDD')});
+    } else {
+        $(that).addClass('show');
+        $('#' + tr_id).addClass('tr_hide');
+        $('#head_1100 td').each(function(){ $(this.parentNode).css('border-bottom','1px solid #DDDDDD')});
+    }
+    return false;
+});
+
+</script>
+{% endblock %}

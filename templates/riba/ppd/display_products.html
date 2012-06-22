@@ -1,0 +1,37 @@
+{%load cc_tags%}
+{%load web_tags%}
+
+<div class="item">
+    {% if not products %}
+        NO PRODUCTS
+    {% endif %}
+    {% for product in products %}
+    <div id="{{ forloop.counter }}" class="product_grid_item nobb">
+        <div class="thumb">
+         <a href="http://www.{{product.product.category.client.clientdomain_name}}/{{product.product.url}}" target="_blank"> {% if product.product_images.0.thumbnail_image.url %}<img src="{{product.product_images.0.thumbnail_image.url}}" title="{{product.product.title}}" height="75" width="75"/>{%else%}<img src="{{MEDIA_URL}}images/noimage.png" width="75" height="75" alt="" title="No image available for {{product.product.title}}" href="http://www.{{product.product.category.client.clientdomain_name}}/{{product.product.url}}" target="_blank"/>{% endif %}</a> 
+         </div>
+         <div class="summary">
+                    <div class="pricing">
+			<div class="left">
+			{% ifequal seller_name 'amar-chitra-katha-international' %}
+  	                      <span class="fmaroon f14 la"><strong>$ {{product.rate_chart.list_price|money}}</strong></span>
+                        {% else %}
+                              <span class="fmaroon f14 la"><span class="WebRupee">Rs </span><strong> {{product.rate_chart.offer_price|money}}</strong></span>
+                        {% endifequal %}                        		
+			{% if product.rate_chart.list_price > product.rate_chart.offer_price %}
+                            {% ifequal seller_name 'amar-chitra-katha-international' %}
+                                <span class="f11 fs fdgray">$ {{product.rate_chart.list_price|money}}</span>
+                            {% else %}
+                           	 <span class="f11 fs fdgray"><span class="WebRupee">Rs </span>{{product.rate_chart.list_price|money}}</span>
+                            {% endifequal %}
+                        {% endif %}
+			</div>
+                        
+                    <div class="clear"><h3 class="la" style="font-weight:normal !important"><a title="{{product.product.title}}" href="http://www.{{product.product.category.client.clientdomain_name}}/{{product.product.url}}" target="_blank">{{product.product.title|truncate:40}}</a></h3></div>
+
+                    </div> <!--end of div class = pricing -->
+
+          </div> <!-- end of div class = summary -->
+      </div> <!-- end of div id = .. -->
+    {% endfor %}
+</div>

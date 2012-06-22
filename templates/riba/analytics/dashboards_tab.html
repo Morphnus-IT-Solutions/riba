@@ -1,0 +1,144 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<div> 
+  {%ifequal dashboard "sales"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Sales Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/sales.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  
+  {%ifequal dashboard "category"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Category Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/category.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  
+  {%ifequal dashboard "cs"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Customer First Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/cs.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  
+  {%ifequal dashboard "marketing"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Marketing Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/marketing.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  
+  {%ifequal dashboard "scm"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Fulfillment Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/scm.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  
+  {%ifequal dashboard "data"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Data Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/data.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  
+  {%ifequal dashboard "admin"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>Admin Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/admin.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  {%ifequal dashboard "user"%}
+  <div class="content_head">
+    <div class="header rc5">
+      <h1>User Dashboard</h1>
+    </div>
+    <div class="clear"></div>
+    <div class="padding_top10 menu_list">
+      <ul>
+        {%include 'analytics/dashboards/user.html'%}
+      </ul>
+    </div>
+  </div>
+  {%endifequal%}
+  <script> 
+{%ifequal dashboard "sales"%}
+    $("ul#menu_account li.item2").addClass('sel_dr');
+{%endifequal%}
+{%ifequal dashboard "category"%}
+    $("ul#menu_account li.item3").addClass('sel_dr');
+{%endifequal%}
+{%ifequal dashboard "cs"%}
+    $("ul#menu_account li.item4").addClass('sel_dr');
+{%endifequal%}
+{%ifequal dashboard "marketing"%}
+    $("ul#menu_account li.item5").addClass('sel_dr');
+{%endifequal%}
+{%ifequal dashboard "scm"%}
+    $("ul#menu_account li.item6").addClass('sel_dr');
+{%endifequal%}
+{%ifequal dashboard "data"%}
+    $("ul#menu_account li.item7").addClass('sel_dr');
+{%endifequal%}
+{%ifequal dashboard "admin"%}
+    $("ul#menu_account li.item8").addClass('sel_dr');
+{%endifequal%}
+{%ifequal dashboard "user"%}
+    $("ul#menu_account li.item9").addClass('sel_dr');
+{%endifequal%}
+</script>
+  <div class="clear"></div>
+</div>
+<div class="clear"></div>
+{% endblock %} 

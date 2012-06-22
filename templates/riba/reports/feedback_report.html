@@ -1,0 +1,52 @@
+{%extends 'web/base.html' %}
+{%block header%}
+{%load cc_tags%}
+{%load web_tags%}
+            {%include "reports/phone_pe_deal_header.html"%}
+{%endblock%}
+{%block content %}
+
+{% daterange "Feedback Report" search_trend from_date to_date request "call_data"%}
+
+{%if staff%}
+<br>
+
+{%show_excel_link request "excel"%}
+<div style="overflow:scroll; width:100%; height:500px" >
+<table class="tbl_report" style="width:1200px;" >
+{%for data in feedback_report_dict.list%}
+{%if forloop.first%}
+    <tr>
+        <th><b>{{data.0}}</b></th>
+        <th><b>{{data.1}}</b></th>
+        <th><b>{{data.2}}</b></th>
+        <th><b>{{data.3}}</b></th>
+        <th><b>{{data.4}}</b></th>
+        <th><b>{{data.5}}</b></th>
+        <th><b>{{data.6}}</b></th>
+        <th><b>{{data.7}}</b></th>
+    </tr>
+{%else%}
+    <tr>
+        <td>{{data.0}}</td>
+        <td>{{data.1}}</td>
+        <td class="la" >{{data.2}}</td>
+        <td>{{data.3}}</td>
+        <td>{{data.4}}</td>
+        <td>{{data.5}}</td>
+        <td>{{data.6}}</td>
+        <td>{{data.7}}</td
+    </tr>
+{%endif%}
+{%endfor%}
+
+</table>
+</div>
+{%show_excel_link request "excel"%}
+<br>
+{%else%}
+<div> You are not allowed to view this page. If you are a staff member, please sign in <a href="/">here</a> with you staff login and try again. </div>
+{%endif%}
+<br>
+
+{%endblock%}

@@ -1,0 +1,353 @@
+{% extends 'ppd/user_home.html' %}
+{% block user_content %}
+<div class="inner-content" %>
+
+	<form action="" id="edit_form" name="edit_form" method="POST" enctype="multipart/form-data", ><!--onReset="return confirm('Do you really want to reset')">-->
+	<div id="post_errors"></div>
+	
+	{% if form.errors %}
+	{% for error in form.errors %}
+	{{error}}
+	{% endfor %}
+	{{form.non_field_errors}}
+  		<p style="color: red;"> Please correct the error{{ form.errors|pluralize }} below. </p>
+  	{% endif %}
+
+
+	<h1 class="head1">{{client_display_name}} - Edit Form</h1>
+<br />
+<br />
+{% comment %}
+<div class="fb fdgray prof_sub_head">{{form}}</div>
+ <table class="tbl_profile"></table>
+{% endcomment %}
+{% ifequal flag 2 %}
+<p> List deleted succesfully</p>
+<a href="/lists/{{client_name}}/{{seller_name}}">Back to Homepage</a><br />
+{% else %}
+{% ifequal flag 1 %}
+<p>List saved succesfully</p>
+<a href="/lists/{{client_name}}/{{seller_name}}">Back to Homepage</a><br />
+{% else %}
+<a href="/lists/{{client_name}}/{{seller_name}}">Back to Homepage</a><br />
+{% endifequal %}
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.title.label }}</td>
+		<td>{{ form.title }}</td>
+			{% if form.title.errors %}
+				<td class="error">{{ form.title.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.slug.label }}</td>
+		<td>{{ form.slug }}</td>
+			{% if form.slug.errors %}
+				<td class="error">{{ form.slug.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+<div style="display:none;visibility:hidden;">
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.client.label }}</td>
+		<td>{{ form.client }}</td>
+			{% if form.client.errors %}
+				<td class="error">{{ form.client.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+</div>
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.Type.label }}</td>
+		<td>{{ form.Type }}</td>
+			{% if form.Type.errors %}
+				<td class="error">{{ form.Type.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+	
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.template_type.label }}</td>
+		<td>{{ form.template_type }}</td>
+			{% if form.template_type.errors %}
+				<td class="error">{{ form.template_type.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.description.label }}</td>
+		<td>{{ form.description }}</td>
+			{% if form.description.errors %}
+				<td class="error">{{ form.description.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.starts_on.label }}</td>
+		<td>{{ form.starts_on }}</td>
+			{% if form.starts_on.errors %}
+				<td class="error">{{ form.starts_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.ends_on.label }}</td>
+		<td>{{ form.ends_on }}</td>
+			{% if form.ends_on.errors %}
+				<td class="error">{{ form.ends_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.is_featured.label }}</td>
+		<td>{{ form.is_featured }}</td>
+			{% if form.is_featured.errors %}
+				<td class="error">{{ form.is_featured.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.percent_on_10.label }}</td>
+		<td>{{ form.percent_on_10 }}</td>
+			{% if form.percent_on_10.errors %}
+				<td class="error">{{ form.percent_on_10.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.percent_on_5.label }}</td>
+		<td>{{ form.percent_on_5 }}</td>
+			{% if form.percent_on_5.errors %}
+				<td class="error">{{ form.percent_on_5.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ form.visibility.label }}</td>
+		<td>{{ form.visibility}}</td>
+		{% if form.visibility.errors %}
+		<td class="error">{{ form.visibility }}</td>
+		{% endif %}
+</tr>
+<p>--------------------------------------------------------------------------------------------------------</p>
+<form method='post' action=''>
+<fieldset>
+<div class="abc">
+	<div class="left">
+		<legend>List Items</legend>
+	</div>
+	<div class="right">
+		<input type="checkbox" name="select_all" id="select_all" class="select_all" />Delete All
+	</div>
+</div>
+<br />
+<br />
+	{{ formset.management_form }}
+		{% for i in formset.forms %}
+		<div class = "formgroup">
+		{% if i %}
+<div style="display:none;visibility:hidden;">
+<tr>
+		<td class="f11 fdgray" width="140">{{ i.id.label }}</td>
+		<td>{{ i.id }}</td>
+			{% if i.id.errors %}
+				<td class="error">{{ i.id.errors }}</td>
+			{% endif %}
+</tr>
+</div>
+<tr>
+<div class="abc">
+	<div class="left">
+		<td class="f11 fdgray" width="140">{{ i.sku.label }}</td>
+		<td>{{ i.sku }}</td>
+			{% if i.sku.errors %}
+				<td class="error">{{ i.sku.errors }}</td>
+			{% endif %}
+	</div>
+	<div class="right">
+		<td width="10"><input type="checkbox" name="itemdel" class="itemdel" id="{{i.instance.sku_id}}" value="{{i.instance.sku_id}}" />Delete</td>
+	</div>
+</div>
+</tr>
+<br />
+<br />
+<a href="/itemsku/{{client_name}}/{{seller_name}}/{{pg}}" onClick="popup = window.open('/itemsku/{{client_name}}/{{seller_name}}/{{pg}}', 'PopupPage','height=300,widht=350,scrollbars=yes,resizable=yes'); return false" target="_blank">Click to see products</a>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.sequence.label }}</td>
+		<td>{{ i.sequence }}</td>
+			{% if i.sequence.errors %}
+				<td class="error">{{ i.sequence.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.user_description.label }}</td>
+		<td>{{ i.user_description }}</td>
+			{% if i.user_description.errors %}
+				<td class="error">{{ i.user_description.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+							  
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.user_title.label }}</td>
+		<td>{{ i.user_title }}</td>
+			{% if i.user_title.errors %}
+				<td class="error">{{ i.user_title.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+	
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.user_features.label }}</td>
+		<td>{{ i.user_features }}</td>
+			{% if i.user_features.errors %}
+				<td class="error">{{ i.user_features.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.starts_on.label }}</td>
+		<td>{{ i.starts_on }}</td>
+			{% if i.starts_on.errors %}
+				<td class="error">{{ i.starts_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.ends_on.label }}</td>
+		<td>{{ i.ends_on }}</td>
+			{% if i.ends_on.errors %}
+				<td class="error">{{ i.ends_on.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+
+<tr>
+	<td class="f11 fdgray" width="140">{{ i.status.label }}</td>
+		<td>{{ i.status }}</td>
+			{% if i.status %}
+				<td class="error">{{ i.status.errors }}</td>
+			{% endif %}
+</tr>
+<br />
+<br />
+{% endif %}
+</div>
+{% endfor %}
+<div class="abc">
+	<div class="left">
+		<input title='Add new item' type='submit' name='additem' id='additem' value='Add Item' />
+	</div>
+	<div class="right">
+		<input type='button' name='Delete Item' id='delete' value='delete' class="delete" method=""/>
+	</div>
+</div>
+</fieldset>
+
+	<table>
+	<tr>
+	<td>
+	<INPUT TYPE="submit" id="save" VALUE="Save" class="grayButton" name="save" > 
+				 &nbsp;&nbsp;&nbsp;
+				<input type="reset" class="grayButton" value="Cancel" onClick"this.form.reset()">
+	<INPUT TYPE="submit" id="dellist" name="dellist" value="Delete List" class="grayButton">
+{% comment %}				
+<a href="/delete/{{client_name}}/{{seller_name}}/{{ID}}" onClick="popup = window.open('/delete/{{client_name}}/{{seller_name}}/{{ID}}', 'PopupPage','height=300,widht=350,scrollbars=yes,resizable=yes'); return false" target="_blank"><INPUT TYPE="submit" id="delete" VALUE="Delete"  class="grayButton" name="delete"></a>
+{% endcomment %}
+</td>
+</tr>
+</table>
+{% endifequal %}
+<script type="text/javascript">
+$("[name='itemdel']").click(function() {    
+	if ($(this).attr('checked')) {
+		if ($("[name='itemdel']:not(:checked)").length == 0)
+			$('#select_all').attr('checked',true);
+		}
+		else {
+			$('#select_all').attr('checked',false);
+		}
+})
+$('#edit_form').get(0).reset();
+$('#select_all').click(function(){
+	var val = $(this).attr('checked');    
+	$('.itemdel').each(function(){
+		$(this).attr('checked',val); 
+	});
+});
+
+$('.delete').click(function(){
+	var d =new Array();
+	var count=0;
+	var fid=  "{{ID}}";
+	//alert("form id is");
+	alert(fid);
+	$('.itemdel').each(function(){
+		var v = $(this).attr('checked');
+		alert(v);
+		if (v==true)
+		{
+			var idv = $(this).attr('id');
+			d[count]=idv;
+			count=count+1;
+			alert (idv);
+		}
+	});
+//	alert(d);
+//	alert(form.id);
+	var data="sku="+d+"&id="+fid;
+	alert(data);
+		var onsuccess = function(response){
+			window.location.reload();
+		};
+			var onerror=function(){};
+		var method="{{request.method}}";
+//		alert(method);
+		var url="/itemdel/{{client_name}}/{{seller_name}}";
+//		alert(url);
+
+	$.ajax({
+	type: method,
+	url:url,
+	data: data,
+	success:onsuccess,
+	error: onerror, });
+});
+
+</script>
+</form>
+</div>
+{% endblock %}
+

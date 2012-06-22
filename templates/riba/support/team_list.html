@@ -1,0 +1,76 @@
+{% extends 'support/base.html' %}
+{% block content %}
+
+<style>
+dl {
+    margin: 0 0 1em !important;
+}
+dl dt {
+    font-weight: normal !important;
+}
+ul, ol {
+    padding-left: 0px !important;
+}
+label {
+    font-weight:normal !important;
+}
+</style>
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; Teams</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Teams</h1>
+    </div>
+        <div class="right content_head">
+			<a id='add' role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Add Team</span></a>
+		</div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+    {% if team_list %}
+    <ul>
+        {% for team in team_list %}
+        <li class='w185 left'><a href='{{team.id}}'>{{team.name|title}}</a></li>
+        {% endfor %}
+        <li style='line-height:0px;width:1px;'>&nbsp;</li>
+    </ul>
+    {% else %}
+    <p>No teams are present in the system</p>
+    {% endif %}
+  </div>
+</div>
+<div id='add_team' style='min-height:80px !important;'></div>
+{% endblock %}
+
+{% block script_footer %}
+$('#add').click(function() {
+    var width = 270;
+    $.get('/team/add/', function(data) {
+        $('#add_team').html(data);
+        var dialog = $('#add_team').dialog({modal:true, title:'Add Team', 
+            width:width, resizable:false});
+    
+    var onSuccess = function(data, textStatus, xhr) {
+		$('#add_team').html(data);
+        $('#addteam').click(onSubmit);
+        if (xhr.status == 200)
+            setInterval('location.reload();', 2000);
+	};
+	var onError = function(xhr, textStatus, error) {
+		$('#add_team').html(xhr.responseText);
+        $('#addteam').click(onSubmit);
+	};
+	var onSubmit = function() {
+        var data = $('#form').serialize();
+        $.ajax({ url:'/team/add/',
+			data : data,
+			success : onSuccess,
+			error : onError,
+			type : 'POST'
+			});
+        return false; 
+	};
+    $('#addteam').click(onSubmit);
+    });
+});
+{% endblock %}

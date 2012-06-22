@@ -1,0 +1,280 @@
+{% extends 'rms/base.html' %}
+{% block content %}
+{% load web_tags %}
+{% load rms_tags %}
+<style>
+label {
+    font-weight:normal !important;
+}
+ul, ol {
+    padding-left:0px !important;
+}
+.header a{
+color:#111 !important;
+text-decoration:none;    
+}
+</style>
+<div class="padding_top10">
+  {% if not form %}
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/campaign">Campaigns</a>&nbsp;&raquo;&nbsp; {{campaign.name|title}}</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1><a href='/campaign/{{campaign.id}}'>{{campaign.name|title}}</a></h1>
+    </div>
+	{% if CCManager or Client or Admin %}
+    {% if campaign.type == 'outbound' %}
+    <div class="right content_head">
+		<a href="responses/upload" role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Add Responses</span></a>
+	</div>
+    {% endif %}
+    {% endif %}
+	<div class="clear bordergray"></div>
+  </div>
+  <div class="main">
+    <div><span class="f18 fb fdgray left">Funnel</span>
+        {%rms_daterange search_trend start_date end_date request %}           
+        <div class="clear">{% if start_date %}<p class="fdgray f11">{{start_date|date:"d M Y"}} {% if end_date %} - {{end_date|date:"d M Y"}}{%endif%}</p>{%endif%}</div>
+        <div class="left_side mart10">
+          <table class="tbl_home">
+            <tr>
+              {% for state in response_summary.states %}
+              <th><div {%if forloop.last%}class='last'{%endif%}>{{state.name}} ({{state.responses}})</div></th>
+              {% endfor %}
+            </tr>
+            <tr>
+                {% for state in response_summary.states %}
+                <td valign="top" class="bl td_attempted">
+                    <table class="tbl_home_inner">
+                        {% for substate in state.substates %}
+                        <tr>
+                            <td><a href="responses?start={{start_date}}&end={{end_date}}&substate={{substate.id}}">{{substate.name}}</a></td>
+                            <td class="ra">{{substate.responses}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                 </td>
+                {% endfor %}
+        </tr>
+      </table>
+    </div>
+    <div class="nav_container mart10">
+      <div class="nav">
+        <div class="nav_title">Pipeline Summary</div>
+        <div class="nav_summary">
+          <table>
+            {% if campaign.type == 'outbound' %}
+            <tr>
+              <td><a href="responses?start={{start_date}}&end={{end_date}}">Total</a></td>
+              <td class="ra">{{response_summary.responses}}</td>
+            </tr>
+            {% endif %}
+            {% for state in response_summary.states %}
+            <tr>
+              <td><a href="responses?start={{start_date}}&end={{end_date}}&state={{state.id}}">{{state.name}}</a></td>
+              <td class="ra">{{state.responses}}</td>
+            </tr>
+            {% endfor %}
+			<tr><td colspan="2">&nbsp;</td></tr>
+			<tr><td colspan="2" style="border-top:1px dotted #ccc; padding-bottom:5px"></td></tr>
+            {% if campaign.type == 'outbound' %}
+            <tr>
+                <td><a href="responses?start={{start_date}}&end={{end_date}}&state=0">New</a></td>
+                <td class="ra">{{response_summary.new}}</td>
+            </tr>
+            {% endif %}
+			<tr>
+                <td><a href="responses/untagged">Untagged</a></td>
+                <td class="ra">{{response_summary.untagged}}</td>
+            </tr>
+          </table>
+        </div>
+    </div>
+</div>
+    <div class="clear border-dotted-gray mart30">&nbsp;</div>
+    {% if CCManager or Client or Admin %}
+    <div class="right content_head">
+		<a href="edit" role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">Edit Campaign</span></a>
+	</div>
+    {% endif %}
+    <div class="left_side mart10">
+	  <div class="f18 fb fdgray marb10">Details</div>
+	  <div>
+		  <div class="left" style="width:915px;">
+			  <div class="w110 f11 flgray left">Client</div>
+			  <div class="w350 left">{{campaign.client.name|title}}</div>
+			  <div class="w110 f11 flgray left">Priority</div>
+			  <div class="left">{%if campaign.priority = 1%}High{%else%}{%if campaign.priority = 2%}Medium{%else%}Low{%endif%}{%endif%}</div>
+			  <div class="clear"></div>
+		  </div>
+		  <div class="left" style="width:915px;">
+			  <div class="w110 f11 flgray left">Type</div>
+			  <div class="w350 left">{{campaign.type|title}}</div>
+			  <div class="w110 f11 flgray left">Starts On</div>
+			  <div class="left">{{campaign.starts_on|date:"h:i A o\n D, d M y"}}</div>
+			  <div class="clear"></div>
+		  </div>
+		  <div class="left" style="width:915px;">
+			  <div class="w110 f11 flgray left">DNI</div>
+			  <div class="w350 left">{{campaign.dni_number}}</div>
+			  <div class="w110 f11 flgray left">Ends 0n</div>
+			  <div class="left">{{campaign.ends_on|date:"h:i A o\n D, d M y"}}</div>
+			  <div class="clear"></div>
+		  </div>
+		  <div class="left" style="width:915px;">
+			  <div class="w110 f11 flgray left">Hotline</div>
+			  <div class="w350 left">{%if campaign.hotline%}{{campaign.hotline}}{%else%}-{%endif%}</div>
+			  <div class="w110 f11 flgray left">Status</div>
+			  <div class="left">{% if campaign.draft %} Draft {% else %} Active {% endif %}</div>
+			  <div class="clear"></div>
+		  </div>
+		  {% if campaign.script %}
+          <div class="left" style="width:915px; margin-bottom:5px;">
+			  <div class="w110 f11 flgray left">Script</div>
+			  <div class="w350 left">{{campaign.script}}</div>
+			  <div class="clear"></div>
+		  </div>
+          {% endif %}
+	  </div>
+      <br />
+    </div>
+  </div>
+  <div class="clear border-dotted-gray mart30">&nbsp;</div>
+    {% if CCManager or Admin %}
+    <div class="right content_head">
+		<a href="agents" role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">Assign Agents</span></a>
+	</div>
+    {% endif %}
+  <div class="mart10">
+    <div class="f18 fb fdgray marb10">Agents</div>
+    <span class="fb fdgray">Inbound</span><br />
+    <ul class='marb10'>
+	  {% for agent in campaign.inbound_agents.all %}
+	  <li class="left agentlist">{{agent.name|title}}</li>
+	  {% endfor %}
+      <li style='width:1px;line-height:0px;'>&nbsp;</li>
+	</ul>
+	    <span class="fb fdgray">Outbound</span><br />
+        <ul>
+	    {% for agent in campaign.outbound_agents.all %}
+	    <li class="left agentlist">{{agent.name|title}}&nbsp;({% pending_followups request agent campaign %})</li>
+	    {% endfor %}
+        <li style='width:1px;line-height:0px;'>&nbsp;</li>
+	    </ul>
+  </div>
+  {% if Admin %}
+  <div class="clear border-dotted-gray mart30">&nbsp;</div>
+  <div class="mart10">
+    <div class="f18 fb fdgray marb10">Users</div>
+    <ul>
+    {% for p in users %}
+    <li class='left agentlist'>{% firstof p.user.first_name|title p.user.username|title %}</li>
+    {% endfor %}
+    <li style='width:1px;line-height:0px;'>&nbsp;</li>
+    </ul>
+  </div>
+  {% endif %}
+
+    {% else %}
+	<div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/campaign">Campaigns</a>&nbsp;&raquo;&nbsp; <a href="/campaign/{{campaign.id}}">{{campaign.name|title}}</a>&nbsp;&raquo;&nbsp; Edit</div>
+	<div class="content_head">
+		<div class="header rc5">
+		  <h1>{{campaign.name|title}}</h1>
+		</div>
+		<div class="clear bordergray"></div>
+	</div>
+    <div class="main">
+		{% if form.non_field_errors %}
+        <div class="error">{{form.non_field_errors}}</div>
+        {%endif%}
+		<form method="post">
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.dni_number.label}}</div>
+			    <div class='col2 left'>{{form.dni_number}}</div>
+                <div class='col1 f11 flgray left'>{{form.hotline.label}}</div>
+                <div class='col2 left'>{{form.hotline}}</div>
+            </div>
+            <div>
+                {%if form.dni_number.errors %}
+                <div class="error w440 left">
+					{{form.dni_number.errors}}
+				</div>
+                {%endif%}
+                {%if form.hotline.errors %}
+                <div class="error w440 left" {%if not form.dni_number.errors %}style="margin-left:460px"{%endif%}>
+					{{form.hotline.errors}}
+                </div>
+                {%endif%}
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.priority.label}}</div>
+			    <div class='col2 left'>{{form.priority}}</div>
+                <div class='col1 f11 flgray left'>{{form.client.label}}</div>
+                <div class='col2 left'>{{form.client}}</div>
+            </div>
+            <div>
+                {%if form.priority.errors %}
+                <div class="error w440 left">
+					{{form.priority.errors}}
+				</div>
+                {%endif%}
+                {%if form.client.errors %}
+                <div class="error w440 left" {%if not form.priority.errors %}style="margin-left:460px"{%endif%}>
+					{{form.client.errors}}
+                </div>
+                {%endif%}
+            </div>
+			<div class='row clear'>
+                <div class='col1 f11 flgray left'>{{form.starts_on.label}}</div>
+			    <div class='col2 left'>{{form.starts_on}}</div>
+                <div class='col1 f11 flgray left'>{{form.ends_on.label}}</div>
+                <div class='col2 left'>{{form.ends_on}}</div>
+            </div>
+            <div>
+                {%if form.starts_on.errors %}
+                <div class="error w440 left">
+					{{form.starts_on.errors}}
+				</div>
+                {%endif%}
+                {%if form.ends_on.errors %}
+                <div class="error w440 left" {%if not form.starts_on.errors %}style="margin-left:460px"{%endif%}>
+					{{form.ends_on.errors}}
+                </div>
+                {%endif%}
+            </div>
+            <div class='row clear' style='height:215px !important;'>
+                <div class='col1 f11 flgray left'>{{form.script.label}}</div>
+                <div class='left'>{{form.script}}</div>
+            </div>
+		    <div class='clear'>
+                <input type="submit" name="submit" value="Save" class="uiButton"/>
+			    <span style="margin-left:10px;"><input type="submit" name="submit" value="Save as Draft" class="uiButton"/></span>
+            </div>
+            {{form.name}}
+            {{form.type}}
+		</form>
+	</div>		
+    {% endif %}
+  </div>
+   <div class="clear"></div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{% if form %}
+$(document).ready(function(){
+    $("#id_starts_on").datetimepicker({dateFormat:'yy-mm-dd', timeFormat:'hh:mm:00', stepMinute:15, onSelect: function(){
+            $('#id_ends_on').datepicker('enable');
+        },
+    });
+    
+    $("#id_ends_on").datetimepicker({dateFormat:'yy-mm-dd', timeFormat:'hh:mm:00', stepMinute:15, beforeShow: function(){
+            var newDate = $('#id_starts_on').datepicker('getDate');
+            if (newDate)
+                $("#id_ends_on").datepicker('option','minDate',newDate);
+            else
+                $("#id_ends_on").datepicker('disable'),True;
+        },
+    });
+});
+{% endif %}
+{% endblock %}

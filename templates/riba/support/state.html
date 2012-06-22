@@ -1,0 +1,101 @@
+{% extends 'support/base.html' %}
+{% block content %}
+{% load web_tags %}
+{% load cc_tags %}
+<style>
+dl {
+    margin: 0 0 1em !important;
+}
+dl dt {
+    font-weight: normal !important;
+}
+ul, ol {
+    padding-left: 0px !important;
+}
+label {
+    font-weight:normal !important;
+}
+</style>
+{% if form %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="{% cc_url request "state/" %}">States</a>&nbsp;&raquo;&nbsp; <a href='{% cc_url request "state/" %}{{state.id}}/'>{{state.name|title}}</a>&nbsp;&raquo;&nbsp; Edit</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>Edit</h1>
+    </div>
+    <div class="clear bordergray"></div>
+  </div>
+  <div class="main">
+  {% if form.non_field_errors %}
+  <div class="error">{{form.non_field_errors}}</div>
+  {%endif%}
+  <form method='post'>
+    <div class='row clear'>
+        <div class='col1 f11 flgray left'>{{form.name.label}}</div>
+        <div class='col2 left'>{{form.name}}</div>
+    </div>
+    <div>
+        {%if form.name.errors %}
+        <div class="error w440 left">
+    		{{form.name.errors}}
+    	</div>
+        {%endif%}
+    </div>
+    <div class='row clear'>
+        <div class='col1 f11 flgray left'>{{form.responsible_team.label}}</div>
+        <div class='col2 left'>{{form.responsible_team}}</div>
+    </div>
+    <div>
+        {%if form.responsible_team.errors %}
+        <div class="error w440 left">
+    		{{form.responsible_team.errors}}
+    	</div>
+        {%endif%}
+    </div>
+    <div class='clear mart15'>
+        <input type="submit" name="submit" value="Save" class="uiButton"/>
+    </div>
+  </form><br />
+  </div>
+</div>
+{% else %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="{% cc_url request "state/" %}">States</a>&nbsp;&raquo;&nbsp; {{state.name|title}}</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+      <h1>{{state.name|title}}</h1>
+    </div>
+        <div class="right content_head">
+			<a href="edit" role="button" class="left uiButton" style="color:#333; text-decoration:none;"><span class="uiButtonText">+ Edit State</span></a>
+		</div>
+	{% if not substates %}
+    <div class="clear bordergray"></div>
+    {% endif %}
+  </div>
+  <div class="main">
+  {% if substates %}
+	<table class="tbl_response">
+		<thead>
+		<tr>
+			<th>Substate</th>
+			<th>Acting Team</th>
+            <th>Turn Around Time</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for substate in substates %}
+		<tr>
+			<td class="w200"><a href="{% cc_url request "substate/" %}{{substate.id}}">{{substate.name|title}}</a></td>
+			<td>{{substate.acting_team.name|title}}</td>
+			<td>{%timedelta substate.tat%}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table><br />
+  {% else %}
+  <p>No substates present under this state</p>
+  {% endif %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,70 @@
+{% load ppd_tags %}
+<input type="hidden" name="form_pm" id="form_id" value="{{po_form.payment_mode.code}}_{{po_form.client.id}}" />
+    {% ifequal po_form.type "empty" %}
+    <b>No details required to activate this payment option.</b><br />
+    <b>Already Enabled.</b>
+    {%else%}
+      <table class="payment_options_style" width="700">
+	      {%if po_form.form.in_favor_of%}
+          <tr>
+            <td class="f11 fdgray">{{po_form.form.in_favor_of.label}}</td>
+            <td class="f12">{{po_form.form.in_favor_of}}</td>
+          </tr>
+          {%endif%}
+          {%if po_form.form.payment_delivery_address%}
+         <tr>
+          <td style="vertical-align:text-top" class="f11 fdgray">Office Address</td>
+          <td class="f12">{{po_form.form.payment_delivery_address}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_name%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_name.label}}</td>
+          <td>{{po_form.form.bank_name}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_branch%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_branch.label}}</td>
+          <td>{{po_form.form.bank_branch}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ac_name%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ac_name.label}}</td>
+          <td>{{po_form.form.bank_ac_name}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ac_type%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ac_type.label}}</td>
+          <td>{{po_form.form.bank_ac_type}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ac_no%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ac_no.label}}</td>
+          <td >{{po_form.form.bank_ac_no}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_address%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_address.label}}</td>
+          <td>{{po_form.form.bank_address}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.bank_ifsc%}
+        <tr>
+          <td class="f11 fdgray">{{po_form.form.bank_ifsc.label}}</td>
+          <td >{{po_form.form.bank_ifsc}}</td>
+        </tr>
+          {%endif%}              
+          {%if po_form.form.location_url%}
+        <tr>
+          <td class="f11 fdgray">{%ifequal po_form.payment_mode.group_code "store" %}Store Addresses{%else%}Nearest Location{%endifequal%}</td>
+          <td>{{po_form.form.location_url}}</td>
+        </tr>
+        {%endif%}             
+        </table>
+        <input type="submit" id="submit_button" /> 
+      {%endifequal%}

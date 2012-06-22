@@ -1,0 +1,39 @@
+{%extends "analytics/base.html"%}
+{% block script_footer %}
+
+<script type="text/javascript">
+    {%if page%}
+        $('#prev_page').click(function(){
+            var cur_page = {{page}};
+            if (cur_page != 1)
+            {
+                document.report_form.page_no.value = cur_page - 1;
+            }
+            document.getElementById("report_form").submit();
+        });
+        $('#next_page').click(function(){
+            var cur_page = {{page}};
+            document.report_form.page_no.value = cur_page+1;
+            document.getElementById("report_form").submit();
+        });
+    {%endif%}
+    $('.page_link').click(function(){
+        var page_link_id = this.id;
+        var pageno = page_link_id.split('page_link_')[1];
+        document.report_form.page_no.value = pageno;
+        document.getElementById("report_form").submit();
+    });
+    function checkall(elem_name)
+    {
+        locats = document.getElementsByName(elem_name);
+        for (i=0; i<locats.length; i++)
+            locats[i].checked = true;
+    }
+    function uncheckall(elem_name)
+    {
+        locats = document.getElementsByName(elem_name);
+        for (i=0; i<locats.length; i++)
+            locats[i].checked = false;
+    }
+</script>
+{% endblock %}

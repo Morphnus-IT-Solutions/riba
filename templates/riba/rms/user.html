@@ -1,0 +1,66 @@
+{% extends 'rms/base.html' %}
+{% load web_tags%}
+{% load rms_tags%}
+{% block content %}
+<style>
+ul, ol {
+    padding-left:0px !important;
+}
+</style>
+{% if not form %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/user">Users</a>&nbsp;&raquo;&nbsp; {% firstof rms_user.first_name|title rms_user.username|title %}</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+          <h1>{% firstof rms_user.first_name|title rms_user.username|title %}</h1>
+    </div>
+        <div class="right content_head">
+		<a href='edit' role="button" class="left uiButton" style="color:#333; text-decoration:none;" id='edit'><span class="uiButtonText">Edit User</span></a>
+        </div>
+	<div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+		<div class="clear"></div>
+        <div class='f12 fb'>{{role.name}}</div>
+        <div class='fb fdgray mart10'>Campaigns</div>
+        {% if campaigns %}
+        <ul>
+            {% for campaign in campaigns %}
+            <li class='left agentlist'><a href='/campaign/{{campaign.id}}/'>{{campaign.name}}</a></li>
+            {% endfor %}
+            <li style='width:1px;line-height:0px;'>&nbsp;</li>
+        </ul>
+        {% else %}
+        <p>None</p>
+        {% endif %}
+  </div>
+</div>
+{% else %}
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/user">Users</a>&nbsp;&raquo;&nbsp; <a href="/user/{{rms_user.id}}/">{% firstof rms_user.first_name|title rms_user.username|title %}</a>&nbsp;&raquo;&nbsp; Edit</div>
+  <div class="content_head">
+    <div class="header rc5 left">
+          <h1>Edit</h1>
+    </div>
+	<div class="clear bordergray"></div>
+  </div>
+  <div class="main clear">
+		<div class="clear"></div>
+        <div class='f12 fb'>{% firstof rms_user.first_name|title rms_user.username|title %}</div>
+        <form method='post' class='mart10'>
+            <div class='f11 flgray'>{{form.role.label}}</div>
+            <div class='mart5'>{{form.role}}<span class='flgray'>&nbsp;&nbsp;&nbsp;Not selecting any role will delete the user</span></div>
+            <div class='f11 flgray mart10'>{{form.campaigns.label}}</div>
+            <ul class='f12 mart5'>
+                {% for checkbox in form.campaigns|checkboxiterator %}
+                <li class='left agentlist'>{{checkbox}}</li>
+                {% endfor %}
+                <li style='width:1px;line-height:0px;'>&nbsp;</li>
+            </ul>
+            <div class='clear mart10'></div>
+                <input type="submit" name="submit" value="Save" class="uiButton"/>
+        </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

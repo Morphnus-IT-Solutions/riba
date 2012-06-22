@@ -1,0 +1,125 @@
+{% extends "rms/base.html" %}
+{% block content %}
+
+<div class="padding_top10">
+  <div class="breadcrumb"><a href="/">Home</a>&nbsp;&raquo;&nbsp; <a href="/campaign">Campaigns</a>&nbsp;&raquo;&nbsp; <a href="/campaign/{{campaign.id}}">{{campaign.name|title}}</a>&nbsp;&raquo;&nbsp; Add Responses</div>
+  <div class="content_head">
+    <div class="header rc5">
+	  <h1>{{campaign.name|title}}</h1>
+    </div>
+	  <div class="clear bordergray"></div>
+  </div>
+  <div class="main">
+		{% if status == 1 %} 
+			{% if invalid_phone %}
+        		<div class="error">Invalid phone numbers found at following rows:
+        		<br/>
+        		{% for data in invalid_phone %}
+          			{{data}}, 
+        		{% endfor %}
+				</div>
+				<br />
+       		{% endif %}
+
+       		{% if overlap %}
+        		<div class="error">Duplicate phone numbers found:
+        		{% for num,tim in overlap %}
+        			<br/>
+        			{{num}} - {{tim}} times  
+        		{% endfor %}
+				</div>
+        	{% endif %}
+		{%else %}
+			{% if status == 2 %}
+			<div class="confirmation_table_bg">
+				<table cellspacing="0" cellpadding="0" border="0" width="100%">
+					<tr>
+						<td valign="top" class="confirmation_successfully">
+						</td>
+						<td class="confirmation_desc">
+							<h1>Response Upload Successful</h1><br />
+						</td>
+					</tr>
+				</table>
+			</div>
+			{% endif %}
+		{%endif%}
+		
+		{% if status == 1 or status == 0 %}		
+	     <p>Select an excel (.xls) file for upload</p>
+         <form method="post" enctype="multipart/form-data" action="{{action}}">        
+         <table cellpadding="0" class="tbl_response_entry" cellspacing="0" border="0">  
+         	<colgroup>
+    			<col width="50"/>
+    			<col />
+    		</colgroup>
+        	{% for field in form %}
+       		<tr>
+				<div class="{%if field.errors %}error{%endif%}">{{field.errors}}</div>
+           		<td class="padl11">
+                    <input id="id_input_excel" type="file" name="input_excel" class="cursorp">
+        		</td>
+        	</tr>
+        	{% endfor %}
+       		<tr>
+				<td class="padl11"><input type="submit" value="Submit" class="uiButton"/></td>
+       		</tr>
+          </table>
+    </form>
+	{% endif %}
+
+	 <div class="mart20 bb"></div>
+	 <div class="mart20 padl11">
+		We expect "<strong>.xls</strong>" file to be in this format of columns.
+     </div>
+	 <div class="clear mart20">
+	 	<div class=" box-shadow pad20">
+	 	<center>
+	 	<table class="tbl_excel">
+			<tr>
+				<th style="padding:0px !important;"><img src="/media/rms/images/excel.gif" width="25" height="19"/></th>
+				<th>MOBILE</th>
+				<th style="background-color:#f4ca78 !important; background-image:none !important; border:1px solid #f29536 !important">NAME</th>
+				<th>EMAIL</th>
+				<th>CITY</th>
+				<th>ADDRESS</th>
+				<th>PIN</th>
+				<th>ALTERNATE PHONE</th> 
+			</tr>
+			<tr>
+				<td style="background-color:#e4ecf7; text-align:center">1</td>
+				<td>9856238956</td>
+				<td>Aman Verma</td>
+				<td>aman.verma@gmail.com</td>
+				<td>Mumbai</td>
+				<td>247 Park, Hometown, Vikhroli(w)</td>
+				<td>400086</td>
+				<td>28900653</td>
+			</tr>
+			<tr>
+				<td style="background-color:#f4ca78; border:1px solid #f29536; text-align:center">2</td>
+				<td>9891384070</td>
+				<td>Shashank Shekhar</td>
+				<td>shashank@gmail.com</td>
+				<td>Mumbai</td>
+				<td>G-1, Hill View, I.C. Colony, Borivali(w)</td>
+				<td>400103</td>
+				<td>28944657</td>
+			</tr>
+			<tr>
+				<td style="background-color:#e4ecf7; text-align:center">3</td>
+				<td>9977582456</td>
+				<td>Amit Kumar</td>
+				<td>amit.kumar@yahoo.com</td>
+				<td>Mumbai</td>
+				<td>3rd floor, OCC Mall, Mumbai Central(E)</td>
+				<td>400004</td>
+				<td>22980673</td>
+			</tr>
+		</table>
+		</center>
+		</div>
+	  </div>
+   </div>
+</div>
+{% endblock %}

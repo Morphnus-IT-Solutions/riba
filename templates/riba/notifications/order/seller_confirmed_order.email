@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Order-Confirmation</title>
+</head>
+<body style="font-family:Arial, Helvetica, sans-serif; size:12px;">
+    <table cellpadding="0" cellspacing="14px" border="0" >
+        <tr>
+            <td>Dear {{shop_name}},</td>
+        </tr>
+        <tr>
+            <td>
+            {%ifequal payment_option.payment_mode.code 'cod'%}
+                Received order from {{customer_name}}{%if customer_email%}, {{customer_email}}{%endif%}
+                {%if customer_phone%}, {{customer_phone}}{%endif%}
+                on {{order_payment_date}}. Please ship the following items and collect cash on delivery.
+            {%else%}
+                Received {{seller_total}} from {{customer_name}}{%if customer_email%}, {{customer_email}}{%endif%}{%if customer_phone%}, {{customer_phone}}{%endif%}. Payment received by {{payment_mode_string}} on {{order_payment_date}}. Please ship the following items:
+            {%endifequal%}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellpadding="2" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background:#ddd;">S.No</td>
+                        <td style="background:#ddd;">Item</td>
+                        <td style="background:#ddd;">FC</td>
+                        <td style="background:#ddd;">Price</td>
+                        <td style="background:#ddd;">Qty</td>
+                        <td style="background:#ddd;">Delivery</td>
+                        <td style="background:#ddd;text-align:right;">Amount</td>
+                    </tr>
+                    {% for item in seller_items %}
+                    <tr>
+                        <td>
+                            {{forloop.counter}}</td>
+                        <td>
+                            {{item.title}} [{{item.sku}}]
+                            {%if item.gift %}
+                             + {{item.gift}}
+                            {%endif%}
+                        </td>
+                        <td>
+                           {%if item.fulfillment_dc%} {{item.fulfillment_dc}} {%endif%}
+                        </td>
+                        <td>
+                            {{item.offer_price|safe}}
+                        </td>
+                        <td>
+                            {{item.qty}}
+                        </td>
+                        <td>
+                            Before {{item.delivery_date|date:"d M, Y"}}
+                        </td>
+                        <td style="text-align:right;">
+                            {{item.total_item_offer_price|safe}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="7">
+                            <hr/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                        </td>
+                        <td>
+                            {%if seller_offer_price_total != seller_total%}Sub-total<br/>{%endif%}
+                            {%if seller_coupon_discount %}Discount {%if coupon%}[{{coupon_code}}]{%endif%}(-)<br/>{%endif%}
+                            {%if is_seller_cashback %}Cashback (-)<br/>{%endif%}
+                            {%if seller_shipping_charges %}Shipping Charges<br/>{%endif%}
+                            Total
+                        </td>
+                        <td style="text-align:right;">
+                            {%if seller_offer_price_total != seller_total%}{{seller_offer_price_total|safe}}<br/>{%endif%}
+                            {%if seller_coupon_discount%}{{seller_coupon_discount}}<br/>{%endif%}
+                            {%if is_seller_cashback %}{{seller_cashback}}<br/>{%endif%}
+                            {%if seller_shipping_charges %}{{seller_shipping_charges}}<br/>{%endif%}
+                            {{seller_total|safe}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="7">
+                            <hr/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                DELIVERY ADDRESS:<br/>
+                {{delivery_name}}<br/>
+                {{delivery_address}}<br/>
+                {{delivery_city}} - {{delivery_pincode}}<br/>
+                {%if delivery_state%}
+                    {{delivery_state}}
+                {%endif%}
+                {%if delivery_country%}
+                    {%if delivery_state%}, {%else%}
+                    {%endif%}{{delivery_country}}
+                {%endif%}<br/>
+                Phone: {{delivery_phone}}
+            </td>    
+        </tr>
+        {%if delivery_notes %}
+        <tr>
+        <td>
+            DELIVERY NOTES:<br/>
+            {{delivery_notes}}
+        </td>
+        </tr>
+        {%endif%}               
+        {%if delivery_giftmessage%}
+        <tr>
+        <td>
+            GIFT NOTES:<br/>
+            {{delivery_giftmessage}}
+        </td>
+        </tr>
+        {%endif%}    
+        <tr>
+        <td><br/>{{signature|linebreaks}}</td>
+        </tr>
+    </table>
+</body>
+</html>

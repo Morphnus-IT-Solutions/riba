@@ -1,0 +1,52 @@
+
+div.jsonSuggestResults {
+	position:absolute;
+	border:1px solid #CCC;
+	padding:0px;
+/*	margin:0px 2px;*/
+	z-index:1;
+	left:346px !important;
+	
+}
+
+div.jsonSuggestResults div.resultItem {
+	margin:0px;
+	padding:3px;
+	position:relative;
+	height:auto;
+	cursor:pointer;
+}
+
+div.jsonSuggestResults div.resultItem.odd {
+	background-color:#FFFFFF;
+}
+div.jsonSuggestResults div.resultItem.even {
+	background-color:#FFFFFF;
+}
+
+div.jsonSuggestResults div.resultItem.hover {
+background-color:#fcfccb;
+	/*background-color:#FCED67;*/
+	cursor:default;
+}
+
+div.jsonSuggestResults div.resultItem img {
+	float:left;
+	margin-right:10px;
+}
+
+div.jsonSuggestResults div.resultItem p {
+	margin:0px;
+	padding:0px;
+}
+
+div.jsonSuggestResults div.resultItem p strong {
+	font-weight:bold;
+}
+
+div.jsonSuggestResults div.resultItem p.extra {
+	font-size: x-small !important;
+	position:absolute;
+	bottom:3px;
+	right: 3px;
+}

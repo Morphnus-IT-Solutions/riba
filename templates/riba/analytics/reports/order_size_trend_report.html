@@ -1,0 +1,129 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+<style type="text/css">
+	.uiButton{padding:0px 6px;}
+	.sku_id {width:270px; float:left;}
+	.excel_main {margin:8px 0 0 5px !important;}
+	.report_option_aa {margin-right:10px;}
+</style>
+<form method="POST" id="report_form" name="report_form" action="">
+{% show_export_link request form 'excel' %}
+{% form_daterange request form title%}
+<div class="report_option_aa"><span>Show charts for Order State:</span>&nbsp;{{form.order_state}}</div><input type="submit" value="Go!" class="uiButton" style="width:50px\9;padding:5px\9;">
+
+<table class="tbl_graph">
+  <tr>
+    <td><div id="param_count" style="border:1px solid #ccc"></div></td>
+    <br>
+  </tr>
+  <tr>&nbsp;&nbsp;</tr>
+  <tr>
+    <td><div id="param_value" style="border:1px solid #ccc"></div></td>
+  </tr>
+</table>
+<div class="mart15">
+  <table class="tbl_response marb20" >
+    <tr> {%for i in headings%}
+      <th class="fb">{{i|title}}</th>
+      {%endfor%} </tr>
+    {%for day in data_list%}
+    <tr> {%ifequal day.day 'Total'%}
+      <td rowspan="4">Total</td>
+      {%else%}
+      <td rowspan="4">{{day.day|date:"d N"}}</td>
+      {%endifequal%}
+      <td {%if forloop.last%}class="fb"{%endif%}># Orders</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.below_500.count%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.500_1000.count%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.1000_2500.count%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.2500_5000.count%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.5000_10000.count%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.above_10000.count%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.Total.count%}</td>
+    </tr>
+    <tr>
+      <td {%if forloop.last%}class="fb"{%endif%}>Value (Rs.)</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.below_500.value%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.500_1000.value%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.1000_2500.value%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.2500_5000.value%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.5000_10000.value%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.above_10000.value%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.Total.value%}</td>
+    </tr>
+    <tr>
+      <td {%if forloop.last%}class="fb"{%endif%}># Orders/100 Visitors</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.below_500.count_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.500_1000.count_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.1000_2500.count_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.2500_5000.count_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.5000_10000.count_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.above_10000.count_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.Total.count_visit_percent%}</td>
+    </tr>
+    <tr>
+      <td {%if forloop.last%}class="fb"{%endif%}>Value/100 Visitors (Rs.)</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.below_500.value_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.500_1000.value_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.1000_2500.value_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.2500_5000.value_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.5000_10000.value_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.above_10000.value_visit_percent%}</td>
+      <td class="ra{%if forloop.last%} fb{%endif%}">{%int_to_comma day.Total.value_visit_percent%}</td>
+    </tr>
+    {%endfor%}
+  </table>
+</div>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Date');
+        data.addColumn('number', 'Below 500');
+        data.addColumn('number', '500 - 1000');
+        data.addColumn('number', '1000 - 2500');
+        data.addColumn('number', '2500 - 5000');
+        data.addColumn('number', '5000 - 10000');
+        data.addRows([
+        {%for day in graph_list%}
+            ["{{day.day|date:"d N"}}", {{day.below_500.count_visit_percent}}, {{day.500_1000.count_visit_percent}}, {{day.1000_2500.count_visit_percent}}, {{day.2500_5000.count_visit_percent}}, {{day.5000_10000.count_visit_percent}}],
+        {%endfor%}
+        ]);
+        var chart = new google.visualization.AreaChart(document.getElementById('param_value'));
+        chart.draw(data, {width: 850, height: 400, title: 'Conversion Trend by Order Size - # Orders/100 visitors', isStacked: true});
+      }
+</script>
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Date');
+        data.addColumn('number', 'Below 500');
+        data.addColumn('number', '500 - 1000');
+        data.addColumn('number', '1000 - 2500');
+        data.addColumn('number', '2500 - 5000');
+        data.addColumn('number', '5000 - 10000');
+        data.addRows([
+        {%for day in graph_list%}
+            ["{{day.day|date:"d N"}}", {{day.below_500.value_visit_percent}}, {{day.500_1000.value_visit_percent}}, {{day.1000_2500.value_visit_percent}}, {{day.2500_5000.value_visit_percent}}, {{day.5000_10000.value_visit_percent}}],
+        {%endfor%}
+        ]);
+        var chart = new google.visualization.AreaChart(document.getElementById('param_count'));
+        chart.draw(data, {width: 850, height: 400, title: 'Conversion Trend by Order Size - Value/100 visitors (Rs.)', isStacked: true});
+      }
+</script>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript" language="javascript">
+    $('.order_state_radio').click(function(){
+        var form=$('#report_form');
+        form.submit()
+    });
+</script>
+{% endblock %} 

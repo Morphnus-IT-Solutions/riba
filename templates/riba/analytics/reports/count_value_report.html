@@ -1,0 +1,269 @@
+{% extends "analytics/base.html" %}
+{% load order_tags %}
+{% block content %}
+
+<form method="POST" id="report_form" name="report_form" action="">
+{% show_export_link request form 'excel' %}
+{% form_daterange request form title%}
+<div class="report_option_main">
+  <div class="hidden">{{form.format_option}}</div>
+  <div class="report_option_aa marb10">
+    <span>Channel:</span>
+    {{form.channel}}
+    <span>Date type:</span>
+    {{form.date_type}}
+  </div>
+    <input type="submit" value="Go!" class="uiButton" style="width:50px\9; padding:5px;">
+</div>
+<br />
+<br />
+</form>
+{%if not hide_it%}
+<table class="tbl_graph mart20">
+  <tr>
+    <td>
+      <div id="visualization_value" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div id="visualization_item" style="border:1px solid #ccc;width: 300px; height: 300px;float:left; margin-left:15px; margin-right:15px;"></div>
+      <div id="visualization_order" style="border:1px solid #ccc;width: 300px; height: 300px;float:left"></div>
+      <div class="clear"></div>
+      <br/>
+    </td>
+  </tr>
+  <tr>
+    <td><div id="daily_value" style="border:1px solid #ccc;"></div>
+      <br/></td>
+  </tr>
+  <tr>
+    <td><div id="daily_item" style="border:1px solid #ccc;"></div>
+      <br/></td>
+  </tr>
+  <tr>
+    <td><div id="daily_order" style="border:1px solid #ccc;"></div>
+      <br/></td>
+  </tr>
+</table>
+<div class="padb5 marb20 width100p">
+<table class="tbl_report">
+  <tr>
+    <th>Date</th>
+    <th>Measure</th>
+    <th class="fb">Booked</th>
+    <th>In collection</th>
+    <th>Cancelled</th>
+    <th>In verif.</th>
+    <th class="fb">Approved</th>
+    <th>To be procured</th>
+    <th>To be invoiced</th>
+    <th>Cancelled</th>
+    <th class="fb">Invoiced</th>
+    <th>To be dispatched</th>
+    <th>In Transit</th>
+    <th>Undelivered</th>
+    <th class="fb">Delivered</th>
+    <th>Returned</th>
+  </tr>
+
+    {%if days|length >= 7%}
+    <!-- Sum total rows below -->
+        {% include "analytics/reports/pipeline_sum_values.html" with rowcolors="row2" %}
+    {%endif%}
+
+  {% for day in days %}
+  <tr class="{%cycle "row1" "row2" as rowcolors%}">
+    <td rowspan="3" style="vertical-align:middle">
+        {{day.day|date:"d M"}}
+      </td>
+    <td>Value</td>
+    {%for order_state in all_order_states%}
+    <td>{{day|lookup:order_state|lookup:'value'}}</td>
+    {%endfor%} </tr>
+
+  <tr class="{{rowcolors}}">
+    <td>Qty</td>
+    {%for order_state in all_order_states%}
+    <form method="post" action="/reports/pipeline_slices/">
+        <input type="hidden" name="order_state" value="{{order_state}}">
+        <input type="hidden" name="start_date" value="{{day.day|date:"d M, Y"}}">
+        <input type="hidden" name="end_date" value="{{day.day|date:"d M, Y"}}">
+        <input type="hidden" name="format_option" value="{{format_option}}">
+        <input type="hidden" name="date_type" value="{{form.date_type.value}}">
+        <input type="hidden" name="channel" value="{{form.channel.value}}">
+        <input type="hidden" name="report_format" value="web">
+        <td><input type="submit" class="submitButtonlinkBlue" value="{{day|lookup:order_state|lookup:'count'}}"></td>
+    </form>
+    {%endfor%} </tr>
+
+  <tr class="{{rowcolors}}">
+    <td>Orders</td>
+    {%for order_state in all_order_states%}
+    <td>{{day|lookup:order_state|lookup:'orders'}}</td>
+    {%endfor%} </tr>
+  {% endfor %}
+
+<!-- Sum total rows below -->
+
+    {%with days|length|divisibleby:"2"|yesno:"row1,row2" as rowcolors%}
+        {% include "analytics/reports/pipeline_sum_values.html" %}
+    {%endwith%}
+
+</table>
+</div>
+{%endif%}
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+<script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+        var raw_data = [['Booked', {{sum_int.booked.count}}],
+                        ['Approved', {{sum_int.approved.count}}],
+                        ['Invoiced', {{sum_int.invoiced.count}}],
+                        ['Delivered', {{sum_int.delivered.count}}]];
+        
+        var years = ' ';
+                        
+        data.addColumn('string', 'Item');
+        for (var i = 0; i  < raw_data.length; ++i) {
+          data.addColumn('number', raw_data[i][0]);    
+        }
+        
+        data.addRows(years.length);
+      
+        for (var j = 0; j < years.length; ++j) {    
+          data.setValue(j, 0, years[j].toString());    
+        }
+        for (var i = 0; i  < raw_data.length; ++i) {
+          for (var j = 1; j  < raw_data[i].length; ++j) {
+            data.setValue(j-1, i+1, raw_data[i][j]);    
+          }
+        }
+        
+        // Create and draw the visualization.
+        new google.visualization.ColumnChart(document.getElementById('visualization_item')).
+            draw(data,
+                 {title:"Total Sales by Volume (# quantity)", 
+                  width:300, height:300,
+                  hAxis: {title: "Quantity"},
+                  chartArea: {width: '70%'},
+                  legend: {'position': 'bottom'},
+                  }
+            );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+<script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+        var raw_data = [['Booked', {{sum_int.booked.orders}}],
+                        ['Approved', {{sum_int.approved.orders}}],
+                        ['Invoiced', {{sum_int.invoiced.orders}}],
+                        ['Delivered', {{sum_int.delivered.orders}}]];
+        
+        var years = ' ';
+                        
+        data.addColumn('string', 'Item');
+        for (var i = 0; i  < raw_data.length; ++i) {
+          data.addColumn('number', raw_data[i][0]);    
+        }
+        
+        data.addRows(years.length);
+      
+        for (var j = 0; j < years.length; ++j) {    
+          data.setValue(j, 0, years[j].toString());    
+        }
+        for (var i = 0; i  < raw_data.length; ++i) {
+          for (var j = 1; j  < raw_data[i].length; ++j) {
+            data.setValue(j-1, i+1, raw_data[i][j]);    
+          }
+        }
+        
+        // Create and draw the visualization.
+        new google.visualization.ColumnChart(document.getElementById('visualization_order')).
+            draw(data,
+                 {title:"Total Sales by Volume (# orders)", 
+                  width:300, height:300,
+                  hAxis: {title: "Orders"},
+                  chartArea: {width: '70%'},
+                  legend: {'position': 'bottom'},
+                  }
+            );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+<script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+        var raw_data = [['Booked', {%division_entry sum_int.booked.value 100000 3%}],
+                        ['Approved', {%division_entry sum_int.approved.value 100000 3%}],
+                        ['Invoiced', {%division_entry sum_int.invoiced.value 100000 3%}],
+                        ['Delivered', {%division_entry sum_int.delivered.value 100000 3%}]];
+        
+        var years = ' ';
+                        
+        data.addColumn('string', 'Item');
+        for (var i = 0; i  < raw_data.length; ++i) {
+          data.addColumn('number', raw_data[i][0]);    
+        }
+        
+        data.addRows(years.length);
+      
+        for (var j = 0; j < years.length; ++j) {    
+          data.setValue(j, 0, years[j].toString());    
+        }
+        for (var i = 0; i  < raw_data.length; ++i) {
+          for (var j = 1; j  < raw_data[i].length; ++j) {
+            data.setValue(j-1, i+1, raw_data[i][j]);    
+          }
+        }
+        
+        // Create and draw the visualization.
+        new google.visualization.ColumnChart(document.getElementById('visualization_value')).
+            draw(data,
+                 {title:"Total Sales by Value (Rs. Lakh)", 
+                  width:300, height:300,
+                  hAxis: {title: "Value"},
+                  chartArea: {width: '70%'},
+                  legend: {'position': 'bottom'},
+                  }
+            );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode|safe}}
+         var chart = new google.visualization.AreaChart(document.getElementById('daily_item'));
+         chart.draw(jscode_data, {width: 900, height: 325, title: 'Daily Sales by Volume (# quantity)',lineWidth: 3,pointSize: 5,colors:['#224499','#FF9900','#004411','#670767','#FF2D00']});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode1|safe}}
+         var chart = new google.visualization.AreaChart(document.getElementById('daily_order'));
+         chart.draw(jscode_data1, {width: 900, height: 325, title: 'Daily Sales by Volume (# orders)',lineWidth: 3,pointSize: 5,colors:['#224499','#FF9900','#004411','#670767','#FF2D00']});
+    }
+</script>
+<script type="text/javascript">
+    google.load("visualization", "2", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart(){
+         {{jscode2|safe}}
+         var chart = new google.visualization.AreaChart(document.getElementById('daily_value'));
+         chart.draw(jscode_data2, {width: 900, height: 325, title: 'Daily Sales by Value (Rs. Lakh)',lineWidth: 3,pointSize: 5,colors:['#224499','#FF9900','#004411','#670767','#FF2D00']});
+    }
+</script>
+{% endblock %} 

@@ -1,0 +1,28 @@
+<style type='text/css'>
+#form input[type=text]{width:200px;margin-bottom:10px;}
+#form select{width:202px;}
+#form input[type=submit]{width:50px;}
+ul, ol { padding-left: 0px !important; }
+</style>
+{% if form.non_field_errors %}
+<div class="error">{{form.non_field_errors}}</div>
+{%endif%}
+<form method='post' action='/state/add/' id='form'>
+<div class="fieldWrapper marb5 clear">
+	<span class="f11 fdgray">{{ form.name.label }}</span><br/>
+	{{ form.name }}
+</div>
+{% if form.name.errors %}
+<div class='error clear'>{{form.name.errors}}</div>
+{% endif %}
+<div class="fieldWrapper marb10 clear">
+	<span class="f11 fdgray">{{ form.responsible_team.label }}</span><br/>
+	{{ form.responsible_team }}
+</div>
+{% if form.responsible_team.errors %}
+<div class='error clear'>{{form.responsible_team.errors}}</div>
+{% endif %}
+<div class='clear'>
+    <input type="submit" name="submit" value="Add" class="uiButton" id='addstate'/>
+</div>
+</form>

@@ -1,0 +1,12 @@
+{% extends 'ppd/user_home.html' %}
+{% load cc_tags %}
+{% load web_tags %}
+{% load ppd_tags %}
+{% block user_content %}
+{% daterange "Subscribers"  search_trend from_date to_date request '' client_display_name%}
+</br>
+<div class="f18">
+    Total No. of Subscribers  =  {{total_subscribers}}
+</div>
+<a href="{{request.get_full_path}}&excel=True">Download as Excel</a>
+{%endblock%}

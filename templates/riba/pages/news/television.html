@@ -1,0 +1,129 @@
+{% extends "web/base.html" %}
+{% block content %}
+<div class="breadcrumb"> <a href="/" title="Go to Chaupaati Home">Home</a>&nbsp;&raquo;&nbsp;News&nbsp;&raquo;&nbsp;Television </div>
+<div class="page_right">
+  <ul>
+    <li><a href="/about/index.html">About Us</a></li>
+    <li><a href="/about/team.html">Team</a></li>
+     <li><a href="/news/index.html">News</a>
+       <ul style="padding:0px 0px 5px 10px;">   
+        <li><a href="/news/television.html" class="fb">Television</a></li>
+        <li><a href="/news/print.html">Print</a></li>
+        <li><a href="/news/web.html">Web</a></li>        
+        </ul>
+    </li>
+    <li><a href="/about/contact.html">Contact Us</a></li>    
+  </ul>
+</div>
+
+<!--light box-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.1/scriptaculous.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jq/fancyzoom.min.js"></script>
+
+	<script type="text/javascript" charset="utf-8">
+		$(document).observe('dom:loaded', function() {
+			$$("td.photo a").each(function(el) { new FancyZoom(el); })
+		});
+	</script>
+    <!--lightbox end-->
+<div class="page">
+  <h1>Television</h1>
+ 
+ 
+  <table class="television" border="1">
+    <tr>
+      <td class="photo">
+     <a href="#16-Sep-2009-CNBC-TV18"> <img src="{{MEDIA_URL}}images/news1/16-Sep-2009-CNBC-TV18.jpg" width="150" /></a>
+     <h4>CNBC TV18- 16 Sep 2009<br />
+ (jump to 2:54)</h4>   
+        </td>  
+        <td width="50"></td> 
+     <td class="photo">
+     <a href="#5-Jun-2009-ETV-Yuvabharat-1"> <img src="{{MEDIA_URL}}images/news1/5-Jun-2009-ETV-Yuvabharat-1.jpg" width="150" /></a>
+      <h4>ETV Yuvabharat- 5 Jun 2009<br />
+Part 1</h4>   
+      </td>  
+      <td width="50"></td> 
+     <td class="photo">
+       <a href="#5-Jun-2009-ETV-Yuvabharat-2"><img src="{{MEDIA_URL}}images/news1/5-Jun-2009-ETV-Yuvabharat-2.jpg" width="150"/></a>
+        <h4>ETV Yuvabharat- 5 Jun 2009<br />
+Part 1</h4>   
+      </td>
+      <td width="50"></td> 
+    </tr>
+  <tr><td colspan="6"><br /></td></tr>
+    <tr>
+      <td class="photo">
+      <a href="#26-Dec-2008-Yyuva-Doordarshan-News"><img src="{{MEDIA_URL}}images/news1/26-Dec-2008-Yyuva-Doordarshan-News.jpg" width="150"/></a>
+      <h4>Yyuva,
+ Doordarshan News- <br />
+26 Dec 2008</h4>      
+        
+      </td> 
+      <td width="50"></td> 
+     <td class="photo">
+       <a href="#6-Dec-2008-Swadesh-Zee-Business-1"><img src="{{MEDIA_URL}}images/news1/6-Dec-2008-Swadesh-Zee-Business-1.jpg" width="150"/></a>
+        <h4>Swadesh,
+ Zee Business <br />6 Dec 2008 -
+Part 1</h4>
+     
+      </td>
+      <td width="50"></td> 
+      <td class="photo">
+      <a href="#6-Dec-2008-Swadesh-Zee-Business-2"> <img src="{{MEDIA_URL}}images/news1/6-Dec-2008-Swadesh-Zee-Business-2.jpg" width="150"/></a>
+         <h4>Swadesh,
+ Zee Business- <br />6 Dec 2008
+Part 2</h4>
+     
+      </td>
+      <td width="50"></td> 
+    </tr>
+     <tr><td colspan="6"><br /></td></tr>
+    <tr>
+      <td class="photo">
+       <a href="#6-Dec-2008-Swadesh-Zee-Business-3"><img src="{{MEDIA_URL}}images/news1/6-Dec-2008-Swadesh-Zee-Business-3.jpg" width="150"/></a>
+       <h4>Swadesh,
+ Zee Business - <br />6 Dec 2008
+Part 3</h4>
+     
+      </td>
+      <td width="50"></td> 
+      <td></td>
+      <td width="50"></td> 
+       <td></td>
+      <td width="50"></td> 
+    </tr>
+     <tr><td colspan="6"><br /></td></tr>
+  </table>
+  <!--objects start-->
+ <div id="16-Sep-2009-CNBC-TV18">   
+   <object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/7i3TtVDoNow&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/7i3TtVDoNow&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>   
+  </div>
+  
+   <div id="5-Jun-2009-ETV-Yuvabharat-1">   
+   <object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/7i3TtVDoNow&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/7i3TtVDoNow&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>  
+  </div>
+   <div id="5-Jun-2009-ETV-Yuvabharat-2">   
+  <object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/3iNOBv1LLiU&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/3iNOBv1LLiU&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object> 
+  </div>
+   <div id="26-Dec-2008-Yyuva-Doordarshan-News">   
+<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/24DsCLDpAO8&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/24DsCLDpAO8&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>  
+  </div>
+   <div id="6-Dec-2008-Swadesh-Zee-Business-1">   
+   <object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/4V-aduHcQJE&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/4V-aduHcQJE&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>  
+  </div>
+   <div id="6-Dec-2008-Swadesh-Zee-Business-2">   
+ <object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/sOn7B3hcY7A&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/sOn7B3hcY7A&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>   
+  </div>
+   <div id="6-Dec-2008-Swadesh-Zee-Business-3">   
+   <object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/1y6905WEAXg&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/1y6905WEAXg&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>   
+  </div>
+  <!--objects end-->
+  
+  
+  
+  
+</div>
+<div class="clear"></div>
+{% endblock %} 

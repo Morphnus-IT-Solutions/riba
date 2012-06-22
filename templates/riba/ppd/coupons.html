@@ -1,0 +1,10 @@
+{% load ppd_tags %}
+{%load web_tags%}
+{% block user_content %}
+
+{% for j in promotion_coupons %}
+	{{j}},
+{% endfor %}
+ 
+{% endblock %}
+ 
