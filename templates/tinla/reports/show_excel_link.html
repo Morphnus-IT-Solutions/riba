@@ -1,5 +1,0 @@
-{%ifequal request.path full_path%}
-    <a href="{{full_path}}?{{excel}}=True">Export as excel</a>&nbsp;&nbsp;
-{%else%}
-    <a href="{{full_path}}&{{excel}}=True">Export as excel</a>&nbsp;&nbsp;
-{%endifequal%}

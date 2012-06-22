@@ -1,7 +1,0 @@
-Dear {{customer_name}},
-
-Please visit the link below to see more details of {{product_name}}. Please feel free to call us on 0922-222-1947 to continue with your order or for any further clarifications.
-
-{{product_link}}
-
-Happy shopping!{%include 'order/signature.email'%}

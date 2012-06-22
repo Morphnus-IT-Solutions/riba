@@ -1,6 +1,0 @@
-            <select name="seller" id="id_seller">
-                    <option {%if seller_id == 0%}selected="selected"{%endif%} value="0">All</option>                      
-                    {%for s in seller%}                         
-                        <option {%if seller_id == s.id%}selected="selected"{%endif%} value={{s.id}}>{{s.name}}</option>                      
-                    {%endfor%}                
-             </select>

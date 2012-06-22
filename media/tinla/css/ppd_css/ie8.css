@@ -1,8 +1,0 @@
-
-/* CSS Document */
-#user_links{margin-bottom:22px !important;}
-.shadow_one{filter:progid:DXImageTransform.Microsoft.dropShadow(color=#dcdcdc,offX=1,offY=1,positive=true); border:1px solid #ccc}
-#search_bar{ padding:1px !important; }
-.tbl_searchbar{margin:2px; border-collapse:collapse;}
-.tbl_searchbar td button[type="submit"]{padding:2px 10px !important; background:url('/media/images/searchbg.jpg') repeat 0px 0px;  height:25px;}
-.cart_button{margin-top:2px !important; background:url('/media/images/cartbg.jpg') repeat -20px 0px;}
