@@ -483,16 +483,7 @@ BANNED_IPS = ()
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 LOGIN_URL = {
-    'website':'/auth/signin/',
-    'cc':'/accounts/login/',
-    'store':'/accounts/login/',
-    'mobileweb':'/auth/signin/',
-    'rms':'/accounts/login/',
-    'analytics':'/accounts/login/',
-    'cs':'/accounts/login/',
-    'platform':'/accounts/login/',
-    'support':'/accounts/login/',
-    'reports':'/accounts/login/'
+    'website':'/accounts/login/',
 }
 
 LOGOUT_URL = '/accounts/logout/'

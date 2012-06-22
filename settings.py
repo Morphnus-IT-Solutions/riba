@@ -1,4 +1,4 @@
-# Django settings for tinla project.
+# Django settings for riba project.
 
 import os
 import logging.config
@@ -51,8 +51,8 @@ USE_I18N = False
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_PREFIX = 'media'
-MEDIA_ROOT = os.path.join(SETTINGS_FILE_FOLDER, 'media/tinla')
-UPLOAD_ROOT = '/home/apps/uploads/u/tinla'
+MEDIA_ROOT = os.path.join(SETTINGS_FILE_FOLDER, 'media/riba')
+UPLOAD_ROOT = '/home/apps/uploads/u/riba'
 # FEEDS ROOT
 FEEDS_ROOT = os.path.join(SETTINGS_FILE_FOLDER, 'feeds/data')
 
@@ -126,7 +126,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'riba.urls'
 
 TEMPLATE_DIRS = (
-    os.path.join(SETTINGS_FILE_FOLDER, 'templates/tinla'),
+    os.path.join(SETTINGS_FILE_FOLDER, 'templates/riba'),
 )
 
 TINYMCE_JS_URL = ADMIN_MEDIA_PREFIX + 'js/tiny_mce/tiny_mce2.js'
@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'imagekit',
     'tinymce',
     'south',
+    'admin',
 	'question',
     'build_document',
     'locations',
