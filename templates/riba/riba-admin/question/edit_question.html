@@ -9,6 +9,19 @@
     <!-- END Breadcrumbs -->
 {% endblock %}
 
+{% block extra_css %}
+<style>
+    .field-label input {width: 300px;}
+    .field-label {width: 400px;}
+    .field-option textarea {width: 300px;}
+    .option-value input {width: 300px;}
+    .option-value {width: 400px;}
+    .dependent-question select {width: 400px;}
+    .dependent-question {width: 500px;}
+    .question textarea{width: 500px;}
+</style>
+{% endblock %}
+
 {%block content%}
 <div class="question-details">
     <h1>Edit Question</h1>
@@ -78,16 +91,16 @@
                                                     {{ f.id.label }}
                                                     {{ f.id }}
                                                 </td>
-                                                <td>{{f.field_label}}</td>
-                                                <td>{{f.field_type}}</td>
-                                                <td>{{f.field_option}}</td>
+                                                <td class="field-label">{{f.field_label}}</td>
+                                                <td class="field-type">{{f.field_type}}</td>
+                                                <td class="field-option">{{f.field_option}}</td>
                                                 <td>{{f.DELETE}}</td>
                                             {% endif %}
                                         </tr>
                                     {% endfor %}
                                         <tr class="add-row">
                                             <td colspan="4">
-                                               <a id="add_another_field" href="javascript:void(0)">Add another field</a>
+                                               <strong><a id="add_another_field" href="javascript:void(0)">Add another field</a></strong>
                                             </td>
                                         </tr>
                                 </tbody>
@@ -119,8 +132,8 @@
                                                     {{ o.id.label }}
                                                     {{ o.id }}
                                                 </td>
-                                                <td>{{o.option_value}}</td>
-                                                <td>{{o.dependent_question}}
+                                                <td class="option-value">{{o.option_value}}</td>
+                                                <td class="dependent-question">{{o.dependent_question}}
                                                     <a href="/admin/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{o.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{o.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
                                                         <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
                                                     </a>
@@ -131,7 +144,7 @@
                                     {% endfor %}
                                         <tr class="add-row">
                                             <td colspan="4">
-                                               <a id="add_another_option" href="javascript:void(0)">Add another option</a>
+                                               <strong><a id="add_another_option" href="javascript:void(0)">Add another option</a></strong>
                                             </td>
                                         </tr>
                                 </tbody>
