@@ -23,7 +23,7 @@
 {% block core_css %}
 
 <!--<link rel="stylesheet" href="{{MEDIA_URL}}css/ch.v19.css" type="text/css" />-->
-<link rel="stylesheet" href="{{MEDIA_URL}}css/question.css" type="text/css" media="screen, projection" />
+<!--<link rel="stylesheet" href="{{MEDIA_URL}}css/question.css" type="text/css" media="screen, projection" />-->
 <link rel="stylesheet" href="{{MEDIA_URL}}js/jsonSuggest/jsonSuggest.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/rupee/font.css">
 
@@ -31,9 +31,13 @@
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/ie7.css" /><![endif]-->
 <!--[if IE 8]><link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/ie8.css" /><![endif]-->
 
-<!--<link rel="stylesheet" href="{{MEDIA_URL}}css/base.css" type="text/css" media="screen, projection" />-->
-<link rel="stylesheet" href="{{MEDIA_URL}}css/common.css" type="text/css" media="screen, projection" />
-<link rel="stylesheet" href="{{MEDIA_URL}}css/riba_admin.css" type="text/css" media="screen, projection" />
+<!--<link rel="stylesheet" href="{{MEDIA_URL}}css/base.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/common.css" type="text/css" media="screen, projection" /> -->
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/home.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/base.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/question.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="/adminmedia/css/base.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="/adminmedia/css/forms.css" type="text/css" media="screen, projection" />
 <!--
 <link rel="stylesheet" href="{{MEDIA_URL}}css/menu.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/buttons.css" type="text/css" media="screen, projection" />
@@ -77,12 +81,15 @@
 <!-- Container -->
 <div id="container">
     <!-- Header -->
-    <div class="admin_header">
+    <div id="admin_header">
         {% block header %}
             {% render_header request %} 
         {% endblock %}
     </div>
     <!-- END Header -->
+    
+    {%block breadcrumbs%}
+    {%endblock%}
 
     <!-- Content -->
     <div id="admin_content">
@@ -90,48 +97,9 @@
         {% endblock %}
     </div>
     <!-- END Content -->
-    
 </div>
 <!-- END Container -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        <td colspan=2 align="center" valign="middle" class="top_banner"><div align="center"> <img src="{{MEDIA_URL}}images/logo.gif" width="140" height="100" /></div></td>
-    </tr>
-    <tr>
-        <td style="width:20%; vertical-align:top;">
-            <div class="menu">
-            <table style="width:100%">
-                <tr>
-                    <td>
-                        <a class="hupt" href="/question/view/">Questions</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="hupt" href="/categories/view/">Categories</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="hupt" href="/build-document/">Build Document</a>
-                    </td>
-                </tr>
-<!--                <tr>
-                    <td>
-                        <a class="hupt" href="YOUR-URL">Newsletter</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="hupt" href="YOUR-URL">Blog</a>
-                    </td>
-                </tr>-->
-            </table>
-            </div>
-        </td>
-        <td style="width:80%; vertical-align:top;">
-        </td>
-    </tr>
-</table>
+{% block script_footer %}
+{% endblock %}
 </body>
 </html>

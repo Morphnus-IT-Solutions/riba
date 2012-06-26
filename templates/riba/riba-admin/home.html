@@ -2,7 +2,7 @@
 {% block content %}
 <div id="home-content">
    <div id="content-main">
-        <div class="module">
+        <div id="module" class="module">
             <table>
                 <caption>
                     Site administration
@@ -17,6 +17,28 @@
                         </td>
                         <td>
                             <a href="question/view/" class="changelink">Change</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <a href="categories/view/">Categories</a>
+                        </th>
+                        <td>
+                            <a href="categories/add/" class="addlink">Add</a>
+                        </td>
+                        <td>
+                            <a href="categories/view/" class="changelink">Change</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <a href="build-document/">Build Document</a>
+                        </th>
+                        <td>
+                            <a href="build-document/upload-template/" class="addlink">Add</a>
+                        </td>
+                        <td>
+                            <a href="build-document/" class="changelink">Change</a>
                         </td>
                     </tr>
                 </tbody>

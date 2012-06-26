@@ -4,11 +4,13 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanen
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.forms.models import formset_factory, inlineformset_factory
+from django.contrib.auth.decorators import login_required
 from question.models import *
 from question.forms import *
 from random import randint
 from django.utils.html import escape
 
+@login_required
 def view_all_questions(request):
     q = request.GET.get('q')
     if q:
@@ -16,23 +18,25 @@ def view_all_questions(request):
     else:
         questions = QuestionTree.objects.select_related('question', 'parent_question').filter(parent_question=None, parent_value=None).order_by('-id')
     ques = {}
+    count = questions.count()
     for qs in questions:
         qt = QuestionTree.objects.filter(lft__gt=qs.lft, rgt__lt=qs.rgt).order_by('lft')
         ques[qs] = qt
     ques_dict = {    
         'ques':ques,
         'q':q,
+        'count': count,
         }
-    return render_to_response('question/view_questions.html', ques_dict, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/question/view_questions.html', ques_dict, context_instance=RequestContext(request))
 
-
+@login_required
 def delete_question(request, question_id):
     try:
         question = Question.objects.get(id = question_id)
     except Question.DoesNotExist:
         raise Http404
     qch = question.get_all_children()
-    html = 'question/question_delete_confirm.html'
+    html = 'riba-admin/question/question_delete_confirm.html'
     if request.method == "POST":
         del_confirm = request.POST.get('del_confirm', 'No')
         if del_confirm == "Yes":
@@ -41,7 +45,7 @@ def delete_question(request, question_id):
                 if q.question:
                     q.question.delete()
                 q.delete()
-        return HttpResponseRedirect('/question/view/')
+        return HttpResponseRedirect('/admin/question/view/')
         
     del_question_dict = {
         'question':question,
@@ -50,6 +54,7 @@ def delete_question(request, question_id):
         }    
     return render_to_response(html, del_question_dict, context_instance=RequestContext(request))
 
+@login_required
 def add_question(request, id=None):
     form = QuestionForm()
     field_inline_formset = inlineformset_factory(Question, Field, form = FieldForm, extra=1, can_delete=True)
@@ -102,7 +107,7 @@ def add_question(request, id=None):
                     return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
                 else:
                     q.rebuild_nsm()
-                    return HttpResponseRedirect('/question/%s' %q.id)
+                    return HttpResponseRedirect('/admin/question/%s' %q.id)
     else:
         is_popup = int(request.GET.get('_popup', 0))
     ctxt = {
@@ -113,9 +118,9 @@ def add_question(request, id=None):
         'is_popup': is_popup,
         'errors': errors,
     }
-    return render_to_response('question/add_question.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/question/add_question.html', ctxt, context_instance=RequestContext(request))
 
-
+@login_required
 def view_question(request, id):
     q = Question.objects.get(pk=id)
     q_fields = q.field_set.all().order_by('id')
@@ -125,9 +130,9 @@ def view_question(request, id):
         'fields': q_fields,
         'options': q_options,
     }
-    return render_to_response('question/question.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/question/question.html', ctxt, context_instance=RequestContext(request))
 
-
+@login_required
 def preview_question(request, id):
     preview_complete = False
     if request.method == "POST":
@@ -154,9 +159,9 @@ def preview_question(request, id):
         'parents': q_parents,
         'preview_complete': preview_complete,
     }
-    return render_to_response('question/preview_question.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/question/preview_question.html', ctxt, context_instance=RequestContext(request))
 
-
+@login_required
 def edit_question(request, id):
     try:
         question = Question.objects.get(pk=id)
@@ -201,7 +206,7 @@ def edit_question(request, id):
                 else:
                     root_question = question.get_root_question().question
                 root_question.rebuild_nsm()
-                return HttpResponseRedirect('/question/%s' %q.id)
+                return HttpResponseRedirect('/admin/question/%s' %q.id)
 
     is_popup = int(request.GET.get('_popup', 0))
     ctxt = {
@@ -213,4 +218,4 @@ def edit_question(request, id):
         'is_popup': is_popup,
         'errors': errors
     }
-    return render_to_response('question/edit_question.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/question/edit_question.html', ctxt, context_instance=RequestContext(request))

@@ -24,3 +24,10 @@ def split_newline(value):
 @register.filter
 def get_range(value):
     return range(1, value)
+
+@register.filter
+def row_class(count):
+    if count % 2 == 0:
+        return 1
+    else:
+        return 2
