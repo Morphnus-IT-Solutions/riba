@@ -9,18 +9,6 @@
     <!-- END Breadcrumbs -->
 {% endblock %}
 
-{% block extra_css %}
-<style>
-    .field-label input {width: 300px;}
-    .field-label {width: 400px;}
-    .field-option textarea {width: 300px;}
-    .option-value input {width: 300px;}
-    .option-value {width: 400px;}
-    .dependent-question select {width: 400px;}
-    .dependent-question {width: 500px;}
-    .question textarea{width: 500px;}
-</style>
-{% endblock %}
 
 {%block content%}
 <div class="question-details">
@@ -182,21 +170,6 @@ $(document).ready(function PreselectMyItem(){
 });
 
 $(document).ready(function(){
-    $('.item_link').toggle(
-        function(){	
-            var e = this.id;
-            var k = e+"_div";
-            $('#'+k).slideDown();
-            $(this).removeClass('toggle-down-arrow');
-            $(this).addClass('toggle-up-arrow');
-        },
-        function(){
-            var e = this.id;
-            $('#'+e+'_div').slideUp();
-            $(this).removeClass('toggle-up-arrow');
-            $(this).addClass('toggle-down-arrow');
-        }
-    );
     $('#id_answer_type').change(function(){
         var e = this.value;
         if (e=="textarea"){

@@ -92,5 +92,12 @@
    cursor: pointer;
 }
 
+.field-label input {width: 300px;}
+.field-label {width: 400px;}
+.field-option textarea {width: 300px;}
+.option-value input {width: 300px;}
+.option-value {width: 400px;}
+.dependent-question select {width: 400px;}
+.dependent-question {width: 500px;}
+.question textarea{width: 500px;}
 
-/* end question.css */
