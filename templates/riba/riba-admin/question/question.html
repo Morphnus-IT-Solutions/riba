@@ -1,0 +1,159 @@
+{% extends "riba-admin/base.html" %}
+{% load web_tags %}
+{% load question_tags %}
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/question/view/">Questions</a>&nbsp;&raquo;&nbsp; {{q.question}} 
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+{% block content %}
+<style type="text/css">
+	table {
+		margin-bottom: 1.4em;
+		width: 100%;
+	}
+	th, td, caption {
+		padding: 4px 5px;
+	}
+	.checkout_table img {
+	  border: 1px solid #D5D8DA;
+	  padding: 1px;
+	}
+.uiButton {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #F5B74E #E5A73E #D6982F !important;
+    color: #333 !important;
+    text-shadow: 0 1px 0 #FEDD9B;
+    box-shadow: 0 1px 1px #eee,inset 0 1px 0 #fee395;
+    background: #FECC5F;
+    cursor: pointer;
+    background-image: -webkit-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    background-image: linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    border-radius: 3px 3px 3px 3px;
+}
+</style>
+
+<h1>{{ q.question }}</h1>
+
+<!-- Content -->
+<div id="question_content">
+    <ul class="object-tools">
+        <li>
+            <a href="/admin/question/edit/{{q.id}}/" class="historylink">Edit</a>
+        </li>
+        <li>
+            <a href="/admin/question/preview/{{q.id}}/" class="historylink">Preview</a>
+        </li>
+    </ul>
+
+    <fieldset id="question-details" class="module aligned">
+        <div class="form-row answer_type">
+            <div>
+                <label for="id_answer_type" class="required">Answer type:</label>
+                <input type="text" readonly="readonly" id="id_answer_type" value="{{q.answer_type|title}}"/>
+            </div>
+        </div>
+        {% if q.type %}
+        <div class="form-row type">
+            <div>
+                <label for="id_type" class="required">Type:</label>
+                <input type="text" readonly="readonly" id="id_type" value="{{q.type|title}}"/>
+            </div>
+        </div>
+        {% endif %}
+    </fieldset>
+    {% if fields %}
+    <div class="module-inline-group" id="question-fields">
+        <div class="tabular inline-related">
+            <fieldset class="inline-module">
+                <h2>Fields</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field label</th>
+                            <th class="required">Field type</th>
+                            <th>Field Option</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for f in fields %}
+                            <tr class="row{{forloop.counter0|row_class}}"> 
+                                <td>{{f.field_label}}</td>
+                                <td>{{f.field_type|title}}</td>
+                                <td>{{f.field_option|linebreaks}}</td>
+                            </tr>
+					    {% endfor %}   
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if options %}
+    <div class="module-inline-group" id="question-options">
+        <div class="tabular inline-related">
+            <fieldset class="inline-module">
+                <h2>Options</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option Value</th>
+                            <th>Dependent Question</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for o in options %}
+                            <tr class="row{{forloop.counter0|row_class}}"> 
+                                <td>{{o.option_value}}</td>
+                                <td><a href="/admin/question/{{o.dependent_question.id}}/">{{o.dependent_question.question}}</a></td>
+                            </tr>
+					    {% endfor %}   
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="submit-row">
+        <p class="deletelink-box">
+            <a href="" class="deletebin deletelink">Delete</a>
+        </p>
+    </div>
+</div>
+<div id='question-delete' style='display:none;'></div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+
+$('.deletebin').click(function(){
+    var k = {{q.id}};
+    var width=650;
+    var height=400;
+    var onsuccess = function(data, textStatus, xhr){
+        $('#question-delete').html(data);
+        var dialog=$('#question-delete').dialog({modal:true, title:'Delete Confirmation',width:width, height:height, resizable:true});
+    };
+    var onerror=function(xhr, textStatus, error){
+        $('#question-delete').html(xhr.responseText);
+        var dialog = $('#question-delete').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
+    };
+    var url= "/admin/question/delete/"+k;
+    $.ajax({
+        type: 'GET',
+        url:url,
+        data: '',
+        success:onsuccess,
+        error: onerror
+    });
+    return false;
+});
+        
+</script>
+{% endblock %}

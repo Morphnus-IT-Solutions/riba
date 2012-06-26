@@ -1,0 +1,96 @@
+/* question.css */
+#changelist #toolbar {
+    padding: 3px;
+    border-bottom: 1px solid #DDD;
+    background: #E1E1E1 url(/media/images/nav-bg.gif) top left repeat-x;
+    color: #666;
+}
+
+.change-list .filtered {
+   /* background: white url(/media/images/changelist-bg.gif) top right repeat-y !important;*/
+    min-height: 400px;
+}
+
+.change-list .filtered .results, .change-list .filtered .paginator, .filtered #toolbar, .filtered div.xfull {
+  /*  margin-right: 160px !important;*/
+    width: auto !important;
+}
+
+#changelist-search img {
+    vertical-align: middle;
+}
+
+#question_list {
+    border: 1px solid #CCC;
+}
+
+#toolbar {
+    border: 1px solid #CCC;
+}
+
+#question_content {
+    margin: 10px 0px;    
+}
+
+#question_list td {
+    border-bottom: 0px;
+}
+
+.parent_question {
+    padding: 6px 6px 6px 16px;
+}
+
+.question-list ul{
+    list-style: none;
+}
+
+.vline{
+    background: url(/media/images/tree/folders/vline.gif) 0 0 no-repeat;
+    width: 17px !important;
+    height: 22px !important;
+}
+
+.lastpq {
+   background: url(/media/images/tree/folders/lp.gif) 0 0 no-repeat;
+   width: 26px !important;
+   height: 22px !important;
+   cursor: pointer;
+}
+
+.pq {
+   background: url(/media/images/tree/folders/tp.gif) 0 0 no-repeat;
+   width: 26px !important;
+   height: 22px !important;
+   cursor: pointer;
+}
+
+.lastpq-collapse {
+   background: url(/media/images/tree/folders/lm.gif) 0 0 no-repeat;
+   width: 26px !important;
+   height: 22px !important;
+   cursor: pointer;
+}
+
+.pq-collapse {
+   background: url(/media/images/tree/folders/tm.gif) 0 0 no-repeat;
+   width: 26px !important;
+   height: 22px !important;
+   cursor: pointer;
+}
+
+.lastlq {
+   background: url(/media/images/tree/folders/ln.gif) 0 0 no-repeat;
+   width: 26px !important;
+   height: 22px !important;
+   cursor: pointer;
+}
+
+.lq {
+   background: url(/media/images/tree/folders/tn.gif) 0 0 no-repeat;
+   width: 26px !important;
+   height: 22px !important; 
+   cursor: pointer;
+}
+
+
+/* end question.css */

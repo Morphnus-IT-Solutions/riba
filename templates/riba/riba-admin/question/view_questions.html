@@ -1,0 +1,159 @@
+{% extends "riba-admin/base.html" %}
+{% load question_tags %}
+{% block extra_css %}
+<style type="text/css">
+table {width:100%; margin-bottom:0px !important;}
+a { text-decoration: underline; color: #46546C; }
+a:hover { text-decoration: underline; color: #4d77c3; }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; Questions
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+<h1>Select question to change</h1>
+
+<!-- Question Content -->
+<div id="question-content">
+    <ul class="object-tools">
+       <li>
+            <a href="/admin/question/add/" class="addlink">Add question</a>
+       </li>
+    </ul>
+
+    <div class="filtered left w85p" id="changelist">
+       <div id="toolbar">
+            <form id="changelist-search" action="" method="GET">
+                <div>
+                    <div>
+                        <label for="searchbar">
+                            <img src="/media/images/icon_searchbox.png" alt="Search" />
+                        </label>
+                        <input type="text" size="25" name="q" id="searchbar" {% if q %}value="{{q}}"{% endif %}>
+                        <input type="SUBMIT" value="Search">
+                    </div>
+                </div>
+            </form>
+       </div>
+       <div id="question_list" class="w85p" style="overflow:scroll;">
+            {% if ques %}
+                {% for key, value in ques.items %}
+                    <div id="{{key.id}}v{{key.level}}">
+                        <table border="0" cellspacing="0" cellpadding="0" class="row{{forloop.counter0|row_class}}">
+                            <tbody>
+                                <tr>
+                                    <td id="{{key.question.id}}" class="parent_question {%if value %}{%if forloop.last%}lastpq{%else%}pq{%endif%}{% else %}{%if forloop.last%}lastlq{%else%}lq{%endif%}{%endif%}"></td>
+                                    <td style="vertical-align:top !important"><a href="/admin/question/{{key.question.id}}/">{{key.question}}</a></td>
+                                    <td style="text-align:right">
+                                        <a class="changelink" href="/admin/question/edit/{{key.question.id}}/">Edit</a>&nbsp;&nbsp;
+                                        <a id="{{key.question.id}}_delete" href="" class="deletebin deletelink">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% for chq in value %}
+                            <div id="{{chq.id}}" class="{{chq.parent_question.id}} hide" style="display:none;">
+                                <table border="0" cellspacing="0" cellpadding="0" class="row{{forloop.parentloop.counter0|row_class}}">
+                                    <tbody>
+                                        <tr>
+                                            {% for i in chq.level|get_range %}
+                                                <td class="vline"></td>
+                                            {% endfor %}
+                                            <td id="{{chq.question.id}}" class="{%if chq.question %} {%if chq.question.is_leaf_question %}lq{%else%}pq parent_question{%endif%}{%else%}lq{%endif%}"></td>
+                                            {% if chq.question %} 
+                                                <td><a href="/admin/question/{{chq.question.id}}/">{{chq.parent_value}} - {{chq.question}}</a></td>
+                                                <td style="text-align:right">
+                                                    <a class="changelink" href="/admin/question/edit/{{chq.question.id}}/">Edit</a>&nbsp;&nbsp;
+                                                    <a id="{{chq.question.id}}_delete" href="" class="deletebin deletelink">Delete</a>
+                                                </td>
+                                            {% else %}
+                                                <td>{{chq.parent_value}} - {{chq.question}}</td>
+                                            {% endif %}
+                                        </tr>
+                                    </tbody>
+                                </table>       
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+			<div class="f15">
+				<h2><strong> No questions to display</strong> </h2>
+			</div>
+            {% endif %}
+            
+       </div>
+    </div>
+    <p class="paginator">
+        {{count}} questions
+    </p>
+</div>
+<!-- End Question Content -->
+<div id='deletebin' style='display:none;'></div>
+<div class="clear"></div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#searchbar").focus();
+
+    $('.parent_question').toggle(
+        function(){	
+            var e = this.id;
+            $('.'+e).show();
+            if($(this).hasClass('pq')){
+                $(this).removeClass('pq');
+                $(this).addClass('pq-collapse');
+            }
+            if($(this).hasClass('lastpq')){
+                $(this).removeClass('lastpq');
+                $(this).addClass('lastpq-collapse');
+            }
+        },
+        function(){
+            var e = this.id;
+            $('.'+e).hide();
+            if($(this).hasClass('pq-collapse')){
+                $(this).removeClass('pq-collapse');
+                $(this).addClass('pq');
+            }
+            if($(this).hasClass('lastpq-collapse')){
+                $(this).removeClass('lastpq-collapse');
+                $(this).addClass('lastpq');
+            }
+        }
+    );
+});
+$('.deletebin').click(function(){
+    var k = this.id.split('_delete')[0];
+    var width=650;
+    var height=400;
+    var onsuccess = function(data, textStatus, xhr){
+        $('#deletebin').html(data);
+        var dialog=$('#deletebin').dialog({modal:true, title:'Delete Confirmation',width:width, height:height, resizable:true});
+    };
+    var onerror=function(xhr, textStatus, error){
+        $('#deletebin').html(xhr.responseText);
+        var dialog = $('#deletebin').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
+    };
+    var url= "/admin/question/delete/"+k;
+    $.ajax({
+        type: 'GET',
+        url:url,
+        data: '',
+        success:onsuccess,
+        error: onerror
+    });
+    return false;
+});
+        
+</script>
+{% endblock %}

@@ -1,0 +1,144 @@
+/*riba_admin.css*/
+#riba-branding h1 {
+    padding: 0 10px;
+    font-size: 18px;
+    margin: 8px 0;
+    font-weight: normal;
+    color: #F4F379;
+}
+
+#admin_header {
+background: #A10326;
+color: white;
+overflow: hidden;
+width: 100%;
+font-size: 12px;
+}
+
+#admin_header a:link {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+#admin_header a:visited {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+#admin_header a:hover {
+    color: #FFC !important;
+    text-decoration: none !important;
+}
+
+#riba-user {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1.2em 10px;
+    font-size: 11px;
+    text-align: right;
+}
+
+#home-content {
+    width: 600px;
+    margin: 10px 15px;
+}
+
+#content-main {
+    float: left;
+    width: 100%;
+}
+
+
+.module table {
+    border-collapse: collapse;
+    border-color: #CCC !important;
+    border-spacing: 2px;
+    display: table;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 2px 5px 3px 5px;
+    font-size: 11px;
+    text-align: left;
+    font-weight: bold;
+    background: #7CA0C7 url(/media/images/default-bg.gif) top left repeat-x;
+    color: white;
+    display: table-caption;
+}
+
+.module tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.module table tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.module table td {
+    white-space: nowrap;
+}
+
+.addlink {
+    padding-left: 12px;
+    background: url(/media/images/icon_addlink.gif) 0 .2em no-repeat;
+}
+
+.changelink {
+    padding-left: 12px;
+    background: url(/media/images/icon_changelink.gif) 0 .2em no-repeat;
+}
+
+.module table th {
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 13px;
+    border-bottom: 1px solid #EEE;
+    vertical-align: top;
+    padding: 5px;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+.module table td {
+    width: 100%;
+    text-align: left;
+    line-height: 13px;
+    border-bottom: 1px solid #EEE;
+    vertical-align: top;
+    padding: 5px;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+.module table td a:link, a:visited {
+    color: #5B80B2;
+    text-decoration: none;
+}
+
+.module table td a:visited {
+    color: #5B80B2;
+    text-decoration: none;
+}
+
+.module table th a:link {
+    color: #5B80B2;
+    text-decoration: none;
+}
+
+.module table th a:visited {
+    color: #5B80B2;
+    text-decoration: none;
+}
+
+.module table td a {
+    display: block;
+    padding-right: .6em;
+    font-size: 11px;
+}
+/*end css*/

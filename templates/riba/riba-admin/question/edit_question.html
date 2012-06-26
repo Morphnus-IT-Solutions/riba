@@ -1,0 +1,269 @@
+{% extends 'riba-admin/base.html' %}
+{% load question_tags %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/question/view/">Questions</a>&nbsp;&raquo;&nbsp; <a href="/admin/question/{{question.id}}/">{{question.question}}</a>&nbsp;&raquo;&nbsp; Edit
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+{%block content%}
+<div class="question-details">
+    <h1>Edit Question</h1>
+    {% if errors %}
+    <div class="error">
+        {% for error in errors %}
+            {{error}}
+        {% endfor %}
+    </div>
+    {% endif %}
+	<div class="inner-content">
+		<form action="" id="add_form" name="add_form" method="POST" enctype="multipart/form-data">
+			<div id="question_details_container"><!-- div web module details container -->
+                <fieldset class="module aligned">
+                    <div class="form-row question">
+                        <div>
+                            <label class="required">{{form.question.label}}:</label>
+                            {{form.question}}
+                        </div>
+                    </div>
+                    <div class="form-row answer_type">
+                        <div>
+                            <label class="required">{{form.answer_type.label}}:</label>
+                            {{form.answer_type}}
+                        </div>
+                    </div>
+                    <div class="form-row type">
+                        <div>
+                            <label>{{form.type.label}}:</label>
+                            {{form.type}}
+                        </div>
+                    </div>
+                    <div class="form-row rows text-area hide">
+                        <div>
+                            <label>{{form.rows.label}}:</label>
+                            {{form.rows}}
+                        </div>
+                    </div>
+                    <div class="form-row columns text-area hide">
+                        <div>
+                            <label>{{form.columns.label}}:</label>
+                            {{form.columns}}
+                        </div>
+                    </div>
+                </fieldset>
+
+				<!--************ FIELD FORM **************-->
+                <div class="module-inline-group" id="question-fields">
+                    <div class="tabular inline-related last-related">
+                        <fieldset class="inline-module">
+                            <h2>Fields</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Field label</th>
+                                        <th class="required">Field type</th>
+                                        <th>Field Option</th>
+                                        <th>Delete?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{field_formset.management_form}}
+                                    {% for f in field_formset.forms %}
+                                        <tr class="dynamic-field-form">
+                                            {% if f %}
+                                                <td style="display:none;visibility:hidden;">
+                                                    {{ f.id.label }}
+                                                    {{ f.id }}
+                                                </td>
+                                                <td>{{f.field_label}}</td>
+                                                <td>{{f.field_type}}</td>
+                                                <td>{{f.field_option}}</td>
+                                                <td>{{f.DELETE}}</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                        <tr class="add-row">
+                                            <td colspan="4">
+                                               <a id="add_another_field" href="javascript:void(0)">Add another field</a>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+				<!-- ********** END FIELD FORM **************** -->
+
+				<!--************ OPTIONS FORM **************-->
+                <div class="module-inline-group" id="question-options">
+                    <div class="tabular inline-related last-related">
+                        <fieldset class="inline-module">
+                            <h2>Options</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Option Value</th>
+                                        <th>Dependent Question</th>
+                                        <th>Delete?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{option_formset.management_form}}
+                                    {% for o in option_formset.forms %}
+                                        <tr class="dynamic-option-form">
+                                            {% if o %}
+                                                <td style="display:none;visibility:hidden;">
+                                                    {{ o.id.label }}
+                                                    {{ o.id }}
+                                                </td>
+                                                <td>{{o.option_value}}</td>
+                                                <td>{{o.dependent_question}}
+                                                    <a href="/admin/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{o.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{o.dependent_question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
+                                                        <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
+                                                    </a>
+                                                </td>
+                                                <td>{{o.DELETE}}</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                        <tr class="add-row">
+                                            <td colspan="4">
+                                               <a id="add_another_option" href="javascript:void(0)">Add another option</a>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+				<!-- ********** END OPTIONS FORM **************** -->
+                <div class="submit-row">
+                    <input type="hidden" id="is_popup" name="is_popup" value={{is_popup}} />
+                    <input type="submit" id="save" VALUE="Save" class="default" name="save" />
+                    <p class="deletelink-box">
+                        <a href="" class="deletebin deletelink">Delete</a>
+                    </p>
+                </div>
+			</div><!-- /div web_container -->
+		</form>
+	</div>
+    <div id='question-delete' style='display:none;'></div>
+</div>
+{% endblock %}
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function PreselectMyItem(){
+    var e = document.getElementById("id_answer_type");
+    var str = e.options[e.selectedIndex].value;
+    if (str=="textarea"){
+        $('.text-area').show();
+    }
+    else{
+        $('.text-area').hide();
+    }
+});
+
+$(document).ready(function(){
+    $('.item_link').toggle(
+        function(){	
+            var e = this.id;
+            var k = e+"_div";
+            $('#'+k).slideDown();
+            $(this).removeClass('toggle-down-arrow');
+            $(this).addClass('toggle-up-arrow');
+        },
+        function(){
+            var e = this.id;
+            $('#'+e+'_div').slideUp();
+            $(this).removeClass('toggle-up-arrow');
+            $(this).addClass('toggle-down-arrow');
+        }
+    );
+    $('#id_answer_type').change(function(){
+        var e = this.value;
+        if (e=="textarea"){
+            $('.text-area').show();
+        }
+        else{
+            $('.text-area').hide();
+        }
+    });
+});
+
+$('.deletebin').click(function(){
+    var k = {{question.id}};
+    var width=650;
+    var height=400;
+    var onsuccess = function(data, textStatus, xhr){
+        $('#question-delete').html(data);
+        var dialog=$('#question-delete').dialog({modal:true, title:'Delete Confirmation',width:width, height:height, resizable:true});
+    };
+    var onerror=function(xhr, textStatus, error){
+        $('#question-delete').html(xhr.responseText);
+        var dialog = $('#question-delete').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
+    };
+    var url= "/admin/question/delete/"+k;
+    $.ajax({
+        type: 'GET',
+        url:url,
+        data: '',
+        success:onsuccess,
+        error: onerror
+    });
+    return false;
+});
+
+</script>
+<script type="text/javascript">
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+-)');
+        var replacement = prefix + '-' + ndx + '-';
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+
+    function cloneMore(selector, type) {
+        var newElement = $(selector).clone();
+        var total = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
+        newElement.find(':input').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        newElement.find('a').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        newElement.find('label').each(function() {
+            var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+            $(this).attr('for', newFor);
+        });
+        total++;
+        $('#id_' + type + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+    }
+
+    // Event handlers for Field
+    $("#add_another_field").click(function() {
+        cloneMore('tr.dynamic-field-form:last', 'field_set');
+    });
+
+
+    // Register the click event handlers
+    $("#add_another_option").click(function() {
+        cloneMore('tr.dynamic-option-form:last', 'option_set');
+    });
+</script>
+<script type="text/javascript" src="/adminmedia/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/adminmedia/js/core.js"></script>
+<script type="text/javascript" src="/adminmedia/js/SelectBox.js"></script>
+<script type="text/javascript" src="/adminmedia/js/SelectFilter2.js"></script>
+{% endblock %}

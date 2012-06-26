@@ -1,0 +1,94 @@
+/* base css */
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    font-family: "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+    color: #333;
+    background: white;
+}
+
+#admin_content {
+    margin: 10px 15px;
+}
+
+.breadcrumbs {
+    background: white url(/media/images/nav-bg-reverse.gif) 0 -10px repeat-x;
+    padding: 2px 8px 3px 8px;
+    font-size: 11px;
+    color: #999;
+    border-top: 1px solid white;
+    border-bottom: 1px solid #CCC;
+    text-align: left;
+}
+
+.breadcrumbs a:link, a:visited {
+    color: #5B80B2;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 18px;
+    color: #666;
+    padding: 0 6px 0 0;
+    margin: 0 0 .2em 0;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: bold;
+}
+
+.paginator {
+    color: #666;
+    border: 1px solid #CCC;
+    background: white url(/media/images/nav-bg.gif) 0 180% repeat-x;
+    overflow: hidden;
+    font-size: 11px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    line-height: 22px;
+    margin: 0;
+}
+
+fieldset .inline-module {
+    border: none;
+    border-bottom: 1px solid #DDD;
+}
+
+.inline-module {
+    border: 1px solid #CCC;
+    background: white;
+}
+
+.inline-module h2, .inline-module caption, .module-inline-group h2 {
+    margin: 0;
+    padding: 2px 5px 3px 5px;
+    font-size: 11px;
+    text-align: left;
+    font-weight: bold;
+    background: #7CA0C7 url(/media/images/default-bg.gif) top left repeat-x !important;
+    color: white;
+}
+
+.module-inline-group {
+    padding: 0;
+    border: 1px solid #CCC;
+    margin: 10px 0;
+}
+
+.inline-related.tabular fieldset.inline-module table {
+    width: 100%;
+}
+
+.inline-module table {
+    border-collapse: collapse;
+}
+
+.module-inline-group ul.tools a.add, .module-inline-group div.add-row a, .module-inline-group .tabular tr.add-row td a {
+    background: url(/media/images/icon_addlink.gif) 0 50% no-repeat;
+    padding-left: 14px;
+    font-size: 11px;
+    outline: 0;
+}
+/* End base css */
