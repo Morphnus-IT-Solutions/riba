@@ -8,8 +8,50 @@ body {
     background: white;
 }
 
+#admin_tabs {
+    background: url(/media/images/cat_bg.gif) repeat-x;
+    color: white;
+    overflow: hidden;
+    width: 15%;
+    height: 100%;
+    float: left;
+}
+
+#admin_tabs table td {
+    line-height: 50px;
+    text-align: center;
+    font-size: 14px !important;
+    font-family: "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+}
+
+#admin_tabs a:link {
+    color: white;
+    text-decoration: none;
+}
+
+#admin_tabs a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+#admin_tabs a:hover {
+    color: #FFC;
+    text-decoration: none;
+}
+
 #admin_content {
-    margin: 10px 15px;
+    float: left;
+    width: 85%;
+}
+
+#admin_content h1 {
+    margin-bottom: 10px;
+}
+
+.tab-highlight {
+    color: #FFC !important;
+    font-size: 16px !important;
+    font-weight: bold;
 }
 
 .breadcrumbs {

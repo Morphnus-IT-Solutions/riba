@@ -7,7 +7,7 @@ handler404 = 'web.views.errors.handle404'
 urlpatterns = patterns('',
     (r'^categories/', include('categories.urls')),
     (r'^question/', include('question.urls')),
-    (r'^build-document/', include('build_document.urls')),
+    (r'^document/', include('document.urls')),
     (r'^logout/', 'django.contrib.auth.views.logout_then_login', {'login_url': '/admin/'}),
     (r'^$', 'admin.views.home'),
 )

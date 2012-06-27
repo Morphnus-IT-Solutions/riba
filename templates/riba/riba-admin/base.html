@@ -89,14 +89,32 @@
         {% endblock %}
     </div>
     <!-- END Header -->
-    
-    {%block breadcrumbs%}
-    {%endblock%}
-
+    <div id="admin_tabs">
+        <table class="w100p">
+            <tr>
+                <td><a href="/admin/" {%ifequal request.path "/admin/"%}class="tab-highlight"{%endifequal%}>Home</a></td>
+            </tr>
+            <tr>
+               <td><a href="/admin/categories/view/" {%if '/categories/' in request.path%}class="tab-highlight"{%endif%}>Categories</td>
+            </tr>
+            <tr>
+                <td><a href="/admin/question/view/" {%if '/question/' in request.path%}class="tab-highlight"{%endif%}>Questions</a></td>
+            </tr>
+            <tr>
+                <td><a href="/admin/document/view/" {%if '/document/' in request.path%}class="tab-highlight"{%endif%}>Documents</a></td>
+            </tr>
+        </table>
+    </div>
     <!-- Content -->
     <div id="admin_content">
-        {% block content %}
-        {% endblock %}
+        <div class="marl5 marr5">
+            {%block breadcrumbs%}
+            {%endblock%}
+        </div>
+        <div class="martlr10">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
     <!-- END Content -->
 </div>

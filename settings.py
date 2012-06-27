@@ -152,7 +152,7 @@ INSTALLED_APPS = (
     'south',
     'admin',
 	'question',
-    'build_document',
+    'document',
     'locations',
     'accounts',
     'catalog',
