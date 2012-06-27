@@ -4,15 +4,17 @@
 			margin-bottom:1.4em;
 			width:100%;
 		}
-		th, td, caption{
-			padding: 4px 10px 4px 5px;
+		tr, th, td, caption{
+			padding: 10px 0px 20px 5px;
+            border-bottom: 0px;
 		}
 	</style>
 	<form action="/question/delete/{{question_id}}/" id="del_confirm" name="del_confirm" method="POST" enctype="multipart/form-data">
 		<div class="clear"></div>
         <div style="padding:25px 25px 25px 25px">
 		<table style="padding: 26px;">
-			<h3> Are you sure you want to delete the question "{{question.question}}"? All of the following related questions will be deleted:</h3>
+			<h3> Are you sure you want to delete the question "{{question.question}}"?<br>
+                All of the following related questions will be deleted:<br></h3>
 			<tr>
 				<td>Question:</td>
 				<td>{{question.question}}</td>
