@@ -100,7 +100,8 @@
 .dependent-question select {width: 400px;}
 .dependent-question {width: 500px;}
 .question textarea{width: 500px;}
-
+.form-row textarea{width: 500px;}
+.form-row input {width: 500px;}
 .uiButton {
     border-width: 1px;
     border-style: solid;

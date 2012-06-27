@@ -1,0 +1,92 @@
+{% extends "riba-admin/base.html" %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/categories/view/">Categories</a>&nbsp;&raquo;&nbsp; <a href="/admin/categories/{{category.id}}/">{{category.name}}</a>&nbsp;&raquo;&nbsp; Edit
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+
+{% block content %}
+<h1>Edit Category</h1>
+
+{% if errors %}
+    <div class="error">
+        {% for error in errors %}
+            {{error}}
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="inner-content">
+    <form action="" id="seller_profile_form" name="seller_profile_form" method="POST">
+        <div id="category_details_container">
+            <fieldset class="module aligned">
+                <div class="form-row name">
+                    <div>
+                        <label class="required">{{form.name.label}}:</label>
+                        {{form.name}}
+                    </div>
+                </div>
+                <div class="form-row description">
+                    <div>
+                        <label class="required">{{form.description.label}}:</label>
+                        {{form.description}}
+                    </div>
+                </div>
+                <div class="form-row image">
+                    <div>
+                        <label>{{form.image.label}}:</label>
+                        <p class="file-upload">{{form.image}}</p>
+                    </div>
+                </div>
+                <div class="form-row sort-order">
+                    <div>
+                        <label class="required">{{form.sort_order.label}}:</label>
+                        {{form.sort_order}}
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="submit-row">
+            <input type="submit" id="save" VALUE="Save" class="default" name="save" />
+            <p class="deletelink-box">
+                <a href="" class="deletebin deletelink">Delete</a>
+            </p>
+        </div>
+    </form>
+    <div id='category-delete' style='display:none;'></div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+
+$('.deletebin').click(function(){
+    var k = {{category.id}};
+    var width=650;
+    var height=400;
+    var onsuccess = function(data, textStatus, xhr){
+        $('#category-delete').html(data);
+        var dialog=$('#category-delete').dialog({modal:true, title:'Delete Confirmation',width:width, height:height, resizable:true});
+    };
+    var onerror=function(xhr, textStatus, error){
+        $('#category-delete').html(xhr.responseText);
+        var dialog = $('#category-delete').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
+    };
+    var url= "/admin/categories/delete/"+k;
+    $.ajax({
+        type: 'GET',
+        url:url,
+        data: '',
+        success:onsuccess,
+        error: onerror
+    });
+    return false;
+});
+        
+</script>
+{% endblock %}

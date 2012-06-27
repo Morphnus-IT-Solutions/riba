@@ -1,0 +1,33 @@
+<div class="inner-content">
+	<style type="text/css">
+		table{
+			margin-bottom:1.4em;
+			width:100%;
+		}
+		th, td, caption{
+			padding: 4px 10px 4px 5px;
+		}
+	</style>
+	<form action="/categories/delete/{{category.id}}/" id="del_confirm" name="del_confirm" method="POST" enctype="multipart/form-data">
+		<div class="clear"></div>
+        <div style="padding:25px 25px 25px 25px">
+		<table style="padding: 26px;">
+			<h3> Are you sure you want to delete following category ?</h3>
+            <br>
+			<tr>
+				<td>Category:</td>
+				<td>{{category.name}}</td>
+            </tr>
+		</table>
+        </div>
+		<div class="ca" style="padding: 25px;">
+			<table class="buttons">
+				<tr>
+                    <input type="submit" id="save" value="Yes" class="btn_c btn_c_s btn_orange" name="del_confirm" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="submit" id="save" value="No" class="btn_c btn_c_s btn_orange" name="del_confirm" />
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>

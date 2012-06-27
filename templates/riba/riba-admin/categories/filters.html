@@ -1,0 +1,74 @@
+{% load cc_tags %}
+{% load web_tags %}
+<div id="refine" class="filters">
+    <div class="fb f12 bgdgray refine_heading toproundcorner5">REFINE YOUR SEARCH </div>
+    <form action="" method="get" id="filter_form"> 
+        {{filter_form.store}}
+        {{filter_form.q}}
+        <div id="price" class="show_filter filter_head filter fb f12">
+            <label>By Price</label>
+        </div>
+        <div id="price_filter" class="filter_options f11">
+            <span id="amount" class="f11"></span>
+            {{filter_form.min}}
+            {{filter_form.max}}
+            <div id="slider-range"></div>
+            <div class="price_range">
+                <div class="gmin f11">Rs. {{filter_form.gmin|money}}</div>
+                <div class="gmax f11">Rs. {{filter_form.gmax|money}}</div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        {% if request.wstore and request.wstore.brand_filter == "hide" %}
+        {% else %}
+        <div id="cat" class="show_filter filter_head filter fb f12" >
+            <label>By {{filter_form.c.label}}</label>
+        </div>
+        <div id="cat_filter" class="filter_options f11">
+            <span class="f10"><a t="show" href="#" field="{{filter_form.c.name}}" id="{{filter_form.c.name}}_showall">Select all</a>&nbsp;|&nbsp;<a field="{{filter_form.c.name}}" t="hide" id="{{filter_form.c.name}}_hideall" href="#">Deselect all</a></span>
+            {{filter_form.c}}
+        </div>
+        {% endif %}
+        {% if request.wstore and request.wstore.brand_filter == "hide" %}
+        {% else %}
+        <div id="brands" class="show_filter filter_head filter fb f12" >
+            <label>By {{filter_form.b.label}}</label>
+        </div>
+        <div id="brands_filter" class="filter_options f11">
+            <span class="f10"><a t="show" href="#" field="{{filter_form.b.name}}" id="{{filter_form.b.name}}_showall">Select all</a>&nbsp;|&nbsp;<a field="{{filter_form.b.name}}" t="hide" id="{{filter_form.b.name}}_hideall" href="#">Deselect all</a></span>
+            {{filter_form.b}}
+        </div>
+        {% endif %}
+        {% for field in filter_form %}
+        {% if field.html_name == "min" or field.html_name == "max"  or field.html_name == "gmin" or field.html_name == "gmax"  or field.html_name == "q" or field.html_name == "store"  or field.html_name == "b" or field.html_name == "c" or field.html_name == "min_discount" or field.html_name == "max_discount" %}
+        {% else %}
+        <div class="filter fb f12">
+            <label>By {{field.label}}</label>
+        </div>
+        <div class="filter_options f11">
+            <span class="f10"><a t="show" href="#" field="{{field.name}}" id="{{field.name}}_showall">Select all</a>&nbsp;|&nbsp;<a field="{{field.name}}" t="hide" id="{{field.name}}_hideall" href="#">Deselect all</a></span>
+            {{field}}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </form>
+</div>
+
+<script language="javascript" type="text/javascript">
+
+	$('.filter_head').click(function(){
+		var div_name = $(this).attr('id') + '_filter';
+		var div = $('#' + div_name);
+		if(div.hasClass('hide_div')){
+			div.removeClass('hide_div');
+			$(this).removeClass('hide_filter');
+			$(this).addClass('show_filter');
+		}
+		else{
+			div.addClass('hide_div');
+			$(this).removeClass('show_filter');
+			$(this).addClass('hide_filter');
+		}	
+	});
+	
+    </script>   

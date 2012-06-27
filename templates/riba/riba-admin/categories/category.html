@@ -1,0 +1,94 @@
+{% extends "riba-admin/base.html" %}
+{% load web_tags %}
+
+{% block extra_css %}
+<style>
+    .form-row div {
+        margin: 2px 0;
+        padding: 2px 3px;
+        vertical-align: middle;
+        font-weight: normal;
+        font-size: 11px;
+    }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/categories/view/">Categories</a>&nbsp;&raquo;&nbsp; {{category.name}} 
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+<h1>{{category.name}}</h1>
+
+<!-- Category Content -->
+<div id="category_content">
+    <ul class="object-tools">
+        <li>
+            <a href="/admin/categories/edit/{{category.id}}/" class="historylink">Edit</a>
+        </li>
+    </ul>
+
+    <fieldset id="category-details" class="module aligned">
+        <div class="form-row description">
+            <div>
+                <label for="id_description">Description:</label>
+                <div id="id_description">{{category.description}}</div>
+            </div>
+        </div>
+        <div class="form-row sort-order">
+            <div>
+                <label for="id_sort_order">Sort Order:</label>
+                <div id="id_sort_order">{{category.sort_order}}</div>
+            </div>
+        </div>
+        {% if category.image %}
+        <div class="form-row image">
+            <div>
+                <label for="id_image">Image:</label>
+                <div id="id_image"><img src="{{category.image.url}}"/></div>
+            </div>
+        </div>
+        {% endif %}
+    </fieldset>
+    <div class="submit-row">
+        <p class="deletelink-box">
+            <a href="" class="deletebin deletelink">Delete</a>
+        </p>
+    </div>
+    <div id='category-delete' style='display:none;'></div>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+
+$('.deletebin').click(function(){
+    var k = {{category.id}};
+    var width=650;
+    var height=400;
+    var onsuccess = function(data, textStatus, xhr){
+        $('#category-delete').html(data);
+        var dialog=$('#category-delete').dialog({modal:true, title:'Delete Confirmation',width:width, height:height, resizable:true});
+    };
+    var onerror=function(xhr, textStatus, error){
+        $('#category-delete').html(xhr.responseText);
+        var dialog = $('#category-delete').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
+    };
+    var url= "/admin/categories/delete/"+k;
+    $.ajax({
+        type: 'GET',
+        url:url,
+        data: '',
+        success:onsuccess,
+        error: onerror
+    });
+    return false;
+});
+        
+</script>
+{% endblock %}

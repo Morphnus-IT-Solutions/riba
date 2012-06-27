@@ -1,0 +1,62 @@
+{% extends "riba-admin/base.html" %}
+{% load question_tags %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/categories/view/">Categories</a>&nbsp;&raquo;&nbsp; Add
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+{%block content%}
+<h1>Add Category</h1>
+
+{% if errors %}
+    <div class="error">
+        {% for error in errors %}
+            {{error}}
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="category-details">
+
+</div>
+	
+<div class="inner-content">
+    <form action="" id="seller_profile_form" name="seller_profile_form" method="POST">
+        <div id="category_details_container">
+            <fieldset class="module aligned">
+                <div class="form-row name">
+                    <div>
+                        <label class="required">{{form.name.label}}:</label>
+                        {{form.name}}
+                    </div>
+                </div>
+                <div class="form-row description">
+                    <div>
+                        <label class="required">{{form.description.label}}:</label>
+                        {{form.description}}
+                    </div>
+                </div>
+                <div class="form-row image">
+                    <div>
+                        <label>{{form.image.label}}:</label>
+                        <p class="file-upload">{{form.image}}</p>
+                    </div>
+                </div>
+                <div class="form-row sort-order">
+                    <div>
+                        <label class="required">{{form.sort_order.label}}:</label>
+                        {{form.sort_order}}
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="submit-row">
+            <input type="submit" id="save" VALUE="Save" class="default" name="save" />
+        </div>
+    </form>
+</div>
+{% endblock %}
