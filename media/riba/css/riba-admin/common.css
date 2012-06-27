@@ -1,12 +1,7 @@
 /* Common css */
-.left {
-    float: left;
-}
-
-.w85p {
-    width: 85%;
-}
-
+.left {float: left;}
+.w85p {width: 85%;}
+.w100p {width: 100%;}
 .shadow_one{box-shadow:0 0 5px #666;-moz-box-shadow:0 0 5px #666;-webkit-box-shadow:0 0 5px #666}
 .shadow_two{box-shadow:0 0 5px #333;-webkit-box-shadow:0 0 5px #333;-moz-box-shadow:0 0 5px #333}
 .shadow_three{box-shadow:0 5px 5px #666;-moz-box-shadow:0 5px 5px #666;-webkit-box-shadow:0 5px 5px #666}

@@ -27,7 +27,7 @@ a:hover { text-decoration: underline; color: #4d77c3; }
        </li>
     </ul>
 
-    <div class="filtered left w85p" id="changelist">
+    <div class="filtered left w100p" id="changelist">
        <div id="toolbar">
             <form id="changelist-search" action="" method="GET">
                 <div>
@@ -41,7 +41,7 @@ a:hover { text-decoration: underline; color: #4d77c3; }
                 </div>
             </form>
        </div>
-       <div id="question_list" class="w85p" style="overflow:scroll;">
+       <div id="question_list" class="w100p" style="overflow:scroll;">
             {% if ques %}
                 {% for key, value in ques.items %}
                     <div id="{{key.id}}v{{key.level}}">
