@@ -57,9 +57,9 @@ def delete_question(request, question_id):
 @login_required
 def add_question(request, id=None):
     form = QuestionForm()
-    field_inline_formset = inlineformset_factory(Question, Field, form = FieldForm, extra=1, can_delete=True)
+    field_inline_formset = inlineformset_factory(Question, Field, form = FieldForm, extra=1)
     field_formset = field_inline_formset(instance=None)
-    option_inline_formset = inlineformset_factory(Question, Option, form = OptionForm, extra=1, fk_name="question", can_delete=True)
+    option_inline_formset = inlineformset_factory(Question, Option, form = OptionForm, extra=1, fk_name="question")
     option_formset = option_inline_formset(instance=None)
     is_popup = 0
     errors = []
@@ -188,11 +188,17 @@ def edit_question(request, id):
                 errors.append(form.errors[er])
         if not errors:
             for fld in field_formset:
-                if fld.is_valid() and fld.cleaned_data.get('field_label'):
-                    fld.save()
+                if fld.is_valid():
+                    if fld.cleaned_data.get('DELETE'):
+                        fld.instance.delete()
+                    elif fld.cleaned_data.get('field_label'):
+                        fld.save()
             for op in option_formset:
-                if op.is_valid() and op.cleaned_data.get('option_value'):
-                    op.save()
+                if op.is_valid():
+                    if op.cleaned_data.get('DELETE'):
+                        op.instance.delete()
+                    elif op.cleaned_data.get('option_value'):
+                        op.save()
                     try:
                         qt = QuestionTree.objects.get(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
                     except QuestionTree.DoesNotExist:

@@ -68,7 +68,6 @@
                                         <th>Field label</th>
                                         <th class="required">Field type</th>
                                         <th>Field Option</th>
-                                        <th>Delete?</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +78,6 @@
                                                 <td class="field-label">{{f.field_label}}</td>
                                                 <td class="field-type">{{f.field_type}}</td>
                                                 <td class="field-option">{{f.field_option}}</td>
-                                                <td>{{f.DELETE}}</td>
                                             {% endif %}
                                         </tr>
                                     {% endfor %}
@@ -105,7 +103,6 @@
                                     <tr>
                                         <th>Option Value</th>
                                         <th>Dependent Question</th>
-                                        <th>Delete?</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -119,7 +116,6 @@
                                                         <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
                                                     </a>
                                                 </td>
-                                                <td>{{o.DELETE}}</td>
                                             {% endif %}
                                         </tr>
                                     {% endfor %}
