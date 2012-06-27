@@ -101,3 +101,16 @@
 .dependent-question {width: 500px;}
 .question textarea{width: 500px;}
 
+.uiButton {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #F5B74E #E5A73E #D6982F !important;
+    color: #333 !important;
+    text-shadow: 0 1px 0 #FEDD9B;
+    box-shadow: 0 1px 1px #eee,inset 0 1px 0 #fee395;
+    background: #FECC5F;
+    cursor: pointer;
+    background-image: -webkit-linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    background-image: linear-gradient(top, #FEDA71 0%, #FEBB4A 100%);
+    border-radius: 3px 3px 3px 3px;
+}

@@ -29,6 +29,10 @@
 .margin-b5{margin-top:5px}
 .margin-t15{margin-top:20px}
 .marr15{margin-right:15px}
+.marl10{margin-left:10px}
+.marb10{margin-bottom:10px}
+.mart10{margin-top:10px}
+.mart5{margin-top:5px}
 .fs{text-decoration:line-through}
 .f10{font-size:10px}
 .f11{font-size:11px}
@@ -87,7 +91,10 @@ div.errors h3{margin-bottom:5px}
 .error {padding:5px 10px; margin:0px; border:1px solid #ddd;}
 .error {background:#FFDDDD;color:#8a1f11;border-color:#E25F53;}
 
-.b1s {
-    border: 1px solid #CCC;
-}
+.b1s {border: 1px solid #CCC;}
+
+.w400 {width: 400px !important;}
+.w300 {width: 300px !important;}
+.w100 {width: 100px !important;}
+.w10 {width: 10px !important;}
 /* End Common css */
