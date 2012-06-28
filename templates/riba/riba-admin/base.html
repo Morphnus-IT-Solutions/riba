@@ -33,13 +33,15 @@
 
 <!--<link rel="stylesheet" href="{{MEDIA_URL}}css/base.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/common.css" type="text/css" media="screen, projection" /> -->
-<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/home.css" type="text/css" media="screen, projection" />
-<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/base.css" type="text/css" media="screen, projection" />
-<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/question.css" type="text/css" media="screen, projection" />
-<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/common.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="/adminmedia/css/base.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="/adminmedia/css/forms.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="/adminmedia/css/widgets.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/base.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/common.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/home.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/question.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="{{MEDIA_URL}}css/riba-admin/document.css" type="text/css" media="screen, projection" />
+
 <!--
 <link rel="stylesheet" href="{{MEDIA_URL}}css/menu.css" type="text/css" media="screen, projection" />
 <link rel="stylesheet" href="{{MEDIA_URL}}css/buttons.css" type="text/css" media="screen, projection" />
@@ -101,7 +103,7 @@
                 <td><a href="/admin/question/view/" {%if '/question/' in request.path%}class="tab-highlight"{%endif%}>Questions</a></td>
             </tr>
             <tr>
-                <td><a href="/admin/document/view/" {%if '/document/' in request.path%}class="tab-highlight"{%endif%}>Documents</a></td>
+                <td><a href="/admin/document/" {%if '/document/' in request.path%}class="tab-highlight"{%endif%}>Documents</a></td>
             </tr>
         </table>
     </div>

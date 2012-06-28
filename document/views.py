@@ -11,11 +11,17 @@ from random import randint
 from django.utils import simplejson
 
 def view_documents(request):
-    templates = Template.objects.select_related("category").filter(state="submitted")
+    q = request.GET.get('q')
+    if q:
+        templates = Template.objects.select_related("category").filter(state="submitted").filter(Q(title__icontains=q) | Q(category__name__icontains=q))
+    else:
+        templates = Template.objects.select_related("category").filter(state="submitted")
     ctxt = {
+        'q': q,
         'templates': templates,
+        'count': templates.count(),
     }
-    return render_to_response('build_document/view_documents.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/document/view_documents.html', ctxt, context_instance=RequestContext(request))
 
 def get_template_from_session(request, id=None):
     session = utils.get_session_obj(request)
@@ -40,7 +46,7 @@ def add_keywords(request, template):
     kt.delete()
     total_words, keywords = [], []
     if template.upload_document:
-        url = template.upload_document.url.replace('/media/', '/media/tinla/')
+        url = template.upload_document.url.replace('/media/', '/media/riba/')
         f = open(settings.DOCUMENT_ROOT+url, 'r')
         fr = f.read()
         total_words = fr.split('$$$')
@@ -73,9 +79,9 @@ def upload_template(request, id=None):
             # add keywords
             add_keywords(request, form.instance)
             if id:
-                return HttpResponseRedirect('/build-document/template-details/%s/' % id)
+                return HttpResponseRedirect('/admin/document/template-details/%s/' % id)
             else:
-                return HttpResponseRedirect('/build-document/template-details/')
+                return HttpResponseRedirect('/admin/document/template-details/')
         else:
             for er in form.errors:
                 errors.append(form.errors[er])
@@ -84,7 +90,7 @@ def upload_template(request, id=None):
         'errors': errors,
         'id': id,
     }
-    return render_to_response('build_document/upload_template.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/document/upload_template.html', ctxt, context_instance=RequestContext(request))
 
 
 def template_details(request, id=None):
@@ -98,9 +104,9 @@ def template_details(request, id=None):
         if form.is_valid():
             form.save()
             if id:
-                return HttpResponseRedirect('/build-document/create-questionnaire/%s/' % id)
+                return HttpResponseRedirect('/admin/document/create-questionnaire/%s/' % id)
             else:
-                return HttpResponseRedirect('/build-document/create-questionnaire/%s/' % id)
+                return HttpResponseRedirect('/admin/document/create-questionnaire/%s/' % id)
 
         else:
             for er in form.errors:
@@ -110,7 +116,7 @@ def template_details(request, id=None):
         'errors': errors,
         'id': id,
     }
-    return  render_to_response('build_document/template_details.html', ctxt, context_instance=RequestContext(request))
+    return  render_to_response('riba-admin/document/template_details.html', ctxt, context_instance=RequestContext(request))
 
 
 def create_questionnaire(request, id=None):

@@ -22,8 +22,8 @@ class Template(models.Model):
         ('new','New'),
         ('draft','Draft'),
         ('submitted','Submitted')), db_index=True)
-    information = HTMLField(blank = True, null = True)
-    about = HTMLField(blank = True, null = True)
+    information = HTMLField(blank = True, null = True, verbose_name="Information about how to use the document")
+    about = HTMLField(blank = True, null = True, verbose_name="What is in the document?")
 
     def __unicode__(self):
         return self.title

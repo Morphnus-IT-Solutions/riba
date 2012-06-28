@@ -31,3 +31,14 @@ def row_class(count):
         return 1
     else:
         return 2
+
+def document_tabs(request, tab):
+    tabs = [dict(name="upload-template", text="Upload Template"), dict(name="template-details", text="Template Details"), 
+            dict(name="create-questionnaire", text="Create Questionnaire"), dict(name="finalize-template", text="Finalize Template")]
+    tab_click = True
+    for t in tabs:
+        if t["name"] == tab:
+            tab_click = False
+        t["tab_click"] = tab_click
+    return dict(request=request, tab=tab, tabs=tabs)
+register.inclusion_tag("riba-admin/document/tabs.html")(document_tabs)
