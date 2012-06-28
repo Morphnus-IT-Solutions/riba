@@ -1,0 +1,45 @@
+/* Document CSS */
+#document_tabs {
+    border-bottom: 2px solid #3F4C6C;
+}
+
+#document_tabs ul {
+    padding-left: 12px;
+    width: 100%;
+}
+
+#document_tabs ul li {
+    list-style: none;
+    margin: 0;
+    margin-right: 3px;
+    padding: 0;
+    float: left;
+    color: #333;
+    font-size: 12px;
+    width: 15%;
+    background-color: #F5F3F4;
+}
+
+#document_tabs div.step_no {
+    padding: 10px 6px;
+    font-size: 22px;
+    float: left;
+}
+
+#document_tabs ul li.selected {
+    background-color: #3F4C6C;
+    color: white;
+}
+
+#document_tabs div.steps {
+    padding-top: 10px;
+    width: 138px;
+    float: left;
+}
+
+.aligned label {
+    width: 20em;
+}
+
+
+/* END Document CSS */

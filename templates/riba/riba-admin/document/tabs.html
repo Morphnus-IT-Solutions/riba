@@ -1,0 +1,8 @@
+<div id="document_tabs">
+    <ul>
+        {% for t in tabs %}
+        <li id="{{t.name}}" class="{% ifequal tab t.name %}selected fb{% endifequal %} {%if t.tab_click%}cp check_tabs{%endif%}"><div class="step_no">{{forloop.counter}}</div><div class="steps">{{t.text}}</div></li>
+        {% endfor %}
+    </ul>
+    <div class="clear"></div>
+</div>

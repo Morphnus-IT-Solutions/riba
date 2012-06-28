@@ -1,0 +1,88 @@
+{% extends "riba-admin/base.html" %}
+{% load question_tags %}
+
+{% block extra_css %}
+<style>
+.form-row input {
+    width: 300px;
+}
+</style>
+{% endblock %}
+
+{%block jquery%}
+{{block.super}}
+<script type="text/javascript" src="/adminmedia/js/tiny_mce/tiny_mce.js"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/document/">Documents</a>&nbsp;&raquo;&nbsp; Add
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+<div id="template-details-content" class="w100p">
+    <form action="" method="POST" id="template_details" name="template_details" enctype="multipart/form-data">
+        {% document_tabs request "template-details" %}
+        <div class="padding10" style="border:#3F4C6C 1px solid;">
+        {% if errors %}
+            <div>
+                {% for error in errors %}
+                    {{error}}
+                {% endfor %}
+            </div>
+        {% endif %}
+            <div id="template_details_container">
+                <fieldset class="module aligned" style="border:0px">
+                    <div class="form-row title">
+                        <div>
+                            <label class="required">{{form.title.label}}:</label>
+                            {{form.title}}
+                        </div>
+                    </div>
+                    <div class="form-row price">
+                        <div>
+                            <label>{{form.offer_price.label}}:</label>
+                            {{form.offer_price}}
+                        </div>
+                    </div>
+                    <div class="form-row time_to_build">
+                        <div>
+                            <label>{{form.time_to_build.label}}:</label>
+                            {{form.time_to_build}}
+                        </div>
+                    </div>
+                    <div class="form-row information">
+                        <div>
+                            <label>{{form.information.label}}:</label>
+                            {{form.information}}
+                        </div>
+                    </div>
+                    <div class="form-row about">
+                        <div>
+                            <label>{{form.about.label}}:</label>
+                            {{form.about}}
+                        </div>
+                    </div>
+                    <input class="mart10 marl10" type="submit" id="proceed" name="proceed" value="Proceed"/>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.check_tabs').click(function(){
+        var next_tab = $(this).attr('id');
+        new_url = "/admin/document/" + next_tab;
+        location.href =  new_url;
+    });
+});
+</script>
+{% endblock %}

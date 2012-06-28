@@ -1,0 +1,103 @@
+<div>
+    <table>
+        {% if child_details %}
+            <tr>
+                <td>Question</td>
+                <td><input id="id_questionnaire-{{question.id}}-child_question" name="questionnaire-{{question.id}}-child_question"  value="{{question.id}}" readonly="readonly" type="hidden">{{question.question}}</input></td>
+                <td>Keyword</td>
+                <td>
+                    <select id="id_questionnaire_set-{{question.id}}-keyword" name="questionnaire-{{question.id}}-keyword">
+                        <option value selected="selected">--------</option>
+                        {% for k in keywords %}
+                            <option value={{k.id}}>{{k.keyword}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>Mandatory</td>
+                <td>
+                    <input type="checkbox" id="id_questionnaire-{{question.id}}-mandatory" name="questionnaire-{{question.id}}-mandatory"></input>
+                </td>
+            </tr>
+            {% for q, fields in child_details.iteritems %}
+                <tr>
+                    <td>Question</td>
+                    <td><input id="id_questionnaire-{{q.id}}-child_question" name="questionnaire-{{q.id}}-child_question"  value="{{q.id}}" readonly="readonly" type="hidden">{{q.question}}</input></td>
+                {% if fields %}
+                </tr>
+                    {% for f in fields %}
+                    <tr>
+                        <td>Field</td>
+                        <td><input type="hidden" id="id_questionnaire-{{f.id}}-field" name="questionnaire-{{f.id}}-field" value="{{f.id}}">{{f.field_label}}</td>
+                        <td>Keyword</td>
+                        <td>
+                            <select id="id_questionnaire-{{f.id}}-keyword" name="questionnaire-{{f.id}}-keyword">
+                                <option value selected="selected">--------</option>
+                                {% for k in keywords %}
+                                    <option value={{k.id}}>{{k.keyword}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>Mandatory</td>
+                        <td>
+                            <input type="checkbox" id="id_questionnaire-{{f.id}}-mandatory" name="questionnaire-{{f.id}}-mandatory"></input>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <td>Keyword</td>
+                    <td>
+                        <select id="id_questionnaire_set-{{q.id}}-keyword" name="questionnaire-{{q.id}}-keyword">
+                            <option value selected="selected">--------</option>
+                            {% for k in keywords %}
+                                <option value={{k.id}}>{{k.keyword}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>Mandatory</td>
+                    <td>
+                        <input type="checkbox" id="id_questionnaire-{{q.id}}-mandatory" name="questionnaire-{{q.id}}-mandatory"></input>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% if fields %}
+                {% for f in fields %}
+                    <tr>
+                        <td>Field</td>
+                        <td><input type="hidden" id="id_questionnaire-{{f.id}}-field" name="questionnaire-{{f.id}}-field" value="{{f.id}}">{{f.field_label}}</td>
+                        <td>Keyword</td>
+                        <td>
+                            <select id="id_questionnaire-{{f.id}}-keyword" name="questionnaire-{{f.id}}-keyword">
+                                <option value selected="selected">--------</option>
+                                {% for k in keywords %}
+                                    <option value={{k.id}}>{{k.keyword}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>Mandatory</td>
+                        <td>
+                            <input type="checkbox" id="id_questionnaire-{{f.id}}-mandatory" name="questionnaire-{{f.id}}-mandatory"></input>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            {% else %}
+                <tr>
+                    <td>Keyword</td>
+                    <td>
+                        <select id="id_questionnaire-{{question.id}}-keyword" name="questionnaire-{{question.id}}-keyword">
+                            <option value selected="selected">--------</option>
+                            {% for k in keywords %}
+                                <option value={{k.id}}>{{k.keyword}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>Mandatory</td>
+                    <td>
+                        <input type="checkbox" id="id_questionnaire-{{question.id}}-mandatory" name="questionnaire-{{question.id}}-mandatory"></input>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endif %}
+    </table>
+</div>

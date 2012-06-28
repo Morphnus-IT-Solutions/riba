@@ -1,0 +1,73 @@
+{% extends "riba-admin/base.html" %}
+{% load question_tags %}
+
+
+{% block extra_css %}
+<style>
+.form-row {
+    padding: 20px 12px;
+}
+
+.form-row select {
+    width: 300px;
+}
+</style>
+{% endblock %}
+
+{%block jquery%}
+{{block.super}}
+<script type="text/javascript" src="/adminmedia/js/tiny_mce/tiny_mce.js"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/document/">Documents</a>&nbsp;&raquo;&nbsp; Add
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+<div id="upload-template-content" class="w100p">
+    <form action="" method="POST" id="upload_template" name="upload_template" enctype="multipart/form-data">
+        {% document_tabs request "upload-template" %}
+        <div class="padding10" style="border:#3F4C6C 1px solid;">
+        {% if errors %}
+            <div>
+                {% for error in errors %}
+                    {{error}}
+                {% endfor %}
+            </div>
+        {% endif %}
+            <div id="upload_template_container">
+                <fieldset class="module aligned" style="border:0px">
+                    <div class="form-row category">
+                        <div>
+                            <label class="required">{{form.category.label}}:</label>
+                            {{form.category}}
+                        </div>
+                    </div>
+                    <div class="form-row upload_document">
+                        <div>
+                            <label>{{form.upload_document.label}}:</label>
+                            {{form.upload_document}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label>OR</label>
+                        </div>
+                    </div>
+                    <div class="form-row upload_text">
+                        <div>
+                            <label>{{form.upload_text.label}}:</label>
+                            {{form.upload_text}}
+                        </div>
+                    </div>
+                    <input class="mart10 marl10" type="submit" id="proceed" name="proceed" value="Proceed"/>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

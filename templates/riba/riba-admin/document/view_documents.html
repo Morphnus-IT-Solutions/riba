@@ -1,0 +1,103 @@
+{% extends "riba-admin/base.html" %}
+{% load question_tags %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; Documents
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+<h1>Select document to change</h1>
+<div id="document-content">
+    <ul class="object-tools">
+       <li>
+            <a href="/admin/document/upload-template/" class="addlink">Add document</a>
+       </li>
+    </ul>
+
+    <div id="changelist" class="filtered">
+       <div id="toolbar">
+            <form id="changelist-search" action="" method="GET">
+                <div>
+                    <div>
+                        <label for="searchbar">
+                            <img src="/media/images/icon_searchbox.png" alt="Search" />
+                        </label>
+                        <input type="text" size="25" name="q" id="searchbar" {% if q %}value="{{q}}"{% endif %}>
+                        <input type="SUBMIT" value="Search">
+                    </div>
+                </div>
+            </form>
+       </div>
+       <div id="document_list" class="w100p b1ps" style="overflow:scroll;">
+            {% if templates %}
+                <table  cellspacing="0" class="w100p" id="result_list">
+                    <thead>
+                        <th class="w40p">Title</th>
+                        <th class="w20p">Category</th>
+                        <th class="w15p">Price</th>
+                        <th class="w15p">Time to Build (in minutes)</th>
+                        <th class="w10p"></th>
+                    </thead>
+                    {% for temp in templates %}
+                        <tbody>
+                            <tr class="row{{forloop.counter0|row_class}}">
+                                <td class="w40p"><a href="/admin/upload-template/{{temp.id}}/">{{temp.title}}</a></td>
+    							<td class="w20p">{{temp.category.name}}</td>
+    							<td class="w15p">$ {{temp.offer_price|floatformat:0}}</td>
+    							<td class="w15p">{{temp.time_to_build}}</td>
+							    <td class="w10p">
+                                    <a class="changelink" href="/admin/upload-template/{{temp.id}}/">Edit</a>&nbsp;&nbsp;
+                                    <a id="{{temp.id}}" href="" class="deletebin deletelink">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    {%endfor%}
+                </table>
+            {% else %}
+			<div class="f15">
+				<h2><strong> No documents to display</strong> </h2>
+			</div>
+            {% endif %}
+       
+    </div>
+    <p class="paginator">
+        {{count}} documents
+    </p>
+</div>
+<!-- End Categories Content -->
+<div id='deletebin' style='display:none;'></div>
+<div class="clear"></div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+
+$('.deletebin').click(function(){
+    var k = this.id
+    var width=650;
+    var height=400;
+    var onsuccess = function(data, textStatus, xhr){
+        $('#deletebin').html(data);
+        var dialog=$('#deletebin').dialog({modal:true, title:'Delete Confirmation',width:width, height:height, resizable:true});
+    };
+    var onerror=function(xhr, textStatus, error){
+        $('#deletebin').html(xhr.responseText);
+        var dialog = $('#deletebin').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
+    };
+    var url= "/categories/delete/"+k;
+    $.ajax({
+        type: 'GET',
+        url:url,
+        data: '',
+        success:onsuccess,
+        error: onerror
+    });
+    return false;
+});
+        
+</script>
+{% endblock %}
