@@ -1,83 +1,78 @@
-{% extends "web/base.html" %}
+{% extends "riba-admin/base.html" %}
+{% load question_tags %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{{MEDIA_URL}}css/build_document.css" type="text/css" media="screen, projection" />
+<style>
+    .form-row input {
+        width: 300px;
+    }
+
+    fieldset table{
+        border: 0px;
+    }
+
+    fieldset table td{
+        border: 0px;
+    }
+</style>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/document/">Documents</a>&nbsp;&raquo;&nbsp; Add
+    </div>
+    <!-- END Breadcrumbs -->
 {% endblock %}
 
 {% block content %}
-<style>
-.table-form select {
-    width: 200px;
-}
-.border-dotted-gray {
-		border-bottom: 1px dotted #ECECEC;
-		border-bottom-width: 1px;
-		border-bottom-style: dotted;
-		border-bottom-color: #ECECEC;
-}
-</style>
-<div align="center">
-    <table width="650px" style="background:no-repeat url(bg.jpg); border-radius: 7px; -webkit-border-radius:7px; -moz-border-radius: 7px; -o-border-radius: 7px; border:2px #999 solid">
-    <tr>
-        <td align="center">
-            {% include "build_document/base.html" %} 
-        </td>
-    </tr>
-    {% if errors %}
-    <tr>
-        <td align="center">
-        <div class="error">
-            {% for error in errors %}
-                {{error}}
-            {% endfor %}
-        </div>
-        </td>
-        <td></td>
-    </tr>
-    {% endif %}
-    <tr>
-        <td align="center">
-        <form action="" method="POST" id="questionnaire" name="questionnaire" enctype="multipart/form-data">
-            <table>
-                <tr><td>
-                {{questionnaire_formset.management_form}}
-                {% for form in questionnaire_formset.forms %}
-                    <table class="table-form">
-                        {% if form %}
-                            <tr>
-                                <td>{{form.question.label}}</td>
-                                <td>{{form.question}}
-                                <a href="/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
-                                                <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
-                                            </a>
-                                </td>
-                                <td>{{form.sort_order.label}}</td>
-                                <td>{{form.sort_order}}</td>
-                                <td>Delete</td>
-                                <td>{{form.DELETE}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan=4 id="id_question-{{forloop.counter0}}-details" class="question_details"></td>
-                            </tr>
-                        {% endif %}
-                        <tr><td colspan=8><div class="clear border-dotted-gray"></div></td></tr>
-                    </table>
-                    
+<div id="questionnaire-content" class="w100p">
+    <form action="" method="POST" id="questionnaire" name="questionnaire" enctype="multipart/form-data">
+        {% document_tabs request "create-questionnaire" %}
+        <div class="padding10" style="border:#3F4C6C 1px solid;">
+        {% if errors %}
+            <div>
+                {% for error in errors %}
+                    {{error}}
                 {% endfor %}
-                </td></tr>
-                <tr>
-                    <td colspan="2" class="tdaligncenter">
-                        <input title='Add Question' type='button' name='add_question' id='add_another_question' value='+ Add Question' class="btn_c btn_c_s" />
-                    </td>
-                    <td colspan="2" class="tdaligncenter">
-                        <input type="submit" id="proceed" name="proceed" value="Proceed"/>
-                    </td>
-                </tr>
-            </table>
-            </form>
-        </td>
-    </tr>
-    </table>
- </div>
+            </div>
+        {% endif %}
+            <div id="questionnaire_container">
+               <fieldset class="aligned" style="border:0px">
+                    {{questionnaire_formset.management_form}}
+                    {% for form in questionnaire_formset.forms %}
+                        <div class="form-row table-form">
+                            {% if form %}
+                                <table >
+                                    <tr>
+                                        <td>{{form.question.label}}</td>
+                                        <td>{{form.question}}
+                                        <a href="/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
+                                                        <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
+                                                    </a>
+                                        </td>
+                                        <td>{{form.sort_order.label}}</td>
+                                        <td>{{form.sort_order}}</td>
+                                        <td>Delete</td>
+                                        <td>{{form.DELETE}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=4 id="id_question-{{forloop.counter0}}-details" class="question_details"></td>
+                                    </tr>       
+                                </table>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="form-row">
+                        <input class="w100" title='Add Question' type='button' name='add_question' id='add_another_question' value='+ Add Question' />
+                        <input class="w100" type="submit" id="proceed" name="proceed" value="Proceed"/>
+                    </div>
+               </fieldset>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}
 
 {% block script_footer %}
@@ -123,15 +118,22 @@
 
     // Event handlers for Field
     $("#add_another_question").click(function() {
-        cloneMore('table.table-form:last', 'questionnaire_set');
+        cloneMore('div.table-form:last', 'questionnaire_set');
     });
 $(document).ready(function() {
+    $('.check_tabs').click(function(){
+        var next_tab = $(this).attr('id');
+        new_url = "/admin/document/" + next_tab;
+        location.href =  new_url;
+    });
+
+
     /* Question trigger */
     $(".question").change(function(){
         var value = this.value;
         var form_count = $('#id_questionnaire_set-TOTAL_FORMS').val(); 
         var qid = this.id.split('-')[1];
-        var url = '/build-document/question-details/'+value+'/';
+        var url = '/admin/document/question-details/'+value+'/';
         var data = 'count='+qid+'&form_count='+form_count;
 
         var onsuccess = function(data, textStatus, xhr){

@@ -1,69 +1,105 @@
-{% extends 'web/base.html' %}
+{% extends 'riba-admin/base.html' %}
 {% load question_tags %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/document/">Documents</a>&nbsp;&raquo;&nbsp; Add
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
 {% block content %}
-<div class="padding_top10">
+<div id="final-content" class="w100p">
     <form action="" method="POST" id="final-questionnaire-form" name="final-questionnaire-form">
-    <div class="question-details">
-        <table>
-            <tbody>
-                <tr>
-                    <td>{{ form.title.label }}</td>
-			        <td>{{ form.title }}</td>
-                    <td>{{ form.offer_price.label }}</td>
-                    <td>{{ form.offer_price }}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.category.label }}</td>
-			        <td>{{ form.category }}</td>
-                    <td>{{ form.time_to_build.label }}</td>
-                    <td>{{ form.time_to_build }}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.upload_document.label }}</td>
-			        <td>{{ form.upload_document.value }}</td>
-                    <td>{{ form.information.label }}</td>
-		            <td>{{ form.information }}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.upload_text.label }}</td>
-			        <td>{{ form.upload_text.value }}</td>
-                    <td>{{ form.about.label }}</td>
-		            <td>{{ form.about }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="questionnaire-details">
-        <table class="tbl_response tablesorter f11" id='questions_list'>
-            <thead>
-                <th class="w250" id="question">Question</th>
-                <th class="w100" id="field">Field</th>
-                <th class="w100" id="keyword">Keyword</th>
-                <th class="w30" id="sort_order">Sort Order</th>
-                <th class="w30" id="mandatory">Mandatory</td>
-            </thead>
-            <tbody>
-            {{formset.management_form}}
-            {% for f in formset.forms %}
-            {% if f %}
-            <tr>
-                <td style="display:none;visibility:hidden;">
-                    {{ f.id }}
-                </td>
-                <td>{{f.question}}</td>
-                <td>{{f.field}}</td>
-                <td>{{f.keyword}}</td>
-                <td>{{f.sort_order}}</td>
-                <td>{{f.mandatory}}</td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <input type="submit" id="save" name="save" value="Save"/>
-    </div>
+        {% document_tabs request "finalize-template" %}
+        <div class="padding10" style="border:#3F4C6C 1px solid;">
+            <div id="finla_container">
+                <fieldset class="aligned" style="border:0px">
+                    <div class="form-row title">
+                        <label for="id_title" class="required">{{form.title.label}}:</label>
+                        {{form.title}}
+                    </div>
+                    <div class="form-row category">
+                        <label for="id_category" class="required">{{form.category.label}}:</label>
+                        {{form.category}}
+                    </div>
+                    <div class="form-row upload_document">
+                        <label for="id_upload_document">{{form.upload_document.label}}:</label>
+                        {{form.upload_document}}
+                    </div>
+                    <div class="form-row upload_text">
+                        <label for="id_upload_text">{{form.upload_text.label}}:</label>
+                        {{form.upload_text}}
+                    </div>
+                    <div class="form-row price">
+                        <label for="id_offer_price">{{form.offer_price.label}}:</label>
+                        {{form.offer_price}}
+                    </div>
+                    <div class="form-row time_to_build">
+                        <label for="id_time_to_build">{{form.time_to_build.label}}:</label>
+                        {{form.time_to_build}}
+                    </div>
+                    <div class="form-row information">
+                        <label for="id_information">{{form.information.label}}:</label>
+                        {{form.information}}
+                    </div>
+                    <div class="form-row about">
+                        <label for="id_about">{{form.about.label}}:</label>
+                        {{form.about}}
+                    </div>
+                </fieldset>
+                <div class="module-inline-group" id="questionnaire-table">
+                    <div class="tabular inline-related">
+                        <fieldset class="inline-module">
+                            <h2>Questionnaire</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Question</th>
+                                        <th>Field</th>
+                                        <th>Keyword</th>
+                                        <th>Sort Order</th>
+                                        <th>Mandatory</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{formset.management_form}}
+                                    {% for f in formset.forms %}
+                                        {% if f %}
+                                        <tr>
+                                            <td style="display:none;visibility:hidden;">{{ f.id }}</td>
+                                            <td>{{f.question}}</td>
+                                            <td>{{f.field}}</td>
+                                            <td>{{f.keyword}}</td>
+                                            <td>{{f.sort_order}}</td>
+                                            <td>{{f.mandatory}}</td>
+                                        </tr>
+                                        {% endif %}                        
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" id="save" name="save" value="Save"/>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.check_tabs').click(function(){
+        var next_tab = $(this).attr('id');
+        new_url = "/admin/document/" + next_tab;
+        location.href =  new_url;
+    });
+});
+</script>
 {% endblock %}

@@ -106,7 +106,7 @@ def template_details(request, id=None):
             if id:
                 return HttpResponseRedirect('/admin/document/create-questionnaire/%s/' % id)
             else:
-                return HttpResponseRedirect('/admin/document/create-questionnaire/%s/' % id)
+                return HttpResponseRedirect('/admin/document/create-questionnaire/')
 
         else:
             for er in form.errors:
@@ -176,7 +176,7 @@ def create_questionnaire(request, id=None):
                         mandatory = request.POST.get("questionnaire-%s-mandatory" % question.id, False)
                         add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
 
-                    return HttpResponseRedirect('/build-document/finalize-template/')
+                    return HttpResponseRedirect('/admin/document/finalize-template/')
         else:
             errors.append(questionnaire_formset.errors)
     ctxt = {
@@ -185,7 +185,7 @@ def create_questionnaire(request, id=None):
         'random_count': randint(1,999), # included for multiple popups of dependent question
         'id': id,
     }
-    return render_to_response('build_document/questionnaire.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/document/questionnaire.html', ctxt, context_instance=RequestContext(request))
 
 
 def add_question(template, question, sort_order, field=None, keyword=None, mandatory=None):
@@ -237,7 +237,7 @@ def get_question_details(request, id):
             "child_details": child_details,
             "keywords": keyword_queryset,
            }
-    return render_to_response('build_document/question_details.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/document/question_details.html', ctxt, context_instance=RequestContext(request))
 
 
 def finalize_template(request):
@@ -264,10 +264,10 @@ def finalize_template(request):
         template_id = session.get('template_id', None)
         if template_id:
             session['template_id'] = None
-        return HttpResponseRedirect('/build-document/')
+        return HttpResponseRedirect('/document/')
     ctxt = {
         'template': template,
         'form': form,
         'formset': formset,
     }
-    return render_to_response('build_document/finalize_template.html', ctxt, context_instance=RequestContext(request))
+    return render_to_response('riba-admin/document/finalize_template.html', ctxt, context_instance=RequestContext(request))
