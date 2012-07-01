@@ -262,27 +262,8 @@ def get_brands(request):
 
 @never_cache
 def index(request):
-#    try:
-#        ua = request.META['HTTP_USER_AGENT']
-#        detect_url = 'http://api.wurflws.com/wurflws?ua=' + ua
-#        detect_url = detect_url.replace(' ','%20')
-#        import urllib2
-#        doc = urllib2.urlopen(detect_url)
-#        data = doc.read()
-#        decoder = simplejson.JSONDecoder()
-#        d = decoder.decode(data)
-#        if 'mobile_browser' in d:
-#            if d['mobile_browser']:
-#                return HttpResponseRedirect('http://ma.chaupaati.in')
-#    except Exception,e:
-#        log.exception('device detection error : %s' % repr(e))
-#        pass
-#
-    _client = request.client
-    domain = request.META['HTTP_HOST']
-
-    ctxt = futurebazaar_home_page_context(request)
-    return render_to_response(request.client.custom_home_page,
+    ctxt = ''
+    return render_to_response('web/home/home.html',
             ctxt,
             context_instance=RequestContext(request))
 

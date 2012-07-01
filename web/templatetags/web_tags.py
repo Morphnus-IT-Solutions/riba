@@ -416,18 +416,7 @@ def render_cs_header(request):
 register.inclusion_tag('cs/header.html')(render_cs_header)
 
 def render_header(request):
-    #if request.client.client == utils.get_future_ecom() and request.client.type == 'mobileweb':
-    if utils.is_future_ecom(request.client.client) and request.client.type == 'mobileweb':
-        return dict(request=request,show_signin=True,show_menu=False,show_search=True)
-    #if request.client.type not in ['cc'] and request.client.client == utils.get_future_ecom():
-    if not utils.is_cc(request) and utils.is_future_ecom(request.client.client) and not request.user.is_authenticated():
-        return dict(request=request,show_signin=False,show_menu=False, show_search=False)
-#    if request.path.startswith('/a/'):
-#        return dict(request=request,show_signin=True,show_menu=False,show_search=False, phonepedeal=True)
-    if utils.is_franchise(request) and utils.is_future_ecom(request.client.client):
-        return dict(request=request,show_signin=True,show_menu=True,show_search=True)
-    else:
-        return dict(request=request, show_signin=True, show_menu=True, show_search=True)
+    return dict(request=request)
 register.inclusion_tag('web/header.html')(render_header)
 
 def render_ppd_footer(request):
@@ -435,8 +424,7 @@ def render_ppd_footer(request):
 register.inclusion_tag('web/ppd_footer.html')(render_ppd_footer)
 
 def render_footer(request):
-    app_settings = {}#{'facebook_app_id':settings.FACEBOOK_APPLICATION_ID}
-    return dict(request=request, show_footer=True,show_signin=True, app_settings=app_settings)
+    return dict(request=request)
 register.inclusion_tag('web/footer.html')(render_footer)
 
 def render_admin_footer(request):
@@ -1142,12 +1130,7 @@ def media_url(request, path):
         # if path contains http://.. , then dont append media before path
         media_url = path
     media_url = media_url.replace("media//media", "media")
-
-    # Ensure https for order pages
-    if request.path.startswith('/orders/payment'):
-        media_url = media_url.replace('http://', 'https://')
-        media_url = media_url.replace('fbcdn.mediafb.com',
-            'www.futurebazaar.com')
+    
     return media_url
 
 @register.simple_tag

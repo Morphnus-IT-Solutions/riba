@@ -1,93 +1,12 @@
- {%load web_tags%}
- {%load ppd_tags%}
- {%load cache %}
-<div id="header">
-  <div id="logo">
-    <div><a href="{% cc_url request "" %}" title="Home"><img src="{%media_url request "images/"%}{% wstore_logo request %}" alt="Logo" width="133" height="69" /></a> </div>
-  </div>
-  {% block ppd_header2 %}
-  {% endblock %}
-  <div id="header_right"> {%if show_signin%}
-    <div id="user_links" class="f11">
-      <ul>
-        {% if request|is_cc %}
-        <li><a href="/auth/signout">Agent Sign Out</a></li>
-        {% endif %}
-        {%if request.user.is_authenticated and not request|is_cc %}
-        <li class="first">Hi<span>{%get_username request%}!</span></li>
-            <li><a href="{% cc_url request ""%}">Home</a></li>
-        <li><a href={%ifequal logged_user.buyer_or_seller "Seller"%}"{%cc_url request 'seller/orders/'%}" {%else%} "{%cc_url request 'user/orders/'%}" {%endifequal%}>My Account</a></li>
-        <li><a href="{%cc_url request 'user/wishlist/'%}">My Wishlist</a></li>
-        
-        <li><a href="/auth/signout">Sign Out</a></li>
-        <li>
-          <div id="follow" class="nav_item_small">
-            <div class="noborder"> <a id="showFollow" class="follow_a">Follow</a>
-              <ul class="follow_us_mn" id="follow_us_mn">
-                <li> <a class="sprite-twitter_mn"  target="_blank" title="Follow Twitter updates" href="http://twitter.com/chaupaati">Twitter</a></li>
-                <li><a  class="sprite-facebook_mn" target="_blank" title="Join Facebook page" href=            "http://www.facebook.com/pages/Chaupaati/158059245130?v=wall">Facebook</a></li>
-                <li><a  class="sprite-feed_mn" target="_blank" title="Subscribe to Chaupaati Blog" href="http://blog.chaupaati.in/feed/" > RSS</a> </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        {%else%}
-            {%if request.user.is_authenticated and request|is_cc%}
-            <li><a href="{% cc_url request ""%}">Home</a></li>
-            <li><a href={%ifequal logged_user.buyer_or_seller "Seller"%}"{%cc_url request 'seller/orders/'%}" {%else%} "{%cc_url request 'user/orders/'%}"                                                                                   {%endifequal%}>My Account</a></li>
-            <li>
-              <div id="follow" class="nav_item_small">
-                <div class="noborder"> <a id="showFollow" class="follow_a">Follow</a>
-                  <ul class="follow_us_mn" id="follow_us_mn">
-                    <li> <a class="sprite-twitter_mn"  target="_blank" title="Follow Twitter updates" href="http://twitter.com/chaupaati">Twitter</a></li>
-                    <li><a  class="sprite-facebook_mn" target="_blank" title="Join Facebook page" href=            "http://www.facebook.com/pages/Chaupaati/158059245130?v=wall">Facebook</a></li>
-                    <li><a  class="sprite-feed_mn" target="_blank" title="Subscribe to Chaupaati Blog" href="http://blog.chaupaati.in/feed/" > RSS</a> </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            {%endif%}
-        {%endif%}
-        {%if not request.user.is_authenticated%}
-            <li><a href="{% cc_url request ""%}">Home</a></li>
-        {%if not request|is_cc%}
-        <li><a href="/auth/signin/" class="signin" title="Sign in">Sign in</a></li>
-        <li><a href="/auth/signup/" class="signin" title="Sign up">Sign up</a></li>
-        {%endif%}
-        <li>
-          <div id="follow" class="nav_item_small">
-            <div class="noborder"> <a id="showFollow" class="follow_a">Follow</a>
-              <ul class="follow_us_mn" id="follow_us_mn">
-                <li><a class="sprite-twitter_mn" target="_blank" title="Follow Twitter updates" href="http://twitter.com/chaupaati">Twitter</a></li>
-                <li><a  class="sprite-facebook_mn" target="_blank" title="Join Facebook page" href="http://www.facebook.com/pages/Chaupaati/158059245130?v=wall">Facebook</a></li>
-                <li><a  class="sprite-feed_mn" target="_blank" title="Subscribe to Chaupaati Blog" href="http://blog.chaupaati.in/feed/" > RSS</a></li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        {%endif%}
-      </ul>
-    </div>
-    {%endif%}
-    {%if show_menu%}
-    <div id="stores"> {% load menu_tags %}
-	{% cache 3600 chaupaatimenu %}
-        {%render_mega_menu request %}
-        {% endcache %}
-      </div>
-    {%endif%} </div>
-  <div class="clear"></div>
+{% load web_tags %}
+<div class="top_space"> </div>
+<div class="top_banner" align="center"> <img src="{% media_url request "images/logo.gif"%}" /> </div>
+<div class="menu"> 
+    <ul>
+        <li><a href="#"> About Us</a></li>
+        <li><a href="#"> Testimonials</a></li>
+        <li><a href="#"> Your Documents</a></li>
+        <li><a href="#"> Law Firms</a></li>
+        <li><a href="#"> Build a Documents</a></li>
+    </ul>
 </div>
-{%block search_bar%}
-            {%if show_search%}
-<div id="search_bar"> {%block form_open %}
-  <form action="{%cc_url request "search" %}" method="get" id="search_form">
-    {%endblock%}
-    <div id="search"> {% block search %}
-      {% render_search_form request %}                               
-      {% endblock %} </div>
-    {%block default_form_close%}
-  </form>
-  {%endblock%} </div>
-{%endif%}
-        {%endblock%} 
