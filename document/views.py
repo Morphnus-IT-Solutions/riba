@@ -89,6 +89,7 @@ def upload_template(request, id=None):
         'form': form,
         'errors': errors,
         'id': id,
+        'template': template,
     }
     return render_to_response('riba-admin/document/upload_template.html', ctxt, context_instance=RequestContext(request))
 
@@ -115,6 +116,7 @@ def template_details(request, id=None):
         'form': form,
         'errors': errors,
         'id': id,
+        'template': template,
     }
     return  render_to_response('riba-admin/document/template_details.html', ctxt, context_instance=RequestContext(request))
 
@@ -184,6 +186,7 @@ def create_questionnaire(request, id=None):
         'questionnaire_formset': questionnaire_formset,
         'random_count': randint(1,999), # included for multiple popups of dependent question
         'id': id,
+        'template': template,
     }
     return render_to_response('riba-admin/document/questionnaire.html', ctxt, context_instance=RequestContext(request))
 

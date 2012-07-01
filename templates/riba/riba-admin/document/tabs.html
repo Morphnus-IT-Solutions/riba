@@ -1,3 +1,6 @@
+{% if id and template %}
+    <h1>{{template.title}}</h1>
+{% endif %}
 <div id="document_tabs">
     <ul>
         {% for t in tabs %}

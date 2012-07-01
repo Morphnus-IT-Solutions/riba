@@ -45,7 +45,7 @@
                     {% for temp in templates %}
                         <tbody>
                             <tr class="row{{forloop.counter0|row_class}}">
-                                <td class="w40p"><a href="/admin/upload-template/{{temp.id}}/">{{temp.title}}</a></td>
+                                <td class="w40p"><a href="/admin/document/upload-template/{{temp.id}}/">{{temp.title}}</a></td>
     							<td class="w20p">{{temp.category.name}}</td>
     							<td class="w15p">$ {{temp.offer_price|floatformat:0}}</td>
     							<td class="w15p">{{temp.time_to_build}}</td>

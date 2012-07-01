@@ -17,7 +17,7 @@
 {% block breadcrumbs %}
     <!-- Breadcrumbs -->
     <div class="breadcrumbs">
-        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/document/">Documents</a>&nbsp;&raquo;&nbsp; Add
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/document/">Documents</a>&nbsp;&raquo;&nbsp; {% if id %}{{template.title}}{% else %}Add{% endif %}
     </div>
     <!-- END Breadcrumbs -->
 {% endblock %}
@@ -25,7 +25,7 @@
 {% block content %}
 <div id="template-details-content" class="w100p">
     <form action="" method="POST" id="template_details" name="template_details" enctype="multipart/form-data">
-        {% document_tabs request "template-details" %}
+        {% document_tabs request "template-details" id template %}
         <div class="padding10" style="border:#3F4C6C 1px solid;">
         {% if errors %}
             <div>
@@ -81,6 +81,8 @@ $(document).ready(function(){
     $('.check_tabs').click(function(){
         var next_tab = $(this).attr('id');
         new_url = "/admin/document/" + next_tab;
+        var id = {{id}};
+        if(id) new_url += '/'+id+'/';
         location.href =  new_url;
     });
 });
