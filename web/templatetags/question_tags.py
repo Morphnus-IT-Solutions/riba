@@ -42,3 +42,7 @@ def document_tabs(request, tab, id=None, template=None):
         t["tab_click"] = tab_click
     return dict(request=request, tab=tab, tabs=tabs, id=id, template=template)
 register.inclusion_tag("riba-admin/document/tabs.html")(document_tabs)
+
+def question_details(questionnaire, question, children=None, fields=None, keywords=None):
+    return dict(qn=questionnaire, question=question, child_details=children, fields=fields, keywords=keywords)
+register.inclusion_tag("riba-admin/document/view_question_details.html")(question_details)

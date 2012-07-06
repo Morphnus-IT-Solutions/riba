@@ -127,68 +127,132 @@ def create_questionnaire(request, id=None):
         return HttpResponseRedirect(request.path.replace('template-details', 'upload-template'))
 
     keyword_queryset = Keyword.objects.filter(template=template)
+    question_queryset = Question.objects.filter(level=1)
 
-    questionnaire_inline_formset =  inlineformset_factory(Template, Questionnaire, form = QuestionnaireForm, extra=1, can_delete=True)
-    questionnaire_formset = questionnaire_inline_formset(instance=template, queryset=Questionnaire.objects.filter(question__level=1, field=None))
+    qdict = {}
+    questionnaire = Questionnaire.objects.select_related('question').filter(template=template).order_by('sort_order')
+
+    '''
+     dict format
+     ------------
+     qdict = {sort_order: {'question': level_1_question,
+                           'fields': [list of all questionnaires having fields belonging to parent question]
+                           'children': {question: [list of all questionnaires having fields belonging to child question]},
+                          }
+             }
+    '''
+    for q in questionnaire:
+        if q.sort_order not in qdict:
+            qdict[q.sort_order] = {}
+
+        if q.question.level == 1:
+            if not qdict[q.sort_order].get('question'):
+                qdict[q.sort_order]['question'] = q
+                qdict[q.sort_order]['children'] = {}
+                qdict[q.sort_order]['fields'] = []
+
+            if q.field:
+                if not qdict[q.sort_order].get('fields'):
+                    qdict[q.sort_order]['fields'] = [q]
+                else:
+                    qdict[q.sort_order]['fields'].append(q)
+
+        else:
+            if not qdict[q.sort_order].get('children'):
+                qdict[q.sort_order]['children'] = {}
+
+            if q.field:
+                if not qdict[q.sort_order]['children'].get(q.question):
+                    qdict[q.sort_order]['children'][q.question] = [q]
+                else:
+                    qdict[q.sort_order]['children'][q.question].append(q)
+            else:
+                if not qdict[q.sort_order]['children'].get(q.question):
+                    qdict[q.sort_order]['children'][q.question] = []
+
     errors = []
+
     if request.method == "POST":
-        questionnaire_formset = questionnaire_inline_formset(request.POST, request.FILES, instance=None)
-        if questionnaire_formset.is_valid():
+        valid_questions, errors = validate_questions(request)
+        if not errors:
             # Delete old questionnaire
             old_questionnaire = Questionnaire.objects.filter(template = template)
             old_questionnaire.delete()
-            for q in questionnaire_formset.forms:
-                # validate mandatory fields
-                question = q.cleaned_data.get("question")
-                sort_order = q.cleaned_data.get("sort_order")
+            
+        for question in valid_questions:
+            children = question.get_all_children()
+            sort_order = question.sort_order
+            fields = question.field_set.all()
+            if fields:
+                for f in fields:
+                    keyword = request.POST.get("questionnaire-%s-keyword" % f.id)
+                    mandatory = request.POST.get("questionnaire-%s-mandatory" % f.id, False)
+                    add_question(template, question, sort_order, field=f, keyword=keyword, mandatory=mandatory)
+            elif children:
+                keyword = request.POST.get("questionnaire-%s-keyword" % question.id)
+                mandatory = request.POST.get("questionnaire-%s-mandatory" % question.id, False)
+                add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
+                for ch in children:
+                    if ch.question:
+                        fields = ch.question.field_set.all()
+                        if fields:
+                            for f in fields:
+                                keyword = request.POST.get("questionnaire-%s-keyword" % f.id)
+                                mandatory = request.POST.get("questionnaire-%s-mandatory" % f.id, False)
+                                add_question(template, ch.question, sort_order, field=f, keyword=keyword, mandatory=mandatory)
+                        else:
+                            keyword = request.POST.get("questionnaire-%s-keyword" % ch.question.id)
+                            mandatory = request.POST.get("questionnaire-%s-mandatory" % ch.question.id, False)
+                            add_question(template, ch.question, sort_order, keyword=keyword, mandatory=mandatory)
+            else:
+                keyword = request.POST.get("questionnaire-%s-keyword" % question.id)
+                mandatory = request.POST.get("questionnaire-%s-mandatory" % question.id, False)
+                add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
 
-                if not question:
-                    errors.append("Please select question")
-                if not sort_order:
-                    errors.append("Please add sort order for all questions")
-
-                if errors:
-                    continue
-                else:
-                    children = question.get_all_children()
-                    fields = question.field_set.all()
-                    if fields:
-                        for f in fields:
-                            keyword = request.POST.get("questionnaire-%s-keyword" % f.id)
-                            mandatory = request.POST.get("questionnaire-%s-mandatory" % f.id, False)
-                            add_question(template, question, sort_order, field=f, keyword=keyword, mandatory=mandatory)
-                    elif children:
-                        keyword = request.POST.get("questionnaire-%s-keyword" % question.id)
-                        mandatory = request.POST.get("questionnaire-%s-mandatory" % question.id, False)
-                        add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
-                        for ch in children:
-                            if ch.question:
-                                fields = ch.question.field_set.all()
-                                if fields:
-                                    for f in fields:
-                                        keyword = request.POST.get("questionnaire-%s-keyword" % f.id)
-                                        mandatory = request.POST.get("questionnaire-%s-mandatory" % f.id, False)
-                                        add_question(template, ch.question, sort_order, field=f, keyword=keyword, mandatory=mandatory)
-                                else:
-                                    keyword = request.POST.get("questionnaire-%s-keyword" % ch.question.id)
-                                    mandatory = request.POST.get("questionnaire-%s-mandatory" % ch.question.id, False)
-                                    add_question(template, ch.question, sort_order, keyword=keyword, mandatory=mandatory)
-                    else:
-                        keyword = request.POST.get("questionnaire-%s-keyword" % question.id)
-                        mandatory = request.POST.get("questionnaire-%s-mandatory" % question.id, False)
-                        add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
-
-                    return HttpResponseRedirect('/admin/document/finalize-template/')
-        else:
-            errors.append(questionnaire_formset.errors)
+        return HttpResponseRedirect('/admin/document/finalize-template/')
+    print qdict 
     ctxt = {
         'errors': errors,
-        'questionnaire_formset': questionnaire_formset,
+        #'questionnaire_formset': questionnaire_formset,
         'random_count': randint(1,999), # included for multiple popups of dependent question
         'id': id,
         'template': template,
+        'qdict': qdict,
+        'questions': question_queryset,
+        'keywords': keyword_queryset,
+        'total_forms': len(qdict)
     }
     return render_to_response('riba-admin/document/questionnaire.html', ctxt, context_instance=RequestContext(request))
+
+
+def validate_questions(request):
+    valid_questions, errors = [], []
+    total_forms = request.POST.get('questionnaire_set-TOTAL_FORMS')
+    if total_forms:
+        for q in range(int(total_forms)):
+            question_id = request.POST.get('questionnaire_set-%s-question' % str(q))
+            sort_order = request.POST.get('questionnaire_set-%s-sort_order' % str(q))
+            delete = request.POST.get('questionnaire_set-%s-DELETE' % str(q))
+
+            if not delete:
+                if not question_id:
+                    errors.append("Please select question in row %s" % str(q+1))
+                if not sort_order:
+                    errors.append("Please add sort order in row %s" % str(q+1))
+
+                # We are adding questions to database even if there are errors
+                # coz we want to display questions to edit after displaying error
+                try:
+                    question = Question.objects.get(pk=int(question_id))
+                    question.sort_order = sort_order
+                    question.save()
+                    valid_questions.append(question)
+                except:
+                    errors.append("Please select appropriate question in row %s" % str(q+1))
+    else:
+        errors.append("Questions not updated properly. Please refresh and try again.")
+
+    return valid_questions, errors
 
 
 def add_question(template, question, sort_order, field=None, keyword=None, mandatory=None):

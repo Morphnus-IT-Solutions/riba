@@ -39,36 +39,69 @@
             </div>
         {% endif %}
             <div id="questionnaire_container">
-               <fieldset class="aligned" style="border:0px">
-                    {{questionnaire_formset.management_form}}
-                    {% for form in questionnaire_formset.forms %}
-                        <div class="form-row table-form">
-                            {% if form %}
-                                <table >
+                <fieldset class="aligned" style="border:0px">
+                    {% if qdict %}
+                        <input type="hidden" name="questionnaire_set-TOTAL_FORMS" value="{{total_forms}}" id="id_questionnaire_set-TOTAL_FORMS">
+                        {% for key, value in qdict.iteritems %}
+                            <div class="form-row table-form">
+                                 <table>
                                     <tr>
-                                        <td>{{form.question.label}}</td>
-                                        <td>{{form.question}}
-                                        <a href="/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" id="add_id_{{form.question.html_name}}~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
-                                                        <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
-                                                    </a>
+                                        <td class="ma">Question</td>
+                                        <td>
+                                            <select id="id_questionnaire_set-{{forloop.counter0}}-question" name="questionnaire_set-{{forloop.counter0}}-question" class="question">
+                                                <option value {% if not value.question %}selected="selected"{% endif %}>--------</option>
+                                                    {% for q in questions %}
+                                                        <option value={{q.id}} {% ifequal value.question.question q %}selected="selected"{% endifequal %}>{{q.question}}</option>
+                                                    {% endfor %}
+                                            </select>
+                                            <a href="/question/add/{{random_count}}{{forloop.counter0}}" class="add-another" name="questionnaire_set-{{forloop.counter0}}-question~{{random_count}}{{forloop.counter0}}" id="add_id_questionnaire_set-{{forloop.counter0}}-question~{{random_count}}{{forloop.counter0}}" onclick="return showAddAnotherPopup(this);">
+                                                <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
+                                            </a>
                                         </td>
-                                        <td>{{form.sort_order.label}}</td>
-                                        <td>{{form.sort_order}}</td>
-                                        <td>Delete</td>
-                                        <td>{{form.DELETE}}</td>
+                                        <td class="ma">Sort Order</td>
+                                        <td>
+                                            <input type="text" id="id_questionnaire_set-{{forloop.counter0}}-sort_order" name="questionnaire_set-{{forloop.counter0}}-sort_order" value="{{key}}"> 
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td colspan=4 id="id_question-{{forloop.counter0}}-details" class="question_details"></td>
-                                    </tr>       
-                                </table>
-                            {% endif %}
+                                        <td colspan=4 id="id_question-{{forloop.counter0}}-details" class="question_details">{% question_details value.question value.question.question value.children value.fields keywords %}</td>
+                                    </tr>
+                                </table>   
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <input type="hidden" name="questionnaire_set-TOTAL_FORMS" value="1" id="id_questionnaire_set-TOTAL_FORMS">
+                        <div class="form-row table-form">
+                            <table>
+                                <tr>
+                                    <td class="ma">Question</td>
+                                    <td>
+                                        <select id="id_questionnaire_set-0-question" name="questionnaire_set-0-question" class="question">
+                                            <option value selected="selected">--------</option>
+                                                {% for q in questions %}
+                                                    <option value={{q.id}}>{{q.question}}</option>
+                                                {% endfor %}
+                                        </select>
+                                        <a href="/question/add/{{random_count}}0" class="add-another" name="questionnaire_set-0-question~{{random_count}}0" id="add_id_questionnaire_set-0-question~{{random_count}}0" onclick="return showAddAnotherPopup(this);">
+                                            <img src="/media/images/icon_addlink.gif" width="10" height="10" alt="Add Another"/>
+                                        </a>
+                                    </td>
+                                    <td class="ma">Sort Order</td>
+                                    <td>
+                                        <input type="text" id="id_questionnaire_set-0-sort_order" name="questionnaire_set-0-sort_order" value="1"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan=4 id="id_question-0-details" class="question_details"></td>
+                                </tr>
+                            </table>
                         </div>
-                    {% endfor %}
+                    {% endif %}
                     <div class="form-row">
                         <input class="w100" title='Add Question' type='button' name='add_question' id='add_another_question' value='+ Add Question' />
                         <input class="w100" type="submit" id="proceed" name="proceed" value="Proceed"/>
                     </div>
-               </fieldset>
+                </fieldset>
             </div>
         </div>
     </form>
@@ -133,10 +166,9 @@ $(document).ready(function() {
     /* Question trigger */
     $(".question").change(function(){
         var value = this.value;
-        var form_count = $('#id_questionnaire_set-TOTAL_FORMS').val(); 
         var qid = this.id.split('-')[1];
         var url = '/admin/document/question-details/'+value+'/';
-        var data = 'count='+qid+'&form_count='+form_count;
+        var data = 'count='+qid;
 
         var onsuccess = function(data, textStatus, xhr){
             $("#id_question-"+qid+"-details").html(data);

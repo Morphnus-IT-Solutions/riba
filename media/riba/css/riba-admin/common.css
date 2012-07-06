@@ -71,6 +71,7 @@
 .ca{text-align:center !important;}
 .la{text-align:left !important;}
 .ra{text-align:right !important;}
+.ma{vertical-align:middle;}
 .bb{border-bottom:1px dotted #999}
 /*.bb{border-bottom:1px dotted #999}*/
 .bbs{border-bottom:1px solid #ccc}
@@ -98,6 +99,7 @@ div.errors h3{margin-bottom:5px}
 .w150 {width: 150px !important;}
 .w100 {width: 100px !important;}
 .w10 {width: 10px !important;}
+.w50 {width: 50px !important;}
 
 .martlr10 {margin: 10px 10px 0px 10px;}
 
