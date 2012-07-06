@@ -210,7 +210,6 @@ def create_questionnaire(request, id=None):
                 add_question(template, question, sort_order, keyword=keyword, mandatory=mandatory)
 
         return HttpResponseRedirect('/admin/document/finalize-template/')
-    print qdict 
     ctxt = {
         'errors': errors,
         #'questionnaire_formset': questionnaire_formset,
