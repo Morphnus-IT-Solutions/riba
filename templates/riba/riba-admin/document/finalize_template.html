@@ -9,6 +9,14 @@
     <!-- END Breadcrumbs -->
 {% endblock %}
 
+{% block extra_css %}
+<style>
+    .form-row input[type="text"] {
+        readonly:readonly;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div id="final-content" class="w100p">
     <form action="" method="POST" id="final-questionnaire-form" name="final-questionnaire-form">

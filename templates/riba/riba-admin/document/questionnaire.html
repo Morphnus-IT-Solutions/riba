@@ -157,7 +157,7 @@ $(document).ready(function() {
     $('.check_tabs').click(function(){
         var next_tab = $(this).attr('id');
         new_url = "/admin/document/" + next_tab;
-        var id = {{id}};
+        var id = "{{id}}";
         if(id) new_url += '/'+id+'/';
         location.href =  new_url;
     });
