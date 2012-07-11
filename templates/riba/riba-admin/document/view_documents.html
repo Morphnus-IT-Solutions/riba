@@ -88,7 +88,7 @@ $('.deletebin').click(function(){
         $('#deletebin').html(xhr.responseText);
         var dialog = $('#deletebin').dialog({modal:true, title:'Delete Confirmation', width:width, height:height, resizable:true});
     };
-    var url= "/categories/delete/"+k;
+    var url= "/admin/document/delete/"+k;
     $.ajax({
         type: 'GET',
         url:url,

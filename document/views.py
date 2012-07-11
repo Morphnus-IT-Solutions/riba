@@ -344,3 +344,24 @@ def finalize_template(request):
         'formset': formset,
     }
     return render_to_response('riba-admin/document/finalize_template.html', ctxt, context_instance=RequestContext(request))
+
+
+def delete_document(request, id):
+    try:
+        template = Template.objects.get(id = id)
+    except Template.DoesNotExist:
+        raise Http404
+    qn = template.questionnaire_set.select_related('question').filter(question__level = 1).values('question__question').distinct('question__question')
+    html = 'riba-admin/document/document_delete_confirm.html'
+    if request.method == "POST":
+        del_confirm = request.POST.get('del_confirm', 'No')
+        if del_confirm == "Yes":
+            template.delete()
+        return HttpResponseRedirect('/admin/document/')
+        
+    del_document_dict = {
+        'id': id,
+        'template':template,
+        'qn': qn,
+        }    
+    return render_to_response(html, del_document_dict, context_instance=RequestContext(request))

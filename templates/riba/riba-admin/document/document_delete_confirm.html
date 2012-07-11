@@ -1,0 +1,36 @@
+<div class="inner-content">
+	<style type="text/css">
+		table{
+			margin-bottom:1.4em;
+			width:100%;
+		}
+		tr, th, td, caption{
+			padding: 10px 0px 20px 5px;
+            border-bottom: 0px;
+		}
+	</style>
+	<form action="/admin/document/delete/{{id}}/" id="del_confirm" name="del_confirm" method="POST" enctype="multipart/form-data">
+		<div class="clear"></div>
+        <div style="padding:25px 25px 25px 25px">
+		<table style="padding: 26px;">
+			<h3> Are you sure you want to delete the document "{{template.title}}"?<br>
+                It contains following questions:<br></h3>
+            {% for q in qn %}
+            <tr>
+                <td>Question:</td>
+                <td>{{q.question__question}}</td>
+            </tr>
+			{% endfor %}
+		</table>
+        </div>
+		<div class="ca" style="padding: 25px;">
+			<table class="buttons">
+				<tr>
+                    <input type="submit" id="save" value="Yes" class="btn_c btn_c_s btn_orange" name="del_confirm" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="submit" id="save" value="No" class="btn_c btn_c_s btn_orange" name="del_confirm" />
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>

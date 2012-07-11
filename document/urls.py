@@ -10,4 +10,5 @@ urlpatterns = patterns('document.views',
     (r'^create-questionnaire/', 'create_questionnaire'),
     (r'^question-details/(?P<id>[0-9]+)/', 'get_question_details'),
     (r'^finalize-template/', 'finalize_template'),
+    (r'^delete/(?P<id>[0-9]+)/$', 'delete_document'),
 )
