@@ -262,7 +262,10 @@ def get_brands(request):
 
 @never_cache
 def index(request):
-    ctxt = ''
+    categories = Category.objects.all()
+    ctxt = {
+        'categories': categories
+    }
     return render_to_response('web/home/home.html',
             ctxt,
             context_instance=RequestContext(request))

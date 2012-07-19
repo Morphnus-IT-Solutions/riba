@@ -47,20 +47,10 @@
     <div class="m_lft_space"> </div>
     <div class="categories_area"> 
         <div class="categories_area_top"> Buy Documents</div>
-        <div class="categories"> 
-            <div class="categories_list"> Business Sales Documents </div>
-            <div class="categories_list"> Confidentiality or non-disclosure </div>
-            <div class="categories_list"> Contract Service Agreements </div>
-            <div class="categories_list"> Business Sales Documents </div>
-            <div class="categories_list"> Confidentiality or non-disclosure </div>
-            <div class="categories_list"> Contract Service Agreements </div>
-            <div class="categories_list"> Business Sales Documents </div>
-            <div class="categories_list"> Confidentiality or non-disclosure </div>
-            <div class="categories_list"> Contract Service Agreements </div>
-            <div class="categories_list"> Business Sales Documents </div>
-            <div class="categories_list"> Confidentiality or non-disclosure </div>
-            <div class="categories_list"> Contract Service Agreements </div>
-            <div class="categories_list"> Business Sales Documents </div>
+        <div class="categories">
+            {% for cat in categories %}
+                <div class="categories_list">{{cat.name}}</div>
+            {% endfor %}
         </div>
     </div>
     <div class="m_m_space"> </div>

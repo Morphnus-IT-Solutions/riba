@@ -226,16 +226,18 @@ float:left;
 .categories
 {
 width:285px;
-height:414px;
+height:420px;
+max-height:415px;
 background-image:url(/media/images/web/cat_bg.gif);
 background-repeat:repeat-x;
-float:left
+float:left;
+overflow-y: auto;
 }
 
 .categories_list
 {
-width:267px;
-height:29px;
+width:265px;
+height:30px;
 border-bottom:#999999 1px dashed;
 font-family:Verdana, Arial, Helvetica, sans-serif;
 font-size:14px;
