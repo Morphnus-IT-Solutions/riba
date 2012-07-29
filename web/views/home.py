@@ -22,6 +22,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.cache import cache
 from catalog.models import *
 from categories.models import *
+from document.models import Template
 from web.models import Banner
 from orders.models import *
 from utils import utils
@@ -263,8 +264,10 @@ def get_brands(request):
 @never_cache
 def index(request):
     categories = Category.objects.all()
+    latest_documents = Template.objects.filter(state='submitted').order_by('-id')[:3]
     ctxt = {
-        'categories': categories
+        'categories': categories,
+        'latest_documents': latest_documents
     }
     return render_to_response('web/home/home.html',
             ctxt,

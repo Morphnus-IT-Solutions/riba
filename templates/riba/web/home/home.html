@@ -25,16 +25,16 @@
     <div class="s_lft_space"> </div>
     <div class="s_middle_txt"> 
         <div class="s_middle_txt_tab"> Latest Documents </div>
-        <div class="document_txt_area"> 
-            <div class="document_top"> 
-                <div class="document_top_txt"> 1. Will - Married or Defacto No Children </div>
-                <div class="document_top_txt"> 2. Will - Married or Defacto with Children </div>
-                <div class="document_top_txt"> 3. Will - Single No Children </div>
+        <div class="document_txt_area">
+            <div class="document_top">
+                {% for doc in latest_documents %}
+                    <div class="document_top_txt">{{forloop.counter0|add:1}}. {{doc.title}}</div> 
+                {% endfor %}
             </div>
-            <div class="documents_bottom_txt_area"> 
-                <div class="documents_bottom_txt"> $ 77.00 </div>
-                <div class="documents_bottom_txt"> $ 77.00 </div>
-                <div class="documents_bottom_txt"> $ 99.00 </div>
+            <div class="documents_bottom_txt_area">
+                {% for doc in latest_documents %}
+                    <div class="documents_bottom_txt"> $ {{doc.offer_price}}</div>
+                {% endfor %}
             </div>
         </div>
     </div>
