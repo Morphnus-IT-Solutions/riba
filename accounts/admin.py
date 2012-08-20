@@ -1,4 +1,4 @@
-from accounts.models import Account,NotificationSettings, PaymentMode, PaymentOption,StoreOwner, Client, ClientDomain, DomainPaymentOptions
+from accounts.models import Account, NotificationSettings, PaymentMode, PaymentOption, Client, ClientDomain, DomainPaymentOptions
 from django.contrib import admin
 
 class NotificationSettingsAdmin(admin.ModelAdmin):
@@ -16,25 +16,19 @@ class NotificationSettingsInline(admin.TabularInline):
 
 class PaymentOptionInline(admin.TabularInline):
     model = PaymentOption
-class StoreOwnerInline(admin.TabularInline):
-    model = StoreOwner
 
 class PaymentOptionAdmin(admin.ModelAdmin):
     list_display = ('payment_mode', 'is_active','sort_order','is_noninstant','is_instant','is_online','is_offline')
     list_filter = (['client'])
 admin.site.register(PaymentOption, PaymentOptionAdmin)
+
 class AccountAdmin(admin.ModelAdmin):
-    inlines = [NotificationSettingsInline,StoreOwnerInline]
+    inlines = [NotificationSettingsInline]
     list_display = ('name','type','primary_email')
     list_filter = ('type','dni')
     search_fields = ['name']
     ordering = ('name',)
 admin.site.register(Account, AccountAdmin)
-
-class StoreOwnerAdmin(admin.ModelAdmin):
-    list_display = ('account','category','store')
-    list_filter = ('account','category','store')
-admin.site.register(StoreOwner, StoreOwnerAdmin)
 
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('name',)
