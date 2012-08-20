@@ -13,7 +13,6 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from utils import utils
 import re, time
 from web.views.order_view import *
-from activitystream.models import Activity
 from datetime import datetime, timedelta
 from users.models import NewsLetter
 from decimal import Decimal
@@ -969,22 +968,6 @@ def load_ppd_product (productitem, request):
     products=productitem
     return dict(products=products,request=request)
 register.inclusion_tag('ppd/display_products.html')(load_ppd_product)
-
-def render_home_buzz(request):
-    act_objs = Activity.objects.filter(aclientdomain=request.client).order_by('-atime')[:5]
-    return { 'act_objs' : act_objs ,'request':request}
-register.inclusion_tag('activitystream/homestream.html')(render_home_buzz)
-
-def render_dailydeal_buzz(request):
-    steal_of_the_day = DailyDeal.objects.filter(type='hero_deal', client=request.client.client, 
-        status='published', starts_on__lte=datetime.now(),ends_on__gte=datetime.now())
-    if steal_of_the_day:
-        steal_of_the_day = steal_of_the_day[0]
-        act_objs = Activity.objects.filter(aclientdomain=request.client, asrc=steal_of_the_day.rate_chart).order_by('-atime')[:5]
-    else:
-        act_objs = Activity.objects.filter(aclientdomain=request.client).order_by('-atime')[:5]
-    return { 'act_objs' : act_objs ,'request':request}
-register.inclusion_tag('activitystream/homestream.html')(render_dailydeal_buzz)
 
 def render_recently_stolen(request):
     from web.views.home import get_recently_stolen_products
