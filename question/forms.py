@@ -5,11 +5,12 @@ from question.models import *
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('question', 'type', 'answer_type', 'rows', 'columns', )
+        fields = ('question', 'category', 'description', 'type', 'answer_type', 'rows', 'columns', )
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields['question'].error_messages['required'] = 'Please enter question'
+        self.fields['category'].error_messages['required'] = 'Please select category'
 
 
 class OptionForm(forms.ModelForm):

@@ -1,9 +1,12 @@
 from django.db import models
+from categories.models import Category
 
 # Create your models here.
 
 class Question(models.Model):
     question = models.TextField()
+    category = models.ForeignKey(Category)
+    description = models.TextField(blank=True, null=True)
     answer_type = models.CharField(max_length=15, db_index=True,
             		default='char', choices=(
                 		('text', 'Text'),
