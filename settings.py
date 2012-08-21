@@ -57,7 +57,7 @@ UPLOAD_ROOT = '/home/apps/uploads/u/riba'
 FEEDS_ROOT = os.path.join(SETTINGS_FILE_FOLDER, 'feeds/data')
 
 #Port number for feeds.futurebazaar.com for feed sync
-FEED_SYNC_PORT_NUMBER = 8080
+#FEED_SYNC_PORT_NUMBER = 8080
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -77,8 +77,8 @@ AUTH_PROFILE_MODULE = 'users.Profile'
 AUTHENTICATION_BACKENDS = (
         #'users.backends.ChaupaatiBackend',
         #'users.backends.PhoneEmailBackend',
-        'users.order_backends.OrderBackend',
-        'users.facebook_backends.FacebookBackend',
+        #'users.order_backends.OrderBackend',
+        #'users.facebook_backends.FacebookBackend',
         'django.contrib.auth.backends.ModelBackend',
         #'users.backends.PhoneEmailBackend',
 )
@@ -88,8 +88,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
     'web.contextp.user',
-    'web.contextp.app_settings',
-    'web.contextp.facebookid',
+    #'web.contextp.app_settings',
+    #'web.contextp.facebookid',
     'web.contextp.media',
 )
 
@@ -112,15 +112,16 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'web.middleware.ClientMiddleWare',
-    'web.middleware.ExceptionMiddleWare',
+    #'web.middleware.ExceptionMiddleWare',
     'django.middleware.common.CommonMiddleware',
-    'web.middleware.URLRestrictMiddleWare',
+    #'web.middleware.URLRestrictMiddleWare',
     'django.middleware.cache.FetchFromCacheMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     #'django.middleware.csrf.CsrfResponseMiddleware'
     'pagination.middleware.PaginationMiddleware',
     #'profiling.middleware.ProfileMiddleware',
     #'web.middleware.MobileWebMiddleWare',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'riba.urls'
@@ -173,7 +174,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'communications',
     'lists',
-    'activitystream',
     'compress',
     'debug_toolbar',
     'django_extensions',
@@ -186,6 +186,11 @@ INSTALLED_APPS = (
     'support',
     'complaints',
     'sellers',
+
+    'activitystream',
+    'affiliates',
+    'api',
+    'atg',
 )
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
