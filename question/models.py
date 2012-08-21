@@ -132,6 +132,7 @@ class Field(models.Model):
 					    ('imagefield', 'ImageField'),
 					    ))
     field_option = models.TextField(null=True, blank=True)
+    sort_order = models.PositiveIntegerField(default = 1)
 
     def __unicode__(self):
         return self.field_label

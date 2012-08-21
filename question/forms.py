@@ -23,7 +23,7 @@ class OptionForm(forms.ModelForm):
 class FieldForm(forms.ModelForm):
     class Meta:
         model = Field
-        fields = ('field_label', 'field_type', 'field_option')
+        fields = ('field_label', 'field_type', 'field_option', 'sort_order')
 
     def __init__(self, *args, **kwargs):
         super(FieldForm, self).__init__(*args, **kwargs)

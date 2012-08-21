@@ -30,6 +30,18 @@
                             {{form.question}}
                         </div>
                     </div>
+                    <div class="form-row description">
+                        <div>
+                            <label>{{form.description.label}}:</label>
+                            {{form.description}}
+                        </div>
+                    </div>
+                    <div class="form-row category">
+                        <div>
+                            <label class="required">{{form.category.label}}:</label>
+                            {{form.category}}
+                        </div>
+                    </div>
                     <div class="form-row answer_type">
                         <div>
                             <label class="required">{{form.answer_type.label}}:</label>
@@ -67,6 +79,7 @@
                                         <th>Field label</th>
                                         <th class="required">Field type</th>
                                         <th>Field Option</th>
+                                        <th>Sort Order</th>
                                         <th>Delete?</th>
                                     </tr>
                                 </thead>
@@ -82,6 +95,7 @@
                                                 <td class="field-label">{{f.field_label}}</td>
                                                 <td class="field-type">{{f.field_type}}</td>
                                                 <td class="field-option">{{f.field_option}}</td>
+                                                <td class="field-sort_order">{{f.sort_order}}</td>
                                                 <td>{{f.DELETE}}</td>
                                             {% endif %}
                                         </tr>
