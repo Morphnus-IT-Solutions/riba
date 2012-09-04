@@ -1,0 +1,177 @@
+{% extends 'riba-admin/base.html' %}
+{% load question_tags %}
+
+{% block extra_css %}
+<style>
+    .aligned label {
+        display: block;
+        padding: 0px 10px 0 0;
+        float: left;
+        width: 300px;
+    }
+
+    .module table td {
+        border-bottom: 0px;
+        vertical-align: middle;
+    }
+
+    fieldset table {
+        border-right: 0px;
+    }
+
+    .field input, textarea, select {
+        width: 400px;
+    }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>&nbsp;&raquo;&nbsp; <a href="/admin/question/view/">Questions</a>&nbsp;&raquo;&nbsp; <a href="/admin/question/{{q.id}}/">{{q.question}}</a>&nbsp;&raquo;&nbsp; Preview
+    </div>
+    <!-- END Breadcrumbs -->
+{% endblock %}
+
+
+{% block content %}
+<div class="preview-details">
+    <h1>Preview Question</h1>
+    <form id="preview_question_form" method="POST" action="">
+        <fieldset class="module aligned">
+            {% for qh in parents %}
+                <div class="form-row">
+                    <div>
+                        <label style="valign:top">{{qh.parent_question}}</label>
+                        <div>{{qh.parent_value}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="form-row">
+                <div>
+                    {% if fields %}
+                        <div class="f12 w300"><strong>{{q.question}}</strong></div>
+                        <div>
+                            <table class="mart10">
+                                <tbody>
+                                    {% for f in fields %}
+                                        <tr>
+                                            <td class="f11 w400">{{f.field_label}}</td>
+                                            <td class="w10">:</td>
+                                            <td class="field">
+                                                {%ifequal f.field_type "text"%}
+                                                    <input id="{{f.id}}" type="text" name="current_question_val">
+                                                {% endifequal %}
+                                                {% ifequal f.field_type "textarea" %}
+                                                    <textarea class="w250 h50" style="height:50px !important;" name="current_question_val"></textarea>
+                                                {% endifequal %}
+                                                {% ifequal f.field_type "dropdown" %}
+                                                    <select id="{{f.id}}" name="current_question_val">
+                                                    {% with f.field_option|split_newline as opts %}
+                                                        {% for o in opts %}
+                                                            <option value="{{o}}">{{o}}</option>
+                                                        {% endfor %}
+                                                    {% endwith %}
+                                                    </select>
+                                                {% endifequal %}
+                                                {% ifequal f.field_type "radio" %}
+                                                    {% with f.field_option|split_newline as opts %}
+                                                        {% for o in opts %}
+                                                            <div><input class="w100" type="radio" name="current_question_val" value="{{o|slugify}}" />{{o}}</div>
+                                                        {% endfor %}
+                                                    {% endwith %}
+                                                {% endifequal %}
+                                                {% ifequal f.field_type "check" %}
+                                                    {% with f.field_option|split_newline as opts %}
+                                                        {% for o in opts %}
+                                                            <div><input class="w100" type="checkbox" name="current_question_val" value="{{o|slugify}}" />{{o}}</div>
+                                                        {% endfor %}
+                                                    {% endwith %}
+                                                {% endifequal %}
+                                                {% ifequal f.field_type "datetime" %}
+                                                    <input readonly="true" type="text" placeholder="Select a Date" name="current_question_val" class="hasdatepicker" />
+                                                {% endifequal%}
+                                                {% ifequal f.field_type "imagefield"%}
+                                                    <input type="file" name="current_question_val" size="40" />
+                                                {% endifequal %}                            
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <label>{{q.question}}</label>
+                        <div>
+                             {% ifequal q.answer_type "text" %}
+                                <div class="left w250"><input id="{{q.id}}" type="text" name="current_question_val"></div>
+                            {% endifequal %}
+                            {% ifequal q.answer_type "textarea" %}
+                                <textarea class="w250 h50" style="height:50px !important;" name="current_question_val"></textarea>
+                            {% endifequal %}
+                            {% ifequal q.answer_type "dropdown" %}
+                               <select id="{{q.id}}" name="current_question_val"> 
+                                    {% for option in options %}
+                                        <option value="{{option.option_value}}">{{option.option_value}}</option>
+                                    {% endfor %}
+                               </select>
+                            {% endifequal %}
+                            {% ifequal q.answer_type "radio" %}
+                                {% for option in options %}
+                                    <input type="radio" name="current_question_val" value="{{option|slugify}}" />{{option}}
+                                {% endfor %}
+                            {% endifequal %}
+                            {% ifequal q.answer_type "checkbox" %}
+                                {% for option in options %}
+                                    <div><input type="checkbox" name="current_question_val" value="{{option|slugify}}" />{{option}}</div>
+                                {% endfor %}
+                            {% endifequal %}
+                            {% ifequal q.answer_type "date" %}
+                                <input readonly="true" type="text" placeholder="Select a Date" name="current_question_val" class="hasdatepicker" />
+                            {% endifequal%}
+                            {% ifequal q.answer_type "attachment"%}
+                                <input type="file" name="current_question_val" size="40" />
+                            {% endifequal %}           
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-row">
+                {% if preview_complete %}
+                    <div class="mart5">
+                        <h3>Your preview is complete !</h3>
+                    </div>
+                    <div class="content_head"> 
+                        <div class="left marl10 mart10 marb10"><a href="/admin/question/view/" class="uiButton fblack" style="padding: 3px 8px !important;">View All Questions</a></div>    
+                        {% comment %}
+                        <div class="left marl10 mart10 marb10"><a href="/admin/question/preview/{{q.id}}/" class="uiButton fblack" style="padding: 3px 8px !important;">Preview Again</a></div>
+                        <div class="left marl10 mart10 marb10"><a href="/admin/question/{{q.id}}/" class="uiButton fblack" style="padding: 3px 8px !important;">Back</a></div>
+                        {% endcomment %}
+                    </div>
+                {% else %}
+	                <div class="marl10">
+                        <input type="hidden" id="id_{{q.id}}" value="{{q.id}}" name="current_question_id"></input>
+                        <input class="w100" type="submit" id="continue" value="Continue" name="continue"></input>
+                    </div>
+                {% endif %}
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+
+{% block script_footer %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function(){
+     $('.hasdatepicker').datepicker({dateFormat: 'dd-mm-yy',
+          onSelect: function(){
+             $('.hasdatepicker').datepicker('enable');
+         },
+     });
+});
+</script>
+{% endblock %}

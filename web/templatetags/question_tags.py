@@ -3,7 +3,7 @@ from question.models import *
 from question.forms import *
 from question.views import add_question
 from django.forms.models import formset_factory, inlineformset_factory
-
+from random import randint
 register = template.Library()
 
 def add_nested_question(request):
@@ -46,3 +46,22 @@ register.inclusion_tag("riba-admin/document/tabs.html")(document_tabs)
 def question_details(questionnaire, question, children=None, fields=None, keywords=None):
     return dict(qn=questionnaire, question=question, child_details=children, fields=fields, keywords=keywords)
 register.inclusion_tag("riba-admin/document/view_question_details.html")(question_details)
+
+
+def display_fields(obj_name, obj):
+    fields = []
+    if obj_name == "fields":
+        for field in obj:
+            field_dict = {}
+            field_dict[field.id] = {'label': field.field_label, 'field_type': field.field_type, 'field_option': field.field_option.split('\n')}
+            fields.append(field_dict)
+    elif obj_name == "question":
+        field_dict = {}
+        field_dict[obj.id] = {'label': '', 'field_type': obj.answer_type, 'field_option': [x.option_value for x in obj.option_set.all()]}
+        fields.append(field_dict)
+    return dict(fields=fields)
+register.inclusion_tag("riba-admin/question/fields.html")(display_fields)
+
+#@register.simple_tag
+#def random(start=1, stop=9999):
+#    return randint(start, stop)

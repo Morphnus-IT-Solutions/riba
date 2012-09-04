@@ -47,97 +47,63 @@
                     </div>
                 </div>
             {% endfor %}
-
             <div class="form-row">
-                <div>
-                    {% if fields %}
-                        <div class="f12 w300"><strong>{{q.question}}</strong></div>
-                        <div>
-                            <table class="mart10">
-                                <tbody>
-                                    {% for f in fields %}
-                                        <tr>
-                                            <td class="f11 w400">{{f.field_label}}</td>
-                                            <td class="w10">:</td>
-                                            <td class="field">
-                                                {%ifequal f.field_type "text"%}
-                                                    <input id="{{f.id}}" type="text" name="current_question_val">
-                                                {% endifequal %}
-                                                {% ifequal f.field_type "textarea" %}
-                                                    <textarea class="w250 h50" style="height:50px !important;" name="current_question_val"></textarea>
-                                                {% endifequal %}
-                                                {% ifequal f.field_type "dropdown" %}
-                                                    <select id="{{f.id}}" name="current_question_val">
-                                                    {% with f.field_option|split_newline as opts %}
-                                                        {% for o in opts %}
-                                                            <option value="{{o}}">{{o}}</option>
-                                                        {% endfor %}
-                                                    {% endwith %}
-                                                    </select>
-                                                {% endifequal %}
-                                                {% ifequal f.field_type "radio" %}
-                                                    {% with f.field_option|split_newline as opts %}
-                                                        {% for o in opts %}
-                                                            <div><input class="w100" type="radio" name="current_question_val" value="{{o|slugify}}" />{{o}}</div>
-                                                        {% endfor %}
-                                                    {% endwith %}
-                                                {% endifequal %}
-                                                {% ifequal f.field_type "check" %}
-                                                    {% with f.field_option|split_newline as opts %}
-                                                        {% for o in opts %}
-                                                            <div><input class="w100" type="checkbox" name="current_question_val" value="{{o|slugify}}" />{{o}}</div>
-                                                        {% endfor %}
-                                                    {% endwith %}
-                                                {% endifequal %}
-                                                {% ifequal f.field_type "datetime" %}
-                                                    <input readonly="true" type="text" placeholder="Select a Date" name="current_question_val" class="hasdatepicker" />
-                                                {% endifequal%}
-                                                {% ifequal f.field_type "imagefield"%}
-                                                    <input type="file" name="current_question_val" size="40" />
-                                                {% endifequal %}                            
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <label>{{q.question}}</label>
-                        <div>
-                             {% ifequal q.answer_type "text" %}
-                                <div class="left w250"><input id="{{q.id}}" type="text" name="current_question_val"></div>
-                            {% endifequal %}
-                            {% ifequal q.answer_type "textarea" %}
-                                <textarea class="w250 h50" style="height:50px !important;" name="current_question_val"></textarea>
-                            {% endifequal %}
-                            {% ifequal q.answer_type "dropdown" %}
-                               <select id="{{q.id}}" name="current_question_val"> 
-                                    {% for option in options %}
-                                        <option value="{{option.option_value}}">{{option.option_value}}</option>
-                                    {% endfor %}
-                               </select>
-                            {% endifequal %}
-                            {% ifequal q.answer_type "radio" %}
-                                {% for option in options %}
-                                    <input type="radio" name="current_question_val" value="{{option|slugify}}" />{{option}}
-                                {% endfor %}
-                            {% endifequal %}
-                            {% ifequal q.answer_type "checkbox" %}
-                                {% for option in options %}
-                                    <div><input type="checkbox" name="current_question_val" value="{{option|slugify}}" />{{option}}</div>
-                                {% endfor %}
-                            {% endifequal %}
-                            {% ifequal q.answer_type "date" %}
-                                <input readonly="true" type="text" placeholder="Select a Date" name="current_question_val" class="hasdatepicker" />
-                            {% endifequal%}
-                            {% ifequal q.answer_type "attachment"%}
-                                <input type="file" name="current_question_val" size="40" />
-                            {% endifequal %}           
-                        </div>
+                <div class="f12">
+                    <strong>{{q.question}}</strong>
+                </div>
+                <input type="hidden" name="fields-TOTAL_FORMS" id="id_fields-TOTAL_FORMS" value="1">
+                <input type="hidden" name="fields-MAX_FORMS" id="id_fields-MAX_FORMS" value="{{q.recurring_times}}">
+                <div class="question">
+                    {% if q.is_recurring %}
+                    <div id="id_fields-0-recurring_label" name="fields-0-recurring_label" class="mart10">{{q.recurring_label}} 1</div>
                     {% endif %}
+                    <table class="mart10">
+                        <tbody>
+                            {% for f in fields %}
+                                {% for key, value in f.iteritems %}
+                                <tr>
+                                    {% if value.label %}
+                                    <td class="f11 w400">{{value.label}}</td>
+                                    <td class="w10">:</td>
+                                    {% endif %}
+                                    <td class="field">
+                                        {%ifequal value.field_type "text"%}
+                                            <input id="id_fields-0-field" type="text" name="fields-0-field">
+                                        {% endifequal %}
+                                        {% ifequal value.field_type "textarea" %}
+                                            <textarea id="id_fields-0-field" name="fields-0-field" class="w250 h50" style="height:50px !important;"></textarea>
+                                        {% endifequal %}
+                                        {% ifequal value.field_type "dropdown" %}
+                                            <select id="id_fields-0-field" name="fields-0-field">
+                                                {% for o in value.field_option %}
+                                                    <option value="{{o}}">{{o}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        {% endifequal %}
+                                        {% ifequal value.field_type "radio" %}
+                                            {% for o in value.field_option %}
+                                                <div><input class="w100" type="radio" value="{{o|slugify}}" id="id_fields-0-{{forloop.counter0}}-field" name="fields-0-field"/>{{o}}</div>
+                                            {% endfor %}
+                                        {% endifequal %}
+                                        {% ifequal value.field_type "check" %}
+                                            {% for o in value.field_option %}
+                                                <div><input class="w100" type="checkbox" value="{{o|slugify}}" id="id_fields-0-{{forloop.counter0}}-field" name="fields-0-field"/>{{o}}</div>
+                                            {% endfor %}
+                                        {% endifequal %}
+                                        {% ifequal value.field_type "datetime" %}
+                                            <input readonly="true" type="text" placeholder="Select a Date" name="current_question_val" class="hasdatepicker" id="id_fields-0-field" name="fields-0-field"/>
+                                        {% endifequal%}
+                                        {% ifequal value.field_type "imagefield"%}
+                                            <input type="file" size="40" id="id_fields-0-field" name="fields-0-field"/>
+                                        {% endifequal %}                            
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
             <div class="form-row">
                 {% if preview_complete %}
                     <div class="mart5">
@@ -151,7 +117,13 @@
                         {% endcomment %}
                     </div>
                 {% else %}
-	                <div class="marl10">
+                    {% if q.is_recurring %}
+                         <div id="add_another_div" class="marl10 left">
+                            <input type="hidden" id="id_{{q.id}}" value="{{q.id}}"></input>
+                            <input class="w100" type="button" id="add_another" value="Add Another" name="add_another"></input>
+                        </div>   
+                    {% endif %}
+	                <div class="marl10 left">
                         <input type="hidden" id="id_{{q.id}}" value="{{q.id}}" name="current_question_id"></input>
                         <input class="w100" type="submit" id="continue" value="Continue" name="continue"></input>
                     </div>
@@ -173,5 +145,48 @@ $(document).ready(function(){
          },
      });
 });
+
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+-)');
+        var replacement = prefix + '-' + ndx + '-';
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+
+    function cloneMore(selector, type, recurring_label) {
+        var newElement = $(selector).clone();
+        var total = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
+        newElement.find(':input').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        /*newElement.find(':select').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });*/
+        newElement.find('div').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('');
+        });
+        total++;
+        $('#id_' + type + '-TOTAL_FORMS').val(total);
+        var max_forms = parseInt($('#id_' + type + '-MAX_FORMS').val());
+        var total_forms = parseInt($('#id_' + type + '-TOTAL_FORMS').val());
+        if(max_forms == total_forms){
+            $("#add_another_div").hide();
+        }
+        $(selector).after(newElement);
+        document.getElementById('id_'+ type + '-' + (total - 1) + '-recurring_label').innerHTML = recurring_label + ' ' + total;
+    }
+
+    // Event handlers for Field
+    $("#add_another").click(function() {
+        cloneMore('div.question:last', 'fields', '{{q.recurring_label}}');
+    });
+
 </script>
 {% endblock %}

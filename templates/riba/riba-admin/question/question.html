@@ -50,17 +50,23 @@
     </ul>
 
     <fieldset id="question-details" class="module aligned">
+        <div class="form-row category">
+            <div>
+                <label for="id_category" class="required">Category:</label>
+                <input type="text" readonly="readonly" id="id_category" value="{{q.category}}"/>
+            </div>
+        </div>
         <div class="form-row answer_type">
             <div>
                 <label for="id_answer_type" class="required">Answer type:</label>
                 <input type="text" readonly="readonly" id="id_answer_type" value="{{q.answer_type|title}}"/>
             </div>
         </div>
-        {% if q.type %}
-        <div class="form-row type">
+        {% if q.description %}
+        <div class="form-row description">
             <div>
-                <label for="id_type">Type:</label>
-                <input type="text" readonly="readonly" id="id_type" value="{{q.type|title}}"/>
+                <label for="id_description">Description:</label>
+                <input type="textarea" readonly="readonly" id="id_description" value="{{q.description}}"/>
             </div>
         </div>
         {% endif %}
@@ -76,6 +82,7 @@
                             <th>Field label</th>
                             <th class="required">Field type</th>
                             <th>Field Option</th>
+                            <th>Sort Order</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,6 +91,7 @@
                                 <td>{{f.field_label}}</td>
                                 <td>{{f.field_type|title}}</td>
                                 <td>{{f.field_option|linebreaks}}</td>
+                                <td>{{f.sort_order}}</td>
                             </tr>
 					    {% endfor %}   
                     </tbody>

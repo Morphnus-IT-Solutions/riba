@@ -49,8 +49,8 @@ a:hover { text-decoration: underline; color: #4d77c3; }
                             <tbody>
                                 <tr>
                                     <td id="{{key.question.id}}" class="parent_question {%if value %}{%if forloop.last%}lastpq{%else%}pq{%endif%}{% else %}{%if forloop.last%}lastlq{%else%}lq{%endif%}{%endif%}"></td>
-                                    <td style="vertical-align:top !important"><a href="/admin/question/{{key.question.id}}/">{{key.question}}</a></td>
-                                    <td style="text-align:right">
+                                    <td style="vertical-align:top; !important"><a href="/admin/question/{{key.question.id}}/">{{key.question}}</a></td>
+                                    <td style="text-align:right;width:100px">
                                         <a class="changelink" href="/admin/question/edit/{{key.question.id}}/">Edit</a>&nbsp;&nbsp;
                                         <a id="{{key.question.id}}_delete" href="" class="deletebin deletelink">Delete</a>
                                     </td>

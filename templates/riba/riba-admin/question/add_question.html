@@ -4,8 +4,17 @@
 {% block extra_css %}
 <style>
 .form-row select {
-    width: 150px;
+    width: 200px;
 }
+
+.form-row input {
+    width: 200px;
+}
+
+#id_is_recurring {
+    width: 15px;
+}
+
 </style>
 {% endblock %}
 
@@ -62,12 +71,6 @@
                             {{form.answer_type}}
                         </div>
                     </div>
-                    <div class="form-row type">
-                        <div>
-                            <label>{{form.type.label}}:</label>
-                            {{form.type}}
-                        </div>
-                    </div>
                     <div class="form-row rows text-area hide">
                         <div>
                             <label>{{form.rows.label}}:</label>
@@ -78,6 +81,24 @@
                         <div>
                             <label>{{form.columns.label}}:</label>
                             {{form.columns}}
+                        </div>
+                    </div>
+                    <div class="form-row is_recurring">
+                        <div>
+                            <label>{{form.is_recurring.label}}:</label>
+                            {{form.is_recurring}}
+                        </div>
+                    </div>
+                    <div class="form-row recurring_times recurring">
+                        <div>
+                            <label>{{form.recurring_times.label}}:</label>
+                            {{form.recurring_times}}
+                        </div>
+                    </div>
+                    <div class="form-row recurring_label recurring">
+                        <div>
+                            <label>{{form.recurring_label.label}}:</label>
+                            {{form.recurring_label}}
                         </div>
                     </div>
                 </fieldset>
@@ -179,16 +200,23 @@ $(document).ready(function PreselectMyItem(){
     else{
         $('.text-area').hide();
     }
-});
 
-$(document).ready(function(){
-    $('#id_answer_type').change(function(){
-        var e = this.value;
-        if (e=="textarea"){
-            $('.text-area').show();
+    var e = document.getElementById("id_is_recurring");
+    var val = e.checked;
+    if(val == true){
+        $('.recurring').show();
+    }
+    else{
+        $('.recurring').hide();
+    }
+
+    $('#id_is_recurring').change(function(){
+        var val = this.checked;
+        if(val == true){
+            $('.recurring').show();
         }
         else{
-            $('.text-area').hide();
+            $('.recurring').hide();
         }
     });
 });

@@ -18,10 +18,12 @@ def view_all_questions(request):
     else:
         questions = QuestionTree.objects.select_related('question', 'parent_question').filter(parent_question=None, parent_value=None).order_by('-id')
     ques = {}
-    count = questions.count()
+    count = 0
     for qs in questions:
-        qt = QuestionTree.objects.filter(lft__gt=qs.lft, rgt__lt=qs.rgt).order_by('lft')
+        print qs.id
+        qt = QuestionTree.objects.select_related('question', 'parent_question').filter(lft__gt=qs.lft, rgt__lt=qs.rgt).order_by('lft')
         ques[qs] = qt
+        count += 1
     ques_dict = {    
         'ques':ques,
         'q':q,
@@ -85,11 +87,12 @@ def add_question(request, id=None):
             if not errors:
                 for fld in field_formset:
                     if fld.is_valid() and fld.cleaned_data.get('field_label'):
-                        f = Field()
+                        fld.save()
                         f.question = q
                         f.field_label = fld.cleaned_data.get('field_label')
                         f.field_type = fld.cleaned_data.get('field_type')
                         f.field_option = fld.cleaned_data.get('field_option')
+                        f.sort_order = fld.cleaned_data.get('sort_order')
                         f.save()
                 for op in option_formset:
                     if op.is_valid() and op.cleaned_data.get('option_value'):
@@ -98,11 +101,12 @@ def add_question(request, id=None):
                         o.option_value = op.cleaned_data.get('option_value')
                         o.dependent_question = op.cleaned_data.get('dependent_question')
                         o.save()
-                        try:
-                            qt = QuestionTree.objects.get(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
-                        except QuestionTree.DoesNotExist:
-                            qt = QuestionTree(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
-                            qt.save()
+                        if op.cleaned_data.get('dependent_question'):
+                            try:
+                                qt = QuestionTree.objects.get(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                            except QuestionTree.DoesNotExist:
+                                qt = QuestionTree(question=o.dependent_question, parent_question=q, parent_value=o.option_value)
+                                qt.save()
                 if is_popup == 1:
                     return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
                 else:
@@ -137,29 +141,63 @@ def preview_question(request, id):
     preview_complete = False
     if request.method == "POST":
         qid = request.POST.get('current_question_id', id)
-        qval = request.POST.get('current_question_val')
+        qval = request.POST.get('fields-0-field')
         q = Question.objects.get(pk=qid)
         try:
             q_tree = QuestionTree.objects.select_related('question').get(parent_question__id=qid, parent_value=qval)
-            if not q_tree.question:
-                preview_complete = True
-            else:
-                q = q_tree.question or q_tree.parent_question 
+            q = q_tree.question or q_tree.parent_question 
         except QuestionTree.DoesNotExist:
             preview_complete = True
     else:
         q = Question.objects.get(pk=id)
-    q_fields = q.field_set.all().order_by('id')
-    q_options = q.option_set.all().order_by('id')
+    q_fields = q.field_set.all()
+    q_options = q.option_set.all()
     q_parents = q.get_all_parents()
+    fields = []
+    if q_fields:
+        for field in q_fields:
+            field_dict = {}
+            field_dict[field.id] = {'label': field.field_label, 'field_type': field.field_type, 'field_option': field.field_option.split('\n')}
+            fields.append(field_dict)
+    else:
+        field_dict = {}
+        field_dict[q.id] = {'label': '', 'field_type': q.answer_type, 'field_option': [x.option_value for x in q.option_set.all()]}
+        fields.append(field_dict)
     ctxt = {
         'q': q,
-        'fields': q_fields,
-        'options': q_options,
-        'parents': q_parents,
+        'fields': fields,
         'preview_complete': preview_complete,
+        'parents': q_parents,
     }
+    print ctxt
     return render_to_response('riba-admin/question/preview_question.html', ctxt, context_instance=RequestContext(request))
+#def preview_question(request, id):
+#    preview_complete = False
+#    if request.method == "POST":
+#        qid = request.POST.get('current_question_id', id)
+#        qval = request.POST.get('current_question_val')
+#        q = Question.objects.get(pk=qid)
+#        try:
+#            q_tree = QuestionTree.objects.select_related('question').get(parent_question__id=qid, parent_value=qval)
+#            if not q_tree.question:
+#                preview_complete = True
+#            else:
+#                q = q_tree.question or q_tree.parent_question 
+#        except QuestionTree.DoesNotExist:
+#            preview_complete = True
+#    else:
+#        q = Question.objects.get(pk=id)
+#    q_fields = q.field_set.all().order_by('id')
+#    q_options = q.option_set.all().order_by('id')
+#    q_parents = q.get_all_parents()
+#    ctxt = {
+#        'q': q,
+#        'fields': q_fields,
+#        'options': q_options,
+#        'parents': q_parents,
+#        'preview_complete': preview_complete,
+#    }
+#    return render_to_response('riba-admin/question/preview_question.html', ctxt, context_instance=RequestContext(request))
 
 @login_required
 def edit_question(request, id):
@@ -193,26 +231,35 @@ def edit_question(request, id):
                         fld.instance.delete()
                     elif fld.cleaned_data.get('field_label'):
                         fld.save()
+                else:
+                    for er in fld.errors:
+                        errors.append(fld.errors[er])
             for op in option_formset:
                 if op.is_valid():
                     if op.cleaned_data.get('DELETE'):
                         op.instance.delete()
+                        try:
+                            qt = QuestionTree.objects.get(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
+                            qt.delete()
+                        except:
+                            pass
                     elif op.cleaned_data.get('option_value'):
                         op.save()
-                    try:
-                        qt = QuestionTree.objects.get(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
-                    except QuestionTree.DoesNotExist:
-                        qt = QuestionTree(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
-                        qt.save()
-            if is_popup == 1:
-                return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
-            else:
-                if question.is_root_question():
-                    root_question = question
+                        try:
+                            qt = QuestionTree.objects.get(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
+                        except QuestionTree.DoesNotExist:
+                            qt = QuestionTree(question=op.instance.dependent_question, parent_question=q, parent_value=op.instance.option_value)
+                            qt.save()
+            if not errors:
+                if is_popup == 1:
+                    return HttpResponse('<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' % (escape(q._get_pk_val()), escape(q)))
                 else:
-                    root_question = question.get_root_question().question
-                root_question.rebuild_nsm()
-                return HttpResponseRedirect('/admin/question/%s' %q.id)
+                    if question.is_root_question():
+                        root_question = question
+                    else:
+                        root_question = question.get_root_question().question
+                    root_question.rebuild_nsm()
+                    return HttpResponseRedirect('/admin/question/%s' %q.id)
 
     is_popup = int(request.GET.get('_popup', 0))
     ctxt = {
