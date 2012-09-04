@@ -13,8 +13,8 @@ class FieldInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['question']
-    list_display = ('question', 'type', 'answer_type',)
-    list_filter = ('type', 'answer_type',)
+    list_display = ('question', 'category', 'answer_type',)
+    list_filter = ('category', 'answer_type',)
     inlines = [FieldInline, OptionInline]
 admin.site.register(Question, QuestionAdmin)
 

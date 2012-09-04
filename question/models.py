@@ -17,10 +17,9 @@ class Question(models.Model):
 					    ('dropdown', 'Dropdown'),
 					    ('attachment', 'Attachment'),
 					    ))
-    type = models.CharField(max_length=10,default='normal', db_index=True, choices=(
-     ('recurring', 'Recurring'),
-     ), null=True, blank=True)
-    #max_times = models.IntegerField(null=True, blank=True, default=1)
+    is_recurring = models.BooleanField(default=False)
+    recurring_times = models.PositiveIntegerField(null=True, blank=True, default=1)
+    recurring_label = models.CharField(max_length=500, null=True, blank=True)
     rows = models.IntegerField(null=True, blank=True, default=5)
     columns = models.IntegerField(null=True, blank=True, default=40)
     level = models.IntegerField(default=1)
@@ -110,7 +109,7 @@ class Question(models.Model):
 
 class Option(models.Model):
     question = models.ForeignKey(Question)
-    option_value = models.CharField(max_length=100, blank=True, null=True)
+    option_value = models.CharField(max_length=100)
     dependent_question = models.ForeignKey(Question, blank=True, null=True, related_name="dependent_question")
 
     def __unicode__(self):
@@ -119,8 +118,11 @@ class Option(models.Model):
     
 
 class Field(models.Model):
+    class Meta:
+        ordering = ('sort_order',)
+
     question = models.ForeignKey(Question)
-    field_label = models.CharField(max_length=100, blank=True, null=True)
+    field_label = models.CharField(max_length=100)
     field_type = models.CharField(max_length=15, db_index=True,
             		default='char', choices=(
                 		('text', 'Text'),
