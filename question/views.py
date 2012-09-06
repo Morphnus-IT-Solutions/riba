@@ -87,7 +87,7 @@ def add_question(request, id=None):
             if not errors:
                 for fld in field_formset:
                     if fld.is_valid() and fld.cleaned_data.get('field_label'):
-                        fld.save()
+                        f = Field()
                         f.question = q
                         f.field_label = fld.cleaned_data.get('field_label')
                         f.field_type = fld.cleaned_data.get('field_type')
