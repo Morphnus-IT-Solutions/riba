@@ -1,6 +1,5 @@
 {% extends "riba-admin/base.html" %}
 {% load question_tags %}
-
 {% block extra_css %}
 <style>
     .form-row input {
@@ -13,6 +12,14 @@
 
     fieldset table td{
         border: 0px;
+    }
+
+    .question {
+        width: 500px;
+    }
+
+    .question option {
+        width: 500px;
     }
 </style>
 
@@ -129,9 +136,9 @@
             $(this).attr({'name': name, 'id': id}).val('');
         });
         newElement.find('a').each(function() {
-            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-').replace('-question~{{random_count}}' + (total - 1), '-question~{{random_count}}' + total);
             var id = 'id_' + name;
-            $(this).attr({'name': name, 'id': id}).val('');
+            $(this).attr({'name': name, 'id': id, 'href': '/question/add/{{random_count}}'+ total + '/'}).val('');
         });
         newElement.find('label').each(function() {
             var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');

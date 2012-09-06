@@ -59,3 +59,8 @@ class FinalQuestionnaireForm(forms.ModelForm):
     class Meta:
         model = Questionnaire
         fields = ('question', 'field', 'keyword', 'sort_order', 'mandatory',)
+
+    def __init__(self, *args, **kwargs):
+        template = kwargs.pop('template', None)
+        super(FinalQuestionnaireForm, self).__init__(*args, **kwargs)
+        self.fields["question"].widget.attrs['class'] = 'question'
